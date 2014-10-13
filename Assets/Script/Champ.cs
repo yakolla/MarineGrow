@@ -7,11 +7,14 @@ public class Champ : MonoBehaviour {
 	NavMeshAgent	m_navAgent;
 	GameObject		m_prefBullet;
 	GameObject		m_aimpoint;
+	Animator		m_animator;
 
 	void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_prefBullet = Resources.Load<GameObject>("Pref/Bullet");
 		m_aimpoint = this.transform.Find("Weapon/Aimpoint").gameObject;
+		m_animator = this.transform.Find("Object").gameObject.GetComponent<Animator> ();
+
 	}
 	
 	// Update is called once per frame
@@ -25,6 +28,13 @@ public class Champ : MonoBehaviour {
 			Vector3 pos = Input.mousePosition;
 			pos.z = 10;
 			m_navAgent.SetDestination(Camera.main.ScreenToWorldPoint(pos));
+
+			pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+
+			m_animator.Play ("hero_" + (int)Mathf.Abs(targetAngle/20));
+			Debug.Log(Mathf.Abs(targetAngle/20));
+
 		}
 		
 		if (Input.GetMouseButtonUp(1) == true)
