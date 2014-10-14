@@ -8,12 +8,16 @@ public class Champ : MonoBehaviour {
 	GameObject		m_prefBullet;
 	GameObject		m_aimpoint;
 	Animator		m_animator;
+	GameObject		m_body;
+	GameObject		m_weapon;
 
 	void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_prefBullet = Resources.Load<GameObject>("Pref/Bullet");
+		m_weapon = this.transform.Find("Weapon").gameObject;
 		m_aimpoint = this.transform.Find("Weapon/Aimpoint").gameObject;
-		m_animator = this.transform.Find("Object").gameObject.GetComponent<Animator> ();
+		m_animator = this.transform.Find("Body").gameObject.GetComponent<Animator> ();
+		m_body = this.transform.Find("Body").gameObject;
 
 	}
 	
@@ -22,6 +26,7 @@ public class Champ : MonoBehaviour {
 
 		FollowChampWithCamera();
 
+		//m_body.transform.LookAt(Camera.main.transform.position, -Vector3.up);
 
 		if (Input.GetMouseButton(0) == true)
 		{
@@ -31,16 +36,21 @@ public class Champ : MonoBehaviour {
 
 			pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+			int angleIndex = (int)targetAngle/20;
 
-			m_animator.Play ("hero_" + (int)Mathf.Abs(targetAngle/20));
-			Debug.Log(Mathf.Abs(targetAngle/20));
+			m_animator.Play ("hero_" + angleIndex);
+			m_weapon.transform.eulerAngles =  new Vector3(90, 0, targetAngle); 
+
+			Debug.Log("hero_" + angleIndex);
+
+
 
 		}
 		
 		if (Input.GetMouseButtonUp(1) == true)
 		{
 			Vector3 pos = m_aimpoint.transform.position;
-			GameObject obj = Instantiate (m_prefBullet, pos, m_aimpoint.transform.rotation) as GameObject;
+			GameObject obj = Instantiate (m_prefBullet, pos, m_weapon.transform.rotation) as GameObject;
 		}
 	}
 

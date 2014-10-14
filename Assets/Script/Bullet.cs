@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.rigidbody.AddRelativeForce(new Vector3(-3f, 0f, 0f));
+		transform.Translate(10*Time.deltaTime, 0, 0, transform);
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -19,6 +19,9 @@ public class Bullet : MonoBehaviour {
 			DestroyObject(this.gameObject);
 			DestroyObject(other.gameObject);
 		}
-
+		else if (other.tag == "Wall")
+		{
+			DestroyObject(this.gameObject);
+		}
 	}
 }
