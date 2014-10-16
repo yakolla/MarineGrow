@@ -10,10 +10,23 @@ public class Champ : MonoBehaviour {
 	Animator		m_animator;
 	GameObject		m_body;
 	GameObject		m_weapon;
+	public string			m_weaponName = "Firegun";
 
 	void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
-		m_prefBullet = Resources.Load<GameObject>("Pref/Bullet");
+		switch(m_weaponName)
+		{
+		case "Firegun":
+			m_prefBullet = Resources.Load<GameObject>("Pref/Firegun");
+			break;
+		case "Bullet":
+			m_prefBullet = Resources.Load<GameObject>("Pref/Bullet");
+			break;
+		case "RocketLauncher":
+			m_prefBullet = Resources.Load<GameObject>("Pref/RocketLauncher");
+			break;
+		}
+
 		m_weapon = this.transform.Find("Weapon").gameObject;
 		m_aimpoint = this.transform.Find("Weapon/Aimpoint").gameObject;
 		m_animator = this.transform.Find("Body").gameObject.GetComponent<Animator> ();
@@ -51,6 +64,8 @@ public class Champ : MonoBehaviour {
 		{
 			Vector3 pos = m_aimpoint.transform.position;
 			GameObject obj = Instantiate (m_prefBullet, pos, m_weapon.transform.rotation) as GameObject;
+			Weapon weapon = (Weapon)obj.GetComponent(m_weaponName);
+			weapon.Init(m_aimpoint);
 		}
 	}
 

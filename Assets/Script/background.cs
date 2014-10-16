@@ -13,12 +13,20 @@ public class background : MonoBehaviour {
 
 		m_prefEnemy = Resources.Load<GameObject>("Pref/Enemy");
 
+		StartCoroutine(spawnEnemyPer());
+	}
+
+	IEnumerator spawnEnemyPer()
+	{
 		for(int i = 0; i < 10; ++i)
 		{
 			Vector3 enemyPos = m_prefEnemy.transform.position;
 			GameObject obj = Instantiate (m_prefEnemy, new Vector3(Random.Range(0f,10f), enemyPos.y, Random.Range(0f,10f)), Quaternion.Euler (0, 0, 0)) as GameObject;
 			obj.GetComponent<Enemy>().SetChamp(m_champ);
 		}
+
+		yield return new WaitForSeconds (10);
+		//StartCoroutine(spawnEnemyPer());
 	}
 	
 	// Update is called once per frame
