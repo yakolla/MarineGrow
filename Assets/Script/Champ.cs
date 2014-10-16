@@ -10,7 +10,7 @@ public class Champ : MonoBehaviour {
 	Animator		m_animator;
 	GameObject		m_body;
 	GameObject		m_weapon;
-	public string			m_weaponName = "Firegun";
+	public string			m_weaponName = "RocketLauncher";
 
 	void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
@@ -33,7 +33,36 @@ public class Champ : MonoBehaviour {
 		m_body = this.transform.Find("Body").gameObject;
 
 	}
-	
+	Vector3 destPos;
+	void OnGUI() {
+		Event e = Event.current;
+		if (e.isKey)
+		{
+			Vector3 pos = destPos;
+
+			if (e.keyCode == KeyCode.W)
+			{
+				pos.z += 0.1F;
+			}
+			if (e.keyCode == KeyCode.S)
+			{
+				pos.z -= 0.1F;
+			}
+			if (e.keyCode == KeyCode.A)
+			{
+				pos.x -= 0.1F;
+			}
+			if (e.keyCode == KeyCode.D)
+			{
+				pos.x += 0.1F;
+			}
+
+			destPos = pos;
+			Debug.Log(destPos);
+		}
+
+
+	}
 	// Update is called once per frame
 	void Update () {
 
@@ -41,28 +70,22 @@ public class Champ : MonoBehaviour {
 
 		//m_body.transform.LookAt(Camera.main.transform.position, -Vector3.up);
 
-		if (Input.GetMouseButton(0) == true)
-		{
-			Vector3 pos = Input.mousePosition;
-			pos.z = 10;
-			m_navAgent.SetDestination(Camera.main.ScreenToWorldPoint(pos));
 
-			pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		m_navAgent.SetDestination(destPos);
+
+		if (Input.GetMouseButton(1) == true)
+		{
+			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
 			float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
 			int angleIndex = (int)targetAngle/20;
-
+			
 			m_animator.Play ("hero_" + angleIndex);
 			m_weapon.transform.eulerAngles =  new Vector3(90, 0, targetAngle); 
-
+			
 			Debug.Log("hero_" + angleIndex);
 
-
-
-		}
-		
-		if (Input.GetMouseButtonUp(1) == true)
-		{
-			Vector3 pos = m_aimpoint.transform.position;
+			pos = m_aimpoint.transform.position;
 			GameObject obj = Instantiate (m_prefBullet, pos, m_weapon.transform.rotation) as GameObject;
 			Weapon weapon = (Weapon)obj.GetComponent(m_weaponName);
 			weapon.Init(m_aimpoint);
