@@ -33,45 +33,41 @@ public class Champ : MonoBehaviour {
 		m_body = this.transform.Find("Body").gameObject;
 
 	}
-	Vector3 destPos;
-	void OnGUI() {
-		Event e = Event.current;
 
-		if (e.keyCode > 0)
+
+	void UpdateChampMovement()
+	{
+		Vector3 pos = Vector3.zero;
+		float step = 1f;
+		if (Input.anyKey)
 		{
-			Vector3 pos = Vector3.zero;
-			float step = 1f;
-			if (e.keyCode == KeyCode.W)
+			if(Input.GetKey(KeyCode.W))
 			{
 				pos.z += step;
 			}
-			if (e.keyCode == KeyCode.S)
+			if(Input.GetKey(KeyCode.S))
 			{
 				pos.z -= step;
 			}
-			if (e.keyCode == KeyCode.A)
+			if(Input.GetKey(KeyCode.A))
 			{
 				pos.x -= step;
 			}
-			if (e.keyCode == KeyCode.D)
+			if(Input.GetKey(KeyCode.D))
 			{
 				pos.x += step;
 			}
-
-			destPos = transform.position+pos;
+			
+			m_navAgent.SetDestination(transform.position+pos);
 		}
-
 
 	}
 	// Update is called once per frame
 	void Update () {
 
+		UpdateChampMovement();
 		FollowChampWithCamera();
 
-		//m_body.transform.LookAt(Camera.main.transform.position, -Vector3.up);
-
-
-		m_navAgent.SetDestination(destPos);
 
 		if (Input.GetMouseButtonUp(1) == true)
 		{

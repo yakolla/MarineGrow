@@ -483,7 +483,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 976516792}
   m_GameObject: {fileID: 409202722}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20833e7af91572544b7bfb8937d271ee, type: 3}
   m_Name: 
@@ -654,6 +654,7 @@ GameObject:
   - 131: {fileID: 542344502}
   - 114: {fileID: 542344501}
   - 54: {fileID: 542344503}
+  - 114: {fileID: 542344504}
   m_Layer: 0
   m_Name: Champ
   m_TagString: Player
@@ -787,6 +788,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &542344504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542344496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3fd0a35317c9343b05a505f725cfbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActiveLineObj: []
+  InactiveLineObj: []
+  LinePrefab: {fileID: 100000, guid: d14b3ab6d9ddd6445be2362495952dbe, type: 2}
 --- !u!1 &554688399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,7 +1468,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1735195708}
   m_GameObject: {fileID: 805268666}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20833e7af91572544b7bfb8937d271ee, type: 3}
   m_Name: 
@@ -1636,6 +1651,10 @@ Prefab:
     - target: {fileID: 11400000, guid: e515b9dc1788f9343beb3f01579a2be7, type: 2}
       propertyPath: m_interval
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: e515b9dc1788f9343beb3f01579a2be7, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e515b9dc1788f9343beb3f01579a2be7, type: 2}
@@ -4053,6 +4072,10 @@ Prefab:
       propertyPath: m_targetPos
       value: 
       objectReference: {fileID: 542344497}
+    - target: {fileID: 11400000, guid: e515b9dc1788f9343beb3f01579a2be7, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e515b9dc1788f9343beb3f01579a2be7, type: 2}
   m_RootGameObject: {fileID: 805268666}
