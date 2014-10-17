@@ -26,6 +26,12 @@ public class Firegun : Weapon {
 		this.transform.parent = m_aimpoint.transform;
 	}
 
+	override public void StopFiring()
+	{
+		base.StopFiring();
+		StartCoroutine(destoryObject());
+	}
+
 	void OnTriggerEnter(Collider other) 
 	{
 		if (other.tag == "Enemy")
