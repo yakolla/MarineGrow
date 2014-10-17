@@ -36,29 +36,29 @@ public class Champ : MonoBehaviour {
 	Vector3 destPos;
 	void OnGUI() {
 		Event e = Event.current;
-		if (e.isKey)
-		{
-			Vector3 pos = destPos;
 
+		if (e.keyCode > 0)
+		{
+			Vector3 pos = Vector3.zero;
+			float step = 1f;
 			if (e.keyCode == KeyCode.W)
 			{
-				pos.z += 0.1F;
+				pos.z += step;
 			}
 			if (e.keyCode == KeyCode.S)
 			{
-				pos.z -= 0.1F;
+				pos.z -= step;
 			}
 			if (e.keyCode == KeyCode.A)
 			{
-				pos.x -= 0.1F;
+				pos.x -= step;
 			}
 			if (e.keyCode == KeyCode.D)
 			{
-				pos.x += 0.1F;
+				pos.x += step;
 			}
 
-			destPos = pos;
-			Debug.Log(destPos);
+			destPos = transform.position+pos;
 		}
 
 
@@ -73,7 +73,7 @@ public class Champ : MonoBehaviour {
 
 		m_navAgent.SetDestination(destPos);
 
-		if (Input.GetMouseButton(1) == true)
+		if (Input.GetMouseButtonUp(1) == true)
 		{
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

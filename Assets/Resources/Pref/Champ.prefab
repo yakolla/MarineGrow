@@ -59,7 +59,9 @@ GameObject:
   - 4: {fileID: 400006}
   - 195: {fileID: 19500000}
   - 114: {fileID: 11400000}
-  - 136: {fileID: 13600000}
+  - 65: {fileID: 6500002}
+  - 131: {fileID: 13100000}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: Champ
   m_TagString: Player
@@ -187,6 +189,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6500002
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -248,19 +262,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_weaponName: Firegun
---- !u!136 &13600000
-CapsuleCollider:
+--- !u!114 &11400002
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f1799050fd247c4a42e4e2b1e36826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchPad: 0
+  touchPadPressed: .150000006
+  touchPadReleased: .0250000004
+  touchZone:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  maximumOffset: .5
+  deadZone: {x: 0, y: 0}
+  normalize: 0
+  roundVertical: 0
+  roundHorizontal: 0
+  roundThreshold: .5
+  position: {x: 0, y: 0}
+  tapCount: 0
+--- !u!131 &13100000
+GUITexture:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_Texture: {fileID: 0}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!195 &19500000
 NavMeshAgent:
   m_ObjectHideFlags: 1
