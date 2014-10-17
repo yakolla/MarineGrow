@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 	NavMeshAgent	m_navAgent;
-	GameObject		m_champ = null;
+	Vector3			m_targetPos;
 	// Use this for initialization
 	void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
@@ -11,16 +11,11 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (m_champ)
-		{
-			Vector3 pos = m_champ.transform.position;
-			m_navAgent.SetDestination(pos);
-		}
-
+		m_navAgent.SetDestination(m_targetPos);
 	}
 
-	public void SetChamp(GameObject obj)
+	public void SetTargetPos(Vector3 pos )
 	{
-		m_champ = obj;
+		m_targetPos = pos;
 	}
 }
