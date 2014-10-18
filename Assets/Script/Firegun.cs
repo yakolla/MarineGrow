@@ -1,46 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Firegun : Weapon {
+public class FireGun : Weapon {
 
-	// Use this for initialization
-	void Start () 
-	{
-
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
+	new void Awake () {
+		base.Awake();
+		m_prefBullet = Resources.Load<GameObject>("Pref/FireGunBullet");
 	}
 
-	IEnumerator destoryObject()
+	override public void CreateBullet()
 	{
-		yield return new WaitForSeconds (2);
-		DestroyObject(this.gameObject);
-	}
-
-	override public void Init(GameObject aimpoint)
-	{
-		base.Init(aimpoint);
-		this.transform.parent = m_aimpoint.transform;
-	}
-
-	override public void StopFiring()
-	{
-		base.StopFiring();
-		StartCoroutine(destoryObject());
-	}
-
-	void OnTriggerEnter(Collider other) 
-	{
-		if (other.tag == "Enemy")
+		if (m_firing == false)
 		{
-			DestroyObject(other.gameObject);
-		}
-		else if (other.tag == "Wall")
-		{
-
+			base.CreateBullet();
 		}
 	}
 }

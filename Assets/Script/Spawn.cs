@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawn : Weapon {
+public class Spawn : MonoBehaviour {
 
 	public int 		m_mobCount = 10;
 	public float 	m_interval = 30;

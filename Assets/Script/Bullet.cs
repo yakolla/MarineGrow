@@ -1,27 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bullet : Weapon {
+public class Bullet : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	protected GameObject	m_aimpoint = null;
+	bool					m_firing = false;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		transform.Translate(10*Time.deltaTime, 0, 0, transform);
+	virtual public void Init(GameObject aimpoint)
+	{
+		m_aimpoint = aimpoint;
+		m_firing = true;
 	}
 
-	void OnTriggerEnter(Collider other) {
-		if (other.tag == "Enemy")
-		{
-			DestroyObject(this.gameObject);
-			DestroyObject(other.gameObject);
-		}
-		else if (other.tag == "Wall")
-		{
-			DestroyObject(this.gameObject);
-		}
+	virtual public void StopFiring()
+	{
+		m_firing = false;
 	}
+
+	public bool IsFiring()
+	{
+		return m_firing;
+	}
+
 }

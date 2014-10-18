@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class LightningBoltLauncher : Weapon {
+public class LightningBoltLauncher : MonoBehaviour {
 
 	//Prefabs to be assigned in Editor
 	public GameObject BoltPrefab;
