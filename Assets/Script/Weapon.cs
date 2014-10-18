@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour {
 	protected	bool	m_firing = false;
 	public float	m_coolTime = 0.5f;
 	float			m_lastCreated = 0;
-
+	protected float			m_targetAngle = 0;
 	protected void Awake () {
 
 		m_aimpoint = this.transform.Find("Aimpoint").gameObject;
@@ -24,8 +24,9 @@ public class Weapon : MonoBehaviour {
 		m_lastCreated = Time.time;
 	}
 
-	public void StartFiring()
+	public void StartFiring(float targetAngle)
 	{
+		m_targetAngle = targetAngle;
 		if (m_lastCreated + m_coolTime < Time.time )
 		{
 			CreateBullet();
@@ -39,7 +40,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	void Update()
+	protected void Update()
 	{
 		if (m_firing == true)
 		{
