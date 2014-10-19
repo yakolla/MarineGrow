@@ -13,13 +13,6 @@ public class FireGunBullet : Bullet {
 	void Update () 
 	{
 	}
-
-	IEnumerator destoryObject()
-	{
-		yield return new WaitForSeconds (2);
-		DestroyObject(this.gameObject);
-	}
-
 	override public void Init(GameObject aimpoint)
 	{
 		base.Init(aimpoint);
@@ -32,18 +25,14 @@ public class FireGunBullet : Bullet {
 	override public void StopFiring()
 	{
 		base.StopFiring();
-		StartCoroutine(destoryObject());
+		DestroyObject(this.gameObject);
 	}
 
 	void OnTriggerEnter(Collider other) 
 	{
-		if (other.tag == "Enemy")
+		if (other.tag.CompareTo("Enemy") == 0)
 		{
 			DestroyObject(other.gameObject);
-		}
-		else if (other.tag == "Wall")
-		{
-
 		}
 	}
 }

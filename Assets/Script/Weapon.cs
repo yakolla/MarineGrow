@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour {
 		m_aimpoint = this.transform.Find("Aimpoint").gameObject;
 	}
 
-	virtual public void CreateBullet()
+	virtual public GameObject CreateBullet()
 	{
 		Vector3 pos = m_aimpoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
@@ -22,6 +22,8 @@ public class Weapon : MonoBehaviour {
 		bullet.Init(m_aimpoint);
 
 		m_lastCreated = Time.time;
+
+		return obj;
 	}
 
 	public void StartFiring(float targetAngle)
@@ -34,7 +36,7 @@ public class Weapon : MonoBehaviour {
 		m_firing = true;
 	}
 
-	public void StopFiring()
+	virtual public void StopFiring()
 	{
 		m_firing = false;
 	}

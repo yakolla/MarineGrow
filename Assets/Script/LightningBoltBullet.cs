@@ -11,6 +11,7 @@ public class LightningBoltBullet : Bullet
 	public int zigs = 100;
 	public float speed = 1f;
 	public float scale = 1f;
+	public float length = 10f;
 	public Light startLight;
 	public Light endLight;
 	
@@ -45,7 +46,7 @@ public class LightningBoltBullet : Bullet
 
 		RaycastHit hit;
 		Vector3 fwd = transform.TransformDirection(Vector3.right);
-		if (Physics.Raycast(transform.position, fwd, out hit, 10.0F))
+		if (Physics.Raycast(transform.position, fwd, out hit, length))
 		{
 			target = hit.transform.position;
 			if (hit.transform.tag.CompareTo("Enemy") == 0)
@@ -55,8 +56,8 @@ public class LightningBoltBullet : Bullet
 		}
 		else
 		{
-			target.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-10f;
-			target.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*10f;
+			target.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
+			target.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
 			target.x += transform.position.x;
 			target.z += transform.position.z;
 		}
@@ -91,4 +92,10 @@ public class LightningBoltBullet : Bullet
 				endLight.transform.position = particles[particles.Length - 1].position;
 		}
 	}	
+	
+	override public void StopFiring()
+	{
+		base.StopFiring();
+		DestroyObject(this.gameObject);
+	}
 }
