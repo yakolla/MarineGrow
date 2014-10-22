@@ -17,7 +17,7 @@ public class GunBullet : Bullet {
 		if (other.tag == "Enemy")
 		{
 			DestroyObject(this.gameObject);
-			other.gameObject.GetComponent<Enemy>().Death();
+			DestroyObject(other.gameObject);
 		}
 		else if (other.tag == "Wall")
 		{

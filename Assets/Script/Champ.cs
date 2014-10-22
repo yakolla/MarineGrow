@@ -84,6 +84,7 @@ public class Champ : MonoBehaviour {
 		if (m_lastAutoTargetTime+m_coolTimeForAutoTarget < Time.time)
 		{
 			m_lastAutoTargetTime = Time.time;
+			Debug.Log(m_lastAutoTargetTime);
 
 			GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 			foreach(GameObject enemy in enemys)

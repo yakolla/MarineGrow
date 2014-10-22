@@ -22,12 +22,12 @@ public class RocketLauncherBullet : Bullet {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag.CompareTo("Enemy") == 0)
+		if (other.tag == "Enemy")
 		{
-			other.gameObject.GetComponent<Enemy>().Death();
+			DestroyObject(other.gameObject);
 			StartCoroutine(destoryObject());
 		}
-		else if (other.tag.CompareTo("Wall") == 0)
+		else if (other.tag == "Wall")
 		{
 			StartCoroutine(destoryObject());
 		}

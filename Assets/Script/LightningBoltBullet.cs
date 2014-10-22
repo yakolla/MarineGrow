@@ -51,7 +51,7 @@ public class LightningBoltBullet : Bullet
 			target = hit.transform.position;
 			if (hit.transform.tag.CompareTo("Enemy") == 0)
 			{
-				hit.transform.gameObject.GetComponent<Enemy>().Death();
+				DestroyObject(hit.transform.gameObject);
 			}
 		}
 		else

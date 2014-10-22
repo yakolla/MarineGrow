@@ -18,10 +18,4 @@ public class Enemy : MonoBehaviour {
 	{
 		m_targetPos = pos;
 	}
-
-	public void Death()
-	{
-		this.gameObject.GetComponent<LOSEntity>().OnDisable();
-		DestroyObject(this.gameObject);
-	}
 }
