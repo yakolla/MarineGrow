@@ -50,12 +50,6 @@ public class Champ : MonoBehaviour {
 		}
 
 	}
-	void RotateChampToPos(Vector3 pos)
-	{
-		float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
-		transform.eulerAngles =  new Vector3(0, -targetAngle, 0);
-		m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StartFiring(targetAngle);
-	}
 	// Update is called once per frame
 	void Update () {
 
@@ -66,7 +60,13 @@ public class Champ : MonoBehaviour {
 		{
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			
-			RotateChampToPos(pos);
+			float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+			int angleIndex = (int)targetAngle/20;
+			
+			m_animator.Play ("hero_" + angleIndex);
+			
+			m_weaponHolder.transform.eulerAngles =  new Vector3(90, 0, targetAngle);
+			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StartFiring(targetAngle);
 		}
 		else
 		{
@@ -92,7 +92,13 @@ public class Champ : MonoBehaviour {
 				if (dist < 3f)
 				{
 					Vector3 pos = enemy.transform.position;
-					RotateChampToPos(pos);
+					float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+					int angleIndex = (int)targetAngle/20;
+					
+					m_animator.Play ("hero_" + angleIndex);
+					
+					m_weaponHolder.transform.eulerAngles =  new Vector3(90, 0, targetAngle);
+					m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StartFiring(targetAngle);
 					return true;
 				}
 			}
