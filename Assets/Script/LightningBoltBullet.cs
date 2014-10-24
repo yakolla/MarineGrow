@@ -56,8 +56,8 @@ public class LightningBoltBullet : Bullet
 		}
 		else
 		{
-			target.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
-			target.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
+			target.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
+			target.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
 			target.x += transform.position.x;
 			target.z += transform.position.z;
 		}
