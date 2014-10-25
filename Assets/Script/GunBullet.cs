@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GunBullet : Bullet {
 
+	public float	m_damage = 1;
 	// Use this for initialization
 	void Start () {
 
@@ -17,7 +18,7 @@ public class GunBullet : Bullet {
 		if (other.tag == "Enemy")
 		{
 			DestroyObject(this.gameObject);
-			other.gameObject.GetComponent<Enemy>().Death();
+			other.gameObject.GetComponent<Enemy>().TakeDamage(m_damage);
 		}
 		else if (other.tag == "Wall")
 		{

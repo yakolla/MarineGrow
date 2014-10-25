@@ -13,8 +13,10 @@ public class LightningBoltBullet : Bullet
 	public float scale = 1f;
 	public float length = 10f;
 	public Light startLight;
-	public Light endLight;
-	
+	public GameObject endLight;
+	public float	m_damage = 5;
+	public float	m_damageOnTime = 0.3f;
+	float			m_lastDamageTime = 0f;
 	Perlin noise;
 	float oneOverZigs;
 	
@@ -51,7 +53,11 @@ public class LightningBoltBullet : Bullet
 			target = hit.transform.position;
 			if (hit.transform.tag.CompareTo("Enemy") == 0)
 			{
-				hit.transform.gameObject.GetComponent<Enemy>().Death();
+				if (m_lastDamageTime+m_damageOnTime<Time.time)
+				{
+					hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(m_damage*m_damageOnTime);
+					m_lastDamageTime = Time.time;
+				}
 			}
 		}
 		else

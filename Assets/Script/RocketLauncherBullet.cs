@@ -4,6 +4,7 @@ using System.Collections;
 public class RocketLauncherBullet : Bullet {
 
 	float m_speed = 10f;
+	public float	m_damage = 4;
 	// Use this for initialization
 	void Start () {
 
@@ -24,7 +25,7 @@ public class RocketLauncherBullet : Bullet {
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo("Enemy") == 0)
 		{
-			other.gameObject.GetComponent<Enemy>().Death();
+			other.gameObject.GetComponent<Enemy>().TakeDamage(m_damage);
 			StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
