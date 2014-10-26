@@ -33,9 +33,16 @@ public class ChampStatusGUI : MonoBehaviour {
 	//Setting up the Inventory window
 	void DisplayGuageWindow(int windowID)
 	{
-		Creature creature = transform.parent.gameObject.GetComponent<Creature>();
-		float hp = creature.m_creatureProperty.getHPRemainRatio();
-		Debug.Log(hp);
+		float hp = m_creature.m_creatureProperty.getHPRemainRatio();
+
 		GUI.DrawTextureWithTexCoords(new Rect(0, 0, 100*hp, 15), Resources.Load<Texture>("Sprites/HP Guage"), new Rect(0f, 0f, hp, 1f));
+		string gague = Mathf.FloorToInt(m_creature.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxHP).ToString();
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 10;
+		style.normal.textColor = Color.grey;
+		style.alignment = TextAnchor.MiddleCenter;
+		GUI.Label(new Rect(0, 0, 100, 15), gague, style);
+		style.normal.textColor = Color.black;
+		GUI.Label(new Rect(1, 1, 100, 15), gague, style);
 	}
 }
