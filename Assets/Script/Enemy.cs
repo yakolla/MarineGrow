@@ -18,13 +18,11 @@ public class Enemy : Creature {
 
 		if (AutoAttack() == false)
 		{
-			Debug.Log("Non AutoAttack");
 			m_navAgent.SetDestination(m_targetPos);
 			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
 		}
 		else
 		{
-			Debug.Log("AutoAttack");
 			m_navAgent.Stop();
 
 		}

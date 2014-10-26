@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Gun : Weapon {
 
-	new void Awake () {
-		base.Awake();
+	new void Start () {
+		base.Start();
 		m_prefBullet = Resources.Load<GameObject>("Pref/GunBullet");
 	}
 }

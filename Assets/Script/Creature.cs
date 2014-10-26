@@ -30,6 +30,8 @@ public class Creature : MonoBehaviour {
 		m_weaponHolder.GetComponent<WeaponHolder>().ChangeWeapon(m_prefWeapon, m_targetTagName);
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
+
+		m_creatureProperty.init();
 	}
 
 	protected void RotateChampToPos(Vector3 pos)

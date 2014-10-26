@@ -6,9 +6,9 @@ public class LightningBoltLauncher : Weapon {
 
 	GameObject	m_bullet;
 
-	new void Awake () {
+	new void Start () {
 	
-		base.Awake();
+		base.Start();
 		m_prefBullet = Resources.Load<GameObject>("Pref/LightningBoltBullet");
 
 	}

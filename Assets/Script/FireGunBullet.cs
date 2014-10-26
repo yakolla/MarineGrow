@@ -3,7 +3,6 @@ using System.Collections;
 
 public class FireGunBullet : Bullet {
 
-	public float	m_damage = 5;
 	public float	m_damageOnTime = 0.3f;
 	float			m_lastDamageTime = 0f;
 	MeshCollider		m_collider;
@@ -28,9 +27,9 @@ public class FireGunBullet : Bullet {
 
 	}
 
-	override public void Init(GameObject aimpoint, string targetTagName)
+	override public void Init(GameObject aimpoint, string targetTagName, float damage)
 	{
-		base.Init(aimpoint, targetTagName);
+		base.Init(aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/FireGunBullet");
 		this.transform.localPosition = pref.transform.localPosition;

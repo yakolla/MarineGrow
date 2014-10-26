@@ -10,9 +10,12 @@ public class Weapon : MonoBehaviour {
 	float						m_lastCreated = 0;
 	protected float				m_targetAngle = 0;
 	public	string				m_targetTagName;
-	protected void Awake () {
+	Creature 					m_creature;
 
+	protected void Start()
+	{
 		m_aimpoint = this.transform.Find("Aimpoint").gameObject;
+		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
 	}
 
 	virtual public GameObject CreateBullet()
@@ -21,7 +24,7 @@ public class Weapon : MonoBehaviour {
 		Vector3 pos = m_aimpoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
 		Bullet bullet = (Bullet)obj.GetComponent(m_prefBullet.name);
-		bullet.Init(m_aimpoint, m_targetTagName);
+		bullet.Init(m_aimpoint, m_targetTagName, m_creature.m_creatureProperty.getDamage());
 
 		m_lastCreated = Time.time;
 

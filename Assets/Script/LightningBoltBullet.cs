@@ -14,7 +14,6 @@ public class LightningBoltBullet : Bullet
 	public float length = 10f;
 	public Light startLight;
 	public GameObject endLight;
-	public float	m_damage = 5;
 	public float	m_coolTime = 0.3f;
 	float			m_lastDamageTime = 0f;
 	Perlin noise;
@@ -22,9 +21,9 @@ public class LightningBoltBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(GameObject aimpoint, string targetTagName)
+	override public void Init(GameObject aimpoint, string targetTagName, float damage)
 	{
-		base.Init(aimpoint, targetTagName);
+		base.Init(aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/LightningBoltBullet");
 		this.transform.localPosition = pref.transform.localPosition;
