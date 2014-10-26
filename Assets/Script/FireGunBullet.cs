@@ -3,19 +3,34 @@ using System.Collections;
 
 public class FireGunBullet : Bullet {
 
+	public float	m_damage = 5;
+	public float	m_damageOnTime = 0.3f;
+	float			m_lastDamageTime = 0f;
+	MeshCollider		m_collider;
 	// Use this for initialization
 	void Start () 
 	{
-
+		m_collider = GetComponent<MeshCollider>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if (m_lastDamageTime+m_damageOnTime<Time.time)
+		{
+			m_collider.enabled = true;
+			m_lastDamageTime = Time.time;
+		}
+		else
+		{
+			m_collider.enabled = false;
+		}
+
 	}
-	override public void Init(GameObject aimpoint)
+
+	override public void Init(GameObject aimpoint, string targetTagName)
 	{
-		base.Init(aimpoint);
+		base.Init(aimpoint, targetTagName);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/FireGunBullet");
 		this.transform.localPosition = pref.transform.localPosition;
@@ -32,7 +47,7 @@ public class FireGunBullet : Bullet {
 	{
 		if (other.tag.CompareTo("Enemy") == 0)
 		{
-			DestroyObject(other.gameObject);
+			other.gameObject.GetComponent<Enemy>().TakeDamage(m_damage);
 		}
 	}
 }

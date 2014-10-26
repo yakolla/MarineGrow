@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DamageGUI : MonoBehaviour {
+public class DamageNumberGUI : MonoBehaviour {
 
 	public float scroll = 0.08f;
 	public float alpha = 1f;
 	public float duration = 1.5f;
 	float	m_lastTime = 0f;
-	public GameObject obj;
+	Vector3 targetPos;
+	GameObject	target;
 	float	posY = 0;
 	// Use this for initialization
 	void Start () {
@@ -16,14 +17,15 @@ public class DamageGUI : MonoBehaviour {
 
 	public void Init(GameObject obj, string str)
 	{
-		this.obj = obj;
+		target = obj;
+		targetPos = obj.transform.position;
 		guiText.text = str;
 		m_lastTime = Time.time;
 
-		Transform trans = transform.Find("DamageGUI");
+		Transform trans = transform.Find("DamageNumberGUI");
 		if (trans != null)
 		{
-			trans.GetComponent<DamageGUI>().Init(obj, str);
+			trans.GetComponent<DamageNumberGUI>().Init(obj, str);
 		}
 	}
 
@@ -31,9 +33,14 @@ public class DamageGUI : MonoBehaviour {
 	void Update () {
 
 
-		if (obj && m_lastTime+duration>Time.time){
+		if (m_lastTime+duration>Time.time){
 
-			Vector3 pos = Camera.main.WorldToViewportPoint(obj.transform.position);
+			if (target)
+			{
+				targetPos = target.transform.position;
+			}
+
+			Vector3 pos = Camera.main.WorldToViewportPoint(targetPos);
 			posY += scroll*Time.deltaTime;
 			pos.y += posY;
 			transform.position = pos;

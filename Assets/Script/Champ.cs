@@ -1,25 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Champ : MonoBehaviour {
+public class Champ : Creature {
 
-	// Use this for initialization
-	protected NavMeshAgent	m_navAgent;
 
-	protected GameObject		m_weaponHolder;
-	protected Animator		m_animator;
-	protected GameObject		m_body;
-	public float	m_coolTimeForAutoTarget = 0.5f;
-	float	m_lastAutoTargetTime = 0f;
-	public GameObject	m_prefWeapon;
+	new void Start () {
+		base.Start();
 
-	protected void Start () {
-		m_navAgent = GetComponent<NavMeshAgent>();
-
-		m_animator = this.transform.Find("Body").gameObject.GetComponent<Animator> ();
-		m_body = this.transform.Find("Body").gameObject;
-		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject;
-		m_weaponHolder.GetComponent<WeaponHolder>().ChangeWeapon(m_prefWeapon);
+		m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 	}
 
 
@@ -50,12 +38,7 @@ public class Champ : MonoBehaviour {
 		}
 
 	}
-	void RotateChampToPos(Vector3 pos)
-	{
-		float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
-		transform.eulerAngles =  new Vector3(0, -targetAngle, 0);
-		m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StartFiring(targetAngle);
-	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -70,7 +53,7 @@ public class Champ : MonoBehaviour {
 		}
 		else
 		{
-			if (AutoTargetAttackableEnemy() == false)
+			if (AutoAttack() == false)
 			{
 				m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
 			}
@@ -78,29 +61,6 @@ public class Champ : MonoBehaviour {
 		}
 
 
-	}
-
-	bool AutoTargetAttackableEnemy() {
-		if (m_lastAutoTargetTime+m_coolTimeForAutoTarget < Time.time)
-		{
-			m_lastAutoTargetTime = Time.time;
-
-			GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-			foreach(GameObject enemy in enemys)
-			{
-				float dist = Vector3.Distance(transform.position, enemy.transform.position);
-				if (dist < 3f)
-				{
-					Vector3 pos = enemy.transform.position;
-					RotateChampToPos(pos);
-					return true;
-				}
-			}
-			
-			return false;
-		}
-
-		return true;
 	}
 
 	void FollowChampWithCamera()

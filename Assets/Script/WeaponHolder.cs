@@ -3,10 +3,9 @@ using System.Collections;
 
 public class WeaponHolder : MonoBehaviour {
 
-	Weapon	m_weapon = null;
+	Weapon			m_weapon = null;
 
-
-	public void ChangeWeapon(GameObject prefWeapon)
+	public void ChangeWeapon(GameObject prefWeapon, string targetTagName)
 	{
 		if (m_weapon != null)
 		{
@@ -15,6 +14,7 @@ public class WeaponHolder : MonoBehaviour {
 		}
 		GameObject obj = Instantiate (prefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
 		m_weapon = (Weapon)obj.GetComponent(prefWeapon.name);
+		m_weapon.m_targetTagName = targetTagName;
 
 		obj.transform.parent = this.transform;
 		obj.transform.localPosition = prefWeapon.transform.localPosition;

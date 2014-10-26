@@ -15,10 +15,11 @@ public class GunBullet : Bullet {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag == "Enemy")
+		if (other.tag == m_targetTagName)
 		{
 			DestroyObject(this.gameObject);
-			other.gameObject.GetComponent<Enemy>().TakeDamage(m_damage);
+			Creature creature = (Creature)other.gameObject.GetComponent(m_targetTagName);
+			creature.TakeDamage(m_damage);
 		}
 		else if (other.tag == "Wall")
 		{

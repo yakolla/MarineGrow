@@ -23,7 +23,7 @@ public class RocketLauncherBullet : Bullet {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag.CompareTo("Enemy") == 0)
+		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
 			other.gameObject.GetComponent<Enemy>().TakeDamage(m_damage);
 			StartCoroutine(destoryObject());

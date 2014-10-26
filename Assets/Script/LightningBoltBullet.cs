@@ -15,16 +15,16 @@ public class LightningBoltBullet : Bullet
 	public Light startLight;
 	public GameObject endLight;
 	public float	m_damage = 5;
-	public float	m_damageOnTime = 0.3f;
+	public float	m_coolTime = 0.3f;
 	float			m_lastDamageTime = 0f;
 	Perlin noise;
 	float oneOverZigs;
 	
 	private Particle[] particles;
 
-	override public void Init(GameObject aimpoint)
+	override public void Init(GameObject aimpoint, string targetTagName)
 	{
-		base.Init(aimpoint);
+		base.Init(aimpoint, targetTagName);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/LightningBoltBullet");
 		this.transform.localPosition = pref.transform.localPosition;
@@ -51,11 +51,12 @@ public class LightningBoltBullet : Bullet
 		if (Physics.Raycast(transform.position, fwd, out hit, length))
 		{
 			target = hit.transform.position;
-			if (hit.transform.tag.CompareTo("Enemy") == 0)
+			if (hit.transform.tag.CompareTo(m_targetTagName) == 0)
 			{
-				if (m_lastDamageTime+m_damageOnTime<Time.time)
+				if (m_lastDamageTime+m_coolTime<Time.time)
 				{
-					hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(m_damage*m_damageOnTime);
+					Creature creature = (Creature)hit.transform.gameObject.GetComponent(m_targetTagName);
+					creature.TakeDamage(m_damage*m_coolTime);
 					m_lastDamageTime = Time.time;
 				}
 			}
