@@ -11,7 +11,7 @@ public class GunBullet : Bullet {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(10*Time.deltaTime, 0, 0, transform);
+		transform.Translate(3*Time.deltaTime, 0, 0, transform);
 	}
 
 	void OnTriggerEnter(Collider other) {
