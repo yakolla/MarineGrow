@@ -59,8 +59,6 @@ public class Champ : Creature {
 			}
 
 		}
-
-
 	}
 
 	void FollowChampWithCamera()
@@ -70,21 +68,5 @@ public class Champ : Creature {
 		myCharacterPosition.z -= 3.5f;
 		Camera.main.transform.position = myCharacterPosition;
 		
-	}
-	Rect windowRect = new Rect(0, 0, 100, 100);
-	void OnGUI()
-	{
-		
-		windowRect = GUI.Window (0, windowRect, DisplayInventoryWindow, "Status");
-		
-	}
-	
-	//Setting up the Inventory window
-	void DisplayInventoryWindow(int windowID)
-	{
-		GUI.Label(new Rect(0, 0, 30, 30), Resources.Load<Texture>("Sprites/swordoftruth"));
-		GUI.Label(new Rect(30, 0, 30, 30), "10");
-		GUI.Label(new Rect(0, 30, 30, 30), Resources.Load<Texture>("Sprites/staffoflight"));
-		GUI.Label(new Rect(0, 60, 30, 30), Resources.Load<Texture>("Sprites/robeofpower"));
 	}
 }
