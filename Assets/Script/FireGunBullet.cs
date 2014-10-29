@@ -27,9 +27,9 @@ public class FireGunBullet : Bullet {
 
 	}
 
-	override public void Init(GameObject aimpoint, string targetTagName, float damage)
+	override public void Init(Creature ownerCreature, GameObject aimpoint, string targetTagName, float damage)
 	{
-		base.Init(aimpoint, targetTagName, damage);
+		base.Init(ownerCreature, aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/FireGunBullet");
 		this.transform.localPosition = pref.transform.localPosition;
@@ -44,9 +44,10 @@ public class FireGunBullet : Bullet {
 
 	void OnTriggerEnter(Collider other) 
 	{
-		if (other.tag.CompareTo("Enemy") == 0)
+		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
-			other.gameObject.GetComponent<Enemy>().TakeDamage(m_damage);
+			Creature creature = (Creature)other.gameObject.GetComponent(m_targetTagName);
+			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
 		}
 	}
 }

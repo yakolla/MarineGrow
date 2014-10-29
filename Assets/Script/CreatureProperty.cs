@@ -5,26 +5,35 @@ using System.Collections;
 public class CreatureProperty {
 
 	[SerializeField]
-	float	m_maxHP = 0;
+	float	m_baseMaxHP = 0;
 	float 	m_hp;
 
 	[SerializeField]
-	float	m_damage = 0;
-	float	m_alphaDamage = 0;
+	float	m_pATKDamage = 0;
+
+	[SerializeField]
+	[Range (0, 100)]
+	float	m_pDefencePoint = 0;
+
+	[SerializeField]
+	int		m_level = 1;
+
+	[SerializeField]
+	int		m_exp = 0;
 
 	public void 	init()
 	{
-		m_hp = m_maxHP;
+		m_hp = m_baseMaxHP;
 	}
 
 	public float getHPRemainRatio()
 	{
-		return m_hp/m_maxHP;
+		return HP/MaxHP;
 	}
 
 	public float MaxHP
 	{
-		get { return m_maxHP; }
+		get { return m_baseMaxHP*Level; }
 	}
 
 	public float HP
@@ -32,7 +41,38 @@ public class CreatureProperty {
 		get { return m_hp; }
 	}
 
-	public float	takeDamage(float damage)
+	public int Level
+	{
+		get { return m_level; }
+	}
+
+	public float getExpRemainRatio()
+	{
+		return Exp/MaxExp;
+	}
+
+	public int MaxExp
+	{
+		get { return Mathf.FloorToInt(m_level*100*1.1f); }
+	}
+
+	public int Exp	
+	{
+		get { return m_exp; }
+	}
+
+	public void		giveExp(int exp)
+	{
+		m_exp += exp;
+		while (MaxExp <= m_exp)
+		{
+			m_exp -= MaxExp;
+			++m_level;
+			m_hp = MaxHP;
+		}
+	}
+
+	public float	givePAttackDamage(float damage)
 	{
 		m_hp -= damage;
 		m_hp = Mathf.Max(0, m_hp);
@@ -40,13 +80,13 @@ public class CreatureProperty {
 		return m_hp;
 	}
 
-	public void	offsetDamage(float damage)
+	public float	PAttackDamage
 	{
-		m_alphaDamage += damage;
+		get {return m_pATKDamage*Level;}
 	}
 
-	public float	getDamage()
+	public float	PDefencePoint
 	{
-		return m_damage+m_alphaDamage;
+		get {return Mathf.Min(100, m_pDefencePoint);}
 	}
 }
