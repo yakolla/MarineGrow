@@ -21,9 +21,9 @@ public class LightningBoltBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(GameObject aimpoint, string targetTagName, float damage)
+	override public void Init(Creature ownerCreature, GameObject aimpoint, string targetTagName, float damage)
 	{
-		base.Init(aimpoint, targetTagName, damage);
+		base.Init(ownerCreature, aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/LightningBoltBullet");
 		this.transform.localPosition = pref.transform.localPosition;
@@ -44,7 +44,8 @@ public class LightningBoltBullet : Bullet
 	void Update ()
 	{
 
-
+		bool mobHitted = false;
+		/*
 		RaycastHit hit;
 		Vector3 fwd = transform.TransformDirection(Vector3.right);
 		if (Physics.Raycast(transform.position, fwd, out hit, length))
@@ -55,12 +56,27 @@ public class LightningBoltBullet : Bullet
 				if (m_lastDamageTime+m_coolTime<Time.time)
 				{
 					Creature creature = (Creature)hit.transform.gameObject.GetComponent(m_targetTagName);
-					creature.TakeDamage(m_damage*m_coolTime);
+					creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime);
 					m_lastDamageTime = Time.time;
 				}
+				mobHitted = true;
 			}
 		}
-		else
+		*/
+
+		if (m_ownerCreature.m_targeting)
+		{
+			target = m_ownerCreature.m_targeting.transform.position;
+			if (m_lastDamageTime+m_coolTime<Time.time)
+			{
+				Creature creature = (Creature)m_ownerCreature.m_targeting.GetComponent(m_targetTagName);
+				creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime);
+				m_lastDamageTime = Time.time;
+			}
+			mobHitted = true;
+		}
+
+		if (mobHitted == false)
 		{
 			target.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
 			target.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;

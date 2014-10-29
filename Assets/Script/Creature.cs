@@ -11,7 +11,7 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected float			m_autoTargetCoolTime = 0.5f;
 	float					m_lastAutoTargetTime = 0f;
-	GameObject				m_targeting;
+	public GameObject		m_targeting;
 
 	[SerializeField]
 	protected GameObject	m_prefWeapon;
@@ -80,21 +80,30 @@ public class Creature : MonoBehaviour {
 		m_material.color = new Color(1f,1f,1f,0f);
 	}
 	
-	virtual public void TakeDamage(float dmg)
+	virtual public void TakeDamage(Creature offender, float dmg)
 	{
-		if (m_creatureProperty.takeDamage(dmg) == 0f)
+		dmg *= 1-m_creatureProperty.PDefencePoint/100f;
+		dmg = Mathf.Max(0, Mathf.FloorToInt(dmg));
+
+		string strDamage = dmg.ToString();
+		if (dmg == 0)
 		{
-			Death();
+			strDamage = "Block";
 		}
-		else{
-			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-			gui.GetComponent<DamageNumberGUI>().Init(gameObject, dmg.ToString());
-			
-			if (m_ingTakenDamageEffect == false)
-			{
-				m_ingTakenDamageEffect = false;
-				StartCoroutine(TakenDamageEffect());
-			}
+
+		GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+		gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
+		
+		if (m_ingTakenDamageEffect == false)
+		{
+			m_ingTakenDamageEffect = false;
+			StartCoroutine(TakenDamageEffect());
+		}
+
+		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
+		{
+			offender.m_creatureProperty.giveExp(m_creatureProperty.Exp);
+			Death();
 		}
 	}
 	

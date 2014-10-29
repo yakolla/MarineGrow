@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Weapon : MonoBehaviour {
@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour {
 		Vector3 pos = m_aimpoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
 		Bullet bullet = (Bullet)obj.GetComponent(m_prefBullet.name);
-		bullet.Init(m_aimpoint, m_targetTagName, m_creature.m_creatureProperty.getDamage());
+		bullet.Init(m_creature, m_aimpoint, m_targetTagName, m_creature.m_creatureProperty.PAttackDamage);
 
 		m_lastCreated = Time.time;
 

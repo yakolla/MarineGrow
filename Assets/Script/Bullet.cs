@@ -6,14 +6,16 @@ public class Bullet : MonoBehaviour {
 	protected GameObject	m_aimpoint = null;
 	bool					m_firing = false;
 	protected	string		m_targetTagName;
-	protected	float		m_damage;
 
-	virtual public void Init(GameObject aimpoint, string targetTagName, float damage)
+
+	protected	Creature	m_ownerCreature;
+
+	virtual public void Init(Creature ownerCreature, GameObject aimpoint, string targetTagName, float damage)
 	{
 		m_aimpoint = aimpoint;
 		m_firing = true;
 		m_targetTagName = targetTagName;
-		m_damage = damage;
+		m_ownerCreature = ownerCreature;
 	}
 
 	virtual public void StopFiring()
