@@ -17,6 +17,9 @@ public class Creature : MonoBehaviour {
 	protected GameObject	m_prefWeapon;
 
 	[SerializeField]
+	protected GameObject	m_prefDeathEffect;
+
+	[SerializeField]
 	protected string		m_targetTagName;
 
 	GameObject		m_prefDamageGUI;
@@ -97,6 +100,10 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void Death()
 	{
+		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
+		effect.transform.localScale = transform.localScale;
+		Debug.Log(transform.localScale);
+
 		this.gameObject.GetComponent<LOSEntity>().OnDisable();
 		DestroyObject(this.gameObject);
 	}
