@@ -7,7 +7,7 @@ using System.Collections;
 
 public class LightningBoltBullet : Bullet
 {
-	Vector3 target;
+	Vector3 targetPos;
 	public int zigs = 100;
 	public float speed = 1f;
 	public float scale = 1f;
@@ -38,50 +38,50 @@ public class LightningBoltBullet : Bullet
 		particleEmitter.Emit(zigs);
 		particles = particleEmitter.particles;
 
-		target = transform.position;
+		targetPos = transform.position;
 	}
 	
 	void Update ()
 	{
 
 		bool mobHitted = false;
-		/*
-		RaycastHit hit;
-		Vector3 fwd = transform.TransformDirection(Vector3.right);
-		if (Physics.Raycast(transform.position, fwd, out hit, length))
-		{
-			target = hit.transform.position;
-			if (hit.transform.tag.CompareTo(m_targetTagName) == 0)
-			{
-				if (m_lastDamageTime+m_coolTime<Time.time)
-				{
-					Creature creature = (Creature)hit.transform.gameObject.GetComponent(m_targetTagName);
-					creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime);
-					m_lastDamageTime = Time.time;
-				}
-				mobHitted = true;
-			}
-		}
-		*/
 
+		Creature target = null;
 		if (m_ownerCreature.m_targeting)
 		{
-			target = m_ownerCreature.m_targeting.transform.position;
-			if (m_lastDamageTime+m_coolTime<Time.time)
-			{
-				Creature creature = (Creature)m_ownerCreature.m_targeting.GetComponent(m_targetTagName);
-				creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime);
-				m_lastDamageTime = Time.time;
-			}
+			targetPos = m_ownerCreature.m_targeting.transform.position;
+			target = (Creature)m_ownerCreature.m_targeting.GetComponent(m_targetTagName);
 			mobHitted = true;
 		}
-
-		if (mobHitted == false)
+		else
 		{
-			target.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
-			target.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
-			target.x += transform.position.x;
-			target.z += transform.position.z;
+			RaycastHit hit;
+			Vector3 fwd = transform.TransformDirection(Vector3.right);
+			if (Physics.Raycast(transform.position, fwd, out hit, length))
+			{
+				if (hit.transform.tag.CompareTo(m_targetTagName) == 0)
+				{
+					targetPos = hit.transform.position;
+					target = (Creature)hit.transform.gameObject.GetComponent(m_targetTagName);
+					mobHitted = true;
+				}
+			}
+		}
+
+		if (mobHitted == true)
+		{
+			if (m_lastDamageTime+m_coolTime<Time.time)
+			{
+				target.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime);
+				m_lastDamageTime = Time.time;
+			}
+		}
+		else
+		{
+			targetPos.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
+			targetPos.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
+			targetPos.x += transform.position.x;
+			targetPos.z += transform.position.z;
 		}
 
 		if (noise == null)
@@ -93,7 +93,7 @@ public class LightningBoltBullet : Bullet
 		
 		for (int i=0; i < particles.Length; i++)
 		{
-			Vector3 position = Vector3.Lerp(transform.position, target, oneOverZigs * (float)i);
+			Vector3 position = Vector3.Lerp(transform.position, targetPos, oneOverZigs * (float)i);
 			Vector3 offset = new Vector3(noise.Noise(timex + position.x, timex + position.y, timex + position.z),
 										noise.Noise(timey + position.x, timey + position.y, timey + position.z),
 										noise.Noise(timez + position.x, timez + position.y, timez + position.z));

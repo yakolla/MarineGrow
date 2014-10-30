@@ -40,7 +40,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
 		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
-		drawGuage(new Rect(size, startY+(size*4), size, size), expRatio, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
+		drawGuage(new Rect(size, startY+(size*4), 100-size, size), expRatio, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
 
 	}
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)

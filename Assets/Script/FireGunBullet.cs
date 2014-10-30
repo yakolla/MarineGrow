@@ -5,11 +5,11 @@ public class FireGunBullet : Bullet {
 
 	public float	m_damageOnTime = 0.3f;
 	float			m_lastDamageTime = 0f;
-	MeshCollider		m_collider;
+	BoxCollider		m_collider;
 	// Use this for initialization
 	void Start () 
 	{
-		m_collider = GetComponent<MeshCollider>();
+		m_collider = GetComponent<BoxCollider>();
 	}
 	
 	// Update is called once per frame

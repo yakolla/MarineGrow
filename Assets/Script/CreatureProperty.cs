@@ -48,7 +48,7 @@ public class CreatureProperty {
 
 	public float getExpRemainRatio()
 	{
-		return Exp/MaxExp;
+		return (float)Exp/MaxExp;
 	}
 
 	public int MaxExp
