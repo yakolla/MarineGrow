@@ -4,10 +4,6 @@ using System.Collections;
 public class FireGun : Weapon {
 
 	GameObject	m_bullet;
-	new void Start () {
-		base.Start();
-		m_prefBullet = Resources.Load<GameObject>("Pref/FireGunBullet");
-	}
 
 	override public GameObject CreateBullet()
 	{

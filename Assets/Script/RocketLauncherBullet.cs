@@ -26,11 +26,13 @@ public class RocketLauncherBullet : Bullet {
 		{
 			Creature creature = (Creature)other.gameObject.GetComponent(m_targetTagName);
 			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
-			StartCoroutine(destoryObject());
+			DestroyObject(this.gameObject);
+			//StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
-			StartCoroutine(destoryObject());
+			DestroyObject(this.gameObject);
+			//StartCoroutine(destoryObject());
 		}
 	}
 }

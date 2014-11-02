@@ -4,7 +4,10 @@ using System.Collections;
 public class Weapon : MonoBehaviour {
 
 	GameObject					m_aimpoint;
+
+	[SerializeField]
 	protected GameObject		m_prefBullet;
+
 	protected	bool			m_firing = false;
 	public float				m_coolTime = 0.5f;
 	float						m_lastCreated = 0;
@@ -23,7 +26,8 @@ public class Weapon : MonoBehaviour {
 
 		Vector3 pos = m_aimpoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
-		Bullet bullet = (Bullet)obj.GetComponent(m_prefBullet.name);
+		//Bullet bullet = (Bullet)obj.GetComponent(m_prefBullet.name);
+		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_aimpoint, m_targetTagName, m_creature.m_creatureProperty.PAttackDamage);
 
 		m_lastCreated = Time.time;
@@ -60,3 +64,4 @@ public class Weapon : MonoBehaviour {
 	}
 
 }
+

@@ -12,7 +12,6 @@ public class Creature : MonoBehaviour {
 	protected float			m_autoTargetCoolTime = 0.5f;
 	float					m_lastAutoTargetTime = 0f;
 	public GameObject		m_targeting;
-
 	[SerializeField]
 	protected GameObject	m_prefWeapon;
 

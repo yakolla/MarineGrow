@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Gun : Weapon {
+public class GrenadeLauncher : Weapon {
 
 
 }

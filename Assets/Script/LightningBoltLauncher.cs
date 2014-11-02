@@ -6,12 +6,6 @@ public class LightningBoltLauncher : Weapon {
 
 	GameObject	m_bullet;
 
-	new void Start () {
-	
-		base.Start();
-		m_prefBullet = Resources.Load<GameObject>("Pref/LightningBoltBullet");
-
-	}
 
 	override public GameObject CreateBullet()
 	{
