@@ -46,8 +46,12 @@ public class Creature : MonoBehaviour {
 	protected bool AutoAttack() {
 		if (m_targeting != null)
 		{
-			RotateChampToPos(m_targeting.transform.position);
-			return true;
+			float dist = Vector3.Distance(transform.position, m_targeting.transform.position);
+			if (dist < 5f)
+			{
+				RotateChampToPos(m_targeting.transform.position);
+				return true;
+			}
 		}
 
 		if (m_lastAutoTargetTime+m_autoTargetCoolTime < Time.time)
@@ -74,9 +78,11 @@ public class Creature : MonoBehaviour {
 
 	virtual protected IEnumerator TakenDamageEffect()
 	{
+
 		m_material.color = new Color(0f,0f,0f,0f);
 		yield return new WaitForSeconds(0.1f);
 		m_material.color = new Color(1f,1f,1f,0f);
+
 	}
 	
 	virtual public void TakeDamage(Creature offender, float dmg)

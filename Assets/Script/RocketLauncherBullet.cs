@@ -17,22 +17,20 @@ public class RocketLauncherBullet : Bullet {
 	IEnumerator destoryObject()
 	{
 		m_speed = 0;
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (0.3f);
 		DestroyObject(this.gameObject);
 	}
 
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
-			Creature creature = (Creature)other.gameObject.GetComponent(m_targetTagName);
+			Creature creature = (Creature)other.gameObject.GetComponent<Creature>();
 			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
-			DestroyObject(this.gameObject);
-			//StartCoroutine(destoryObject());
+			StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
-			DestroyObject(this.gameObject);
-			//StartCoroutine(destoryObject());
+			StartCoroutine(destoryObject());
 		}
 	}
 }

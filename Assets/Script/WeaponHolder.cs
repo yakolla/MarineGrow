@@ -13,7 +13,7 @@ public class WeaponHolder : MonoBehaviour {
 			m_weapon = null;
 		}
 		GameObject obj = Instantiate (prefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-		m_weapon = (Weapon)obj.GetComponent(prefWeapon.name);
+		m_weapon = obj.GetComponent<Weapon>();
 		m_weapon.m_targetTagName = targetTagName;
 
 		obj.transform.parent = this.transform;
