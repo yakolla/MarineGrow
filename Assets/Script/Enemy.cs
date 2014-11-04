@@ -15,9 +15,11 @@ public class Enemy : Creature {
 	// Update is called once per frame
 	void Update () {
 
+
 		if (AutoAttack() == false)
 		{
 			m_navAgent.SetDestination(m_targetPos);
+			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
 		}
 		else
 		{

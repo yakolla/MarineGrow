@@ -27,9 +27,9 @@ public class FireGunBullet : Bullet {
 
 	}
 
-	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	override public void Init(Creature ownerCreature, GameObject aimpoint, string targetTagName, float damage)
 	{
-		base.Init(ownerCreature, aimpoint, damage, chargingTime);
+		base.Init(ownerCreature, aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/FireGunBullet");
 		this.transform.localPosition = pref.transform.localPosition;
