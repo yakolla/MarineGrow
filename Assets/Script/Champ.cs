@@ -40,7 +40,7 @@ public class Champ : Creature {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 
 		UpdateChampMovement();
 		FollowChampWithCamera();

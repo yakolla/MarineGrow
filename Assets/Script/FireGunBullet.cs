@@ -31,9 +31,6 @@ public class FireGunBullet : Bullet {
 	{
 		base.Init(ownerCreature, aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
-		GameObject pref = Resources.Load<GameObject>("Pref/FireGunBullet");
-		this.transform.localPosition = pref.transform.localPosition;
-		this.transform.localScale = pref.transform.localScale;
 	}
 
 	override public void StopFiring()
@@ -46,7 +43,7 @@ public class FireGunBullet : Bullet {
 	{
 		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
-			Creature creature = (Creature)other.gameObject.GetComponent(m_targetTagName);
+			Creature creature = other.gameObject.GetComponent<Creature>();
 			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
 		}
 	}

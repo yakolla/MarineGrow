@@ -20,7 +20,7 @@ public class FireGun : Weapon {
 		base.StopFiring();
 		if (m_bullet != null)
 		{
-			Bullet bullet = (Bullet)m_bullet.GetComponent(m_prefBullet.name);
+			Bullet bullet = (Bullet)m_bullet.GetComponent<Bullet>();
 			bullet.StopFiring();
 		}
 
