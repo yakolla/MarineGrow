@@ -5,8 +5,8 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	Creature	m_creature;
 	Rect 		m_statusWindowRect = new Rect(0, Screen.height-100, 100, 100);
-	Rect 		m_guageWindowRect = new Rect((Screen.width-100)/2, Screen.height-30, 100, 30);
-	Rect 		m_skillWindowRect = new Rect((Screen.width-100)/2, Screen.height-30-30, 100, 30);
+	Rect 		m_guageWindowRect = new Rect(300, Screen.height-30, 100, 30);
+
 
 	void Start () {
 
@@ -18,7 +18,6 @@ public class ChampStatusGUI : MonoBehaviour {
 	{		
 		m_statusWindowRect = GUI.Window (0, m_statusWindowRect, DisplayStatusWindow, "");
 		m_guageWindowRect = GUI.Window (1, m_guageWindowRect, DisplayGuageWindow, "");		
-		m_skillWindowRect = GUI.Window (2, m_skillWindowRect, DisplaySkillWindow, "");		
 	}
 	
 	//Setting up the Inventory window
@@ -62,28 +61,5 @@ public class ChampStatusGUI : MonoBehaviour {
 		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxHP).ToString();
 		drawGuage(new Rect(0, 0, 100, 15), hp, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
 
-	}
-	IEnumerator spawnObject(GameObject pref, Vector3 pos)
-	{
-		GameObject spwan = (GameObject)Instantiate(pref, pos, transform.rotation);
-		spwan.SetActive(false);
-		yield return new WaitForSeconds (0.3f);
-		spwan.SetActive(true);
-	}
-	void DisplaySkillWindow(int windowID)
-	{
-		int startX = 0;
-		int size = 25;
-
-		if (GUI.Button(new Rect(startX+0*size, 0, size, size), "Z"))
-		{
-			GameObject prefFollower = Resources.Load<GameObject>("Pref/Follower");
-			Vector3 pos = transform.position;
-			StartCoroutine(spawnObject(prefFollower, pos));
-
-		}
-		GUI.Button(new Rect(startX+1*size, 0, size, size), "X");
-		GUI.Button(new Rect(startX+2*size, 0, size, size), "C");
-		GUI.Button(new Rect(startX+3*size, 0, size, size), "V");
 	}
 }

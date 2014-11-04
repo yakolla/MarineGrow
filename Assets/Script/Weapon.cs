@@ -15,17 +15,18 @@ public class Weapon : MonoBehaviour {
 	public	string				m_targetTagName;
 	Creature 					m_creature;
 
-	void Start()
+	protected void Start()
 	{
 		m_aimpoint = this.transform.Find("Aimpoint").gameObject;
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
-
 	}
 
 	virtual public GameObject CreateBullet()
 	{
+
 		Vector3 pos = m_aimpoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
+		//Bullet bullet = (Bullet)obj.GetComponent(m_prefBullet.name);
 		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_aimpoint, m_targetTagName, m_creature.m_creatureProperty.PAttackDamage);
 

@@ -25,6 +25,9 @@ public class LightningBoltBullet : Bullet
 	{
 		base.Init(ownerCreature, aimpoint, targetTagName, damage);
 		this.transform.parent = m_aimpoint.transform;
+		GameObject pref = Resources.Load<GameObject>("Pref/LightningBoltBullet");
+		this.transform.localPosition = pref.transform.localPosition;
+		this.transform.localScale = pref.transform.localScale;
 	}
 	
 	void Start()
@@ -47,7 +50,7 @@ public class LightningBoltBullet : Bullet
 		if (m_ownerCreature.m_targeting)
 		{
 			targetPos = m_ownerCreature.m_targeting.transform.position;
-			target = (Creature)m_ownerCreature.m_targeting.GetComponent<Creature>();
+			target = (Creature)m_ownerCreature.m_targeting.GetComponent(m_targetTagName);
 			mobHitted = true;
 		}
 		else
@@ -59,7 +62,7 @@ public class LightningBoltBullet : Bullet
 				if (hit.transform.tag.CompareTo(m_targetTagName) == 0)
 				{
 					targetPos = hit.transform.position;
-					target = (Creature)hit.transform.gameObject.GetComponent<Creature>();
+					target = (Creature)hit.transform.gameObject.GetComponent(m_targetTagName);
 					mobHitted = true;
 				}
 			}

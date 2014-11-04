@@ -22,7 +22,7 @@ public class LightningBoltLauncher : Weapon {
 		base.StopFiring();
 		if (m_bullet != null)
 		{
-			Bullet bullet = m_bullet.GetComponent<Bullet>();
+			Bullet bullet = (Bullet)m_bullet.GetComponent(m_prefBullet.name);
 			bullet.StopFiring();
 		}
 		

@@ -3,27 +3,31 @@ using System.Collections;
 
 public class Follower : Champ {
 
-	float	m_destroyTime;
-	new void Start()
-	{
+
+	new void Start () {
 		base.Start();
-		m_destroyTime = Time.time+5f;
 	}
 
 	// Update is called once per frame
-	new void Update () {
-		if (this == null)
-			return;
+	void Update () {
+	
+	}
 
-		if (AutoAttack() == false)
+	void OnTriggerEnter(Collider other) {
+		if (other.transform.tag.CompareTo("Enemy") == 0)
 		{
-			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
+			Vector3 pos = other.transform.position;
+			float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+			int angleIndex = (int)targetAngle/20;
+			
+
+			
+			m_weaponHolder.transform.eulerAngles =  new Vector3(90, 0, targetAngle);
+			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StartFiring(targetAngle);
 		}
 
-		if (m_destroyTime<Time.time)
-		{
-			Death();
-		}
+
+		
 	}
 
 }
