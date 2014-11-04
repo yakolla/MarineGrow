@@ -5,7 +5,7 @@ public class WeaponHolder : MonoBehaviour {
 
 	Weapon			m_weapon = null;
 
-	public void ChangeWeapon(GameObject prefWeapon)
+	public void ChangeWeapon(GameObject prefWeapon, string targetTagName)
 	{
 		if (m_weapon != null)
 		{
@@ -18,7 +18,11 @@ public class WeaponHolder : MonoBehaviour {
 		m_weapon.m_targetTagName = targetTagName;
 =======
 		m_weapon = obj.GetComponent<Weapon>();
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+		m_weapon.m_targetTagName = targetTagName;
+>>>>>>> parent of 1fd5f8f... 우클릭 하고 있으면, 차징됨.
 
 		obj.transform.parent = this.transform;
 		obj.transform.localPosition = prefWeapon.transform.localPosition;

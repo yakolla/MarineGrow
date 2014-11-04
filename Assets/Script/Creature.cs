@@ -6,7 +6,7 @@ public class Creature : MonoBehaviour {
 	// Use this for initialization
 	protected NavMeshAgent	m_navAgent;
 
-	protected WeaponHolder	m_weaponHolder;
+	protected GameObject	m_weaponHolder;
 	protected Material		m_material;
 	[SerializeField]
 	protected float			m_autoTargetCoolTime = 0.5f;
@@ -21,27 +21,26 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected string		m_targetTagName;
 
-	GameObject				m_prefDamageGUI;
-	public CreatureProperty	m_creatureProperty;
-	bool					m_ingTakenDamageEffect = false;
+	GameObject		m_prefDamageGUI;
+	public			CreatureProperty	m_creatureProperty;
+	bool			m_ingTakenDamageEffect = false;
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 
-		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
-		m_weaponHolder.ChangeWeapon(m_prefWeapon);
+		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject;
+		m_weaponHolder.GetComponent<WeaponHolder>().ChangeWeapon(m_prefWeapon, m_targetTagName);
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
 		m_creatureProperty.init();
 	}
 
-	protected float RotateChampToPos(Vector3 pos)
+	protected void RotateChampToPos(Vector3 pos)
 	{
 		float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetAngle, 0);
-
-		return targetAngle;
+		m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StartFiring(targetAngle);
 	}
 
 	protected bool AutoAttack() {
@@ -52,9 +51,9 @@ public class Creature : MonoBehaviour {
 			return true;
 =======
 			float dist = Vector3.Distance(transform.position, m_targeting.transform.position);
-			if (dist < m_weaponHolder.GetWeapon().AttackRange)
+			if (dist < 5f)
 			{
-				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(m_targeting.transform.position), 0);
+				RotateChampToPos(m_targeting.transform.position);
 				return true;
 			}
 >>>>>>> origin/master
@@ -68,16 +67,17 @@ public class Creature : MonoBehaviour {
 			foreach(GameObject target in targets)
 			{
 				float dist = Vector3.Distance(transform.position, target.transform.position);
-				if (dist < m_weaponHolder.GetWeapon().AttackRange)
+				if (dist < 5f)
 				{
 					m_targeting = target.gameObject;
-					m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(m_targeting.transform.position), 0);
+					RotateChampToPos(m_targeting.transform.position);
 					return true;
 				}
 			}
+			
+			return false;
 		}
 
-		m_weaponHolder.GetWeapon().StopFiring();
 		return false;
 	}
 
@@ -87,28 +87,32 @@ public class Creature : MonoBehaviour {
 		yield return new WaitForSeconds(0.1f);
 		m_material.color = new Color(1f,1f,1f,0f);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		m_ingTakenDamageEffect = false;
 >>>>>>> origin/master
+=======
+
+>>>>>>> parent of 1fd5f8f... 우클릭 하고 있으면, 차징됨.
 	}
 	
 	virtual public void TakeDamage(Creature offender, float dmg)
 	{
 		dmg *= 1-m_creatureProperty.PDefencePoint/100f;
 		dmg = Mathf.Max(0, Mathf.FloorToInt(dmg));
+
+		string strDamage = dmg.ToString();
+		if (dmg == 0)
+		{
+			strDamage = "Block";
+		}
+
+		GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+		gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
 		
 		if (m_ingTakenDamageEffect == false)
 		{
-			m_ingTakenDamageEffect = true;
-
-			string strDamage = dmg.ToString();
-			if (dmg == 0)
-			{
-				strDamage = "Block";
-			}
-			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
-
+			m_ingTakenDamageEffect = false;
 			StartCoroutine(TakenDamageEffect());
 		}
 
@@ -118,16 +122,12 @@ public class Creature : MonoBehaviour {
 			Death();
 		}
 	}
-
-	public string TargetTagName
-	{
-		get { return m_targetTagName; }
-	}
 	
 	virtual public void Death()
 	{
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
+		Debug.Log(transform.localScale);
 
 		this.gameObject.GetComponent<LOSEntity>().OnDisable();
 		DestroyObject(this.gameObject);
