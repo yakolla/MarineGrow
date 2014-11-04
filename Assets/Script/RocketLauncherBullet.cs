@@ -8,7 +8,11 @@ public class RocketLauncherBullet : Bullet {
 	void Start () {
 
 	}
-	
+	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	{
+		base.Init(ownerCreature, aimpoint, damage+damage*chargingTime, chargingTime);
+		transform.FindChild("Particle System").particleSystem.startSize += chargingTime;
+	}
 	// Update is called once per frame
 	void Update () {
 		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
@@ -17,28 +21,20 @@ public class RocketLauncherBullet : Bullet {
 	IEnumerator destoryObject()
 	{
 		m_speed = 0;
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (0.3f);
 		DestroyObject(this.gameObject);
 	}
 
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
-<<<<<<< HEAD
-			Creature creature = (Creature)other.gameObject.GetComponent(m_targetTagName);
-			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
-			DestroyObject(this.gameObject);
-			//StartCoroutine(destoryObject());
-=======
-			Creature creature = (Creature)other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
+			Creature creature = other.gameObject.GetComponent<Creature>();
+			creature.TakeDamage(m_ownerCreature, m_damage);
 			StartCoroutine(destoryObject());
->>>>>>> origin/master
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
-			DestroyObject(this.gameObject);
-			//StartCoroutine(destoryObject());
+			StartCoroutine(destoryObject());
 		}
 	}
 }

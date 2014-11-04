@@ -7,11 +7,11 @@ public class LightningBoltLauncher : Weapon {
 	GameObject	m_bullet;
 
 
-	override public GameObject CreateBullet()
+	override public GameObject CreateBullet(float chargingTime)
 	{
 		if (m_bullet == null)
 		{
-			m_bullet = base.CreateBullet();
+			m_bullet = base.CreateBullet(chargingTime);
 		}
 
 		return m_bullet;
