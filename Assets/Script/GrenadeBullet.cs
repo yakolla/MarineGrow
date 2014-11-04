@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GrenadeBullet : Bullet {
 
-	float m_speed = 5f;
+	float m_speed = 3f;
 	float m_startTime;
 	bool m_pendingDestroy = false;
 	// Use this for initialization
@@ -11,7 +11,13 @@ public class GrenadeBullet : Bullet {
 		m_startTime = Time.time;
 
 	}
-	
+
+	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	{
+		base.Init(ownerCreature, aimpoint, damage, chargingTime);
+		m_speed += chargingTime;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (m_pendingDestroy == true)
@@ -40,7 +46,7 @@ public class GrenadeBullet : Bullet {
 			if (dist < 5f)
 			{
 				Creature creature = (Creature)target.GetComponent<Creature>();
-				creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
+				creature.TakeDamage(m_ownerCreature, m_damage);
 			}
 		}
 	}

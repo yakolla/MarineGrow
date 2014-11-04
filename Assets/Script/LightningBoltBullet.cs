@@ -21,9 +21,9 @@ public class LightningBoltBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(Creature ownerCreature, GameObject aimpoint, string targetTagName, float damage)
+	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
 	{
-		base.Init(ownerCreature, aimpoint, targetTagName, damage);
+		base.Init(ownerCreature, aimpoint, damage, chargingTime);
 		this.transform.parent = m_aimpoint.transform;
 		GameObject pref = Resources.Load<GameObject>("Pref/LightningBoltBullet");
 		this.transform.localPosition = pref.transform.localPosition;
