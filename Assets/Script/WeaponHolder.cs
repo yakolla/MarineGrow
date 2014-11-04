@@ -5,7 +5,7 @@ public class WeaponHolder : MonoBehaviour {
 
 	Weapon			m_weapon = null;
 
-	public void ChangeWeapon(GameObject prefWeapon, string targetTagName)
+	public void ChangeWeapon(GameObject prefWeapon)
 	{
 		if (m_weapon != null)
 		{
@@ -13,8 +13,12 @@ public class WeaponHolder : MonoBehaviour {
 			m_weapon = null;
 		}
 		GameObject obj = Instantiate (prefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
+<<<<<<< HEAD
 		m_weapon = (Weapon)obj.GetComponent(prefWeapon.name);
 		m_weapon.m_targetTagName = targetTagName;
+=======
+		m_weapon = obj.GetComponent<Weapon>();
+>>>>>>> origin/master
 
 		obj.transform.parent = this.transform;
 		obj.transform.localPosition = prefWeapon.transform.localPosition;
