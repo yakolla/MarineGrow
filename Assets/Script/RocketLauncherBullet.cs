@@ -8,7 +8,11 @@ public class RocketLauncherBullet : Bullet {
 	void Start () {
 
 	}
-	
+	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	{
+		base.Init(ownerCreature, aimpoint, damage+damage*chargingTime, chargingTime);
+		transform.FindChild("Particle System").particleSystem.startSize += chargingTime;
+	}
 	// Update is called once per frame
 	void Update () {
 		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
@@ -25,7 +29,7 @@ public class RocketLauncherBullet : Bullet {
 		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
 			Creature creature = (Creature)other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage);
+			creature.TakeDamage(m_ownerCreature, m_damage);
 			StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
