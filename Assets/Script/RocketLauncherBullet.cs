@@ -12,6 +12,7 @@ public class RocketLauncherBullet : Bullet {
 	{
 		base.Init(ownerCreature, aimpoint, damage+damage*chargingTime, chargingTime);
 		transform.FindChild("Particle System").particleSystem.startSize += chargingTime;
+		this.GetComponent<BoxCollider>().size += new Vector3(chargingTime, 0, chargingTime);
 	}
 	// Update is called once per frame
 	void Update () {

@@ -89,4 +89,19 @@ public class Champ : Creature {
 		Camera.main.transform.position = myCharacterPosition;
 		
 	}
+	void OnTriggerEnter(Collider other) {
+		if (other.tag.CompareTo("ItemBox") == 0)
+		{
+			ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
+			switch(itemBox.ItemType)
+			{
+			case ItemBox.Type.HPPosion:
+				m_creatureProperty.Heal(itemBox.ItemValue);
+				break;
+			}
+
+			itemBox.Death();
+		};
+
+	}
 }

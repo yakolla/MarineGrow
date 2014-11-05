@@ -25,6 +25,8 @@ public class Creature : MonoBehaviour {
 	public CreatureProperty	m_creatureProperty;
 	bool					m_ingTakenDamageEffect = false;
 
+	GameObject				m_floatingHealthBar;
+
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 
@@ -32,6 +34,13 @@ public class Creature : MonoBehaviour {
 		m_weaponHolder.ChangeWeapon(m_prefWeapon);
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
+
+		GameObject prefFloatingHealthBar = Resources.Load<GameObject>("Pref/FloatingHealthBarGUI");
+		m_floatingHealthBar = (GameObject)Instantiate(prefFloatingHealthBar, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+		m_floatingHealthBar.transform.parent = transform;
+		m_floatingHealthBar.transform.localPosition = Vector3.zero;
+
+		//m_floatingHealthBar.SetActive(false);
 
 		m_creatureProperty.init();
 	}
@@ -78,8 +87,8 @@ public class Creature : MonoBehaviour {
 
 	virtual protected IEnumerator TakenDamageEffect()
 	{
-
-		m_material.color = new Color(0f,0f,0f,0f);
+		m_floatingHealthBar.SetActive(true);
+		m_material.color = new Color(1f,0f,0f,0f);
 		yield return new WaitForSeconds(0.1f);
 		m_material.color = new Color(1f,1f,1f,0f);
 		m_ingTakenDamageEffect = false;
@@ -119,11 +128,14 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void Death()
 	{
+		GameObject.Find("Background").gameObject.GetComponent<background>().SpawnItemBox(transform.position);
+
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
 
 		this.gameObject.GetComponent<LOSEntity>().OnDisable();
 		DestroyObject(this.gameObject);
+
 	}
 
 }

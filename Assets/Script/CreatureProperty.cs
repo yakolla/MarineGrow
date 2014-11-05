@@ -80,6 +80,14 @@ public class CreatureProperty {
 		return m_hp;
 	}
 
+	public float	Heal(int hp)
+	{
+		m_hp += hp;
+		m_hp = Mathf.Min(MaxHP, m_hp);
+		
+		return m_hp;
+	}
+
 	public float	PAttackDamage
 	{
 		get {return m_pATKDamage*Level;}
