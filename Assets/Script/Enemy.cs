@@ -13,8 +13,8 @@ public class Enemy : Creature {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	new void Update () {
+		base.Update();
 
 		if (AutoAttack() == false)
 		{

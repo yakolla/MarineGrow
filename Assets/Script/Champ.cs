@@ -5,7 +5,8 @@ public class Champ : Creature {
 
 	float	m_startChargeTime;
 	bool	m_charging = false;
-
+	[SerializeField]
+	bool	m_enableAutoTarget = true;
 	new void Start () {
 		base.Start();
 
@@ -42,43 +43,61 @@ public class Champ : Creature {
 	}
 
 	// Update is called once per frame
-	protected void Update () {
+	new void Update () {
+		base.Update();
 
 		UpdateChampMovement();
 		FollowChampWithCamera();
 
-		if (Input.GetMouseButton(1) == true)
+		if (m_enableAutoTarget)
 		{
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			
-			RotateChampToPos(pos);
-		}
-
-		if (Input.GetMouseButtonDown(1) == true)
-		{
-			m_charging = true;
-			m_startChargeTime = Time.time;
-			m_weaponHolder.GetWeapon().StopFiring();
-			Debug.Log("GetMouseButtonDown");
-		}
-		else if (Input.GetMouseButtonUp(1) == true)
-		{
-			Debug.Log("GetMouseButtonUp");
-			m_charging = false;
-			
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			
-			m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(pos), Time.time-m_startChargeTime);
-		}
-
-		if (m_charging == false)
-		{
-			if (AutoAttack() == false)
+			if (Input.GetMouseButton(1) == true)
 			{
-				m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
+				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				
+				RotateChampToPos(pos);
 			}
 			
+			if (Input.GetMouseButtonDown(1) == true)
+			{
+				m_charging = true;
+				m_startChargeTime = Time.time;
+				m_weaponHolder.GetWeapon().StopFiring();
+				Debug.Log("GetMouseButtonDown");
+			}
+			else if (Input.GetMouseButtonUp(1) == true)
+			{
+				Debug.Log("GetMouseButtonUp");
+				m_charging = false;
+				
+				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				
+				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(pos), Time.time-m_startChargeTime);
+			}
+			
+			if (m_charging == false)
+			{
+				if (AutoAttack() == false)
+				{
+					m_weaponHolder.GetWeapon().StopFiring();
+				}
+				
+			}
 		}
+		else
+		{
+			if (Input.GetMouseButton(1) == true)
+			{
+				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				
+				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(pos), 0);
+			}
+			else
+			{
+				m_weaponHolder.GetWeapon().StopFiring();
+			}
+		}
+
 	}
 
 	void FollowChampWithCamera()

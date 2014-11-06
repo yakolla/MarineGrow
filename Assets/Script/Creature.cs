@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Creature : MonoBehaviour {
 
@@ -27,6 +28,13 @@ public class Creature : MonoBehaviour {
 
 	GameObject				m_floatingHealthBar;
 
+	struct DamageEffect
+	{
+		public float endTime;
+		public GameObject effect;
+	}
+	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
+
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 
@@ -40,8 +48,6 @@ public class Creature : MonoBehaviour {
 		m_floatingHealthBar.transform.parent = transform;
 		m_floatingHealthBar.transform.localPosition = Vector3.zero;
 
-		//m_floatingHealthBar.SetActive(false);
-
 		m_creatureProperty.init();
 	}
 
@@ -51,6 +57,11 @@ public class Creature : MonoBehaviour {
 		transform.eulerAngles =  new Vector3(0, -targetAngle, 0);
 
 		return targetAngle;
+	}
+
+	protected void Update()
+	{
+		UpdateDamageEffect();
 	}
 
 	protected bool AutoAttack() {
@@ -85,19 +96,36 @@ public class Creature : MonoBehaviour {
 		return false;
 	}
 
-	virtual protected IEnumerator TakenDamageEffect()
+	protected IEnumerator BodyRedColoredOnTakenDamage()
 	{
-		m_floatingHealthBar.SetActive(true);
 		m_material.color = new Color(1f,0f,0f,0f);
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(0.3f);
 		m_material.color = new Color(1f,1f,1f,0f);
 		m_ingTakenDamageEffect = false;
 	}
-	
-	virtual public void TakeDamage(Creature offender, float dmg)
+
+	void UpdateDamageEffect()
 	{
+		for(int i = 0; i < (int)DamageDesc.Type.Count; ++i)
+		{
+			if (m_damageEffects[i].effect != null)
+			{
+				if (m_damageEffects[i].endTime < Time.time)
+				{
+					DestroyObject(m_damageEffects[i].effect);
+					m_damageEffects[i].effect = null;
+				}
+			}
+
+		}
+
+	}
+	
+	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
+	{
+		float dmg = damageDesc.Damage;
 		dmg *= 1-m_creatureProperty.PDefencePoint/100f;
-		dmg = Mathf.Max(0, Mathf.FloorToInt(dmg));
+		dmg= Mathf.Max(0, Mathf.FloorToInt(dmg));
 		
 		if (m_ingTakenDamageEffect == false)
 		{
@@ -108,10 +136,26 @@ public class Creature : MonoBehaviour {
 			{
 				strDamage = "Block";
 			}
+
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
 
-			StartCoroutine(TakenDamageEffect());
+			StartCoroutine(BodyRedColoredOnTakenDamage());
+
+			if (damageDesc.PrefEffect != null)
+			{
+				if (m_damageEffects[(int)damageDesc.DamageType].effect == null)
+				{
+					GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+					dmgEffect.transform.parent = transform;
+					dmgEffect.transform.localPosition = Vector3.zero;
+					
+					m_damageEffects[(int)damageDesc.DamageType].effect = dmgEffect;
+
+				}
+
+				m_damageEffects[(int)damageDesc.DamageType].endTime = Time.time+0.5f;
+			}
 		}
 
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)

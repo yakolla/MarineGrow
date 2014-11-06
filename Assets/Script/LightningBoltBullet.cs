@@ -69,7 +69,7 @@ public class LightningBoltBullet : Bullet
 		{
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
-				target.TakeDamage(m_ownerCreature, m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime);
+				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, endLight));
 				m_lastDamageTime = Time.time;
 			}
 		}
@@ -107,8 +107,8 @@ public class LightningBoltBullet : Bullet
 		{
 			if (startLight)
 				startLight.transform.position = particles[0].position;
-			if (endLight)
-				endLight.transform.position = particles[particles.Length - 1].position;
+			//if (endLight)
+			//	endLight.transform.position = particles[particles.Length - 1].position;
 		}
 	}	
 	

@@ -30,7 +30,7 @@ public class RocketLauncherBullet : Bullet {
 		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
 			Creature creature = other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, m_damage);
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, null));
 			StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)

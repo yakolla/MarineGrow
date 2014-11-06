@@ -45,7 +45,7 @@ public class GrenadeBullet : Bullet {
 			if (dist < 5f)
 			{
 				Creature creature = target.GetComponent<Creature>();
-				creature.TakeDamage(m_ownerCreature, m_damage);
+				creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, null));
 			}
 		}
 	}
