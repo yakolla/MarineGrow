@@ -3,16 +3,17 @@ using System.Collections;
 
 public class CreatureDeathEffect : MonoBehaviour {
 
+	ParticleSystem m_ps;
 
 	void Start () {
-		StartCoroutine(DoEffect());
-
+		m_ps = transform.Find("ef death").GetComponent<ParticleSystem>();
 	}
-	IEnumerator DoEffect()
+
+	void Update()
 	{
-		yield return new WaitForSeconds(1f);
-		DestroyObject(this.gameObject);
-
+		if (m_ps.IsAlive() == false)
+		{
+			DestroyObject(this.gameObject);
+		}
 	}
-
 }
