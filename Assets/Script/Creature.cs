@@ -180,6 +180,9 @@ public class Creature : MonoBehaviour {
 		this.gameObject.GetComponent<LOSEntity>().OnDisable();
 		DestroyObject(this.gameObject);
 
+		CameraShake shake = Camera.main.gameObject.GetComponent<CameraShake>();
+		shake.shake = 0.1f;
+		shake.enabled = true;
 	}
 
 }
