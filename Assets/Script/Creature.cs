@@ -9,9 +9,7 @@ public class Creature : MonoBehaviour {
 
 	protected WeaponHolder	m_weaponHolder;
 	protected Material		m_material;
-	[SerializeField]
-	protected float			m_autoTargetCoolTime = 0.5f;
-	float					m_lastAutoTargetTime = 0f;
+
 	public GameObject		m_targeting;
 	[SerializeField]
 	protected GameObject	m_prefWeapon;
@@ -75,22 +73,18 @@ public class Creature : MonoBehaviour {
 			}
 		}
 
-		if (m_lastAutoTargetTime+m_autoTargetCoolTime < Time.time)
+		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName);
+		foreach(GameObject target in targets)
 		{
-			m_lastAutoTargetTime = Time.time;
-
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName);
-			foreach(GameObject target in targets)
+			float dist = Vector3.Distance(transform.position, target.transform.position);
+			if (dist < m_weaponHolder.GetWeapon().AttackRange)
 			{
-				float dist = Vector3.Distance(transform.position, target.transform.position);
-				if (dist < m_weaponHolder.GetWeapon().AttackRange)
-				{
-					m_targeting = target.gameObject;
-					m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(m_targeting.transform.position), 0);
-					return true;
-				}
+				m_targeting = target.gameObject;
+				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(m_targeting.transform.position), 0);
+				return true;
 			}
 		}
+
 
 		m_weaponHolder.GetWeapon().StopFiring();
 		return false;

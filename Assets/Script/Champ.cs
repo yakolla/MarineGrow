@@ -7,12 +7,27 @@ public class Champ : Creature {
 	bool	m_charging = false;
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
+
+	[SerializeField]
+	GameObject	m_prefLevelUpEffect;
 	new void Start () {
 		base.Start();
 
 		m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
+		m_creatureProperty.m_callbackLevelup = delegate() {
+			GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
+			effect.transform.parent = transform;
+			effect.transform.localPosition = Vector3.zero;
+			effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
+			StartCoroutine(UpdateLevelUpEffect(effect));
+		};
 	}
 
+	IEnumerator UpdateLevelUpEffect(GameObject effect)
+	{
+		yield return new WaitForSeconds(1.3f);
+		DestroyObject(effect);
+	} 
 
 	void UpdateChampMovement()
 	{

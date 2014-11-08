@@ -1,13 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawn : MonoBehaviour {
-
-	public int 				m_mobCount = 10;
+[System.Serializable]
+class SpawnDesc
+{
+	[SerializeField]
+	public int 			m_mobCount = 10;
+	[SerializeField]
 	public float 			m_interval = 30;
+	[SerializeField]
 	public Transform		m_targetPos;
+	[SerializeField]
 	public GameObject		m_prefEnemy;
-	public GameObject		m_prefBossEnemy;
+}
+
+public class Spawn : MonoBehaviour {
+	[SerializeField]
+	SpawnDesc[]	m_descs;
+
+	[SerializeField]
+	GameObject		m_prefBossEnemy;
+
 	GameObject				m_boss;
 
 	// Use this for initialization
@@ -15,26 +28,30 @@ public class Spawn : MonoBehaviour {
 
 		m_boss = Instantiate (m_prefBossEnemy, transform.position, Quaternion.Euler(0f, 0f, 0f)) as GameObject;
 		m_boss.GetComponent<Enemy>().SetTargetPos(transform.position);
-		StartCoroutine(spawnEnemyPer());
+		foreach(SpawnDesc desc in m_descs)
+		{
+			StartCoroutine(spawnEnemyPer(desc));
+		}
 	}
 
-	IEnumerator spawnEnemyPer()
+	IEnumerator spawnEnemyPer(SpawnDesc desc)
 	{
 		float cx = transform.position.x;
 		float cz = transform.position.z;
-		for(int i = 0; i < m_mobCount; ++i)
-		{
-			Vector3 enemyPos = m_prefEnemy.transform.position;
-			GameObject obj = Instantiate (m_prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
-			obj.GetComponent<Enemy>().SetTargetPos(m_targetPos.position);
-		}
 
-		
-		yield return new WaitForSeconds (m_interval);
+
+		for(int i = 0; i < desc.m_mobCount; ++i)
+		{
+			Vector3 enemyPos = desc.m_prefEnemy.transform.position;
+			GameObject obj = Instantiate (desc.m_prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
+			obj.GetComponent<Enemy>().SetTargetPos(desc.m_targetPos.position);
+		}
+				
+		yield return new WaitForSeconds (desc.m_interval);
 
 		if (m_boss != null)
 		{
-			StartCoroutine(spawnEnemyPer());
+			StartCoroutine(spawnEnemyPer(desc));
 		}
 
 	}

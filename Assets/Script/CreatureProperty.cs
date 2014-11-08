@@ -21,6 +21,9 @@ public class CreatureProperty {
 	[SerializeField]
 	int		m_exp = 0;
 
+	public delegate void CallbackOnLevelUp();
+	public CallbackOnLevelUp	m_callbackLevelup = delegate(){};
+
 	public void 	init()
 	{
 		m_hp = m_baseMaxHP;
@@ -68,6 +71,7 @@ public class CreatureProperty {
 		{
 			m_exp -= MaxExp;
 			++m_level;
+			m_callbackLevelup();
 			m_hp = MaxHP;
 		}
 	}
