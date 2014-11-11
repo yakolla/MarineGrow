@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-	GameObject					m_aimpoint;
+	protected GameObject					m_aimpoint;
 
 	[SerializeField]
-	protected GameObject		m_prefBullet;
+	GameObject		m_prefBullet;
 
 	protected	bool			m_firing = false;
 	[SerializeField]
@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	protected float		m_attackRange;
 
-	void Start()
+	protected void Start()
 	{
 		m_aimpoint = this.transform.Find("Aimpoint").gameObject;
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();

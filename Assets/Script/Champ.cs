@@ -15,11 +15,16 @@ public class Champ : Creature {
 
 		m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 		m_creatureProperty.m_callbackLevelup = delegate() {
+
 			GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
 			effect.transform.parent = transform;
 			effect.transform.localPosition = Vector3.zero;
 			effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
 			StartCoroutine(UpdateLevelUpEffect(effect));
+
+			transform.Find("LevelupGUI").gameObject.SetActive(true);
+			ChampLevelupGUI levelupGUI = transform.Find("LevelupGUI").GetComponent<ChampLevelupGUI>();
+
 		};
 	}
 
@@ -27,6 +32,8 @@ public class Champ : Creature {
 	{
 		yield return new WaitForSeconds(1.3f);
 		DestroyObject(effect);
+
+
 	} 
 
 	void UpdateChampMovement()

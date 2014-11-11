@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChampStatusGUI : MonoBehaviour {
+public class ChampLevelupGUI : MonoBehaviour {
 
 	Creature	m_creature;
-	Rect 		m_statusWindowRect = new Rect(0, 0, 100, 100);
-	Rect 		m_guageWindowRect = new Rect((Screen.width-100)/2, Screen.height-30, 100, 30);
-	Rect 		m_skillWindowRect = new Rect((Screen.width-100)/2, Screen.height-30-30, 100, 30);
+	Rect 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
+	Rect 		m_skillWindowRect = new Rect((Screen.width-100)/2, 0, 100, 30);
+
+	[SerializeField]
+	GUISkin		m_guiSkin;
 
 	void Start () {
 
@@ -14,30 +16,56 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	}
 
+	void OnEnable() {
+		Time.timeScale = 0;
+	}
+
+	void OnDisable() {
+		Time.timeScale = 1;
+	}
+
 	void OnGUI()
-	{		
-		//m_statusWindowRect = GUI.Window (0, m_statusWindowRect, DisplayStatusWindow, "");
-		m_guageWindowRect = GUI.Window (1, m_guageWindowRect, DisplayGuageWindow, "");		
-		m_skillWindowRect = GUI.Window (2, m_skillWindowRect, DisplaySkillWindow, "");		
+	{
+		GUI.skin = m_guiSkin;
+
+		m_statusWindowRect = GUI.Window (10, m_statusWindowRect, DisplayStatusWindow, "");
+		m_skillWindowRect = GUI.Window (12, m_skillWindowRect, DisplaySkillWindow, "");		
+	}
+
+	IEnumerator UpdateDestroy()
+	{
+		yield return new WaitForSeconds(0.1f);
+
 	}
 	
 	//Setting up the Inventory window
 	void DisplayStatusWindow(int windowID)
 	{
 		int startY = 0;
-		int size = 20;
+		int size = 60;
+
+		if (GUI.Button(new Rect(Screen.width-size, 0, size, size), "X"))
+		{
+			this.gameObject.SetActive(false);
+			return;
+		}
 
 		GUI.Label(new Rect(0, startY+(size*0), size, size), Resources.Load<Texture>("Sprites/level"));
 		GUI.Label(new Rect(size, startY+(size*0), size, size), m_creature.m_creatureProperty.Level.ToString());
 
+
 		GUI.Label(new Rect(0, startY+(size*1), size, size), Resources.Load<Texture>("Sprites/swordoftruth"));
 		GUI.Label(new Rect(size, startY+(size*1), size, size), m_creature.m_creatureProperty.PAttackDamage.ToString());
+		GUI.Button(new Rect(size+size, startY+(size*1), size, size), "+");
 
 		GUI.Label(new Rect(0, startY+(size*2), size, size), Resources.Load<Texture>("Sprites/staffoflight"));
 		GUI.Label(new Rect(size, startY+(size*2), size, size), m_creature.m_creatureProperty.PDefencePoint.ToString());
+		GUI.Button(new Rect(size+size, startY+(size*2), size, size), "+");
 
 		GUI.Label(new Rect(0, startY+(size*3), size, size), Resources.Load<Texture>("Sprites/robeofpower"));
 		GUI.Label(new Rect(size, startY+(size*3), size, size), "0");
+		GUI.Button(new Rect(size+size, startY+(size*3), size, size), "+");
+
 
 		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
 		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
