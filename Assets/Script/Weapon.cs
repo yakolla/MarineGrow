@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-	protected GameObject					m_aimpoint;
+	protected GameObject					m_gunPoint;
 
 	[SerializeField]
 	GameObject		m_prefBullet;
@@ -13,38 +13,40 @@ public class Weapon : MonoBehaviour {
 	protected float				m_coolTime = 0.5f;
 
 	float						m_lastCreated = 0;
-	protected float				m_targetAngle = 0;
 	Creature 					m_creature;
 	float						m_chargingTime;
+	Vector2						m_targetAngle;
+
 	[SerializeField]
 	protected float		m_attackRange;
 
 	protected void Start()
 	{
-		m_aimpoint = this.transform.Find("Aimpoint").gameObject;
+		m_gunPoint = this.transform.Find("GunPoint").gameObject;
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
 
 	}
 
-	virtual public GameObject CreateBullet(float chargingTime)
+	virtual public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
 	{
-		Vector3 pos = m_aimpoint.transform.position;
+		Vector3 pos = m_gunPoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_aimpoint, m_creature.m_creatureProperty.PAttackDamage, chargingTime);
+		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PAttackDamage, chargingTime, targetAngle);
 
 		m_lastCreated = Time.time;
 
 		return obj;
 	}
 
-	public void StartFiring(float targetAngle, float chargingTime)
+	public void StartFiring(Vector2 targetAngle, float chargingTime)
 	{
-		m_targetAngle = targetAngle;
 		if (m_lastCreated + m_coolTime < Time.time )
 		{
-			CreateBullet(chargingTime);
+			CreateBullet(targetAngle, chargingTime);
+
 		}
+		m_targetAngle = targetAngle;
 		m_firing = true;
 	}
 
@@ -63,7 +65,7 @@ public class Weapon : MonoBehaviour {
 		{
 			if (m_lastCreated + m_coolTime < Time.time )
 			{
-				CreateBullet(0);
+				CreateBullet(m_targetAngle, 0);
 			}
 		}
 

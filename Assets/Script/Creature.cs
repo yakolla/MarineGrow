@@ -49,12 +49,14 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.init();
 	}
 
-	protected float RotateChampToPos(Vector3 pos)
+	protected Vector2 RotateChampToPos(Vector3 pos)
 	{
-		float targetAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
-		transform.eulerAngles =  new Vector3(0, -targetAngle, 0);
+		float targetHorAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
 
-		return targetAngle;
+		Debug.Log((pos - transform.position).normalized);
+		float targetVerAngle = ((pos - transform.position).normalized * 90).y;
+		return new Vector2(targetHorAngle, targetVerAngle);
 	}
 
 	protected void Update()

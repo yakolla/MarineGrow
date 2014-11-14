@@ -11,9 +11,9 @@ public class GrenadeBullet : Bullet {
 		m_startTime = Time.time;
 
 	}
-	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, aimpoint, damage, chargingTime);
+		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
 		m_speed += chargingTime;
 	}
 

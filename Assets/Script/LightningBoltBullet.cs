@@ -21,10 +21,10 @@ public class LightningBoltBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, aimpoint, damage, chargingTime);
-		this.transform.parent = m_aimpoint.transform;
+		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+		this.transform.parent = m_gunPoint.transform;
 	}
 	
 	void Start()
