@@ -9,7 +9,6 @@ public class RocketLauncherBullet : Bullet {
 	float m_speed = 10f;
 	// Use this for initialization
 	void Start () {
-
 	}
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
@@ -20,6 +19,7 @@ public class RocketLauncherBullet : Bullet {
 	// Update is called once per frame
 	void Update () {
 		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
+
 	}
 
 	IEnumerator destoryObject()

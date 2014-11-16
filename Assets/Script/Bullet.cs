@@ -17,6 +17,11 @@ public class Bullet : MonoBehaviour {
 		m_ownerCreature = ownerCreature;
 		m_damage = damage;
 		m_targetAngle = targetAngle;
+
+		this.transform.parent = m_gunPoint.transform;
+		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, targetAngle.y));
+		this.transform.parent = null;
+
 		StartFiring();
 	}
 

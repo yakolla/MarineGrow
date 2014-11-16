@@ -32,7 +32,7 @@ public class Weapon : MonoBehaviour {
 		Vector3 pos = m_gunPoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PAttackDamage, chargingTime, targetAngle);
+		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, chargingTime, targetAngle);
 
 		m_lastCreated = Time.time;
 

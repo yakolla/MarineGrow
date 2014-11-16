@@ -69,7 +69,7 @@ public class LightningBoltBullet : Bullet
 		{
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
-				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, endLight));
+				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, endLight));
 				m_lastDamageTime = Time.time;
 			}
 		}

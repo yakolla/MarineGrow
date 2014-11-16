@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -54,7 +54,6 @@ public class Creature : MonoBehaviour {
 		float targetHorAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
 
-		Debug.Log((pos - transform.position).normalized);
 		float targetVerAngle = ((pos - transform.position).normalized * 90).y;
 		return new Vector2(targetHorAngle, targetVerAngle);
 	}
@@ -120,7 +119,7 @@ public class Creature : MonoBehaviour {
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 		float dmg = damageDesc.Damage;
-		dmg *= 1-m_creatureProperty.PDefencePoint/100f;
+		dmg *= 1-m_creatureProperty.PhysicalDefencePoint/100f;
 		dmg= Mathf.Max(0, Mathf.FloorToInt(dmg));
 		
 		if (m_ingTakenDamageEffect == false)
