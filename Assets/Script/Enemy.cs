@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : Creature {
 
-	Vector3			m_targetPos;
+	GameObject			m_target;
 
 	// Use this for initialization
 	new void Start () {
@@ -18,7 +18,10 @@ public class Enemy : Creature {
 
 		if (AutoAttack() == false)
 		{
-			m_navAgent.SetDestination(m_targetPos);
+			if (m_target)
+			{
+				m_navAgent.SetDestination(m_target.transform.position);
+			}
 		}
 		else
 		{
@@ -28,9 +31,9 @@ public class Enemy : Creature {
 
 	}
 
-	public void SetTargetPos(Vector3 pos )
+	public void SetTarget(GameObject obj )
 	{
-		m_targetPos = pos;
+		m_target = obj;
 	}
 
 }

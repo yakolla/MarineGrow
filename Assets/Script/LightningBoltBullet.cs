@@ -21,10 +21,10 @@ public class LightningBoltBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, aimpoint, damage, chargingTime);
-		this.transform.parent = m_aimpoint.transform;
+		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+		this.transform.parent = m_gunPoint.transform;
 	}
 	
 	void Start()
@@ -69,7 +69,7 @@ public class LightningBoltBullet : Bullet
 		{
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
-				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, endLight));
+				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, endLight));
 				m_lastDamageTime = Time.time;
 			}
 		}

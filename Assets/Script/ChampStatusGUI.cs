@@ -1,49 +1,32 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ChampStatusGUI : MonoBehaviour {
 
 	Creature	m_creature;
-	Rect 		m_statusWindowRect = new Rect(0, 0, 100, 100);
-	Rect 		m_guageWindowRect = new Rect((Screen.width-100)/2, Screen.height-30, 100, 30);
-	Rect 		m_skillWindowRect = new Rect((Screen.width-100)/2, Screen.height-30-30, 100, 30);
+
+	Rect 		m_guageWindowRect;
+	Rect 		m_skillWindowRect;
+	Texture		m_guageTexture;
+	float 		m_width = Screen.width * (1/5f);
+	float 		m_height = Screen.height * (1/12f);
 
 	void Start () {
 
 		m_creature = transform.parent.gameObject.GetComponent<Creature>();
+		m_guageTexture = Resources.Load<Texture>("Sprites/HP Guage");
 
+
+		m_guageWindowRect = new Rect((Screen.width-m_width)/2, Screen.height-m_height, m_width, m_height);
+		m_skillWindowRect = new Rect((Screen.width-m_width)/2, Screen.height-m_height-m_height, m_width, m_height);
 	}
 
 	void OnGUI()
 	{		
-		//m_statusWindowRect = GUI.Window (0, m_statusWindowRect, DisplayStatusWindow, "");
 		m_guageWindowRect = GUI.Window (1, m_guageWindowRect, DisplayGuageWindow, "");		
 		m_skillWindowRect = GUI.Window (2, m_skillWindowRect, DisplaySkillWindow, "");		
 	}
-	
-	//Setting up the Inventory window
-	void DisplayStatusWindow(int windowID)
-	{
-		int startY = 0;
-		int size = 20;
 
-		GUI.Label(new Rect(0, startY+(size*0), size, size), Resources.Load<Texture>("Sprites/level"));
-		GUI.Label(new Rect(size, startY+(size*0), size, size), m_creature.m_creatureProperty.Level.ToString());
-
-		GUI.Label(new Rect(0, startY+(size*1), size, size), Resources.Load<Texture>("Sprites/swordoftruth"));
-		GUI.Label(new Rect(size, startY+(size*1), size, size), m_creature.m_creatureProperty.PAttackDamage.ToString());
-
-		GUI.Label(new Rect(0, startY+(size*2), size, size), Resources.Load<Texture>("Sprites/staffoflight"));
-		GUI.Label(new Rect(size, startY+(size*2), size, size), m_creature.m_creatureProperty.PDefencePoint.ToString());
-
-		GUI.Label(new Rect(0, startY+(size*3), size, size), Resources.Load<Texture>("Sprites/robeofpower"));
-		GUI.Label(new Rect(size, startY+(size*3), size, size), "0");
-
-		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
-		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
-		drawGuage(new Rect(size, startY+(size*4), 100-size, size), expRatio, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
-
-	}
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)
 	{
 		GUI.DrawTextureWithTexCoords(new Rect(size.x, size.y, size.width*ratio, size.height), guage, new Rect(0f, 0f, ratio, 1f));
@@ -58,9 +41,16 @@ public class ChampStatusGUI : MonoBehaviour {
 	//Setting up the Inventory window
 	void DisplayGuageWindow(int windowID)
 	{
+		int startY = 0;
+		int size = (int)m_height/2;
+
 		float hp = m_creature.m_creatureProperty.getHPRemainRatio();
 		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxHP).ToString();
-		drawGuage(new Rect(0, 0, 100, 15), hp, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
+		drawGuage(new Rect(0, 0, m_width, size), hp, lable, m_guageTexture); 
+
+		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
+		lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
+		drawGuage(new Rect(0, startY+(size*1), m_width-size, size), expRatio, lable, m_guageTexture); 
 
 	}
 	IEnumerator spawnObject(GameObject pref, Vector3 pos)
@@ -73,7 +63,7 @@ public class ChampStatusGUI : MonoBehaviour {
 	void DisplaySkillWindow(int windowID)
 	{
 		int startX = 0;
-		int size = 25;
+		int size = (int)m_width/4;
 
 		if (GUI.Button(new Rect(startX+0*size, 0, size, size), "Z"))
 		{

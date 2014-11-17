@@ -3,20 +3,32 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 
-	protected GameObject	m_aimpoint = null;
+	protected GameObject	m_gunPoint = null;
 	bool					m_firing = false;
 	protected	string		m_targetTagName;
 	protected	float		m_damage;
-
+	protected 	Vector2		m_targetAngle;
 	protected	Creature	m_ownerCreature;
 
-	virtual public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	virtual public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		m_aimpoint = aimpoint;
-		m_firing = true;
+		m_gunPoint = gunPoint;
 		m_targetTagName = ownerCreature.TargetTagName;
 		m_ownerCreature = ownerCreature;
 		m_damage = damage;
+		m_targetAngle = targetAngle;
+
+		this.transform.parent = m_gunPoint.transform;
+		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, targetAngle.y));
+		this.transform.parent = null;
+
+		StartFiring();
+	}
+
+	virtual public void StartFiring()
+	{
+		m_firing = true;
+
 	}
 
 	virtual public void StopFiring()

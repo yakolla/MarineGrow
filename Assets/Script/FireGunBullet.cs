@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class FireGunBullet : Bullet {
@@ -29,10 +29,11 @@ public class FireGunBullet : Bullet {
 
 	}
 
-	override public void Init(Creature ownerCreature, GameObject aimpoint, float damage, float chargingTime)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, aimpoint, damage, chargingTime);
-		this.transform.parent = m_aimpoint.transform;
+		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+		this.transform.parent = m_gunPoint.transform;
+		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, targetAngle.y));
 	}
 
 	override public void StopFiring()
@@ -46,7 +47,7 @@ public class FireGunBullet : Bullet {
 		if (other.tag.CompareTo(m_targetTagName) == 0)
 		{
 			Creature creature = other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PAttackDamage, DamageDesc.Type.Fire, m_prefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_prefDamageEffect));			
 		}
 	}
 }

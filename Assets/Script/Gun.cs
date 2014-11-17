@@ -4,26 +4,26 @@ using System.Collections;
 public class Gun : Weapon {
 
 	[SerializeField]
-	GameObject		m_prefAimpointEffect = null;
+	GameObject		m_prefGunPointEffect = null;
 
-	GameObject		m_aimpointEffect;
+	GameObject		m_gunPointEffect;
 
-	override public GameObject CreateBullet(float chargingTime)
+	override public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
 	{
-		GameObject bullet = base.CreateBullet(chargingTime);
+		GameObject bullet = base.CreateBullet(targetAngle, chargingTime);
 
-		if (m_aimpointEffect)
+		if (m_gunPointEffect)
 		{
-			m_aimpointEffect.SetActive(true);
+			m_gunPointEffect.SetActive(true);
 		}
 		else
 		{
-			if (m_prefAimpointEffect)
+			if (m_prefGunPointEffect)
 			{
-				m_aimpointEffect = Instantiate (m_prefAimpointEffect, Vector3.zero, transform.rotation) as GameObject;
-				m_aimpointEffect.transform.parent = m_aimpoint.transform;
-				m_aimpointEffect.transform.localPosition = Vector3.zero;
-				m_aimpointEffect.SetActive(false);
+				m_gunPointEffect = Instantiate (m_prefGunPointEffect, Vector3.zero, transform.rotation) as GameObject;
+				m_gunPointEffect.transform.parent = m_gunPoint.transform;
+				m_gunPointEffect.transform.localPosition = Vector3.zero;
+				m_gunPointEffect.SetActive(false);
 			}
 
 		}
@@ -35,6 +35,6 @@ public class Gun : Weapon {
 	{
 		base.StopFiring();
 
-		if (m_aimpointEffect)		m_aimpointEffect.SetActive(false);
+		if (m_gunPointEffect)		m_gunPointEffect.SetActive(false);
 	}
 }

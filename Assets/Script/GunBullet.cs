@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GunBullet : Bullet {
@@ -18,7 +18,7 @@ public class GunBullet : Bullet {
 		{
 			DestroyObject(this.gameObject);
 			Creature creature = other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PAttackDamage, DamageDesc.Type.Normal, null));
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Normal, null));
 		}
 		else if (other.tag == "Wall")
 		{

@@ -9,11 +9,11 @@ public class CreatureProperty {
 	float 	m_hp;
 
 	[SerializeField]
-	float	m_pATKDamage = 0;
+	float	m_basePhysicalDamage = 0;
 
 	[SerializeField]
 	[Range (0, 100)]
-	float	m_pDefencePoint = 0;
+	float	m_basePhysicalDefence = 0;
 
 	[SerializeField]
 	int		m_level = 1;
@@ -26,7 +26,7 @@ public class CreatureProperty {
 
 	public void 	init()
 	{
-		m_hp = m_baseMaxHP;
+		m_hp = MaxHP;
 	}
 
 	public float getHPRemainRatio()
@@ -36,7 +36,13 @@ public class CreatureProperty {
 
 	public float MaxHP
 	{
-		get { return m_baseMaxHP*Level; }
+		get { return m_baseMaxHP*100; }
+	}
+
+	public float BaseMaxHP
+	{
+		get { return m_baseMaxHP; }
+		set { m_baseMaxHP = value; }
 	}
 
 	public float HP
@@ -92,13 +98,15 @@ public class CreatureProperty {
 		return m_hp;
 	}
 
-	public float	PAttackDamage
+	public float	PhysicalAttackDamage
 	{
-		get {return m_pATKDamage*Level;}
+		get {return m_basePhysicalDamage;}
+		set { m_basePhysicalDamage = value; }
 	}
 
-	public float	PDefencePoint
+	public float	PhysicalDefencePoint
 	{
-		get {return Mathf.Min(100, m_pDefencePoint);}
+		get {return Mathf.Min(100, m_basePhysicalDefence);}
+		set { m_basePhysicalDefence = value; }
 	}
 }

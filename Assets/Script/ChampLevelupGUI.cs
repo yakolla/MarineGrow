@@ -1,23 +1,28 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ChampLevelupGUI : MonoBehaviour {
 
 	Creature	m_creature;
-	Rect 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
-	Rect 		m_skillWindowRect = new Rect((Screen.width-100)/2, 0, 100, 30);
+	Rect 		m_statusWindowRect;
+	Rect 		m_skillWindowRect;
+	int			m_statPoing = 0;
 
 	[SerializeField]
 	GUISkin		m_guiSkin;
 
+	float 		m_width = Screen.width * (1/5f);
+	float 		m_height = Screen.height * (1/8f);
+
 	void Start () {
 
 		m_creature = transform.parent.gameObject.GetComponent<Creature>();
-
+		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 	}
 
 	void OnEnable() {
 		Time.timeScale = 0;
+		m_statPoing++;
 	}
 
 	void OnDisable() {
@@ -28,21 +33,14 @@ public class ChampLevelupGUI : MonoBehaviour {
 	{
 		GUI.skin = m_guiSkin;
 
-		m_statusWindowRect = GUI.Window (10, m_statusWindowRect, DisplayStatusWindow, "");
-		m_skillWindowRect = GUI.Window (12, m_skillWindowRect, DisplaySkillWindow, "");		
-	}
-
-	IEnumerator UpdateDestroy()
-	{
-		yield return new WaitForSeconds(0.1f);
-
+		m_statusWindowRect = GUI.Window (10, m_statusWindowRect, DisplayStatusWindow, "");	
 	}
 	
 	//Setting up the Inventory window
 	void DisplayStatusWindow(int windowID)
 	{
 		int startY = 0;
-		int size = 60;
+		int size = (int)m_height;
 
 		if (GUI.Button(new Rect(Screen.width-size, 0, size, size), "X"))
 		{
@@ -55,21 +53,28 @@ public class ChampLevelupGUI : MonoBehaviour {
 
 
 		GUI.Label(new Rect(0, startY+(size*1), size, size), Resources.Load<Texture>("Sprites/swordoftruth"));
-		GUI.Label(new Rect(size, startY+(size*1), size, size), m_creature.m_creatureProperty.PAttackDamage.ToString());
-		GUI.Button(new Rect(size+size, startY+(size*1), size, size), "+");
+		GUI.Label(new Rect(size, startY+(size*1), size, size), m_creature.m_creatureProperty.PhysicalAttackDamage.ToString());
+		if (GUI.Button(new Rect(size+size, startY+(size*1), size, size), "+") && m_statPoing > 0)
+		{
+			m_creature.m_creatureProperty.PhysicalAttackDamage+=1;
+			--m_statPoing;
+		}
 
 		GUI.Label(new Rect(0, startY+(size*2), size, size), Resources.Load<Texture>("Sprites/staffoflight"));
-		GUI.Label(new Rect(size, startY+(size*2), size, size), m_creature.m_creatureProperty.PDefencePoint.ToString());
-		GUI.Button(new Rect(size+size, startY+(size*2), size, size), "+");
+		GUI.Label(new Rect(size, startY+(size*2), size, size), m_creature.m_creatureProperty.PhysicalDefencePoint.ToString());
+		if (GUI.Button(new Rect(size+size, startY+(size*2), size, size), "+") && m_statPoing > 0)
+		{
+			m_creature.m_creatureProperty.PhysicalDefencePoint+=1;
+			--m_statPoing;
+		}
 
 		GUI.Label(new Rect(0, startY+(size*3), size, size), Resources.Load<Texture>("Sprites/robeofpower"));
-		GUI.Label(new Rect(size, startY+(size*3), size, size), "0");
-		GUI.Button(new Rect(size+size, startY+(size*3), size, size), "+");
-
-
-		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
-		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
-		drawGuage(new Rect(size, startY+(size*4), 100-size, size), expRatio, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
+		GUI.Label(new Rect(size, startY+(size*3), size, size), m_creature.m_creatureProperty.BaseMaxHP.ToString());
+		if (GUI.Button(new Rect(size+size, startY+(size*3), size, size), "+") && m_statPoing > 0)
+		{
+			m_creature.m_creatureProperty.BaseMaxHP+=1;
+			--m_statPoing;
+		}
 
 	}
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)
@@ -91,27 +96,6 @@ public class ChampLevelupGUI : MonoBehaviour {
 		drawGuage(new Rect(0, 0, 100, 15), hp, lable, Resources.Load<Texture>("Sprites/HP Guage")); 
 
 	}
-	IEnumerator spawnObject(GameObject pref, Vector3 pos)
-	{
-		GameObject spwan = (GameObject)Instantiate(pref, pos, transform.rotation);
-		spwan.SetActive(false);
-		yield return new WaitForSeconds (0.3f);
-		spwan.SetActive(true);
-	}
-	void DisplaySkillWindow(int windowID)
-	{
-		int startX = 0;
-		int size = 25;
 
-		if (GUI.Button(new Rect(startX+0*size, 0, size, size), "Z"))
-		{
-			GameObject prefFollower = Resources.Load<GameObject>("Pref/Follower");
-			Vector3 pos = transform.position;
-			StartCoroutine(spawnObject(prefFollower, pos));
 
-		}
-		GUI.Button(new Rect(startX+1*size, 0, size, size), "X");
-		GUI.Button(new Rect(startX+2*size, 0, size, size), "C");
-		GUI.Button(new Rect(startX+3*size, 0, size, size), "V");
-	}
 }
