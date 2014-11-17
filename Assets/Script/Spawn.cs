@@ -56,7 +56,18 @@ public class Spawn : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		if (m_boss == null)
+		{
+			Transform tran = transform.FindChild("Spawn");
+			if (tran != null)
+			{
+				GameObject spawn = tran.gameObject;
+				spawn.transform.parent = null;
+				spawn.SetActive(true);
+			}
+			
+			DestroyObject(this.gameObject);
+		}
 	}
 
 }
