@@ -33,7 +33,6 @@ public class FireGunBullet : Bullet {
 	{
 		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
 		this.transform.parent = m_gunPoint.transform;
-		this.transform.localPosition = Vector3.zero;
 		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, targetAngle.y));
 	}
 
