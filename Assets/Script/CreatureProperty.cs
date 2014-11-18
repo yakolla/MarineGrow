@@ -21,6 +21,9 @@ public class CreatureProperty {
 	[SerializeField]
 	int		m_exp = 0;
 
+	[SerializeField]
+	int		m_gold = 0;
+
 	public delegate void CallbackOnLevelUp();
 	public CallbackOnLevelUp	m_callbackLevelup = delegate(){};
 
@@ -68,6 +71,12 @@ public class CreatureProperty {
 	public int Exp	
 	{
 		get { return m_exp; }
+	}
+
+	public int Gold
+	{
+		get { return m_gold; }
+		set { m_gold = value; }
 	}
 
 	public void		giveExp(int exp)

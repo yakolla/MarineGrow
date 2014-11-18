@@ -18,14 +18,18 @@ public class Bullet : MonoBehaviour {
 		m_damage = damage;
 		m_targetAngle = targetAngle;
 
+		Vector3 scale = this.transform.localScale;
+
 		this.transform.parent = m_gunPoint.transform;
+		this.transform.localPosition = Vector3.zero;
 		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, targetAngle.y));
+		this.transform.localScale = scale;
 		this.transform.parent = null;
 
 		StartFiring();
 	}
 
-	virtual public void StartFiring()
+	public void StartFiring()
 	{
 		m_firing = true;
 

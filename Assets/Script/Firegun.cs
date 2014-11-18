@@ -7,7 +7,7 @@ public class Firegun : Weapon {
 
 	override public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
 	{
-		if (m_firing == false)
+		if (m_bullet == null)
 		{
 			m_bullet = base.CreateBullet(targetAngle, chargingTime);
 		}

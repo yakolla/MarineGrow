@@ -26,7 +26,10 @@ public class Weapon : MonoBehaviour {
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
 
 	}
-
+	public GameObject GunPoint	
+	{
+		get { return m_gunPoint; }
+	}
 	virtual public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
 	{
 		Vector3 pos = m_gunPoint.transform.position;

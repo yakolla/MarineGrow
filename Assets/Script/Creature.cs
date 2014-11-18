@@ -49,7 +49,7 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.init();
 	}
 
-	protected Vector2 RotateChampToPos(Vector3 pos)
+	protected Vector2 RotateToTarget(Vector3 pos)
 	{
 		float targetHorAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
@@ -66,12 +66,13 @@ public class Creature : MonoBehaviour {
 	protected bool AutoAttack() {
 		if (m_targeting != null)
 		{
-			float dist = Vector3.Distance(transform.position, m_targeting.transform.position);
+			float dist = Vector3.Distance(m_weaponHolder.GetWeapon().GunPoint.transform.position, m_targeting.transform.position);
 			if (dist < m_weaponHolder.GetWeapon().AttackRange)
 			{
-				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(m_targeting.transform.position), 0);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
 				return true;
 			}
+
 		}
 
 		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName);
@@ -81,12 +82,12 @@ public class Creature : MonoBehaviour {
 			if (dist < m_weaponHolder.GetWeapon().AttackRange)
 			{
 				m_targeting = target.gameObject;
-				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(m_targeting.transform.position), 0);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
 				return true;
 			}
 		}
 
-
+		m_targeting = null;
 		m_weaponHolder.GetWeapon().StopFiring();
 		return false;
 	}

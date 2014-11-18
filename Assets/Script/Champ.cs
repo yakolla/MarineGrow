@@ -77,7 +77,7 @@ public class Champ : Creature {
 			{
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				
-				RotateChampToPos(pos);
+				RotateToTarget(pos);
 			}
 			
 			if (Input.GetMouseButtonDown(1) == true)
@@ -94,7 +94,7 @@ public class Champ : Creature {
 				
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				
-				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(pos), Time.time-m_startChargeTime);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), Time.time-m_startChargeTime);
 			}
 			
 			if (m_charging == false)
@@ -112,7 +112,7 @@ public class Champ : Creature {
 			{
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				
-				m_weaponHolder.GetWeapon().StartFiring(RotateChampToPos(pos), 0);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), 0);
 			}
 			else
 			{
@@ -130,6 +130,13 @@ public class Champ : Creature {
 		Camera.main.transform.position = myCharacterPosition;
 		
 	}
+
+	IEnumerator UpdateDeathItemBox(ItemBox itemBox)
+	{
+		yield return new WaitForSeconds(1.3f);
+		itemBox.Death();		
+	} 
+
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo("ItemBox") == 0)
 		{
@@ -139,9 +146,13 @@ public class Champ : Creature {
 			case ItemBox.Type.HPPosion:
 				m_creatureProperty.Heal(itemBox.ItemValue);
 				break;
+			case ItemBox.Type.Gold:
+				m_creatureProperty.Gold += itemBox.ItemValue;
+				itemBox.SetTarget(gameObject);
+				break;
 			}
 
-			itemBox.Death();
+			//itemBox.Death();
 		};
 
 	}

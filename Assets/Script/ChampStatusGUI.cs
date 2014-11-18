@@ -7,6 +7,8 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	Rect 		m_guageWindowRect;
 	Rect 		m_skillWindowRect;
+	Rect		m_goodsWindowRect;
+
 	Texture		m_guageTexture;
 	float 		m_width = Screen.width * (1/5f);
 	float 		m_height = Screen.height * (1/12f);
@@ -16,15 +18,16 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_creature = transform.parent.gameObject.GetComponent<Creature>();
 		m_guageTexture = Resources.Load<Texture>("Sprites/HP Guage");
 
-
+		m_goodsWindowRect = new Rect((Screen.width-m_width)/2, 0, m_width, m_height);
 		m_guageWindowRect = new Rect((Screen.width-m_width)/2, Screen.height-m_height, m_width, m_height);
 		m_skillWindowRect = new Rect((Screen.width-m_width)/2, Screen.height-m_height-m_height, m_width, m_height);
 	}
 
 	void OnGUI()
 	{		
-		m_guageWindowRect = GUI.Window (1, m_guageWindowRect, DisplayGuageWindow, "");		
-		m_skillWindowRect = GUI.Window (2, m_skillWindowRect, DisplaySkillWindow, "");		
+		m_goodsWindowRect = GUI.Window (1, m_goodsWindowRect, DisplayGoodsWindow, "");
+		m_guageWindowRect = GUI.Window (2, m_guageWindowRect, DisplayStatusWindow, "");
+		m_skillWindowRect = GUI.Window (3, m_skillWindowRect, DisplaySkillWindow, "");
 	}
 
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)
@@ -38,8 +41,18 @@ public class ChampStatusGUI : MonoBehaviour {
 		style.normal.textColor = Color.black;
 		GUI.Label(new Rect(size.x+1, size.y+1, size.width, size.height), lable, style);
 	}
+
+	void DisplayGoodsWindow(int windowID)
+	{
+		int startY = 0;
+		int size = (int)m_height;
+		
+		GUI.Label(new Rect(0, 0, m_goodsWindowRect.width, m_goodsWindowRect.height), "G:" + m_creature.m_creatureProperty.Gold);
+		
+	}
+
 	//Setting up the Inventory window
-	void DisplayGuageWindow(int windowID)
+	void DisplayStatusWindow(int windowID)
 	{
 		int startY = 0;
 		int size = (int)m_height/2;
