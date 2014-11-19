@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour {
 
 	protected GameObject	m_gunPoint = null;
 	bool					m_firing = false;
-	protected	string		m_targetTagName;
+	protected	Creature.Type	m_targetTagName;
 	protected	float		m_damage;
 	protected 	Vector2		m_targetAngle;
 	protected	Creature	m_ownerCreature;

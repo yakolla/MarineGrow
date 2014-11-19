@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Champ : Creature {
@@ -141,18 +141,7 @@ public class Champ : Creature {
 		if (other.tag.CompareTo("ItemBox") == 0)
 		{
 			ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
-			switch(itemBox.ItemType)
-			{
-			case ItemBox.Type.HPPosion:
-				m_creatureProperty.Heal(itemBox.ItemValue);
-				break;
-			case ItemBox.Type.Gold:
-				m_creatureProperty.Gold += itemBox.ItemValue;
-				itemBox.SetTarget(gameObject);
-				break;
-			}
-
-			//itemBox.Death();
+			itemBox.Eaten(this);
 		};
 
 	}

@@ -49,7 +49,7 @@ public class GrenadeBullet : Bullet {
 
 	void bomb()
 	{
-		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName);
+		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName.ToString());
 		Vector3 pos = transform.position;
 		//pos.y = 0;
 		foreach(GameObject target in targets)

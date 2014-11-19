@@ -6,8 +6,9 @@ public class ItemBox : MonoBehaviour {
 	public enum Type
 	{
 		Gold,
-		HPPosion,
+		HealPosion,
 		Ring,
+		Count
 	}
 
 	[SerializeField]
@@ -24,10 +25,26 @@ public class ItemBox : MonoBehaviour {
 		m_parabola = new Parabola(gameObject, Random.Range(7, 10), Random.Range(-4.3f, 4.3f)*20f);
 	}
 
-	public void SetTarget(GameObject target)
+	void SetTarget(GameObject target)
 	{
 		m_target = target;
 		m_bezier = new Bezier(gameObject, target.transform.position, transform.position, target.transform.position);
+	}
+
+	public void Eaten(Creature obj)
+	{
+		switch(ItemType)
+		{
+		case ItemBox.Type.HealPosion:
+			obj.m_creatureProperty.Heal(ItemValue);
+			break;
+		case ItemBox.Type.Gold:
+			obj.m_creatureProperty.Gold += ItemValue;
+			
+			break;
+		}
+
+		SetTarget(obj.gameObject);
 	}
 
 	void Update()
@@ -59,5 +76,6 @@ public class ItemBox : MonoBehaviour {
 	public int ItemValue
 	{
 		get { return m_itemValue; }
+		set {m_itemValue = value;}
 	}
 }

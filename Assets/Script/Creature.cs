@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class Creature : MonoBehaviour {
 
+	public enum Type
+	{
+		Champ,
+		Enemy,
+	}
 	// Use this for initialization
 	protected NavMeshAgent	m_navAgent;
 
@@ -18,13 +23,15 @@ public class Creature : MonoBehaviour {
 	protected GameObject	m_prefDeathEffect;
 
 	[SerializeField]
-	protected string		m_targetTagName;
+	protected Type			m_targetTagName;
 
 	GameObject				m_prefDamageGUI;
 	public CreatureProperty	m_creatureProperty;
 	bool					m_ingTakenDamageEffect = false;
 
 	GameObject				m_floatingHealthBar;
+	
+	SpawnDesc			m_spawnDesc;
 
 	struct DamageEffect
 	{
@@ -58,6 +65,16 @@ public class Creature : MonoBehaviour {
 		return new Vector2(targetHorAngle, targetVerAngle);
 	}
 
+	public SpawnDesc SpawnDesc
+	{
+		get {return m_spawnDesc;}
+	}
+	
+	public void SetSpawnDesc(SpawnDesc spawnDesc)
+	{
+		m_spawnDesc = spawnDesc;
+	}
+
 	protected void Update()
 	{
 		UpdateDamageEffect();
@@ -75,7 +92,7 @@ public class Creature : MonoBehaviour {
 
 		}
 
-		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName);
+		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName.ToString());
 		foreach(GameObject target in targets)
 		{
 			float dist = Vector3.Distance(transform.position, target.transform.position);
@@ -161,14 +178,14 @@ public class Creature : MonoBehaviour {
 		}
 	}
 
-	public string TargetTagName
+	public Type TargetTagName
 	{
 		get { return m_targetTagName; }
 	}
 	
 	virtual public void Death()
 	{
-		GameObject.Find("Background").gameObject.GetComponent<background>().SpawnItemBox(transform.position);
+		GameObject.Find("Background").gameObject.GetComponent<background>().SpawnItemBox(m_spawnDesc, transform.position);
 
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;

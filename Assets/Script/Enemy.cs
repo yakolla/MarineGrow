@@ -4,7 +4,6 @@ using System.Collections;
 public class Enemy : Creature {
 
 	GameObject			m_target;
-
 	// Use this for initialization
 	new void Start () {
 		base.Start();
