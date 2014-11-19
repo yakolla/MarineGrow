@@ -11,28 +11,17 @@ public class ItemBox : MonoBehaviour {
 	}
 
 	[SerializeField]
-	Type m_itemType = Type.Gold;
+	Type 			m_itemType = Type.Gold;
 
 	[SerializeField]
-	int		m_itemValue = 0;
-
-	float m_speed = 10f;
-	float m_startTime;
-	float			m_ang = 45f;
-	Vector2			m_vel;
-	float			m_height;
-	float			m_gravity = 10f;
+	int				m_itemValue = 0;
 
 	Bezier			m_bezier;
+	Parabola		m_parabola;
+	GameObject		m_target;
 
-	GameObject	m_target;
 	void Start () {
-		m_speed = Random.Range(7, 10);
-		m_ang = Random.Range(-8.5f, 8.5f)*10f;
-		m_vel.x = m_speed * Mathf.Cos(m_ang);
-		m_vel.y = m_speed * Mathf.Sin(m_ang);
-		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
-		m_startTime = Time.time;
+		m_parabola = new Parabola(gameObject, Random.Range(7, 10), Random.Range(-4.3f, 4.3f)*20f);
 	}
 
 	public void SetTarget(GameObject target)
@@ -45,13 +34,7 @@ public class ItemBox : MonoBehaviour {
 	{
 		if (m_target == null)
 		{
-			if (transform.position.y >= 0)
-			{
-				float elapse = Time.time - m_startTime;
-				float y = m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);
-				transform.position = new Vector3(transform.position.x, y, transform.position.z);
-				transform.Translate(m_vel.x*Time.deltaTime, 0, 0, transform);
-			}
+			m_parabola.Update();
 		}
 		else
 		{
