@@ -4,8 +4,6 @@ using System.Collections;
 public class RocketLauncherBullet : Bullet {
 
 	[SerializeField]
-	GameObject 		m_prefDamageEffect;
-
 	float m_speed = 10f;
 	// Use this for initialization
 	void Start () {
@@ -30,10 +28,10 @@ public class RocketLauncherBullet : Bullet {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag.CompareTo(m_targetTagName) == 0)
+		if (other.tag.CompareTo(m_targetTagName.ToString()) == 0)
 		{
 			Creature creature = other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_prefDamageEffect));
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
 			StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)

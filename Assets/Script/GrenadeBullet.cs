@@ -5,8 +5,6 @@ public class GrenadeBullet : Bullet {
 
 	bool m_isDestroying = false;
 	GameObject		m_shadow;
-	[SerializeField]
-	GameObject 		m_prefDamageEffect;
 
 	GameObject m_prefShadow;
 	Parabola	m_parabola;
@@ -58,7 +56,7 @@ public class GrenadeBullet : Bullet {
 			if (dist < 5f)
 			{
 				Creature creature = target.GetComponent<Creature>();
-				creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_prefDamageEffect));
+				creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
 			}
 		}
 
@@ -67,7 +65,7 @@ public class GrenadeBullet : Bullet {
 	
 	void OnTriggerEnter(Collider other) {
 		return;
-		if (other.tag.CompareTo(m_targetTagName) == 0)
+		if (other.tag.CompareTo(m_targetTagName.ToString()) == 0)
 		{
 			bomb();
 

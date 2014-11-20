@@ -10,6 +10,9 @@ public class Bullet : MonoBehaviour {
 	protected 	Vector2		m_targetAngle;
 	protected	Creature	m_ownerCreature;
 
+	[SerializeField]
+	GameObject 		m_prefDamageEffect;
+
 	virtual public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
 		m_gunPoint = gunPoint;
@@ -18,12 +21,10 @@ public class Bullet : MonoBehaviour {
 		m_damage = damage;
 		m_targetAngle = targetAngle;
 
-		Vector3 scale = this.transform.localScale;
 
 		this.transform.parent = m_gunPoint.transform;
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, targetAngle.y));
-		this.transform.localScale = scale;
 		this.transform.parent = null;
 
 		StartFiring();
@@ -43,6 +44,11 @@ public class Bullet : MonoBehaviour {
 	public bool IsFiring()
 	{
 		return m_firing;
+	}
+
+	protected GameObject PrefDamageEffect
+	{
+		get {return m_prefDamageEffect;}
 	}
 
 }

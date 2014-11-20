@@ -110,8 +110,10 @@ public class Champ : Creature {
 		{
 			if (Input.GetMouseButton(1) == true)
 			{
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				
+				pos = ray.origin + (ray.direction* 10f);
 				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), 0);
 			}
 			else

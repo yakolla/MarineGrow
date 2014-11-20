@@ -58,11 +58,12 @@ public class Creature : MonoBehaviour {
 
 	protected Vector2 RotateToTarget(Vector3 pos)
 	{
-		float targetHorAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+		Vector3 gunPoint = m_weaponHolder.GetWeapon().GunPoint.transform.position;
+		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
+		//float targetVerAngle = ((pos - gunPoint).normalized * 90).y;
 
-		float targetVerAngle = ((pos - transform.position).normalized * 90).y;
-		return new Vector2(targetHorAngle, targetVerAngle);
+		return new Vector2(targetHorAngle, 0f);
 	}
 
 	public SpawnDesc SpawnDesc
@@ -83,7 +84,7 @@ public class Creature : MonoBehaviour {
 	protected bool AutoAttack() {
 		if (m_targeting != null)
 		{
-			float dist = Vector3.Distance(m_weaponHolder.GetWeapon().GunPoint.transform.position, m_targeting.transform.position);
+			float dist = Vector3.Distance(transform.position, m_targeting.transform.position);
 			if (dist < m_weaponHolder.GetWeapon().AttackRange)
 			{
 				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
