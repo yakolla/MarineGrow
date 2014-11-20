@@ -22,7 +22,7 @@ public class Weapon : MonoBehaviour {
 
 	protected void Start()
 	{
-		m_gunPoint = this.transform.Find("GunPoint").gameObject;
+		m_gunPoint = this.transform.parent.transform.gameObject;
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
 
 	}
@@ -30,13 +30,15 @@ public class Weapon : MonoBehaviour {
 	{
 		get { return m_gunPoint; }
 	}
+
+
 	virtual public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
 	{
 		Vector3 pos = m_gunPoint.transform.position;
 		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, chargingTime, targetAngle);
-
+		obj.transform.localScale = m_prefBullet.transform.localScale;
 		m_lastCreated = Time.time;
 
 		return obj;

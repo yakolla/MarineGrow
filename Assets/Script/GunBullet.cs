@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GunBullet : Bullet {
 
+	[SerializeField]
+	float	m_speed = 3f;
 	// Use this for initialization
 	void Start () {
 
@@ -10,7 +12,7 @@ public class GunBullet : Bullet {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(3*Time.deltaTime, 0, 0, transform);
+		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -18,7 +20,7 @@ public class GunBullet : Bullet {
 		{
 			DestroyObject(this.gameObject);
 			Creature creature = other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Normal, null));
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Normal, PrefDamageEffect));
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{

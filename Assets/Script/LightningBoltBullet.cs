@@ -13,7 +13,6 @@ public class LightningBoltBullet : Bullet
 	public float scale = 1f;
 	public float length = 10f;
 	public Light startLight;
-	public GameObject endLight;
 	public float	m_coolTime = 0.3f;
 	float			m_lastDamageTime = 0f;
 	Perlin noise;
@@ -56,7 +55,7 @@ public class LightningBoltBullet : Bullet
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
 			if (Physics.Raycast(transform.position, fwd, out hit, length))
 			{
-				if (hit.transform.tag.CompareTo(m_targetTagName) == 0)
+				if (hit.transform.tag.CompareTo(m_targetTagName.ToString()) == 0)
 				{
 					targetPos = hit.transform.position;
 					target = (Creature)hit.transform.gameObject.GetComponent<Creature>();
@@ -69,7 +68,7 @@ public class LightningBoltBullet : Bullet
 		{
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
-				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, endLight));
+				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, PrefDamageEffect));
 				m_lastDamageTime = Time.time;
 			}
 		}

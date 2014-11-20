@@ -4,8 +4,7 @@ using System.Collections;
 public class FireGunBullet : Bullet {
 
 	public float	m_damageOnTime = 0.3f;
-	[SerializeField]
-	GameObject 		m_prefDamageEffect;
+
 	float			m_lastDamageTime = 0f;
 	BoxCollider		m_collider;
 	// Use this for initialization
@@ -49,10 +48,10 @@ public class FireGunBullet : Bullet {
 
 	void OnTriggerEnter(Collider other) 
 	{
-		if (other.tag.CompareTo(m_targetTagName) == 0)
+		if (other.tag.CompareTo(m_targetTagName.ToString()) == 0)
 		{
 			Creature creature = other.gameObject.GetComponent<Creature>();
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_prefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, PrefDamageEffect));			
 		}
 	}
 }
