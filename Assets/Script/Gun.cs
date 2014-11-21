@@ -14,6 +14,7 @@ public class Gun : Weapon {
 
 		if (m_gunPointEffect)
 		{
+			m_gunPointEffect.GetComponent<ParticleSystem>().Play();
 			m_gunPointEffect.SetActive(true);
 		}
 		else
