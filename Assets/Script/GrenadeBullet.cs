@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GrenadeBullet : Bullet {
@@ -47,36 +47,23 @@ public class GrenadeBullet : Bullet {
 
 	void bomb()
 	{
-		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName.ToString());
-		Vector3 pos = transform.position;
-		//pos.y = 0;
-		foreach(GameObject target in targets)
+		string[] tags = m_ownerCreature.GetAutoTargetTags();
+		foreach(string tag in tags)
 		{
-			float dist = Vector3.Distance(pos, target.transform.position);
-			if (dist < 5f)
+			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+			Vector3 pos = transform.position;
+			//pos.y = 0;
+			foreach(GameObject target in targets)
 			{
-				Creature creature = target.GetComponent<Creature>();
-				creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
+				float dist = Vector3.Distance(pos, target.transform.position);
+				if (dist < 5f)
+				{
+					Creature creature = target.GetComponent<Creature>();
+					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
+				}
 			}
 		}
 
 		StartCoroutine(destoryObject());
-	}
-	
-	void OnTriggerEnter(Collider other) {
-		return;
-		if (other.tag.CompareTo(m_targetTagName.ToString()) == 0)
-		{
-			bomb();
-
-
-			StartCoroutine(destoryObject());
-		}
-		else if (other.tag.CompareTo("Wall") == 0)
-		{
-			bomb();
-
-			StartCoroutine(destoryObject());
-		}
 	}
 }

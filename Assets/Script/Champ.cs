@@ -122,6 +122,11 @@ public class Champ : Creature {
 
 	}
 
+	override public string[] GetAutoTargetTags()
+	{
+		return new string[]{Creature.Type.Enemy.ToString()};
+	}
+
 	void FollowChampWithCamera()
 	{
 		Vector3 myCharacterPosition = m_navAgent.transform.position;

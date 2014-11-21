@@ -30,6 +30,11 @@ public class Enemy : Creature {
 
 	}
 
+	override public string[] GetAutoTargetTags()
+	{
+		return new string[]{Creature.Type.Champ.ToString()};
+	}
+
 	public void SetTarget(GameObject obj )
 	{
 		m_target = obj;

@@ -55,10 +55,11 @@ public class LightningBoltBullet : Bullet
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
 			if (Physics.Raycast(transform.position, fwd, out hit, length))
 			{
-				if (hit.transform.tag.CompareTo(m_targetTagName.ToString()) == 0)
-				{
+				Creature creature = hit.transform.gameObject.GetComponent<Creature>();
+				if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+				{				
 					targetPos = hit.transform.position;
-					target = (Creature)hit.transform.gameObject.GetComponent<Creature>();
+					target = creature;
 					mobHitted = true;
 				}
 			}

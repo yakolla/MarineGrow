@@ -23,7 +23,7 @@ public class Creature : MonoBehaviour {
 	protected GameObject	m_prefDeathEffect;
 
 	[SerializeField]
-	protected Type			m_targetTagName;
+	protected Type			m_creatureType;
 
 	GameObject				m_prefDamageGUI;
 	public CreatureProperty	m_creatureProperty;
@@ -66,6 +66,10 @@ public class Creature : MonoBehaviour {
 		return new Vector2(targetHorAngle, 0f);
 	}
 
+	static public bool IsEnemy(Creature a, Creature b)
+	{
+		return a.CreatureType != b.CreatureType;
+	}
 	public SpawnDesc SpawnDesc
 	{
 		get {return m_spawnDesc;}
@@ -81,6 +85,11 @@ public class Creature : MonoBehaviour {
 		UpdateDamageEffect();
 	}
 
+	virtual public string[] GetAutoTargetTags()
+	{
+		return null;
+	}
+
 	protected bool AutoAttack() {
 		if (m_targeting != null)
 		{
@@ -93,17 +102,22 @@ public class Creature : MonoBehaviour {
 
 		}
 
-		GameObject[] targets = GameObject.FindGameObjectsWithTag(m_targetTagName.ToString());
-		foreach(GameObject target in targets)
+		string[] tags = GetAutoTargetTags();
+		foreach(string tag in tags)
 		{
-			float dist = Vector3.Distance(transform.position, target.transform.position);
-			if (dist < m_weaponHolder.GetWeapon().AttackRange)
+			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+			foreach(GameObject target in targets)
 			{
-				m_targeting = target.gameObject;
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
-				return true;
+				float dist = Vector3.Distance(transform.position, target.transform.position);
+				if (dist < m_weaponHolder.GetWeapon().AttackRange)
+				{
+					m_targeting = target.gameObject;
+					m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
+					return true;
+				}
 			}
 		}
+
 
 		m_targeting = null;
 		m_weaponHolder.GetWeapon().StopFiring();
@@ -179,9 +193,9 @@ public class Creature : MonoBehaviour {
 		}
 	}
 
-	public Type TargetTagName
+	public Type CreatureType
 	{
-		get { return m_targetTagName; }
+		get { return m_creatureType; }
 	}
 	
 	virtual public void Death()
