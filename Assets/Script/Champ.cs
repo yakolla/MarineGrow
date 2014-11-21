@@ -127,7 +127,7 @@ public class Champ : Creature {
 	void FollowChampWithCamera()
 	{
 		Vector3 myCharacterPosition = m_navAgent.transform.position;
-		myCharacterPosition.y = 6;
+		myCharacterPosition.y = Camera.main.transform.position.y;
 		myCharacterPosition.z -= 3.5f;
 		Camera.main.transform.position = myCharacterPosition;
 		
