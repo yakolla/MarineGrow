@@ -25,6 +25,7 @@ public class Gun : Weapon {
 				m_gunPointEffect.transform.parent = m_gunPoint.transform;
 				m_gunPointEffect.transform.localPosition = Vector3.zero;
 				m_gunPointEffect.transform.localScale = m_prefGunPointEffect.transform.localScale;
+				m_gunPointEffect.transform.localRotation = m_prefGunPointEffect.transform.localRotation;
 				m_gunPointEffect.SetActive(false);
 			}
 

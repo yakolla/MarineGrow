@@ -22,7 +22,8 @@ public class ItemBox : MonoBehaviour {
 	GameObject		m_target;
 
 	void Start () {
-		m_parabola = new Parabola(gameObject, Random.Range(7, 10), Random.Range(-4.3f, 4.3f)*20f);
+		m_parabola = new Parabola(gameObject, Random.Range(7, 10), Random.Range(1, 4.3f)*20f);
+		transform.localEulerAngles = new Vector3(0f, Random.Range(0, 180f), 0f);
 	}
 
 	void SetTarget(GameObject target)

@@ -32,8 +32,6 @@ public class Champ : Creature {
 	{
 		yield return new WaitForSeconds(1.3f);
 		DestroyObject(effect);
-
-
 	} 
 
 	void UpdateChampMovement()
@@ -132,12 +130,6 @@ public class Champ : Creature {
 		Camera.main.transform.position = myCharacterPosition;
 		
 	}
-
-	IEnumerator UpdateDeathItemBox(ItemBox itemBox)
-	{
-		yield return new WaitForSeconds(1.3f);
-		itemBox.Death();		
-	} 
 
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo("ItemBox") == 0)

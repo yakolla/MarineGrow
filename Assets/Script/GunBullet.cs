@@ -13,6 +13,9 @@ public class GunBullet : Bullet {
 	// Update is called once per frame
 	void Update () {
 		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
+
+		transform.FindChild("Body").transform.LookAt(Camera.main.transform);
+		
 	}
 
 	void OnTriggerEnter(Collider other) {
