@@ -16,8 +16,6 @@ public class Creature : MonoBehaviour {
 	protected Material		m_material;
 
 	public GameObject		m_targeting;
-	[SerializeField]
-	protected GameObject	m_prefWeapon;
 
 	[SerializeField]
 	protected GameObject	m_prefDeathEffect;
@@ -43,9 +41,6 @@ public class Creature : MonoBehaviour {
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 
-		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
-		m_weaponHolder.ChangeWeapon(m_prefWeapon);
-
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
 		GameObject prefFloatingHealthBar = Resources.Load<GameObject>("Pref/FloatingHealthBarGUI");
@@ -56,9 +51,16 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.init();
 	}
 
+	public void ChangeWeapon(GameObject prefWeapon)
+	{
+		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
+		m_weaponHolder.ChangeWeapon(prefWeapon);
+	}
+
 	protected Vector2 RotateToTarget(Vector3 pos)
 	{
 		Vector3 gunPoint = m_weaponHolder.GetWeapon().GunPoint.transform.position;
+		gunPoint.x = transform.position.x;
 		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
 		//float targetVerAngle = ((pos - gunPoint).normalized * 90).y;

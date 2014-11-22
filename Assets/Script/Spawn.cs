@@ -47,17 +47,20 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator spawnEnemyPer(SpawnDesc desc)
 	{
-		float cx = transform.position.x;
-		float cz = transform.position.z;
-
-
-		for(int i = 0; i < desc.m_mobCount; ++i)
+		if (m_target != null)
 		{
-			Vector3 enemyPos = desc.m_prefEnemy.transform.position;
-			GameObject obj = Instantiate (desc.m_prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
-			obj.GetComponent<Enemy>().SetTarget(m_target);
-			obj.GetComponent<Enemy>().SetSpawnDesc(desc);
+			float cx = transform.position.x;
+			float cz = transform.position.z;
+			
+			for(int i = 0; i < desc.m_mobCount; ++i)
+			{
+				Vector3 enemyPos = desc.m_prefEnemy.transform.position;
+				GameObject obj = Instantiate (desc.m_prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
+				obj.GetComponent<Enemy>().SetTarget(m_target);
+				obj.GetComponent<Enemy>().SetSpawnDesc(desc);
+			}
 		}
+
 				
 		yield return new WaitForSeconds (desc.m_interval);
 
@@ -70,6 +73,10 @@ public class Spawn : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (m_target == null)
+		{
+			m_target = GameObject.Find("Champ(Clone)");
+		}
 		if (m_boss == null)
 		{
 			Transform tran = transform.FindChild("Spawn");
