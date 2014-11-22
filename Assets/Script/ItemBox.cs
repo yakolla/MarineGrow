@@ -7,12 +7,14 @@ public class ItemBox : MonoBehaviour {
 	{
 		Gold,
 		HealPosion,
-		Ring,
+		Weapon,
 		Count
 	}
 
 	[SerializeField]
-	Type 			m_itemType = Type.Gold;
+	Texture			m_icon;
+
+	protected Type 	m_itemType = Type.Gold;
 
 	[SerializeField]
 	int				m_itemValue = 0;
@@ -21,34 +23,28 @@ public class ItemBox : MonoBehaviour {
 	Parabola		m_parabola;
 	GameObject		m_target;
 
-	void Start () {
-		m_parabola = new Parabola(gameObject, Random.Range(5, 7), Random.Range(80, 90));
-		//transform.localEulerAngles = new Vector3(0f, Random.Range(0, 180f), 0f);
-
-
+	protected void Start () {
+		m_parabola = new Parabola(gameObject, Random.Range(-2, 2), Random.Range(5, 7), Random.Range(80, 90));
 	}
 
-	void SetTarget(GameObject target)
+	protected void SetTarget(GameObject target)
 	{
 		m_target = target;
 		m_bezier = new Bezier(gameObject, target.transform.position, transform.position, target.transform.position);
 	}
 
-	public void Eaten(Creature obj)
+	virtual public void Pickup(Creature obj)
 	{
-		switch(ItemType)
-		{
-		case ItemBox.Type.HealPosion:
-			obj.m_creatureProperty.Heal(ItemValue);
-			break;
-		case ItemBox.Type.Gold:
-			obj.m_creatureProperty.Gold += ItemValue;
-			
-			break;
-		}
-
+		Use(obj);
 		SetTarget(obj.gameObject);
 	}
+
+	virtual public string Description()
+	{
+		return m_itemType.ToString() + "\n" + m_itemValue.ToString();
+	}
+
+	virtual public void Use(Creature obj){}
 
 	void Update()
 	{
@@ -74,6 +70,11 @@ public class ItemBox : MonoBehaviour {
 	public Type ItemType
 	{
 		get { return m_itemType; }
+	}
+
+	public Texture ItemIcon
+	{
+		get { return m_icon; }
 	}
 
 	public int ItemValue

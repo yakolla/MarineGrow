@@ -9,6 +9,7 @@ public class background : MonoBehaviour {
 	void Start () {
 		m_prefItemBoxes[(int)ItemBox.Type.Gold] = Resources.Load<GameObject>("Pref/ItemGoldBox");
 		m_prefItemBoxes[(int)ItemBox.Type.HealPosion] = Resources.Load<GameObject>("Pref/ItemHealPosionBox");
+		m_prefItemBoxes[(int)ItemBox.Type.Weapon] = Resources.Load<GameObject>("Pref/ItemWeaponBox");
 	}
 
 	// Update is called once per frame
@@ -30,7 +31,6 @@ public class background : MonoBehaviour {
 				GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBoxes[(int)desc.m_itemType], pos, Quaternion.Euler(0f, 0f, 0f));
 				ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
 				itemBox.ItemValue = Random.Range(desc.m_minItemValue, desc.m_maxItemValue);
-				itemBoxObj.transform.localScale += itemBoxObj.transform.localScale*(itemBox.ItemValue/1000f);
 			}
 		}
 

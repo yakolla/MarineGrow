@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Parabola {
 
-	float 			m_speed = 10f;
 	float 			m_startTime;
 	float			m_finishTime;
 	Vector3			m_vel;
@@ -12,17 +11,20 @@ public class Parabola {
 
 	GameObject		m_obj;
 
-	public Parabola(GameObject obj, float speed, float ang)
+	public Parabola(GameObject obj, float hspeed, float vspeed, float vang)
 	{
 		m_obj = obj;
 		m_oriPos = obj.transform.position;
 
-		m_speed = speed;
-		ang = ang * Mathf.Deg2Rad;
+		vang = vang * Mathf.Deg2Rad;
+		float hang = -m_obj.transform.eulerAngles.y * Mathf.Deg2Rad;
 
-		m_vel.x = m_speed * Mathf.Cos(ang);
-		m_vel.y = m_speed * Mathf.Sin(ang);
+		m_vel.x = hspeed * Mathf.Cos(hang);
+		m_vel.y = vspeed * Mathf.Sin(vang);
+		m_vel.z = hspeed * Mathf.Sin(hang);
+
 		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
+
 		m_startTime = Time.time;
 		m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
 	}
@@ -46,8 +48,7 @@ public class Parabola {
 			float x = m_vel.x*elapse;
 			float z = m_vel.z*elapse;
 			float y = m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);
-			m_obj.transform.position = new Vector3(m_oriPos.x+x, m_oriPos.y+y, m_oriPos.z);
-
+			m_obj.transform.position = new Vector3(m_oriPos.x+x, y, m_oriPos.z+z);
 			return true;
 		}
 

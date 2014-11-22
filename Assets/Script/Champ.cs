@@ -140,7 +140,7 @@ public class Champ : Creature {
 		if (other.tag.CompareTo("ItemBox") == 0)
 		{
 			ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
-			itemBox.Eaten(this);
+			itemBox.Use(this);
 		};
 
 	}

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Enemy : Creature {
+	[SerializeField]
+	GameObject			m_prefWeapon;
 
 	GameObject			m_target;
 	// Use this for initialization
@@ -9,6 +11,7 @@ public class Enemy : Creature {
 		base.Start();
 		m_material = transform.Find("Body/mon_a").GetComponent<SkinnedMeshRenderer>().material;
 
+		ChangeWeapon(m_prefWeapon);
 	}
 	
 	// Update is called once per frame
