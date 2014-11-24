@@ -57,7 +57,6 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
 			m_equipedWeapon.Use(champObj.GetComponent<Creature>());
-
 			DestroyObject(gameObject);
 			return;
 		}

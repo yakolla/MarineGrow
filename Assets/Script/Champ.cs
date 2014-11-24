@@ -13,7 +13,7 @@ public class Champ : Creature {
 	new void Start () {
 		base.Start();
 
-		m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
+		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 		m_creatureProperty.m_callbackLevelup = delegate() {
 
 			GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
@@ -140,7 +140,7 @@ public class Champ : Creature {
 		if (other.tag.CompareTo("ItemBox") == 0)
 		{
 			ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
-			itemBox.Use(this);
+			itemBox.Pickup(this);
 		};
 
 	}

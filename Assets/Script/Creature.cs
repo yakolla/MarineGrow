@@ -140,7 +140,7 @@ public class Creature : MonoBehaviour {
 		{
 			if (m_damageEffects[i].effect != null)
 			{
-				if (m_damageEffects[i].endTime < Time.time)
+				if (m_damageEffects[i].effect.particleSystem.IsAlive() == false)
 				{
 					DestroyObject(m_damageEffects[i].effect);
 					m_damageEffects[i].effect = null;
@@ -170,7 +170,7 @@ public class Creature : MonoBehaviour {
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
 
-			StartCoroutine(BodyRedColoredOnTakenDamage());
+			//StartCoroutine(BodyRedColoredOnTakenDamage());
 
 			if (damageDesc.PrefEffect != null)
 			{
