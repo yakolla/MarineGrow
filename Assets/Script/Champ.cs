@@ -9,7 +9,8 @@ public class Champ : Creature {
 	bool	m_enableAutoTarget = true;
 
 	[SerializeField]
-	GameObject	m_prefLevelUpEffect;
+	GameObject	m_prefLevelUpEffect = null;
+
 	new void Start () {
 		base.Start();
 

@@ -3,48 +3,38 @@ using System.Collections;
 
 public class ItemBox : MonoBehaviour {
 
-	public enum Type
-	{
-		Gold,
-		HealPosion,
-		Weapon,
-		Count
-	}
-
 	[SerializeField]
-	Texture			m_icon;
-
-	protected Type 	m_itemType = Type.Gold;
-
-	[SerializeField]
-	int				m_itemValue = 0;
+	Item			m_item;
 
 	Bezier			m_bezier;
 	Parabola		m_parabola;
-	GameObject		m_target;
+	GameObject		m_target = null;
 
-	protected void Start () {
+	void Start () {
 		m_parabola = new Parabola(gameObject, Random.Range(-2, 2), Random.Range(5, 7), Random.Range(80, 90));
+
 	}
 
-	protected void SetTarget(GameObject target)
+	void SetTarget(GameObject target)
 	{
 		m_target = target;
 		m_bezier = new Bezier(gameObject, target.transform.position, transform.position, target.transform.position);
 	}
 
-	virtual public void Pickup(Creature obj)
+	public void Pickup(Creature obj)
 	{
-		Use(obj);
+		m_item.Use(obj);
 		SetTarget(obj.gameObject);
 	}
 
-	virtual public string Description()
-	{
-		return m_itemType.ToString() + "\n" + m_itemValue.ToString();
+	public void Use(Creature obj){
+		m_item.Use(obj);
 	}
 
-	virtual public void Use(Creature obj){}
+	public string Description()
+	{
+		return m_item.Description();
+	}
 
 	void Update()
 	{
@@ -67,19 +57,16 @@ public class ItemBox : MonoBehaviour {
 		DestroyObject(this.gameObject);
 	}
 
-	public Type ItemType
+	public Item.Type ItemType
 	{
-		get { return m_itemType; }
+		get { return m_item.ItemType; }
 	}
 
-	public Texture ItemIcon
+	public Item Item
 	{
-		get { return m_icon; }
+		get { return m_item; }
+		set {m_item = value;}
 	}
 
-	public int ItemValue
-	{
-		get { return m_itemValue; }
-		set {m_itemValue = value;}
-	}
+
 }

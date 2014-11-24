@@ -9,7 +9,7 @@ public class ChampLevelupGUI : MonoBehaviour {
 	int			m_statPoing = 0;
 
 	[SerializeField]
-	GUISkin		m_guiSkin;
+	GUISkin		m_guiSkin = null;
 
 	float 		m_width = Screen.width * (1/5f);
 	float 		m_height = Screen.height * (1/8f);

@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class ItemSpawnDesc
 {
-	public ItemBox.Type m_itemType = ItemBox.Type.Gold;
+	public Item.Type m_itemType = Item.Type.Gold;
 	public int 			m_minItemValue = 1;
 	public int 			m_maxItemValue = 1;
 	[Range(0F, 1F)]

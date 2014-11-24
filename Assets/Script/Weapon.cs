@@ -3,12 +3,13 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-	protected GameObject					m_gunPoint;
+	protected GameObject		m_gunPoint;
 
 	[SerializeField]
-	GameObject		m_prefBullet;
+	GameObject					m_prefBullet = null;
 
 	protected	bool			m_firing = false;
+
 	[SerializeField]
 	protected float				m_coolTime = 0.5f;
 

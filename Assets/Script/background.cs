@@ -3,13 +3,13 @@ using System.Collections;
 
 public class background : MonoBehaviour {
 
-	GameObject[]	m_prefItemBoxes = new GameObject[(int)ItemBox.Type.Count];
+	GameObject[]	m_prefItemBoxes = new GameObject[(int)Item.Type.Count];
 
 	// Use this for initialization
 	void Start () {
-		m_prefItemBoxes[(int)ItemBox.Type.Gold] = Resources.Load<GameObject>("Pref/ItemGoldBox");
-		m_prefItemBoxes[(int)ItemBox.Type.HealPosion] = Resources.Load<GameObject>("Pref/ItemHealPosionBox");
-		m_prefItemBoxes[(int)ItemBox.Type.Weapon] = Resources.Load<GameObject>("Pref/ItemWeaponBox");
+		m_prefItemBoxes[(int)Item.Type.Gold] = Resources.Load<GameObject>("Pref/ItemGoldBox");
+		m_prefItemBoxes[(int)Item.Type.HealPosion] = Resources.Load<GameObject>("Pref/ItemHealPosionBox");
+		m_prefItemBoxes[(int)Item.Type.Weapon] = Resources.Load<GameObject>("Pref/ItemWeaponBox");
 	}
 
 	// Update is called once per frame
@@ -29,8 +29,26 @@ public class background : MonoBehaviour {
 			if (ratio <= desc.m_ratio)
 			{
 				GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBoxes[(int)desc.m_itemType], pos, Quaternion.Euler(0f, 0f, 0f));
-				ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
-				itemBox.ItemValue = Random.Range(desc.m_minItemValue, desc.m_maxItemValue);
+				Item item = null;
+				switch(desc.m_itemType)
+				{
+				case Item.Type.Gold:
+					item = new ItemGold(Random.Range(desc.m_minItemValue, desc.m_maxItemValue));
+					break;
+				case Item.Type.HealPosion:
+					item = new ItemHealPosion(Random.Range(desc.m_minItemValue, desc.m_maxItemValue));
+					break;
+				case Item.Type.Weapon:
+					item = new ItemWeapon(null);
+					break;
+				}
+
+				if (item != null)
+				{
+					ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
+					itemBox.Item = item;
+				}
+
 			}
 		}
 

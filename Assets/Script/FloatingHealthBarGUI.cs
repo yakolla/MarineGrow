@@ -8,7 +8,7 @@ public class FloatingHealthBarGUI : MonoBehaviour {
 	Creature	m_creature;
 
 	[SerializeField]
-	Texture		m_gague;
+	Texture		m_gague = null;
 
 	// Use this for initialization
 	void Start () {

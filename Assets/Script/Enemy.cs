@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : Creature {
 	[SerializeField]
-	GameObject			m_prefWeapon;
+	GameObject			m_prefWeapon = null;
 
 	GameObject			m_target;
 	// Use this for initialization
