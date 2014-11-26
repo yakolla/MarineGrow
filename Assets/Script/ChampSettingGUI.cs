@@ -41,7 +41,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		m_items.Add(new ItemObject(new ItemWeapon("Pref/RocketLauncher")));
 
 		Save();
-		Load();
+		//Load();
 	}
 
 	void OnEnable() {

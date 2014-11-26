@@ -128,9 +128,9 @@ public class Creature : MonoBehaviour {
 
 	protected IEnumerator BodyRedColoredOnTakenDamage()
 	{
-		m_material.color = new Color(1f,0f,0f,0f);
+		//m_material.color = new Color(1f,0f,0f,0f);
 		yield return new WaitForSeconds(0.3f);
-		m_material.color = new Color(1f,1f,1f,0f);
+		//m_material.color = new Color(1f,1f,1f,0f);
 		m_ingTakenDamageEffect = false;
 	}
 
@@ -153,6 +153,7 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
+
 		float dmg = damageDesc.Damage;
 		dmg *= 1-m_creatureProperty.PhysicalDefencePoint/100f;
 		dmg= Mathf.Max(0, Mathf.FloorToInt(dmg));
@@ -170,22 +171,20 @@ public class Creature : MonoBehaviour {
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
 
-			//StartCoroutine(BodyRedColoredOnTakenDamage());
+			StartCoroutine(BodyRedColoredOnTakenDamage());
+		}
 
-			if (damageDesc.PrefEffect != null)
+		if (damageDesc.PrefEffect != null)
+		{
+			if (m_damageEffects[(int)damageDesc.DamageType].effect == null)
 			{
-				if (m_damageEffects[(int)damageDesc.DamageType].effect == null)
-				{
-					GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-					dmgEffect.transform.parent = transform;
-					dmgEffect.transform.localPosition = Vector3.zero;
-					
-					m_damageEffects[(int)damageDesc.DamageType].effect = dmgEffect;
-
-				}
-
-				m_damageEffects[(int)damageDesc.DamageType].endTime = Time.time+0.5f;
+				GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+				dmgEffect.transform.parent = transform;
+				dmgEffect.transform.localPosition = Vector3.zero;
+				
+				m_damageEffects[(int)damageDesc.DamageType].effect = dmgEffect;
 			}
+			
 		}
 
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
@@ -193,6 +192,7 @@ public class Creature : MonoBehaviour {
 			offender.m_creatureProperty.giveExp(m_creatureProperty.Exp);
 			Death();
 		}
+
 	}
 
 	public Type CreatureType
