@@ -27,6 +27,7 @@ public class Item {
 		return m_itemType.ToString();
 	}
 
+	virtual public void Pickup(Creature obj){}
 	virtual public void Use(Creature obj){}
 
 	public Type ItemType

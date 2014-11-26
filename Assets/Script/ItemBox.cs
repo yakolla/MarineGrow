@@ -23,7 +23,7 @@ public class ItemBox : MonoBehaviour {
 
 	public void Pickup(Creature obj)
 	{
-		m_item.Use(obj);
+		m_item.Pickup(obj);
 		SetTarget(obj.gameObject);
 	}
 

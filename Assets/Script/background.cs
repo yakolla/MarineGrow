@@ -39,7 +39,7 @@ public class background : MonoBehaviour {
 					item = new ItemHealPosion(Random.Range(desc.m_minItemValue, desc.m_maxItemValue));
 					break;
 				case Item.Type.Weapon:
-					item = new ItemWeapon(null);
+					item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
 					break;
 				}
 

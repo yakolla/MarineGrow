@@ -12,6 +12,10 @@ public class ItemGold : Item{
 		m_gold = gold;
 	}
 
+	override public void Pickup(Creature obj){
+		Use(obj);
+	}
+
 	override public void Use(Creature obj){
 		obj.m_creatureProperty.Gold += m_gold;
 	}

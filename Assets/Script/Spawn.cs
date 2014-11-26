@@ -5,6 +5,7 @@ using System.Collections;
 public class ItemSpawnDesc
 {
 	public Item.Type m_itemType = Item.Type.Gold;
+	public string 		m_ItemCodeName;
 	public int 			m_minItemValue = 1;
 	public int 			m_maxItemValue = 1;
 	[Range(0F, 1F)]

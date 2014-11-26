@@ -13,8 +13,6 @@ public class ChampSettingGUI : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_prefChamp = null;
 
-	[SerializeField]
-	ArrayList	m_items = new ArrayList();
 
 	ItemObject		m_equipedWeapon = null;
 	ItemObject[]	m_aquipedAccessory = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
@@ -34,11 +32,12 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 
-		m_items.Add(new ItemObject(new ItemWeapon("Pref/Firegun")));
-		m_items.Add(new ItemObject(new ItemWeapon("Pref/Gun")));
-		m_items.Add(new ItemObject(new ItemWeapon("Pref/LightningBoltLauncher")));
-	    m_items.Add(new ItemObject(new ItemWeapon("Pref/GrenadeLauncher")));
-		m_items.Add(new ItemObject(new ItemWeapon("Pref/RocketLauncher")));
+
+		Warehouse.Instance().PushItem(new ItemWeapon("Pref/Firegun"));
+		Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
+		Warehouse.Instance().PushItem(new ItemWeapon("Pref/LightningBoltLauncher"));
+		Warehouse.Instance().PushItem(new ItemWeapon("Pref/GrenadeLauncher"));
+		Warehouse.Instance().PushItem(new ItemWeapon("Pref/RocketLauncher"));
 
 		Save();
 		//Load();
@@ -63,11 +62,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create (Application.persistentDataPath + "/savedGames.gd");
 
-		bf.Serialize(file, m_items.Count);
-		foreach(ItemObject obj in m_items)
-		{
-			bf.Serialize(file, obj.Item);
-		}
+		Warehouse.Instance().Save(bf, file);
 
 		file.Close();
 	}
@@ -77,11 +72,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
 
-			int length = (int)bf.Deserialize(file);
-			for(int i = 0; i < length;  ++i)
-			{
-				m_items.Add(new ItemObject((Item)bf.Deserialize(file)));
-			}
+			Warehouse.Instance().Load(bf, file);
 
 			file.Close();
 		}
@@ -126,8 +117,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				int id = x+y*INVEN_SLOT_COLS;
 				ItemObject item = null;
-				if (id < m_items.Count)
-					item = (ItemObject)m_items[id];				
+				if (id < Warehouse.Instance().Items.Count)
+					item = Warehouse.Instance().Items[id];				
 
 				if (GUI.Button(new Rect(size*x, startY+(size*(3+y)), size, size), item != null ? item.ItemIcon : null))
 				{

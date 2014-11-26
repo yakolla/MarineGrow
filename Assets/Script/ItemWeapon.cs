@@ -13,6 +13,10 @@ public class ItemWeapon : Item{
 		m_weaponName = Resources.Load<GameObject>(prefWeapon).name;
 	}
 
+	override public void Pickup(Creature obj){
+		Warehouse.Instance().PushItem(this);
+	}
+
 	override public void Use(Creature obj)
 	{
 		obj.ChangeWeapon(Resources.Load<GameObject>(m_prefWeapon));
