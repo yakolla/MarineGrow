@@ -10,7 +10,7 @@ public class GrenadeBullet : Bullet {
 	Parabola	m_parabola;
 	// Use this for initialization
 	void Start () {
-		m_parabola = new Parabola(gameObject, 7f, 7f, 45f);
+		m_parabola = new Parabola(gameObject, 7f, 7f, 45f, 1);
 
 	}
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)

@@ -11,7 +11,7 @@ public class ItemBox : MonoBehaviour {
 	GameObject		m_target = null;
 
 	void Start () {
-		m_parabola = new Parabola(gameObject, Random.Range(-2, 2), Random.Range(5, 7), Random.Range(80, 90));
+		m_parabola = new Parabola(gameObject, Random.Range(-2, 2), Random.Range(5, 7), Random.Range(80, 90), 3);
 
 	}
 
