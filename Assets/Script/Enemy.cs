@@ -9,7 +9,7 @@ public class Enemy : Creature {
 	// Use this for initialization
 	new void Start () {
 		base.Start();
-		m_material = transform.Find("Body/mon_a").GetComponent<SkinnedMeshRenderer>().material;
+		//m_material = transform.Find("Body/mon_a").GetComponent<SkinnedMeshRenderer>().material;
 
 		ChangeWeapon(m_prefWeapon);
 	}

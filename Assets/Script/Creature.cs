@@ -134,6 +134,8 @@ public class Creature : MonoBehaviour {
 		m_ingTakenDamageEffect = false;
 	}
 
+
+
 	void UpdateDamageEffect()
 	{
 		for(int i = 0; i < (int)DamageDesc.Type.Count; ++i)
