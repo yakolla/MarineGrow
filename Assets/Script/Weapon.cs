@@ -45,12 +45,29 @@ public class Weapon : MonoBehaviour {
 		return obj;
 	}
 
-	public void StartFiring(Vector2 targetAngle, float chargingTime)
+	public void StartFiring(Vector2 targetAngle, float chargingTime, int bulletPerOnce, float arcAngle)
 	{
+
 		if (m_lastCreated + m_coolTime < Time.time )
 		{
-			CreateBullet(targetAngle, chargingTime);
+			int halfBulletPerOnce = bulletPerOnce / 2;
+			float oneArc = arcAngle / 2 / Mathf.Max(halfBulletPerOnce, 1);
 
+			for(int i = 0; i < bulletPerOnce; ++i)
+			{
+				float ang = 0;
+				if (i <= halfBulletPerOnce)
+				{
+					ang = oneArc*i-targetAngle.x;
+				}
+				else
+				{
+					ang = oneArc*(-i % halfBulletPerOnce)-targetAngle.x;
+				}
+
+				transform.rotation = Quaternion.Euler(0, ang, 0);
+				CreateBullet(targetAngle, chargingTime);
+			}
 		}
 		m_targetAngle = targetAngle;
 		m_firing = true;
@@ -65,6 +82,7 @@ public class Weapon : MonoBehaviour {
 	{
 		get { return m_attackRange; }
 	}
+
 	protected void Update()
 	{
 		if (m_firing == true)

@@ -15,7 +15,6 @@ public class GrenadeBullet : Bullet {
 	}
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		targetAngle.y = 0;
 		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
 
 		m_prefShadow = Resources.Load<GameObject>("Pref/shadow");

@@ -93,7 +93,7 @@ public class Champ : Creature {
 				
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), Time.time-m_startChargeTime);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), Time.time-m_startChargeTime, 1, 0);
 			}
 			
 			if (m_charging == false)
@@ -113,7 +113,7 @@ public class Champ : Creature {
 				Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				pos = ray.origin + (ray.direction* 10f);
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), 0);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos), 0, 1, 0);
 			}
 			else
 			{

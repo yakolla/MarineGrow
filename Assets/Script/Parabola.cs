@@ -24,11 +24,11 @@ public class Parabola {
 		m_vel.x = hspeed * Mathf.Cos(hang);
 		m_vel.y = vspeed * Mathf.Sin(vang);
 		m_vel.z = hspeed * Mathf.Sin(hang);
-
 		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
 
 		m_startTime = Time.time;
 		m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
+
 	}
 
 	public float MaxHeight
@@ -55,7 +55,7 @@ public class Parabola {
 			++m_bouncing;
 			if (m_maxBouncing == m_bouncing)
 			{
-				return true;
+				return false;
 			}
 			else
 			{
@@ -67,7 +67,7 @@ public class Parabola {
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 }

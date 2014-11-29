@@ -23,6 +23,12 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected Type			m_creatureType;
 
+	[SerializeField]
+	int						m_bulletPerOnce = 1;
+
+	[SerializeField]
+	float					m_arcAngle = 0;
+
 	GameObject				m_prefDamageGUI;
 	public CreatureProperty	m_creatureProperty;
 	bool					m_ingTakenDamageEffect = false;
@@ -98,7 +104,7 @@ public class Creature : MonoBehaviour {
 			float dist = Vector3.Distance(transform.position, m_targeting.transform.position);
 			if (dist < m_weaponHolder.GetWeapon().AttackRange)
 			{
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_bulletPerOnce, m_arcAngle);
 				return true;
 			}
 
@@ -114,7 +120,7 @@ public class Creature : MonoBehaviour {
 				if (dist < m_weaponHolder.GetWeapon().AttackRange)
 				{
 					m_targeting = target.gameObject;
-					m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0);
+					m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_bulletPerOnce, m_arcAngle);
 					return true;
 				}
 			}
