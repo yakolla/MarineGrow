@@ -24,18 +24,16 @@ public class Creature : MonoBehaviour {
 	protected Type			m_creatureType;
 
 	[SerializeField]
-	int						m_bulletPerOnce = 1;
-
-	[SerializeField]
-	float					m_arcAngle = 0;
+	protected Weapon.FiringDesc[]	m_firingDescs = null;
 
 	GameObject				m_prefDamageGUI;
 	public CreatureProperty	m_creatureProperty;
 	bool					m_ingTakenDamageEffect = false;
 
 	GameObject				m_floatingHealthBar;
+	GameObject				m_aimpoint;
 	
-	SpawnDesc			m_spawnDesc;
+	SpawnDesc				m_spawnDesc;
 
 	struct DamageEffect
 	{
@@ -46,6 +44,7 @@ public class Creature : MonoBehaviour {
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
+		m_aimpoint = transform.Find("Aimpoint").gameObject;
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
@@ -65,7 +64,7 @@ public class Creature : MonoBehaviour {
 
 	protected Vector2 RotateToTarget(Vector3 pos)
 	{
-		Vector3 gunPoint = m_weaponHolder.GetWeapon().GunPoint.transform.position;
+		Vector3 gunPoint = m_weaponHolder.transform.position;
 		gunPoint.x = transform.position.x;
 		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
@@ -98,34 +97,54 @@ public class Creature : MonoBehaviour {
 		return null;
 	}
 
-	protected bool AutoAttack() {
-		if (m_targeting != null)
+	protected bool inAttackRange(GameObject targeting)
+	{
+		float dist = Vector3.Distance(transform.position, targeting.transform.position);
+		if (dist <= m_weaponHolder.GetWeapon().AttackRange)
 		{
-			float dist = Vector3.Distance(transform.position, m_targeting.transform.position);
-			if (dist < m_weaponHolder.GetWeapon().AttackRange)
-			{
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_bulletPerOnce, m_arcAngle);
-				return true;
-			}
-
+			return true;
 		}
 
+		return false;
+	}
+
+	protected GameObject searchTarget()
+	{
 		string[] tags = GetAutoTargetTags();
 		foreach(string tag in tags)
 		{
 			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
 			foreach(GameObject target in targets)
 			{
-				float dist = Vector3.Distance(transform.position, target.transform.position);
-				if (dist < m_weaponHolder.GetWeapon().AttackRange)
+				if (true == inAttackRange(target))
 				{
-					m_targeting = target.gameObject;
-					m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_bulletPerOnce, m_arcAngle);
-					return true;
+					return target;
 				}
 			}
 		}
 
+		return null;
+	}
+
+	virtual protected bool AutoAttack() {
+		if (m_targeting != null)
+		{
+			if (false == inAttackRange(m_targeting))
+			{
+				m_targeting = null;
+			}
+		}
+
+		if (m_targeting == null)
+		{
+			m_targeting = searchTarget();
+		}
+
+		if (m_targeting != null)
+		{
+			m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_firingDescs);
+			return true;
+		}
 
 		m_targeting = null;
 		m_weaponHolder.GetWeapon().StopFiring();
@@ -187,7 +206,7 @@ public class Creature : MonoBehaviour {
 			if (m_damageEffects[(int)damageDesc.DamageType].effect == null)
 			{
 				GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-				dmgEffect.transform.parent = transform;
+				dmgEffect.transform.parent = m_aimpoint.transform;
 				dmgEffect.transform.localPosition = Vector3.zero;
 				
 				m_damageEffects[(int)damageDesc.DamageType].effect = dmgEffect;

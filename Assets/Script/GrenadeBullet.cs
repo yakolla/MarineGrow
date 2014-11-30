@@ -6,11 +6,20 @@ public class GrenadeBullet : Bullet {
 	bool m_isDestroying = false;
 	GameObject		m_shadow;
 
+	[SerializeField]
+	GameObject		m_prefBombEffect = null;
+
+	[SerializeField]
+	float			m_bombRange = 5f;
+
+	[SerializeField]
+	float			m_speed = 7f;
+
 	GameObject m_prefShadow;
 	Parabola	m_parabola;
 	// Use this for initialization
 	void Start () {
-		m_parabola = new Parabola(gameObject, 7f, 7f, 45f, 1);
+		m_parabola = new Parabola(gameObject, m_speed, 10f, 45f, 1);
 
 	}
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
@@ -35,13 +44,14 @@ public class GrenadeBullet : Bullet {
 		m_shadow.transform.localScale = m_prefShadow.transform.localScale * ((m_parabola.MaxHeight-transform.position.y+1.5f)/m_parabola.MaxHeight);
 	}
 	
-	IEnumerator destoryObject()
+	IEnumerator destoryObject(GameObject bombEffect)
 	{
 		m_isDestroying = true;
-		yield return new WaitForSeconds (0.4f);
 		DestroyObject(m_shadow);
-		DestroyObject(this.gameObject);
 
+		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
+		DestroyObject(this.gameObject);
+		DestroyObject(bombEffect);
 	}
 
 	void bomb()
@@ -55,7 +65,7 @@ public class GrenadeBullet : Bullet {
 			foreach(GameObject target in targets)
 			{
 				float dist = Vector3.Distance(pos, target.transform.position);
-				if (dist < 5f)
+				if (dist < m_bombRange)
 				{
 					Creature creature = target.GetComponent<Creature>();
 					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
@@ -63,6 +73,9 @@ public class GrenadeBullet : Bullet {
 			}
 		}
 
-		StartCoroutine(destoryObject());
+		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
+		bombEffect.particleSystem.startSize = m_bombRange*2;
+
+		StartCoroutine(destoryObject(bombEffect));
 	}
 }

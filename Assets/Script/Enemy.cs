@@ -5,7 +5,7 @@ public class Enemy : Creature {
 	[SerializeField]
 	GameObject			m_prefWeapon = null;
 
-	GameObject			m_target;
+	GameObject			m_goalForNavigation;
 	// Use this for initialization
 	new void Start () {
 		base.Start();
@@ -20,9 +20,9 @@ public class Enemy : Creature {
 
 		if (AutoAttack() == false)
 		{
-			if (m_target)
+			if (m_goalForNavigation)
 			{
-				m_navAgent.SetDestination(m_target.transform.position);
+				m_navAgent.SetDestination(m_goalForNavigation.transform.position);
 			}
 		}
 		else
@@ -40,7 +40,7 @@ public class Enemy : Creature {
 
 	public void SetTarget(GameObject obj )
 	{
-		m_target = obj;
+		m_goalForNavigation = obj;
 	}
 
 }
