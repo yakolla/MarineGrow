@@ -43,12 +43,14 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 		else
 		{
-			Load();
+			//Load();
 
 			if (Warehouse.Instance().Items.Count == 0)
 			{
 				Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
 			}
+
+			//Save ();
 		}
 	}
 

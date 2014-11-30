@@ -2,6 +2,17 @@
 using System.Collections;
 
 [System.Serializable]
+public class ItemOptionSpawnDesc
+{
+	public Item.Option  m_optionType;
+	public int 			m_minItemValue = 1;
+	public int 			m_maxItemValue = 1;
+	[Range(0F, 1F)]
+	public float		m_ratio = 0f;
+	
+}
+
+[System.Serializable]
 public class ItemSpawnDesc
 {
 	public Item.Type m_itemType = Item.Type.Gold;
@@ -10,6 +21,8 @@ public class ItemSpawnDesc
 	public int 			m_maxItemValue = 1;
 	[Range(0F, 1F)]
 	public float		m_ratio = 0f;
+
+	public ItemOptionSpawnDesc[] m_itemOptionSpawnDesc = null;
 
 }
 

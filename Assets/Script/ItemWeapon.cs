@@ -24,7 +24,7 @@ public class ItemWeapon : Item{
 	
 	override public string Description()
 	{
-		return m_weaponName;
+		return m_weaponName +  OptionsDescription();
 	}
 
 }
