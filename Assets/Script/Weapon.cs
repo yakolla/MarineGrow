@@ -3,6 +3,13 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
+	[System.Serializable]
+	public struct FiringDesc
+	{
+		public float 	angle;
+		public float	delayTime;
+	}
+
 	protected GameObject		m_gunPoint;
 
 	[SerializeField]
@@ -27,16 +34,11 @@ public class Weapon : MonoBehaviour {
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
 
 	}
-	public GameObject GunPoint	
-	{
-		get { return m_gunPoint; }
-	}
-
 
 	virtual public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
 	{
 		Vector3 pos = m_gunPoint.transform.position;
-		GameObject obj = Instantiate (m_prefBullet, pos, transform.rotation) as GameObject;
+		GameObject obj = Instantiate (m_prefBullet, pos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, chargingTime, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
@@ -45,30 +47,25 @@ public class Weapon : MonoBehaviour {
 		return obj;
 	}
 
-	public void StartFiring(Vector2 targetAngle, float chargingTime, int bulletPerOnce, float arcAngle)
+	protected IEnumerator DelayToStartFiring(Vector2 targetAngle, float chargingTime, float delay)
 	{
+		yield return new WaitForSeconds(delay);
+		CreateBullet(targetAngle, chargingTime);
+	}
 
+	public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
+	{		
 		if (m_lastCreated + m_coolTime < Time.time )
 		{
-			int halfBulletPerOnce = bulletPerOnce / 2;
-			float oneArc = arcAngle / 2 / Mathf.Max(halfBulletPerOnce, 1);
-
-			for(int i = 0; i < bulletPerOnce; ++i)
+			float oriAng = targetAngle.x;
+			for(int i = 0; i < firingDescs.Length; ++i)
 			{
-				float ang = 0;
-				if (i <= halfBulletPerOnce)
-				{
-					ang = oneArc*i-targetAngle.x;
-				}
-				else
-				{
-					ang = oneArc*(-i % halfBulletPerOnce)-targetAngle.x;
-				}
-
-				transform.rotation = Quaternion.Euler(0, ang, 0);
-				CreateBullet(targetAngle, chargingTime);
+				float ang = firingDescs[i].angle-oriAng;
+				targetAngle.x = ang;
+				StartCoroutine(DelayToStartFiring(targetAngle, chargingTime, firingDescs[i].delayTime));
 			}
 		}
+
 		m_targetAngle = targetAngle;
 		m_firing = true;
 	}
