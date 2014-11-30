@@ -17,6 +17,17 @@ public class background : MonoBehaviour {
 
 	}
 
+	IEnumerator delayLoadLevel(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		Application.LoadLevel("main");
+	}
+	
+	public void DelayLoadLevel(float delay)
+	{
+		StartCoroutine(delayLoadLevel(delay));
+	}
+
 	public void SpawnItemBox(SpawnDesc spawnDesc, Vector3 pos)
 	{
 		if (spawnDesc == null)

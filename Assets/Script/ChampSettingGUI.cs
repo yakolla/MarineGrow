@@ -13,6 +13,9 @@ public class ChampSettingGUI : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_prefChamp = null;
 
+	[SerializeField]
+	bool		m_cheat = true;
+
 
 	ItemObject		m_equipedWeapon = null;
 	ItemObject[]	m_aquipedAccessory = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
@@ -28,19 +31,30 @@ public class ChampSettingGUI : MonoBehaviour {
 	float 		m_width = Screen.width * (1/5f);
 	float 		m_height = Screen.height * (1/8f);
 
+	void Awake()
+	{
+		if (m_cheat == true)
+		{
+			Warehouse.Instance().PushItem(new ItemWeapon("Pref/Firegun"));
+			Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
+			Warehouse.Instance().PushItem(new ItemWeapon("Pref/LightningBoltLauncher"));
+			Warehouse.Instance().PushItem(new ItemWeapon("Pref/GrenadeLauncher"));
+			Warehouse.Instance().PushItem(new ItemWeapon("Pref/RocketLauncher"));
+		}
+		else
+		{
+			Load();
+
+			if (Warehouse.Instance().Items.Count == 0)
+			{
+				Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
+			}
+		}
+	}
+
 	void Start () {
 
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
-
-
-		Warehouse.Instance().PushItem(new ItemWeapon("Pref/Firegun"));
-		Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
-		Warehouse.Instance().PushItem(new ItemWeapon("Pref/LightningBoltLauncher"));
-		Warehouse.Instance().PushItem(new ItemWeapon("Pref/GrenadeLauncher"));
-		Warehouse.Instance().PushItem(new ItemWeapon("Pref/RocketLauncher"));
-
-		Save();
-		//Load();
 	}
 
 	void OnEnable() {

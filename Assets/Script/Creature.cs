@@ -30,7 +30,6 @@ public class Creature : MonoBehaviour {
 	public CreatureProperty	m_creatureProperty;
 	bool					m_ingTakenDamageEffect = false;
 
-	GameObject				m_floatingHealthBar;
 	GameObject				m_aimpoint;
 	
 	SpawnDesc				m_spawnDesc;
@@ -48,11 +47,6 @@ public class Creature : MonoBehaviour {
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
-		GameObject prefFloatingHealthBar = Resources.Load<GameObject>("Pref/FloatingHealthBarGUI");
-		m_floatingHealthBar = (GameObject)Instantiate(prefFloatingHealthBar, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-		m_floatingHealthBar.transform.parent = transform;
-		m_floatingHealthBar.transform.localPosition = Vector3.zero;
-
 		m_creatureProperty.init();
 	}
 
@@ -68,7 +62,6 @@ public class Creature : MonoBehaviour {
 		gunPoint.x = transform.position.x;
 		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
-		//float targetVerAngle = ((pos - gunPoint).normalized * 90).y;
 
 		return new Vector2(targetHorAngle, 0f);
 	}

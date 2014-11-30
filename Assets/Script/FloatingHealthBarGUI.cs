@@ -10,6 +10,9 @@ public class FloatingHealthBarGUI : MonoBehaviour {
 	[SerializeField]
 	Texture		m_gague = null;
 
+	[SerializeField]
+	Texture		m_gagueOutter = null;
+
 	// Use this for initialization
 	void Start () {
 		m_owner = transform.parent.gameObject;
@@ -34,6 +37,8 @@ public class FloatingHealthBarGUI : MonoBehaviour {
 		float ratio = m_creature.m_creatureProperty.getHPRemainRatio();
 
 		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (50-size)*ratio, size), m_gague, new Rect(0f, 0f, ratio, 1f));
+		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (50-size), size), m_gagueOutter, new Rect(0f, 0f, 1f, 1f));
 
 	}
 }
+
