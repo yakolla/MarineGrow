@@ -137,6 +137,12 @@ public class Champ : Creature {
 		
 	}
 
+	override public void Death()
+	{
+		base.Death();
+		GameObject.Find("Background").GetComponent<background>().DelayLoadLevel(2);
+	}
+
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo("ItemBox") == 0)
 		{

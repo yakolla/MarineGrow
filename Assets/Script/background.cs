@@ -17,6 +17,29 @@ public class background : MonoBehaviour {
 
 	}
 
+	IEnumerator delayLoadLevel(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		Application.LoadLevel("main");
+	}
+	
+	public void DelayLoadLevel(float delay)
+	{
+		StartCoroutine(delayLoadLevel(delay));
+	}
+
+	void bindItemOption(Item item, ItemOptionSpawnDesc[] descs)
+	{
+		foreach(ItemOptionSpawnDesc desc in descs)
+		{
+			float ratio = Random.Range(0f, 1f);
+			if (ratio <= desc.m_ratio)
+			{
+				item.OptionDescs.Add(new Item.OptionDesc(desc.m_optionType, Random.Range(desc.m_minItemValue, desc.m_maxItemValue)));
+			}
+		}
+	}
+
 	public void SpawnItemBox(SpawnDesc spawnDesc, Vector3 pos)
 	{
 		if (spawnDesc == null)
@@ -40,6 +63,8 @@ public class background : MonoBehaviour {
 					break;
 				case Item.Type.Weapon:
 					item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
+					bindItemOption(item, desc.m_itemOptionSpawnDesc);
+
 					break;
 				}
 

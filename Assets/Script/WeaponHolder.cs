@@ -12,6 +12,7 @@ public class WeaponHolder : MonoBehaviour {
 			DestroyObject(m_weapon);
 			m_weapon = null;
 		}
+
 		GameObject obj = Instantiate (prefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
 		m_weapon = obj.GetComponent<Weapon>();
 
