@@ -31,6 +31,8 @@ public class Creature : MonoBehaviour {
 	bool					m_ingTakenDamageEffect = false;
 
 	GameObject				m_aimpoint;
+
+	Animator				m_animator;
 	
 	SpawnDesc				m_spawnDesc;
 
@@ -45,6 +47,8 @@ public class Creature : MonoBehaviour {
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_aimpoint = transform.Find("Aimpoint").gameObject;
 
+		m_animator = transform.Find("Body").GetComponent<Animator>();
+
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
 		m_creatureProperty.init();
@@ -58,10 +62,11 @@ public class Creature : MonoBehaviour {
 
 	protected Vector2 RotateToTarget(Vector3 pos)
 	{
+
 		Vector3 gunPoint = m_weaponHolder.transform.position;
 		gunPoint.x = transform.position.x;
-		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
-		transform.eulerAngles =  new Vector3(0, -targetHorAngle, 0);
+		float targetHorAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+		transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
 
 		return new Vector2(targetHorAngle, 0f);
 	}
@@ -135,9 +140,17 @@ public class Creature : MonoBehaviour {
 
 		if (m_targeting != null)
 		{
+			if (m_animator != null)
+				m_animator.SetTrigger("Attack");
+
 			m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_firingDescs);
 			return true;
 		}
+
+
+
+		if (m_animator != null)
+			m_animator.SetTrigger("Walk");
 
 		m_targeting = null;
 		m_weaponHolder.GetWeapon().StopFiring();

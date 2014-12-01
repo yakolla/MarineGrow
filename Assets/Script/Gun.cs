@@ -38,6 +38,7 @@ public class Gun : Weapon {
 	{
 		base.StopFiring();
 
-		if (m_gunPointEffect)		m_gunPointEffect.SetActive(false);
+		if (m_gunPointEffect)		
+			m_gunPointEffect.SetActive(false);
 	}
 }

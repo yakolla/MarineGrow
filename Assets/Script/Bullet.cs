@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour {
 		m_damage = damage;
 		m_targetAngle = targetAngle;
 
+
 		StartFiring();
 	}
 
