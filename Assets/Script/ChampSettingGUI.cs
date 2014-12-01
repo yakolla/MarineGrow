@@ -94,6 +94,37 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
+	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot)
+	{
+		int startY = 0;
+		int size = (int)m_height;
+
+		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
+		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*4), size*3, size*3), selectedItem.Item.Description());
+
+		if (true == inEquipSlot)
+		{
+			if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Unequip"))
+			{
+				m_equipedWeapon = null;				
+			}
+		}
+		else
+		{
+			if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Equip"))
+			{
+				m_equipedWeapon = selectedItem;				
+			}
+		}
+		
+		
+		if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+2)+size, startY+(size*6), size*2, size), "Sell"))
+		{
+			
+		}
+
+	}
+
 	void DisplayStatusWindow(int windowID)
 	{
 		int startY = 0;
@@ -107,25 +138,22 @@ public class ChampSettingGUI : MonoBehaviour {
 			return;
 		}
 
-		GUI.Label(new Rect(0, startY+(size*0), size, size), "Equip Weapon");
+		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "Weapon");
 		if (GUI.Button(new Rect(0, startY+(size*1), size, size), m_equipedWeapon != null ? m_equipedWeapon.ItemIcon : null))
 		{
-			m_equipedWeapon = null;
+			m_latestSelected = m_equipedWeapon;
 		}
 
-		GUI.Label(new Rect(size*2, startY+(size*0), size, size), "Equip Accessory");
+		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "Accessory");
 
 		for(int x = 0; x < EQUIP_ACCESSORY_SLOT_MAX; x++)
 		{
 			if (GUI.Button(new Rect(size*(2+x), startY+(size*1), size, size), ""))
 			{
-
 			}
 		}
 
-
-
-		GUI.Label(new Rect(0, startY+(size*2), size, size), "Items");
+		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "Items");
 
 		for(int y = 0; y < INVEN_SLOT_ROWS; y++)
 		{
@@ -140,7 +168,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				{
 					if (item != null && item.Item.ItemType == Item.Type.Weapon)
 					{
-						m_equipedWeapon = item;
 						m_latestSelected = item;
 					}
 				}
@@ -151,9 +178,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		if (m_latestSelected != null)
 		{
-			GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*4), size*3, size*3), m_latestSelected.Item.Description());
+			DisplayItemDesc(m_latestSelected, m_equipedWeapon == m_latestSelected);
 		}
-
 
 	}
 }
