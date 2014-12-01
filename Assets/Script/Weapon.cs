@@ -25,6 +25,9 @@ public class Weapon : MonoBehaviour {
 	float						m_chargingTime;
 	Vector2						m_targetAngle;
 
+	public delegate void CallbackOnCreateBullet();
+	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
+
 	[SerializeField]
 	protected float		m_attackRange;
 
@@ -44,6 +47,7 @@ public class Weapon : MonoBehaviour {
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 		m_lastCreated = Time.time;
 
+		m_callbackCreateBullet();
 		return obj;
 	}
 
@@ -64,6 +68,8 @@ public class Weapon : MonoBehaviour {
 				targetAngle.x = ang;
 				StartCoroutine(DelayToStartFiring(targetAngle, chargingTime, firingDescs[i].delayTime));
 			}
+
+
 		}
 
 		m_targetAngle = targetAngle;
@@ -78,18 +84,6 @@ public class Weapon : MonoBehaviour {
 	public float AttackRange
 	{
 		get { return m_attackRange; }
-	}
-
-	protected void Update()
-	{
-		if (m_firing == true)
-		{
-			if (m_lastCreated + m_coolTime < Time.time )
-			{
-				CreateBullet(m_targetAngle, 0);
-			}
-		}
-
 	}
 
 }

@@ -23,6 +23,7 @@ public class Enemy : Creature {
 			if (m_goalForNavigation)
 			{
 				m_navAgent.SetDestination(m_goalForNavigation.transform.position);
+				RotateToTarget(m_goalForNavigation.transform.position);
 			}
 		}
 		else

@@ -58,6 +58,10 @@ public class Creature : MonoBehaviour {
 	{
 		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
 		m_weaponHolder.ChangeWeapon(prefWeapon);
+		m_weaponHolder.GetWeapon().m_callbackCreateBullet = delegate() {
+			if (m_animator != null)
+				m_animator.SetTrigger("Attack");
+		};
 	}
 
 	protected Vector2 RotateToTarget(Vector3 pos)
@@ -140,17 +144,10 @@ public class Creature : MonoBehaviour {
 
 		if (m_targeting != null)
 		{
-			if (m_animator != null)
-				m_animator.SetTrigger("Attack");
-
 			m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_firingDescs);
+
 			return true;
 		}
-
-
-
-		if (m_animator != null)
-			m_animator.SetTrigger("Walk");
 
 		m_targeting = null;
 		m_weaponHolder.GetWeapon().StopFiring();
