@@ -80,6 +80,43 @@ public class Item {
 
 	virtual public void Pickup(Creature obj){}
 	virtual public void Use(Creature obj){}
+	virtual public void NoUse(Creature obj){}
+
+	public void ApplyOptions(Creature obj)
+	{
+		foreach(OptionDesc desc in m_optionDescs)
+		{
+			switch(desc.Type)
+			{
+			case Option.PhysicalDmg:
+				obj.m_creatureProperty.AlphaPhysicalAttackDamage += desc.Value;
+				break;
+			case Option.MovingSpeed:
+				break;
+			case Option.DefencePoint:
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint += desc.Value;
+				break;
+			}
+		}
+	}
+
+	public void NoApplyOptions(Creature obj)
+	{
+		foreach(OptionDesc desc in m_optionDescs)
+		{
+			switch(desc.Type)
+			{
+			case Option.PhysicalDmg:
+				obj.m_creatureProperty.AlphaPhysicalAttackDamage -= desc.Value;
+				break;
+			case Option.MovingSpeed:
+				break;
+			case Option.DefencePoint:
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= desc.Value;
+				break;
+			}
+		}
+	}
 
 	public Type ItemType
 	{

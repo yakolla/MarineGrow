@@ -12,9 +12,13 @@ public class CreatureProperty {
 	[SerializeField]
 	float	m_basePhysicalDamage = 0;
 
+	float	m_alphaPhysicalDamage = 0;
+
 	[SerializeField]
 	[Range (0, 100)]
 	float	m_basePhysicalDefence = 0;
+
+	float	m_alphaPhysicalDefencePoint = 0;
 
 	[SerializeField]
 	int		m_level = 1;
@@ -110,13 +114,25 @@ public class CreatureProperty {
 
 	public float	PhysicalAttackDamage
 	{
-		get {return m_basePhysicalDamage;}
+		get {return m_basePhysicalDamage + AlphaPhysicalAttackDamage;}
 		set { m_basePhysicalDamage = value; }
+	}
+
+	public float	AlphaPhysicalAttackDamage
+	{
+		get {return m_alphaPhysicalDamage;}
+		set { m_alphaPhysicalDamage = value; }
 	}
 
 	public float	PhysicalDefencePoint
 	{
-		get {return Mathf.Min(100, m_basePhysicalDefence);}
+		get {return Mathf.Min(100, m_basePhysicalDefence + AlphaPhysicalDefencePoint);}
 		set { m_basePhysicalDefence = value; }
+	}
+
+	public float	AlphaPhysicalDefencePoint
+	{
+		get {return m_alphaPhysicalDefencePoint;}
+		set { m_alphaPhysicalDefencePoint = value; }
 	}
 }

@@ -16,6 +16,8 @@ public class ChampSettingGUI : MonoBehaviour {
 	[SerializeField]
 	bool		m_cheat = true;
 
+	[SerializeField]
+	ItemSpawnDesc[]		m_itemSpawnDesc = null;
 
 	ItemObject		m_equipedWeapon = null;
 	ItemObject[]	m_aquipedAccessory = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
@@ -31,36 +33,50 @@ public class ChampSettingGUI : MonoBehaviour {
 	float 		m_width = Screen.width * (1/5f);
 	float 		m_height = Screen.height * (1/8f);
 
-	void Awake()
+
+	public ItemObject	EquipedWeapon
 	{
-		if (m_cheat == true)
-		{
-			Warehouse.Instance().PushItem(new ItemWeapon("Pref/Firegun"));
-			Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
-			Warehouse.Instance().PushItem(new ItemWeapon("Pref/LightningBoltLauncher"));
-			Warehouse.Instance().PushItem(new ItemWeapon("Pref/GrenadeLauncher"));
-			Warehouse.Instance().PushItem(new ItemWeapon("Pref/RocketLauncher"));
-		}
-		else
-		{
-			//Load();
-
-			if (Warehouse.Instance().Items.Count == 0)
-			{
-				Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
-			}
-
-			//Save ();
-		}
+		get {return m_equipedWeapon;}
 	}
 
-	void Start () {
-
-		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
+	public ItemObject[]	EquipedAccessories
+	{
+		get {return m_aquipedAccessory;}
 	}
 
 	void OnEnable() {
 		Time.timeScale = 0;
+
+		
+		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
+
+		if (m_cheat == true)
+		{
+			foreach(ItemSpawnDesc desc in m_itemSpawnDesc)
+			{
+
+				Item item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
+				foreach(ItemOptionSpawnDesc optionDesc in desc.m_itemOptionSpawnDesc)
+				{
+					item.OptionDescs.Add(new Item.OptionDesc(optionDesc.m_optionType, optionDesc.m_minItemValue));
+
+				}
+
+				Warehouse.Instance().PushItem(item);
+
+			}
+		}
+		else
+		{
+			//Load();
+			
+			if (Warehouse.Instance().Items.Count == 0)
+			{
+				Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
+			}
+			
+			//Save ();
+		}
 	}
 
 	void OnDisable() {
@@ -134,7 +150,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
 			m_equipedWeapon.Item.Use(champObj.GetComponent<Creature>());
-			DestroyObject(gameObject);
+			this.enabled = false;
 			return;
 		}
 
