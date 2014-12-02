@@ -25,9 +25,6 @@ public class MeleeBullet : Bullet {
 		{
 			m_collider.enabled = false;
 		}
-		
-		
-		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, m_targetAngle.y));
 	}
 	
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
