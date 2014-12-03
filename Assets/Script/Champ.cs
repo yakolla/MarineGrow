@@ -19,7 +19,7 @@ public class Champ : Creature {
 
 			GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
 			effect.transform.parent = transform;
-			effect.transform.localPosition = Vector3.zero;
+			effect.transform.localPosition = m_prefLevelUpEffect.transform.position;
 			effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
 			StartCoroutine(UpdateLevelUpEffect(effect));
 
@@ -132,7 +132,7 @@ public class Champ : Creature {
 	{
 		Vector3 myCharacterPosition = m_navAgent.transform.position;
 		myCharacterPosition.y = Camera.main.transform.position.y;
-		myCharacterPosition.z -= 3.5f;
+		myCharacterPosition.z -= 1.5f;
 		Camera.main.transform.position = myCharacterPosition;
 		
 	}

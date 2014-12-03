@@ -20,6 +20,12 @@ public class ItemWeapon : Item{
 	override public void Use(Creature obj)
 	{
 		obj.ChangeWeapon(Resources.Load<GameObject>(m_prefWeapon));
+		ApplyOptions(obj);
+	}
+
+	override public void NoUse(Creature obj)
+	{
+		NoApplyOptions(obj);
 	}
 	
 	override public string Description()
