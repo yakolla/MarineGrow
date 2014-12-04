@@ -25,6 +25,24 @@ public class Warehouse {
 		m_items.Add(new ItemObject(item));
 	}
 
+	public void RemoveItem(ItemObject obj)
+	{
+		m_items.Remove(obj);
+	}
+
+	public ItemObject FindItemByItemType(Item.Type type)
+	{
+		foreach(ItemObject obj in m_items)
+		{
+			if (obj.Item.ItemType == type)
+			{
+				return obj;
+			}
+		}
+
+		return null;
+	}
+
 	public void Save(BinaryFormatter bf, FileStream file)
 	{
 		bf.Serialize(file, m_items.Count);

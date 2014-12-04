@@ -72,7 +72,8 @@ public class Creature : MonoBehaviour {
 
 		Vector3 gunPoint = m_weaponHolder.transform.position;
 		gunPoint.x = transform.position.x;
-		float targetHorAngle = Mathf.Atan2(pos.z-transform.position.z, pos.x-transform.position.x) * Mathf.Rad2Deg;
+		gunPoint.z = transform.position.z;
+		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
 
 		return new Vector2(targetHorAngle, 0f);

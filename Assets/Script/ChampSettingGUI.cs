@@ -54,16 +54,26 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			foreach(ItemSpawnDesc desc in m_itemSpawnDesc)
 			{
-
-				Item item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
-				foreach(ItemOptionSpawnDesc optionDesc in desc.m_itemOptionSpawnDesc)
+				Item item = null;
+				switch(desc.m_itemType)
 				{
-					item.OptionDescs.Add(new Item.OptionDesc(optionDesc.m_optionType, optionDesc.m_minItemValue));
-
+				case Item.Type.Weapon:
+					item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
+					foreach(ItemOptionSpawnDesc optionDesc in desc.m_itemOptionSpawnDesc)
+					{
+						item.OptionDescs.Add(new Item.OptionDesc(optionDesc.m_optionType, optionDesc.m_minItemValue));
+						
+					}
+					break;
+				case Item.Type.WeaponFragment:
+					item = new ItemWeaponFragment();
+					break;
 				}
 
-				Warehouse.Instance().PushItem(item);
-
+				if (item != null)
+				{
+					Warehouse.Instance().PushItem(item);
+				}
 			}
 		}
 		else
@@ -118,26 +128,53 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*4), size*3, size*3), selectedItem.Item.Description());
 
-		if (true == inEquipSlot)
+		if (selectedItem.Item.ItemType == Item.Type.Weapon)
 		{
-			if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Unequip"))
+			if (true == inEquipSlot)
 			{
-				m_equipedWeapon = null;				
+				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Unequip"))
+				{
+					m_equipedWeapon = null;				
+				}
+			}
+			else
+			{
+				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Equip"))
+				{
+					m_equipedWeapon = selectedItem;				
+				}
 			}
 		}
-		else
+
+
+		if (selectedItem.Item.LevelUpReqDescs.Count > 0)
 		{
-			if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Equip"))
-			{
-				m_equipedWeapon = selectedItem;				
-			}
-		}
-		
-		
-		if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+2)+size, startY+(size*6), size*2, size), "Sell"))
-		{
+			bool canLevelup = true;
+			ItemObject[] reqItems = new ItemObject[selectedItem.Item.LevelUpReqDescs.Count];
 			
+			for(int i = 0; i < reqItems.Length; ++i)
+			{
+				Item.LevelUpReqDesc desc = selectedItem.Item.LevelUpReqDescs[i];
+				reqItems[i] = Warehouse.Instance().FindItemByItemType(desc.ItemType);
+				if (reqItems[i] == null)
+				{
+					canLevelup = false;
+				}
+			}
+			
+			if (canLevelup == true)
+			{
+				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+2)+size, startY+(size*6), size*2, size), "LevelUp"))
+				{
+					++selectedItem.Item.Level;
+					foreach(ItemObject obj in reqItems)
+					{
+						Warehouse.Instance().RemoveItem(obj);
+					}
+				}
+			}
 		}
+
 
 	}
 
@@ -182,7 +219,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				if (GUI.Button(new Rect(size*x, startY+(size*(3+y)), size, size), item != null ? item.ItemIcon : null))
 				{
-					if (item != null && item.Item.ItemType == Item.Type.Weapon)
+					if (item != null)
 					{
 						m_latestSelected = item;
 					}
