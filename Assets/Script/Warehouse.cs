@@ -7,6 +7,7 @@ using System.IO;
 public class Warehouse {
 
 	List<ItemObject>	m_items = new List<ItemObject>();
+	int					m_gold = 0;
 
 	static Warehouse m_wareHouse = null;
 	static public Warehouse Instance()
@@ -45,5 +46,11 @@ public class Warehouse {
 	public List<ItemObject> Items
 	{
 		get {return m_items;}
+	}
+
+	public int Gold
+	{
+		get { return m_gold; }
+		set { m_gold = value; }
 	}
 }

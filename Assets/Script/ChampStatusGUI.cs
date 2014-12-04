@@ -47,7 +47,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		int startY = 0;
 		int size = (int)m_height;
 		
-		GUI.Label(new Rect(0, 0, m_goodsWindowRect.width, m_goodsWindowRect.height), "G:" + m_creature.m_creatureProperty.Gold);
+		GUI.Label(new Rect(0, 0, m_goodsWindowRect.width, m_goodsWindowRect.height), "G:" + Warehouse.Instance().Gold);
 		
 	}
 

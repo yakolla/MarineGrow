@@ -5,8 +5,12 @@ public class Champ : Creature {
 
 	float	m_startChargeTime;
 	bool	m_charging = false;
+
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
+
+	[SerializeField]
+	Vector3	m_cameraOffset;
 
 	[SerializeField]
 	GameObject	m_prefLevelUpEffect = null;
@@ -31,7 +35,7 @@ public class Champ : Creature {
 
 	IEnumerator UpdateLevelUpEffect(GameObject effect)
 	{
-		yield return new WaitForSeconds(1.3f);
+		yield return new WaitForSeconds(effect.particleSystem.duration);
 		DestroyObject(effect);
 	} 
 
@@ -131,8 +135,9 @@ public class Champ : Creature {
 	void FollowChampWithCamera()
 	{
 		Vector3 myCharacterPosition = m_navAgent.transform.position;
-		myCharacterPosition.y = Camera.main.transform.position.y;
-		myCharacterPosition.z -= 1.5f;
+		myCharacterPosition.y = m_cameraOffset.y;
+		myCharacterPosition.z -= m_cameraOffset.z;
+		myCharacterPosition.x -= m_cameraOffset.x;
 		Camera.main.transform.position = myCharacterPosition;
 		
 	}
