@@ -10,6 +10,7 @@ public class Item {
 		Gold,
 		HealPosion,
 		Weapon,
+		WeaponFragment,
 		Count
 	}
 
@@ -49,9 +50,40 @@ public class Item {
 		}
 	}
 
+	public struct LevelUpReqDesc
+	{
+		Type	m_type;
+		int		m_value;
+		
+		public LevelUpReqDesc(Type	type, int	value)
+		{
+			m_type = type;
+			m_value = value;
+		}
+		
+		public Type ItemType
+		{
+			get {return m_type;}
+		}
+		
+		public int ItemCount
+		{
+			get {return m_value;}
+		}
+		
+		public string Descript()
+		{
+			return m_type.ToString() + ":" + m_value.ToString();
+		}
+	}
+
 	string			m_icon = null;
 	Type 			m_itemType = Type.Gold;
+	int				m_count = 1;
+	int				m_level = 1;
+
 	List<OptionDesc>	m_optionDescs = new List<OptionDesc>();
+	List<LevelUpReqDesc>	m_levelupReqDescs = new List<LevelUpReqDesc>();
 
 	public Item(Type type, string icon)
 	{
@@ -61,7 +93,7 @@ public class Item {
 
 	virtual public string Description()
 	{
-		return m_itemType.ToString() + OptionsDescription();
+		return "Level:" + Level + "\n" + m_itemType.ToString() + OptionsDescription();
 	}
 
 	protected string OptionsDescription()
@@ -78,7 +110,7 @@ public class Item {
 		return desc;
 	}
 
-	virtual public void Pickup(Creature obj){}
+	virtual public void Pickup(Creature obj){Warehouse.Instance().PushItem(this);}
 	virtual public void Use(Creature obj){}
 	virtual public void NoUse(Creature obj){}
 
@@ -118,6 +150,18 @@ public class Item {
 		}
 	}
 
+	public int Level
+	{
+		get {return m_level;}
+		set {m_level = value;}
+	}
+
+	public int Count
+	{
+		get {return m_count;}
+		set {m_count = value;}
+	}
+
 	public Type ItemType
 	{
 		get { return m_itemType; }
@@ -131,6 +175,11 @@ public class Item {
 	public List<OptionDesc> OptionDescs
 	{
 		get {return m_optionDescs;}
+	}
+
+	public List<LevelUpReqDesc> LevelUpReqDescs
+	{
+		get {return m_levelupReqDescs;}
 	}
 
 }

@@ -11,10 +11,7 @@ public class ItemWeapon : Item{
 	{
 		m_prefWeapon = prefWeapon;
 		m_weaponName = Resources.Load<GameObject>(prefWeapon).name;
-	}
-
-	override public void Pickup(Creature obj){
-		Warehouse.Instance().PushItem(this);
+		LevelUpReqDescs.Add(new LevelUpReqDesc(Item.Type.WeaponFragment, 1));
 	}
 
 	override public void Use(Creature obj)
@@ -30,7 +27,7 @@ public class ItemWeapon : Item{
 	
 	override public string Description()
 	{
-		return m_weaponName +  OptionsDescription();
+		return m_weaponName + "\n" +  base.Description();
 	}
 
 }
