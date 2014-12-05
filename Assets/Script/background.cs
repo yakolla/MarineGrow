@@ -10,6 +10,7 @@ public class background : MonoBehaviour {
 		m_prefItemBoxes[(int)Item.Type.Gold] = Resources.Load<GameObject>("Pref/ItemGoldBox");
 		m_prefItemBoxes[(int)Item.Type.HealPosion] = Resources.Load<GameObject>("Pref/ItemHealPosionBox");
 		m_prefItemBoxes[(int)Item.Type.Weapon] = Resources.Load<GameObject>("Pref/ItemWeaponBox");
+		m_prefItemBoxes[(int)Item.Type.WeaponFragment] = Resources.Load<GameObject>("Pref/ItemWeaponFragmentBox");
 	}
 
 	// Update is called once per frame
@@ -65,6 +66,10 @@ public class background : MonoBehaviour {
 					item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
 					bindItemOption(item, desc.m_itemOptionSpawnDesc);
 
+					break;
+				case Item.Type.WeaponFragment:
+					item = new ItemWeaponFragment();
+					
 					break;
 				}
 
