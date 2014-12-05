@@ -17,7 +17,7 @@ public class ItemGold : Item{
 	}
 
 	override public void Use(Creature obj){
-		obj.m_creatureProperty.Gold += m_gold;
+		Warehouse.Instance().Gold += m_gold;
 	}
 
 }

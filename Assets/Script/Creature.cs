@@ -60,7 +60,10 @@ public class Creature : MonoBehaviour {
 		m_weaponHolder.ChangeWeapon(prefWeapon);
 		m_weaponHolder.GetWeapon().m_callbackCreateBullet = delegate() {
 			if (m_animator != null)
+			{
 				m_animator.SetTrigger("Attack");
+			}
+
 		};
 	}
 
