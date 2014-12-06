@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,18 +9,20 @@ public class Warehouse {
 	List<ItemObject>	m_items = new List<ItemObject>();
 	int					m_gold = 0;
 
-	static Warehouse m_wareHouse = null;
-	static public Warehouse Instance()
+	static Warehouse m_ins = null;
+	static public Warehouse Instance
 	{
-		if (m_wareHouse == null)
-		{
-			m_wareHouse = new Warehouse();
-		}
+		get {
+			if (m_ins == null)
+			{
+				m_ins = new Warehouse();
+			}
 
-		return m_wareHouse;
+			return m_ins;
+		}
 	}
 
-	public void PushItem(Item item)
+	public void PushItem(ItemData item)
 	{
 		m_items.Add(new ItemObject(item));
 	}
@@ -30,7 +32,7 @@ public class Warehouse {
 		m_items.Remove(obj);
 	}
 
-	public ItemObject FindItemByItemType(Item.Type type)
+	public ItemObject FindItemByItemType(ItemData.Type type)
 	{
 		foreach(ItemObject obj in m_items)
 		{
@@ -57,7 +59,7 @@ public class Warehouse {
 		int length = (int)bf.Deserialize(file);
 		for(int i = 0; i < length;  ++i)
 		{
-			m_items.Add(new ItemObject((Item)bf.Deserialize(file)));
+			m_items.Add(new ItemObject((ItemData)bf.Deserialize(file)));
 		}
 	}
 

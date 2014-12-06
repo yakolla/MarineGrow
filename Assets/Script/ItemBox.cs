@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ItemBox : MonoBehaviour {
 
 	[SerializeField]
-	Item			m_item;
+	ItemData			m_item;
 
 	Bezier			m_bezier;
 	Parabola		m_parabola;
@@ -57,12 +57,12 @@ public class ItemBox : MonoBehaviour {
 		DestroyObject(this.gameObject);
 	}
 
-	public Item.Type ItemType
+	public ItemData.Type ItemType
 	{
 		get { return m_item.ItemType; }
 	}
 
-	public Item Item
+	public ItemData Item
 	{
 		get { return m_item; }
 		set {m_item = value;}

@@ -145,7 +145,7 @@ public class Champ : Creature {
 	override public void Death()
 	{
 		base.Death();
-		GameObject.Find("Background").GetComponent<background>().DelayLoadLevel(2);
+		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(2);
 	}
 
 	void OnTriggerEnter(Collider other) {

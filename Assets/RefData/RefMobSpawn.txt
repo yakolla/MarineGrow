@@ -1,0 +1,51 @@
+[
+	{
+		"id":1,
+		"mobCount":3,
+		"interval":10,
+		"prefEnemy":"mon_a",
+		"refItemSpawns":
+		[
+			{
+				"refItemId":1,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":0.5
+			},
+			{
+				"refItemId":2,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":0.5
+				
+			}
+		]
+	},
+	{
+		"id":2,
+		"mobCount":1,
+		"interval":10,
+		"prefEnemy":"mon_a_fly",
+		"refItemSpawns":
+		[
+			{
+				"refItemId":3,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":1
+			},
+			{
+				"refItemId":4,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":1,
+				"itemOptionSpawns":
+				[
+					{
+						"type":"PhysicalDmg", "minValue":0, "maxValue":0, "ratio":0
+					}
+				]
+			}
+		]
+	}
+]

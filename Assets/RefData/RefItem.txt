@@ -1,0 +1,22 @@
+[
+	{
+		"id":1,
+		"codeName":"",
+		"type":"Gold"
+	},
+	{
+		"id":2,
+		"codeName":"",
+		"type":"HealPosion"
+	},
+	{
+		"id":3,
+		"codeName":"",
+		"type":"WeaponFragment"
+	},
+	{
+		"id":4,
+		"codeName":"Firegun",
+		"type":"Weapon"
+	}
+]

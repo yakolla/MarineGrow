@@ -5,15 +5,15 @@ public class ItemObject {
 
 
 	Texture			m_icon;
-	Item			m_item;
+	ItemData			m_item;
 
-	public ItemObject(Item item)
+	public ItemObject(ItemData item)
 	{
 		m_item = item;
 		m_icon = Resources.Load<Texture>(item.ItemIcon);
 	}
 
-	public Item Item
+	public ItemData Item
 	{
 		get {return m_item;}
 	}

@@ -17,7 +17,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	bool		m_cheat = true;
 
 	[SerializeField]
-	ItemSpawnDesc[]		m_itemSpawnDesc = null;
+	RefItemSpawn[]		m_itemSpawnDesc = null;
 
 	ItemObject		m_equipedWeapon = null;
 	ItemObject[]	m_aquipedAccessory = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
@@ -46,43 +46,20 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void OnEnable() {
 		Time.timeScale = 0;
-
 		
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 
 		if (m_cheat == true)
 		{
-			foreach(ItemSpawnDesc desc in m_itemSpawnDesc)
-			{
-				Item item = null;
-				switch(desc.m_itemType)
-				{
-				case Item.Type.Weapon:
-					item = new ItemWeapon("Pref/" + desc.m_ItemCodeName);
-					foreach(ItemOptionSpawnDesc optionDesc in desc.m_itemOptionSpawnDesc)
-					{
-						item.OptionDescs.Add(new Item.OptionDesc(optionDesc.m_optionType, optionDesc.m_minItemValue));
-						
-					}
-					break;
-				case Item.Type.WeaponFragment:
-					item = new ItemWeaponFragment();
-					break;
-				}
-
-				if (item != null)
-				{
-					Warehouse.Instance().PushItem(item);
-				}
-			}
+			
 		}
 		else
 		{
 			//Load();
 			
-			if (Warehouse.Instance().Items.Count == 0)
+			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance().PushItem(new ItemWeapon("Pref/Gun"));
+				Warehouse.Instance.PushItem(new ItemWeaponData("Pref/Gun"));
 			}
 			
 			//Save ();
@@ -104,7 +81,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create (Application.persistentDataPath + "/savedGames.gd");
 
-		Warehouse.Instance().Save(bf, file);
+		Warehouse.Instance.Save(bf, file);
 
 		file.Close();
 	}
@@ -114,7 +91,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
 
-			Warehouse.Instance().Load(bf, file);
+			Warehouse.Instance.Load(bf, file);
 
 			file.Close();
 		}
@@ -128,7 +105,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*4), size*3, size*3), selectedItem.Item.Description());
 
-		if (selectedItem.Item.ItemType == Item.Type.Weapon)
+		if (selectedItem.Item.ItemType == ItemData.Type.Weapon)
 		{
 			if (true == inEquipSlot)
 			{
@@ -154,8 +131,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			for(int i = 0; i < reqItems.Length; ++i)
 			{
-				Item.LevelUpReqDesc desc = selectedItem.Item.LevelUpReqDescs[i];
-				reqItems[i] = Warehouse.Instance().FindItemByItemType(desc.ItemType);
+				ItemData.LevelUpReqDesc desc = selectedItem.Item.LevelUpReqDescs[i];
+				reqItems[i] = Warehouse.Instance.FindItemByItemType(desc.ItemType);
 				if (reqItems[i] == null)
 				{
 					canLevelup = false;
@@ -169,7 +146,7 @@ public class ChampSettingGUI : MonoBehaviour {
 					++selectedItem.Item.Level;
 					foreach(ItemObject obj in reqItems)
 					{
-						Warehouse.Instance().RemoveItem(obj);
+						Warehouse.Instance.RemoveItem(obj);
 					}
 				}
 			}
@@ -214,8 +191,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				int id = x+y*INVEN_SLOT_COLS;
 				ItemObject item = null;
-				if (id < Warehouse.Instance().Items.Count)
-					item = Warehouse.Instance().Items[id];				
+				if (id < Warehouse.Instance.Items.Count)
+					item = Warehouse.Instance.Items[id];				
 
 				if (GUI.Button(new Rect(size*x, startY+(size*(3+y)), size, size), item != null ? item.ItemIcon : null))
 				{

@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
-public class ItemHealPosion : Item{
+public class ItemHealPosionData : ItemData{
 
 	[SerializeField]
 	int m_heal;
 
-	public ItemHealPosion(int heal) : base(Item.Type.HealPosion, "Sprites/swordoftruth")
+	public ItemHealPosionData(int heal) : base(ItemData.Type.HealPosion, "Sprites/swordoftruth")
 	{
 		m_heal = heal;
 	}

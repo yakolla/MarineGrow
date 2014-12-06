@@ -1,0 +1,12 @@
+[
+	{
+		"id":1,
+		"name":"Basic Dungeon",
+		"refMobSpawnIds":[1,2]
+	},
+	{
+		"id":2,
+		"name":"Midium Dungeon",
+		"refMobSpawnIds":[1]
+	}
+]

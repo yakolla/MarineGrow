@@ -1,17 +1,17 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
-public class ItemWeapon : Item{
+public class ItemWeaponData : ItemData{
 
 	string 	m_prefWeapon;
 	string 	m_weaponName;
 
-	public ItemWeapon(string prefWeapon) : base(Item.Type.Weapon, "Sprites/swordoftruth")
+	public ItemWeaponData(string prefWeapon) : base(ItemData.Type.Weapon, "Sprites/swordoftruth")
 	{
 		m_prefWeapon = prefWeapon;
 		m_weaponName = Resources.Load<GameObject>(prefWeapon).name;
-		LevelUpReqDescs.Add(new LevelUpReqDesc(Item.Type.WeaponFragment, 1));
+		LevelUpReqDescs.Add(new LevelUpReqDesc(ItemData.Type.WeaponFragment, 1));
 	}
 
 	override public void Use(Creature obj)

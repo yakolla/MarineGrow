@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Item {
+public class ItemData {
 
+	
 	public enum Type
 	{
 		Gold,
@@ -14,6 +15,7 @@ public class Item {
 		Count
 	}
 
+	
 	public enum Option
 	{
 		PhysicalDmg,
@@ -85,7 +87,7 @@ public class Item {
 	List<OptionDesc>	m_optionDescs = new List<OptionDesc>();
 	List<LevelUpReqDesc>	m_levelupReqDescs = new List<LevelUpReqDesc>();
 
-	public Item(Type type, string icon)
+	public ItemData(Type type, string icon)
 	{
 		m_icon = icon;
 		m_itemType = type;
@@ -110,7 +112,7 @@ public class Item {
 		return desc;
 	}
 
-	virtual public void Pickup(Creature obj){Warehouse.Instance().PushItem(this);}
+	virtual public void Pickup(Creature obj){Warehouse.Instance.PushItem(this);}
 	virtual public void Use(Creature obj){}
 	virtual public void NoUse(Creature obj){}
 

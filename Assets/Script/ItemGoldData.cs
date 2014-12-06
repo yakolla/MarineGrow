@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
-public class ItemGold : Item{
+public class ItemGoldData : ItemData{
 
 	[SerializeField]
 	int m_gold;
 
-	public ItemGold(int gold) : base(Item.Type.Gold, "Sprites/swordoftruth")
+	public ItemGoldData(int gold) : base(ItemData.Type.Gold, "Sprites/swordoftruth")
 	{
 		m_gold = gold;
 	}
@@ -17,7 +17,7 @@ public class ItemGold : Item{
 	}
 
 	override public void Use(Creature obj){
-		Warehouse.Instance().Gold += m_gold;
+		Warehouse.Instance.Gold += m_gold;
 	}
 
 }
