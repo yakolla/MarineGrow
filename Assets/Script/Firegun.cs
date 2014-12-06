@@ -3,16 +3,22 @@ using System.Collections;
 
 public class Firegun : Weapon {
 
-	GameObject	m_bullet;
+	GameObject[]	m_bullet;
 
-	override public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
-	{
-		if (m_bullet == null)
+	override public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
+	{		
+		if (m_firing == false && isCoolTime() == true )
 		{
-			m_bullet = base.CreateBullet(targetAngle, chargingTime);
+			m_bullet = new GameObject[firingDescs.Length];
+
+			for(int i = 0; i < firingDescs.Length; ++i)
+			{
+				targetAngle.x = firingDescs[i].angle;
+				m_bullet[i] = CreateBullet(targetAngle, chargingTime);
+			}
 		}
 
-		return m_bullet;
+		m_firing = true;
 	}
 
 	override public void StopFiring()
@@ -20,8 +26,13 @@ public class Firegun : Weapon {
 		base.StopFiring();
 		if (m_bullet != null)
 		{
-			Bullet bullet = (Bullet)m_bullet.GetComponent<Bullet>();
-			bullet.StopFiring();
+			foreach(GameObject obj in m_bullet)
+			{
+				Bullet bullet = (Bullet)obj.GetComponent<Bullet>();
+				bullet.StopFiring();
+			}
+
+			m_bullet = null;
 		}
 
 	}

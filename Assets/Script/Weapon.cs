@@ -23,7 +23,6 @@ public class Weapon : MonoBehaviour {
 	float						m_lastCreated = 0;
 	Creature 					m_creature;
 	float						m_chargingTime;
-	Vector2						m_targetAngle;
 
 	public delegate void CallbackOnCreateBullet();
 	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
@@ -57,9 +56,14 @@ public class Weapon : MonoBehaviour {
 		CreateBullet(targetAngle, chargingTime);
 	}
 
-	public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
+	protected bool isCoolTime()
+	{
+		return m_lastCreated + m_coolTime < Time.time;
+	}
+
+	virtual public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
 	{		
-		if (m_lastCreated + m_coolTime < Time.time )
+		if ( isCoolTime() == true )
 		{
 			float oriAng = targetAngle.x;
 			for(int i = 0; i < firingDescs.Length; ++i)
@@ -68,11 +72,8 @@ public class Weapon : MonoBehaviour {
 				targetAngle.x = ang;
 				StartCoroutine(DelayToStartFiring(targetAngle, chargingTime, firingDescs[i].delayTime));
 			}
-
-
 		}
 
-		m_targetAngle = targetAngle;
 		m_firing = true;
 	}
 

@@ -25,9 +25,6 @@ public class FireGunBullet : Bullet {
 		{
 			m_collider.enabled = false;
 		}
-
-		
-		this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, m_targetAngle.y));
 	}
 
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
@@ -37,7 +34,9 @@ public class FireGunBullet : Bullet {
 
 		transform.parent = m_gunPoint.transform;
 		transform.localPosition = Vector3.zero;
+		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.x, 0));
 		transform.localScale = scale;
+
 	}
 
 	override public void StopFiring()

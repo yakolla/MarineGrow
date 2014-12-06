@@ -51,7 +51,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (m_cheat == true)
 		{
-			
+			Warehouse.Instance.PushItem(new ItemWeaponData("Pref/Gun"));
+			Warehouse.Instance.PushItem(new ItemWeaponData("Pref/Firegun"));
 		}
 		else
 		{
