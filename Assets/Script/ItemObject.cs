@@ -10,7 +10,7 @@ public class ItemObject {
 	public ItemObject(ItemData item)
 	{
 		m_item = item;
-		m_icon = Resources.Load<Texture>(item.ItemIcon);
+		m_icon = Resources.Load<Texture>(item.RefItem.icon);
 	}
 
 	public ItemData Item

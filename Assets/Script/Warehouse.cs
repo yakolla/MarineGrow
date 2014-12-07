@@ -24,7 +24,16 @@ public class Warehouse {
 
 	public void PushItem(ItemData item)
 	{
-		m_items.Add(new ItemObject(item));
+		ItemObject itemObj = FindItemByItem(item);
+		if (itemObj == null)
+		{
+			m_items.Add(new ItemObject(item));
+		}
+		else
+		{
+			itemObj.Item.Count += item.Count;
+		}
+
 	}
 
 	public void RemoveItem(ItemObject obj)
@@ -36,12 +45,25 @@ public class Warehouse {
 	{
 		foreach(ItemObject obj in m_items)
 		{
-			if (obj.Item.ItemType == type)
+			if (obj.Item.RefItem.type == type)
 			{
 				return obj;
 			}
 		}
 
+		return null;
+	}
+
+	public ItemObject FindItemByItem(ItemData item)
+	{
+		foreach(ItemObject obj in m_items)
+		{
+			if (obj.Item.Compare(item))
+			{
+				return obj;
+			}
+		}
+		
 		return null;
 	}
 

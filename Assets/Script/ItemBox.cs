@@ -59,7 +59,7 @@ public class ItemBox : MonoBehaviour {
 
 	public ItemData.Type ItemType
 	{
-		get { return m_item.ItemType; }
+		get { return m_item.RefItem.type; }
 	}
 
 	public ItemData Item

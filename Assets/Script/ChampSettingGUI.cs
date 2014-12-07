@@ -106,7 +106,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*4), size*3, size*3), selectedItem.Item.Description());
 
-		if (selectedItem.Item.ItemType == ItemData.Type.Weapon)
+		if (selectedItem.Item.RefItem.type == ItemData.Type.Weapon)
 		{
 			if (true == inEquipSlot)
 			{
@@ -132,7 +132,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			for(int i = 0; i < reqItems.Length; ++i)
 			{
-				ItemData.LevelUpReqDesc desc = selectedItem.Item.LevelUpReqDescs[i];
+				LevelUpReqDesc desc = selectedItem.Item.LevelUpReqDescs[i];
 				reqItems[i] = Warehouse.Instance.FindItemByItemType(desc.ItemType);
 				if (reqItems[i] == null)
 				{
@@ -193,14 +193,21 @@ public class ChampSettingGUI : MonoBehaviour {
 				int id = x+y*INVEN_SLOT_COLS;
 				ItemObject item = null;
 				if (id < Warehouse.Instance.Items.Count)
+				{
 					item = Warehouse.Instance.Items[id];				
 
-				if (GUI.Button(new Rect(size*x, startY+(size*(3+y)), size, size), item != null ? item.ItemIcon : null))
-				{
-					if (item != null)
+					if (GUI.Button(new Rect(size*x, startY+(size*(3+y)), size, size), item != null ? item.ItemIcon : null))
 					{
 						m_latestSelected = item;
 					}
+
+					GUIStyle style = new GUIStyle();
+					style.alignment = TextAnchor.LowerRight;
+					style.richText = true;
+
+					string str = "<color=white>" +item.Item.Count + "</color>";
+					GUI.Label(new Rect(size*x, startY+(size*(3+y)), size, size), str, style);
+
 				}
 			}
 		}

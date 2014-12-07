@@ -2,21 +2,31 @@
 	{
 		"id":1,
 		"codeName":"",
-		"type":"Gold"
+		"type":"Gold",
+		"icon":"Sprites/swordoftruth"
 	},
 	{
 		"id":2,
 		"codeName":"",
-		"type":"HealPosion"
+		"type":"HealPosion",
+		"icon":"Sprites/swordoftruth"
 	},
 	{
 		"id":3,
 		"codeName":"",
-		"type":"WeaponFragment"
+		"type":"WeaponFragment",
+		"icon":"Sprites/swordoftruth"
 	},
 	{
 		"id":4,
 		"codeName":"Firegun",
-		"type":"Weapon"
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
+		"id":5,
+		"codeName":"LightningBoltLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth"
 	}
 ]

@@ -16,7 +16,7 @@ public class RefItem : RefBaseData
 	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
 	public 	ItemData.Type 	type;
 	public 	string 			codeName;
-	
+	public	string			icon;
 
 }
 
@@ -120,6 +120,11 @@ public class RefData {
 	public Dictionary<int, RefWorldMap> RefWorldMaps
 	{
 		get {return m_refWorldMaps;}
+	}
+
+	public Dictionary<int, RefItem> RefItems
+	{
+		get {return m_refItems;}
 	}
 
 }

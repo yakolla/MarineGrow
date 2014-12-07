@@ -7,7 +7,7 @@ public class ItemHealPosionData : ItemData{
 	[SerializeField]
 	int m_heal;
 
-	public ItemHealPosionData(int heal) : base(ItemData.Type.HealPosion, "Sprites/swordoftruth")
+	public ItemHealPosionData(int heal) : base(2)
 	{
 		m_heal = heal;
 	}

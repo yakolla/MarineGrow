@@ -9,7 +9,6 @@ public class Enemy : Creature {
 	// Use this for initialization
 	new void Start () {
 		base.Start();
-		//m_material = transform.Find("Body/mon_a").GetComponent<SkinnedMeshRenderer>().material;
 
 		ChangeWeapon(m_prefWeapon);
 	}
@@ -29,7 +28,6 @@ public class Enemy : Creature {
 		else
 		{
 			m_navAgent.Stop();
-
 		}
 
 	}
@@ -42,6 +40,7 @@ public class Enemy : Creature {
 	public void SetTarget(GameObject obj )
 	{
 		m_goalForNavigation = obj;
+
 	}
 
 }

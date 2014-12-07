@@ -7,7 +7,7 @@ public class ItemGoldData : ItemData{
 	[SerializeField]
 	int m_gold;
 
-	public ItemGoldData(int gold) : base(ItemData.Type.Gold, "Sprites/swordoftruth")
+	public ItemGoldData(int gold) : base(1)
 	{
 		m_gold = gold;
 	}
