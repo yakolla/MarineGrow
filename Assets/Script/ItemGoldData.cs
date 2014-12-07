@@ -4,12 +4,10 @@ using System.Collections;
 [System.Serializable]
 public class ItemGoldData : ItemData{
 
-	[SerializeField]
-	int m_gold;
 
-	public ItemGoldData(int gold) : base(1)
+	public ItemGoldData(int gold) : base(1, gold)
 	{
-		m_gold = gold;
+
 	}
 
 	override public void Pickup(Creature obj){
@@ -17,7 +15,7 @@ public class ItemGoldData : ItemData{
 	}
 
 	override public void Use(Creature obj){
-		Warehouse.Instance.Gold += m_gold;
+		Warehouse.Instance.Gold += Count;
 	}
 
 }

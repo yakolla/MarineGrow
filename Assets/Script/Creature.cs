@@ -24,7 +24,7 @@ public class Creature : MonoBehaviour {
 	protected Type			m_creatureType;
 
 	[SerializeField]
-	protected Weapon.FiringDesc[]	m_firingDescs = null;
+	public Weapon.FiringDesc[]	m_firingDescs = null;
 
 	GameObject				m_prefDamageGUI;
 	public CreatureProperty	m_creatureProperty;

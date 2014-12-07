@@ -4,12 +4,8 @@ using System.Collections;
 [System.Serializable]
 public class ItemHealPosionData : ItemData{
 
-	[SerializeField]
-	int m_heal;
-
-	public ItemHealPosionData(int heal) : base(2)
+	public ItemHealPosionData(int heal) : base(2, heal)
 	{
-		m_heal = heal;
 	}
 
 	override public void Pickup(Creature obj){
@@ -17,7 +13,7 @@ public class ItemHealPosionData : ItemData{
 	}
 
 	override public void Use(Creature obj){
-		obj.m_creatureProperty.Heal(m_heal);
+		obj.m_creatureProperty.Heal(Count);
 	}
 
 }

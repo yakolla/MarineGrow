@@ -5,13 +5,19 @@
 		"waves":
 		[
 			{
-				"refMobSpawnIds":[1]
+				"refMobSpawnIds":[1],
+				"interval":5,
+				"repeatCount":10
 			},
 			{
-				"refMobSpawnIds":[1,2]
+				"refMobSpawnIds":[1,2],
+				"interval":10,
+				"repeatCount":30
 			},
 			{
-				"refMobSpawnIds":[3]
+				"refMobSpawnIds":[3],
+				"interval":10,
+				"repeatCount":1
 			},
 		]
 	},
@@ -21,7 +27,9 @@
 		"waves":
 		[
 			{
-				"refMobSpawnIds":[1]
+				"refMobSpawnIds":[1],
+				"interval":10,
+				"repeatCount":1
 			}
 		]
 	}

@@ -7,11 +7,10 @@ public class ItemWeaponData : ItemData{
 	string 	m_prefWeapon;
 	string 	m_weaponName;
 
-	public ItemWeaponData(int refItemId) : base(refItemId)
+	public ItemWeaponData(int refItemId) : base(refItemId, 1)
 	{
 		m_prefWeapon = "Pref/" + RefItem.codeName;
 		m_weaponName = RefItem.codeName;
-		LevelUpReqDescs.Add(new LevelUpReqDesc(ItemData.Type.WeaponFragment, 1));
 	}
 
 	public string WeaponName
@@ -22,6 +21,27 @@ public class ItemWeaponData : ItemData{
 	override public void Use(Creature obj)
 	{
 		obj.ChangeWeapon(Resources.Load<GameObject>(m_prefWeapon));
+
+		if (RefItem.evolutionFiring == null)
+		{
+			obj.m_firingDescs = new Weapon.FiringDesc[1];
+			obj.m_firingDescs[0].angle = 0;
+			obj.m_firingDescs[0].delayTime = 0;
+		}
+		else
+		{
+			obj.m_firingDescs = new Weapon.FiringDesc[this.Evolution*2+1];
+			for(int i = 0; i < obj.m_firingDescs.Length; ++i)
+			{
+				obj.m_firingDescs[i].angle = RefItem.evolutionFiring.angle*((i+1)/2);
+				obj.m_firingDescs[i].delayTime = RefItem.evolutionFiring.delay*i;
+				if (i % 2 == 1)
+				{
+					obj.m_firingDescs[i].angle *= -1;
+				}
+			}
+		}
+
 		ApplyOptions(obj);
 	}
 
