@@ -3,65 +3,26 @@ guid: f3fb7b489ea82684e9dc0d68f62e8795
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: Bip001
-    100002: Bip001 Head
-    100004: Bip001 HeadNub
-    100006: Bip001 L Calf
-    100008: Bip001 L Foot
-    100010: Bip001 L Thigh
-    100012: Bip001 L Toe0
-    100014: Bip001 L Toe0Nub
-    100016: Bip001 Neck
-    100018: Bip001 Pelvis
-    100020: Bip001 Ponytail1
-    100022: Bip001 Ponytail1Nub
-    100024: Bip001 R Calf
-    100026: Bip001 R Foot
-    100028: Bip001 R Thigh
-    100030: Bip001 R Toe0
-    100032: Bip001 R Toe0Nub
-    100034: Bip001 Spine
-    100036: Bone001
-    100038: Bone002
-    100040: Bone003
-    100042: Bone004
-    100044: monster_b1
-    100046: //RootNode
-    100048: Bone003(mirrored)
-    100050: Bone005
-    100052: mon_b
-    400000: Bip001
-    400002: Bip001 Head
-    400004: Bip001 HeadNub
-    400006: Bip001 L Calf
-    400008: Bip001 L Foot
-    400010: Bip001 L Thigh
-    400012: Bip001 L Toe0
-    400014: Bip001 L Toe0Nub
-    400016: Bip001 Neck
-    400018: Bip001 Pelvis
-    400020: Bip001 Ponytail1
-    400022: Bip001 Ponytail1Nub
-    400024: Bip001 R Calf
-    400026: Bip001 R Foot
-    400028: Bip001 R Thigh
-    400030: Bip001 R Toe0
-    400032: Bip001 R Toe0Nub
-    400034: Bip001 Spine
-    400036: Bone001
-    400038: Bone002
-    400040: Bone003
-    400042: Bone004
-    400044: monster_b1
-    400046: //RootNode
-    400048: Bone003(mirrored)
-    400050: Bone005
-    400052: mon_b
-    4300000: monster_b1
-    4300002: mon_b
+    100000: Bone01
+    100002: Bone02
+    100004: Bone03
+    100006: Bone04
+    100008: Bone05
+    100010: mon_b
+    100012: //RootNode
+    400000: Bone01
+    400002: Bone02
+    400004: Bone03
+    400006: Bone04
+    400008: Bone05
+    400010: mon_b
+    400012: //RootNode
+    2300000: Bone01
+    3300000: Bone01
+    4300000: mon_b
+    4300002: Bone01
     9500000: //RootNode
-    13700000: monster_b1
-    13700002: mon_b
+    13700000: mon_b
   materials:
     importMaterials: 1
     materialName: 0
@@ -69,7 +30,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     animationCompression: 1
     animationRotationError: .5

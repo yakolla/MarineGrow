@@ -3,19 +3,24 @@ guid: 5e7adb73d435ddb4dbff11f61fa67c0e
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: Bone003
-    100002: Bone003(mirrored)
-    100004: Bone004
-    100006: Bone005
-    100008: mon_b
-    100010: //RootNode
-    400000: Bone003
-    400002: Bone003(mirrored)
-    400004: Bone004
-    400006: Bone005
-    400008: mon_b
-    400010: //RootNode
+    100000: Bone01
+    100002: Bone02
+    100004: Bone03
+    100006: Bone04
+    100008: Bone05
+    100010: mon_b
+    100012: //RootNode
+    400000: Bone01
+    400002: Bone02
+    400004: Bone03
+    400006: Bone04
+    400008: Bone05
+    400010: mon_b
+    400012: //RootNode
+    2300000: Bone01
+    3300000: Bone01
     4300000: mon_b
+    4300002: Bone01
     7400000: Take 001
     9500000: //RootNode
     13700000: mon_b
