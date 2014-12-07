@@ -47,18 +47,25 @@ public class RefItemSpawn
 public class RefMobSpawn : RefBaseData
 {
 	public int 					mobCount;
-	public float 				interval;	
+	public float 				interval;
+	public int					repeatCount;
 	public string				prefEnemy;
 	public RefItemSpawn[]		refItemSpawns;
+}
+
+public class RefWave
+{
+	public int[]			refMobSpawnIds;
+	
+	[JsonIgnore]
+	public Dictionary<int, RefMobSpawn>		refMobSpawns = new Dictionary<int, RefMobSpawn>();
 }
 
 public class RefWorldMap : RefBaseData
 {
 	public string			name;
-	public int[]			refMobSpawnIds;
+	public RefWave[]		waves;
 
-	[JsonIgnore]
-	public Dictionary<int, RefMobSpawn>		refMobSpawns = new Dictionary<int, RefMobSpawn>();
 }
 
 public class RefData {
@@ -93,13 +100,16 @@ public class RefData {
 
 		foreach(KeyValuePair<int, RefWorldMap> pair in m_refWorldMaps)
 		{
-			foreach(int id in pair.Value.refMobSpawnIds)
+			foreach(RefWave wave in pair.Value.waves)
 			{
-				pair.Value.refMobSpawns[id] = m_refMobSpawns[id];
-
-				foreach(RefItemSpawn itemSpawn in m_refMobSpawns[id].refItemSpawns)
+				foreach(int id in wave.refMobSpawnIds)
 				{
-					itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
+					wave.refMobSpawns[id] = m_refMobSpawns[id];
+					
+					foreach(RefItemSpawn itemSpawn in m_refMobSpawns[id].refItemSpawns)
+					{
+						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
+					}
 				}
 			}
 		}

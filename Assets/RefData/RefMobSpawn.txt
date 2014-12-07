@@ -3,6 +3,7 @@
 		"id":1,
 		"mobCount":3,
 		"interval":10,
+		"repeatCount":3,
 		"prefEnemy":"mon_a",
 		"refItemSpawns":
 		[
@@ -25,6 +26,7 @@
 		"id":2,
 		"mobCount":1,
 		"interval":10,
+		"repeatCount":3,
 		"prefEnemy":"mon_a_fly",
 		"refItemSpawns":
 		[
@@ -33,7 +35,17 @@
 				"minValue":1,
 				"maxValue":1,
 				"ratio":1
-			},
+			}
+		]
+	},
+	{
+		"id":3,
+		"mobCount":1,
+		"interval":10,
+		"repeatCount":3,
+		"prefEnemy":"mon_a_boss",
+		"refItemSpawns":
+		[
 			{
 				"refItemId":4,
 				"minValue":1,

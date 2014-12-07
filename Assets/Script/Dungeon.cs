@@ -69,7 +69,7 @@ public class Dungeon : MonoBehaviour {
 	                item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
                     break;
 				case ItemData.Type.Weapon:
-					item = new ItemWeaponData("Pref/" + desc.refItem.codeName);
+					item = new ItemWeaponData(desc.refItem.id);
 					bindItemOption(item, desc.itemOptionSpawns);
 
 					break;

@@ -51,8 +51,11 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (m_cheat == true)
 		{
-			Warehouse.Instance.PushItem(new ItemWeaponData("Pref/Gun"));
-			Warehouse.Instance.PushItem(new ItemWeaponData("Pref/Firegun"));
+			Warehouse.Instance.PushItem(new ItemWeaponData(4));
+			Warehouse.Instance.PushItem(new ItemWeaponData(5));
+			Warehouse.Instance.PushItem(new ItemWeaponData(6));
+			Warehouse.Instance.PushItem(new ItemWeaponData(7));
+			Warehouse.Instance.PushItem(new ItemWeaponData(8));
 		}
 		else
 		{
@@ -60,7 +63,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData("Pref/Gun"));
+				Warehouse.Instance.PushItem(new ItemWeaponData(6));
 			}
 			
 			//Save ();

@@ -7,10 +7,10 @@ public class ItemWeaponData : ItemData{
 	string 	m_prefWeapon;
 	string 	m_weaponName;
 
-	public ItemWeaponData(string prefWeapon) : base(4)
+	public ItemWeaponData(int refItemId) : base(refItemId)
 	{
-		m_prefWeapon = prefWeapon;
-		m_weaponName = Resources.Load<GameObject>(prefWeapon).name;
+		m_prefWeapon = "Pref/" + RefItem.codeName;
+		m_weaponName = RefItem.codeName;
 		LevelUpReqDescs.Add(new LevelUpReqDesc(ItemData.Type.WeaponFragment, 1));
 	}
 

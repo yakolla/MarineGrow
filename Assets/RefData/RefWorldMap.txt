@@ -2,11 +2,27 @@
 	{
 		"id":1,
 		"name":"Basic Dungeon",
-		"refMobSpawnIds":[1,2]
+		"waves":
+		[
+			{
+				"refMobSpawnIds":[1]
+			},
+			{
+				"refMobSpawnIds":[1,2]
+			},
+			{
+				"refMobSpawnIds":[3]
+			},
+		]
 	},
 	{
 		"id":2,
 		"name":"Midium Dungeon",
-		"refMobSpawnIds":[1]
+		"waves":
+		[
+			{
+				"refMobSpawnIds":[1]
+			}
+		]
 	}
 ]

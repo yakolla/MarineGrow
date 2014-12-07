@@ -28,5 +28,23 @@
 		"codeName":"LightningBoltLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth"
+	},
+	{
+		"id":6,
+		"codeName":"Gun",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
+		"id":7,
+		"codeName":"RocketLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
+		"id":8,
+		"codeName":"GrenadeLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth"
 	}
 ]
