@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-public class OptionDesc
+public class ItemOptionDesc
 {
 	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
 	ItemData.Option	m_type;
 	float	m_value;
 	
-	public OptionDesc(ItemData.Option	type, float	value)
+	public ItemOptionDesc(ItemData.Option	type, float	value)
 	{
 		m_type = type;
 		m_value = value;
@@ -32,33 +32,7 @@ public class OptionDesc
 	}
 }
 
-public struct LevelUpReqDesc
-{
-	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
-	ItemData.Type	m_type;
-	int		m_value;
-	
-	public LevelUpReqDesc(ItemData.Type	type, int	value)
-	{
-		m_type = type;
-		m_value = value;
-	}
-	
-	public ItemData.Type ItemType
-	{
-		get {return m_type;}
-	}
-	
-	public int ItemCount
-	{
-		get {return m_value;}
-	}
-	
-	public string Descript()
-	{
-		return m_type.ToString() + ":" + m_value.ToString();
-	}
-}
+
 public class ItemData {
 	
 	public enum Type
@@ -66,7 +40,8 @@ public class ItemData {
 		Gold,
 		HealPosion,
 		Weapon,
-		WeaponFragment,
+		WeaponUpgradeFragment,
+		WeaponEvolutionFragment,
 		Count
 	}
 
@@ -82,24 +57,27 @@ public class ItemData {
 
 
 	int				m_refItemId;
-	int				m_count = 1;
+	int				m_count = 0;
 	int				m_level = 1;
+	int				m_evoultion = 0;
 
-	List<OptionDesc>	m_optionDescs = new List<OptionDesc>();
-	List<LevelUpReqDesc>	m_levelupReqDescs = new List<LevelUpReqDesc>();
+	List<ItemOptionDesc>		m_optionDescs = new List<ItemOptionDesc>();
 
 	[JsonIgnore]
 	RefItem				m_refItem;
 
-	public ItemData(int refItemId)
+	public ItemData(int refItemId, int count)
 	{
 		m_refItemId = refItemId;
+		m_count = count;
 		m_refItem = RefData.Instance.RefItems[m_refItemId];
 	}
 
 	virtual public string Description()
 	{
-		return "Level:" + Level + "\n" + m_refItem.type.ToString() + OptionsDescription();
+		return "Level:" + Level + "\n" + 
+				"Evolution:" + Evolution + "\n" + 
+				m_refItem.type.ToString() + OptionsDescription();
 	}
 
 	protected string OptionsDescription()
@@ -108,7 +86,7 @@ public class ItemData {
 			return "";
 
 		string desc = "\n";
-		foreach(OptionDesc op in OptionDescs)
+		foreach(ItemOptionDesc op in OptionDescs)
 		{
 			desc += op.Descript() + "\n";
 		}
@@ -126,7 +104,7 @@ public class ItemData {
 
 	public void ApplyOptions(Creature obj)
 	{
-		foreach(OptionDesc desc in m_optionDescs)
+		foreach(ItemOptionDesc desc in m_optionDescs)
 		{
 			switch(desc.Type)
 			{
@@ -144,7 +122,7 @@ public class ItemData {
 
 	public void NoApplyOptions(Creature obj)
 	{
-		foreach(OptionDesc desc in m_optionDescs)
+		foreach(ItemOptionDesc desc in m_optionDescs)
 		{
 			switch(desc.Type)
 			{
@@ -166,6 +144,12 @@ public class ItemData {
 		set {m_level = value;}
 	}
 
+	public int Evolution
+	{
+		get {return m_evoultion;}
+		set {m_evoultion = value;}
+	}
+
 	public int Count
 	{
 		get {return m_count;}
@@ -177,14 +161,9 @@ public class ItemData {
 		get {return m_refItem;}
 	}
 
-	public List<OptionDesc> OptionDescs
+	public List<ItemOptionDesc> OptionDescs
 	{
 		get {return m_optionDescs;}
-	}
-
-	public List<LevelUpReqDesc> LevelUpReqDescs
-	{
-		get {return m_levelupReqDescs;}
 	}
 
 }

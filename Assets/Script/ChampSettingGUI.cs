@@ -51,11 +51,16 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (m_cheat == true)
 		{
-			Warehouse.Instance.PushItem(new ItemWeaponData(4));
-			Warehouse.Instance.PushItem(new ItemWeaponData(5));
-			Warehouse.Instance.PushItem(new ItemWeaponData(6));
-			Warehouse.Instance.PushItem(new ItemWeaponData(7));
-			Warehouse.Instance.PushItem(new ItemWeaponData(8));
+			if (Warehouse.Instance.Items.Count == 0)
+			{
+				Warehouse.Instance.PushItem(new ItemWeaponData(101));
+				Warehouse.Instance.PushItem(new ItemWeaponData(102));
+				Warehouse.Instance.PushItem(new ItemWeaponData(103));
+				Warehouse.Instance.PushItem(new ItemWeaponData(104));
+				Warehouse.Instance.PushItem(new ItemWeaponData(105));
+				Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData(11));
+				Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData(11));
+			}
 		}
 		else
 		{
@@ -63,7 +68,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(6));
+				Warehouse.Instance.PushItem(new ItemWeaponData(103));
 			}
 			
 			//Save ();
@@ -101,6 +106,29 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
+	bool canProgressUpItem(List<RefProgressUpItem> progressUpItems)
+	{
+		bool canLevelup = true;
+
+		foreach(RefProgressUpItem levelUpItem in progressUpItems)
+		{
+			ItemObject haveItemObj = Warehouse.Instance.FindItem(levelUpItem.refItemId);
+			if (haveItemObj == null)
+			{
+				canLevelup = false;
+				continue;
+			}
+			
+			if (haveItemObj != null && haveItemObj.Item.Count < levelUpItem.count )
+			{
+				canLevelup = false;
+				continue;
+			}
+		}
+
+		return canLevelup;
+	}
+	
 	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot)
 	{
 		int startY = 0;
@@ -128,29 +156,31 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 
 
-		if (selectedItem.Item.LevelUpReqDescs.Count > 0)
+		if (selectedItem.Item.RefItem.levelUpItems.Count > 0)
 		{
-			bool canLevelup = true;
-			ItemObject[] reqItems = new ItemObject[selectedItem.Item.LevelUpReqDescs.Count];
-			
-			for(int i = 0; i < reqItems.Length; ++i)
-			{
-				LevelUpReqDesc desc = selectedItem.Item.LevelUpReqDescs[i];
-				reqItems[i] = Warehouse.Instance.FindItemByItemType(desc.ItemType);
-				if (reqItems[i] == null)
-				{
-					canLevelup = false;
-				}
-			}
+			bool canLevelup = canProgressUpItem(selectedItem.Item.RefItem.levelUpItems);
 			
 			if (canLevelup == true)
 			{
 				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+2)+size, startY+(size*6), size*2, size), "LevelUp"))
 				{
 					++selectedItem.Item.Level;
-					foreach(ItemObject obj in reqItems)
+					foreach(RefProgressUpItem levelUpItem in selectedItem.Item.RefItem.levelUpItems)
 					{
-						Warehouse.Instance.RemoveItem(obj);
+						Warehouse.Instance.PullItem(levelUpItem.refItemId, levelUpItem.count);
+					}
+				}
+			}
+
+			bool canEvolution = canProgressUpItem(selectedItem.Item.RefItem.evolutionItems);
+			if (canEvolution == true)
+			{
+				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+4)+size, startY+(size*6), size*2, size), "Evolution"))
+				{
+					++selectedItem.Item.Evolution;
+					foreach(RefProgressUpItem levelUpItem in selectedItem.Item.RefItem.evolutionItems)
+					{
+						Warehouse.Instance.PullItem(levelUpItem.refItemId, levelUpItem.count);
 					}
 				}
 			}
@@ -163,6 +193,8 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		int startY = 0;
 		int size = (int)m_height;
+
+		GUI.skin.label.alignment = TextAnchor.UpperLeft;
 
 		if (GUI.Button(new Rect(Screen.width-size, 0, size, size), "X") && m_equipedWeapon != null)
 		{
@@ -215,6 +247,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}
 
+		GUI.skin.label.alignment = TextAnchor.UpperLeft;
 
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		if (m_latestSelected != null)

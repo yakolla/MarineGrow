@@ -10,8 +10,7 @@ public class Spawn : MonoBehaviour {
 
 
 	int				m_wave = 0;
-	int				m_spawnCount = 0;
-	int				m_maxSpawnCountOfTheWave = 0;
+	int				m_maxRepeatCount = 0;
 	// Use this for initialization
 	void Start () {
 		StartWave(0);
@@ -21,47 +20,53 @@ public class Spawn : MonoBehaviour {
 	{
 		int dungeonId = transform.parent.GetComponent<Dungeon>().DungeonId;
 
-		if (RefData.Instance.RefWorldMaps[dungeonId].waves.Length <= wave)
+		RefWorldMap dungeon = RefData.Instance.RefWorldMaps[dungeonId];
+
+		if (dungeon.waves.Length <= wave)
 			return;
 
 		m_wave = wave;
-		m_spawnCount = 0;
-		m_maxSpawnCountOfTheWave = 0;
+		m_maxRepeatCount = dungeon.waves[wave].repeatCount;
 
-		foreach(KeyValuePair<int, RefMobSpawn> pair in RefData.Instance.RefWorldMaps[dungeonId].waves[wave].refMobSpawns)
-		{
-			m_maxSpawnCountOfTheWave += pair.Value.repeatCount;
-			StartCoroutine(spawnEnemyPer(pair.Value, 0));
-		}
+		StartCoroutine(spawnEnemyPer(dungeon.waves[wave], 0));
 	}
 
-	IEnumerator spawnEnemyPer(RefMobSpawn desc, int repeatNum)
+	IEnumerator spawnEnemyPer(RefWave wave, int repeatNum)
 	{
-		if (m_target != null && repeatNum < desc.repeatCount)
+		if (m_target != null)
 		{
 			float cx = transform.position.x;
 			float cz = transform.position.z;
-			
-			GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + desc.prefEnemy);
-			for(int i = 0; i < desc.mobCount; ++i)
+
+			foreach(KeyValuePair<int, RefMobSpawn> pair in wave.refMobSpawns)
 			{
-				Vector3 enemyPos = prefEnemy.transform.position;
-				GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
-				obj.GetComponent<Enemy>().SetTarget(m_target);
-				obj.GetComponent<Enemy>().SetSpawnDesc(desc);
+				GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
+				for(int i = 0; i < pair.Value.mobCount; ++i)
+				{
+					Vector3 enemyPos = prefEnemy.transform.position;
+					GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
+					Enemy enemy = obj.GetComponent<Enemy>();
+					
+					enemy.SetTarget(m_target);
+					enemy.SetSpawnDesc(pair.Value);
+
+					//enemy.m_creatureProperty.AlphaMaxHP+=repeatNum/2;
+					enemy.m_creatureProperty.AlphaPhysicalAttackDamage+=repeatNum;
+					enemy.m_creatureProperty.AlphaPhysicalDefencePoint+=repeatNum;
+				}	
 			}
+
+			repeatNum++;
 		}
 				
-		yield return new WaitForSeconds (desc.interval);
+		yield return new WaitForSeconds (wave.interval);
 
-		if (repeatNum < desc.repeatCount)
+
+		if (repeatNum < wave.repeatCount)
 		{
-			StartCoroutine(spawnEnemyPer(desc, repeatNum+1));
+			StartCoroutine(spawnEnemyPer(wave, repeatNum));
 		}
-
-		++m_spawnCount;
-
-		if (m_spawnCount == m_maxSpawnCountOfTheWave)
+		else
 		{
 			StartWave(m_wave+1);
 		}

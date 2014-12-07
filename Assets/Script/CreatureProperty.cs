@@ -10,14 +10,19 @@ public class CreatureProperty {
 	float 	m_hp;
 
 	[SerializeField]
+	float	m_alphaMaxHP = 0;
+
+	[SerializeField]
 	float	m_basePhysicalDamage = 0;
 
+	[SerializeField]
 	float	m_alphaPhysicalDamage = 0;
 
 	[SerializeField]
 	[Range (0, 100)]
 	float	m_basePhysicalDefence = 0;
 
+	[SerializeField]
 	float	m_alphaPhysicalDefencePoint = 0;
 
 	[SerializeField]
@@ -42,13 +47,13 @@ public class CreatureProperty {
 
 	public float MaxHP
 	{
-		get { return m_baseMaxHP*100; }
+		get { return (m_baseMaxHP+AlphaMaxHP)*100; }
 	}
 
-	public float BaseMaxHP
+	public float AlphaMaxHP
 	{
-		get { return m_baseMaxHP; }
-		set { m_baseMaxHP = value; }
+		get { return m_alphaMaxHP; }
+		set { m_alphaMaxHP = value; }
 	}
 
 	public float HP

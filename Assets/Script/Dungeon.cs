@@ -42,7 +42,7 @@ public class Dungeon : MonoBehaviour {
 			float ratio = Random.Range(0f, 1f);
 			if (ratio <= desc.ratio)
 			{
-				item.OptionDescs.Add(new OptionDesc(desc.type, Random.Range(desc.minValue, desc.maxValue)));
+				item.OptionDescs.Add(new ItemOptionDesc(desc.type, Random.Range(desc.minValue, desc.maxValue)));
 			}
 		}
 	}
@@ -73,8 +73,8 @@ public class Dungeon : MonoBehaviour {
 					bindItemOption(item, desc.itemOptionSpawns);
 
 					break;
-				case ItemData.Type.WeaponFragment:
-					item = new ItemWeaponFragmentData();
+				case ItemData.Type.WeaponUpgradeFragment:
+					item = new ItemWeaponUpgradeFragmentData(3);
 					
 					break;
 				}

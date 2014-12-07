@@ -69,10 +69,10 @@ public class ChampLevelupGUI : MonoBehaviour {
 		}
 
 		GUI.Label(new Rect(0, startY+(size*3), size, size), Resources.Load<Texture>("Sprites/robeofpower"));
-		GUI.Label(new Rect(size, startY+(size*3), size, size), m_creature.m_creatureProperty.BaseMaxHP.ToString());
+		GUI.Label(new Rect(size, startY+(size*3), size, size), m_creature.m_creatureProperty.AlphaMaxHP.ToString());
 		if (GUI.Button(new Rect(size+size, startY+(size*3), size, size), "+") && m_statPoing > 0)
 		{
-			m_creature.m_creatureProperty.BaseMaxHP+=1;
+			m_creature.m_creatureProperty.AlphaMaxHP+=1;
 			--m_statPoing;
 		}
 

@@ -24,7 +24,7 @@ public class Warehouse {
 
 	public void PushItem(ItemData item)
 	{
-		ItemObject itemObj = FindItemByItem(item);
+		ItemObject itemObj = FindItem(item);
 		if (itemObj == null)
 		{
 			m_items.Add(new ItemObject(item));
@@ -32,6 +32,24 @@ public class Warehouse {
 		else
 		{
 			itemObj.Item.Count += item.Count;
+		}
+	}
+
+	public void PullItem(int refItemId, int count)
+	{
+		ItemObject itemObj = FindItem(refItemId);
+		if (itemObj == null)
+		{
+			return;
+		}
+
+		if (count <= itemObj.Item.Count)
+		{
+			itemObj.Item.Count -= count;
+			if (itemObj.Item.Count == 0)
+			{
+				RemoveItem(itemObj);
+			}
 		}
 
 	}
@@ -41,11 +59,11 @@ public class Warehouse {
 		m_items.Remove(obj);
 	}
 
-	public ItemObject FindItemByItemType(ItemData.Type type)
+	public ItemObject FindItem(int refItemId)
 	{
 		foreach(ItemObject obj in m_items)
 		{
-			if (obj.Item.RefItem.type == type)
+			if (obj.Item.RefItem.id == refItemId)
 			{
 				return obj;
 			}
@@ -54,7 +72,7 @@ public class Warehouse {
 		return null;
 	}
 
-	public ItemObject FindItemByItem(ItemData item)
+	public ItemObject FindItem(ItemData item)
 	{
 		foreach(ItemObject obj in m_items)
 		{

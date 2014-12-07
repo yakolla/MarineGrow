@@ -11,13 +11,27 @@ public class RefBaseData
 	public int 				id;
 }
 
+public class RefProgressUpItem
+{
+	public int				refItemId;
+	public int				count;
+}
+
+public class RefEvolutionFiring
+{
+	public float			angle;
+	public float			delay;
+}
+
 public class RefItem : RefBaseData
 {
 	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
-	public 	ItemData.Type 	type;
-	public 	string 			codeName;
-	public	string			icon;
-
+	public 	ItemData.Type 		type;
+	public 	string 				codeName;
+	public	string				icon;
+	public	List<RefProgressUpItem>	levelUpItems = new List<RefProgressUpItem>();
+	public	List<RefProgressUpItem>	evolutionItems = new List<RefProgressUpItem>();
+	public 	RefEvolutionFiring	evolutionFiring;
 }
 
 public class RefItemOptionSpawn
@@ -47,16 +61,16 @@ public class RefItemSpawn
 public class RefMobSpawn : RefBaseData
 {
 	public int 					mobCount;
-	public float 				interval;
-	public int					repeatCount;
 	public string				prefEnemy;
 	public RefItemSpawn[]		refItemSpawns;
 }
 
 public class RefWave
 {
-	public int[]			refMobSpawnIds;
-	
+	public int[]			refMobSpawnIds;	
+	public float 			interval;
+	public int				repeatCount;
+
 	[JsonIgnore]
 	public Dictionary<int, RefMobSpawn>		refMobSpawns = new Dictionary<int, RefMobSpawn>();
 }

@@ -2,8 +2,6 @@
 	{
 		"id":1,
 		"mobCount":3,
-		"interval":10,
-		"repeatCount":3,
 		"prefEnemy":"mon_a",
 		"refItemSpawns":
 		[
@@ -11,13 +9,13 @@
 				"refItemId":1,
 				"minValue":1,
 				"maxValue":1,
-				"ratio":0.5
+				"ratio":0.1
 			},
 			{
 				"refItemId":2,
 				"minValue":1,
 				"maxValue":1,
-				"ratio":0.5
+				"ratio":0.01
 				
 			}
 		]
@@ -25,8 +23,6 @@
 	{
 		"id":2,
 		"mobCount":1,
-		"interval":10,
-		"repeatCount":3,
 		"prefEnemy":"mon_a_fly",
 		"refItemSpawns":
 		[
@@ -41,13 +37,11 @@
 	{
 		"id":3,
 		"mobCount":1,
-		"interval":10,
-		"repeatCount":3,
 		"prefEnemy":"mon_a_boss",
 		"refItemSpawns":
 		[
 			{
-				"refItemId":4,
+				"refItemId":101,
 				"minValue":1,
 				"maxValue":1,
 				"ratio":1,
