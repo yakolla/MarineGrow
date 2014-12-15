@@ -238,6 +238,7 @@ public class Creature : MonoBehaviour {
 	{
 		GameObject.Find("Dungeon").gameObject.GetComponent<Dungeon>().SpawnItemBox(m_spawnDesc, transform.position);
 
+
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
 

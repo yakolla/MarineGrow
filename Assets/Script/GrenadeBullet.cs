@@ -46,7 +46,6 @@ public class GrenadeBullet : Bullet {
 	
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
-		m_isDestroying = true;
 		DestroyObject(m_shadow);
 
 		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
@@ -56,6 +55,8 @@ public class GrenadeBullet : Bullet {
 
 	void bomb()
 	{
+		m_isDestroying = true;
+
 		string[] tags = m_ownerCreature.GetAutoTargetTags();
 		foreach(string tag in tags)
 		{
@@ -75,7 +76,7 @@ public class GrenadeBullet : Bullet {
 
 		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
 		bombEffect.particleSystem.startSize = m_bombRange*2;
-
+		this.audio.Play();
 		StartCoroutine(destoryObject(bombEffect));
 	}
 }

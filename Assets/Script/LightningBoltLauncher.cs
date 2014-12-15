@@ -22,6 +22,7 @@ public class LightningBoltLauncher : Weapon {
 	override public void StopFiring()
 	{
 		base.StopFiring();
+		this.audio.Stop();
 		if (m_bullet != null)
 		{
 			Bullet bullet = m_bullet.GetComponent<Bullet>();

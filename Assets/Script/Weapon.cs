@@ -46,6 +46,8 @@ public class Weapon : MonoBehaviour {
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 		m_lastCreated = Time.time;
 
+		this.audio.Play();
+
 		m_callbackCreateBullet();
 		return obj;
 	}

@@ -24,6 +24,7 @@ public class Firegun : Weapon {
 	override public void StopFiring()
 	{
 		base.StopFiring();
+		this.audio.Stop();
 		if (m_bullet != null)
 		{
 			foreach(GameObject obj in m_bullet)
