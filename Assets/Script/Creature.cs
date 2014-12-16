@@ -71,8 +71,8 @@ public class Creature : MonoBehaviour {
 	{
 
 		Vector3 gunPoint = m_weaponHolder.transform.position;
-		gunPoint.x = transform.position.x;
-		gunPoint.z = transform.position.z;
+		//gunPoint.x = transform.position.x;
+		//gunPoint.z = transform.position.z;
 		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
 
@@ -223,10 +223,15 @@ public class Creature : MonoBehaviour {
 
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
 		{
-			offender.m_creatureProperty.giveExp(m_creatureProperty.Exp);
+			offender.GiveExp(m_creatureProperty.Exp);
 			Death();
 		}
 
+	}
+
+	virtual public void GiveExp(int exp)
+	{
+		m_creatureProperty.giveExp(exp);
 	}
 
 	public Type CreatureType

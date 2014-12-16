@@ -61,7 +61,10 @@ public class Champ : Creature {
 			{
 				pos.x += step;
 			}
-			
+
+			float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
+			transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
+
 			m_navAgent.SetDestination(transform.position+pos);
 		}
 

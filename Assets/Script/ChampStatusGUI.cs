@@ -66,24 +66,15 @@ public class ChampStatusGUI : MonoBehaviour {
 		drawGuage(new Rect(0, startY+(size*1), m_width-size, size), expRatio, lable, m_guageTexture); 
 
 	}
-	IEnumerator spawnObject(GameObject pref, Vector3 pos)
-	{
-		GameObject spwan = (GameObject)Instantiate(pref, pos, transform.rotation);
-		spwan.SetActive(false);
-		yield return new WaitForSeconds (0.3f);
-		spwan.SetActive(true);
-	}
+
 	void DisplaySkillWindow(int windowID)
 	{
 		int startX = 0;
 		int size = (int)m_width/4;
-
 		if (GUI.Button(new Rect(startX+0*size, 0, size, size), "Z"))
 		{
 			GameObject prefFollower = Resources.Load<GameObject>("Pref/Follower");
-			Vector3 pos = transform.position;
-			StartCoroutine(spawnObject(prefFollower, pos));
-
+			Instantiate(prefFollower, transform.position, transform.rotation);
 		}
 		GUI.Button(new Rect(startX+1*size, 0, size, size), "X");
 		GUI.Button(new Rect(startX+2*size, 0, size, size), "C");
