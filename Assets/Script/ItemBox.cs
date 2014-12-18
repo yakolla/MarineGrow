@@ -18,7 +18,7 @@ public class ItemBox : MonoBehaviour {
 	void SetTarget(GameObject target)
 	{
 		m_target = target;
-		m_bezier = new Bezier(gameObject, target.transform.position, transform.position, target.transform.position);
+		m_bezier = new Bezier(gameObject, target, transform.position, target.transform.position, 0.07f);
 	}
 
 	public void Pickup(Creature obj)

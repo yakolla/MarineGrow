@@ -128,5 +128,30 @@
 			"angle":30,
 			"delay":1
 		}
+	},
+	{
+		"id":106,
+		"codeName":"GuidedRocketLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		],
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0
+		}
 	}
 ]

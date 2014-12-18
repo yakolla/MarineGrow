@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviour {
 		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, chargingTime, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
+
 		m_lastCreated = Time.time;
 
 		this.audio.Play();
