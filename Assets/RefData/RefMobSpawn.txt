@@ -53,5 +53,33 @@
 				]
 			}
 		]
+	},
+	{
+		"id":4,
+		"mobCount":3,
+		"prefEnemy":"mon_d",
+		"refItemSpawns":
+		[
+			{
+				"refItemId":3,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":1
+			}
+		]
+	},
+	{
+		"id":5,
+		"mobCount":3,
+		"prefEnemy":"mon_e",
+		"refItemSpawns":
+		[
+			{
+				"refItemId":3,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":1
+			}
+		]
 	}
 ]

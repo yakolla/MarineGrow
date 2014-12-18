@@ -62,6 +62,7 @@ public class Creature : MonoBehaviour {
 			if (m_animator != null)
 			{
 				m_animator.SetTrigger("Attack");
+				Debug.Log("a");
 			}
 
 		};

@@ -20,6 +20,25 @@ public class MeleeBullet : Bullet {
 		{
 			m_collider.enabled = true;
 			m_lastDamageTime = Time.time;
+
+			RaycastHit hit;
+			Vector3 fwd = transform.TransformDirection(Vector3.right);
+			if (Physics.Raycast(transform.position, fwd, out hit, 10f))
+			{
+				Creature creature = hit.transform.gameObject.GetComponent<Creature>();
+				if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+				{				
+					float dist = Vector3.Distance(m_ownerCreature.transform.position, creature.transform.position);
+
+					if (dist < 2f)
+					{
+						creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, PrefDamageEffect));	
+						
+						DestroyObject(gameObject);
+					}
+
+				}
+			}
 		}
 		else
 		{
@@ -36,15 +55,10 @@ public class MeleeBullet : Bullet {
 		transform.localPosition = Vector3.zero;
 		transform.localScale = scale;
 	}
-	
-	override public void StopFiring()
-	{
-		base.StopFiring();
-		DestroyObject(gameObject);
-	}
-	
+
 	void OnTriggerEnter(Collider other) 
 	{
+		return;
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
