@@ -37,7 +37,7 @@
 	{
 		"id":3,
 		"prefEnemy":"mon_a_boss",
-		"refWeaponItem":"107",
+		"refWeaponItem":"103",
 		"refItemSpawns":
 		[
 			{
