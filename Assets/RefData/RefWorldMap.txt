@@ -7,32 +7,38 @@
 			{
 				"refMobSpawnIds":[4],
 				"interval":5,
-				"repeatCount":10
+				"repeatCount":10,
+				"mobCount":3
 			},
 			{
 				"refMobSpawnIds":[5],
 				"interval":10,
-				"repeatCount":10
+				"repeatCount":10,
+				"mobCount":3
 			},
 			{
 				"refMobSpawnIds":[1],
 				"interval":10,
-				"repeatCount":10
+				"repeatCount":10,
+				"mobCount":3
 			},
 			{
 				"refMobSpawnIds":[1,2],
 				"interval":10,
-				"repeatCount":30
+				"repeatCount":10,
+				"mobCount":3
 			},
 			{
 				"refMobSpawnIds":[1,2,4,5],
 				"interval":10,
-				"repeatCount":30
+				"repeatCount":10,
+				"mobCount":3
 			},
 			{
 				"refMobSpawnIds":[3],
 				"interval":10,
-				"repeatCount":1
+				"repeatCount":1,
+				"mobCount":3
 			},
 		]
 	},

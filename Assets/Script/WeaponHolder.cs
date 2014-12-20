@@ -5,7 +5,7 @@ public class WeaponHolder : MonoBehaviour {
 
 	Weapon			m_weapon = null;
 
-	public void ChangeWeapon(GameObject prefWeapon)
+	public void ChangeWeapon(Weapon weapon)
 	{
 		if (m_weapon != null)
 		{
@@ -13,13 +13,7 @@ public class WeaponHolder : MonoBehaviour {
 			m_weapon = null;
 		}
 
-		GameObject obj = Instantiate (prefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-		m_weapon = obj.GetComponent<Weapon>();
-
-		obj.transform.parent = this.transform;
-		obj.transform.localPosition = prefWeapon.transform.localPosition;
-		obj.transform.localRotation = prefWeapon.transform.localRotation;
-		obj.transform.localScale = prefWeapon.transform.localScale;
+		m_weapon = weapon;
 	}
 
 	public Weapon GetWeapon()

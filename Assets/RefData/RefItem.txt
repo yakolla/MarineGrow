@@ -46,13 +46,23 @@
 		{
 			"angle":30,
 			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":0.5,
+			"range":5
 		}
 	},
 	{
 		"id":102,
 		"codeName":"LightningBoltLauncher",
 		"type":"Weapon",
-		"icon":"Sprites/swordoftruth"
+		"icon":"Sprites/swordoftruth",
+		"weapon":
+		{
+			"coolTime":0.5,
+			"range":5
+		}
 	},
 	{
 		"id":103,
@@ -77,6 +87,11 @@
 		{
 			"angle":30,
 			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":0.5,
+			"range":5
 		}
 	},
 	{
@@ -102,6 +117,11 @@
 		{
 			"angle":30,
 			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":0.5,
+			"range":5
 		}
 	},
 	{
@@ -127,6 +147,11 @@
 		{
 			"angle":30,
 			"delay":1
+		},
+		"weapon":
+		{
+			"coolTime":1,
+			"range":5
 		}
 	},
 	{
@@ -152,6 +177,41 @@
 		{
 			"angle":30,
 			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":0.5,
+			"range":5
+		}
+	},
+	{
+		"id":107,
+		"codeName":"Melee",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		],
+		"evolutionFiring":
+		{
+			"angle":0,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":1,
+			"range":1.5
 		}
 	}
 ]

@@ -34,7 +34,7 @@ public class Creature : MonoBehaviour {
 
 	Animator				m_animator;
 	
-	RefMobSpawn				m_spawnDesc;
+	RefMob				m_spawnDesc;
 
 	struct DamageEffect
 	{
@@ -54,10 +54,22 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.init();
 	}
 
-	public void ChangeWeapon(GameObject prefWeapon)
+	public void ChangeWeapon(ItemWeaponData weaponData)
 	{
 		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
-		m_weaponHolder.ChangeWeapon(prefWeapon);
+
+		GameObject obj = Instantiate (weaponData.PrefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
+		Weapon weapon = obj.GetComponent<Weapon>();
+		
+		obj.transform.parent = m_weaponHolder.transform;
+		obj.transform.localPosition = weaponData.PrefWeapon.transform.localPosition;
+		obj.transform.localRotation = weaponData.PrefWeapon.transform.localRotation;
+		obj.transform.localScale = weaponData.PrefWeapon.transform.localScale;
+
+		weapon.AttackRange = weaponData.RefItem.weapon.range;
+		weapon.CoolTime = weaponData.RefItem.weapon.coolTime;
+
+		m_weaponHolder.ChangeWeapon(weapon);
 		m_weaponHolder.GetWeapon().m_callbackCreateBullet = delegate() {
 			if (m_animator != null)
 			{
@@ -83,12 +95,12 @@ public class Creature : MonoBehaviour {
 	{
 		return a.CreatureType != b.CreatureType;
 	}
-	public RefMobSpawn SpawnDesc
+	public RefMob SpawnDesc
 	{
 		get {return m_spawnDesc;}
 	}
 	
-	public void SetSpawnDesc(RefMobSpawn spawnDesc)
+	public void SetSpawnDesc(RefMob spawnDesc)
 	{
 		m_spawnDesc = spawnDesc;
 	}

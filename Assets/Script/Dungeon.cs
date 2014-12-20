@@ -47,7 +47,7 @@ public class Dungeon : MonoBehaviour {
 		}
 	}
 
-	public void SpawnItemBox(RefMobSpawn spawnDesc, Vector3 pos)
+	public void SpawnItemBox(RefMob spawnDesc, Vector3 pos)
 	{
 		if (spawnDesc == null)
 			return;

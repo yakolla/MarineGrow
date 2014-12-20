@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class Parasite : Creature {
 	[SerializeField]
-	GameObject			m_prefWeapon = null;
+	int			m_refWeaponItem = 0;
 
 	new void Start () {
 
 		m_creatureProperty.init();
 
-		ChangeWeapon(m_prefWeapon);
+		ChangeWeapon(new ItemWeaponData(m_refWeaponItem));
 	}
 
 	// Update is called once per frame

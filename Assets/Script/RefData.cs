@@ -23,6 +23,12 @@ public class RefEvolutionFiring
 	public float			delay;
 }
 
+public class RefWeapon
+{
+	public float			coolTime;
+	public float			range;
+}
+
 public class RefItem : RefBaseData
 {
 	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
@@ -32,6 +38,7 @@ public class RefItem : RefBaseData
 	public	List<RefProgressUpItem>	levelUpItems = new List<RefProgressUpItem>();
 	public	List<RefProgressUpItem>	evolutionItems = new List<RefProgressUpItem>();
 	public 	RefEvolutionFiring	evolutionFiring;
+	public  RefWeapon			weapon;
 }
 
 public class RefItemOptionSpawn
@@ -58,10 +65,10 @@ public class RefItemSpawn
 	public RefItem				refItem;
 }
 
-public class RefMobSpawn : RefBaseData
+public class RefMob : RefBaseData
 {
-	public int 					mobCount;
 	public string				prefEnemy;
+	public int					refWeaponItem;
 	public RefItemSpawn[]		refItemSpawns;
 }
 
@@ -70,9 +77,11 @@ public class RefWave
 	public int[]			refMobSpawnIds;	
 	public float 			interval;
 	public int				repeatCount;
+	public int 				mobCount;
+
 
 	[JsonIgnore]
-	public Dictionary<int, RefMobSpawn>		refMobSpawns = new Dictionary<int, RefMobSpawn>();
+	public Dictionary<int, RefMob>		refMobSpawns = new Dictionary<int, RefMob>();
 }
 
 public class RefWorldMap : RefBaseData
@@ -86,7 +95,7 @@ public class RefData {
 
 
 	Dictionary<int, RefWorldMap>	m_refWorldMaps = new Dictionary<int, RefWorldMap>();
-	Dictionary<int, RefMobSpawn>	m_refMobSpawns = new Dictionary<int, RefMobSpawn>();
+	Dictionary<int, RefMob>			m_refMobs = new Dictionary<int, RefMob>();
 	Dictionary<int, RefItemSpawn>	m_refItemSpawns = new Dictionary<int, RefItemSpawn>();
 	Dictionary<int, RefItem>		m_refItems = new Dictionary<int, RefItem>();
 
@@ -109,7 +118,7 @@ public class RefData {
 	void Load()
 	{
 		Deserialize(m_refWorldMaps, "RefWorldMap.txt");
-		Deserialize(m_refMobSpawns, "RefMobSpawn.txt");
+		Deserialize(m_refMobs, "RefMob.txt");
 		Deserialize(m_refItems, "RefItem.txt");
 
 		foreach(KeyValuePair<int, RefWorldMap> pair in m_refWorldMaps)
@@ -118,9 +127,9 @@ public class RefData {
 			{
 				foreach(int id in wave.refMobSpawnIds)
 				{
-					wave.refMobSpawns[id] = m_refMobSpawns[id];
+					wave.refMobSpawns[id] = m_refMobs[id];
 					
-					foreach(RefItemSpawn itemSpawn in m_refMobSpawns[id].refItemSpawns)
+					foreach(RefItemSpawn itemSpawn in m_refMobs[id].refItemSpawns)
 					{
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}

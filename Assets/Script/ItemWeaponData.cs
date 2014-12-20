@@ -4,13 +4,18 @@ using System.Collections;
 [System.Serializable]
 public class ItemWeaponData : ItemData{
 
-	string 	m_prefWeapon;
+	GameObject 	m_prefWeapon;
 	string 	m_weaponName;
 
 	public ItemWeaponData(int refItemId) : base(refItemId, 1)
 	{
-		m_prefWeapon = "Pref/" + RefItem.codeName;
+		m_prefWeapon = Resources.Load<GameObject>("Pref/" + RefItem.codeName);
 		m_weaponName = RefItem.codeName;
+	}
+
+	public GameObject PrefWeapon
+	{
+		get {return m_prefWeapon;}
 	}
 
 	public string WeaponName
@@ -20,7 +25,7 @@ public class ItemWeaponData : ItemData{
 
 	override public void Use(Creature obj)
 	{
-		obj.ChangeWeapon(Resources.Load<GameObject>(m_prefWeapon));
+		obj.ChangeWeapon(this);
 
 		if (RefItem.evolutionFiring == null)
 		{

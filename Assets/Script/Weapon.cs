@@ -85,9 +85,16 @@ public class Weapon : MonoBehaviour {
 		m_firing = false;
 	}
 
+	public float CoolTime
+	{
+		get { return m_coolTime; }
+		set { m_coolTime = value; }
+	}
+
 	public float AttackRange
 	{
 		get { return m_attackRange; }
+		set { m_attackRange = value; }
 	}
 
 }

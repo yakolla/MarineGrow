@@ -1,8 +1,8 @@
 [
 	{
 		"id":1,
-		"mobCount":3,
 		"prefEnemy":"mon_a",
+		"refWeaponItem":"107",
 		"refItemSpawns":
 		[
 			{
@@ -22,8 +22,8 @@
 	},
 	{
 		"id":2,
-		"mobCount":1,
 		"prefEnemy":"mon_a_fly",
+		"refWeaponItem":"102",
 		"refItemSpawns":
 		[
 			{
@@ -36,8 +36,8 @@
 	},
 	{
 		"id":3,
-		"mobCount":1,
 		"prefEnemy":"mon_a_boss",
+		"refWeaponItem":"107",
 		"refItemSpawns":
 		[
 			{
@@ -56,8 +56,8 @@
 	},
 	{
 		"id":4,
-		"mobCount":3,
 		"prefEnemy":"mon_d",
+		"refWeaponItem":"103",
 		"refItemSpawns":
 		[
 			{
@@ -70,8 +70,8 @@
 	},
 	{
 		"id":5,
-		"mobCount":3,
 		"prefEnemy":"mon_e",
+		"refWeaponItem":"101",
 		"refItemSpawns":
 		[
 			{

@@ -38,14 +38,16 @@ public class Spawn : MonoBehaviour {
 			float cx = transform.position.x;
 			float cz = transform.position.z;
 
-			foreach(KeyValuePair<int, RefMobSpawn> pair in wave.refMobSpawns)
+			foreach(KeyValuePair<int, RefMob> pair in wave.refMobSpawns)
 			{
 				GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
-				for(int i = 0; i < pair.Value.mobCount; ++i)
+				for(int i = 0; i < wave.mobCount; ++i)
 				{
 					Vector3 enemyPos = prefEnemy.transform.position;
 					GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
 					Enemy enemy = obj.GetComponent<Enemy>();
+					ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
+					weapon.Item.Use(enemy);
 					
 					enemy.SetTarget(m_target);
 					enemy.SetSpawnDesc(pair.Value);

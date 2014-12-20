@@ -2,15 +2,12 @@
 using System.Collections;
 
 public class Enemy : Creature {
-	[SerializeField]
-	GameObject			m_prefWeapon = null;
 
 	GameObject			m_goalForNavigation;
 	// Use this for initialization
 	new void Start () {
 		base.Start();
 
-		ChangeWeapon(m_prefWeapon);
 	}
 	
 	// Update is called once per frame
