@@ -85,7 +85,7 @@
 		],
 		"evolutionFiring":
 		{
-			"angle":30,
+			"angle":10,
 			"delay":0
 		},
 		"weapon":
@@ -235,7 +235,7 @@
 		],
 		"evolutionFiring":
 		{
-			"angle":30,
+			"angle":10,
 			"delay":0
 		},
 		"weapon":
@@ -243,5 +243,25 @@
 			"coolTime":0.3,
 			"range":7
 		}
+	},
+	{
+		"id":1001,
+		"codeName":"Follower",
+		"type":"Follower",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		]
 	}
 ]

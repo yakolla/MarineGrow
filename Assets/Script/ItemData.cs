@@ -42,6 +42,7 @@ public class ItemData {
 		Weapon,
 		WeaponUpgradeFragment,
 		WeaponEvolutionFragment,
+		Follower,
 		Count
 	}
 

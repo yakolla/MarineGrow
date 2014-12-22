@@ -76,7 +76,10 @@ public class ChampStatusGUI : MonoBehaviour {
 			GameObject prefFollower = Resources.Load<GameObject>("Pref/Follower");
 			Instantiate(prefFollower, transform.position, transform.rotation);
 		}
-		GUI.Button(new Rect(startX+1*size, 0, size, size), "X");
+		if (GUI.Button(new Rect(startX+1*size, 0, size, size), "X"))
+		{
+			m_creature.m_creatureProperty.Heal((int)m_creature.m_creatureProperty.MaxHP);
+		}
 		GUI.Button(new Rect(startX+2*size, 0, size, size), "C");
 		GUI.Button(new Rect(startX+3*size, 0, size, size), "V");
 	}

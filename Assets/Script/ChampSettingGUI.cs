@@ -8,7 +8,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	const int INVEN_SLOT_COLS = 4;
 	const int INVEN_SLOT_ROWS = 4;
-	const int EQUIP_ACCESSORY_SLOT_MAX = 4;
+	const int EQUIP_FOLLOWER_SLOT_MAX = 4;
 
 	[SerializeField]
 	GameObject		m_prefChamp = null;
@@ -20,7 +20,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	RefItemSpawn[]		m_itemSpawnDesc = null;
 
 	ItemObject		m_equipedWeapon = null;
-	ItemObject[]	m_aquipedAccessory = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
+	ItemObject[]	m_equipedFollowers = new ItemObject[EQUIP_FOLLOWER_SLOT_MAX];
 
 	ItemObject		m_latestSelected = null;
 
@@ -41,7 +41,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	public ItemObject[]	EquipedAccessories
 	{
-		get {return m_aquipedAccessory;}
+		get {return m_equipedFollowers;}
 	}
 
 	void OnEnable() {
@@ -61,6 +61,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(106));
 				Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData(11));
 				Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData(11));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1001));
 			}
 		}
 		else
@@ -138,7 +139,9 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*4), size*3, size*3), selectedItem.Item.Description());
 
-		if (selectedItem.Item.RefItem.type == ItemData.Type.Weapon)
+		switch(selectedItem.Item.RefItem.type)
+		{
+		case ItemData.Type.Weapon:
 		{
 			if (true == inEquipSlot)
 			{
@@ -154,8 +157,54 @@ public class ChampSettingGUI : MonoBehaviour {
 					m_equipedWeapon = selectedItem;				
 				}
 			}
-		}
+		}break;
 
+		case ItemData.Type.Follower:
+		{
+			if (true == inEquipSlot)
+			{
+				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Unfollower"))
+				{
+					for(int x = 0; x < m_equipedFollowers.Length; ++x)
+					{
+						if (m_equipedFollowers[x] != null)
+						{
+							m_equipedFollowers[x] = null;
+							break;
+						}
+					}					
+				}
+			}
+			else
+			{
+				if (GUI.Button(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*6), size*2, size), "Follower"))
+				{
+					bool aleadyExists = false;
+					for(int x = 0; x < m_equipedFollowers.Length; ++x)
+					{
+						if (m_equipedFollowers[x] == selectedItem)
+						{
+							aleadyExists = true;
+							break;
+						}
+					}	
+
+					if (aleadyExists == false)
+					{
+						for(int x = 0; x < m_equipedFollowers.Length; ++x)
+						{
+							if (m_equipedFollowers[x] == null)
+							{
+								m_equipedFollowers[x] = selectedItem;
+								break;
+							}
+						}	
+					}
+
+				}
+			}
+		}break;
+		}
 
 		if (selectedItem.Item.RefItem.levelUpItems.Count > 0)
 		{
@@ -200,7 +249,16 @@ public class ChampSettingGUI : MonoBehaviour {
 		if (GUI.Button(new Rect(Screen.width-size, 0, size, size), "X") && m_equipedWeapon != null)
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
-			m_equipedWeapon.Item.Use(champObj.GetComponent<Creature>());
+			Creature champ = champObj.GetComponent<Creature>();
+
+			m_equipedWeapon.Item.Use(champ);
+			for(int x = 0; x < m_equipedFollowers.Length; ++x)
+			{
+				if (m_equipedFollowers[x] != null)
+				{
+					m_equipedFollowers[x].Item.Use(champ);
+				}
+			}	
 			this.enabled = false;
 			return;
 		}
@@ -211,12 +269,13 @@ public class ChampSettingGUI : MonoBehaviour {
 			m_latestSelected = m_equipedWeapon;
 		}
 
-		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "Accessory");
+		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "Follower");
 
-		for(int x = 0; x < EQUIP_ACCESSORY_SLOT_MAX; x++)
+		for(int x = 0; x < EQUIP_FOLLOWER_SLOT_MAX; x++)
 		{
-			if (GUI.Button(new Rect(size*(2+x), startY+(size*1), size, size), ""))
+			if (GUI.Button(new Rect(size*(2+x), startY+(size*1), size, size), m_equipedFollowers[x] != null ? m_equipedFollowers[x].ItemIcon : null))
 			{
+				m_latestSelected = m_equipedFollowers[x];
 			}
 		}
 
@@ -253,7 +312,20 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+1), startY+(size*3), size, size), "Desc");
 		if (m_latestSelected != null)
 		{
-			DisplayItemDesc(m_latestSelected, m_equipedWeapon == m_latestSelected);
+			bool equiped = m_equipedWeapon == m_latestSelected;
+			if (equiped == false)
+			{
+				for(int x = 0; x < m_equipedFollowers.Length; ++x)
+				{
+					if (m_equipedFollowers[x] == m_latestSelected)
+					{
+						equiped = true;
+						break;
+					}
+				}	
+			}
+
+			DisplayItemDesc(m_latestSelected, equiped);
 		}
 
 	}
