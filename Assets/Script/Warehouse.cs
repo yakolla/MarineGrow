@@ -24,7 +24,7 @@ public class Warehouse {
 
 	public void PushItem(ItemData item)
 	{
-		ItemObject itemObj = FindItem(item);
+		ItemObject itemObj = FindItem(item.RefItem.id);
 		if (itemObj == null)
 		{
 			m_items.Add(new ItemObject(item));
@@ -72,18 +72,6 @@ public class Warehouse {
 		return null;
 	}
 
-	public ItemObject FindItem(ItemData item)
-	{
-		foreach(ItemObject obj in m_items)
-		{
-			if (obj.Item.Compare(item))
-			{
-				return obj;
-			}
-		}
-		
-		return null;
-	}
 
 	public void Save(BinaryFormatter bf, FileStream file)
 	{

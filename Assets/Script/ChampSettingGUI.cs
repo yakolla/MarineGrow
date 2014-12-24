@@ -62,6 +62,9 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData(11));
 				Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData(11));
 				Warehouse.Instance.PushItem(new ItemFollowerData(1001));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1002));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1003));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1004));
 			}
 		}
 		else
