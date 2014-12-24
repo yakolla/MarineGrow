@@ -26,7 +26,7 @@ public class ItemFollowerData : ItemData{
 	override public void Use(Creature obj)
 	{
 		GameObject.Instantiate(m_prefFollower, obj.transform.position, obj.transform.rotation);
-
+		Warehouse.Instance.PullItem(RefItem.id, 1);
 	}
 
 	override public void NoUse(Creature obj)

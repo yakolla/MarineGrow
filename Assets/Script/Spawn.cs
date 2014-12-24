@@ -8,11 +8,15 @@ public class Spawn : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_target = null;
 
+	Transform[]		m_areas = null;
+
 
 	int				m_wave = 0;
 	int				m_maxRepeatCount = 0;
 	// Use this for initialization
 	void Start () {
+
+		m_areas = transform.GetComponentsInChildren<Transform>();
 		StartWave(0);
 	}
 
@@ -35,8 +39,10 @@ public class Spawn : MonoBehaviour {
 	{
 		if (m_target != null)
 		{
-			float cx = transform.position.x;
-			float cz = transform.position.z;
+			Transform area = m_areas[Random.Range(0,m_areas.Length)];
+			float cx = area.position.x;
+			float cz = area.position.z;
+			float scale = area.localScale.x;
 
 			foreach(KeyValuePair<int, RefMob> pair in wave.refMobSpawns)
 			{
@@ -44,7 +50,7 @@ public class Spawn : MonoBehaviour {
 				for(int i = 0; i < wave.mobCount; ++i)
 				{
 					Vector3 enemyPos = prefEnemy.transform.position;
-					GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
+					GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx-scale,cx+scale), enemyPos.y, Random.Range(cz-scale,cz+scale)), Quaternion.Euler (0, 0, 0)) as GameObject;
 					Enemy enemy = obj.GetComponent<Enemy>();
 					ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 					weapon.Item.Use(enemy);

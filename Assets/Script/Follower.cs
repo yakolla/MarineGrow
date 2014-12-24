@@ -27,7 +27,11 @@ public class Follower : Creature {
 		if (AutoAttack() == false)
 		{
 			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
-			this.m_navAgent.SetDestination(m_champ.transform.position);
+			m_navAgent.SetDestination(m_champ.transform.position);
+		}
+		else
+		{
+			m_navAgent.Stop();
 		}
 
 		if (m_destroyTime<Time.time)

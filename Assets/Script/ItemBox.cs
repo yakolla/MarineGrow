@@ -6,13 +6,17 @@ public class ItemBox : MonoBehaviour {
 	[SerializeField]
 	ItemData			m_item;
 
+	[SerializeField]
+	float			m_lifeTime = 5f;
+	float			m_timeToDeath = 0;
+
 	Bezier			m_bezier;
 	Parabola		m_parabola;
 	GameObject		m_target = null;
 
 	void Start () {
 		m_parabola = new Parabola(gameObject, Random.Range(-2, 2), Random.Range(5, 7), Random.Range(80, 90), 3);
-
+		m_timeToDeath = Time.time + m_lifeTime;
 	}
 
 	void SetTarget(GameObject target)
@@ -41,6 +45,11 @@ public class ItemBox : MonoBehaviour {
 		if (m_target == null)
 		{
 			m_parabola.Update();
+
+			if (m_timeToDeath < Time.time)
+			{
+				Death();
+			}
 		}
 		else
 		{
