@@ -10,6 +10,8 @@ public class Spawn : MonoBehaviour {
 
 	Transform[]		m_areas = null;
 
+	[SerializeField]
+	GameObject		m_prefSpawnEffect = null;
 
 	int				m_wave = 0;
 	int				m_maxRepeatCount = 0;
@@ -42,7 +44,7 @@ public class Spawn : MonoBehaviour {
 			Transform area = m_areas[Random.Range(0,m_areas.Length)];
 			float cx = area.position.x;
 			float cz = area.position.z;
-			float scale = area.localScale.x;
+			float scale = area.localScale.x/2;
 
 			foreach(KeyValuePair<int, RefMob> pair in wave.refMobSpawns)
 			{
@@ -50,7 +52,14 @@ public class Spawn : MonoBehaviour {
 				for(int i = 0; i < wave.mobCount; ++i)
 				{
 					Vector3 enemyPos = prefEnemy.transform.position;
-					GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx-scale,cx+scale), enemyPos.y, Random.Range(cz-scale,cz+scale)), Quaternion.Euler (0, 0, 0)) as GameObject;
+					enemyPos.x = Random.Range(cx-scale,cx+scale);
+					enemyPos.z = Random.Range(cz-scale,cz+scale);
+
+					GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+					yield return new WaitForSeconds (spawnEffect.particleSystem.duration);
+					DestroyObject(spawnEffect);
+
+					GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 					Enemy enemy = obj.GetComponent<Enemy>();
 					ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 					weapon.Item.Use(enemy);

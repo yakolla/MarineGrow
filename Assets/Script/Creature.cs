@@ -161,7 +161,6 @@ public class Creature : MonoBehaviour {
 		if (m_targeting != null)
 		{
 			m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_firingDescs);
-
 			return true;
 		}
 
