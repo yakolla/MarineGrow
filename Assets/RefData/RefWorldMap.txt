@@ -5,40 +5,52 @@
 		"waves":
 		[
 			{
-				"refMobSpawnIds":[4,2],
+				"refMobIds":[1001],
 				"interval":5,
-				"repeatCount":10,
-				"mobCount":3
-			},
-			{
-				"refMobSpawnIds":[5],
-				"interval":10,
-				"repeatCount":10,
-				"mobCount":3
-			},
-			{
-				"refMobSpawnIds":[1],
-				"interval":10,
-				"repeatCount":2,
-				"mobCount":3
-			},
-			{
-				"refMobSpawnIds":[1,2],
-				"interval":10,
-				"repeatCount":10,
-				"mobCount":3
-			},
-			{
-				"refMobSpawnIds":[1,2,4,5],
-				"interval":10,
-				"repeatCount":10,
-				"mobCount":3
-			},
-			{
-				"refMobSpawnIds":[3],
-				"interval":10,
 				"repeatCount":1,
 				"mobCount":3
+			},			
+			{
+				"refMobIds":[4],
+				"interval":10,
+				"repeatCount":10,
+				"mobCount":3
+			},			
+			{
+				"refMobIds":[5],
+				"interval":10,
+				"repeatCount":10,
+				"mobCount":6
+			},
+			{
+				"refMobIds":[1],
+				"interval":10,
+				"repeatCount":2,
+				"mobCount":9
+			},
+			{
+				"refMobIds":[1001],
+				"interval":5,
+				"repeatCount":1,
+				"mobCount":3
+			},
+			{
+				"refMobIds":[1,2],
+				"interval":10,
+				"repeatCount":10,
+				"mobCount":6
+			},
+			{
+				"refMobIds":[1,2,4,5],
+				"interval":10,
+				"repeatCount":10,
+				"mobCount":3
+			},
+			{
+				"refMobIds":[3],
+				"interval":10,
+				"repeatCount":1,
+				"mobCount":1
 			},
 		]
 	},
@@ -48,7 +60,7 @@
 		"waves":
 		[
 			{
-				"refMobSpawnIds":[1],
+				"refMobIds":[1],
 				"interval":10,
 				"repeatCount":1
 			}

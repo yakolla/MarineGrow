@@ -245,6 +245,30 @@
 		}
 	},
 	{
+		"id":109,
+		"codeName":"NothingWeapon",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			
+		],
+		"evolutionItems":
+		[
+			
+		],
+		"evolutionFiring":
+		{
+			"angle":10,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":1,
+			"range":0
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"FollowerFireMan",
 		"type":"Follower",

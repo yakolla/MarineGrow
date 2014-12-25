@@ -17,7 +17,7 @@ public class Spawn : MonoBehaviour {
 	GameObject		m_prefSpawnEffect = null;
 
 	int				m_wave = 0;
-	int				m_maxRepeatCount = 0;
+	int				m_spawnCount = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -35,9 +35,8 @@ public class Spawn : MonoBehaviour {
 			return;
 
 		m_wave = wave;
-		m_maxRepeatCount = dungeon.waves[wave].repeatCount;
 
-		StartCoroutine(spawnEnemyPer(dungeon.waves[wave], 0));
+		StartCoroutine(spawnEnemyPer(dungeon.waves[wave], m_spawnCount));
 	}
 
 	IEnumerator spawnEnemyPer(RefWave wave, int repeatNum)
@@ -86,7 +85,8 @@ public class Spawn : MonoBehaviour {
 
 		if (repeatNum < wave.repeatCount)
 		{
-			StartCoroutine(spawnEnemyPer(wave, repeatNum));
+			++m_spawnCount;
+			StartCoroutine(spawnEnemyPer(wave, m_spawnCount));
 		}
 		else
 		{

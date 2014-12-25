@@ -74,7 +74,7 @@ public class RefMob : RefBaseData
 
 public class RefWave
 {
-	public int[]			refMobSpawnIds;	
+	public int[]			refMobIds;	
 	public float 			interval;
 	public int				repeatCount;
 	public int 				mobCount;
@@ -125,7 +125,7 @@ public class RefData {
 		{
 			foreach(RefWave wave in pair.Value.waves)
 			{
-				foreach(int id in wave.refMobSpawnIds)
+				foreach(int id in wave.refMobIds)
 				{
 					wave.refMobSpawns[id] = m_refMobs[id];
 					
