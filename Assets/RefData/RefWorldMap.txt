@@ -11,20 +11,20 @@
 				"mobCount":3
 			},			
 			{
-				"refMobIds":[4],
-				"interval":10,
+				"refMobIds":[1,4],
+				"interval":3,
 				"repeatCount":10,
-				"mobCount":3
+				"mobCount":6
 			},			
 			{
 				"refMobIds":[5],
-				"interval":10,
+				"interval":3,
 				"repeatCount":10,
-				"mobCount":6
+				"mobCount":12
 			},
 			{
 				"refMobIds":[1],
-				"interval":10,
+				"interval":3,
 				"repeatCount":2,
 				"mobCount":9
 			},
@@ -38,13 +38,13 @@
 				"refMobIds":[1,2],
 				"interval":10,
 				"repeatCount":10,
-				"mobCount":6
+				"mobCount":12
 			},
 			{
 				"refMobIds":[1,2,4,5],
 				"interval":10,
 				"repeatCount":10,
-				"mobCount":3
+				"mobCount":6
 			},
 			{
 				"refMobIds":[3],
