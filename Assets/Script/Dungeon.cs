@@ -53,7 +53,7 @@ public class Dungeon : MonoBehaviour {
 			return;
 
 
-		foreach(RefItemSpawn desc in spawnDesc.refItemSpawns)
+		foreach(RefItemSpawn desc in spawnDesc.refDropItems)
 		{
 			float ratio = Random.Range(0f, 1f);
 			if (ratio <= desc.ratio)

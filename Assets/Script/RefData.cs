@@ -69,7 +69,7 @@ public class RefMob : RefBaseData
 {
 	public string				prefEnemy;
 	public int					refWeaponItem;
-	public RefItemSpawn[]		refItemSpawns;
+	public RefItemSpawn[]		refDropItems;
 }
 
 public class RefWave
@@ -129,7 +129,7 @@ public class RefData {
 				{
 					wave.refMobSpawns[id] = m_refMobs[id];
 					
-					foreach(RefItemSpawn itemSpawn in m_refMobs[id].refItemSpawns)
+					foreach(RefItemSpawn itemSpawn in m_refMobs[id].refDropItems)
 					{
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}

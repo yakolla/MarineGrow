@@ -216,7 +216,7 @@
 	},
 	{
 		"id":108,
-		"codeName":"Gun",
+		"codeName":"ChampGun",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
 		"levelUpItems":

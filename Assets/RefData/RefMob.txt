@@ -3,7 +3,7 @@
 		"id":1,
 		"prefEnemy":"mon_a",
 		"refWeaponItem":"107",
-		"refItemSpawns":
+		"refDropItems":
 		[
 			{
 				"refItemId":1,
@@ -24,10 +24,16 @@
 		"id":2,
 		"prefEnemy":"mon_a_fly",
 		"refWeaponItem":"102",
-		"refItemSpawns":
+		"refDropItems":
 		[
 			{
 				"refItemId":3,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":1
+			},
+			{
+				"refItemId":1001,
 				"minValue":1,
 				"maxValue":1,
 				"ratio":1
@@ -38,7 +44,7 @@
 		"id":3,
 		"prefEnemy":"mon_a_boss",
 		"refWeaponItem":"103",
-		"refItemSpawns":
+		"refDropItems":
 		[
 			{
 				"refItemId":101,
@@ -58,7 +64,7 @@
 		"id":4,
 		"prefEnemy":"mon_d",
 		"refWeaponItem":"103",
-		"refItemSpawns":
+		"refDropItems":
 		[
 			{
 				"refItemId":3,
@@ -72,7 +78,7 @@
 		"id":5,
 		"prefEnemy":"mon_e",
 		"refWeaponItem":"101",
-		"refItemSpawns":
+		"refDropItems":
 		[
 			{
 				"refItemId":3,

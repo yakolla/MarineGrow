@@ -73,7 +73,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(103));
+				Warehouse.Instance.PushItem(new ItemWeaponData(108));
 			}
 			
 			//Save ();
