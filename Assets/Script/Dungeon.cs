@@ -74,7 +74,10 @@ public class Dungeon : MonoBehaviour {
 
 					break;
 				case ItemData.Type.WeaponUpgradeFragment:
-					item = new ItemWeaponUpgradeFragmentData(3);					
+					item = new ItemWeaponUpgradeFragmentData();					
+					break;
+				case ItemData.Type.Follower:
+					item = new ItemFollowerData(desc.refItemId);					
 					break;
 				}
 

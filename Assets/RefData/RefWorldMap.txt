@@ -5,7 +5,7 @@
 		"waves":
 		[
 			{
-				"refMobSpawnIds":[4],
+				"refMobSpawnIds":[4,2],
 				"interval":5,
 				"repeatCount":10,
 				"mobCount":3

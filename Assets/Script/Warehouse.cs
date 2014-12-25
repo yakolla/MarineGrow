@@ -31,7 +31,17 @@ public class Warehouse {
 		}
 		else
 		{
-			itemObj.Item.Count += item.Count;
+			switch(itemObj.Item.RefItem.type)
+			{
+			case ItemData.Type.Follower:
+			case ItemData.Type.Weapon:
+				break;
+			default:
+				itemObj.Item.Count += item.Count;
+				itemObj.Item.Count = Mathf.Min(itemObj.Item.Count, 999);
+				break;
+			}
+
 		}
 	}
 
