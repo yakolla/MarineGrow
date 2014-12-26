@@ -115,26 +115,58 @@ public class Creature : MonoBehaviour {
 		return null;
 	}
 
-	protected bool inAttackRange(GameObject targeting)
+	protected bool inAttackRange(GameObject targeting, float overrideRange)
 	{
 		float dist = Vector3.Distance(transform.position, targeting.transform.position);
-		if (dist <= m_weaponHolder.GetWeapon().AttackRange)
+
+		if (overrideRange == 0f)
 		{
-			return true;
+			if (dist <= m_weaponHolder.GetWeapon().AttackRange)
+			{
+				return true;
+			}
 		}
+		else
+		{
+			if (dist <= overrideRange)
+			{
+				return true;
+			}
+		}
+
 
 		return false;
 	}
 
-	protected GameObject searchTarget()
+	public GameObject SearchTarget(string[] targetTags, Creature[] skipTargets, float range)
 	{
-		string[] tags = GetAutoTargetTags();
-		foreach(string tag in tags)
+		foreach(string tag in targetTags)
 		{
 			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
 			foreach(GameObject target in targets)
 			{
-				if (true == inAttackRange(target))
+				bool isSkip = false;
+				if (skipTargets != null)
+				{
+					foreach(Creature skip in skipTargets)
+					{
+						if (skip == null)
+							break;
+
+						if (skip.gameObject == target)
+						{
+							isSkip = true;
+							break;
+						}
+					}
+				}
+
+				if (isSkip == true)
+				{
+					continue;
+				}
+
+				if (true == inAttackRange(target, range))
 				{
 					return target;
 				}
@@ -147,7 +179,7 @@ public class Creature : MonoBehaviour {
 	virtual protected bool AutoAttack() {
 		if (m_targeting != null)
 		{
-			if (false == inAttackRange(m_targeting))
+			if (false == inAttackRange(m_targeting, 0f))
 			{
 				m_targeting = null;
 			}
@@ -155,7 +187,7 @@ public class Creature : MonoBehaviour {
 
 		if (m_targeting == null)
 		{
-			m_targeting = searchTarget();
+			m_targeting = SearchTarget(GetAutoTargetTags(), null, 0f);
 		}
 
 		if (m_targeting != null)
