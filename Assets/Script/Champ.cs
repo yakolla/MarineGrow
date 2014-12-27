@@ -18,6 +18,7 @@ public class Champ : Creature {
 	new void Start () {
 		base.Start();
 
+		m_creatureProperty.init(0f, 0f, 0f);
 		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 		m_creatureProperty.m_callbackLevelup = delegate() {
 

@@ -34,7 +34,6 @@ public class Creature : MonoBehaviour {
 
 	Animator				m_animator;
 	
-	RefMob				m_spawnDesc;
 
 	struct DamageEffect
 	{
@@ -51,7 +50,7 @@ public class Creature : MonoBehaviour {
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
-		m_creatureProperty.init();
+
 	}
 
 	public void ChangeWeapon(ItemWeaponData weaponData)
@@ -102,15 +101,7 @@ public class Creature : MonoBehaviour {
 	{
 		return a.CreatureType != b.CreatureType;
 	}
-	public RefMob SpawnDesc
-	{
-		get {return m_spawnDesc;}
-	}
-	
-	public void SetSpawnDesc(RefMob spawnDesc)
-	{
-		m_spawnDesc = spawnDesc;
-	}
+
 
 	protected void Update()
 	{
@@ -291,9 +282,6 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void Death()
 	{
-		GameObject.Find("Dungeon").gameObject.GetComponent<Dungeon>().SpawnItemBox(m_spawnDesc, transform.position);
-
-
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
 
