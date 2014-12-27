@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : Creature {
+public class Mob : Creature {
 
 	GameObject			m_goalForNavigation;
 	// Use this for initialization

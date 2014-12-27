@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class Boss : Enemy {
+public class Boss : Mob {
 
 	// Update is called once per frame
 

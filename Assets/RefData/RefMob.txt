@@ -89,6 +89,20 @@
 		]
 	},
 	{
+		"id":6,
+		"prefEnemy":"mon_f",
+		"refWeaponItem":"101",
+		"refDropItems":
+		[
+			{
+				"refItemId":3,
+				"minValue":1,
+				"maxValue":1,
+				"ratio":1
+			}
+		]
+	},
+	{
 		"id":1001,
 		"prefEnemy":"giftbox",
 		"refWeaponItem":"109",

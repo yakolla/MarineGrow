@@ -64,7 +64,7 @@ public class Spawn : MonoBehaviour {
 					DestroyObject(spawnEffect);
 
 					GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-					Enemy enemy = obj.GetComponent<Enemy>();
+					Mob enemy = obj.GetComponent<Mob>();
 					ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 					weapon.Item.Use(enemy);
 					

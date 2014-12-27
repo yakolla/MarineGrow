@@ -47,7 +47,7 @@ public class CreatureProperty {
 
 	public float MaxHP
 	{
-		get { return (m_baseMaxHP+AlphaMaxHP)*100; }
+		get { return (m_baseMaxHP+AlphaMaxHP)*10; }
 	}
 
 	public float AlphaMaxHP

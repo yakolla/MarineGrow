@@ -91,6 +91,13 @@ public class Creature : MonoBehaviour {
 		return new Vector2(targetHorAngle, 0f);
 	}
 
+	protected Vector2 RotateToTarget(float angle)
+	{		
+		transform.eulerAngles = new Vector3(0, -angle, 0);
+		
+		return new Vector2(angle, 0f);
+	}
+
 	static public bool IsEnemy(Creature a, Creature b)
 	{
 		return a.CreatureType != b.CreatureType;
