@@ -290,7 +290,6 @@ public class Creature : MonoBehaviour {
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
 
-		this.gameObject.GetComponent<LOSEntity>().OnDisable();
 		DestroyObject(this.gameObject);
 
 		CameraShake shake = Camera.main.gameObject.GetComponent<CameraShake>();
