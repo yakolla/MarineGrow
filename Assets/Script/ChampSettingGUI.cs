@@ -59,9 +59,16 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(104));
 				Warehouse.Instance.PushItem(new ItemWeaponData(105));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106));
-				Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData(11));
-				Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData(11));
+				for(int i = 0 ; i < 1000; ++i)
+				{
+					Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData());
+					Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData());
+				}
+
 				Warehouse.Instance.PushItem(new ItemFollowerData(1001));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1002));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1003));
+				Warehouse.Instance.PushItem(new ItemFollowerData(1004));
 			}
 		}
 		else
@@ -70,7 +77,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(103));
+				Warehouse.Instance.PushItem(new ItemWeaponData(108));
 			}
 			
 			//Save ();

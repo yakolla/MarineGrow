@@ -4,7 +4,7 @@ using System.Collections;
 public class Follower : Creature {
 
 	[SerializeField]
-	float	m_destroyTime;
+	int	m_refItemId = 101;
 
 	ItemObject	m_weapon;
 
@@ -13,9 +13,8 @@ public class Follower : Creature {
 	new void Start()
 	{
 		base.Start();
-		m_destroyTime += Time.time;
 
-		m_weapon = new ItemObject(new ItemWeaponData(103));
+		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId));
 		m_weapon.Item.Use(this);
 
 		m_champ = GameObject.Find("Champ(Clone)").GetComponent<Creature>();
@@ -27,14 +26,13 @@ public class Follower : Creature {
 		if (AutoAttack() == false)
 		{
 			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
-			this.m_navAgent.SetDestination(m_champ.transform.position);
+			if (m_champ != null)
+				m_navAgent.SetDestination(m_champ.transform.position);
 		}
-
-		if (m_destroyTime<Time.time)
+		else
 		{
-			Death();
+			m_navAgent.Stop();
 		}
-
 
 	}
 

@@ -24,14 +24,24 @@ public class Warehouse {
 
 	public void PushItem(ItemData item)
 	{
-		ItemObject itemObj = FindItem(item);
+		ItemObject itemObj = FindItem(item.RefItem.id);
 		if (itemObj == null)
 		{
 			m_items.Add(new ItemObject(item));
 		}
 		else
 		{
-			itemObj.Item.Count += item.Count;
+			switch(itemObj.Item.RefItem.type)
+			{
+			case ItemData.Type.Follower:
+			case ItemData.Type.Weapon:
+				break;
+			default:
+				itemObj.Item.Count += item.Count;
+				itemObj.Item.Count = Mathf.Min(itemObj.Item.Count, 999);
+				break;
+			}
+
 		}
 	}
 
@@ -72,18 +82,6 @@ public class Warehouse {
 		return null;
 	}
 
-	public ItemObject FindItem(ItemData item)
-	{
-		foreach(ItemObject obj in m_items)
-		{
-			if (obj.Item.Compare(item))
-			{
-				return obj;
-			}
-		}
-		
-		return null;
-	}
 
 	public void Save(BinaryFormatter bf, FileStream file)
 	{

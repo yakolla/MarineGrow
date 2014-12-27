@@ -69,12 +69,12 @@ public class RefMob : RefBaseData
 {
 	public string				prefEnemy;
 	public int					refWeaponItem;
-	public RefItemSpawn[]		refItemSpawns;
+	public RefItemSpawn[]		refDropItems;
 }
 
 public class RefWave
 {
-	public int[]			refMobSpawnIds;	
+	public int[]			refMobIds;	
 	public float 			interval;
 	public int				repeatCount;
 	public int 				mobCount;
@@ -125,11 +125,11 @@ public class RefData {
 		{
 			foreach(RefWave wave in pair.Value.waves)
 			{
-				foreach(int id in wave.refMobSpawnIds)
+				foreach(int id in wave.refMobIds)
 				{
 					wave.refMobSpawns[id] = m_refMobs[id];
 					
-					foreach(RefItemSpawn itemSpawn in m_refMobs[id].refItemSpawns)
+					foreach(RefItemSpawn itemSpawn in m_refMobs[id].refDropItems)
 					{
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}

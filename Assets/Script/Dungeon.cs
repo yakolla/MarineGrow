@@ -53,7 +53,7 @@ public class Dungeon : MonoBehaviour {
 			return;
 
 
-		foreach(RefItemSpawn desc in spawnDesc.refItemSpawns)
+		foreach(RefItemSpawn desc in spawnDesc.refDropItems)
 		{
 			float ratio = Random.Range(0f, 1f);
 			if (ratio <= desc.ratio)
@@ -74,8 +74,10 @@ public class Dungeon : MonoBehaviour {
 
 					break;
 				case ItemData.Type.WeaponUpgradeFragment:
-					item = new ItemWeaponUpgradeFragmentData(3);
-					
+					item = new ItemWeaponUpgradeFragmentData();					
+					break;
+				case ItemData.Type.Follower:
+					item = new ItemFollowerData(desc.refItemId);					
 					break;
 				}
 

@@ -8,11 +8,20 @@ public class Spawn : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_target = null;
 
+	[SerializeField]
+	AudioClip		m_sfxSpawnEffect;
+
+	Transform[]		m_areas = null;
+
+	[SerializeField]
+	GameObject		m_prefSpawnEffect = null;
 
 	int				m_wave = 0;
-	int				m_maxRepeatCount = 0;
+	int				m_spawnCount = 0;
 	// Use this for initialization
 	void Start () {
+
+		m_areas = transform.GetComponentsInChildren<Transform>();
 		StartWave(0);
 	}
 
@@ -26,17 +35,18 @@ public class Spawn : MonoBehaviour {
 			return;
 
 		m_wave = wave;
-		m_maxRepeatCount = dungeon.waves[wave].repeatCount;
 
-		StartCoroutine(spawnEnemyPer(dungeon.waves[wave], 0));
+		StartCoroutine(spawnEnemyPer(dungeon.waves[wave], m_spawnCount));
 	}
 
 	IEnumerator spawnEnemyPer(RefWave wave, int repeatNum)
 	{
 		if (m_target != null)
 		{
-			float cx = transform.position.x;
-			float cz = transform.position.z;
+			Transform area = m_areas[Random.Range(0,m_areas.Length)];
+			float cx = area.position.x;
+			float cz = area.position.z;
+			float scale = area.localScale.x/2;
 
 			foreach(KeyValuePair<int, RefMob> pair in wave.refMobSpawns)
 			{
@@ -44,7 +54,16 @@ public class Spawn : MonoBehaviour {
 				for(int i = 0; i < wave.mobCount; ++i)
 				{
 					Vector3 enemyPos = prefEnemy.transform.position;
-					GameObject obj = Instantiate (prefEnemy, new Vector3(Random.Range(cx,cx+3f), enemyPos.y, Random.Range(cz,cz+3f)), Quaternion.Euler (0, 0, 0)) as GameObject;
+					enemyPos.x = Random.Range(cx-scale,cx+scale);
+					enemyPos.z = Random.Range(cz-scale,cz+scale);
+
+					audio.clip = m_sfxSpawnEffect;
+					audio.Play();
+					GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+					yield return new WaitForSeconds (spawnEffect.particleSystem.duration);
+					DestroyObject(spawnEffect);
+
+					GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 					Enemy enemy = obj.GetComponent<Enemy>();
 					ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 					weapon.Item.Use(enemy);
@@ -66,7 +85,8 @@ public class Spawn : MonoBehaviour {
 
 		if (repeatNum < wave.repeatCount)
 		{
-			StartCoroutine(spawnEnemyPer(wave, repeatNum));
+			++m_spawnCount;
+			StartCoroutine(spawnEnemyPer(wave, m_spawnCount));
 		}
 		else
 		{

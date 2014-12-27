@@ -60,7 +60,7 @@ public class Parabola {
 			else
 			{
 				m_oriPos = m_obj.transform.position;
-				m_vel /= 2;
+				m_vel *= 1-(float)m_bouncing/m_maxBouncing;
 				m_startTime = Time.time;
 				m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
 				
