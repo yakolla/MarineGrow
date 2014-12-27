@@ -7,12 +7,10 @@ using System.Collections;
 
 public class LightningBoltBullet : Bullet
 {
-	Vector3 targetPos;
 	public int zigs = 100;
 	public float speed = 1f;
 	public float scale = 1f;
 	public float length = 10f;
-	public Light startLight;
 	public float	m_coolTime = 0.3f;
 	float			m_lastDamageTime = 0f;
 	Perlin noise;
@@ -33,8 +31,8 @@ public class LightningBoltBullet : Bullet
 
 		particleEmitter.Emit(zigs);
 		particles = particleEmitter.particles;
+		noise = new Perlin();
 
-		targetPos = transform.position;
 	}
 	
 	void Update ()
@@ -42,11 +40,24 @@ public class LightningBoltBullet : Bullet
 
 		bool mobHitted = false;
 
-		Creature target = null;
+		Creature[] targets = new Creature[5];
+		int hittedTargetCount = 0;
 		if (m_ownerCreature.m_targeting)
 		{
-			targetPos = m_ownerCreature.m_targeting.transform.position;
-			target = (Creature)m_ownerCreature.m_targeting.GetComponent<Creature>();
+			targets[0] = m_ownerCreature.m_targeting.GetComponent<Creature>();
+			hittedTargetCount++;
+
+
+			for(int i = 1; i < targets.Length; ++i)
+			{
+				GameObject chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetAutoTargetTags(), targets, 3f);
+				if (chaningTargetObj == null)
+					break;
+
+				targets[i] = chaningTargetObj.GetComponent<Creature>();
+				hittedTargetCount++;
+			}
+
 			mobHitted = true;
 		}
 		else
@@ -58,9 +69,9 @@ public class LightningBoltBullet : Bullet
 				Creature creature = hit.transform.gameObject.GetComponent<Creature>();
 				if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 				{				
-					targetPos = hit.transform.position;
-					target = creature;
+					targets[0] = creature;
 					mobHitted = true;
+					hittedTargetCount++;
 				}
 			}
 		}
@@ -69,48 +80,56 @@ public class LightningBoltBullet : Bullet
 		{
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
-				target.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage*m_coolTime, DamageDesc.Type.Lightinig, PrefDamageEffect));
+				for(int i = 0; i < hittedTargetCount; ++i)
+				{
+					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Lightinig, PrefDamageEffect));
+				}
+
 				m_lastDamageTime = Time.time;
 			}
 		}
 		else
-		{
-			targetPos.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
-			targetPos.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
-			targetPos.x += transform.position.x;
-			targetPos.z += transform.position.z;
+		{/*
+			targetPos[0].x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
+			targetPos[0].z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
+			targetPos[0].x += transform.position.x;
+			targetPos[0].z += transform.position.z;*/
 		}
 
-		if (noise == null)
-			noise = new Perlin();
-			
-		float timex = Time.time * speed * 0.1365143f;
-		float timey = Time.time * speed * 1.21688f;
-		float timez = Time.time * speed * 2.5564f;
-		
-		for (int i=0; i < particles.Length; i++)
+
+
+		int perParticles = particles.Length/hittedTargetCount;
+		createChanningParticle(transform.position, targets[0].transform.position, 0, perParticles);
+		for(int i = 0; i < hittedTargetCount-1; ++i)
 		{
-			Vector3 position = Vector3.Lerp(transform.position, targetPos, oneOverZigs * (float)i);
-			Vector3 offset = new Vector3(noise.Noise(timex + position.x, timex + position.y, timex + position.z),
-										noise.Noise(timey + position.x, timey + position.y, timey + position.z),
-										noise.Noise(timez + position.x, timez + position.y, timez + position.z));
-			position += (offset * scale * ((float)i * oneOverZigs));
-			
-			particles[i].position = position;
-			particles[i].color = Color.white;
-			particles[i].energy = 1f;
+			createChanningParticle(targets[i].transform.position, targets[i+1].transform.position, perParticles*(i+1), perParticles*(i+1)+perParticles);
 		}
 		
 		particleEmitter.particles = particles;
-		
-		if (particleEmitter.particleCount >= 2)
-		{
-			if (startLight)
-				startLight.transform.position = particles[0].position;
-			//if (endLight)
-			//	endLight.transform.position = particles[particles.Length - 1].position;
-		}
 	}	
+
+	void createChanningParticle(Vector3 start, Vector3 dest, int particleStartIndex, int particleFinishIndex)
+	{
+		float timex = Time.time * speed * 0.1365143f;
+		float timey = Time.time * speed * 1.21688f;
+		float timez = Time.time * speed * 2.5564f;
+
+
+		int length = particleFinishIndex-particleStartIndex;
+		for (int i=0; i < length; i++)
+		{
+			float lerpProgress = oneOverZigs * (float)i * (particles.Length/length);
+			Vector3 position = Vector3.Lerp(start, dest, lerpProgress);
+			Vector3 offset = new Vector3(noise.Noise(timex + position.x, timex + position.y, timex + position.z),
+			                             noise.Noise(timey + position.x, timey + position.y, timey + position.z),
+			                             noise.Noise(timez + position.x, timez + position.y, timez + position.z));
+			position += offset * scale * lerpProgress;
+			
+			particles[particleStartIndex+i].position = position;
+			particles[particleStartIndex+i].color = Color.white;
+			particles[particleStartIndex+i].energy = 1f;
+		}
+	}
 	
 	override public void StopFiring()
 	{
