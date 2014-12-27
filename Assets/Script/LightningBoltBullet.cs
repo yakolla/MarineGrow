@@ -12,7 +12,9 @@ public class LightningBoltBullet : Bullet
 	public float scale = 1f;
 	public float length = 10f;
 	public float	m_coolTime = 0.3f;
+	public Color	m_color = Color.white;
 	float			m_lastDamageTime = 0f;
+
 	Perlin noise;
 	float oneOverZigs;
 	
@@ -33,6 +35,13 @@ public class LightningBoltBullet : Bullet
 		particles = particleEmitter.particles;
 		noise = new Perlin();
 
+		for(int i = 0; i < particles.Length; ++i)
+		{
+			particles[i].position = Vector3.zero;
+			particles[i].color = m_color;
+			particles[i].energy = 1f;
+		}
+		particleEmitter.particles = particles;
 	}
 	
 	void Update ()
@@ -104,7 +113,7 @@ public class LightningBoltBullet : Bullet
 		{
 			createChanningParticle(targets[i].transform.position, targets[i+1].transform.position, perParticles*(i+1), perParticles*(i+1)+perParticles);
 		}
-		
+
 		particleEmitter.particles = particles;
 	}	
 
@@ -126,7 +135,7 @@ public class LightningBoltBullet : Bullet
 			position += offset * scale * lerpProgress;
 			
 			particles[particleStartIndex+i].position = position;
-			particles[particleStartIndex+i].color = Color.white;
+			particles[particleStartIndex+i].color = m_color;
 			particles[particleStartIndex+i].energy = 1f;
 		}
 	}
