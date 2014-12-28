@@ -17,6 +17,8 @@ public class Spawn : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_prefSpawnEffect = null;
 
+	List<GameObject>	m_bosses = new List<GameObject>();
+
 	RefWorldMap		m_dungeon;
 	int				m_wave = 0;
 	int				m_repeatWave = 0;
@@ -58,6 +60,33 @@ public class Spawn : MonoBehaviour {
 		StartCoroutine(spawnEnemyPer(m_dungeon.waves[wave]));
 	}
 
+	IEnumerator checkBossAlive()
+	{
+		yield return new WaitForSeconds (1f);
+
+		bool existBoss = false;
+		foreach(GameObject boss in m_bosses)
+		{
+			if (boss != null)
+			{
+				existBoss = true;
+				break;
+			}
+		}
+
+		if (existBoss == true)
+		{
+			StartCoroutine(checkBossAlive());
+		}
+		else
+		{
+			m_bosses.Clear();
+			StartWave(m_wave+1);		
+
+		}
+
+	}
+
 	IEnumerator spawnEnemyPer(RefWave refWave)
 	{
 		if (m_target == null)
@@ -69,13 +98,22 @@ public class Spawn : MonoBehaviour {
 		else
 		{
 			int totalWave = m_wave + 1 + m_repeatWave*m_dungeon.waves.Length;
-			StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
+			bool isBossWave = m_dungeon.waves.Length-1 == m_wave;
+			if (isBossWave == true)
+			{
+				StartCoroutine(EffectWaveText("Boss", 1));
+			}
+			else
+			{
+				StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
+			}
+
+
 
 			Transform area = m_areas[Random.Range(1,m_areas.Length)];
 			float cx = area.position.x;
 			float cz = area.position.z;
 			float scale = area.localScale.x/2;
-			Debug.Log("TotalWave: " + totalWave + "x:" + cx + "z:" + cz + "scale:" + scale);
 
 			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
 			{
@@ -91,7 +129,7 @@ public class Spawn : MonoBehaviour {
 							Vector3 enemyPos = prefEnemy.transform.position;
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
-							Debug.Log("enemyPos: " + enemyPos);
+
 							audio.clip = m_sfxSpawnEffect;
 							audio.Play();
 
@@ -100,6 +138,11 @@ public class Spawn : MonoBehaviour {
 							DestroyObject(spawnEffect);
 
 							GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+							if (isBossWave == true)
+							{
+								m_bosses.Add(obj);
+							}
+
 							Mob enemy = obj.GetComponent<Mob>();
 							ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 							weapon.Item.Use(enemy);
@@ -115,7 +158,8 @@ public class Spawn : MonoBehaviour {
 				}
 			}
 
-			StartWave(m_wave+1);
+			StartCoroutine(checkBossAlive());
+
 		}
 	}
 

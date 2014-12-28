@@ -1,4 +1,4 @@
-[
+[	
 	{
 		"id":1,
 		"name":"Basic Dungeon",
@@ -73,6 +73,35 @@
 				[					
 					{
 						"refMobIds":[1],
+						"interval":10,
+						"repeatCount":1,
+						"mobCount":1
+					}
+				]
+			}
+		]
+	},
+	{
+		"id":2,
+		"name":"Basic Dungeon",
+		"waves":
+		[
+			{
+				"mobSpawns":
+				[
+					{
+						"refMobIds":[6],
+						"interval":1,
+						"repeatCount":1,
+						"mobCount":3
+					}
+				]
+			},
+			{
+				"mobSpawns":
+				[					
+					{
+						"refMobIds":[3],
 						"interval":10,
 						"repeatCount":1,
 						"mobCount":1
