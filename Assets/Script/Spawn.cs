@@ -11,6 +11,7 @@ public class Spawn : MonoBehaviour {
 	[SerializeField]
 	AudioClip		m_sfxSpawnEffect;
 
+	[SerializeField]
 	Transform[]		m_areas = null;
 
 	[SerializeField]
@@ -26,8 +27,22 @@ public class Spawn : MonoBehaviour {
 		m_dungeon = RefData.Instance.RefWorldMaps[dungeonId];
 
 		m_areas = transform.GetComponentsInChildren<Transform>();
-
 		StartWave(0);
+	}
+
+	IEnumerator EffectWaveText(string msg, float alpha)
+	{
+		guiText.text = msg;
+		Color color = guiText.color;
+		color.a = alpha;
+		guiText.color = color;
+		yield return new WaitForSeconds (0.2f);
+
+		if (alpha > 0)
+		{
+			StartCoroutine(EffectWaveText(msg, alpha-0.1f));
+		}
+
 	}
 
 	void StartWave(int wave)
@@ -53,10 +68,14 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			Transform area = m_areas[Random.Range(0,m_areas.Length)];
+			int totalWave = m_wave + 1 + m_repeatWave*m_dungeon.waves.Length;
+			StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
+
+			Transform area = m_areas[Random.Range(1,m_areas.Length)];
 			float cx = area.position.x;
 			float cz = area.position.z;
 			float scale = area.localScale.x/2;
+			Debug.Log("TotalWave: " + totalWave + "x:" + cx + "z:" + cz + "scale:" + scale);
 
 			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
 			{
@@ -72,7 +91,7 @@ public class Spawn : MonoBehaviour {
 							Vector3 enemyPos = prefEnemy.transform.position;
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
-
+							Debug.Log("enemyPos: " + enemyPos);
 							audio.clip = m_sfxSpawnEffect;
 							audio.Play();
 
@@ -88,8 +107,7 @@ public class Spawn : MonoBehaviour {
 							enemy.SetTarget(m_target);
 							enemy.SetSpawnDesc(pair.Value);
 
-							//enemy.m_creatureProperty.AlphaMaxHP+=repeatNum/2;
-							enemy.m_creatureProperty.Level = m_wave+1+m_repeatWave*m_dungeon.waves.Length;
+							enemy.m_creatureProperty.Level = totalWave;
 						}	
 					}
 

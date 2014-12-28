@@ -41,10 +41,11 @@ public class CreatureProperty {
 
 	public void 	init(float phyDamagePerLevel, float phyDefencePerLevel, float hpPerLevel)
 	{
-		m_hp = MaxHP;
 		m_phyDamagePerLevel = phyDamagePerLevel;
 		m_phyDefencePerLevel = phyDefencePerLevel;
 		m_hpPerLevel = hpPerLevel;
+		m_hp = MaxHP;
+
 	}
 
 	public float getHPRemainRatio()
@@ -54,7 +55,7 @@ public class CreatureProperty {
 
 	public float MaxHP
 	{
-		get { return ((m_baseMaxHP+AlphaMaxHP)+(m_baseMaxHP+AlphaMaxHP)*Level*m_hpPerLevel)*10; }
+		get { return ((m_baseMaxHP+AlphaMaxHP)+(m_baseMaxHP+AlphaMaxHP)*(Level-1)*m_hpPerLevel)*10; }
 	}
 
 	public float AlphaMaxHP
@@ -121,7 +122,7 @@ public class CreatureProperty {
 
 	public float	PhysicalAttackDamage
 	{
-		get {return m_basePhysicalDamage + AlphaPhysicalAttackDamage + (m_basePhysicalDamage + AlphaPhysicalAttackDamage)*Level*m_phyDamagePerLevel;}
+		get {return m_basePhysicalDamage + AlphaPhysicalAttackDamage + (m_basePhysicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_phyDamagePerLevel;}
 		set { m_basePhysicalDamage = value; }
 	}
 
@@ -133,7 +134,7 @@ public class CreatureProperty {
 
 	public float	PhysicalDefencePoint
 	{
-		get {return Mathf.Min(100, m_basePhysicalDefence + AlphaPhysicalDefencePoint + (m_basePhysicalDefence + AlphaPhysicalDefencePoint)*Level*m_phyDefencePerLevel);}
+		get {return Mathf.Min(100, m_basePhysicalDefence + AlphaPhysicalDefencePoint + (m_basePhysicalDefence + AlphaPhysicalDefencePoint)*(Level-1)*m_phyDefencePerLevel);}
 		set { m_basePhysicalDefence = value; }
 	}
 

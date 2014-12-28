@@ -25,35 +25,28 @@
 				"mobSpawns":
 				[
 					{
-						"refMobIds":[6],
-						"interval":1,
-						"repeatCount":1,
-						"mobCount":3
-					},
-					{
-						"refMobIds":[1001],
-						"interval":5,
-						"repeatCount":1,
-						"mobCount":3
-					},			
-					{
 						"refMobIds":[1,4],
 						"interval":3,
-						"repeatCount":10,
+						"repeatCount":2,
 						"mobCount":6
 					},			
 					{
 						"refMobIds":[5,6],
 						"interval":3,
-						"repeatCount":10,
+						"repeatCount":1,
 						"mobCount":12
 					},
 					{
 						"refMobIds":[1],
 						"interval":3,
-						"repeatCount":2,
+						"repeatCount":1,
 						"mobCount":9
-					},
+					}
+				]
+			},
+			{
+				"mobSpawns":
+				[
 					{
 						"refMobIds":[1001],
 						"interval":5,
@@ -63,17 +56,23 @@
 					{
 						"refMobIds":[1,2,6],
 						"interval":10,
-						"repeatCount":10,
+						"repeatCount":1,
 						"mobCount":12
 					},
 					{
 						"refMobIds":[1,2,4,5],
 						"interval":10,
-						"repeatCount":10,
+						"repeatCount":1,
 						"mobCount":6
-					},
+					}
+					
+				]
+			},
+			{
+				"mobSpawns":
+				[					
 					{
-						"refMobIds":[3],
+						"refMobIds":[1],
 						"interval":10,
 						"repeatCount":1,
 						"mobCount":1
