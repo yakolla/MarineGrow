@@ -27,7 +27,7 @@ public class Spawn : MonoBehaviour {
 
 		int dungeonId = transform.parent.GetComponent<Dungeon>().DungeonId;		
 		m_dungeon = RefData.Instance.RefWorldMaps[dungeonId];
-
+		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
 		m_areas = transform.GetComponentsInChildren<Transform>();
 		StartWave(0);
 	}
@@ -45,6 +45,22 @@ public class Spawn : MonoBehaviour {
 			StartCoroutine(EffectWaveText(msg, alpha-0.1f));
 		}
 
+	}
+
+	IEnumerator EffectBulletTime(float t)
+	{
+		yield return new WaitForSeconds (0.01f);
+		
+		if (t > 0)
+		{
+			Time.timeScale = 1.1f-t;
+			StartCoroutine(EffectBulletTime(t-0.01f));
+		}
+		else
+		{
+			m_target.GetComponent<Creature>().SetFollowingCamera();
+		}
+		
 	}
 
 	void StartWave(int wave)
@@ -108,8 +124,6 @@ public class Spawn : MonoBehaviour {
 				StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
 			}
 
-
-
 			Transform area = m_areas[Random.Range(1,m_areas.Length)];
 			float cx = area.position.x;
 			float cz = area.position.z;
@@ -140,7 +154,10 @@ public class Spawn : MonoBehaviour {
 							GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 							if (isBossWave == true)
 							{
+
 								m_bosses.Add(obj);
+								StartCoroutine(EffectBulletTime(1));
+								obj.GetComponent<Creature>().SetFollowingCamera();
 							}
 
 							Mob enemy = obj.GetComponent<Mob>();

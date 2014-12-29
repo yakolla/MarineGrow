@@ -136,6 +136,12 @@ public class Creature : MonoBehaviour {
 		return false;
 	}
 
+	public void SetFollowingCamera()
+	{
+		FollowingCamera followingCamera = Camera.main.GetComponent<FollowingCamera>();
+		followingCamera.SetTarget(gameObject);
+	}
+
 	public GameObject SearchTarget(string[] targetTags, Creature[] skipTargets, float range)
 	{
 		foreach(string tag in targetTags)
