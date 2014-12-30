@@ -1,6 +1,6 @@
 [	
 	{
-		"id":2,
+		"id":1,
 		"name":"Basic Dungeon",
 		"waves":
 		[
@@ -82,7 +82,7 @@
 		]
 	},
 	{
-		"id":1,
+		"id":2,
 		"name":"Basic Dungeon",
 		"waves":
 		[

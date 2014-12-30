@@ -32,6 +32,15 @@ public class Spawn : MonoBehaviour {
 		StartWave(0);
 	}
 
+	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
+	{
+
+		yield return new WaitForSeconds (delay);
+		
+		DestroyObject(obj);
+		
+	}
+
 	IEnumerator EffectWaveText(string msg, float alpha)
 	{
 		guiText.text = msg;
@@ -142,14 +151,17 @@ public class Spawn : MonoBehaviour {
 						{
 							Vector3 enemyPos = prefEnemy.transform.position;
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
+							enemyPos.y = m_prefSpawnEffect.transform.position.y;
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
 
 							audio.clip = m_sfxSpawnEffect;
 							audio.Play();
 
-							GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-							yield return new WaitForSeconds (spawnEffect.particleSystem.duration);
-							DestroyObject(spawnEffect);
+							GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
+							ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
+
+							StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
+							yield return new WaitForSeconds (1);
 
 							GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 							if (isBossWave == true)
