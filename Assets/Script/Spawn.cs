@@ -9,9 +9,6 @@ public class Spawn : MonoBehaviour {
 	GameObject		m_target = null;
 
 	[SerializeField]
-	AudioClip		m_sfxSpawnEffect;
-
-	[SerializeField]
 	Transform[]		m_areas = null;
 
 	[SerializeField]
@@ -153,9 +150,6 @@ public class Spawn : MonoBehaviour {
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.y = m_prefSpawnEffect.transform.position.y;
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
-
-							audio.clip = m_sfxSpawnEffect;
-							audio.Play();
 
 							GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
 							ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
