@@ -19,6 +19,9 @@ public class Champ : Creature {
 		base.Start();
 
 		m_creatureProperty.init(0f, 0f, 0f);
+
+		SetFollowingCamera();
+
 		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 		m_creatureProperty.m_callbackLevelup = delegate() {
 
@@ -76,7 +79,6 @@ public class Champ : Creature {
 		base.Update();
 
 		UpdateChampMovement();
-		FollowChampWithCamera();
 
 		if (m_enableAutoTarget)
 		{
@@ -134,16 +136,6 @@ public class Champ : Creature {
 	override public string[] GetAutoTargetTags()
 	{
 		return new string[]{Creature.Type.Enemy.ToString()};
-	}
-
-	void FollowChampWithCamera()
-	{
-		Vector3 myCharacterPosition = m_navAgent.transform.position;
-		myCharacterPosition.y = m_cameraOffset.y;
-		myCharacterPosition.z -= m_cameraOffset.z;
-		myCharacterPosition.x -= m_cameraOffset.x;
-		Camera.main.transform.position = myCharacterPosition;
-		
 	}
 
 	override public void Death()

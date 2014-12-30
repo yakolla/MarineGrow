@@ -51,6 +51,7 @@ public class Bezier {
 			if (m_target != null)
 			{
 				m_end = m_target.transform.position;
+
 			}
 
 			c += m_step; //100 steps to draw each bezier curve
