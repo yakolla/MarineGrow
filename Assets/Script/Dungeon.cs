@@ -47,7 +47,33 @@ public class Dungeon : MonoBehaviour {
 		}
 	}
 
-	public void SpawnItemBox(RefMob spawnDesc, Vector3 pos)
+	IEnumerator EffectBulletTime(float t)
+	{
+		yield return new WaitForSeconds (0.002f);
+		
+		if (t > 0)
+		{
+			Time.timeScale = 1.1f-t;
+			StartCoroutine(EffectBulletTime(t-0.002f));
+		}
+		else
+		{
+
+		}
+		
+	}
+
+	public void OnKillMob(Mob mob)
+	{
+		SpawnItemBox(mob.RefMob, mob.transform.position);
+
+		if (mob.Boss == true)
+		{
+			StartCoroutine(EffectBulletTime(1));
+		}
+	}
+
+	void SpawnItemBox(RefMob spawnDesc, Vector3 pos)
 	{
 		if (spawnDesc == null)
 			return;

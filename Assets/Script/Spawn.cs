@@ -16,14 +16,16 @@ public class Spawn : MonoBehaviour {
 
 	List<GameObject>	m_bosses = new List<GameObject>();
 
-	RefWorldMap		m_dungeon;
+	RefWorldMap		m_refWorldMap;
+	Dungeon			m_dungeon;
 	int				m_wave = 0;
 	int				m_repeatWave = 0;
 	// Use this for initialization
 	void Start () {
 
-		int dungeonId = transform.parent.GetComponent<Dungeon>().DungeonId;		
-		m_dungeon = RefData.Instance.RefWorldMaps[dungeonId];
+		m_dungeon = transform.parent.GetComponent<Dungeon>();
+		int dungeonId = m_dungeon.DungeonId;
+		m_refWorldMap = RefData.Instance.RefWorldMaps[dungeonId];
 		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
 		m_areas = transform.GetComponentsInChildren<Transform>();
 		StartWave(0);
@@ -71,7 +73,7 @@ public class Spawn : MonoBehaviour {
 
 	void StartWave(int wave)
 	{
-		if (m_dungeon.waves.Length <= wave)
+		if (m_refWorldMap.waves.Length <= wave)
 		{
 			m_repeatWave++;
 			wave = 0;
@@ -79,12 +81,12 @@ public class Spawn : MonoBehaviour {
 
 		m_wave = wave;
 
-		StartCoroutine(spawnEnemyPer(m_dungeon.waves[wave]));
+		StartCoroutine(spawnEnemyPer(m_refWorldMap.waves[wave]));
 	}
 
 	IEnumerator checkBossAlive()
 	{
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (3f);
 
 		bool existBoss = false;
 		foreach(GameObject boss in m_bosses)
@@ -119,8 +121,8 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			int totalWave = m_wave + 1 + m_repeatWave*m_dungeon.waves.Length;
-			bool isBossWave = m_dungeon.waves.Length-1 == m_wave;
+			int totalWave = m_wave + 1 + m_repeatWave*m_refWorldMap.waves.Length;
+			bool isBossWave = m_refWorldMap.waves.Length-1 == m_wave;
 			if (isBossWave == true)
 			{
 				StartCoroutine(EffectWaveText("Boss", 1));
@@ -171,8 +173,9 @@ public class Spawn : MonoBehaviour {
 							weapon.Item.Use(enemy);
 							
 							enemy.SetTarget(m_target);
-							enemy.SetSpawnDesc(pair.Value);
-
+							enemy.RefMob = pair.Value;
+							enemy.Dungeon = m_dungeon;
+							enemy.Boss = isBossWave;
 							enemy.m_creatureProperty.Level = totalWave;
 						}	
 					}

@@ -4,6 +4,8 @@ using System.Collections;
 public class Mob : Creature {
 
 	RefMob				m_refMob;
+	Dungeon				m_dungeon;
+	bool				m_boss = false;
 
 	GameObject			m_goalForNavigation;
 	// Use this for initialization
@@ -32,14 +34,21 @@ public class Mob : Creature {
 
 	}
 
-	public RefMob SpawnDesc
+	public bool Boss
+	{
+		get {return m_boss;}
+		set {m_boss = value;}
+	}
+
+	public RefMob RefMob
 	{
 		get {return m_refMob;}
+		set {m_refMob = value;}
 	}
 	
-	public void SetSpawnDesc(RefMob spawnDesc)
+	public Dungeon Dungeon
 	{
-		m_refMob = spawnDesc;
+		set {m_dungeon = value;}
 	}
 
 	override public string[] GetAutoTargetTags()
@@ -55,9 +64,10 @@ public class Mob : Creature {
 
 	override public void Death()
 	{
-		GameObject.Find("Dungeon").gameObject.GetComponent<Dungeon>().SpawnItemBox(m_refMob, transform.position);
+		m_dungeon.OnKillMob(this);
 		
 		base.Death();
+
 	}
 
 }
