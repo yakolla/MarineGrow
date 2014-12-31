@@ -6,7 +6,7 @@ public class Spawn : MonoBehaviour {
 
 
 	[SerializeField]
-	GameObject		m_target = null;
+	GameObject		m_champ = null;
 
 	[SerializeField]
 	Transform[]		m_areas = null;
@@ -66,7 +66,7 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			m_target.GetComponent<Creature>().SetFollowingCamera();
+			m_champ.GetComponent<Creature>().SetFollowingCamera();
 		}
 		
 	}
@@ -113,7 +113,7 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator spawnEnemyPer(RefWave refWave)
 	{
-		if (m_target == null)
+		if (m_champ == null)
 		{
 			yield return new WaitForSeconds (1f);
 
@@ -172,7 +172,7 @@ public class Spawn : MonoBehaviour {
 							ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 							weapon.Item.Use(enemy);
 							
-							enemy.SetTarget(m_target);
+							enemy.SetTarget(m_champ);
 							enemy.RefMob = pair.Value;
 							enemy.Dungeon = m_dungeon;
 							enemy.Boss = isBossWave;
@@ -191,9 +191,9 @@ public class Spawn : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (m_target == null)
+		if (m_champ == null)
 		{
-			m_target = GameObject.Find("Champ(Clone)");
+			m_champ = GameObject.Find("Champ(Clone)");
 		}
 	}
 
