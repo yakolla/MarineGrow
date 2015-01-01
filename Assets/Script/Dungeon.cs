@@ -7,10 +7,15 @@ public class Dungeon : MonoBehaviour {
 	[SerializeField]
 	int				m_dungeonId;
 
+	RefWorldMap		m_refWorldMap;
+
 	GameObject[]	m_prefItemBoxes = new GameObject[(int)ItemData.Type.Count];
 
 	// Use this for initialization
 	void Start () {		
+
+		
+		m_refWorldMap = RefData.Instance.RefWorldMaps[m_dungeonId];
 
 		string[] itemTypeNames = Enum.GetNames(typeof(ItemData.Type));
 		for(int i = 0; i < itemTypeNames.Length-1; ++i)
@@ -65,7 +70,7 @@ public class Dungeon : MonoBehaviour {
 
 	public void OnKillMob(Mob mob)
 	{
-		SpawnItemBox(mob.RefMob, mob.transform.position);
+		StartCoroutine(SpawnItemBox(mob, mob.transform.position));
 
 		if (mob.Boss == true)
 		{
@@ -73,48 +78,55 @@ public class Dungeon : MonoBehaviour {
 		}
 	}
 
-	void SpawnItemBox(RefMob spawnDesc, Vector3 pos)
+	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)
 	{
-		if (spawnDesc == null)
-			return;
 
-
-		foreach(RefItemSpawn desc in spawnDesc.refDropItems)
+		if (mob != null)
 		{
-			float ratio = Random.Range(0f, 1f);
-			if (ratio <= desc.ratio)
+			foreach(RefItemSpawn desc in mob.RefMobSpawn.refDropItems)
 			{
-				GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBoxes[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
-				ItemData item = null;
-				switch(desc.refItem.type)
+				float ratio = Random.Range(0f, 1f);
+				if (ratio <= desc.ratio)
 				{
-				case ItemData.Type.Gold:
-					item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
-					break;
-				case ItemData.Type.HealPosion:
-	                item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
-                    break;
-				case ItemData.Type.Weapon:
-					item = new ItemWeaponData(desc.refItem.id);
-					bindItemOption(item, desc.itemOptionSpawns);
-
-					break;
-				case ItemData.Type.WeaponUpgradeFragment:
-					item = new ItemWeaponUpgradeFragmentData();					
-					break;
-				case ItemData.Type.Follower:
-					item = new ItemFollowerData(desc.refItemId);					
-					break;
+					GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBoxes[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
+					itemBoxObj.SetActive(false);
+					ItemData item = null;
+					switch(desc.refItem.type)
+					{
+					case ItemData.Type.Gold:
+						item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
+						break;
+					case ItemData.Type.HealPosion:
+						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
+						break;
+					case ItemData.Type.Weapon:
+						item = new ItemWeaponData(desc.refItem.id);
+						bindItemOption(item, desc.itemOptionSpawns);
+						
+						break;
+					case ItemData.Type.WeaponUpgradeFragment:
+						item = new ItemWeaponUpgradeFragmentData();					
+						break;
+					case ItemData.Type.Follower:
+						item = new ItemFollowerData(desc.refItemId);					
+						break;
+					case ItemData.Type.WeaponEvolutionFragment:
+						item = new ItemWeaponEvolutionFragmentData();					
+						break;
+					}
+					
+					if (item != null)
+					{
+						ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
+						itemBox.Item = item;
+						itemBoxObj.SetActive(true);
+						yield return new WaitForSeconds (0.2f);
+					}
+					
 				}
-
-				if (item != null)
-				{
-					ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
-					itemBox.Item = item;
-				}
-
 			}
 		}
+
 
 	}
 

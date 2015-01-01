@@ -72,7 +72,6 @@ public class RefMob : RefBaseData
 	public float				phyDamagePerLevel;
 	public float 				phyDefencePerLevel;
 	public float 				hpPerLevel;
-	public RefItemSpawn[]		refDropItems;
 }
 
 public class RefMobSpawn
@@ -80,8 +79,8 @@ public class RefMobSpawn
 	public int[]			refMobIds;	
 	public float 			interval;
 	public int				repeatCount;
-	public int 				mobCount;
-
+	public int 				mobCount;	
+	public RefItemSpawn[]	refDropItems;
 
 	[JsonIgnore]
 	public Dictionary<int, RefMob>		refMobs = new Dictionary<int, RefMob>();
@@ -138,11 +137,11 @@ public class RefData {
 					foreach(int id in mobSpawn.refMobIds)
 					{
 						mobSpawn.refMobs[id] = m_refMobs[id];
-						
-						foreach(RefItemSpawn itemSpawn in m_refMobs[id].refDropItems)
-						{
-							itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
-						}
+					}
+
+					foreach(RefItemSpawn itemSpawn in mobSpawn.refDropItems)
+					{
+						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}
 				}
 			}

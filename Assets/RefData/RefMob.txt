@@ -5,23 +5,8 @@
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":1,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":0.1
-			},
-			{
-				"refItemId":2,
-				"minValue":100,
-				"maxValue":1000,
-				"ratio":0.01
-				
-			}
-		]
+		"hpPerLevel":1
+		
 	},
 	{
 		"id":2,
@@ -29,22 +14,7 @@
 		"refWeaponItem":"102",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":3,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":1
-			},
-			{
-				"refItemId":1001,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":1
-			}
-		]
+		"hpPerLevel":1
 	},
 	{
 		"id":3,
@@ -52,22 +22,7 @@
 		"refWeaponItem":"103",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":101,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":1,
-				"itemOptionSpawns":
-				[
-					{
-						"type":"PhysicalDmg", "minValue":0, "maxValue":0, "ratio":0
-					}
-				]
-			}
-		]
+		"hpPerLevel":1
 	},
 	{
 		"id":4,
@@ -75,16 +30,7 @@
 		"refWeaponItem":"103",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":3,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":1
-			}
-		]
+		"hpPerLevel":1
 	},
 	{
 		"id":5,
@@ -92,16 +38,7 @@
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":3,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":1
-			}
-		]
+		"hpPerLevel":1
 	},
 	{
 		"id":6,
@@ -109,16 +46,7 @@
 		"refWeaponItem":"101",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":3,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":1
-			}
-		]
+		"hpPerLevel":1
 	},
 	{
 		"id":1001,
@@ -126,21 +54,6 @@
 		"refWeaponItem":"109",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1,
-		"refDropItems":
-		[
-			{
-				"refItemId":3,
-				"minValue":1,
-				"maxValue":1,
-				"ratio":0.5
-			},
-			{
-				"refItemId":2,
-				"minValue":100,
-				"maxValue":1000,
-				"ratio":0.5
-			}
-		]
+		"hpPerLevel":1
 	}
 ]

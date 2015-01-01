@@ -5,6 +5,7 @@ public class Mob : Creature {
 
 	RefMob				m_refMob;
 	Dungeon				m_dungeon;
+	RefMobSpawn			m_refMobSpawn;
 	bool				m_boss = false;
 
 	GameObject			m_goalForNavigation;
@@ -49,6 +50,12 @@ public class Mob : Creature {
 	public Dungeon Dungeon
 	{
 		set {m_dungeon = value;}
+	}
+
+	public RefMobSpawn RefMobSpawn
+	{
+		set {m_refMobSpawn = value;}
+		get {return m_refMobSpawn;}
 	}
 
 	override public string[] GetAutoTargetTags()

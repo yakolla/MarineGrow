@@ -175,6 +175,7 @@ public class Spawn : MonoBehaviour {
 							enemy.SetTarget(m_champ);
 							enemy.RefMob = pair.Value;
 							enemy.Dungeon = m_dungeon;
+							enemy.RefMobSpawn = mobSpawn;
 							enemy.Boss = isBossWave;
 							enemy.m_creatureProperty.Level = totalWave;
 						}	
