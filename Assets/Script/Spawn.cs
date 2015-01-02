@@ -146,6 +146,7 @@ public class Spawn : MonoBehaviour {
 					{
 
 						GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
+						GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + pair.Value.prefBody);
 						for(int i = 0; i < mobSpawn.mobCount; ++i)
 						{
 							Vector3 enemyPos = prefEnemy.transform.position;
@@ -159,16 +160,22 @@ public class Spawn : MonoBehaviour {
 							StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
 							yield return new WaitForSeconds (1);
 
-							GameObject obj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+							GameObject enemyObj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+							GameObject enemyBody = Instantiate (prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+							enemyBody.name = "Body";
+							enemyBody.transform.parent = enemyObj.transform;
+							enemyBody.transform.localPosition = Vector3.zero;
+							enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+
 							if (isBossWave == true)
 							{
 
-								m_bosses.Add(obj);
+								m_bosses.Add(enemyObj);
 								StartCoroutine(EffectBulletTime(1));
-								obj.GetComponent<Creature>().SetFollowingCamera();
+								enemyObj.GetComponent<Creature>().SetFollowingCamera();
 							}
 
-							Mob enemy = obj.GetComponent<Mob>();
+							Mob enemy = enemyObj.GetComponent<Mob>();
 							ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
 							weapon.Item.Use(enemy);
 							

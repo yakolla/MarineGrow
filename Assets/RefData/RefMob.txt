@@ -2,6 +2,7 @@
 	{
 		"id":1,
 		"prefEnemy":"mon_a",
+		"prefBody":"mon/mon_a_body",
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -11,6 +12,7 @@
 	{
 		"id":2,
 		"prefEnemy":"mon_a_fly",
+		"prefBody":"mon/mon_b_body",		
 		"refWeaponItem":"102",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -19,6 +21,7 @@
 	{
 		"id":3,
 		"prefEnemy":"mon_a_boss",
+		"prefBody":"mon/mon_c_body",		
 		"refWeaponItem":"103",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -27,6 +30,7 @@
 	{
 		"id":4,
 		"prefEnemy":"mon_d",
+		"prefBody":"mon/mon_d_body",
 		"refWeaponItem":"103",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -35,6 +39,7 @@
 	{
 		"id":5,
 		"prefEnemy":"mon_e",
+		"prefBody":"mon/mon_e_body",
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -43,6 +48,7 @@
 	{
 		"id":6,
 		"prefEnemy":"mon_f",
+		"prefBody":"mon/mon_f_body",
 		"refWeaponItem":"101",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -51,6 +57,7 @@
 	{
 		"id":1001,
 		"prefEnemy":"giftbox",
+		"prefBody":"mon/giftbox_body",
 		"refWeaponItem":"109",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,

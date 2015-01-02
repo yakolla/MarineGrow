@@ -68,6 +68,7 @@ public class RefItemSpawn
 public class RefMob : RefBaseData
 {
 	public string				prefEnemy;
+	public string				prefBody;
 	public int					refWeaponItem;
 	public float				phyDamagePerLevel;
 	public float 				phyDefencePerLevel;
