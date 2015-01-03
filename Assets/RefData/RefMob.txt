@@ -6,7 +6,13 @@
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1
+		"hpPerLevel":1,
+		"mobAI":"Normal",
+		"eggMob":
+		{
+			"refMobId":7,
+			"count":2
+		}
 		
 	},
 	{
@@ -16,7 +22,8 @@
 		"refWeaponItem":"102",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1
+		"hpPerLevel":1,
+		"mobAI":"Normal"
 	},
 	{
 		"id":3,
@@ -25,7 +32,13 @@
 		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1
+		"hpPerLevel":1,
+		"mobAI":"Normal",
+		"eggMob":
+		{
+			"refMobId":8,
+			"count":4
+		}
 	},
 	{
 		"id":4,
@@ -34,7 +47,8 @@
 		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1
+		"hpPerLevel":1,
+		"mobAI":"Normal"
 	},
 	{
 		"id":5,
@@ -43,7 +57,8 @@
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1
+		"hpPerLevel":1,
+		"mobAI":"Normal"
 	},
 	{
 		"id":6,
@@ -53,7 +68,29 @@
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":1,
-		"nearByChampOnSpawn":true
+		"nearByChampOnSpawn":true,
+		"mobAI":"Rotation"
+	},
+	{
+		"id":7,
+		"prefEnemy":"mon_a_egg",
+		"prefBody":"mon/mon_a_body",
+		"refWeaponItem":"107",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":1,
+		"mobAI":"Normal"
+		
+	},
+	{
+		"id":8,
+		"prefEnemy":"mon_a_boss_egg",
+		"prefBody":"mon/mon_c_body",		
+		"refWeaponItem":"110",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":1,
+		"mobAI":"Normal"
 	},
 	{
 		"id":1001,
@@ -62,6 +99,7 @@
 		"refWeaponItem":"109",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
-		"hpPerLevel":1
+		"hpPerLevel":1,
+		"mobAI":"Normal"
 	}
 ]

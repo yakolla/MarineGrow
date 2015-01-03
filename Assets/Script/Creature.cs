@@ -78,7 +78,7 @@ public class Creature : MonoBehaviour {
 		};
 	}
 
-	protected Vector2 RotateToTarget(Vector3 pos)
+	public Vector2 RotateToTarget(Vector3 pos)
 	{
 
 		Vector3 gunPoint = m_weaponHolder.transform.position;
@@ -90,7 +90,7 @@ public class Creature : MonoBehaviour {
 		return new Vector2(targetHorAngle, 0f);
 	}
 
-	protected Vector2 RotateToTarget(float angle)
+	public Vector2 RotateToTarget(float angle)
 	{		
 		transform.eulerAngles = new Vector3(0, -angle, 0);
 		
@@ -180,7 +180,7 @@ public class Creature : MonoBehaviour {
 		return null;
 	}
 
-	virtual protected bool AutoAttack() {
+	virtual public bool AutoAttack() {
 		if (m_targeting != null)
 		{
 			if (false == inAttackRange(m_targeting, 0f))

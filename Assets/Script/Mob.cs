@@ -4,34 +4,45 @@ using System.Collections;
 public class Mob : Creature {
 
 	RefMob				m_refMob;
-	Dungeon				m_dungeon;
+	Spawn				m_spawn;
 	RefMobSpawn			m_refMobSpawn;
 	bool				m_boss = false;
-
+	MobAI				m_ai;
 	GameObject			m_goalForNavigation;
 	// Use this for initialization
 	new void Start () {
 		base.Start();
 
+
+	}
+
+	public void Init(RefMob refMob, Spawn spawn, RefMobSpawn refMobSpawn, bool boss)
+	{
+		RefMob = refMob;
+		Spawn = spawn;
+		RefMobSpawn = refMobSpawn;
+		Boss = boss;
+
 		m_creatureProperty.init(this, m_refMob.phyDamagePerLevel, m_refMob.phyDefencePerLevel, m_refMob.hpPerLevel);
+		
+		switch(refMob.mobAI)
+		{
+		case MobAIType.Normal:
+			m_ai = new MobAINormal();
+			m_ai.Init(this);
+			break;
+		case MobAIType.Rotation:
+			m_ai = new MobAIRotation();
+			m_ai.Init(this);
+			break;
+		}
 	}
 	
 	// Update is called once per frame
 	new void Update () {
 		base.Update();
 
-		if (AutoAttack() == false)
-		{
-			if (m_goalForNavigation)
-			{
-				m_navAgent.SetDestination(m_goalForNavigation.transform.position);
-				RotateToTarget(m_goalForNavigation.transform.position);
-			}
-		}
-		else
-		{
-			m_navAgent.Stop();
-		}
+		m_ai.Update();
 
 	}
 
@@ -47,9 +58,10 @@ public class Mob : Creature {
 		set {m_refMob = value;}
 	}
 	
-	public Dungeon Dungeon
-	{
-		set {m_dungeon = value;}
+	public Spawn Spawn	{
+		set {
+			m_spawn = value;
+		}
 	}
 
 	public RefMobSpawn RefMobSpawn
@@ -65,13 +77,13 @@ public class Mob : Creature {
 
 	public void SetTarget(GameObject obj )
 	{
-		m_goalForNavigation = obj;
+		m_ai.SetTarget(obj);
 
 	}
 
 	override public void Death()
 	{
-		m_dungeon.OnKillMob(this);
+		m_spawn.OnKillMob(this);
 		
 		base.Death();
 

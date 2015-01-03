@@ -65,6 +65,21 @@ public class RefItemSpawn
 	public RefItem				refItem;
 }
 
+public class RefEggMob
+{
+	public int					refMobId;
+	public int					count;
+
+	[JsonIgnore]
+	public RefMob				refMob;
+}
+
+public enum MobAIType
+{
+	Normal,
+	Rotation,
+}
+
 public class RefMob : RefBaseData
 {
 	public string				prefEnemy;
@@ -74,6 +89,10 @@ public class RefMob : RefBaseData
 	public float 				phyDefencePerLevel;
 	public float 				hpPerLevel;
 	public bool					nearByChampOnSpawn;
+	public RefEggMob			eggMob;
+
+	[JsonConverter(typeof(StringEnumConverter))]
+	public MobAIType			mobAI;
 }
 
 public class RefMobSpawn
@@ -146,6 +165,14 @@ public class RefData {
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}
 				}
+			}
+		}
+
+		foreach(KeyValuePair<int, RefMob> pair in m_refMobs)
+		{
+			if (pair.Value.eggMob != null)
+			{
+				pair.Value.eggMob.refMob = m_refMobs[pair.Value.eggMob.refMobId];
 			}
 		}
 	}

@@ -37,17 +37,13 @@ public class CreatureProperty {
 	float 	m_phyDefencePerLevel = 0f;
 	float 	m_hpPerLevel = 0f;
 
-
-	public delegate void CallbackOnLevelUp();
-	public CallbackOnLevelUp	m_callbackLevelup = delegate(){};
-
 	public void 	init(Creature owner, float phyDamagePerLevel, float phyDefencePerLevel, float hpPerLevel)
 	{
 		m_owner = owner;
 		m_phyDamagePerLevel = phyDamagePerLevel;
 		m_phyDefencePerLevel = phyDefencePerLevel;
 		m_hpPerLevel = hpPerLevel;
-		Level = 1;
+		Level = m_level;
 
 	}
 
