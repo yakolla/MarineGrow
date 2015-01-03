@@ -5,6 +5,8 @@ public class RocketLauncherBullet : Bullet {
 
 	[SerializeField]
 	float m_speed = 10f;
+
+	float	m_elpasedTime = 0f;
 	// Use this for initialization
 	void Start () {
 	}
@@ -16,8 +18,8 @@ public class RocketLauncherBullet : Bullet {
 	}
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
-
+		transform.Translate(m_elpasedTime, 0, 0, transform);
+		m_elpasedTime += Time.deltaTime*0.2f;
 	}
 
 	IEnumerator destoryObject()

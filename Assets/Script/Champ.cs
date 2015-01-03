@@ -18,23 +18,23 @@ public class Champ : Creature {
 	new void Start () {
 		base.Start();
 
-		m_creatureProperty.init(0f, 0f, 0f);
+		m_creatureProperty.init(this, 0f, 0f, 0f);
 
 		SetFollowingCamera();
 
 		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
-		m_creatureProperty.m_callbackLevelup = delegate() {
+	}
 
-			GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
-			effect.transform.parent = transform;
-			effect.transform.localPosition = m_prefLevelUpEffect.transform.position;
-			effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
-			StartCoroutine(UpdateLevelUpEffect(effect));
-
-			transform.Find("LevelupGUI").gameObject.SetActive(true);
-			ChampLevelupGUI levelupGUI = transform.Find("LevelupGUI").GetComponent<ChampLevelupGUI>();
-
-		};
+	void LevelUp()
+	{
+		GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
+		effect.transform.parent = transform;
+		effect.transform.localPosition = m_prefLevelUpEffect.transform.position;
+		effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
+		StartCoroutine(UpdateLevelUpEffect(effect));
+		
+		transform.Find("LevelupGUI").gameObject.SetActive(true);
+		ChampLevelupGUI levelupGUI = transform.Find("LevelupGUI").GetComponent<ChampLevelupGUI>();
 	}
 
 	IEnumerator UpdateLevelUpEffect(GameObject effect)
@@ -66,8 +66,12 @@ public class Champ : Creature {
 				pos.x += step;
 			}
 
-			float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
-			transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
+			if (m_targeting == null)
+			{
+				float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
+				transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
+
+			}
 
 			m_navAgent.SetDestination(transform.position+pos);
 		}

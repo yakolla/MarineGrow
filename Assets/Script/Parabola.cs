@@ -23,7 +23,7 @@ public class Parabola {
 
 		m_vel.x = hspeed * Mathf.Cos(hang);
 		m_vel.y = vspeed * Mathf.Sin(vang);
-		m_vel.z = hspeed * Mathf.Sin(hang);
+		m_vel.z = hspeed * Mathf.Cos(hang);
 		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
 
 		m_startTime = Time.time;

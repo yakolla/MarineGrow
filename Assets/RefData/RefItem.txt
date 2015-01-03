@@ -120,8 +120,8 @@
 		},
 		"weapon":
 		{
-			"coolTime":0.5,
-			"range":5
+			"coolTime":0.9,
+			"range":8
 		}
 	},
 	{

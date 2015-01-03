@@ -5,6 +5,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class CreatureProperty {
 
+	Creature	m_owner;
+
 	[SerializeField]
 	float	m_baseMaxHP = 0;
 	float 	m_hp;
@@ -39,8 +41,9 @@ public class CreatureProperty {
 	public delegate void CallbackOnLevelUp();
 	public CallbackOnLevelUp	m_callbackLevelup = delegate(){};
 
-	public void 	init(float phyDamagePerLevel, float phyDefencePerLevel, float hpPerLevel)
+	public void 	init(Creature owner, float phyDamagePerLevel, float phyDefencePerLevel, float hpPerLevel)
 	{
+		m_owner = owner;
 		m_phyDamagePerLevel = phyDamagePerLevel;
 		m_phyDefencePerLevel = phyDefencePerLevel;
 		m_hpPerLevel = hpPerLevel;
@@ -74,7 +77,6 @@ public class CreatureProperty {
 		get { return m_level; }
 		set {
 			m_level = value;
-			m_callbackLevelup();
 			m_hp = MaxHP;
 		}
 	}
@@ -100,7 +102,8 @@ public class CreatureProperty {
 		while (MaxExp <= m_exp)
 		{
 			m_exp -= MaxExp;
-			++Level;
+			++Level;			
+			m_owner.SendMessage("LevelUp");
 		}
 	}
 

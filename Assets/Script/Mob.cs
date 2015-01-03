@@ -13,7 +13,7 @@ public class Mob : Creature {
 	new void Start () {
 		base.Start();
 
-		m_creatureProperty.init(m_refMob.phyDamagePerLevel, m_refMob.phyDefencePerLevel, m_refMob.hpPerLevel);
+		m_creatureProperty.init(this, m_refMob.phyDamagePerLevel, m_refMob.phyDefencePerLevel, m_refMob.hpPerLevel);
 	}
 	
 	// Update is called once per frame

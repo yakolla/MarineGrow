@@ -8,7 +8,7 @@ public class Parasite : Creature {
 
 	new void Start () {
 
-		m_creatureProperty.init(0f, 0f, 0f);
+		m_creatureProperty.init(this, 0f, 0f, 0f);
 
 		ChangeWeapon(new ItemWeaponData(m_refWeaponItem));
 	}
