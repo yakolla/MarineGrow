@@ -13,9 +13,9 @@ public class MobAI {
 		m_navAgent = mob.GetComponent<NavMeshAgent>();
 	}
 
-	public void SetTarget(GameObject obj )
+	virtual public void SetTarget(GameObject obj )
 	{
-		m_target = obj;		
+		m_target = obj;
 	}
 	
 	// Update is called once per frame

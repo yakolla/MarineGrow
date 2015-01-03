@@ -29,13 +29,16 @@ public class Mob : Creature {
 		{
 		case MobAIType.Normal:
 			m_ai = new MobAINormal();
-			m_ai.Init(this);
 			break;
 		case MobAIType.Rotation:
 			m_ai = new MobAIRotation();
-			m_ai.Init(this);
+			break;
+		case MobAIType.Dash:
+			m_ai = new MobAIDash();
 			break;
 		}
+
+		m_ai.Init(this);
 	}
 	
 	// Update is called once per frame

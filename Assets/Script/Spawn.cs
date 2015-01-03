@@ -70,7 +70,8 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			m_champ.GetComponent<Creature>().SetFollowingCamera();
+			if (m_champ)
+				m_champ.GetComponent<Creature>().SetFollowingCamera();
 		}
 		
 	}
