@@ -22,7 +22,7 @@
 		"id":3,
 		"prefEnemy":"mon_a_boss",
 		"prefBody":"mon/mon_c_body",		
-		"refWeaponItem":"103",
+		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":1

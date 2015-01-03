@@ -21,7 +21,7 @@ public class Weapon : MonoBehaviour {
 	protected float				m_coolTime = 0.5f;
 
 	float						m_lastCreated = 0;
-	Creature 					m_creature;
+	protected Creature 			m_creature;
 	float						m_chargingTime;
 
 	public delegate void CallbackOnCreateBullet();

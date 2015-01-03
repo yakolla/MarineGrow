@@ -3,8 +3,7 @@ using System.Collections;
 
 public class RocketLauncherBullet : Bullet {
 
-	[SerializeField]
-	float m_speed = 10f;
+	float m_speed = 1f;
 
 	float	m_elpasedTime = 0f;
 	// Use this for initialization
@@ -19,7 +18,7 @@ public class RocketLauncherBullet : Bullet {
 	// Update is called once per frame
 	void Update () {
 		transform.Translate(m_elpasedTime, 0, 0, transform);
-		m_elpasedTime += Time.deltaTime*0.2f;
+		m_elpasedTime += Time.deltaTime*0.3f*m_speed;
 	}
 
 	IEnumerator destoryObject()
