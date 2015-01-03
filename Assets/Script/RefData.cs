@@ -73,6 +73,7 @@ public class RefMob : RefBaseData
 	public float				phyDamagePerLevel;
 	public float 				phyDefencePerLevel;
 	public float 				hpPerLevel;
+	public bool					nearByChampOnSpawn;
 }
 
 public class RefMobSpawn
@@ -80,7 +81,7 @@ public class RefMobSpawn
 	public int[]			refMobIds;	
 	public float 			interval;
 	public int				repeatCount;
-	public int 				mobCount;	
+	public int 				mobCount;
 	public RefItemSpawn[]	refDropItems;
 
 	[JsonIgnore]

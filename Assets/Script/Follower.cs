@@ -14,6 +14,9 @@ public class Follower : Creature {
 	{
 		base.Start();
 
+		
+		m_creatureProperty.init(this, 0f, 0f, 0f);
+
 		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId));
 		m_weapon.Item.Use(this);
 

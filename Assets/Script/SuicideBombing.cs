@@ -19,11 +19,22 @@ public class SuicideBombing : Weapon {
 		{
 			CreateBullet(Vector2.zero, 0f);
 			m_creature.Death();
+			return;
+		}
+
+		if (m_creature.m_targeting != null)
+		{
+			float d = Vector3.Distance(m_creature.transform.position, transform.position);
+			if (d < 2f)
+			{
+				m_destroy = true;
+			}
 		}
 	}
 
 	void OnTriggerEnter(Collider other) 
 	{
+		return;
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_creature))
 		{

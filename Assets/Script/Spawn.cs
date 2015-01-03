@@ -138,6 +138,16 @@ public class Spawn : MonoBehaviour {
 
 					foreach(KeyValuePair<int, RefMob> pair in mobSpawn.refMobs)
 					{
+						if (pair.Value.nearByChampOnSpawn == true)
+						{
+							cx = m_champ.transform.position.x;
+							cz = m_champ.transform.position.z;
+						}
+						else
+						{
+							cx = area.position.x;
+							cz = area.position.z;
+						}
 
 						GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
 						GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + pair.Value.prefBody);
@@ -146,6 +156,7 @@ public class Spawn : MonoBehaviour {
 							Vector3 enemyPos = Vector3.zero;
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
+
 							Mob mob = m_dungeon.SpawnMob(pair.Value, mobSpawn, enemyPos, totalWave, m_champ);
 							if (isBossWave == true)
 							{			
@@ -155,7 +166,7 @@ public class Spawn : MonoBehaviour {
 								mob.SetFollowingCamera();
 							}
 
-							yield return new WaitForSeconds (1);
+							yield return new WaitForSeconds (0.5f);
 						}	
 					}
 

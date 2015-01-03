@@ -26,8 +26,8 @@ public class SuicideBombingBullet : Bullet {
 	
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);		
-	
+		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+			
 	}
 
 
@@ -36,6 +36,7 @@ public class SuicideBombingBullet : Bullet {
 		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
 
 		DestroyObject(bombEffect);
+		DestroyObject(gameObject);
 	}
 
 	void bomb()
@@ -61,7 +62,7 @@ public class SuicideBombingBullet : Bullet {
 		
 		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
 		bombEffect.particleSystem.startSize = m_bombRange*2;
-		//this.audio.Play();
+		this.audio.Play();
 
 		StartCoroutine(destoryObject(bombEffect));
 

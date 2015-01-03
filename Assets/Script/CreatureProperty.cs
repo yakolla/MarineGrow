@@ -47,7 +47,7 @@ public class CreatureProperty {
 		m_phyDamagePerLevel = phyDamagePerLevel;
 		m_phyDefencePerLevel = phyDefencePerLevel;
 		m_hpPerLevel = hpPerLevel;
-		m_hp = MaxHP;
+		Level = 1;
 
 	}
 
@@ -102,8 +102,13 @@ public class CreatureProperty {
 		while (MaxExp <= m_exp)
 		{
 			m_exp -= MaxExp;
-			++Level;			
-			m_owner.SendMessage("LevelUp");
+			++Level;
+
+			if (m_owner != null)
+			{
+				m_owner.SendMessage("LevelUp");
+			}
+
 		}
 	}
 
