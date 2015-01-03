@@ -138,7 +138,7 @@ public class Creature : MonoBehaviour {
 
 	public void SetFollowingCamera()
 	{
-		FollowingCamera followingCamera = Camera.main.GetComponent<FollowingCamera>();
+		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetTarget(gameObject);
 	}
 

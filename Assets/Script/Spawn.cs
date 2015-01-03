@@ -11,8 +11,7 @@ public class Spawn : MonoBehaviour {
 	[SerializeField]
 	Transform[]		m_areas = null;
 
-	[SerializeField]
-	GameObject		m_prefSpawnEffect = null;
+
 
 	List<GameObject>	m_bosses = new List<GameObject>();
 
@@ -31,14 +30,7 @@ public class Spawn : MonoBehaviour {
 		StartWave(0);
 	}
 
-	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
-	{
 
-		yield return new WaitForSeconds (delay);
-		
-		DestroyObject(obj);
-		
-	}
 
 	IEnumerator EffectWaveText(string msg, float alpha)
 	{
@@ -81,7 +73,7 @@ public class Spawn : MonoBehaviour {
 
 		m_wave = wave;
 
-		StartCoroutine(spawnEnemyPer(m_refWorldMap.waves[wave]));
+		StartCoroutine(spawnMobPer(m_refWorldMap.waves[wave]));
 	}
 
 	IEnumerator checkBossAlive()
@@ -111,13 +103,15 @@ public class Spawn : MonoBehaviour {
 
 	}
 
-	IEnumerator spawnEnemyPer(RefWave refWave)
+
+
+	IEnumerator spawnMobPer(RefWave refWave)
 	{
 		if (m_champ == null)
 		{
 			yield return new WaitForSeconds (1f);
 
-			StartCoroutine(spawnEnemyPer(refWave));
+			StartCoroutine(spawnMobPer(refWave));
 		}
 		else
 		{
@@ -149,42 +143,19 @@ public class Spawn : MonoBehaviour {
 						GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + pair.Value.prefBody);
 						for(int i = 0; i < mobSpawn.mobCount; ++i)
 						{
-							Vector3 enemyPos = prefEnemy.transform.position;
+							Vector3 enemyPos = Vector3.zero;
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
-							enemyPos.y = m_prefSpawnEffect.transform.position.y;
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
-
-							GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
-							ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
-
-							StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
-							yield return new WaitForSeconds (1);
-
-							GameObject enemyObj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-							GameObject enemyBody = Instantiate (prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-							enemyBody.name = "Body";
-							enemyBody.transform.parent = enemyObj.transform;
-							enemyBody.transform.localPosition = Vector3.zero;
-							enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-
+							Mob mob = m_dungeon.SpawnMob(pair.Value, mobSpawn, enemyPos, totalWave, m_champ);
 							if (isBossWave == true)
-							{
-
-								m_bosses.Add(enemyObj);
+							{			
+								m_bosses.Add(mob.gameObject);
 								StartCoroutine(EffectBulletTime(1));
-								enemyObj.GetComponent<Creature>().SetFollowingCamera();
+								mob.Boss = true;
+								mob.SetFollowingCamera();
 							}
 
-							Mob enemy = enemyObj.GetComponent<Mob>();
-							ItemObject weapon = new ItemObject(new ItemWeaponData(pair.Value.refWeaponItem));
-							weapon.Item.Use(enemy);
-							
-							enemy.SetTarget(m_champ);
-							enemy.RefMob = pair.Value;
-							enemy.Dungeon = m_dungeon;
-							enemy.RefMobSpawn = mobSpawn;
-							enemy.Boss = isBossWave;
-							enemy.m_creatureProperty.Level = totalWave;
+							yield return new WaitForSeconds (1);
 						}	
 					}
 

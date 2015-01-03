@@ -45,20 +45,20 @@ public class Bezier {
 
 	public bool Update()
 	{
-
+		if (m_target != null)
+		{
+			m_end = m_target.transform.position;
+			
+		}
 		if (c < 1) //we defined 100 steps to draw the curve
 		{
-			if (m_target != null)
-			{
-				m_end = m_target.transform.position;
-
-			}
-
 			c += m_step; //100 steps to draw each bezier curve
+			c = Mathf.Min(1, c);
 			m_owner.transform.position = CalculateBezierPoint(c, m_start, m_handle1, m_handle2, m_end);
 			return true;
 		}
 
+		m_owner.transform.position = m_end;
 		return false;
 	}
 

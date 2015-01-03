@@ -36,6 +36,11 @@ public class Parabola {
 		get { return m_height;}
 	}
 
+	public Vector3 Position
+	{
+		get {return m_obj.transform.position;}
+	}
+
 	public void Destroy()
 	{
 		MonoBehaviour.DestroyObject(m_obj);

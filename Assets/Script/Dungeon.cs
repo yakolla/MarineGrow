@@ -9,6 +9,9 @@ public class Dungeon : MonoBehaviour {
 
 	RefWorldMap		m_refWorldMap;
 
+	[SerializeField]
+	GameObject		m_prefSpawnEffect = null;
+
 	GameObject[]	m_prefItemBoxes = new GameObject[(int)ItemData.Type.Count];
 
 	// Use this for initialization
@@ -68,6 +71,22 @@ public class Dungeon : MonoBehaviour {
 		
 	}
 
+	IEnumerator EffectSpawnBossBaby(Parabola parabola, RefMob refMob, RefMobSpawn refMobSpawn, int mobLevel, GameObject champ)
+	{
+		yield return new WaitForSeconds (0.002f);
+		
+		if (parabola.Update() == true)
+		{
+			StartCoroutine(EffectSpawnBossBaby(parabola, refMob, refMobSpawn, mobLevel, champ));
+		}
+		else
+		{
+			SpawnMob(refMob, refMobSpawn, parabola.Position, mobLevel, champ);
+			parabola.Destroy();
+		}
+		
+	}
+
 	public void OnKillMob(Mob mob)
 	{
 		StartCoroutine(SpawnItemBox(mob, mob.transform.position));
@@ -75,7 +94,57 @@ public class Dungeon : MonoBehaviour {
 		if (mob.Boss == true)
 		{
 			StartCoroutine(EffectBulletTime(1));
+			for(int i = 0; i < 4; ++i)
+			{
+				GameObject spawnEffect = Instantiate (m_prefSpawnEffect, mob.transform.position, m_prefSpawnEffect.transform.rotation) as GameObject;
+				Parabola parabola = new Parabola(spawnEffect, Random.Range(-5.5f, 5.5f), Random.Range(5, 7), Random.Range(60, 90), 1);
+				StartCoroutine(EffectSpawnBossBaby(parabola, mob.RefMob, mob.RefMobSpawn, mob.m_creatureProperty.Level, mob.m_targeting));
+			}
 		}
+	}
+
+	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
+	{
+		
+		yield return new WaitForSeconds (delay);
+		
+		DestroyObject(obj);
+		
+	}
+
+	public Mob SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, GameObject champ)
+	{
+		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + refMob.prefEnemy);
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + refMob.prefBody);
+		
+		Vector3 enemyPos = pos;
+		enemyPos.y = m_prefSpawnEffect.transform.position.y;
+
+		GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
+		ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
+		
+		StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
+		
+		GameObject enemyObj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+		GameObject enemyBody = Instantiate (prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+		enemyBody.name = "Body";
+		enemyBody.transform.parent = enemyObj.transform;
+		enemyBody.transform.localPosition = Vector3.zero;
+		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+		
+
+		Mob enemy = enemyObj.GetComponent<Mob>();
+		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem));
+		weapon.Item.Use(enemy);
+		
+		enemy.SetTarget(champ);
+		enemy.RefMob = refMob;
+		enemy.Dungeon = this;
+		enemy.RefMobSpawn = refMobSpawn;
+		enemy.m_creatureProperty.Level = mobLevel;
+		
+		return enemy;
+		
 	}
 
 	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)
