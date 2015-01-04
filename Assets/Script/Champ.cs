@@ -15,10 +15,14 @@ public class Champ : Creature {
 	[SerializeField]
 	GameObject	m_prefLevelUpEffect = null;
 
-	new void Start () {
-		base.Start();
+	[SerializeField]
+	RefCreatureBaseProperty	m_creatureBaseProperty;
 
-		m_creatureProperty.init(this, 0f, 0f, 0f);
+	new void Start () {
+		
+		m_creatureProperty.init(this, m_creatureBaseProperty);
+
+		base.Start();
 
 		SetFollowingCamera();
 

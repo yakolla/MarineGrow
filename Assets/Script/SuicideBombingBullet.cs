@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SuicideBombingBullet : Bullet {
 
-	bool	m_destroy = false;
 
 	[SerializeField]
 	GameObject		m_prefBombEffect = null;
@@ -31,18 +30,15 @@ public class SuicideBombingBullet : Bullet {
 	}
 
 
-	IEnumerator destoryObject(GameObject bombEffect)
+	IEnumerator destoryObject(float t)
 	{
-		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
+		yield return new WaitForSeconds (t);
 
-		DestroyObject(bombEffect);
 		DestroyObject(gameObject);
 	}
 
 	void bomb()
 	{
-		m_destroy = true;
-		
 		string[] tags = m_ownerCreature.GetAutoTargetTags();
 		foreach(string tag in tags)
 		{
@@ -61,10 +57,13 @@ public class SuicideBombingBullet : Bullet {
 		}
 		
 		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
+		bombEffect.transform.parent = transform;
+		bombEffect.transform.localPosition = Vector3.zero;
+		bombEffect.transform.localRotation = m_prefBombEffect.transform.rotation;
 		bombEffect.particleSystem.startSize = m_bombRange*2;
 		this.audio.Play();
 
-		StartCoroutine(destoryObject(bombEffect));
+		StartCoroutine(destoryObject(bombEffect.particleSystem.duration));
 
 	}
 }

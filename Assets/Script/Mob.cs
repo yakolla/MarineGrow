@@ -23,8 +23,9 @@ public class Mob : Creature {
 		RefMobSpawn = refMobSpawn;
 		Boss = boss;
 
-		m_creatureProperty.init(this, m_refMob.phyDamagePerLevel, m_refMob.phyDefencePerLevel, m_refMob.hpPerLevel);
-		
+		m_creatureProperty.init(this, m_refMob.baseCreatureProperty);
+
+
 		switch(refMob.mobAI)
 		{
 		case MobAIType.Normal:

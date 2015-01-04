@@ -49,8 +49,8 @@ public class Creature : MonoBehaviour {
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
-
-
+		
+		m_navAgent.speed = m_creatureProperty.MoveSpeed;
 	}
 
 	public void ChangeWeapon(ItemWeaponData weaponData)
@@ -106,6 +106,8 @@ public class Creature : MonoBehaviour {
 	protected void Update()
 	{
 		UpdateDamageEffect();
+
+
 	}
 
 	virtual public string[] GetAutoTargetTags()

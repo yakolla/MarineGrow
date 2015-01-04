@@ -11,6 +11,23 @@ public class RefBaseData
 	public int 				id;
 }
 
+[System.Serializable]
+public class RefCreatureBaseProperty
+{
+	public float	maxHP;
+	public float	physicalDamage;
+
+	[Range (0, 100)]
+	public float	physicalDefence;
+	public int		level;
+	public int		exp;
+	public float 	phyDamagePerLevel;
+	public float 	phyDefencePerLevel;
+	public float 	hpPerLevel;
+	[Range (0, 100)]
+	public float	moveSpeed;
+}
+
 public class RefProgressUpItem
 {
 	public int				refItemId;
@@ -91,6 +108,7 @@ public class RefMob : RefBaseData
 	public float 				hpPerLevel;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
+	public RefCreatureBaseProperty		baseCreatureProperty;
 
 	[JsonConverter(typeof(StringEnumConverter))]
 	public MobAIType			mobAI;
@@ -102,6 +120,7 @@ public class RefMobSpawn
 	public float 			interval;
 	public int				repeatCount;
 	public int 				mobCount;
+	public bool				boss = false;
 	public RefItemSpawn[]	refDropItems;
 
 	[JsonIgnore]

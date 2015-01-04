@@ -6,7 +6,7 @@ public class ChampLevelupGUI : MonoBehaviour {
 	Creature	m_creature;
 	Rect 		m_statusWindowRect;
 	Rect 		m_skillWindowRect;
-	int			m_statPoing = 0;
+	int			m_statPoint = 0;
 
 	[SerializeField]
 	GUISkin		m_guiSkin = null;
@@ -22,7 +22,7 @@ public class ChampLevelupGUI : MonoBehaviour {
 
 	void OnEnable() {
 		Time.timeScale = 0;
-		m_statPoing++;
+		m_statPoint+=3;
 	}
 
 	void OnDisable() {
@@ -49,31 +49,31 @@ public class ChampLevelupGUI : MonoBehaviour {
 		}
 
 		GUI.Label(new Rect(0, startY+(size*0), size, size), Resources.Load<Texture>("Sprites/level"));
-		GUI.Label(new Rect(size, startY+(size*0), size, size), m_creature.m_creatureProperty.Level.ToString());
+		GUI.Label(new Rect(size, startY+(size*0), size, size), m_statPoint.ToString());
 
 
 		GUI.Label(new Rect(0, startY+(size*1), size, size), Resources.Load<Texture>("Sprites/swordoftruth"));
 		GUI.Label(new Rect(size, startY+(size*1), size, size), m_creature.m_creatureProperty.PhysicalAttackDamage.ToString());
-		if (GUI.Button(new Rect(size+size, startY+(size*1), size, size), "+") && m_statPoing > 0)
+		if (GUI.Button(new Rect(size+size, startY+(size*1), size, size), "+") && m_statPoint > 0)
 		{
-			m_creature.m_creatureProperty.PhysicalAttackDamage+=1;
-			--m_statPoing;
+			m_creature.m_creatureProperty.AlphaPhysicalAttackDamage+=1;
+			--m_statPoint;
 		}
 
 		GUI.Label(new Rect(0, startY+(size*2), size, size), Resources.Load<Texture>("Sprites/staffoflight"));
 		GUI.Label(new Rect(size, startY+(size*2), size, size), m_creature.m_creatureProperty.PhysicalDefencePoint.ToString());
-		if (GUI.Button(new Rect(size+size, startY+(size*2), size, size), "+") && m_statPoing > 0)
+		if (GUI.Button(new Rect(size+size, startY+(size*2), size, size), "+") && m_statPoint > 0)
 		{
-			m_creature.m_creatureProperty.PhysicalDefencePoint+=1;
-			--m_statPoing;
+			m_creature.m_creatureProperty.AlphaPhysicalDefencePoint+=1;
+			--m_statPoint;
 		}
 
 		GUI.Label(new Rect(0, startY+(size*3), size, size), Resources.Load<Texture>("Sprites/robeofpower"));
 		GUI.Label(new Rect(size, startY+(size*3), size, size), m_creature.m_creatureProperty.AlphaMaxHP.ToString());
-		if (GUI.Button(new Rect(size+size, startY+(size*3), size, size), "+") && m_statPoing > 0)
+		if (GUI.Button(new Rect(size+size, startY+(size*3), size, size), "+") && m_statPoint > 0)
 		{
 			m_creature.m_creatureProperty.AlphaMaxHP+=1;
-			--m_statPoing;
+			--m_statPoint;
 		}
 
 	}

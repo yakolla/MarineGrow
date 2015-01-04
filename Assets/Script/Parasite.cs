@@ -6,9 +6,12 @@ public class Parasite : Creature {
 	[SerializeField]
 	int			m_refWeaponItem = 0;
 
+	[SerializeField]
+	RefCreatureBaseProperty	m_creatureBaseProperty;
+
 	new void Start () {
 
-		m_creatureProperty.init(this, 0f, 0f, 0f);
+		m_creatureProperty.init(this, m_creatureBaseProperty);
 
 		ChangeWeapon(new ItemWeaponData(m_refWeaponItem));
 	}

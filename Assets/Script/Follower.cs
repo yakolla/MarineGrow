@@ -10,12 +10,14 @@ public class Follower : Creature {
 
 	Creature	m_champ;
 
+	[SerializeField]
+	RefCreatureBaseProperty	m_creatureBaseProperty;
+
 	new void Start()
 	{
-		base.Start();
+		m_creatureProperty.init(this, m_creatureBaseProperty);
 
-		
-		m_creatureProperty.init(this, 0f, 0f, 0f);
+		base.Start();
 
 		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId));
 		m_weapon.Item.Use(this);

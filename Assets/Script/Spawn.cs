@@ -127,15 +127,7 @@ public class Spawn : MonoBehaviour {
 		else
 		{
 			int totalWave = m_wave + 1 + m_repeatWave*m_refWorldMap.waves.Length;
-			bool isBossWave = m_refWorldMap.waves.Length-1 == m_wave;
-			if (isBossWave == true)
-			{
-				StartCoroutine(EffectWaveText("Boss", 1));
-			}
-			else
-			{
-				StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
-			}
+
 
 			Transform area = m_areas[Random.Range(1,m_areas.Length)];
 			float cx = area.position.x;
@@ -144,6 +136,11 @@ public class Spawn : MonoBehaviour {
 
 			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
 			{
+				if (mobSpawn.boss == true)
+					StartCoroutine(EffectWaveText("Boss", mobSpawn.refMobs.Count));
+				else
+					StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
+
 				for(int repeatNum = 0; repeatNum < mobSpawn.repeatCount; ++repeatNum)
 				{
 
@@ -151,8 +148,12 @@ public class Spawn : MonoBehaviour {
 					{
 						if (pair.Value.nearByChampOnSpawn == true)
 						{
-							cx = m_champ.transform.position.x;
-							cz = m_champ.transform.position.z;
+							if (m_champ)
+							{
+								cx = m_champ.transform.position.x;
+								cz = m_champ.transform.position.z;
+							}
+
 						}
 						else
 						{
@@ -168,7 +169,7 @@ public class Spawn : MonoBehaviour {
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
 
-							SpawnMob(pair.Value, mobSpawn, enemyPos, totalWave, isBossWave);
+							SpawnMob(pair.Value, mobSpawn, enemyPos, m_repeatWave+m_wave/(m_refWorldMap.waves.Length/3), mobSpawn.boss, mobSpawn.boss && i == 0);
 
 
 							yield return new WaitForSeconds (0.5f);
@@ -207,7 +208,7 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			SpawnMob(refMob, refMobSpawn, parabola.Position, mobLevel, false);
+			SpawnMob(refMob, refMobSpawn, parabola.Position, mobLevel, false, false);
 			parabola.Destroy();
 		}
 		
@@ -242,7 +243,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera)
 	{		
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + refMob.prefEnemy);
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + refMob.prefBody);
@@ -276,15 +277,19 @@ public class Spawn : MonoBehaviour {
 		if (boss == true)
 		{			
 			m_bosses.Add(enemy.gameObject);
+		}
+
+		if (followingCamera == true)
+		{
 			StartCoroutine(EffectBulletTime(1));
 			enemy.SetFollowingCamera();
 		}
 
 	}
 	
-	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss)
+	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera)
 	{
-		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, boss));
+		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, boss, followingCamera));
 	}
 	
 	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)

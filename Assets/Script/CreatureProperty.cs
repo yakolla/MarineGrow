@@ -8,24 +8,20 @@ public class CreatureProperty {
 	Creature	m_owner;
 
 	[SerializeField]
-	float	m_baseMaxHP = 0;
+	RefCreatureBaseProperty	m_baseProperty;
 	float 	m_hp;
 
 	[SerializeField]
 	float	m_alphaMaxHP = 0;
 
 	[SerializeField]
-	float	m_basePhysicalDamage = 0;
-
-	[SerializeField]
 	float	m_alphaPhysicalDamage = 0;
 
 	[SerializeField]
-	[Range (0, 100)]
-	float	m_basePhysicalDefence = 0;
+	float	m_alphaPhysicalDefencePoint = 0;
 
 	[SerializeField]
-	float	m_alphaPhysicalDefencePoint = 0;
+	float	m_alphaMoveSpeed = 0f;
 
 	[SerializeField]
 	int		m_level = 1;
@@ -33,18 +29,12 @@ public class CreatureProperty {
 	[SerializeField]
 	int		m_exp = 0;
 
-	float 	m_phyDamagePerLevel = 0f;
-	float 	m_phyDefencePerLevel = 0f;
-	float 	m_hpPerLevel = 0f;
-
-	public void 	init(Creature owner, float phyDamagePerLevel, float phyDefencePerLevel, float hpPerLevel)
+	public void 	init(Creature owner, RefCreatureBaseProperty baseProperty)
 	{
 		m_owner = owner;
-		m_phyDamagePerLevel = phyDamagePerLevel;
-		m_phyDefencePerLevel = phyDefencePerLevel;
-		m_hpPerLevel = hpPerLevel;
-		Level = m_level;
-
+		m_baseProperty = baseProperty;
+		Level = m_baseProperty.level;
+		m_exp = m_baseProperty.exp;
 	}
 
 	public float getHPRemainRatio()
@@ -54,7 +44,7 @@ public class CreatureProperty {
 
 	public float MaxHP
 	{
-		get { return ((m_baseMaxHP+AlphaMaxHP)+(m_baseMaxHP+AlphaMaxHP)*(Level-1)*m_hpPerLevel)*10; }
+		get { return ((m_baseProperty.maxHP+AlphaMaxHP)+(m_baseProperty.maxHP+AlphaMaxHP)*(Level-1)*m_baseProperty.hpPerLevel)*100; }
 	}
 
 	public float AlphaMaxHP
@@ -126,8 +116,7 @@ public class CreatureProperty {
 
 	public float	PhysicalAttackDamage
 	{
-		get {return m_basePhysicalDamage + AlphaPhysicalAttackDamage + (m_basePhysicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_phyDamagePerLevel;}
-		set { m_basePhysicalDamage = value; }
+		get {return m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage + (m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_baseProperty.phyDamagePerLevel;}
 	}
 
 	public float	AlphaPhysicalAttackDamage
@@ -138,13 +127,23 @@ public class CreatureProperty {
 
 	public float	PhysicalDefencePoint
 	{
-		get {return Mathf.Min(100, m_basePhysicalDefence + AlphaPhysicalDefencePoint + (m_basePhysicalDefence + AlphaPhysicalDefencePoint)*(Level-1)*m_phyDefencePerLevel);}
-		set { m_basePhysicalDefence = value; }
+		get {return Mathf.Min(100, m_baseProperty.physicalDefence + AlphaPhysicalDefencePoint + (m_baseProperty.physicalDefence + AlphaPhysicalDefencePoint)*(Level-1)*m_baseProperty.phyDefencePerLevel);}
 	}
 
 	public float	AlphaPhysicalDefencePoint
 	{
 		get {return m_alphaPhysicalDefencePoint;}
 		set { m_alphaPhysicalDefencePoint = value; }
+	}
+
+	public float	MoveSpeed
+	{
+		get {return Mathf.Min(100, m_baseProperty.moveSpeed + AlphaMoveSpeed);}
+	}
+	
+	public float	AlphaMoveSpeed
+	{
+		get {return m_alphaMoveSpeed;}
+		set { m_alphaMoveSpeed = value; }
 	}
 }
