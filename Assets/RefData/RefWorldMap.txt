@@ -102,10 +102,10 @@
 						]
 					},
 					{
-						"refMobIds":[1],
+						"refMobIds":[3],
 						"interval":3,
 						"repeatCount":1,
-						"mobCount":9,
+						"mobCount":3,
 						"boss":true,
 						"refDropItems":
 						[
