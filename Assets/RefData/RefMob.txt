@@ -65,7 +65,7 @@
 		"baseCreatureProperty":
 		{
 			"maxHP":0.3,
-			"physicalDamage":5,
+			"physicalDamage":50,
 			"physicalDefence":0,
 			"level":1,
 			"exp":10,

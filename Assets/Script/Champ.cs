@@ -24,10 +24,11 @@ public class Champ : Creature {
 
 		base.Start();
 
-		SetFollowingCamera();
+		SetFollowingCamera(null);
 
 		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 	}
+
 
 	void LevelUp()
 	{

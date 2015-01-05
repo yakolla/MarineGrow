@@ -11,21 +11,26 @@ public class Spawn : MonoBehaviour {
 
 	[SerializeField]
 	Transform[]		m_areas = null;
+	Transform		m_areaInChamp = null;
 
 	[SerializeField]
 	GameObject		m_prefSpawnEffect = null;
 	
 	GameObject[]	m_prefItemBoxes = new GameObject[(int)ItemData.Type.Count];
 
+	float			m_effectBulletTime = 0f;
+
+	FollowingCamera	m_followingCamera = null;
 
 	List<GameObject>	m_bosses = new List<GameObject>();
 
 	RefWorldMap		m_refWorldMap;
 	Dungeon			m_dungeon;
 	int				m_wave = 0;
-	int				m_repeatWave = 0;
 	// Use this for initialization
 	void Start () {
+
+		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -59,34 +64,29 @@ public class Spawn : MonoBehaviour {
 
 	}
 
-	IEnumerator EffectBulletTime(float t)
+
+	void EffectBulletTime()
 	{
-		yield return new WaitForSeconds (0.01f);
-		
+		float t = m_effectBulletTime;
 		if (t > 0)
 		{
 			Time.timeScale = 1.1f-t;
-			StartCoroutine(EffectBulletTime(t-0.01f));
+			m_effectBulletTime -= 0.01f;
 		}
 		else
 		{
-			if (m_champ)
-				m_champ.GetComponent<Creature>().SetFollowingCamera();
+			//if (m_champ)
+			//	m_champ.GetComponent<Creature>().SetFollowingCamera();
 		}
 		
 	}
 
 	void StartWave(int wave)
 	{
-		if (m_refWorldMap.waves.Length <= wave)
-		{
-			m_repeatWave++;
-			wave = 0;
-		}
-
 		m_wave = wave;
 
-		StartCoroutine(spawnMobPer(m_refWorldMap.waves[wave]));
+		StartCoroutine(EffectWaveText("Wave " + m_wave, 1));
+		StartCoroutine(spawnMobPer(m_refWorldMap.waves[wave%m_refWorldMap.waves.Length]));
 	}
 
 	IEnumerator checkBossAlive()
@@ -115,6 +115,17 @@ public class Spawn : MonoBehaviour {
 	}
 
 
+	Transform	getSpawnArea(bool champAreaExcept)
+	{
+		Transform area = m_areas[Random.Range(1,m_areas.Length)];
+
+		if (champAreaExcept == true && area == m_areaInChamp)
+		{
+			return getSpawnArea(champAreaExcept);
+		}
+
+		return area;
+	}
 
 	IEnumerator spawnMobPer(RefWave refWave)
 	{
@@ -126,20 +137,19 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			int totalWave = m_wave + 1 + m_repeatWave*m_refWorldMap.waves.Length;
+			 
 
 
-			Transform area = m_areas[Random.Range(1,m_areas.Length)];
+			Transform area = getSpawnArea(true);
 			float cx = area.position.x;
 			float cz = area.position.z;
 			float scale = area.localScale.x/2;
 
 			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
 			{
+
 				if (mobSpawn.boss == true)
 					StartCoroutine(EffectWaveText("Boss", mobSpawn.refMobs.Count));
-				else
-					StartCoroutine(EffectWaveText("Wave " + totalWave, 1));
 
 				for(int repeatNum = 0; repeatNum < mobSpawn.repeatCount; ++repeatNum)
 				{
@@ -169,7 +179,7 @@ public class Spawn : MonoBehaviour {
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
 
-							SpawnMob(pair.Value, mobSpawn, enemyPos, m_repeatWave+m_wave/(m_refWorldMap.waves.Length/3), mobSpawn.boss, mobSpawn.boss && i == 0);
+							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, mobSpawn.boss, mobSpawn.boss && repeatNum == 0 && i == 0);
 
 
 							yield return new WaitForSeconds (0.5f);
@@ -220,7 +230,7 @@ public class Spawn : MonoBehaviour {
 		
 		if (mob.Boss == true)
 		{
-			StartCoroutine(EffectBulletTime(1));
+			m_effectBulletTime = 1f;
 		}
 		if (mob.RefMob.eggMob != null)
 		{
@@ -233,6 +243,11 @@ public class Spawn : MonoBehaviour {
 		}
 
 
+	}
+
+	public void SetAreaInChamp(Transform area)
+	{
+		m_areaInChamp = area;
 	}
 	
 	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
@@ -281,8 +296,8 @@ public class Spawn : MonoBehaviour {
 
 		if (followingCamera == true)
 		{
-			StartCoroutine(EffectBulletTime(1));
-			enemy.SetFollowingCamera();
+			m_effectBulletTime = 1f;
+			enemy.SetFollowingCamera(m_champ);
 		}
 
 	}
@@ -349,6 +364,8 @@ public class Spawn : MonoBehaviour {
 		{
 			m_champ = GameObject.Find("Champ(Clone)");
 		}
+
+		EffectBulletTime();
 	}
 
 }
