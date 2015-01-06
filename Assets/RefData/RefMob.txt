@@ -29,7 +29,7 @@
 	{
 		"id":2,
 		"prefEnemy":"mon_a_fly",
-		"prefBody":"mon/mon_b_body",		
+		"prefBody":"mon_c/mon_c_skin",
 		"refWeaponItem":"102",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -51,7 +51,7 @@
 	{
 		"id":3,
 		"prefEnemy":"mon_a_boss",
-		"prefBody":"mon/mon_c_body",		
+		"prefBody":"mon_c/mon_c_skin",
 		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -78,7 +78,7 @@
 	{
 		"id":4,
 		"prefEnemy":"mon_d",
-		"prefBody":"mon/mon_d_body",
+		"prefBody":"mon_d/mon_d_skin",
 		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -100,7 +100,7 @@
 	{
 		"id":5,
 		"prefEnemy":"mon_e",
-		"prefBody":"mon/mon_e_body",
+		"prefBody":"mon_e/mon_e_skin",
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -122,13 +122,13 @@
 	{
 		"id":6,
 		"prefEnemy":"mon_f",
-		"prefBody":"mon/mon_f_body",
+		"prefBody":"mon_f/mon_f_skin",
 		"refWeaponItem":"101",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
 		"nearByChampOnSpawn":true,
-		"mobAI":"Revolution",
+		"mobAI":"Normal",
 		"baseCreatureProperty":
 		{
 			"maxHP":0.3,
@@ -168,8 +168,30 @@
 	{
 		"id":8,
 		"prefEnemy":"mon_a_boss_egg",
-		"prefBody":"mon/mon_c_body",		
+		"prefBody":"mon_c/mon_c_skin",		
 		"refWeaponItem":"110",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Normal",
+		"baseCreatureProperty":
+		{
+			"maxHP":0.3,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":1,
+			"phyDefencePerLevel":1,
+			"hpPerLevel":0.5,
+			"moveSpeed":3
+		}
+	},
+	{
+		"id":9,
+		"prefEnemy":"mon_h",
+		"prefBody":"mon_h/mon_h_skin",
+		"refWeaponItem":"104",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,

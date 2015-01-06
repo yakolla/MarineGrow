@@ -6,12 +6,12 @@
 		[
 			{
 				"mobSpawns":
-				[
+				[					
 					{
-						"refMobIds":[6],
-						"interval":1,
+						"refMobIds":[1001],
+						"interval":5,
 						"repeatCount":1,
-						"mobCount":3,
+						"mobCount":1,
 						"refDropItems":
 						[
 							{
@@ -30,10 +30,10 @@
 						]
 					},
 					{
-						"refMobIds":[1001],
-						"interval":5,
+						"refMobIds":[9],
+						"interval":1,
 						"repeatCount":1,
-						"mobCount":1,
+						"mobCount":3,						
 						"boss":true,
 						"refDropItems":
 						[

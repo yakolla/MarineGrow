@@ -17,13 +17,17 @@ public class RocketLauncherBullet : Bullet {
 	}
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(m_elpasedTime, 0, 0, transform);
-		m_elpasedTime += Time.deltaTime*0.3f*m_speed;
+
+		if (m_speed > 0f)
+		{
+			transform.Translate(m_elpasedTime, 0, 0, transform);
+			m_elpasedTime += Time.deltaTime*0.3f*m_speed;
+		}
+
 	}
 
 	IEnumerator destoryObject()
 	{
-		m_speed = 0;
 		yield return new WaitForSeconds (0.3f);
 		DestroyObject(this.gameObject);
 	}
@@ -33,10 +37,14 @@ public class RocketLauncherBullet : Bullet {
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
 			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
+			transform.position = other.gameObject.transform.position;
+			m_speed = 0;
 			StartCoroutine(destoryObject());
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
+			transform.position = other.gameObject.transform.position;
+			m_speed = 0;
 			StartCoroutine(destoryObject());
 		}
 	}
