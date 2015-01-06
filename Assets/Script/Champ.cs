@@ -25,6 +25,8 @@ public class Champ : Creature {
 		base.Start();
 
 		SetFollowingCamera(null);
+		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
+		followingCamera.SetMainTarget(gameObject);
 
 		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
 	}

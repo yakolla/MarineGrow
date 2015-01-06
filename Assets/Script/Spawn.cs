@@ -137,9 +137,6 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			 
-
-
 			Transform area = getSpawnArea(true);
 			float cx = area.position.x;
 			float cz = area.position.z;
@@ -151,6 +148,7 @@ public class Spawn : MonoBehaviour {
 				if (mobSpawn.boss == true)
 					StartCoroutine(EffectWaveText("Boss", mobSpawn.refMobs.Count));
 
+				int spawnCount = 0;
 				for(int repeatNum = 0; repeatNum < mobSpawn.repeatCount; ++repeatNum)
 				{
 
@@ -179,7 +177,8 @@ public class Spawn : MonoBehaviour {
 							enemyPos.x = Random.Range(cx-scale,cx+scale);
 							enemyPos.z = Random.Range(cz-scale,cz+scale);
 
-							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, mobSpawn.boss, mobSpawn.boss && repeatNum == 0 && i == 0);
+							++spawnCount;
+							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, mobSpawn.boss, mobSpawn.boss && spawnCount == 1);
 
 
 							yield return new WaitForSeconds (0.5f);

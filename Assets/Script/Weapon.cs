@@ -45,7 +45,6 @@ public class Weapon : MonoBehaviour {
 		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, chargingTime, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
-		m_lastCreated = Time.time;
 
 		this.audio.Play();
 
@@ -75,6 +74,7 @@ public class Weapon : MonoBehaviour {
 				targetAngle.x = ang;
 				StartCoroutine(DelayToStartFiring(targetAngle, chargingTime, firingDescs[i].delayTime));
 			}
+			m_lastCreated = Time.time;
 		}
 
 		m_firing = true;

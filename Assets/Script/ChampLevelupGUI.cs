@@ -8,6 +8,7 @@ public class ChampLevelupGUI : MonoBehaviour {
 	Rect 		m_skillWindowRect;
 	int			m_statPoint = 0;
 
+	bool		m_stop = false;
 	[SerializeField]
 	GUISkin		m_guiSkin = null;
 
@@ -21,11 +22,12 @@ public class ChampLevelupGUI : MonoBehaviour {
 	}
 
 	void OnEnable() {
-		Time.timeScale = 0;
+		m_stop = true;
 		m_statPoint+=3;
 	}
 
 	void OnDisable() {
+		m_stop = false;
 		Time.timeScale = 1;
 	}
 
@@ -34,6 +36,14 @@ public class ChampLevelupGUI : MonoBehaviour {
 		GUI.skin = m_guiSkin;
 
 		m_statusWindowRect = GUI.Window (10, m_statusWindowRect, DisplayStatusWindow, "");	
+	}
+
+	void Update()
+	{
+		if (m_stop == true)
+		{
+			Time.timeScale = 0;
+		}
 	}
 	
 	//Setting up the Inventory window

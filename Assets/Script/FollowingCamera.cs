@@ -7,6 +7,7 @@ public class FollowingCamera : MonoBehaviour
 	[SerializeField]
 	GameObject m_target;
 	GameObject m_nextTarget;
+	GameObject m_mainTarget;
 
 	[SerializeField]
 	Vector3 m_cameraOffset;
@@ -23,6 +24,11 @@ public class FollowingCamera : MonoBehaviour
 		m_from = Camera.main.transform.position;
 	}
 
+	public void SetMainTarget(GameObject mainTarget)
+	{
+		m_mainTarget = mainTarget;
+	}
+
 	void Start()
 	{
 
@@ -31,7 +37,12 @@ public class FollowingCamera : MonoBehaviour
 	void Update()
 	{
 		if (m_target == null)
+		{
+			m_target = m_mainTarget;
+			m_elapsedTime = 0f;
+			m_from = Camera.main.transform.position;
 			return;
+		}
 
 		m_elapsedTime += 0.01f;
 		m_elapsedTime = Mathf.Min(1f, m_elapsedTime);
