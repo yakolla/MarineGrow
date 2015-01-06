@@ -146,7 +146,12 @@ public class Spawn : MonoBehaviour {
 			{
 
 				if (mobSpawn.boss == true)
-					StartCoroutine(EffectWaveText("Boss", mobSpawn.refMobs.Count));
+				{
+					guiText.text = "Boss";
+					Color color = guiText.color;
+					color.a = 1;
+					guiText.color = color;
+				}
 
 				int spawnCount = 0;
 				for(int repeatNum = 0; repeatNum < mobSpawn.repeatCount; ++repeatNum)

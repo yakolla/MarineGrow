@@ -96,6 +96,7 @@ public enum MobAIType
 	Normal,
 	Rotation,
 	Dash,
+	Revolution,
 }
 
 public class RefMob : RefBaseData

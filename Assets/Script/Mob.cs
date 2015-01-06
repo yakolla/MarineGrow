@@ -37,6 +37,9 @@ public class Mob : Creature {
 		case MobAIType.Dash:
 			m_ai = new MobAIDash();
 			break;
+		case MobAIType.Revolution:
+			m_ai = new MobAIRevolution();
+			break;
 		}
 
 		m_ai.Init(this);

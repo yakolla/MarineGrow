@@ -33,7 +33,7 @@
 						"refMobIds":[1001],
 						"interval":5,
 						"repeatCount":1,
-						"mobCount":3,
+						"mobCount":1,
 						"boss":true,
 						"refDropItems":
 						[

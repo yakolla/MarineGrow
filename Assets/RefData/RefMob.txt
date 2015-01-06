@@ -128,7 +128,7 @@
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
 		"nearByChampOnSpawn":true,
-		"mobAI":"Rotation",
+		"mobAI":"Revolution",
 		"baseCreatureProperty":
 		{
 			"maxHP":0.3,
@@ -191,11 +191,11 @@
 		"id":1001,
 		"prefEnemy":"giftbox",
 		"prefBody":"mon/giftbox_body",
-		"refWeaponItem":"109",
+		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
-		"mobAI":"Normal",
+		"mobAI":"Revolution",
 		"baseCreatureProperty":
 		{
 			"maxHP":0.3,
