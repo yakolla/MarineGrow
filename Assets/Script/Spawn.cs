@@ -64,17 +64,6 @@ public class Spawn : MonoBehaviour {
 
 	}
 
-
-	void EffectBulletTime()
-	{
-		float t = m_effectBulletTime;
-		if (t > 0)
-		{
-			Time.timeScale = 1.1f-t;
-			m_effectBulletTime -= 0.01f;
-		}		
-	}
-
 	void StartWave(int wave)
 	{
 		m_wave = wave;
@@ -364,8 +353,6 @@ public class Spawn : MonoBehaviour {
 		{
 			m_champ = GameObject.Find("Champ(Clone)");
 		}
-
-		EffectBulletTime();
 	}
 
 }

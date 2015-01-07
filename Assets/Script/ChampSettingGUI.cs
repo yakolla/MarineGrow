@@ -45,7 +45,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	}
 
 	void OnEnable() {
-		Time.timeScale = 0;
+		TimeEffector.Instance.StopTime();
 		
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 
@@ -85,7 +85,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	}
 
 	void OnDisable() {
-		Time.timeScale = 1;
+		TimeEffector.Instance.StartTime();
 	}
 
 	void OnGUI()

@@ -6,6 +6,9 @@ public class MobAINormal : MobAI {
 
 	// Update is called once per frame
 	override public void Update () {
+		if (TimeEffector.Instance.IsStop() == true)
+			return;
+
 		if (m_mob.AutoAttack() == false)
 		{
 			if (m_target)

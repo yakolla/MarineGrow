@@ -142,6 +142,7 @@ public class Champ : Creature {
 			}
 		}
 
+		TimeEffector.Instance.Update();
 	}
 
 	override public string[] GetAutoTargetTags()
