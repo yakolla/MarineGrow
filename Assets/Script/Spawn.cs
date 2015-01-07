@@ -72,13 +72,7 @@ public class Spawn : MonoBehaviour {
 		{
 			Time.timeScale = 1.1f-t;
 			m_effectBulletTime -= 0.01f;
-		}
-		else
-		{
-			//if (m_champ)
-			//	m_champ.GetComponent<Creature>().SetFollowingCamera();
-		}
-		
+		}		
 	}
 
 	void StartWave(int wave)
@@ -117,14 +111,25 @@ public class Spawn : MonoBehaviour {
 
 	Transform	getSpawnArea(bool champAreaExcept)
 	{
-		Transform area = m_areas[Random.Range(1,m_areas.Length)];
-
-		if (champAreaExcept == true && area == m_areaInChamp)
+		if (champAreaExcept == true)
 		{
-			return getSpawnArea(champAreaExcept);
+			int maxIndex = 0;
+			float maxDist = 0f;
+			for(int i = 1; i < m_areas.Length; ++i)
+			{
+				Transform area = m_areas[i];
+				float dist = Vector3.Distance(area.position, m_champ.transform.position);
+				if (maxDist < dist)
+				{
+					maxDist = dist;
+					maxIndex = i;
+
+				}
+			}
+			return m_areas[maxIndex];
 		}
 
-		return area;
+		return m_areas[Random.Range(1,m_areas.Length)];
 	}
 
 	IEnumerator spawnMobPer(RefWave refWave)
@@ -137,10 +142,7 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			Transform area = getSpawnArea(true);
-			float cx = area.position.x;
-			float cz = area.position.z;
-			float scale = area.localScale.x/2;
+
 
 			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
 			{
@@ -159,31 +161,33 @@ public class Spawn : MonoBehaviour {
 
 					foreach(KeyValuePair<int, RefMob> pair in mobSpawn.refMobs)
 					{
+						Transform area = getSpawnArea(true);
+						Vector3 cp = area.position;
+						Vector3 scale = area.localScale*0.5f;
+
 						if (pair.Value.nearByChampOnSpawn == true)
 						{
 							if (m_champ)
 							{
-								cx = m_champ.transform.position.x;
-								cz = m_champ.transform.position.z;
+								cp = m_champ.transform.position;
 							}
 
 						}
 						else
 						{
-							cx = area.position.x;
-							cz = area.position.z;
+							cp = area.position;
 						}
 
 						GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
 						GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + pair.Value.prefBody);
 						for(int i = 0; i < mobSpawn.mobCount; ++i)
 						{
-							Vector3 enemyPos = Vector3.zero;
-							enemyPos.x = Random.Range(cx-scale,cx+scale);
-							enemyPos.z = Random.Range(cz-scale,cz+scale);
+							Vector3 enemyPos = cp;
+							enemyPos.x += Random.Range(-scale.x,scale.x);
+							enemyPos.z += Random.Range(-scale.z,scale.z);
 
 							++spawnCount;
-							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, mobSpawn.boss, mobSpawn.boss && spawnCount == 1);
+							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, mobSpawn.boss, mobSpawn.boss && spawnCount == 1, m_prefSpawnEffect);
 
 
 							yield return new WaitForSeconds (0.5f);
@@ -212,20 +216,11 @@ public class Spawn : MonoBehaviour {
 	}
 
 	
-	IEnumerator EffectSpawnBossBaby(Parabola parabola, RefMob refMob, RefMobSpawn refMobSpawn, int mobLevel)
+	IEnumerator EffectSpawnBossBaby(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel)
 	{
 		yield return new WaitForSeconds (0.002f);
-		
-		if (parabola.Update() == true)
-		{
-			StartCoroutine(EffectSpawnBossBaby(parabola, refMob, refMobSpawn, mobLevel));
-		}
-		else
-		{
-			SpawnMob(refMob, refMobSpawn, parabola.Position, mobLevel, false, false);
-			parabola.Destroy();
-		}
-		
+		SpawnMob(refMob, refMobSpawn, pos, mobLevel, false, false, null);
+
 	}
 	
 	public void OnKillMob(Mob mob)
@@ -240,9 +235,7 @@ public class Spawn : MonoBehaviour {
 		{
 			for(int i = 0; i < mob.RefMob.eggMob.count; ++i)
 			{
-				GameObject spawnEffect = Instantiate (m_prefSpawnEffect, mob.transform.position, m_prefSpawnEffect.transform.rotation) as GameObject;
-				Parabola parabola = new Parabola(spawnEffect, Random.Range(-2.5f, 2.5f), Random.Range(5, 7), Random.Range(60, 90), 1);
-				StartCoroutine(EffectSpawnBossBaby(parabola, mob.RefMob.eggMob.refMob, mob.RefMobSpawn, mob.m_creatureProperty.Level));
+				StartCoroutine(EffectSpawnBossBaby(mob.RefMob.eggMob.refMob, mob.RefMobSpawn, mob.transform.position, mob.m_creatureProperty.Level));
 			}
 		}
 
@@ -262,7 +255,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera, GameObject prefSpawnEffect)
 	{		
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + refMob.prefEnemy);
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + refMob.prefBody);
@@ -270,10 +263,13 @@ public class Spawn : MonoBehaviour {
 		Vector3 enemyPos = pos;
 		enemyPos.y = m_prefSpawnEffect.transform.position.y;
 
-		GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
-		ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
-		
-		StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
+		if (prefSpawnEffect != null)
+		{
+			GameObject spawnEffect = Instantiate (prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
+			ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
+			
+			StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
+		}
 
 		yield return new WaitForSeconds (1f);
 		
@@ -306,9 +302,9 @@ public class Spawn : MonoBehaviour {
 
 	}
 	
-	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera)
+	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera, GameObject prefSpawnEffect)
 	{
-		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, boss, followingCamera));
+		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, boss, followingCamera, prefSpawnEffect));
 	}
 	
 	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)

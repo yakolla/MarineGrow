@@ -45,12 +45,11 @@ public class FollowingCamera : MonoBehaviour
 		}
 
 		m_elapsedTime += 0.01f;
-		m_elapsedTime = Mathf.Min(1f, m_elapsedTime);
 
-		Vector3 myCharacterPosition = Vector3.Lerp(m_from, m_target.transform.position-m_cameraOffset, m_elapsedTime);
+		Vector3 myCharacterPosition = Vector3.Lerp(m_from, m_target.transform.position-m_cameraOffset, Mathf.Min(1f, m_elapsedTime));
 		Camera.main.transform.position = myCharacterPosition;
 
-		if (m_elapsedTime == 1f)
+		if (m_elapsedTime >= 2f)
 		{
 			if (m_nextTarget != null)
 			{

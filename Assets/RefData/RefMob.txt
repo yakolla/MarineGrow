@@ -127,7 +127,6 @@
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
-		"nearByChampOnSpawn":true,
 		"mobAI":"Normal",
 		"baseCreatureProperty":
 		{

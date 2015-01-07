@@ -19,7 +19,7 @@ public class Area : MonoBehaviour {
 		if (other.tag.CompareTo("Champ") == 0)
 		{
 			m_spawn.SetAreaInChamp(transform);
-		};
 
+		};
 	}
 }
