@@ -167,8 +167,6 @@ public class Spawn : MonoBehaviour {
 							cp = area.position;
 						}
 
-						GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
-						GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + pair.Value.prefBody);
 						for(int i = 0; i < mobSpawn.mobCount; ++i)
 						{
 							Vector3 enemyPos = cp;
@@ -247,7 +245,7 @@ public class Spawn : MonoBehaviour {
 	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera, GameObject prefSpawnEffect)
 	{		
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + refMob.prefEnemy);
-		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + refMob.prefBody);
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
 		
 		Vector3 enemyPos = pos;
 		enemyPos.y = m_prefSpawnEffect.transform.position.y;
