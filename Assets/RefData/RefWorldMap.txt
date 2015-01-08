@@ -30,10 +30,10 @@
 						]
 					},
 					{
-						"refMobIds":[9],
+						"refMobIds":[4],
 						"interval":1,
-						"repeatCount":1,
-						"mobCount":3,						
+						"repeatCount":3,
+						"mobCount":1,						
 						"boss":true,
 						"refDropItems":
 						[
@@ -58,7 +58,7 @@
 				"mobSpawns":
 				[
 					{
-						"refMobIds":[1,4],
+						"refMobIds":[2,3],
 						"interval":3,
 						"repeatCount":2,
 						"mobCount":6,
@@ -80,7 +80,7 @@
 						]
 					},			
 					{
-						"refMobIds":[5,6],
+						"refMobIds":[1,2,3],
 						"interval":3,
 						"repeatCount":1,
 						"mobCount":12,
@@ -102,7 +102,7 @@
 						]
 					},
 					{
-						"refMobIds":[3],
+						"refMobIds":[5],
 						"interval":3,
 						"repeatCount":1,
 						"mobCount":3,
@@ -152,7 +152,7 @@
 						]
 					},
 					{
-						"refMobIds":[1,2,6],
+						"refMobIds":[2,3,4],
 						"interval":10,
 						"repeatCount":1,
 						"mobCount":12,
@@ -174,7 +174,7 @@
 						]
 					},
 					{
-						"refMobIds":[1,2,4,5],
+						"refMobIds":[6],
 						"interval":10,
 						"repeatCount":1,
 						"mobCount":6,
@@ -197,33 +197,6 @@
 						]
 					}
 					
-				]
-			},
-			{
-				"mobSpawns":
-				[					
-					{
-						"refMobIds":[1],
-						"interval":10,
-						"repeatCount":1,
-						"mobCount":1,
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":101,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1,
-								"itemOptionSpawns":
-								[
-									{
-										"type":"PhysicalDmg", "minValue":0, "maxValue":0, "ratio":0
-									}
-								]
-							}
-						]
-					}
 				]
 			}
 		]

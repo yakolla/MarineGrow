@@ -26,6 +26,7 @@ public class RefCreatureBaseProperty
 	public float 	hpPerLevel;
 	[Range (0, 100)]
 	public float	moveSpeed;
+	public float	navMeshBaseOffset;
 }
 
 public class RefProgressUpItem
@@ -101,7 +102,6 @@ public enum MobAIType
 
 public class RefMob : RefBaseData
 {
-	public string				prefEnemy;
 	public string				prefBody;
 	public int					refWeaponItem;
 	public float				phyDamagePerLevel;
