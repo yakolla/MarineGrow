@@ -13,7 +13,7 @@ public class Mob : Creature {
 	new void Start () {
 		base.Start();
 
-
+		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 	}
 
 	public void Init(RefMob refMob, Spawn spawn, RefMobSpawn refMobSpawn, bool boss)

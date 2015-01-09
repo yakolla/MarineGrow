@@ -21,6 +21,9 @@ public class MobAIRotation : MobAI {
 	
 	// Update is called once per frame
 	override public void Update () {
+		if (TimeEffector.Instance.IsStop() == true)
+			return;
+
 		int angle  = Lerp(0, 360, time);
 		
 		m_weaponHolder.GetWeapon().StartFiring(m_mob.RotateToTarget(angle), 0, m_mob.m_firingDescs);

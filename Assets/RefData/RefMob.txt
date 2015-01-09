@@ -1,8 +1,7 @@
 [
-	{"hpPerLevel":2,
+	{
 		"id":1,
-		"prefEnemy":"mon_a",
-		"prefBody":"mon/mon_a_body",
+		"prefBody":"crazy_dog_skin",
 		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -23,14 +22,14 @@
 			"phyDamagePerLevel":1,
 			"phyDefencePerLevel":2,
 			"hpPerLevel":0.5,
-			"moveSpeed":3
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
 		}
 	},
 	{
 		"id":2,
-		"prefEnemy":"mon_a_fly",
-		"prefBody":"mon_c/mon_c_skin",
-		"refWeaponItem":"102",
+		"prefBody":"small_spider_skin",
+		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
@@ -45,18 +44,18 @@
 			"phyDamagePerLevel":2,
 			"phyDefencePerLevel":0.2,
 			"hpPerLevel":0.5,
-			"moveSpeed":3
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
 		}
 	},
 	{
 		"id":3,
-		"prefEnemy":"mon_a_boss",
-		"prefBody":"mon_c/mon_c_skin",
-		"refWeaponItem":"110",
+		"prefBody":"spider_skin",
+		"refWeaponItem":"107",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
-		"mobAI":"Dash",
+		"mobAI":"Normal",
 		"eggMob":
 		{
 			"refMobId":8,
@@ -72,18 +71,18 @@
 			"phyDamagePerLevel":3,
 			"phyDefencePerLevel":3,
 			"hpPerLevel":3,
-			"moveSpeed":3
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
 		}
 	},
 	{
 		"id":4,
-		"prefEnemy":"mon_d",
-		"prefBody":"mon_d/mon_d_skin",
+		"prefBody":"bat_skin",
 		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
-		"mobAI":"Normal",
+		"mobAI":"Dash",
 		"baseCreatureProperty":
 		{
 			"maxHP":0.3,
@@ -94,102 +93,13 @@
 			"phyDamagePerLevel":1,
 			"phyDefencePerLevel":1,
 			"hpPerLevel":0.5,
-			"moveSpeed":3
+			"moveSpeed":3,
+			"navMeshBaseOffset":1
 		}
 	},
 	{
 		"id":5,
-		"prefEnemy":"mon_e",
-		"prefBody":"mon_e/mon_e_skin",
-		"refWeaponItem":"107",
-		"phyDamagePerLevel":1,
-		"phyDefencePerLevel":1,
-		"hpPerLevel":2,
-		"mobAI":"Normal",
-		"baseCreatureProperty":
-		{
-			"maxHP":0.3,
-			"physicalDamage":5,
-			"physicalDefence":0,
-			"level":1,
-			"exp":10,
-			"phyDamagePerLevel":1,
-			"phyDefencePerLevel":1,
-			"hpPerLevel":0.5,
-			"moveSpeed":3
-		}
-	},
-	{
-		"id":6,
-		"prefEnemy":"mon_f",
-		"prefBody":"mon_f/mon_f_skin",
-		"refWeaponItem":"101",
-		"phyDamagePerLevel":1,
-		"phyDefencePerLevel":1,
-		"hpPerLevel":2,
-		"mobAI":"Normal",
-		"baseCreatureProperty":
-		{
-			"maxHP":0.3,
-			"physicalDamage":5,
-			"physicalDefence":0,
-			"level":1,
-			"exp":10,
-			"phyDamagePerLevel":1,
-			"phyDefencePerLevel":1,
-			"hpPerLevel":0.5,
-			"moveSpeed":3
-		}
-	},
-	{
-		"id":7,
-		"prefEnemy":"mon_a_egg",
-		"prefBody":"mon/mon_a_body",
-		"refWeaponItem":"107",
-		"phyDamagePerLevel":1,
-		"phyDefencePerLevel":1,
-		"hpPerLevel":2,
-		"mobAI":"Normal",
-		"baseCreatureProperty":
-		{
-			"maxHP":0.3,
-			"physicalDamage":5,
-			"physicalDefence":0,
-			"level":1,
-			"exp":10,
-			"phyDamagePerLevel":1,
-			"phyDefencePerLevel":1,
-			"hpPerLevel":0.5,
-			"moveSpeed":3
-		}
-		
-	},
-	{
-		"id":8,
-		"prefEnemy":"mon_a_boss_egg",
-		"prefBody":"mon_c/mon_c_skin",		
-		"refWeaponItem":"110",
-		"phyDamagePerLevel":1,
-		"phyDefencePerLevel":1,
-		"hpPerLevel":2,
-		"mobAI":"Normal",
-		"baseCreatureProperty":
-		{
-			"maxHP":0.3,
-			"physicalDamage":5,
-			"physicalDefence":0,
-			"level":1,
-			"exp":10,
-			"phyDamagePerLevel":1,
-			"phyDefencePerLevel":1,
-			"hpPerLevel":0.5,
-			"moveSpeed":3
-		}
-	},
-	{
-		"id":9,
-		"prefEnemy":"mon_h",
-		"prefBody":"mon_h/mon_h_skin",
+		"prefBody":"eye_brain_skin",
 		"refWeaponItem":"104",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -205,13 +115,79 @@
 			"phyDamagePerLevel":1,
 			"phyDefencePerLevel":1,
 			"hpPerLevel":0.5,
-			"moveSpeed":3
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
+		"id":6,
+		"prefBody":"slime_skin",
+		"refWeaponItem":"101",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Normal",
+		"baseCreatureProperty":
+		{
+			"maxHP":0.3,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":1,
+			"phyDefencePerLevel":1,
+			"hpPerLevel":0.5,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
+		"id":7,
+		"prefBody":"crazy_dog_skin",
+		"refWeaponItem":"107",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Normal",
+		"baseCreatureProperty":
+		{
+			"maxHP":0.3,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":1,
+			"phyDefencePerLevel":2,
+			"hpPerLevel":0.5,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
+		"id":8,
+		"prefBody":"spider_skin",
+		"refWeaponItem":"110",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Normal",
+		"baseCreatureProperty":
+		{
+			"maxHP":0.3,
+			"physicalDamage":50,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":3,
+			"phyDefencePerLevel":3,
+			"hpPerLevel":3,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
 		}
 	},
 	{
 		"id":1001,
-		"prefEnemy":"giftbox",
-		"prefBody":"mon/giftbox_body",
+		"prefBody":"drumtong_skin",
 		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
@@ -227,7 +203,8 @@
 			"phyDamagePerLevel":0,
 			"phyDefencePerLevel":0,
 			"hpPerLevel":0.5,
-			"moveSpeed":3
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
 		}
 	}
 ]

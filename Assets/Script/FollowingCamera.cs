@@ -15,12 +15,14 @@ public class FollowingCamera : MonoBehaviour
 	Vector3	m_from;
 
 	float m_elapsedTime = 0f;
+	bool m_done = false;
 
 	public void SetTarget(GameObject target, GameObject nextTarget)
 	{
 		m_target = target;
 		m_nextTarget = nextTarget;
 		m_elapsedTime = 0f;
+		m_done = false;
 		m_from = Camera.main.transform.position;
 	}
 
@@ -40,6 +42,7 @@ public class FollowingCamera : MonoBehaviour
 		{
 			m_target = m_mainTarget;
 			m_elapsedTime = 0f;
+			m_done = false;
 			m_from = Camera.main.transform.position;
 			return;
 		}
@@ -48,6 +51,12 @@ public class FollowingCamera : MonoBehaviour
 
 		Vector3 myCharacterPosition = Vector3.Lerp(m_from, m_target.transform.position-m_cameraOffset, Mathf.Min(1f, m_elapsedTime));
 		Camera.main.transform.position = myCharacterPosition;
+
+		if (m_elapsedTime >= 1f && m_done == false && m_target != m_mainTarget)
+		{
+			TimeEffector.Instance.BulletTime();
+			m_done = true;
+		}
 
 		if (m_elapsedTime >= 2f)
 		{

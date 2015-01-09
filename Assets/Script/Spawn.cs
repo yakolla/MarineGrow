@@ -5,6 +5,12 @@ using Enum = System.Enum;
 
 public class Spawn : MonoBehaviour {
 
+	public enum SpawnMobType
+	{
+		Normal,
+		Boss,
+		Egg,
+	}
 
 	[SerializeField]
 	GameObject		m_champ = null;
@@ -64,17 +70,6 @@ public class Spawn : MonoBehaviour {
 
 	}
 
-
-	void EffectBulletTime()
-	{
-		float t = m_effectBulletTime;
-		if (t > 0)
-		{
-			Time.timeScale = 1.1f-t;
-			m_effectBulletTime -= 0.01f;
-		}		
-	}
-
 	void StartWave(int wave)
 	{
 		m_wave = wave;
@@ -111,7 +106,7 @@ public class Spawn : MonoBehaviour {
 
 	Transform	getSpawnArea(bool champAreaExcept)
 	{
-		if (champAreaExcept == true)
+		if (m_champ != null && champAreaExcept == true)
 		{
 			int maxIndex = 0;
 			float maxDist = 0f;
@@ -146,13 +141,14 @@ public class Spawn : MonoBehaviour {
 
 			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
 			{
-
+				SpawnMobType spawnMobType = SpawnMobType.Normal;
 				if (mobSpawn.boss == true)
 				{
 					guiText.text = "Boss";
 					Color color = guiText.color;
 					color.a = 1;
 					guiText.color = color;
+					spawnMobType = SpawnMobType.Boss;
 				}
 
 				int spawnCount = 0;
@@ -178,8 +174,6 @@ public class Spawn : MonoBehaviour {
 							cp = area.position;
 						}
 
-						GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + pair.Value.prefEnemy);
-						GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + pair.Value.prefBody);
 						for(int i = 0; i < mobSpawn.mobCount; ++i)
 						{
 							Vector3 enemyPos = cp;
@@ -187,7 +181,7 @@ public class Spawn : MonoBehaviour {
 							enemyPos.z += Random.Range(-scale.z,scale.z);
 
 							++spawnCount;
-							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, mobSpawn.boss, mobSpawn.boss && spawnCount == 1, m_prefSpawnEffect);
+							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, spawnMobType, spawnMobType == SpawnMobType.Boss && spawnCount == 1, m_prefSpawnEffect);
 
 
 							yield return new WaitForSeconds (0.5f);
@@ -216,10 +210,10 @@ public class Spawn : MonoBehaviour {
 	}
 
 	
-	IEnumerator EffectSpawnBossBaby(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel)
+	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel)
 	{
 		yield return new WaitForSeconds (0.002f);
-		SpawnMob(refMob, refMobSpawn, pos, mobLevel, false, false, null);
+		SpawnMob(refMob, refMobSpawn, pos, mobLevel, SpawnMobType.Egg, false, null);
 
 	}
 	
@@ -235,7 +229,7 @@ public class Spawn : MonoBehaviour {
 		{
 			for(int i = 0; i < mob.RefMob.eggMob.count; ++i)
 			{
-				StartCoroutine(EffectSpawnBossBaby(mob.RefMob.eggMob.refMob, mob.RefMobSpawn, mob.transform.position, mob.m_creatureProperty.Level));
+				StartCoroutine(EffectSpawnMobEgg(mob.RefMob.eggMob.refMob, mob.RefMobSpawn, mob.transform.position, mob.m_creatureProperty.Level));
 			}
 		}
 
@@ -255,10 +249,10 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera, GameObject prefSpawnEffect)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera, GameObject prefSpawnEffect)
 	{		
-		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/" + refMob.prefEnemy);
-		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/" + refMob.prefBody);
+		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
 		
 		Vector3 enemyPos = pos;
 		enemyPos.y = m_prefSpawnEffect.transform.position.y;
@@ -279,7 +273,18 @@ public class Spawn : MonoBehaviour {
 		enemyBody.transform.parent = enemyObj.transform;
 		enemyBody.transform.localPosition = Vector3.zero;
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-		enemyBody.transform.localScale *= prefEnemy.transform.localScale.x;
+		switch(spawnMobType)
+		{
+		case SpawnMobType.Normal:
+			break;
+		case SpawnMobType.Boss:
+			break;
+		case SpawnMobType.Egg:
+			enemyBody.transform.localScale *= 0.5f;
+			break;
+		}
+
+		bool boss = spawnMobType == SpawnMobType.Boss;
 		
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, this, refMobSpawn, boss);
@@ -302,9 +307,9 @@ public class Spawn : MonoBehaviour {
 
 	}
 	
-	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, bool boss, bool followingCamera, GameObject prefSpawnEffect)
+	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera, GameObject prefSpawnEffect)
 	{
-		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, boss, followingCamera, prefSpawnEffect));
+		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, spawnMobType, followingCamera, prefSpawnEffect));
 	}
 	
 	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)
@@ -364,8 +369,6 @@ public class Spawn : MonoBehaviour {
 		{
 			m_champ = GameObject.Find("Champ(Clone)");
 		}
-
-		EffectBulletTime();
 	}
 
 }
