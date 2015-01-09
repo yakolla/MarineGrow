@@ -33,38 +33,31 @@ public class MobAIDash : MobAI {
 		if (TimeEffector.Instance.IsStop() == true)
 			return;
 
-		if (m_mob.AutoAttack() == false)
+		m_mob.AutoAttack();
+		if (m_target)
 		{
-			if (m_target)
+			if (m_breakMode == false)
 			{
-
-
-				if (m_breakMode == false)
-				{
-					m_speed += Time.deltaTime*0.1f;
-				}
-				else
-				{
-					m_speed -= Time.deltaTime*0.1f;
-					if (m_speed <= 0)
-					{						
-						SetTarget(m_target);
-					}
-				}
-
-				m_mob.transform.Translate(m_speed, 0, 0, m_mob.transform);
-				float d = Vector3.Distance(m_mob.transform.position, m_goal);
-				if (d < 1.5f && m_breakMode == false)
-				{
-					m_breakMode = true;
-				}
-
+				m_speed += Time.deltaTime*0.1f;
 			}
+			else
+			{
+				m_speed -= Time.deltaTime*0.2f;
+				if (m_speed <= 0)
+				{						
+					SetTarget(m_target);
+				}
+			}
+
+			m_mob.transform.Translate(m_speed, 0, 0, m_mob.transform);
+			float d = Vector3.Distance(m_mob.transform.position, m_goal);
+			if (d < 1.5f && m_breakMode == false)
+			{
+				m_breakMode = true;
+			}
+
 		}
-		else
-		{
-			m_speed = 0f;
-		}
+
 
 	}
 

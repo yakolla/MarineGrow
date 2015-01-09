@@ -9,7 +9,7 @@ public class ItemWeaponData : ItemData{
 
 	public ItemWeaponData(int refItemId) : base(refItemId, 1)
 	{
-		m_prefWeapon = Resources.Load<GameObject>("Pref/" + RefItem.codeName);
+		m_prefWeapon = Resources.Load<GameObject>("Pref/Weapon/" + RefItem.codeName);
 		m_weaponName = RefItem.codeName;
 	}
 

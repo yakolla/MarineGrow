@@ -25,21 +25,11 @@ public class SuicideBombing : Weapon {
 		if (m_creature.m_targeting != null)
 		{
 			float d = Vector3.Distance(m_creature.transform.position, transform.position);
-			if (d < 2f)
+			if (d < AttackRange)
 			{
 				m_destroy = true;
 			}
 		}
 	}
 
-	void OnTriggerEnter(Collider other) 
-	{
-		return;
-		Creature creature = other.gameObject.GetComponent<Creature>();
-		if (creature && Creature.IsEnemy(creature, m_creature))
-		{
-			m_destroy = true;
-		}
-		
-	}
 }

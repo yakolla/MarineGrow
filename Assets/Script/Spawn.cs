@@ -22,8 +22,8 @@ public class Spawn : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_prefSpawnEffect = null;
 	
-	GameObject[]	m_prefItemBoxes = new GameObject[(int)ItemData.Type.Count];
-
+	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
+	GameObject		m_prefItemBox;
 	float			m_effectBulletTime = 0f;
 
 	FollowingCamera	m_followingCamera = null;
@@ -42,10 +42,13 @@ public class Spawn : MonoBehaviour {
 		int dungeonId = m_dungeon.DungeonId;
 		m_refWorldMap = RefData.Instance.RefWorldMaps[dungeonId];
 
+		m_prefItemBox = Resources.Load<GameObject>("Pref/ItemBox/ItemBox");
 		string[] itemTypeNames = Enum.GetNames(typeof(ItemData.Type));
 		for(int i = 0; i < itemTypeNames.Length-1; ++i)
 		{
-			m_prefItemBoxes[i] = Resources.Load<GameObject>("Pref/Item" + itemTypeNames[i] + "Box");
+			m_prefItemBoxSkins[i] = Resources.Load<GameObject>("Pref/ItemBox/item_" + itemTypeNames[i] + "_skin");
+			if (m_prefItemBoxSkins[i] == null)
+				Debug.Log("Pref/ItemBox/item_" + itemTypeNames[i] + "_skin");
 		}
 
 		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
@@ -108,20 +111,19 @@ public class Spawn : MonoBehaviour {
 	{
 		if (m_champ != null && champAreaExcept == true)
 		{
-			int maxIndex = 0;
-			float maxDist = 0f;
+			List<Transform> areas = new List<Transform>();
+
 			for(int i = 1; i < m_areas.Length; ++i)
 			{
 				Transform area = m_areas[i];
 				float dist = Vector3.Distance(area.position, m_champ.transform.position);
-				if (maxDist < dist)
+				if (dist > 15f)
 				{
-					maxDist = dist;
-					maxIndex = i;
+					areas.Add(area);
 
 				}
 			}
-			return m_areas[maxIndex];
+			return areas[Random.Range(1,areas.Count)];
 		}
 
 		return m_areas[Random.Range(1,m_areas.Length)];
@@ -322,8 +324,13 @@ public class Spawn : MonoBehaviour {
 				float ratio = Random.Range(0f, 1f);
 				if (ratio <= desc.ratio)
 				{
-					GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBoxes[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
+					GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
+					GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
+					itemSkinObj.transform.parent = itemBoxObj.transform;
+					itemSkinObj.transform.localPosition = Vector3.zero;
+					itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
 					itemBoxObj.SetActive(false);
+
 					ItemData item = null;
 					switch(desc.refItem.type)
 					{
