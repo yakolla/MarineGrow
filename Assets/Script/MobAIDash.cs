@@ -51,7 +51,7 @@ public class MobAIDash : MobAI {
 
 			m_mob.transform.Translate(m_speed, 0, 0, m_mob.transform);
 			float d = Vector3.Distance(m_mob.transform.position, m_goal);
-			if (d < 1.5f && m_breakMode == false)
+			if (d <= 1.1f)
 			{
 				m_breakMode = true;
 			}

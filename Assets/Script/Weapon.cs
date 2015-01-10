@@ -56,6 +56,7 @@ public class Weapon : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(delay);
 		CreateBullet(targetAngle, chargingTime);
+
 	}
 
 	protected bool isCoolTime()
@@ -73,6 +74,7 @@ public class Weapon : MonoBehaviour {
 				float ang = firingDescs[i].angle-oriAng;
 				targetAngle.x = ang;
 				StartCoroutine(DelayToStartFiring(targetAngle, chargingTime, firingDescs[i].delayTime));
+
 			}
 			m_lastCreated = Time.time;
 		}

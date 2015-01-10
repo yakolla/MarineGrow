@@ -12,18 +12,15 @@ public class Parabola {
 	int				m_bouncing = 0;
 	GameObject		m_obj;
 
-	public Parabola(GameObject obj, float hspeed, float vspeed, float vang, int bouncing)
+	public Parabola(GameObject obj, float hspeed, float vspeed, float hRadian, float vRadian, int bouncing)
 	{
 		m_obj = obj;
 		m_oriPos = obj.transform.position;
 		m_maxBouncing = bouncing;
 
-		vang = vang * Mathf.Deg2Rad;
-		float hang = -m_obj.transform.eulerAngles.y * Mathf.Deg2Rad;
-
-		m_vel.x = hspeed * Mathf.Cos(hang);
-		m_vel.y = vspeed * Mathf.Sin(vang);
-		m_vel.z = hspeed * Mathf.Cos(hang);
+		m_vel.x = hspeed * Mathf.Cos(hRadian);
+		m_vel.y = vspeed * Mathf.Sin(vRadian);
+		m_vel.z = hspeed * Mathf.Sin(hRadian);
 		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
 
 		m_startTime = Time.time;

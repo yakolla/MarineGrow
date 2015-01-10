@@ -3,6 +3,7 @@ using System.Collections;
 
 public class RocketLauncherBullet : Bullet {
 
+	[SerializeField]
 	float m_speed = 1f;
 
 	float	m_elpasedTime = 0f;
@@ -21,7 +22,7 @@ public class RocketLauncherBullet : Bullet {
 		if (m_speed > 0f)
 		{
 			transform.Translate(m_elpasedTime, 0, 0, transform);
-			m_elpasedTime += Time.deltaTime*0.3f*m_speed;
+			m_elpasedTime += Time.deltaTime*0.1f*m_speed;
 		}
 
 	}

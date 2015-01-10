@@ -183,7 +183,14 @@ public class Spawn : MonoBehaviour {
 							enemyPos.z += Random.Range(-scale.z,scale.z);
 
 							++spawnCount;
-							SpawnMob(pair.Value, mobSpawn, enemyPos, 1+m_wave/m_refWorldMap.waves.Length, spawnMobType, spawnMobType == SpawnMobType.Boss && spawnCount == 1, m_prefSpawnEffect);
+							SpawnMob(  pair.Value
+							         , mobSpawn
+							         , enemyPos
+							         , 1+m_wave/m_refWorldMap.waves.Length
+							         , spawnMobType
+							         , spawnMobType == SpawnMobType.Boss && spawnCount == 1
+							         , m_prefSpawnEffect
+							         );
 
 
 							yield return new WaitForSeconds (0.5f);
@@ -291,8 +298,9 @@ public class Spawn : MonoBehaviour {
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, this, refMobSpawn, boss);
 		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem));
+		weapon.Item.Evolution = refMob.baseCreatureProperty.level + mobLevel;
 		weapon.Item.Use(enemy);
-		
+
 		enemy.SetTarget(m_champ);
 		enemy.m_creatureProperty.Level = mobLevel;
 		
@@ -305,6 +313,7 @@ public class Spawn : MonoBehaviour {
 		{
 			m_effectBulletTime = 1f;
 			enemy.SetFollowingCamera(m_champ);
+			TimeEffector.Instance.StopTime();
 		}
 
 	}
@@ -353,6 +362,12 @@ public class Spawn : MonoBehaviour {
 						break;
 					case ItemData.Type.WeaponEvolutionFragment:
 						item = new ItemWeaponEvolutionFragmentData();					
+						break;
+					case ItemData.Type.GoldMedal:
+						item = new ItemGoldMedalData();					
+						break;
+					case ItemData.Type.SilverMedal:
+						item = new ItemSilverMedalData();					
 						break;
 					}
 					

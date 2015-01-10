@@ -19,7 +19,7 @@ public class GrenadeBullet : Bullet {
 	Parabola	m_parabola;
 	// Use this for initialization
 	void Start () {
-		m_parabola = new Parabola(gameObject, m_speed, 10f, 45f, 1);
+
 
 	}
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
@@ -29,6 +29,7 @@ public class GrenadeBullet : Bullet {
 		m_prefShadow = Resources.Load<GameObject>("Pref/shadow");
 		m_shadow = (GameObject)Instantiate(m_prefShadow, transform.position, m_prefShadow.transform.rotation);
 
+		m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), 10f, -targetAngle.x * Mathf.Deg2Rad, 45f * Mathf.Deg2Rad, 3);
 	}
 
 	// Update is called once per frame

@@ -29,7 +29,7 @@
 	{
 		"id":2,
 		"prefBody":"small_spider_skin",
-		"refWeaponItem":"107",
+		"refWeaponItem":"110",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
@@ -80,7 +80,7 @@
 		"mobAI":"Dash",		
 		"baseCreatureProperty":
 		{
-			"maxHP":0.3,
+			"maxHP":1,
 			"physicalDamage":5,
 			"physicalDefence":0,
 			"level":1,
@@ -107,7 +107,7 @@
 		},
 		"baseCreatureProperty":
 		{
-			"maxHP":0.3,
+			"maxHP":2,
 			"physicalDamage":5,
 			"physicalDefence":0,
 			"level":1,
@@ -127,9 +127,14 @@
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,
 		"mobAI":"Normal",
+		"eggMob":
+		{
+			"refMobId":9,
+			"count":2
+		},
 		"baseCreatureProperty":
 		{
-			"maxHP":0.3,
+			"maxHP":3,
 			"physicalDamage":5,
 			"physicalDefence":0,
 			"level":1,
@@ -186,9 +191,81 @@
 		}
 	},
 	{
+		"id":9,
+		"prefBody":"slime_skin",
+		"refWeaponItem":"110",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Normal",
+		"baseCreatureProperty":
+		{
+			"maxHP":0.3,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":1,
+			"phyDefencePerLevel":1,
+			"hpPerLevel":0.5,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
+		"id":10,
+		"prefBody":"spider_skin",
+		"refWeaponItem":"101",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Rotation",
+		"nearByChampOnSpawn":true,
+		"baseCreatureProperty":
+		{
+			"maxHP":1,
+			"physicalDamage":50,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":3,
+			"phyDefencePerLevel":3,
+			"hpPerLevel":3,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
+		"id":11,
+		"prefBody":"eye_brain_skin",
+		"refWeaponItem":"105",
+		"phyDamagePerLevel":1,
+		"phyDefencePerLevel":1,
+		"hpPerLevel":2,
+		"mobAI":"Normal",
+		"eggMob":
+		{
+			"refMobId":8,
+			"count":2
+		},
+		"baseCreatureProperty":
+		{
+			"maxHP":2,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"level":1,
+			"exp":10,
+			"phyDamagePerLevel":1,
+			"phyDefencePerLevel":1,
+			"hpPerLevel":0.5,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
 		"id":1001,
 		"prefBody":"drumtong_skin",
-		"refWeaponItem":"110",
+		"refWeaponItem":"109",
 		"phyDamagePerLevel":1,
 		"phyDefencePerLevel":1,
 		"hpPerLevel":2,

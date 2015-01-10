@@ -24,6 +24,18 @@
 		"icon":"Sprites/swordoftruth"
 	},
 	{
+		"id":5,
+		"codeName":"",
+		"type":"GoldMedal",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
+		"id":6,
+		"codeName":"",
+		"type":"SilverMedal",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
 		"id":101,
 		"codeName":"Firegun",
 		"type":"Weapon",
@@ -121,7 +133,7 @@
 		"weapon":
 		{
 			"coolTime":0.9,
-			"range":8
+			"range":9
 		}
 	},
 	{
@@ -150,7 +162,7 @@
 		},
 		"weapon":
 		{
-			"coolTime":3,
+			"coolTime":5,
 			"range":5
 		}
 	},
@@ -290,6 +302,36 @@
 		{
 			"coolTime":1,
 			"range":2
+		}
+	},
+	{
+		"id":111,
+		"codeName":"ChampRocketLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		],
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":1,
+			"range":8
 		}
 	},
 	{
