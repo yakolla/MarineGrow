@@ -298,7 +298,7 @@ public class Spawn : MonoBehaviour {
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, this, refMobSpawn, boss);
 		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem));
-		weapon.Item.Evolution = refMob.baseCreatureProperty.level + mobLevel;
+		weapon.Item.Evolution = ((refMob.baseCreatureProperty.level-1) + mobLevel) / 10;
 		weapon.Item.Use(enemy);
 
 		enemy.SetTarget(m_champ);

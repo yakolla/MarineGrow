@@ -104,9 +104,6 @@ public class RefMob : RefBaseData
 {
 	public string				prefBody;
 	public int					refWeaponItem;
-	public float				phyDamagePerLevel;
-	public float 				phyDefencePerLevel;
-	public float 				hpPerLevel;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
 	public RefCreatureBaseProperty		baseCreatureProperty;

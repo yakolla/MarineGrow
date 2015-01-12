@@ -12,7 +12,6 @@
 						"interval":5,
 						"repeatCount":1,
 						"mobCount":1,
-						"boss":true,
 						"refDropItems":
 						[
 							{
@@ -231,7 +230,7 @@
 						]
 					},
 					{
-						"refMobIds":[4],
+						"refMobIds":[4,12],
 						"interval":10,
 						"repeatCount":1,
 						"mobCount":6,
