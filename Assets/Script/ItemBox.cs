@@ -10,7 +10,7 @@ public class ItemBox : MonoBehaviour {
 	AudioClip			m_sfxPickupItem;
 
 	[SerializeField]
-	float			m_lifeTime = 5f;
+	float			m_lifeTime = 15f;
 	float			m_timeToDeath = 0;
 
 	Bezier			m_bezier;
@@ -18,7 +18,8 @@ public class ItemBox : MonoBehaviour {
 	GameObject		m_target = null;
 
 	void Start () {
-		m_parabola = new Parabola(gameObject, Random.Range(-0.5f, 0.5f), Random.Range(5, 7), Random.Range(-3.14f, 3.14f), Random.Range(1.2f, 1.57f), 50);
+		m_parabola = new Parabola(gameObject, Random.Range(-0.5f, 0.5f), Random.Range(5, 7), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
+		m_parabola.GroundY = 0.5f;
 		m_timeToDeath = Time.time + m_lifeTime;
 	}
 
@@ -52,7 +53,8 @@ public class ItemBox : MonoBehaviour {
 		{
 			if (m_parabola.Update() == false)
 			{
-				Death();
+				if (Time.time > m_timeToDeath)
+					Death();
 			}
 		}
 		else

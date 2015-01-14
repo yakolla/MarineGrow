@@ -77,7 +77,7 @@ public class Spawn : MonoBehaviour {
 	{
 		m_wave = wave;
 
-		StartCoroutine(EffectWaveText("Wave " + m_wave, 1));
+		StartCoroutine(EffectWaveText("Wave " + (m_wave + 1), 1));
 		StartCoroutine(spawnMobPer(m_refWorldMap.waves[wave%m_refWorldMap.waves.Length]));
 	}
 
@@ -154,51 +154,53 @@ public class Spawn : MonoBehaviour {
 				}
 
 				int spawnCount = 0;
-				for(int repeatNum = 0; repeatNum < mobSpawn.repeatCount; ++repeatNum)
+
+
+				foreach(KeyValuePair<int, RefMob> pair in mobSpawn.refMobs)
 				{
+					Transform area = getSpawnArea(true);
+					Vector3 cp = area.position;
+					Vector3 scale = area.localScale*0.5f;
 
-					foreach(KeyValuePair<int, RefMob> pair in mobSpawn.refMobs)
+					if (pair.Value.nearByChampOnSpawn == true)
 					{
-						Transform area = getSpawnArea(true);
-						Vector3 cp = area.position;
-						Vector3 scale = area.localScale*0.5f;
-
-						if (pair.Value.nearByChampOnSpawn == true)
+						if (m_champ)
 						{
-							if (m_champ)
-							{
-								cp = m_champ.transform.position;
-							}
-
-						}
-						else
-						{
-							cp = area.position;
+							cp = m_champ.transform.position;
 						}
 
-						for(int i = 0; i < mobSpawn.mobCount; ++i)
-						{
-							Vector3 enemyPos = cp;
-							enemyPos.x += Random.Range(-scale.x,scale.x);
-							enemyPos.z += Random.Range(-scale.z,scale.z);
-
-							++spawnCount;
-							SpawnMob(  pair.Value
-							         , mobSpawn
-							         , enemyPos
-							         , 1+m_wave/m_refWorldMap.waves.Length
-							         , spawnMobType
-							         , spawnMobType == SpawnMobType.Boss && spawnCount == 1
-							         , m_prefSpawnEffect
-							         );
-
-
-							yield return new WaitForSeconds (0.5f);
-						}	
 					}
+					else
+					{
+						cp = area.position;
+					}
+					float waveProgress = Mathf.Min(1f, m_wave / (m_refWorldMap.waves.Length*30));
+					int mobSpawnCount = (int)(mobSpawn.mobCount[0] * (1f-waveProgress) + mobSpawn.mobCount[1] * waveProgress);
+					for(int i = 0; i < mobSpawnCount; ++i)
+					{
+						Vector3 enemyPos = cp;
+						enemyPos.x += Random.Range(-scale.x,scale.x);
+						enemyPos.z += Random.Range(-scale.z,scale.z);
+
+						++spawnCount;
+						SpawnMob(  pair.Value
+						         , mobSpawn
+						         , enemyPos
+						         , 1+m_wave/m_refWorldMap.waves.Length
+						         , spawnMobType
+						         , spawnMobType == SpawnMobType.Boss && spawnCount == 1
+						         , m_prefSpawnEffect
+						         );
+
+
+						yield return new WaitForSeconds (0.5f);
+					}	
 
 					yield return new WaitForSeconds (mobSpawn.interval);
 				}
+
+
+
 			}
 
 			StartCoroutine(checkBossAlive());
@@ -298,12 +300,12 @@ public class Spawn : MonoBehaviour {
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, this, refMobSpawn, boss);
 		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem));
-		weapon.Item.Evolution = ((refMob.baseCreatureProperty.level-1) + mobLevel) / 10;
+		weapon.Item.Evolution = (int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
 		weapon.Item.Use(enemy);
 
 		enemy.SetTarget(m_champ);
 		enemy.m_creatureProperty.Level = mobLevel;
-		
+		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
 		if (boss == true)
 		{			
 			m_bosses.Add(enemy.gameObject);

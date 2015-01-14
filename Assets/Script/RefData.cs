@@ -19,7 +19,7 @@ public class RefCreatureBaseProperty
 
 	[Range (0, 100)]
 	public float	physicalDefence;
-	public int		level;
+	public float	evolutionPerLevel;
 	public int		exp;
 	public float 	phyDamagePerLevel;
 	public float 	phyDefencePerLevel;
@@ -116,8 +116,7 @@ public class RefMobSpawn
 {
 	public int[]			refMobIds;	
 	public float 			interval;
-	public int				repeatCount;
-	public int 				mobCount;
+	public int[]			mobCount;
 	public bool				boss = false;
 	public RefItemSpawn[]	refDropItems;
 

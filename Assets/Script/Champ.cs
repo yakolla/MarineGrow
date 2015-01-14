@@ -21,6 +21,7 @@ public class Champ : Creature {
 	new void Start () {
 		
 		m_creatureProperty.init(this, m_creatureBaseProperty);
+		m_creatureProperty.Level = 1;
 
 		base.Start();
 

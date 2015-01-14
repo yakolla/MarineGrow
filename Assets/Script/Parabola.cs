@@ -10,6 +10,8 @@ public class Parabola {
 	Vector3			m_oriPos;
 	int				m_maxBouncing = 1;
 	int				m_bouncing = 0;
+	bool			m_finish = false;
+	float			m_groundY = 0f;
 	GameObject		m_obj;
 
 	public Parabola(GameObject obj, float hspeed, float vspeed, float hRadian, float vRadian, int bouncing)
@@ -26,6 +28,11 @@ public class Parabola {
 		m_startTime = Time.time;
 		m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
 
+	}
+
+	public float GroundY
+	{
+		set {m_groundY = value;}
 	}
 
 	public float MaxHeight
@@ -46,27 +53,29 @@ public class Parabola {
 
 	public bool Update()
 	{
+		if (m_finish == true)
+			return false;
+
 		float elapse = Time.time - m_startTime;
 		float x = m_vel.x*elapse;
 		float z = m_vel.z*elapse;
 		float y = m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);
-		m_obj.transform.position = new Vector3(m_oriPos.x+x, y, m_oriPos.z+z);
+		m_obj.transform.position = new Vector3(m_oriPos.x+x, Mathf.Max(y, m_groundY), m_oriPos.z+z);
 
-		if (Time.time > m_finishTime && m_obj.transform.position.y < 0)
+		if (Time.time > m_finishTime && y <= m_groundY)
 		{
 			++m_bouncing;
-			if (m_maxBouncing == m_bouncing)
+			if (m_maxBouncing <= m_bouncing)
 			{
+				m_finish = true;
 				return false;
 			}
-			else
-			{
-				m_oriPos = m_obj.transform.position;
-				m_vel *= 1-(float)m_bouncing/m_maxBouncing;
-				m_startTime = Time.time;
-				m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
-				
-			}
+
+			// more bounce			
+			m_oriPos = m_obj.transform.position;
+			m_vel *= 1-(float)m_bouncing/m_maxBouncing;
+			m_startTime = Time.time;
+			m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
 		}
 
 		return true;

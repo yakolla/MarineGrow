@@ -33,7 +33,6 @@ public class CreatureProperty {
 	{
 		m_owner = owner;
 		m_baseProperty = baseProperty;
-		Level = m_baseProperty.level;
 		m_exp = m_baseProperty.exp;
 	}
 
