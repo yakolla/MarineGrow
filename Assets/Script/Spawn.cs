@@ -24,6 +24,9 @@ public class Spawn : MonoBehaviour {
 	
 	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
 	GameObject		m_prefItemBox;
+
+	[SerializeField]
+	GameObject		m_prefEgg;
 	float			m_effectBulletTime = 0f;
 
 	FollowingCamera	m_followingCamera = null;
@@ -183,13 +186,12 @@ public class Spawn : MonoBehaviour {
 						enemyPos.z += Random.Range(-scale.z,scale.z);
 
 						++spawnCount;
-						SpawnMob(  pair.Value
+						StartCoroutine(  EffectSpawnMob(pair.Value
 						         , mobSpawn
 						         , enemyPos
 						         , 1+m_wave/m_refWorldMap.waves.Length
 						         , spawnMobType
-						         , spawnMobType == SpawnMobType.Boss && spawnCount == 1
-						         , m_prefSpawnEffect
+						         , spawnMobType == SpawnMobType.Boss && spawnCount == 1)
 						         );
 
 
@@ -198,9 +200,6 @@ public class Spawn : MonoBehaviour {
 
 					yield return new WaitForSeconds (mobSpawn.interval);
 				}
-
-
-
 			}
 
 			StartCoroutine(checkBossAlive());
@@ -223,8 +222,32 @@ public class Spawn : MonoBehaviour {
 	
 	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel)
 	{
-		yield return new WaitForSeconds (0.002f);
-		SpawnMob(refMob, refMobSpawn, pos, mobLevel, SpawnMobType.Egg, false, null);
+		GameObject eggObj = Instantiate (m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
+		Animator eggAni = eggObj.GetComponent<Animator>();
+		eggAni.speed = 0f;
+		Parabola parabola = new Parabola(eggObj, Random.Range(1f, 3f), 5f, Random.Range(-3.14f, 3.14f), Random.Range(-1.5f, 1.5f), 1);
+		parabola.GroundY = -0.7f;
+		while(parabola.Update())
+		{
+			yield return null;
+		}		
+
+		yield return new WaitForSeconds (3f);
+		eggObj.audio.Play();
+		eggAni.speed = 1f;
+		yield return new WaitForSeconds (0.5f);
+
+		SpawnMob(refMob, refMobSpawn, parabola.Position, mobLevel, SpawnMobType.Egg, false);
+
+		while(eggObj.transform.position.y > parabola.GroundY-1f)
+		{
+			yield return new WaitForSeconds (0.1f);
+			Vector3 eggPos = eggObj.transform.position;
+			eggPos.y -= 0.1f;
+			eggObj.transform.position = eggPos;
+		}
+		
+		DestroyObject(eggObj);
 
 	}
 	
@@ -260,17 +283,15 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera, GameObject prefSpawnEffect)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{		
-		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
-		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
-		
+
 		Vector3 enemyPos = pos;
 		enemyPos.y = m_prefSpawnEffect.transform.position.y;
 
-		if (prefSpawnEffect != null)
+		if (m_prefSpawnEffect != null)
 		{
-			GameObject spawnEffect = Instantiate (prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
+			GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
 			ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
 			
 			StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
@@ -278,6 +299,17 @@ public class Spawn : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		
+		SpawnMob(refMob, refMobSpawn, enemyPos, mobLevel, spawnMobType, followingCamera);
+
+	}
+	
+	void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	{
+		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
+
+		Vector3 enemyPos = pos;
+
 		GameObject enemyObj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 		GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";
@@ -294,7 +326,7 @@ public class Spawn : MonoBehaviour {
 			enemyBody.transform.localScale *= 0.5f;
 			break;
 		}
-
+		
 		bool boss = spawnMobType == SpawnMobType.Boss;
 		
 		Mob enemy = enemyObj.GetComponent<Mob>();
@@ -302,27 +334,22 @@ public class Spawn : MonoBehaviour {
 		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem));
 		weapon.Item.Evolution = (int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
 		weapon.Item.Use(enemy);
-
+		
 		enemy.SetTarget(m_champ);
 		enemy.m_creatureProperty.Level = mobLevel;
-		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
+		//		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
+		
 		if (boss == true)
 		{			
 			m_bosses.Add(enemy.gameObject);
 		}
-
+		
 		if (followingCamera == true)
 		{
 			m_effectBulletTime = 1f;
 			enemy.SetFollowingCamera(m_champ);
 			TimeEffector.Instance.StopTime();
 		}
-
-	}
-	
-	public void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera, GameObject prefSpawnEffect)
-	{
-		StartCoroutine(EffectSpawnMob(refMob, refMobSpawn, pos, mobLevel, spawnMobType, followingCamera, prefSpawnEffect));
 	}
 	
 	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)

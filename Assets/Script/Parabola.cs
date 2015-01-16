@@ -33,6 +33,7 @@ public class Parabola {
 	public float GroundY
 	{
 		set {m_groundY = value;}
+		get {return m_groundY;}
 	}
 
 	public float MaxHeight
