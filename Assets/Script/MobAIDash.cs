@@ -6,12 +6,15 @@ public class MobAIDash : MobAI {
 	Vector3	m_goal;
 	bool	m_breakMode = false;
 	float	m_speed;
+	GameObject	m_prefAttackGuidedLine;
 
 	override public void Init(Mob mob)
 	{
 		base.Init(mob);
 
 		m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+
+		m_prefAttackGuidedLine = Resources.Load<GameObject>("Pref/ef laser point");
 	}
 
 	override public void SetTarget(GameObject obj )
@@ -25,6 +28,25 @@ public class MobAIDash : MobAI {
 		m_navAgent.SetDestination(m_goal);
 		m_speed = 0;
 		m_breakMode = false;
+
+		m_mob.Spawn.StartCoroutine(EffectAttackGudiedLine(m_mob.transform.position, m_goal, 0));
+
+	}
+
+	IEnumerator EffectAttackGudiedLine(Vector3 start, Vector3 goal, float t)
+	{		
+		float targetHorAngle = Mathf.Atan2(goal.z-start.z, goal.x-start.x) * Mathf.Rad2Deg;
+		GameObject guidedLine = MonoBehaviour.Instantiate (m_prefAttackGuidedLine, start, Quaternion.Euler (0, -targetHorAngle, 0)) as GameObject;
+		Vector3 scale = Vector3.one;
+		scale.x = Vector3.Distance(start, goal);
+		guidedLine.transform.localScale = scale;
+		while(t < 1f)
+		{
+			t += 0.01f;
+			yield return null;
+		}
+
+		MonoBehaviour.DestroyObject(guidedLine);
 	}
 
 	// Update is called once per frame
@@ -50,10 +72,7 @@ public class MobAIDash : MobAI {
 				}
 			}
 			m_navAgent.speed = m_speed;
-			//m_navAgent.Move(m_mob.transform.up*m_speed);
 			m_navAgent.autoBraking = false;
-			//m_navAgent.stoppingDistance = 3f;
-			//m_mob.transform.Translate(m_speed, 0, 0, m_mob.transform);
 			float d = Vector3.Distance(m_mob.transform.position, m_goal);
 			if (d <= 1.1f)
 			{

@@ -9,8 +9,9 @@ public class MobAIItemShuttle : MobAI {
 	Vector3	m_dir;
 	float	m_droppedItemTime;
 	float	m_elapsed = 0f;
-	float	m_dropFullTime = 10f;
-	float 	m_dropTryTime = 1f;
+	const float	m_dropFullTime = 10f;
+	const float m_dropTryTime = 1f;
+	const float	m_dropPosY = 8F;
 
 	override public void	Init(Mob mob)
 	{
@@ -64,7 +65,7 @@ public class MobAIItemShuttle : MobAI {
 			if (ratio < m_droppedItemTime/m_dropFullTime)
 			{
 				Vector3 pos = m_mob.transform.position;
-				pos.y = 7f;
+				pos.y = m_dropPosY;
 				m_mob.Spawn.SpawnItemBox(m_mob.RefMobSpawn.refDropItems, pos);
 				m_droppedItemTime = 0f;
 			}
