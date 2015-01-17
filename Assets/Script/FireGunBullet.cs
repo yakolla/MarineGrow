@@ -47,7 +47,7 @@ public class FireGunBullet : Bullet {
 
 				if (m_collider.enabled)
 				{
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, PrefDamageEffect));	
+					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.DebuffType.Nothing, PrefDamageEffect));	
 				}
 
 			}
@@ -57,10 +57,10 @@ public class FireGunBullet : Bullet {
 		}
 	}
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
 		Vector3 scale = transform.localScale;
-		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 
 		transform.parent = m_gunPoint.transform;
 		transform.localPosition = Vector3.zero;
@@ -86,7 +86,7 @@ public class FireGunBullet : Bullet {
 
 			m_collider.center = new Vector3(dist/2.6f, m_collider.center.y, m_collider.center.z);
 			m_collider.size = new Vector3(dist, m_collider.size.y, m_collider.size.z);
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, PrefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.DebuffType.Nothing, PrefDamageEffect));			
 		}
 	}
 }

@@ -9,18 +9,27 @@ public class DamageDesc {
 		Normal,
 		Fire,
 		Ice,
-		Lightinig,
+		Lightining,
 		Count
+	}
+
+	public enum DebuffType
+	{
+		Nothing,
+		Airbone,
+		Count,
 	}
 
 	float		m_damage;
 	Type		m_type;
 	GameObject	m_prefEffect;
+	DebuffType	m_debuffType;
 
-	public DamageDesc(float damage, Type type, GameObject prefEffect)
+	public DamageDesc(float damage, Type type, DebuffType debuffType, GameObject prefEffect)
 	{
 		m_damage = damage;
 		m_type = type;
+		m_debuffType = debuffType;
 		m_prefEffect = prefEffect;
 	}
 
@@ -32,6 +41,11 @@ public class DamageDesc {
 	public Type DamageType
 	{
 		get { return m_type;}
+	}
+
+	public DebuffType DamageDeBuffType
+	{
+		get { return m_debuffType;}
 	}
 
 	public GameObject	PrefEffect

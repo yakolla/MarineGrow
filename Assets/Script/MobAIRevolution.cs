@@ -25,7 +25,7 @@ public class MobAIRevolution  : MobAI {
 	override public void Update () {
 		int angle  = Lerp(0, 360, time);
 		
-		m_weaponHolder.GetWeapon().StartFiring(m_mob.RotateToTarget(angle), 0, m_mob.m_firingDescs);
+		m_weaponHolder.GetWeapon().StartFiring(m_mob.RotateToTarget(angle), m_mob.m_firingDescs);
 
 		if (m_mob.AutoAttack() == false)
 		{

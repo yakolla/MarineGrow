@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GrenadeBullet : Bullet {
+public class MineBullet : Bullet {
 
 	bool m_isDestroying = false;
 	GameObject		m_shadow;
@@ -12,11 +12,11 @@ public class GrenadeBullet : Bullet {
 	[SerializeField]
 	float			m_bombRange = 5f;
 
-	[SerializeField]
-	float			m_speed = 7f;
+	float			m_elapsed = 0f;
+	float			m_bombTime = 5f;
 
 	GameObject m_prefShadow;
-	Parabola	m_parabola;
+
 	// Use this for initialization
 	void Start () {
 
@@ -27,9 +27,15 @@ public class GrenadeBullet : Bullet {
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 
 		m_prefShadow = Resources.Load<GameObject>("Pref/shadow");
-		m_shadow = (GameObject)Instantiate(m_prefShadow, transform.position, m_prefShadow.transform.rotation);
 
-		m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), 10f, -targetAngle.x * Mathf.Deg2Rad, 45f * Mathf.Deg2Rad, 3);
+		m_shadow = (GameObject)Instantiate(m_prefShadow, transform.position, m_prefShadow.transform.rotation);
+		Vector3 scale = Vector3.one;
+		scale.x += m_bombRange/2f;
+		scale.y += m_bombRange/2f;
+		m_shadow.transform.localScale = scale;
+
+		m_elapsed = Time.time+m_bombTime;
+
 	}
 
 	// Update is called once per frame
@@ -37,12 +43,10 @@ public class GrenadeBullet : Bullet {
 		if (m_isDestroying == true)
 			return;
 
-		if (m_parabola.Update() == false)
+		if (m_elapsed < Time.time)
 		{
 			bomb();
 		}
-		m_shadow.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-		m_shadow.transform.localScale = m_prefShadow.transform.localScale * ((m_parabola.MaxHeight-transform.position.y+1.5f)/m_parabola.MaxHeight);
 	}
 	
 	IEnumerator destoryObject(GameObject bombEffect)

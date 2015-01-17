@@ -26,7 +26,7 @@ public class MobAIRotation : MobAI {
 
 		int angle  = Lerp(0, 360, time);
 		
-		m_weaponHolder.GetWeapon().StartFiring(m_mob.RotateToTarget(angle), 0, m_mob.m_firingDescs);
+		m_weaponHolder.GetWeapon().StartFiring(m_mob.RotateToTarget(angle), m_mob.m_firingDescs);
 		
 		time += Time.deltaTime * 0.1f;
 		time -= (int)time;

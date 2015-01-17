@@ -43,6 +43,8 @@ public class Creature : MonoBehaviour {
 	}
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
 
+	bool[]	m_debuff = new bool[(int)DamageDesc.DebuffType.Count];
+
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_aimpoint = transform.Find("Aimpoint").gameObject;
@@ -112,8 +114,6 @@ public class Creature : MonoBehaviour {
 	protected void Update()
 	{
 		UpdateDamageEffect();
-
-
 	}
 
 	virtual public string[] GetAutoTargetTags()
@@ -189,25 +189,38 @@ public class Creature : MonoBehaviour {
 	}
 
 	virtual public bool AutoAttack() {
-		if (m_targeting != null)
+
+		bool debuff = false;
+		foreach(bool b in m_debuff)
 		{
-			if (false == inAttackRange(m_targeting, 0f))
+			if (b == true)
 			{
-				m_targeting = null;
+				debuff = b;
+				break;
 			}
 		}
 
-		if (m_targeting == null)
+		if (debuff == false)
 		{
-			m_targeting = SearchTarget(GetAutoTargetTags(), null, 0f);
-		}
+			if (m_targeting != null)
+			{
+				if (false == inAttackRange(m_targeting, 0f))
+				{
+					m_targeting = null;
+				}
+			}
 
-		if (m_targeting != null)
-		{
-			m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), 0, m_firingDescs);
-			return true;
-		}
+			if (m_targeting == null)
+			{
+				m_targeting = SearchTarget(GetAutoTargetTags(), null, 0f);
+			}
 
+			if (m_targeting != null)
+			{
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), m_firingDescs);
+				return true;
+			}
+		}
 		m_targeting = null;
 		m_weaponHolder.GetWeapon().StopFiring();
 		return false;
@@ -215,9 +228,30 @@ public class Creature : MonoBehaviour {
 
 	protected IEnumerator BodyRedColoredOnTakenDamage()
 	{
-		//m_material.color = new Color(1f,0f,0f,0f);
-		yield return new WaitForSeconds(0.3f);
-		//m_material.color = new Color(1f,1f,1f,0f);
+		Renderer[] renders = GetComponentsInChildren<Renderer>();
+		if (renders != null)
+		{
+			Color color = new Color(1f,0f,0f,0f);
+			int len = renders.Length;
+
+			for(int i = 0; i < len; ++i)
+			{
+				if (renders[i])
+				{
+					renders[i].material.color = color;
+				}
+			}
+			
+			yield return new WaitForSeconds(1.3f);
+			
+			color = new Color(1f,1f,1f,0f);
+			for(int i = 0; i < len; ++i)
+			{
+				if (renders[i])
+					renders[i].material.color = color;
+				
+			}
+		}
 		m_ingTakenDamageEffect = false;
 	}
 
@@ -238,6 +272,18 @@ public class Creature : MonoBehaviour {
 
 		}
 
+	}
+
+	IEnumerator EffectAirbone()
+	{		
+		Parabola parabola = new Parabola(gameObject, 0, 7f, 0f, 1.5f, 1);
+		while(parabola.Update())
+		{
+
+			yield return null;
+		}
+
+		m_debuff[(int)DamageDesc.DebuffType.Airbone] = false;
 	}
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
@@ -260,7 +306,7 @@ public class Creature : MonoBehaviour {
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
 
-			StartCoroutine(BodyRedColoredOnTakenDamage());
+			//StartCoroutine(BodyRedColoredOnTakenDamage());
 		}
 
 		if (damageDesc.PrefEffect != null)
@@ -275,6 +321,16 @@ public class Creature : MonoBehaviour {
 			}
 			
 		}
+
+		if (damageDesc.DamageDeBuffType != DamageDesc.DebuffType.Nothing)
+		{
+			if (m_debuff[(int)damageDesc.DamageDeBuffType] == false)
+			{
+				m_debuff[(int)damageDesc.DamageDeBuffType] = true;
+				StartCoroutine(EffectAirbone());
+			}
+		}
+
 
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
 		{

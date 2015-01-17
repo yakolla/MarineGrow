@@ -250,9 +250,16 @@ public class Spawn : MonoBehaviour {
 		DestroyObject(eggObj);
 
 	}
+
+	IEnumerator EffectSpawnItem(RefItemSpawn[] refDropItems, Vector3 pos)
+	{
+		yield return new WaitForSeconds (0.5f);
+		SpawnItemBox(refDropItems, pos);		
+	}
 	
 	public void OnKillMob(Mob mob)
 	{
+
 		SpawnItemBox(mob.RefMobSpawn.refDropItems, mob.transform.position);
 		
 		if (mob.Boss == true)

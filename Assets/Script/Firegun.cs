@@ -5,7 +5,7 @@ public class Firegun : Weapon {
 
 	GameObject[]	m_bullet;
 
-	override public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
+	override public void StartFiring(Vector2 targetAngle, FiringDesc[] firingDescs)
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
@@ -14,7 +14,7 @@ public class Firegun : Weapon {
 			for(int i = 0; i < firingDescs.Length; ++i)
 			{
 				targetAngle.x = firingDescs[i].angle;
-				m_bullet[i] = CreateBullet(targetAngle, chargingTime);
+				m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position);
 			}
 		}
 

@@ -23,9 +23,9 @@ public class SuicideBombingBullet : Bullet {
 
 	}
 	
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 			
 	}
 
@@ -51,7 +51,7 @@ public class SuicideBombingBullet : Bullet {
 				if (dist < m_bombRange)
 				{
 					Creature creature = target.GetComponent<Creature>();
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
+					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.DebuffType.Nothing, PrefDamageEffect));
 				}
 			}
 		}

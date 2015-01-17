@@ -8,7 +8,7 @@ public class SuicideBombing : Weapon {
 
 	}
 
-	override public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
+	override public void StartFiring(Vector2 targetAngle, FiringDesc[] firingDescs)
 	{
 		m_firing = true;
 	}
@@ -17,7 +17,7 @@ public class SuicideBombing : Weapon {
 	{
 		if (m_destroy == true)
 		{
-			CreateBullet(Vector2.zero, 0f);
+			CreateBullet(Vector2.zero, m_gunPoint.transform.position);
 			m_creature.Death();
 			return;
 		}

@@ -32,7 +32,7 @@ public class MeleeBullet : Bullet {
 
 					if (dist < 2f)
 					{
-						creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, PrefDamageEffect));	
+						creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.DebuffType.Nothing, PrefDamageEffect));	
 						
 						DestroyObject(gameObject);
 					}
@@ -46,10 +46,10 @@ public class MeleeBullet : Bullet {
 		}
 	}
 	
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
 		Vector3 scale = transform.localScale;
-		base.Init(ownerCreature, gunPoint, damage, chargingTime, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 		
 		transform.parent = m_gunPoint.transform;
 		transform.localPosition = Vector3.zero;
@@ -62,7 +62,7 @@ public class MeleeBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, PrefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.DebuffType.Nothing, PrefDamageEffect));			
 		}
 	}
 }

@@ -10,11 +10,10 @@ public class RocketLauncherBullet : Bullet {
 	// Use this for initialization
 	void Start () {
 	}
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
-		base.Init(ownerCreature, gunPoint, damage+damage*chargingTime, chargingTime, targetAngle);
-		transform.GetComponentInChildren<ParticleSystem>().startSize += chargingTime;
-		this.GetComponent<BoxCollider>().size += new Vector3(chargingTime, 0, chargingTime);
+		base.Init(ownerCreature, gunPoint, damage+damage, targetAngle);
+
 	}
 	// Update is called once per frame
 	void Update () {
@@ -37,7 +36,7 @@ public class RocketLauncherBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, PrefDamageEffect));
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.DebuffType.Nothing, PrefDamageEffect));
 			transform.position = other.gameObject.transform.position;
 			m_speed = 0;
 			StartCoroutine(destoryObject());

@@ -429,6 +429,105 @@
 					}
 					
 				]
+			},
+			{
+				"mobSpawns":
+				[
+					{
+						"refMobIds":[1002],
+						"interval":5,
+						"mobCount":[1,1],
+						"refDropItems":
+						[							
+							{
+								"refItemId":2,
+								"minValue":100,
+								"maxValue":1000,
+								"ratio":0.6
+								
+							},
+							{
+								"refItemId":2,
+								"minValue":100,
+								"maxValue":1000,
+								"ratio":0.6
+								
+							},
+							{
+								"refItemId":2,
+								"minValue":100,
+								"maxValue":1000,
+								"ratio":0.6
+								
+							},
+							{
+								"refItemId":2,
+								"minValue":100,
+								"maxValue":1000,
+								"ratio":0.6
+								
+							}
+							
+						]
+					},
+					{
+						"refMobIds":[1,2,3],
+						"interval":10,
+						"mobCount":[3,12],
+						"refDropItems":
+						[
+							{
+								"refItemId":1,
+								"minValue":1,
+								"maxValue":1,
+								"ratio":0.1
+							},
+							{
+								"refItemId":2,
+								"minValue":100,
+								"maxValue":1000,
+								"ratio":0.01
+								
+							}
+						]
+					},
+					{
+						"refMobIds":[13],
+						"interval":5,
+						"mobCount":[1,5],
+						"boss":true,
+						"refDropItems":
+						[
+							{
+								"refItemId":1,
+								"minValue":1,
+								"maxValue":1,
+								"ratio":0.1
+							},
+							{
+								"refItemId":2,
+								"minValue":100,
+								"maxValue":1000,
+								"ratio":0.01
+								
+							},
+							{
+								"refItemId":5,
+								"minValue":1,
+								"maxValue":1,
+								"ratio":1
+							},
+							{
+								"refItemId":6,
+								"minValue":1,
+								"maxValue":1,
+								"ratio":1
+								
+							}
+						]
+					}
+					
+				]
 			}
 		]
 	},

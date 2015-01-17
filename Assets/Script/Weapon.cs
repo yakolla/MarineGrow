@@ -36,12 +36,11 @@ public class Weapon : MonoBehaviour {
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
 	}
 
-	virtual public GameObject CreateBullet(Vector2 targetAngle, float chargingTime)
+	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
-		Vector3 pos = m_gunPoint.transform.position;
-		GameObject obj = Instantiate (m_prefBullet, pos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
+		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, chargingTime, targetAngle);
+		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 
@@ -51,10 +50,10 @@ public class Weapon : MonoBehaviour {
 		return obj;
 	}
 
-	protected IEnumerator DelayToStartFiring(Vector2 targetAngle, float chargingTime, float delay)
+	protected IEnumerator DelayToStartFiring(Vector2 targetAngle, float delay)
 	{
 		yield return new WaitForSeconds(delay);
-		CreateBullet(targetAngle, chargingTime);
+		CreateBullet(targetAngle, m_gunPoint.transform.position);
 
 	}
 
@@ -63,7 +62,7 @@ public class Weapon : MonoBehaviour {
 		return m_lastCreated + m_coolTime < Time.time;
 	}
 
-	virtual public void StartFiring(Vector2 targetAngle, float chargingTime, FiringDesc[] firingDescs)
+	virtual public void StartFiring(Vector2 targetAngle, FiringDesc[] firingDescs)
 	{		
 		if ( isCoolTime() == true )
 		{
@@ -72,7 +71,7 @@ public class Weapon : MonoBehaviour {
 			{
 				float ang = firingDescs[i].angle-oriAng;
 				targetAngle.x = ang;
-				StartCoroutine(DelayToStartFiring(targetAngle, chargingTime, firingDescs[i].delayTime));
+				StartCoroutine(DelayToStartFiring(targetAngle, firingDescs[i].delayTime));
 
 			}
 			m_lastCreated = Time.time;

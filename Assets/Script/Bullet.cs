@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour {
 	[SerializeField]
 	GameObject 		m_prefDamageEffect = null;
 
-	virtual public void Init(Creature ownerCreature, GameObject gunPoint, float damage, float chargingTime, Vector2 targetAngle)
+	virtual public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
 		m_gunPoint = gunPoint;
 		m_ownerCreature = ownerCreature;

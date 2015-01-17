@@ -335,6 +335,66 @@
 		}
 	},
 	{
+		"id":112,
+		"codeName":"MineLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		],
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":1,
+			"range":8
+		}
+	},
+	{
+		"id":113,
+		"codeName":"TornadoLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		],
+		"evolutionFiring":
+		{
+			"angle":10,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":5,
+			"range":7
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"FollowerFireMan",
 		"type":"Follower",
