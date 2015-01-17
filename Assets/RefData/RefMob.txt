@@ -267,5 +267,24 @@
 			"moveSpeed":3,
 			"navMeshBaseOffset":0
 		}
+	},
+	{
+		"id":1002,
+		"prefBody":"plane_skin",
+		"refWeaponItem":"109",
+		"mobAI":"ItemShuttle",
+		"baseCreatureProperty":
+		{
+			"maxHP":0.3,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"evolutionPerLevel":0.1,
+			"exp":10,
+			"phyDamagePerLevel":0,
+			"phyDefencePerLevel":0,
+			"hpPerLevel":0.5,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
 	}
 ]

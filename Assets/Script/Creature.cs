@@ -7,7 +7,8 @@ public class Creature : MonoBehaviour {
 	public enum Type
 	{
 		Champ,
-		Enemy,
+		Mob,
+		Npc,
 	}
 	// Use this for initialization
 	protected NavMeshAgent	m_navAgent;
@@ -99,6 +100,11 @@ public class Creature : MonoBehaviour {
 
 	static public bool IsEnemy(Creature a, Creature b)
 	{
+		if (b.CreatureType == Type.Npc)
+			return false;
+		if (a.CreatureType == Type.Npc)
+			return false;
+
 		return a.CreatureType != b.CreatureType;
 	}
 
@@ -264,7 +270,7 @@ public class Creature : MonoBehaviour {
 				GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 				dmgEffect.transform.parent = m_aimpoint.transform;
 				dmgEffect.transform.localPosition = Vector3.zero;
-				
+				dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
 				m_damageEffects[(int)damageDesc.DamageType].effect = dmgEffect;
 			}
 			
@@ -286,12 +292,16 @@ public class Creature : MonoBehaviour {
 	public Type CreatureType
 	{
 		get { return m_creatureType; }
+		set {
+			m_creatureType = value;
+			tag = m_creatureType.ToString();
+		}
 	}
 	
 	virtual public void Death()
 	{
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
-		effect.transform.localScale = transform.localScale;
+		effect.GetComponentInChildren<ParticleSystem>().startRotation = Random.Range(0, 360);
 
 		DestroyObject(this.gameObject);
 

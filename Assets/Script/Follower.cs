@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Follower : Creature {
@@ -48,7 +48,7 @@ public class Follower : Creature {
 
 	override public string[] GetAutoTargetTags()
 	{
-		return new string[]{Creature.Type.Enemy.ToString()};
+		return new string[]{Creature.Type.Mob.ToString()};
 	}
 
 }

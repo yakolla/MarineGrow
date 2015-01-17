@@ -253,7 +253,7 @@ public class Spawn : MonoBehaviour {
 	
 	public void OnKillMob(Mob mob)
 	{
-		StartCoroutine(SpawnItemBox(mob, mob.transform.position));
+		SpawnItemBox(mob.RefMobSpawn.refDropItems, mob.transform.position);
 		
 		if (mob.Boss == true)
 		{
@@ -314,7 +314,7 @@ public class Spawn : MonoBehaviour {
 		GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";
 		enemyBody.transform.parent = enemyObj.transform;
-		enemyBody.transform.localPosition = Vector3.zero;
+		enemyBody.transform.localPosition = prefEnemyBody.transform.localPosition;
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 		switch(spawnMobType)
 		{
@@ -352,63 +352,59 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 	
-	IEnumerator SpawnItemBox(Mob mob, Vector3 pos)
-	{
-		
-		if (mob != null)
-		{
-			foreach(RefItemSpawn desc in mob.RefMobSpawn.refDropItems)
-			{
-				float ratio = Random.Range(0f, 1f);
-				if (ratio <= desc.ratio)
-				{
-					GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
-					GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
-					itemSkinObj.transform.parent = itemBoxObj.transform;
-					itemSkinObj.transform.localPosition = Vector3.zero;
-					itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
-					itemBoxObj.SetActive(false);
+	public void SpawnItemBox(RefItemSpawn[] refDropItems, Vector3 pos)
+	{		
 
-					ItemData item = null;
-					switch(desc.refItem.type)
-					{
-					case ItemData.Type.Gold:
-						item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
-						break;
-					case ItemData.Type.HealPosion:
-						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
-						break;
-					case ItemData.Type.Weapon:
-						item = new ItemWeaponData(desc.refItem.id);
-						bindItemOption(item, desc.itemOptionSpawns);
-						
-						break;
-					case ItemData.Type.WeaponUpgradeFragment:
-						item = new ItemWeaponUpgradeFragmentData();					
-						break;
-					case ItemData.Type.Follower:
-						item = new ItemFollowerData(desc.refItemId);					
-						break;
-					case ItemData.Type.WeaponEvolutionFragment:
-						item = new ItemWeaponEvolutionFragmentData();					
-						break;
-					case ItemData.Type.GoldMedal:
-						item = new ItemGoldMedalData();					
-						break;
-					case ItemData.Type.SilverMedal:
-						item = new ItemSilverMedalData();					
-						break;
-					}
+		foreach(RefItemSpawn desc in refDropItems)
+		{
+			float ratio = Random.Range(0f, 1f);
+			if (ratio <= desc.ratio)
+			{
+				GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
+				GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
+				itemSkinObj.transform.parent = itemBoxObj.transform;
+				itemSkinObj.transform.localPosition = Vector3.zero;
+				itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
+				itemBoxObj.SetActive(false);
+
+				ItemData item = null;
+				switch(desc.refItem.type)
+				{
+				case ItemData.Type.Gold:
+					item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
+					break;
+				case ItemData.Type.HealPosion:
+					item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
+					break;
+				case ItemData.Type.Weapon:
+					item = new ItemWeaponData(desc.refItem.id);
+					bindItemOption(item, desc.itemOptionSpawns);
 					
-					if (item != null)
-					{
-						ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
-						itemBox.Item = item;
-						itemBoxObj.SetActive(true);
-						yield return new WaitForSeconds (0.2f);
-					}
-					
+					break;
+				case ItemData.Type.WeaponUpgradeFragment:
+					item = new ItemWeaponUpgradeFragmentData();					
+					break;
+				case ItemData.Type.Follower:
+					item = new ItemFollowerData(desc.refItemId);					
+					break;
+				case ItemData.Type.WeaponEvolutionFragment:
+					item = new ItemWeaponEvolutionFragmentData();					
+					break;
+				case ItemData.Type.GoldMedal:
+					item = new ItemGoldMedalData();					
+					break;
+				case ItemData.Type.SilverMedal:
+					item = new ItemSilverMedalData();					
+					break;
 				}
+				
+				if (item != null)
+				{
+					ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
+					itemBox.Item = item;
+					itemBoxObj.SetActive(true);
+				}
+				
 			}
 		}
 		

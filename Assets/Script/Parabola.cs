@@ -58,10 +58,10 @@ public class Parabola {
 			return false;
 
 		float elapse = Time.time - m_startTime;
-		float x = m_vel.x*elapse;
-		float z = m_vel.z*elapse;
-		float y = m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);
-		m_obj.transform.position = new Vector3(m_oriPos.x+x, Mathf.Max(y, m_groundY), m_oriPos.z+z);
+		float x = m_oriPos.x+m_vel.x*elapse;
+		float z = m_oriPos.z+m_vel.z*elapse;
+		float y = m_oriPos.y+m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);
+		m_obj.transform.position = new Vector3(x, Mathf.Max(y, m_groundY), z);
 
 		if (Time.time > m_finishTime && y <= m_groundY)
 		{

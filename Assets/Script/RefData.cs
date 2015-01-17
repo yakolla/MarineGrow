@@ -98,6 +98,7 @@ public enum MobAIType
 	Rotation,
 	Dash,
 	Revolution,
+	ItemShuttle,
 }
 
 public class RefMob : RefBaseData

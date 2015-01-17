@@ -8,7 +8,7 @@
 				"mobSpawns":
 				[					
 					{
-						"refMobIds":[1001],
+						"refMobIds":[1001,1002],
 						"interval":5,
 						"mobCount":[1,1],
 						"refDropItems":

@@ -40,6 +40,9 @@ public class Mob : Creature {
 		case MobAIType.Revolution:
 			m_ai = new MobAIRevolution();
 			break;
+		case MobAIType.ItemShuttle:
+			m_ai = new MobAIItemShuttle();
+			break;
 		}
 
 		m_ai.Init(this);
@@ -66,9 +69,8 @@ public class Mob : Creature {
 	}
 	
 	public Spawn Spawn	{
-		set {
-			m_spawn = value;
-		}
+		set {m_spawn = value;}
+		get {return m_spawn;}
 	}
 
 	public RefMobSpawn RefMobSpawn
