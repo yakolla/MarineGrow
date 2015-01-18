@@ -231,14 +231,16 @@ public class Creature : MonoBehaviour {
 		Renderer[] renders = GetComponentsInChildren<Renderer>();
 		if (renders != null)
 		{
-			Color color = new Color(1f,0f,0f,0f);
+			Material mat = Resources.Load<Material>("Materials/TakenDamage");
+			Color color = new Color(0f,1f,0f,0f);
 			int len = renders.Length;
 
 			for(int i = 0; i < len; ++i)
 			{
 				if (renders[i])
 				{
-					renders[i].material.color = color;
+					renders[i].material = mat;
+
 				}
 			}
 			

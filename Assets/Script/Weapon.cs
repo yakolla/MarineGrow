@@ -53,6 +53,7 @@ public class Weapon : MonoBehaviour {
 	protected IEnumerator DelayToStartFiring(Vector2 targetAngle, float delay)
 	{
 		yield return new WaitForSeconds(delay);
+
 		CreateBullet(targetAngle, m_gunPoint.transform.position);
 
 	}
@@ -74,6 +75,7 @@ public class Weapon : MonoBehaviour {
 				StartCoroutine(DelayToStartFiring(targetAngle, firingDescs[i].delayTime));
 
 			}
+
 			m_lastCreated = Time.time;
 		}
 

@@ -76,12 +76,17 @@ public class Spawn : MonoBehaviour {
 
 	}
 
+	RefWave	GetCurrentWave()
+	{
+		return m_refWorldMap.waves[m_wave%m_refWorldMap.waves.Length];
+	}
+
 	void StartWave(int wave)
 	{
 		m_wave = wave;
 
 		StartCoroutine(EffectWaveText("Wave " + (m_wave + 1), 1));
-		StartCoroutine(spawnMobPer(m_refWorldMap.waves[wave%m_refWorldMap.waves.Length]));
+		StartCoroutine(spawnMobPer(GetCurrentWave()));
 	}
 
 	IEnumerator checkBossAlive()
@@ -250,12 +255,6 @@ public class Spawn : MonoBehaviour {
 		DestroyObject(eggObj);
 
 	}
-
-	IEnumerator EffectSpawnItem(RefItemSpawn[] refDropItems, Vector3 pos)
-	{
-		yield return new WaitForSeconds (0.5f);
-		SpawnItemBox(refDropItems, pos);		
-	}
 	
 	public void OnKillMob(Mob mob)
 	{
@@ -361,6 +360,10 @@ public class Spawn : MonoBehaviour {
 	
 	public void SpawnItemBox(RefItemSpawn[] refDropItems, Vector3 pos)
 	{		
+		if (refDropItems == null)
+		{
+			refDropItems = GetCurrentWave().refDropItems;
+		}
 
 		foreach(RefItemSpawn desc in refDropItems)
 		{

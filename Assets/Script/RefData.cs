@@ -128,6 +128,7 @@ public class RefMobSpawn
 public class RefWave
 {
 	public RefMobSpawn[]	mobSpawns;
+	public RefItemSpawn[]	refDropItems;
 }
 
 public class RefWorldMap : RefBaseData
@@ -178,7 +179,19 @@ public class RefData {
 						mobSpawn.refMobs[id] = m_refMobs[id];
 					}
 
-					foreach(RefItemSpawn itemSpawn in mobSpawn.refDropItems)
+					if (mobSpawn.refDropItems != null)
+					{
+						foreach(RefItemSpawn itemSpawn in mobSpawn.refDropItems)
+						{
+							itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
+						}
+					}
+
+				}
+
+				if (wave.refDropItems != null)
+				{
+					foreach(RefItemSpawn itemSpawn in wave.refDropItems)
 					{
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}
