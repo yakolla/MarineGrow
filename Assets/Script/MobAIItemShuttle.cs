@@ -47,7 +47,7 @@ public class MobAIItemShuttle : MobAI {
 	// Update is called once per frame
 	override public void Update () {
 
-		m_mob.transform.position = Vector3.MoveTowards(m_mob.transform.position, m_goal, Time.deltaTime);
+		m_mob.transform.position = Vector3.MoveTowards(m_mob.transform.position, m_goal, m_mob.m_creatureProperty.MoveSpeed * Time.deltaTime);
 
 		m_elapsed += Time.deltaTime;
 		m_droppedItemTime += Time.deltaTime;

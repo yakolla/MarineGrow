@@ -231,27 +231,35 @@ public class Creature : MonoBehaviour {
 		Renderer[] renders = GetComponentsInChildren<Renderer>();
 		if (renders != null)
 		{
-			Material mat = Resources.Load<Material>("Materials/TakenDamage");
+			Texture dtex = Resources.Load<Texture>("ani/damage monster");
+			Texture tex = Resources.Load<Texture>("ani/monster");
 			Color color = new Color(0f,1f,0f,0f);
 			int len = renders.Length;
 
 			for(int i = 0; i < len; ++i)
 			{
-				if (renders[i])
+				if (renders[i] && renders[i].material && renders[i].material.mainTexture)
 				{
-					renders[i].material = mat;
+					if (renders[i].material.mainTexture.name.CompareTo("monster") == 0)
+					{
+						renders[i].material.mainTexture = dtex;
+					}
 
 				}
 			}
 			
-			yield return new WaitForSeconds(1.3f);
+			yield return new WaitForSeconds(0.3f);
 			
-			color = new Color(1f,1f,1f,0f);
 			for(int i = 0; i < len; ++i)
 			{
-				if (renders[i])
-					renders[i].material.color = color;
-				
+				if (renders[i] && renders[i].material && renders[i].material.mainTexture)
+				{
+					if (renders[i].material.mainTexture.name.CompareTo("damage monster") == 0)
+					{
+						renders[i].material.mainTexture = tex;
+					}
+					
+				}
 			}
 		}
 		m_ingTakenDamageEffect = false;
@@ -308,7 +316,7 @@ public class Creature : MonoBehaviour {
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
 
-			//StartCoroutine(BodyRedColoredOnTakenDamage());
+			StartCoroutine(BodyRedColoredOnTakenDamage());
 		}
 
 		if (damageDesc.PrefEffect != null)

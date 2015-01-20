@@ -41,6 +41,11 @@ public class Follower : Creature {
 
 	}
 
+	public int WeaponItemID
+	{
+		set {m_refItemId = value;}
+	}
+
 	override public void GiveExp(int exp)
 	{
 		m_champ.GiveExp(exp);

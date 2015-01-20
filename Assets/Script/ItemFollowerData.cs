@@ -4,18 +4,13 @@ using System.Collections;
 [System.Serializable]
 public class ItemFollowerData : ItemData{
 
-	GameObject 	m_prefFollower;
 	string 	m_followerName;
+	int		m_weaponID;
 
-	public ItemFollowerData(int refItemId) : base(refItemId, 1)
+	public ItemFollowerData(int refItemId, RefMob refMob) : base(refItemId, 1)
 	{
-		m_prefFollower = Resources.Load<GameObject>("Pref/" + RefItem.codeName);
-		m_followerName = RefItem.codeName;
-	}
-
-	public GameObject PrefFollower
-	{
-		get {return m_prefFollower;}
+		m_followerName = refMob.prefBody;
+		m_weaponID = refMob.refWeaponItem;
 	}
 
 	public string FollowerName
@@ -25,11 +20,20 @@ public class ItemFollowerData : ItemData{
 
 	override public void Use(Creature obj)
 	{
-		GameObject followerObj = (GameObject)GameObject.Instantiate(m_prefFollower, obj.transform.position, obj.transform.rotation);
-		Creature follower = (Creature)followerObj.GetComponent<Creature>();
-		follower.m_creatureProperty.AlphaMaxHP += Level;
-		follower.m_creatureProperty.AlphaPhysicalAttackDamage += Level;
-		follower.m_creatureProperty.AlphaPhysicalDefencePoint += Level;
+		GameObject followerObj = (GameObject)GameObject.Instantiate(Resources.Load<GameObject>("Pref/Follower"), obj.transform.position, obj.transform.rotation);
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + m_followerName);
+		
+		Vector3 enemyPos = obj.transform.position;
+		
+		GameObject enemyBody = GameObject.Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+		enemyBody.name = "Body";
+		enemyBody.transform.parent = followerObj.transform;
+		enemyBody.transform.localPosition = prefEnemyBody.transform.localPosition;
+		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+
+		Follower follower = (Follower)followerObj.GetComponent<Follower>();
+		follower.WeaponItemID = m_weaponID;
+		follower.m_creatureProperty.Level = obj.m_creatureProperty.Level;
 	}
 
 	override public void NoUse(Creature obj)
