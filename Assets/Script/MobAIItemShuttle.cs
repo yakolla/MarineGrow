@@ -13,7 +13,7 @@ public class MobAIItemShuttle : MobAI {
 	const float m_dropTryTime = 1f;
 	const float	m_dropPosY = 8F;
 
-	override public void	Init(Mob mob)
+	override public void	Init(Creature mob)
 	{
 		base.Init(mob);
 		m_planeSpots = GameObject.FindGameObjectsWithTag("ItemShuttleSpot");
@@ -66,7 +66,7 @@ public class MobAIItemShuttle : MobAI {
 			{
 				Vector3 pos = m_mob.transform.position;
 				pos.y = m_dropPosY;
-				m_mob.Spawn.SpawnItemBox(m_mob.RefMobSpawn.refDropItems, pos);
+				m_mob.Spawn.SpawnItemBox(m_mob.RefDropItems, pos);
 				m_droppedItemTime = 0f;
 			}
 

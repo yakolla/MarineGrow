@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MobAI {
 
-	protected Mob				m_mob;
+	protected Creature				m_mob;
 	protected GameObject 		m_target;
 	protected NavMeshAgent		m_navAgent;
 
-	virtual public void	Init(Mob mob)
+	virtual public void	Init(Creature mob)
 	{
 		m_mob = mob;
 		m_navAgent = mob.GetComponent<NavMeshAgent>();

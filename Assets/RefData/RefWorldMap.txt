@@ -451,7 +451,7 @@
 				"mobSpawns":
 				[
 					{
-						"refMobIds":[11],
+						"refMobIds":[5],
 						"interval":5,
 						"repeatCount":[1,1],
 						"mobCount":[1,1],

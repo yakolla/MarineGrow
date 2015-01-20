@@ -6,7 +6,7 @@ public class MobAIRotation : MobAI {
 	float time = 0f;
 	WeaponHolder	m_weaponHolder;
 
-	override public void Init(Mob mob)
+	override public void Init(Creature mob)
 	{
 		base.Init(mob);
 

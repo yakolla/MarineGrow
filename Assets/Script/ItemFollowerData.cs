@@ -6,11 +6,15 @@ public class ItemFollowerData : ItemData{
 
 	string 	m_followerName;
 	int		m_weaponID;
+	RefCreatureBaseProperty	m_baseProperty;
+	MobAIType	m_aiType;
 
-	public ItemFollowerData(int refItemId, RefMob refMob) : base(refItemId, 1)
+	public ItemFollowerData(RefMob refMob) : base(1001, 1)
 	{
 		m_followerName = refMob.prefBody;
 		m_weaponID = refMob.refWeaponItem;
+		m_baseProperty = refMob.baseCreatureProperty;
+		m_aiType = refMob.mobAI;
 	}
 
 	public string FollowerName
@@ -33,7 +37,9 @@ public class ItemFollowerData : ItemData{
 
 		Follower follower = (Follower)followerObj.GetComponent<Follower>();
 		follower.WeaponItemID = m_weaponID;
+		follower.Init(obj, m_aiType, m_baseProperty);
 		follower.m_creatureProperty.Level = obj.m_creatureProperty.Level;
+		Debug.Log(obj.m_creatureProperty.Level);
 	}
 
 	override public void NoUse(Creature obj)

@@ -8,7 +8,7 @@ public class MobAIDash : MobAI {
 	float	m_speed;
 	GameObject	m_prefAttackGuidedLine;
 
-	override public void Init(Mob mob)
+	override public void Init(Creature mob)
 	{
 		base.Init(mob);
 

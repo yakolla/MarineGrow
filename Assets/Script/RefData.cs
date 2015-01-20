@@ -92,6 +92,15 @@ public class RefEggMob
 	public RefMob				refMob;
 }
 
+public class RefFollowerMob
+{
+	public int					refMobId;
+	public int					count;
+	
+	[JsonIgnore]
+	public RefMob				refMob;
+}
+
 public enum MobAIType
 {
 	Normal,
@@ -107,6 +116,7 @@ public class RefMob : RefBaseData
 	public int					refWeaponItem;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
+	public RefFollowerMob		followerMob;
 	public RefCreatureBaseProperty		baseCreatureProperty;
 
 	[JsonConverter(typeof(StringEnumConverter))]
@@ -205,6 +215,14 @@ public class RefData {
 			if (pair.Value.eggMob != null)
 			{
 				pair.Value.eggMob.refMob = m_refMobs[pair.Value.eggMob.refMobId];
+			}
+		}
+
+		foreach(KeyValuePair<int, RefMob> pair in m_refMobs)
+		{
+			if (pair.Value.followerMob != null)
+			{
+				pair.Value.followerMob.refMob = m_refMobs[pair.Value.followerMob.refMobId];
 			}
 		}
 	}

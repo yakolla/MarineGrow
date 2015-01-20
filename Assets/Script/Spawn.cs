@@ -197,7 +197,7 @@ public class Spawn : MonoBehaviour {
 							
 							++spawnCount;
 							StartCoroutine(  EffectSpawnMob(pair.Value
-							                                , mobSpawn
+							                                , mobSpawn.refDropItems
 							                                , enemyPos
 							                                , 1+m_wave/m_refWorldMap.waves.Length
 							                                , spawnMobType
@@ -232,7 +232,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 	
-	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel)
+	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
 	{
 		GameObject eggObj = Instantiate (m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
 		Animator eggAni = eggObj.GetComponent<Animator>();
@@ -249,7 +249,7 @@ public class Spawn : MonoBehaviour {
 		eggAni.speed = 1f;
 		yield return new WaitForSeconds (0.5f);
 
-		SpawnMob(refMob, refMobSpawn, parabola.Position, mobLevel, SpawnMobType.Egg, false);
+		SpawnMob(refMob, refDropItems, parabola.Position, mobLevel, SpawnMobType.Egg, false);
 
 		while(eggObj.transform.position.y > parabola.GroundY-1f)
 		{
@@ -266,7 +266,7 @@ public class Spawn : MonoBehaviour {
 	public void OnKillMob(Mob mob)
 	{
 
-		SpawnItemBox(mob.RefMobSpawn.refDropItems, mob.transform.position);
+		SpawnItemBox(mob.RefDropItems, mob.transform.position);
 		
 		if (mob.Boss == true)
 		{
@@ -276,7 +276,7 @@ public class Spawn : MonoBehaviour {
 		{
 			for(int i = 0; i < mob.RefMob.eggMob.count; ++i)
 			{
-				StartCoroutine(EffectSpawnMobEgg(mob.RefMob.eggMob.refMob, mob.RefMobSpawn, mob.transform.position, mob.m_creatureProperty.Level));
+				StartCoroutine(EffectSpawnMobEgg(mob.RefMob.eggMob.refMob, mob.RefDropItems, mob.transform.position, mob.m_creatureProperty.Level));
 			}
 		}
 
@@ -296,7 +296,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -312,11 +312,11 @@ public class Spawn : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		
-		SpawnMob(refMob, refMobSpawn, enemyPos, mobLevel, spawnMobType, followingCamera);
+		SpawnMob(refMob, refDropItems, enemyPos, mobLevel, spawnMobType, followingCamera);
 
 	}
 	
-	void SpawnMob(RefMob refMob, RefMobSpawn refMobSpawn, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	void SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
@@ -343,7 +343,7 @@ public class Spawn : MonoBehaviour {
 		bool boss = spawnMobType == SpawnMobType.Boss;
 		
 		Mob enemy = enemyObj.GetComponent<Mob>();
-		enemy.Init(refMob, this, refMobSpawn, boss);
+		enemy.Init(refMob, this, refDropItems, boss);
 		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem));
 		weapon.Item.Evolution = (int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
 		weapon.Item.Use(enemy);
@@ -355,6 +355,16 @@ public class Spawn : MonoBehaviour {
 		if (boss == true)
 		{			
 			m_bosses.Add(enemy.gameObject);
+		}
+
+		if (refMob.followerMob != null)
+		{
+			for(int i = 0; i < refMob.followerMob.count; ++i)
+			{
+				ItemObject follower = new ItemObject(new ItemFollowerData(refMob.followerMob.refMob));
+				follower.Item.Use(enemy);
+			}
+
 		}
 		
 		if (followingCamera == true)
@@ -402,7 +412,7 @@ public class Spawn : MonoBehaviour {
 					item = new ItemWeaponUpgradeFragmentData();					
 					break;
 				case ItemData.Type.Follower:
-					item = new ItemFollowerData(desc.refItemId, RefData.Instance.RefMobs[desc.maxValue]);					
+					item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
 					break;
 				case ItemData.Type.WeaponEvolutionFragment:
 					item = new ItemWeaponEvolutionFragmentData();					

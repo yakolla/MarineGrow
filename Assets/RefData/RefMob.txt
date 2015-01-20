@@ -90,6 +90,11 @@
 			"refMobId":8,
 			"count":2
 		},
+		"followerMob":
+		{
+			"refMobId":4,
+			"count":2
+		},
 		"baseCreatureProperty":
 		{
 			"maxHP":5,

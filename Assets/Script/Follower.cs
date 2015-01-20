@@ -8,21 +8,16 @@ public class Follower : Creature {
 
 	ItemObject	m_weapon;
 
-	Creature	m_champ;
-
-	[SerializeField]
-	RefCreatureBaseProperty	m_creatureBaseProperty;
-
+	Creature	m_owner;
+	MobAI				m_ai;
 	new void Start()
 	{
-		m_creatureProperty.init(this, m_creatureBaseProperty);
 
 		base.Start();
 
 		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId));
 		m_weapon.Item.Use(this);
 
-		m_champ = GameObject.Find("Champ(Clone)").GetComponent<Creature>();
 	}
 
 	// Update is called once per frame
@@ -31,12 +26,14 @@ public class Follower : Creature {
 		if (AutoAttack() == false)
 		{
 			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
-			if (m_champ != null)
-				m_navAgent.SetDestination(m_champ.transform.position);
+			if (m_owner != null)
+				m_navAgent.SetDestination(m_owner.transform.position);
 		}
 		else
 		{
-			m_navAgent.Stop();
+			m_ai.SetTarget(m_targeting);
+			m_navAgent.SetDestination(m_targeting.transform.position);
+			m_ai.Update();
 		}
 
 	}
@@ -46,14 +43,49 @@ public class Follower : Creature {
 		set {m_refItemId = value;}
 	}
 
+	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty)
+	{
+		m_owner = owner;
+		if (m_owner)
+		{
+			CreatureType = m_owner.CreatureType;
+			m_creatureProperty.init(this, baseProperty);
+			Spawn = owner.Spawn;
+
+			switch(aiType)
+			{
+			case MobAIType.Normal:
+				m_ai = new MobAINormal();
+				break;
+			case MobAIType.Rotation:
+				m_ai = new MobAIRotation();
+				break;
+			case MobAIType.Dash:
+				m_ai = new MobAIDash();
+				break;
+			case MobAIType.Revolution:
+				m_ai = new MobAIRevolution();
+				break;
+			case MobAIType.ItemShuttle:
+				m_ai = new MobAIItemShuttle();
+				break;
+			}
+			
+			m_ai.Init(this);
+		}
+	}
+
 	override public void GiveExp(int exp)
 	{
-		m_champ.GiveExp(exp);
+		m_owner.GiveExp(exp);
 	}
 
 	override public string[] GetAutoTargetTags()
 	{
-		return new string[]{Creature.Type.Mob.ToString()};
+		if (m_owner)
+			return m_owner.GetAutoTargetTags();
+
+		return new string[]{""};
 	}
 
 }

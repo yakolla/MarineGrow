@@ -4,8 +4,6 @@ using System.Collections;
 public class Mob : Creature {
 
 	RefMob				m_refMob;
-	Spawn				m_spawn;
-	RefMobSpawn			m_refMobSpawn;
 	bool				m_boss = false;
 	MobAI				m_ai;
 	GameObject			m_goalForNavigation;
@@ -16,11 +14,11 @@ public class Mob : Creature {
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 	}
 
-	public void Init(RefMob refMob, Spawn spawn, RefMobSpawn refMobSpawn, bool boss)
+	public void Init(RefMob refMob, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
 	{
 		RefMob = refMob;
 		Spawn = spawn;
-		RefMobSpawn = refMobSpawn;
+		RefDropItems = refDropItems;
 		Boss = boss;
 
 		m_creatureProperty.init(this, m_refMob.baseCreatureProperty);
@@ -67,17 +65,6 @@ public class Mob : Creature {
 		get {return m_refMob;}
 		set {m_refMob = value;}
 	}
-	
-	public Spawn Spawn	{
-		set {m_spawn = value;}
-		get {return m_spawn;}
-	}
-
-	public RefMobSpawn RefMobSpawn
-	{
-		set {m_refMobSpawn = value;}
-		get {return m_refMobSpawn;}
-	}
 
 	override public string[] GetAutoTargetTags()
 	{
@@ -92,7 +79,7 @@ public class Mob : Creature {
 
 	override public void Death()
 	{
-		m_spawn.OnKillMob(this);
+		Spawn.OnKillMob(this);
 		
 		base.Death();
 

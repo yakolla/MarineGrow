@@ -7,7 +7,7 @@ public class MobAIRevolution  : MobAI {
 	WeaponHolder	m_weaponHolder;
 	Vector3			m_oriPos;
 
-	override public void Init(Mob mob)
+	override public void Init(Creature mob)
 	{
 		base.Init(mob);
 		m_oriPos = mob.transform.position;

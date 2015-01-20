@@ -35,7 +35,8 @@ public class Creature : MonoBehaviour {
 
 	Animator				m_animator;
 	
-
+	Spawn					m_spawn;
+	RefItemSpawn[]			m_dropItems;
 	struct DamageEffect
 	{
 		public float endTime;
@@ -81,6 +82,11 @@ public class Creature : MonoBehaviour {
 		};
 	}
 
+	public Spawn Spawn	{
+		set {m_spawn = value;}
+		get {return m_spawn;}
+	}
+
 	public Vector2 RotateToTarget(Vector3 pos)
 	{
 
@@ -119,6 +125,12 @@ public class Creature : MonoBehaviour {
 	virtual public string[] GetAutoTargetTags()
 	{
 		return null;
+	}
+
+	public RefItemSpawn[] RefDropItems
+	{
+		set {m_dropItems = value;}
+		get {return m_dropItems;}
 	}
 
 	protected bool inAttackRange(GameObject targeting, float overrideRange)

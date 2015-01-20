@@ -18,7 +18,7 @@ public class ItemBox : MonoBehaviour {
 	GameObject		m_target = null;
 
 	void Start () {
-		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 1);
+		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 3);
 		m_parabola.GroundY = 0.5f;
 		m_timeToDeath = Time.time + m_lifeTime;
 	}
