@@ -117,6 +117,7 @@ public class RefMobSpawn
 {
 	public int[]			refMobIds;	
 	public float 			interval;
+	public int[]			repeatCount;
 	public int[]			mobCount;
 	public bool				boss = false;
 	public RefItemSpawn[]	refDropItems;
@@ -230,4 +231,8 @@ public class RefData {
 		get {return m_refItems;}
 	}
 
+	public Dictionary<int, RefMob> RefMobs
+	{
+		get {return m_refMobs;}
+	}
 }

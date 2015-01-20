@@ -125,7 +125,7 @@ public class Spawn : MonoBehaviour {
 			{
 				Transform area = m_areas[i];
 				float dist = Vector3.Distance(area.position, m_champ.transform.position);
-				if (dist > 15f)
+				if (dist > 5f)
 				{
 					areas.Add(area);
 
@@ -183,27 +183,34 @@ public class Spawn : MonoBehaviour {
 						cp = area.position;
 					}
 					float waveProgress = Mathf.Min(1f, m_wave / (m_refWorldMap.waves.Length*30));
-					int mobSpawnCount = (int)(mobSpawn.mobCount[0] * (1f-waveProgress) + mobSpawn.mobCount[1] * waveProgress);
-					for(int i = 0; i < mobSpawnCount; ++i)
+
+					int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
+
+					for(int r = 0; r < mobSpawnRepeatCount; ++r)
 					{
-						Vector3 enemyPos = cp;
-						enemyPos.x += Random.Range(-scale.x,scale.x);
-						enemyPos.z += Random.Range(-scale.z,scale.z);
+						int mobSpawnCount = (int)(mobSpawn.mobCount[0] * (1f-waveProgress) + mobSpawn.mobCount[1] * waveProgress);
+						for(int i = 0; i < mobSpawnCount; ++i)
+						{
+							Vector3 enemyPos = cp;
+							enemyPos.x += Random.Range(-scale.x,scale.x);
+							enemyPos.z += Random.Range(-scale.z,scale.z);
+							
+							++spawnCount;
+							StartCoroutine(  EffectSpawnMob(pair.Value
+							                                , mobSpawn
+							                                , enemyPos
+							                                , 1+m_wave/m_refWorldMap.waves.Length
+							                                , spawnMobType
+							                                , spawnMobType == SpawnMobType.Boss && spawnCount == 1)
+							               );
+							
+							
+							yield return new WaitForSeconds (0.5f);
+						}	
+						
+						yield return new WaitForSeconds (mobSpawn.interval);
+					}
 
-						++spawnCount;
-						StartCoroutine(  EffectSpawnMob(pair.Value
-						         , mobSpawn
-						         , enemyPos
-						         , 1+m_wave/m_refWorldMap.waves.Length
-						         , spawnMobType
-						         , spawnMobType == SpawnMobType.Boss && spawnCount == 1)
-						         );
-
-
-						yield return new WaitForSeconds (0.5f);
-					}	
-
-					yield return new WaitForSeconds (mobSpawn.interval);
 				}
 			}
 
@@ -395,7 +402,7 @@ public class Spawn : MonoBehaviour {
 					item = new ItemWeaponUpgradeFragmentData();					
 					break;
 				case ItemData.Type.Follower:
-					item = new ItemFollowerData(desc.refItemId);					
+					item = new ItemFollowerData(desc.refItemId, RefData.Instance.RefMobs[desc.maxValue]);					
 					break;
 				case ItemData.Type.WeaponEvolutionFragment:
 					item = new ItemWeaponEvolutionFragmentData();					
