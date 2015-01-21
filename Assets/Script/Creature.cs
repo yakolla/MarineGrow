@@ -28,6 +28,8 @@ public class Creature : MonoBehaviour {
 	public Weapon.FiringDesc[]	m_firingDescs = null;
 
 	GameObject				m_prefDamageGUI;
+	GameObject				m_prefPickupItemGUI;
+
 	public CreatureProperty	m_creatureProperty;
 	bool					m_ingTakenDamageEffect = false;
 
@@ -43,6 +45,7 @@ public class Creature : MonoBehaviour {
 		public GameObject effect;
 	}
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
+	DamageEffect[]	m_pickupItemEffects = new DamageEffect[(int)ItemData.Type.Count];
 
 	bool[]	m_debuff = new bool[(int)DamageDesc.DebuffType.Count];
 
@@ -53,7 +56,8 @@ public class Creature : MonoBehaviour {
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
-		
+		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
+
 		m_navAgent.speed = m_creatureProperty.MoveSpeed;
 	}
 
@@ -120,6 +124,7 @@ public class Creature : MonoBehaviour {
 	protected void Update()
 	{
 		UpdateDamageEffect();
+		UpdatePickupItemEffect();
 	}
 
 	virtual public string[] GetAutoTargetTags()
@@ -296,6 +301,23 @@ public class Creature : MonoBehaviour {
 
 	}
 
+	void UpdatePickupItemEffect()
+	{
+		for(int i = 0; i < (int)ItemData.Type.Count; ++i)
+		{
+			if (m_pickupItemEffects[i].effect != null)
+			{
+				if (m_pickupItemEffects[i].effect.particleSystem.IsAlive() == false)
+				{
+					DestroyObject(m_pickupItemEffects[i].effect);
+					m_pickupItemEffects[i].effect = null;
+				}
+			}
+			
+		}
+		
+	}
+
 	IEnumerator EffectAirbone()
 	{		
 		Parabola parabola = new Parabola(gameObject, 0, 7f, 0f, 1.5f, 1);
@@ -306,6 +328,53 @@ public class Creature : MonoBehaviour {
 		}
 
 		m_debuff[(int)DamageDesc.DebuffType.Airbone] = false;
+	}
+
+	public void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
+	{
+		if (m_damageEffects[(int)type].effect == null && prefEffect != null)
+		{
+			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+			dmgEffect.transform.parent = m_aimpoint.transform;
+			dmgEffect.transform.localPosition = Vector3.zero;
+			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
+			m_damageEffects[(int)type].effect = dmgEffect;
+		}
+	}
+
+	public void ApplyPickUpItemEffect(ItemData.Type type, GameObject prefEffect, int value)
+	{
+		if (m_pickupItemEffects[(int)type].effect == null)
+		{
+			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+			dmgEffect.transform.parent = m_aimpoint.transform;
+			dmgEffect.transform.localPosition = Vector3.zero;
+			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
+			m_pickupItemEffects[(int)type].effect = dmgEffect;
+		}
+
+
+		string strDamage = value.ToString();			
+
+		switch(type)
+		{
+		case ItemData.Type.Gold:
+			{
+				GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+				Color color = Color.yellow;
+				Vector3 offset = new Vector3(0.2f, 0.5f, 0.2f);
+				gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, color, offset);
+			}
+			break;
+		case ItemData.Type.HealPosion:
+			{
+				GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+				Color color = Color.green;
+				Vector3 offset = new Vector3(0.5f, 1f, 0.5f);
+				gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, color, offset);
+			}
+			break;
+		}
 	}
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
@@ -326,23 +395,13 @@ public class Creature : MonoBehaviour {
 			}
 
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage);
+			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, Color.red, Vector3.zero);
 
 			StartCoroutine(BodyRedColoredOnTakenDamage());
 		}
 
-		if (damageDesc.PrefEffect != null)
-		{
-			if (m_damageEffects[(int)damageDesc.DamageType].effect == null)
-			{
-				GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-				dmgEffect.transform.parent = m_aimpoint.transform;
-				dmgEffect.transform.localPosition = Vector3.zero;
-				dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
-				m_damageEffects[(int)damageDesc.DamageType].effect = dmgEffect;
-			}
-			
-		}
+		ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
+
 
 		if (damageDesc.DamageDeBuffType != DamageDesc.DebuffType.Nothing)
 		{

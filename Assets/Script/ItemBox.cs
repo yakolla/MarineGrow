@@ -15,18 +15,21 @@ public class ItemBox : MonoBehaviour {
 
 	Bezier			m_bezier;
 	Parabola		m_parabola;
-	GameObject		m_target = null;
+	Creature		m_target = null;
+
+	[SerializeField]
+	GameObject	m_prefPickupItemEffect;
 
 	void Start () {
-		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 3);
+		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
 		m_parabola.GroundY = 0.5f;
 		m_timeToDeath = Time.time + m_lifeTime;
 	}
 
-	void SetTarget(GameObject target)
+	void SetTarget(Creature target)
 	{
 		m_target = target;
-		m_bezier = new Bezier(gameObject, target, transform.position, target.transform.position, 0.07f);
+		m_bezier = new Bezier(gameObject, target.gameObject, transform.position, target.transform.position, 0.07f);
 	}
 
 	public void Pickup(Creature obj)
@@ -35,7 +38,7 @@ public class ItemBox : MonoBehaviour {
 		audio.Play();
 
 		m_item.Pickup(obj);
-		SetTarget(obj.gameObject);
+		SetTarget(obj);
 	}
 
 	public void Use(Creature obj){
@@ -61,6 +64,9 @@ public class ItemBox : MonoBehaviour {
 		{
 			if (m_bezier.Update() == false)
 			{
+
+				m_target.ApplyPickUpItemEffect(ItemType, m_prefPickupItemEffect, Item.Count);
+
 				Death();
 			}
 		}

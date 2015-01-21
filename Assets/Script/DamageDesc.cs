@@ -10,6 +10,8 @@ public class DamageDesc {
 		Fire,
 		Ice,
 		Lightining,
+		PickUpGold,
+		PickUpHealPotion,
 		Count
 	}
 

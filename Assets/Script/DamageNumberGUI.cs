@@ -8,24 +8,27 @@ public class DamageNumberGUI : MonoBehaviour {
 	public float duration = 1.5f;
 	float	m_lastTime = 0f;
 	Vector3 targetPos;
+	Vector3	m_offset = Vector3.zero;
 	GameObject	target;
 	float	posY = 0;
 	// Use this for initialization
 	void Start () {
-		guiText.material.color = new Color(1f,1f,1f,1.0f);
+		guiText.material.color = new Color(1f,1f,1f,1f);
+
 	}
 
-	public void Init(GameObject obj, string str)
+	public void Init(GameObject obj, string str, Color color, Vector3 offset)
 	{
 		target = obj;
 		targetPos = obj.transform.position;
 		guiText.text = str;
 		m_lastTime = Time.time;
-
+		guiText.color = color;
+		m_offset = offset;
 		Transform trans = transform.Find("DamageNumberGUI");
 		if (trans != null)
 		{
-			trans.GetComponent<DamageNumberGUI>().Init(obj, str);
+			trans.GetComponent<DamageNumberGUI>().Init(obj, str, Color.black, offset);
 		}
 	}
 
@@ -37,7 +40,7 @@ public class DamageNumberGUI : MonoBehaviour {
 
 			if (target)
 			{
-				targetPos = target.transform.position;
+				targetPos = target.transform.position+m_offset;
 			}
 
 			Vector3 pos = Camera.main.WorldToViewportPoint(targetPos);
