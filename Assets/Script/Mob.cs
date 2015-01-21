@@ -85,8 +85,20 @@ public class Mob : Creature {
 	override public void Death()
 	{
 		Spawn.OnKillMob(this);
+
+		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
+		effect.transform.localScale = transform.localScale;
+
+		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
+		if (sfx != null)
+		{
+			effect.audio.clip = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
+			effect.audio.Play();
+		}
+
+		DestroyObject(this.gameObject);
 		
-		base.Death();
+		ShakeCamera();
 
 	}
 

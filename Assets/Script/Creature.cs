@@ -434,16 +434,21 @@ public class Creature : MonoBehaviour {
 			tag = m_creatureType.ToString();
 		}
 	}
-	
-	virtual public void Death()
+
+	protected void ShakeCamera()
 	{
-		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
-
-		DestroyObject(this.gameObject);
-
 		CameraShake shake = Camera.main.gameObject.GetComponent<CameraShake>();
 		shake.shake = 0.1f;
 		shake.enabled = true;
+	}
+	
+	virtual public void Death()
+	{
+		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);	
+
+		DestroyObject(this.gameObject);
+
+		ShakeCamera();
 	}
 
 }

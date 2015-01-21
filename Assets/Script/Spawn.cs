@@ -166,28 +166,30 @@ public class Spawn : MonoBehaviour {
 
 				foreach(KeyValuePair<int, RefMob> pair in mobSpawn.refMobs)
 				{
-					Transform area = getSpawnArea(true);
-					Vector3 cp = area.position;
-					Vector3 scale = area.localScale*0.5f;
 
-					if (pair.Value.nearByChampOnSpawn == true)
-					{
-						if (m_champ)
-						{
-							cp = m_champ.transform.position;
-						}
-
-					}
-					else
-					{
-						cp = area.position;
-					}
 					float waveProgress = Mathf.Min(1f, m_wave / (m_refWorldMap.waves.Length*30));
 
 					int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
 
 					for(int r = 0; r < mobSpawnRepeatCount; ++r)
 					{
+						Transform area = getSpawnArea(true);
+						Vector3 cp = area.position;
+						Vector3 scale = area.localScale*0.5f;
+						
+						if (pair.Value.nearByChampOnSpawn == true)
+						{
+							if (m_champ)
+							{
+								cp = m_champ.transform.position;
+							}
+							
+						}
+						else
+						{
+							cp = area.position;
+						}
+
 						int mobSpawnCount = (int)(mobSpawn.mobCount[0] * (1f-waveProgress) + mobSpawn.mobCount[1] * waveProgress);
 						for(int i = 0; i < mobSpawnCount; ++i)
 						{

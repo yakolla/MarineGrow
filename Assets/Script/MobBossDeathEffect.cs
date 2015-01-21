@@ -7,6 +7,7 @@ public class MobBossDeathEffect : MonoBehaviour {
 
 	void Start () {
 		m_ani = GetComponent<Animator>();
+
 	}
 
 	void Update()
