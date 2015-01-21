@@ -22,6 +22,11 @@ public class Mob : Creature {
 		Boss = boss;
 
 		m_creatureProperty.init(this, m_refMob.baseCreatureProperty);
+		GameObject prefDeathEffect = Resources.Load<GameObject>("Pref/mon_skin/"+refMob.prefBody+"_death");
+		if (prefDeathEffect != null)
+		{
+			m_prefDeathEffect = prefDeathEffect;
+		}
 
 
 		switch(refMob.mobAI)

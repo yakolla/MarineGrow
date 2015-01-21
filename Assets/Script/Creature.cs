@@ -438,7 +438,6 @@ public class Creature : MonoBehaviour {
 	virtual public void Death()
 	{
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
-		effect.GetComponentInChildren<ParticleSystem>().startRotation = Random.Range(0, 360);
 
 		DestroyObject(this.gameObject);
 
