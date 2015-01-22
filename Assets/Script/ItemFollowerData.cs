@@ -39,7 +39,7 @@ public class ItemFollowerData : ItemData{
 		follower.WeaponItemID = m_weaponID;
 		follower.Init(obj, m_aiType, m_baseProperty);
 		follower.m_creatureProperty.Level = obj.m_creatureProperty.Level;
-		Debug.Log(obj.m_creatureProperty.Level);
+	
 	}
 
 	override public void NoUse(Creature obj)

@@ -36,6 +36,12 @@
 		"icon":"Sprites/swordoftruth"
 	},
 	{
+		"id":7,
+		"codeName":"",
+		"type":"MobEgg",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
 		"id":101,
 		"codeName":"Firegun",
 		"type":"Weapon",
@@ -391,6 +397,36 @@
 		"weapon":
 		{
 			"coolTime":5,
+			"range":7
+		}
+	},
+	{
+		"id":114,
+		"codeName":"ChampTornadoLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"levelUpItems":
+		[
+			{
+				"refItemId":3, 
+				"count":10
+			}
+		],
+		"evolutionItems":
+		[
+			{
+				"refItemId":4, 
+				"count":10
+			}
+		],
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":1,
 			"range":7
 		}
 	},

@@ -67,7 +67,7 @@ public class GrenadeBullet : Bullet {
 			foreach(GameObject target in targets)
 			{
 				float dist = Vector3.Distance(pos, target.transform.position);
-				if (dist < m_bombRange)
+				if (dist < m_bombRange/2)
 				{
 					Creature creature = target.GetComponent<Creature>();
 					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.DebuffType.Nothing, PrefDamageEffect));

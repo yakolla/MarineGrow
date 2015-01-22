@@ -92,7 +92,7 @@ public class Mob : Creature {
 		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
 		if (sfx != null)
 		{
-			effect.audio.clip = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
+			effect.audio.clip = sfx;
 			effect.audio.Play();
 		}
 

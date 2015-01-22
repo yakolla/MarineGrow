@@ -45,6 +45,7 @@ public class ItemData {
 		Follower,
 		GoldMedal,
 		SilverMedal,
+		MobEgg,
 		Count
 	}
 

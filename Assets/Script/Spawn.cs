@@ -17,7 +17,6 @@ public class Spawn : MonoBehaviour {
 
 	[SerializeField]
 	Transform[]		m_areas = null;
-	Transform		m_areaInChamp = null;
 
 	[SerializeField]
 	GameObject		m_prefSpawnEffect = null;
@@ -201,7 +200,7 @@ public class Spawn : MonoBehaviour {
 							StartCoroutine(  EffectSpawnMob(pair.Value
 							                                , mobSpawn.refDropItems
 							                                , enemyPos
-							                                , 1+m_wave/m_refWorldMap.waves.Length
+							                                , spawnMobLevel()
 							                                , spawnMobType
 							                                , spawnMobType == SpawnMobType.Boss && spawnCount == 1)
 							               );
@@ -233,6 +232,10 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
+	int spawnMobLevel()
+	{
+		return 1+m_wave/m_refWorldMap.waves.Length;
+	}
 	
 	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
 	{
@@ -285,11 +288,6 @@ public class Spawn : MonoBehaviour {
 
 	}
 
-	public void SetAreaInChamp(Transform area)
-	{
-		m_areaInChamp = area;
-	}
-	
 	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
 	{		
 		yield return new WaitForSeconds (delay);
@@ -338,7 +336,7 @@ public class Spawn : MonoBehaviour {
 		case SpawnMobType.Boss:
 			break;
 		case SpawnMobType.Egg:
-			enemyBody.transform.localScale *= 0.5f;
+			enemyObj.transform.localScale *= 0.5f;
 			break;
 		}
 		
@@ -389,12 +387,7 @@ public class Spawn : MonoBehaviour {
 			float ratio = Random.Range(0f, 1f);
 			if (ratio <= desc.ratio)
 			{
-				GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
-				GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
-				itemSkinObj.transform.parent = itemBoxObj.transform;
-				itemSkinObj.transform.localPosition = Vector3.zero;
-				itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
-				itemBoxObj.SetActive(false);
+
 
 				ItemData item = null;
 				switch(desc.refItem.type)
@@ -425,10 +418,20 @@ public class Spawn : MonoBehaviour {
 				case ItemData.Type.SilverMedal:
 					item = new ItemSilverMedalData();					
 					break;
+				case ItemData.Type.MobEgg:
+					StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMobs[Random.Range(desc.minValue, desc.maxValue)], null, pos, spawnMobLevel()));
+					break;
 				}
 				
 				if (item != null)
 				{
+					GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
+					GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
+					itemSkinObj.transform.parent = itemBoxObj.transform;
+					itemSkinObj.transform.localPosition = Vector3.zero;
+					itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
+					itemBoxObj.SetActive(false);
+
 					ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
 					itemBox.Item = item;
 					itemBoxObj.SetActive(true);
