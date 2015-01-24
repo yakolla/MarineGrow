@@ -25,9 +25,9 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void OnGUI()
 	{		
-		m_goodsWindowRect = GUI.Window (1, m_goodsWindowRect, DisplayGoodsWindow, "");
-		m_guageWindowRect = GUI.Window (2, m_guageWindowRect, DisplayStatusWindow, "");
-		m_skillWindowRect = GUI.Window (3, m_skillWindowRect, DisplaySkillWindow, "");
+		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
+		m_guageWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
+		m_skillWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
 	}
 
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)

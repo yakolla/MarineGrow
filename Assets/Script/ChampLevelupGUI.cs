@@ -33,7 +33,7 @@ public class ChampLevelupGUI : MonoBehaviour {
 	{
 		GUI.skin = m_guiSkin;
 
-		m_statusWindowRect = GUI.Window (10, m_statusWindowRect, DisplayStatusWindow, "");	
+		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampLevelUp, m_statusWindowRect, DisplayStatusWindow, "");	
 	}
 
 	void Update()

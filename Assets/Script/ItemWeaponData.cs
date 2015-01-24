@@ -11,6 +11,7 @@ public class ItemWeaponData : ItemData{
 	{
 		m_prefWeapon = Resources.Load<GameObject>("Pref/Weapon/" + RefItem.codeName);
 		m_weaponName = RefItem.codeName;
+		Lock = true;
 	}
 
 	public GameObject PrefWeapon

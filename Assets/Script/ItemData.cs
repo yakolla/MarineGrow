@@ -40,8 +40,8 @@ public class ItemData {
 		Gold,
 		HealPosion,
 		Weapon,
-		WeaponUpgradeFragment,
-		WeaponEvolutionFragment,
+		WeaponParts,
+		WeaponDNA,
 		Follower,
 		GoldMedal,
 		SilverMedal,
@@ -64,6 +64,7 @@ public class ItemData {
 	int				m_count = 0;
 	int				m_level = 1;
 	int				m_evoultion = 0;
+	bool			m_lock = false;
 
 	List<ItemOptionDesc>		m_optionDescs = new List<ItemOptionDesc>();
 
@@ -163,6 +164,13 @@ public class ItemData {
 	public RefItem RefItem
 	{
 		get {return m_refItem;}
+	}
+
+	public bool Lock
+	{
+		get {return m_lock;}
+		set {m_lock = value;}
+
 	}
 
 	public List<ItemOptionDesc> OptionDescs

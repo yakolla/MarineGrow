@@ -388,28 +388,52 @@ public class Spawn : MonoBehaviour {
 			if (ratio <= desc.ratio)
 			{
 
-
+				float scale = 1f;
 				ItemData item = null;
 				switch(desc.refItem.type)
 				{
 				case ItemData.Type.Gold:
 					item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
+					switch(item.Count/3)
+					{
+					case 0:
+						scale = 0.3f;
+						break;
+					case 1:
+						scale = 0.5f;
+						break;
+					case 2:
+						scale = 0.7f;
+						break;
+					}
 					break;
 				case ItemData.Type.HealPosion:
 					item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
+					switch(item.Count/300)
+					{
+					case 0:
+						scale = 0.3f;
+						break;
+					case 1:
+						scale = 0.5f;
+						break;
+					case 2:
+						scale = 0.7f;
+						break;
+					}
 					break;
 				case ItemData.Type.Weapon:
 					item = new ItemWeaponData(desc.refItem.id);
 					bindItemOption(item, desc.itemOptionSpawns);
 					
 					break;
-				case ItemData.Type.WeaponUpgradeFragment:
+				case ItemData.Type.WeaponParts:
 					item = new ItemWeaponUpgradeFragmentData();					
 					break;
 				case ItemData.Type.Follower:
 					item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
 					break;
-				case ItemData.Type.WeaponEvolutionFragment:
+				case ItemData.Type.WeaponDNA:
 					item = new ItemWeaponEvolutionFragmentData();					
 					break;
 				case ItemData.Type.GoldMedal:
@@ -430,6 +454,7 @@ public class Spawn : MonoBehaviour {
 					itemSkinObj.transform.parent = itemBoxObj.transform;
 					itemSkinObj.transform.localPosition = Vector3.zero;
 					itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
+					itemBoxObj.transform.localScale = Vector3.one * scale;
 					itemBoxObj.SetActive(false);
 
 					ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
