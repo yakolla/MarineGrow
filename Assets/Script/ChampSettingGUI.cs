@@ -70,6 +70,10 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(new ItemGoldMedalData());
 					Warehouse.Instance.PushItem(new ItemSilverMedalData());
 				}
+
+				Warehouse.Instance.Gold.Item.Count = 1000;
+				Warehouse.Instance.Gem.Item.Count = 1000;
+
 				Warehouse.Instance.PushItem(new ItemFollowerData(RefData.Instance.RefMobs[4]));
 			}
 		}
@@ -117,121 +121,150 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
-	bool canProgressUpItem(List<RefProgressUpItem> progressUpItems)
-	{
-		bool canLevelup = true;
-
-		foreach(RefProgressUpItem levelUpItem in progressUpItems)
-		{
-			ItemObject haveItemObj = Warehouse.Instance.FindItem(levelUpItem.refItemId);
-			if (haveItemObj == null)
-			{
-				canLevelup = false;
-				continue;
-			}
-			
-			if (haveItemObj != null && haveItemObj.Item.Count < levelUpItem.count )
-			{
-				canLevelup = false;
-				continue;
-			}
-		}
-
-		return canLevelup;
-	}
-
-
 
 	class CheckPriceDesc
 	{
-		public struct Desc
-		{
-			public bool 	able;
-			public string 	colofulDesc;
-		}
-
-		public Desc	m_gemCond;
-		public Desc	m_goldCond;
-		public Desc	m_goldMedalCond;
-		public Desc	m_weaponPartsCond;
-		public Desc	m_weaponDNACond;
+		public bool 	able;
+		public string 	colofulDesc;	
 	}
 
-	void GetPriceConditionDesc(RefPrice refPrice, CheckPriceDesc desc)
+	bool GetPriceConditionDesc(RefPriceCondition refPriceCondition, CheckPriceDesc[] desc)
 	{
-		// gem
-		desc.m_gemCond.able = refPrice.gem <= Warehouse.Instance.Gem;
-		
-		desc.m_gemCond.colofulDesc = desc.m_gemCond.able == true ? "<color=white>" : "<color=red>";
-		desc.m_gemCond.colofulDesc += "Gems:" + refPrice.gem + "</color>";
+		bool able = true;
+		int i = 0;
+		foreach(RefPrice refPrice in refPriceCondition.conds)
+		{
+			desc[i] = new CheckPriceDesc();
+			RefItem refItem = RefData.Instance.RefItems[refPrice.refItemId];
+			if (refItem == null)
+			{
+				Debug.Log("no refItemId:" + refPrice.refItemId);
+				able = false;
+				continue;
+			}
 
-		// gold
-		desc.m_goldCond.able = refPrice.gold <= Warehouse.Instance.Gold;
-		
-		desc.m_goldCond.colofulDesc = desc.m_goldCond.able == true ? "<color=white>" : "<color=red>";
-		desc.m_goldCond.colofulDesc += "Gold:" + refPrice.gold + "</color>";
+			ItemObject itemObj = Warehouse.Instance.FindItem(refPrice.refItemId);
+			if (itemObj != null && refPrice.count <= itemObj.Item.Count)
+			{
+				desc[i].able = true;
+				desc[i].colofulDesc = "<color=white>";
+			}
+			else
+			{
+				desc[i].able = false;
+				desc[i].colofulDesc = "<color=red>";
+				able = false;
+			}
 
 
-		// gold medal
-		desc.m_goldMedalCond.able = false;
-		ItemObject goldMedalItemObj = Warehouse.Instance.FindItem(5);
-		desc.m_goldMedalCond.able = goldMedalItemObj != null && refPrice.goldMedalItem <= goldMedalItemObj.Item.Count;
-		
-		desc.m_goldMedalCond.colofulDesc = desc.m_goldMedalCond.able == true ? "<color=white>" : "<color=red>";
-		desc.m_goldMedalCond.colofulDesc += "Gold Medals:" + refPrice.goldMedalItem + "</color>";
+			desc[i].colofulDesc += refItem.codeName + ":" + refPrice.count;
+			desc[i].colofulDesc += "</color>";
 
-		// levelup
-		desc.m_weaponPartsCond.able = false;
-		ItemObject levelupItemObj = Warehouse.Instance.FindItem(3);
-		desc.m_weaponPartsCond.able = levelupItemObj != null && refPrice.weaponPartsItem <= levelupItemObj.Item.Count;
-		
-		desc.m_weaponPartsCond.colofulDesc = desc.m_weaponPartsCond.able == true ? "<color=white>" : "<color=red>";
-		desc.m_weaponPartsCond.colofulDesc += "Weapon Parts:" + refPrice.weaponPartsItem + "</color>";
+			++i;
+		}
 
-		// evolution
-		desc.m_weaponDNACond.able = false;
-		ItemObject evolutionItemObj = Warehouse.Instance.FindItem(4);
-		desc.m_weaponDNACond.able = levelupItemObj != null && refPrice.weaponDNAItem <= evolutionItemObj.Item.Count;
-		
-		desc.m_weaponDNACond.colofulDesc = desc.m_weaponDNACond.able == true ? "<color=white>" : "<color=red>";
-		desc.m_weaponDNACond.colofulDesc += "Weapon DNA:" + refPrice.weaponDNAItem + "</color>";
+		return able;
+	}
+
+	bool CheckAvailableItem(RefPriceCondition condition)
+	{
+		foreach(RefPrice price in condition.conds)
+		{
+			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
+			if (inventoryItemObj == null)
+				return false;
+
+			if (inventoryItemObj != null)
+			{
+				if (inventoryItemObj.Item.Count < price.count)
+					return false;
+			}
+		}
+
+		return true;
+	}
+
+	void PayPriceItem(RefPriceCondition condition)
+	{
+		foreach(RefPrice price in condition.conds)
+		{
+			Warehouse.Instance.PullItem(price.refItemId, price.count);
+		}
+	}
+
+	delegate void OnPay();
+	int makeItemButton(int startX, int startY, int size, RefPriceCondition[] conditions, string btnName, OnPay functor)
+	{
+		int prevWidth = 0;
+		if (conditions != null && conditions.Length > 0)
+		{
+			foreach(RefPriceCondition condition in conditions)
+			{
+				int width = size*condition.conds.Length;
+				GUI.BeginGroup(new Rect(startX+prevWidth, startY, width, size*2));
+				if (GUI.Button(new Rect(0, 0, width, size*2), ""))
+				{
+					if (CheckAvailableItem(condition))
+					{
+						PayPriceItem(condition);
+						functor();
+					}
+				}
+				
+				GUIStyle style = new GUIStyle();
+				style.alignment = TextAnchor.MiddleCenter;
+				style.richText = true;
+				GUI.Label(new Rect(0, 0, width, size), "<color=white>"+btnName+"</color>", style);
+				
+				int priceIndex = 0;
+				foreach(RefPrice price in condition.conds)
+				{
+					RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
+					
+					GUI.Label(new Rect(size*priceIndex, size, size, size), Resources.Load<Texture>(condRefItem.icon));
+					style.alignment = TextAnchor.LowerRight;
+					
+					
+					string str = "<color=white>";
+					
+					ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
+					if (inventoryItemObj == null)
+						str = "<color=red>";
+					else if (inventoryItemObj != null && inventoryItemObj.Item.Count < price.count)
+						str = "<color=red>";
+					
+					str += price.count + "</color>";
+					GUI.Label(new Rect(size*priceIndex, size, size, size), str, style);
+					
+					++priceIndex;
+					
+				}
+				GUI.EndGroup();
+				
+				prevWidth += width;
+				
+			}
+			
+		}
+
+		return prevWidth;
 	}
 	
 	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot)
 	{
 		int size = (int)m_slotHeight;
-		int startX = size*(INVEN_SLOT_COLS+2);
-		int startY = 0;
+		int startX = size*(INVEN_SLOT_COLS+4);
+		int startY = size*2;
 
 
-		GUI.Label(new Rect(startX, startY+(size*3), Screen.width-size*(INVEN_SLOT_COLS+1), size*3), selectedItem.Item.Description());
+		GUI.Label(new Rect(startX, startY, Screen.width-size*(INVEN_SLOT_COLS+1), size*3), selectedItem.Item.Description());
 
 		if (selectedItem.Item.Lock == true)
 		{
+			makeItemButton(startX, startY+(size*3), size, selectedItem.Item.RefItem.unlock, "Unlock", ()=>{
+				selectedItem.Item.Lock = false;
+			});
 
-			if (selectedItem.Item.RefItem.price != null && selectedItem.Item.RefItem.price.unlock != null)
-			{
-				CheckPriceDesc checkPriceDesc = new CheckPriceDesc();
-
-				GetPriceConditionDesc(selectedItem.Item.RefItem.price.unlock, checkPriceDesc);
-
-				if (GUI.Button(new Rect(startX, startY+(size*6), size*2, size), "Unlock" + "\n" + checkPriceDesc.m_gemCond.colofulDesc))
-				{
-					if (checkPriceDesc.m_gemCond.able == true)
-					{
-						Warehouse.Instance.Gem -= selectedItem.Item.RefItem.price.unlock.gem;
-						selectedItem.Item.Lock = false;
-					}
-				}
-				else if (GUI.Button(new Rect(startX+size*2, startY+(size*6), size*2, size), "Unlock" + "\n" + checkPriceDesc.m_goldMedalCond.colofulDesc))
-				{
-					if (checkPriceDesc.m_goldMedalCond.able == true)
-					{
-						Warehouse.Instance.PullItem(5, selectedItem.Item.RefItem.price.unlock.goldMedalItem);
-						selectedItem.Item.Lock = false;
-					}
-				}
-			}
 			return;
 		}
 
@@ -241,14 +274,14 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*6), size*2, size), "Unequip"))
+				if (GUI.Button(new Rect(startX, startY+(size*2), size*2, size), "Unequip"))
 				{
 					m_equipedWeapon = null;				
 				}
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*6), size*2, size), "Equip"))
+				if (GUI.Button(new Rect(startX, startY+(size*2), size*2, size), "Equip"))
 				{
 					m_equipedWeapon = selectedItem;				
 				}
@@ -301,48 +334,12 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}break;
 		}
-
-		if (selectedItem.Item.RefItem.levelUpItems.Count > 0)
-		{
-			if (selectedItem.Item.RefItem.price != null)
-			{
-				CheckPriceDesc checkPriceDesc = new CheckPriceDesc();
-				
-				GetPriceConditionDesc(selectedItem.Item.RefItem.price.levelup, checkPriceDesc);
-				
-				
-				if (GUI.Button(new Rect(startX+size*2, startY+(size*6), size*2, size), "LevelUp" + "\n" + checkPriceDesc.m_weaponPartsCond.colofulDesc))
-				{
-					if (checkPriceDesc.m_weaponPartsCond.able == true)
-					{
-						++selectedItem.Item.Level;
-						Warehouse.Instance.PullItem(3, selectedItem.Item.RefItem.price.levelup.weaponPartsItem);
-					}
-				}
-			}
-
-		}
-
-		if (selectedItem.Item.RefItem.evolutionItems.Count > 0)
-		{
-			if (selectedItem.Item.RefItem.price != null)
-			{
-
-				CheckPriceDesc checkPriceDesc = new CheckPriceDesc();
-				
-				GetPriceConditionDesc(selectedItem.Item.RefItem.price.evolution, checkPriceDesc);
-
-				if (GUI.Button(new Rect(startX+size*4, startY+(size*6), size*2, size), "Evolution" + "\n" + checkPriceDesc.m_weaponDNACond.colofulDesc))
-				{
-					if (checkPriceDesc.m_weaponDNACond.able == true)
-					{
-						++selectedItem.Item.Evolution;
-						Warehouse.Instance.PullItem(4, selectedItem.Item.RefItem.price.evolution.weaponDNAItem);
-					}
-				}
-			}
-		}
-
+		int prevWidth = makeItemButton(startX, startY+(size*3), size, selectedItem.Item.RefItem.levelup, "Levelup", ()=>{
+			++selectedItem.Item.Level;
+		});
+		makeItemButton(startX+prevWidth, startY+(size*3), size, selectedItem.Item.RefItem.evolution, "Evolution", ()=>{
+			++selectedItem.Item.Evolution;
+		});
 
 	}
 
@@ -352,8 +349,9 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void DisplayStatusWindow(int windowID)
 	{
-		int startY = 0;
+
 		int size = (int)m_slotHeight;
+		int startY = size;
 
 		GUI.skin.label.alignment = TextAnchor.UpperLeft;
 
@@ -373,6 +371,17 @@ public class ChampSettingGUI : MonoBehaviour {
 			this.enabled = false;
 			return;
 		}
+
+		GUIStyle style = new GUIStyle();
+		style.alignment = TextAnchor.LowerRight;
+		style.richText = true;
+
+		ItemObject goldItemObj = Warehouse.Instance.Gold;
+		ItemObject gemItemObj = Warehouse.Instance.Gem;
+		GUI.Label(new Rect(Screen.width/2-size*2, 0, size, size), goldItemObj.ItemIcon);
+		GUI.Label(new Rect(Screen.width/2-size*2, 0, size, size), "<color=white>" +goldItemObj.Item.Count + "</color>", style);
+		GUI.Label(new Rect(Screen.width/2-size, 0, size, size), gemItemObj.ItemIcon);
+		GUI.Label(new Rect(Screen.width/2-size, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>", style);
 
 		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "Weapon");
 		if (GUI.Button(new Rect(0, startY+(size*1), size, size), m_equipedWeapon != null ? m_equipedWeapon.ItemIcon : null))
@@ -401,10 +410,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				m_latestSelected = item;
 			}
 			
-			GUIStyle style = new GUIStyle();
-			style.alignment = TextAnchor.LowerRight;
-			style.richText = true;
-			
 			string str = "<color=white>" +item.Item.Count + "</color>";
 			GUI.Label(new Rect(size*x, (size*(y)), size, size), str, style);
 
@@ -414,7 +419,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		GUI.skin.label.alignment = TextAnchor.UpperLeft;
 
-		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+2), startY+(size*2), size, size), "Desc");
+		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+4), startY, size, size), "Desc");
 
 		if (m_latestSelected != null)
 		{

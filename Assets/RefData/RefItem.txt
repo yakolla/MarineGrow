@@ -37,27 +37,86 @@
 	},
 	{
 		"id":7,
-		"codeName":"",
+		"codeName":"MobEgg",
 		"type":"MobEgg",
 		"icon":"Sprites/swordoftruth"
+	},
+	{
+		"id":8,
+		"codeName":"Gem",
+		"type":"Gem",
+		"icon":"Sprites/Gem"
 	},
 	{
 		"id":101,
 		"codeName":"Firegun",
 		"type":"Weapon",
 		"icon":"Sprites/Firegun",
-		"levelUpItems":
+		"levelup":
 		[
 			{
-				"refItemId":3, 
-				"count":10
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":3, 
+						"count":10
+					}
+				]
+			}
+			
+		],
+		"evolution":
+		[
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":4, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
 			}
 		],
-		"evolutionItems":
-		[
+		"unlock":
+		[			
 			{
-				"refItemId":4, 
-				"count":10
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":1000
+					},
+					{
+						"refItemId":5, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
 			}
 		],
 		"evolutionFiring":
@@ -69,24 +128,6 @@
 		{
 			"coolTime":0.5,
 			"range":5
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"weaponPartsItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"weaponDNAItem":10,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -99,44 +140,80 @@
 			"coolTime":0.5,
 			"range":5
 		},
-		"price":
-		{
-			"unlock":
+		"levelup":
+		[
 			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":3, 
+						"count":10
+					}
+				]
 			}
-		}
+			
+		],
+		"evolution":
+		[
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":4, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		],
+		"unlock":
+		[			
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":1000
+					},
+					{
+						"refItemId":5, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		]
 	},
 	{
 		"id":103,
 		"codeName":"Gun",
 		"type":"Weapon",
 		"icon":"Sprites/Gun",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":10,
@@ -146,24 +223,6 @@
 		{
 			"coolTime":0.5,
 			"range":5
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -171,20 +230,7 @@
 		"codeName":"RocketLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -194,24 +240,6 @@
 		{
 			"coolTime":0.9,
 			"range":9
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -219,20 +247,7 @@
 		"codeName":"GrenadeLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/Grenade",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -242,24 +257,6 @@
 		{
 			"coolTime":5,
 			"range":5
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -267,20 +264,7 @@
 		"codeName":"GuidedRocketLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -290,24 +274,6 @@
 		{
 			"coolTime":0.5,
 			"range":5
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -315,20 +281,7 @@
 		"codeName":"Melee",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":0,
@@ -338,24 +291,6 @@
 		{
 			"coolTime":1,
 			"range":1.5
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -363,20 +298,7 @@
 		"codeName":"ChampGun",
 		"type":"Weapon",
 		"icon":"Sprites/Gun",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":10,
@@ -387,38 +309,79 @@
 			"coolTime":0.3,
 			"range":7
 		},
-		"price":
-		{
-			"unlock":
+		"levelup":
+		[
 			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":3, 
+						"count":10
+					}
+				]
 			}
-		}
+			
+		],
+		"evolution":
+		[
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":4, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		],
+		"unlock":
+		[			
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":1000
+					},
+					{
+						"refItemId":5, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		]
 	},
 	{
 		"id":109,
 		"codeName":"NothingWeapon",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
-		"levelUpItems":
-		[
-			
-		],
-		"evolutionItems":
-		[
-			
-		],
 		"evolutionFiring":
 		{
 			"angle":10,
@@ -428,39 +391,13 @@
 		{
 			"coolTime":1,
 			"range":0
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
 		"id":110,
 		"codeName":"SuicideBombing",
 		"type":"Weapon",
-		"icon":"Sprites/SuicideBombing",
-		"levelUpItems":
-		[
-			
-		],
-		"evolutionItems":
-		[
-			
-		],
+		"icon":"Sprites/SuicideBombing",		
 		"evolutionFiring":
 		{
 			"angle":10,
@@ -470,24 +407,6 @@
 		{
 			"coolTime":1,
 			"range":1.2
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -495,20 +414,7 @@
 		"codeName":"ChampRocketLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -519,44 +425,85 @@
 			"coolTime":1,
 			"range":8
 		},
-		"price":
+		"weapon":
 		{
-			"unlock":
+			"coolTime":0.3,
+			"range":7
+		},
+		"levelup":
+		[
 			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":3, 
+						"count":10
+					}
+				]
 			}
-		}
+			
+		],
+		"evolution":
+		[
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":4, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		],
+		"unlock":
+		[			
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":1000
+					},
+					{
+						"refItemId":5, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		]
 	},
 	{
 		"id":112,
 		"codeName":"MineLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -566,24 +513,6 @@
 		{
 			"coolTime":1,
 			"range":8
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -591,20 +520,7 @@
 		"codeName":"TornadoLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/Tornado",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":10,
@@ -614,24 +530,6 @@
 		{
 			"coolTime":5,
 			"range":7
-		},
-		"price":
-		{
-			"unlock":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			}
 		}
 	},
 	{
@@ -639,20 +537,7 @@
 		"codeName":"ChampTornadoLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/Tornado",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		],
+		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -663,43 +548,84 @@
 			"coolTime":1,
 			"range":7
 		},
-		"price":
+		"weapon":
 		{
-			"unlock":
+			"coolTime":0.3,
+			"range":7
+		},
+		"levelup":
+		[
 			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"levelup":
-			{
-				"goldMedalItem":100,
-				"gem":10
-			},
-			"evolution":
-			{
-				"goldMedalItem":100,
-				"gem":10
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":3, 
+						"count":10
+					}
+				]
 			}
-		}
+			
+		],
+		"evolution":
+		[
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":100
+					},
+					{
+						"refItemId":4, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		],
+		"unlock":
+		[			
+			{
+				"conds":
+				[
+					{
+						"refItemId":1, 
+						"count":1000
+					},
+					{
+						"refItemId":5, 
+						"count":10
+					}
+				]
+			},
+			{
+				"conds":
+				[
+					{
+						"refItemId":8, 
+						"count":10
+					}
+				]
+			}
+		]
 	},
 	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
 		"icon":"Sprites/Follower",
-		"levelUpItems":
-		[
-			{
-				"refItemId":3, 
-				"count":10
-			}
-		],
-		"evolutionItems":
-		[
-			{
-				"refItemId":4, 
-				"count":10
-			}
-		]
+		
 	}
 ]
