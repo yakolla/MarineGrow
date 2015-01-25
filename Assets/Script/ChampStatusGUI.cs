@@ -47,8 +47,18 @@ public class ChampStatusGUI : MonoBehaviour {
 		int startY = 0;
 		int size = (int)m_height;
 		
-		GUI.Label(new Rect(0, 0, m_goodsWindowRect.width, m_goodsWindowRect.height), "G:" + Warehouse.Instance.Gold);
+		//GUI.Label(new Rect(0, 0, m_goodsWindowRect.width, m_goodsWindowRect.height), "G:" + Warehouse.Instance.Gold);
+
+		GUIStyle style = new GUIStyle();
+		style.alignment = TextAnchor.LowerRight;
+		style.richText = true;
 		
+		ItemObject goldItemObj = Warehouse.Instance.Gold;
+		ItemObject gemItemObj = Warehouse.Instance.Gem;
+		GUI.Label(new Rect(0, 0, size, size), goldItemObj.ItemIcon);
+		GUI.Label(new Rect(0, 0, size, size), "<color=white>" +goldItemObj.Item.Count + "</color>", style);
+		GUI.Label(new Rect(size*2, 0, size, size), gemItemObj.ItemIcon);
+		GUI.Label(new Rect(size*2, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>", style);
 	}
 
 	//Setting up the Inventory window
