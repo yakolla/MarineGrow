@@ -26,6 +26,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	Rect 		m_statusWindowRect;
 	Rect 		m_skillWindowRect;
+	Rect		m_goodsWindowRect;
 
 	[SerializeField]
 	GUISkin		m_guiSkin = null;
@@ -48,6 +49,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		TimeEffector.Instance.StopTime();
 		
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
+		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
 
 		if (m_cheat == true)
 		{
@@ -98,7 +100,8 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		GUI.skin = m_guiSkin;
 
-		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");	
+		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
+		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 	}
 
 	public void Save() {
@@ -221,8 +224,8 @@ public class ChampSettingGUI : MonoBehaviour {
 				{
 					RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
 					
-					GUI.Label(new Rect(size*priceIndex, size, size, size), Resources.Load<Texture>(condRefItem.icon));
-					style.alignment = TextAnchor.LowerRight;
+					GUI.Label(new Rect(size*priceIndex, size, size*0.7f, size*0.7f), Resources.Load<Texture>(condRefItem.icon));
+					style.alignment = TextAnchor.MiddleRight;
 					
 					
 					string str = "<color=white>";
@@ -347,6 +350,11 @@ public class ChampSettingGUI : MonoBehaviour {
 	Vector2 itemScrollPosition;
 
 
+	void DisplayGoodsWindow(int windowID)
+	{
+		ChampStatusGUI.DisplayChampGoodsGUI((int)m_slotHeight);
+	}
+
 	void DisplayStatusWindow(int windowID)
 	{
 
@@ -375,13 +383,6 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUIStyle style = new GUIStyle();
 		style.alignment = TextAnchor.LowerRight;
 		style.richText = true;
-
-		ItemObject goldItemObj = Warehouse.Instance.Gold;
-		ItemObject gemItemObj = Warehouse.Instance.Gem;
-		GUI.Label(new Rect(Screen.width/2-size*2, 0, size, size), goldItemObj.ItemIcon);
-		GUI.Label(new Rect(Screen.width/2-size*2, 0, size, size), "<color=white>" +goldItemObj.Item.Count + "</color>", style);
-		GUI.Label(new Rect(Screen.width/2-size, 0, size, size), gemItemObj.ItemIcon);
-		GUI.Label(new Rect(Screen.width/2-size, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>", style);
 
 		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "Weapon");
 		if (GUI.Button(new Rect(0, startY+(size*1), size, size), m_equipedWeapon != null ? m_equipedWeapon.ItemIcon : null))

@@ -10,17 +10,17 @@ public class ChampStatusGUI : MonoBehaviour {
 	Rect		m_goodsWindowRect;
 
 	Texture		m_guageTexture;
-	float 		m_width = Screen.width * (1/5f);
-	float 		m_height = Screen.height * (1/12f);
+	float 		m_slotWidth = Screen.width * (1/5f);
+	float 		m_slotHeight = Screen.height * (1/8f);
 
 	void Start () {
 
 		m_creature = transform.parent.gameObject.GetComponent<Creature>();
 		m_guageTexture = Resources.Load<Texture>("Sprites/HP Guage");
 
-		m_goodsWindowRect = new Rect((Screen.width-m_width)/2, 0, m_width, m_height);
-		m_guageWindowRect = new Rect((Screen.width-m_width)/2, Screen.height-m_height, m_width, m_height);
-		m_skillWindowRect = new Rect((Screen.width-m_width)/2, Screen.height-m_height-m_height, m_width, m_height);
+		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
+		m_guageWindowRect = new Rect(Screen.width/2-m_slotWidth/2, Screen.height-m_slotHeight, m_slotWidth, m_slotHeight);
+		m_skillWindowRect = new Rect(Screen.width/2-m_slotWidth, Screen.height-m_slotHeight-m_slotHeight, m_slotWidth+m_slotWidth, m_slotHeight);
 	}
 
 	void OnGUI()
@@ -42,45 +42,48 @@ public class ChampStatusGUI : MonoBehaviour {
 		GUI.Label(new Rect(size.x+1, size.y+1, size.width, size.height), lable, style);
 	}
 
-	void DisplayGoodsWindow(int windowID)
+	static public void DisplayChampGoodsGUI(int size)
 	{
+		int startX = size/3;
 		int startY = 0;
-		int size = (int)m_height;
 		
-		//GUI.Label(new Rect(0, 0, m_goodsWindowRect.width, m_goodsWindowRect.height), "G:" + Warehouse.Instance.Gold);
-
 		GUIStyle style = new GUIStyle();
-		style.alignment = TextAnchor.LowerRight;
+		style.alignment = TextAnchor.MiddleCenter;
 		style.richText = true;
 		
 		ItemObject goldItemObj = Warehouse.Instance.Gold;
 		ItemObject gemItemObj = Warehouse.Instance.Gem;
-		GUI.Label(new Rect(0, 0, size, size), goldItemObj.ItemIcon);
-		GUI.Label(new Rect(0, 0, size, size), "<color=white>" +goldItemObj.Item.Count + "</color>", style);
-		GUI.Label(new Rect(size*2, 0, size, size), gemItemObj.ItemIcon);
-		GUI.Label(new Rect(size*2, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>", style);
+		GUI.Label(new Rect(startX, size*0.2f, size*0.7f, size*0.7f), goldItemObj.ItemIcon);
+		GUI.Label(new Rect(startX+size, 0, size, size), "<color=white>" + goldItemObj.Item.Count + "</color>", style);
+		GUI.Label(new Rect(startX+size*3, size*0.2f, size*0.7f, size*0.7f), gemItemObj.ItemIcon);
+		GUI.Label(new Rect(startX+size*4, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>", style);
+	}
+
+	void DisplayGoodsWindow(int windowID)
+	{
+		DisplayChampGoodsGUI((int)m_slotHeight);
 	}
 
 	//Setting up the Inventory window
 	void DisplayStatusWindow(int windowID)
 	{
 		int startY = 0;
-		int size = (int)m_height/2;
+		int size = (int)m_slotHeight/2;
 
 		float hp = m_creature.m_creatureProperty.getHPRemainRatio();
 		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxHP).ToString();
-		drawGuage(new Rect(0, 0, m_width, size), hp, lable, m_guageTexture); 
+		drawGuage(new Rect(0, 0, m_slotWidth, size), hp, lable, m_guageTexture); 
 
 		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
 		lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
-		drawGuage(new Rect(0, startY+(size*1), m_width-size, size), expRatio, lable, m_guageTexture); 
+		drawGuage(new Rect(0, startY+(size*1), m_slotWidth-size, size), expRatio, lable, m_guageTexture); 
 
 	}
 
 	void DisplaySkillWindow(int windowID)
 	{
 		int startX = 0;
-		int size = (int)m_width/4;
+		int size = (int)m_skillWindowRect.width/4;
 		if (GUI.Button(new Rect(startX+0*size, 0, size, size), "Z"))
 		{
 			GameObject prefFollower = Resources.Load<GameObject>("Pref/Follower");
