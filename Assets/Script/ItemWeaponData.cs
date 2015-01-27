@@ -40,11 +40,14 @@ public class ItemWeaponData : ItemData{
 			for(int i = 0; i < obj.m_firingDescs.Length; ++i)
 			{
 				obj.m_firingDescs[i].angle = RefItem.evolutionFiring.angle*((i+1)/2);
-				obj.m_firingDescs[i].delayTime = RefItem.evolutionFiring.delay*i;
 				if (i % 2 == 1)
 				{
 					obj.m_firingDescs[i].angle *= -1;
 				}
+
+
+				obj.m_firingDescs[i].delayTime = RefItem.evolutionFiring.delay*i;
+
 			}
 		}
 

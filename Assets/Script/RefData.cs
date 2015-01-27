@@ -51,6 +51,7 @@ public class RefPrice
 public class RefPriceCondition
 {
 	public RefPrice[]		conds;
+	public RefPrice[]		else_conds;
 }
 
 
@@ -60,9 +61,9 @@ public class RefItem : RefBaseData
 	public 	ItemData.Type 		type;
 	public 	string 				codeName;
 	public	string				icon;
-	public	RefPriceCondition[]	levelup;
-	public	RefPriceCondition[]	evolution;
-	public 	RefPriceCondition[]	unlock;
+	public	RefPriceCondition	levelup;
+	public	RefPriceCondition	evolution;
+	public 	RefPriceCondition	unlock;
 	public 	RefEvolutionFiring	evolutionFiring;
 	public  RefWeapon			weapon;
 

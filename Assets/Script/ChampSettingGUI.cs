@@ -59,8 +59,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(102));
 				Warehouse.Instance.PushItem(new ItemWeaponData(108));
 				Warehouse.Instance.PushItem(new ItemWeaponData(111));
-				Warehouse.Instance.PushItem(new ItemWeaponData(105));
-				Warehouse.Instance.PushItem(new ItemWeaponData(106));
 				Warehouse.Instance.PushItem(new ItemWeaponData(114));
 				for(int i = 0 ; i < 1000; ++i)
 				{
@@ -73,8 +71,8 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(new ItemSilverMedalData());
 				}
 
-				Warehouse.Instance.Gold.Item.Count = 1000;
-				Warehouse.Instance.Gem.Item.Count = 1000;
+				Warehouse.Instance.Gold.Item.Count = 100000;
+				Warehouse.Instance.Gem.Item.Count = 100000;
 
 				Warehouse.Instance.PushItem(new ItemFollowerData(RefData.Instance.RefMobs[4]));
 			}
@@ -169,9 +167,19 @@ public class ChampSettingGUI : MonoBehaviour {
 		return able;
 	}
 
-	bool CheckAvailableItem(RefPriceCondition condition)
+	float getItemLevelupWorth(ItemObject itemObj)
 	{
-		foreach(RefPrice price in condition.conds)
+		return itemObj.Item.Level * 5;
+	}
+
+	float getItemEvolutionWorth(ItemObject itemObj)
+	{
+		return (itemObj.Item.Evolution+1) * 50;
+	}
+
+	bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
+	{
+		foreach(RefPrice price in conds)
 		{
 			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
 			if (inventoryItemObj == null)
@@ -179,7 +187,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			if (inventoryItemObj != null)
 			{
-				if (inventoryItemObj.Item.Count < price.count)
+				if (inventoryItemObj.Item.Count < price.count*itemWorth)
 					return false;
 			}
 		}
@@ -187,76 +195,95 @@ public class ChampSettingGUI : MonoBehaviour {
 		return true;
 	}
 
-	void PayPriceItem(RefPriceCondition condition)
+	void PayPriceItem(RefPrice[] conds, float itemWorth)
 	{
-		foreach(RefPrice price in condition.conds)
+		foreach(RefPrice price in conds)
 		{
-			Warehouse.Instance.PullItem(price.refItemId, price.count);
+			Warehouse.Instance.PullItem(price.refItemId, (int)(price.count*itemWorth));
 		}
 	}
 
 	delegate void OnPay();
-	int makeItemButton(int startX, int startY, int size, RefPriceCondition[] conditions, string btnName, OnPay functor)
+	int makeItemButton(int startX, int startY, int size, RefPriceCondition condition, float itemWorth, string btnName, OnPay functor)
 	{
 		int prevWidth = 0;
-		if (conditions != null && conditions.Length > 0)
-		{
-			foreach(RefPriceCondition condition in conditions)
+		if (condition != null)
+		{			
+			prevWidth = size*condition.conds.Length;
+			if (false == makeItemButtonCore(startX, startY, prevWidth, size, size*2, condition.conds, itemWorth, btnName, functor))
 			{
-				int width = size*condition.conds.Length;
-				GUI.BeginGroup(new Rect(startX+prevWidth, startY, width, size*2));
-				if (GUI.Button(new Rect(0, 0, width, size*2), ""))
-				{
-					if (CheckAvailableItem(condition))
-					{
-						PayPriceItem(condition);
-						functor();
-					}
-				}
-				
-				GUIStyle style = new GUIStyle();
-				style.alignment = TextAnchor.MiddleCenter;
-				style.richText = true;
-				GUI.Label(new Rect(0, 0, width, size), "<color=white>"+btnName+"</color>", style);
-				
-				int priceIndex = 0;
-				foreach(RefPrice price in condition.conds)
-				{
-					RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
-					
-					GUI.Label(new Rect(size*priceIndex, size, size*0.7f, size*0.7f), Resources.Load<Texture>(condRefItem.icon));
-					style.alignment = TextAnchor.MiddleRight;
-					
-					
-					string str = "<color=white>";
-					
-					ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
-					if (inventoryItemObj == null)
-						str = "<color=red>";
-					else if (inventoryItemObj != null && inventoryItemObj.Item.Count < price.count)
-						str = "<color=red>";
-					
-					str += price.count + "</color>";
-					GUI.Label(new Rect(size*priceIndex, size, size, size), str, style);
-					
-					++priceIndex;
-					
-				}
-				GUI.EndGroup();
-				
-				prevWidth += width;
-				
+				makeItemButtonCore(startX, startY+size*2, prevWidth, size, size, condition.else_conds, itemWorth, "", functor);
 			}
 			
 		}
-
+		
 		return prevWidth;
+	}
+	bool makeItemButtonCore(int startX, int startY, int width, int height, int btnHeight, RefPrice[] conds, float itemWorth, string btnName, OnPay functor)
+	{
+		GUI.BeginGroup(new Rect(startX, startY, width, btnHeight));
+		if (GUI.Button(new Rect(0, 0, width, btnHeight), ""))
+		{
+			if (CheckAvailableItem(conds, itemWorth))
+			{
+				PayPriceItem(conds, itemWorth);
+				functor();
+			}
+		}
+		
+		GUIStyle style = new GUIStyle();
+		style.alignment = TextAnchor.MiddleCenter;
+		style.richText = true;
+		GUI.Label(new Rect(0, 0, width, height), "<color=white>"+btnName+"</color>", style);
+		
+		bool able = true;
+		int priceIndex = 0;
+		foreach(RefPrice price in conds)
+		{
+			RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
+
+			if (btnName.CompareTo("") == 0)
+				GUI.Label(new Rect(height*priceIndex, height/5, height*0.7f, height*0.7f), Resources.Load<Texture>(condRefItem.icon));
+			else
+				GUI.Label(new Rect(height*priceIndex, height, height*0.7f, height*0.7f), Resources.Load<Texture>(condRefItem.icon));
+
+			style.alignment = TextAnchor.MiddleRight;
+			
+			string str = "<color=white>";
+			
+			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
+			if (inventoryItemObj == null)
+			{
+				str = "<color=red>";
+				able = false;
+			}
+			else if (inventoryItemObj != null && inventoryItemObj.Item.Count < price.count*itemWorth)
+			{
+				str = "<color=red>";
+				able = false;
+			}
+			
+			str += price.count*itemWorth + "</color>";
+
+			if (btnName.CompareTo("") == 0)
+				GUI.Label(new Rect(height*priceIndex, height/5, height, height), str, style);
+			else
+				GUI.Label(new Rect(height*priceIndex, height, height, height), str, style);
+			
+			++priceIndex;
+			
+		}
+		
+		GUI.EndGroup();
+
+		return able;
+
 	}
 	
 	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot)
 	{
 		int size = (int)m_slotHeight;
-		int startX = size*(INVEN_SLOT_COLS+4);
+		int startX = size*(INVEN_SLOT_COLS+3);
 		int startY = size*2;
 
 
@@ -264,7 +291,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (selectedItem.Item.Lock == true)
 		{
-			makeItemButton(startX, startY+(size*3), size, selectedItem.Item.RefItem.unlock, "Unlock", ()=>{
+			makeItemButton(startX, startY+(size*3), size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
 				selectedItem.Item.Lock = false;
 			});
 
@@ -277,14 +304,14 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*2), size*2, size), "Unequip"))
+				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Unequip"))
 				{
 					m_equipedWeapon = null;				
 				}
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*2), size*2, size), "Equip"))
+				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Equip"))
 				{
 					m_equipedWeapon = selectedItem;				
 				}
@@ -295,7 +322,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*6), size*2, size), "Unfollower"))
+				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Unfollower"))
 				{
 					for(int x = 0; x < m_equipedFollowers.Length; ++x)
 					{
@@ -309,7 +336,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*6), size*2, size), "Follower"))
+				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Follower"))
 				{
 					bool aleadyExists = false;
 					for(int x = 0; x < m_equipedFollowers.Length; ++x)
@@ -337,10 +364,11 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}break;
 		}
-		int prevWidth = makeItemButton(startX, startY+(size*3), size, selectedItem.Item.RefItem.levelup, "Levelup", ()=>{
+		int prevWidth = makeItemButton(startX+size*2, startY+(size*3), size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
 			++selectedItem.Item.Level;
 		});
-		makeItemButton(startX+prevWidth, startY+(size*3), size, selectedItem.Item.RefItem.evolution, "Evolution", ()=>{
+
+		makeItemButton(startX+prevWidth+size*2, startY+(size*3), size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
 			++selectedItem.Item.Evolution;
 		});
 
