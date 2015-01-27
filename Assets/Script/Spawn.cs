@@ -445,6 +445,10 @@ public class Spawn : MonoBehaviour {
 				case ItemData.Type.MobEgg:
 					StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMobs[Random.Range(desc.minValue, desc.maxValue)], null, pos, spawnMobLevel()));
 					break;
+					/*
+				case ItemData.Type.MobBox:
+					SpawnMob(RefData.Instance.RefMobs[desc.minValue], refDropItems, pos, spawnMobLevel(), SpawnMobType.Normal, false);
+					break;*/
 				}
 				
 				if (item != null)
