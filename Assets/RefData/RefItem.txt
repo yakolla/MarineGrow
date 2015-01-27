@@ -602,6 +602,23 @@
 		}
 	},
 	{
+		"id":115,
+		"codeName":"Cocoon",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",
+		
+		"evolutionFiring":
+		{
+			"angle":10,
+			"delay":0
+		},
+		"weapon":
+		{
+			"coolTime":0.5,
+			"range":5
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",

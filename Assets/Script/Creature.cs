@@ -10,6 +10,15 @@ public class Creature : MonoBehaviour {
 		Mob,
 		Npc,
 	}
+
+	public enum CrowdControlType
+	{
+		Nothing = 0x0,
+		Airborne = 0x1,
+		Stun = 0x2,
+	}
+
+	int	m_crowdControl = (int)CrowdControlType.Nothing;
 	// Use this for initialization
 	protected NavMeshAgent	m_navAgent;
 
@@ -47,7 +56,7 @@ public class Creature : MonoBehaviour {
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
 	DamageEffect[]	m_pickupItemEffects = new DamageEffect[(int)ItemData.Type.Count];
 
-	bool[]	m_debuff = new bool[(int)DamageDesc.DebuffType.Count];
+	DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
@@ -205,19 +214,15 @@ public class Creature : MonoBehaviour {
 		return null;
 	}
 
+	protected bool HasCrowdControl()
+	{
+		return m_crowdControl != (int)CrowdControlType.Nothing;
+	}
+
 	virtual public bool AutoAttack() {
 
-		bool debuff = false;
-		foreach(bool b in m_debuff)
-		{
-			if (b == true)
-			{
-				debuff = b;
-				break;
-			}
-		}
 
-		if (debuff == false)
+		if (HasCrowdControl() == false)
 		{
 			if (m_targeting != null)
 			{
@@ -318,8 +323,10 @@ public class Creature : MonoBehaviour {
 		
 	}
 
-	IEnumerator EffectAirbone()
+	IEnumerator EffectAirborne()
 	{		
+		
+		m_crowdControl += (int)CrowdControlType.Airborne;
 		Parabola parabola = new Parabola(gameObject, 0, 7f, 0f, 1.5f, 1);
 		while(parabola.Update())
 		{
@@ -327,7 +334,17 @@ public class Creature : MonoBehaviour {
 			yield return null;
 		}
 
-		m_debuff[(int)DamageDesc.DebuffType.Airbone] = false;
+		m_buffEffects[(int)DamageDesc.BuffType.Airborne].effect = null;
+		m_crowdControl -= (int)CrowdControlType.Airborne;
+	}
+
+	IEnumerator EffectStun()
+	{		
+		m_crowdControl += (int)CrowdControlType.Stun;
+		yield return new WaitForSeconds(2f);
+		
+		m_buffEffects[(int)DamageDesc.BuffType.Stun].effect = null;
+		m_crowdControl -= (int)CrowdControlType.Stun;
 	}
 
 	public void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
@@ -403,12 +420,22 @@ public class Creature : MonoBehaviour {
 		ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
 
 
-		if (damageDesc.DamageDeBuffType != DamageDesc.DebuffType.Nothing)
+		if (damageDesc.DamageBuffType != DamageDesc.BuffType.Nothing)
 		{
-			if (m_debuff[(int)damageDesc.DamageDeBuffType] == false)
+			if (m_buffEffects[(int)damageDesc.DamageBuffType].effect == null)
 			{
-				m_debuff[(int)damageDesc.DamageDeBuffType] = true;
-				StartCoroutine(EffectAirbone());
+				m_buffEffects[(int)damageDesc.DamageBuffType].effect = damageDesc.PrefEffect;
+
+				switch(damageDesc.DamageBuffType)
+				{
+				case DamageDesc.BuffType.Airborne:
+					StartCoroutine(EffectAirborne());
+					break;
+				case DamageDesc.BuffType.Stun:
+					StartCoroutine(EffectStun());
+					break;
+				}
+
 			}
 		}
 

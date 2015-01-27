@@ -32,7 +32,7 @@ public class MeleeBullet : Bullet {
 
 					if (dist < 2f)
 					{
-						creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.DebuffType.Nothing, PrefDamageEffect));	
+						creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.BuffType.Nothing, PrefDamageEffect));	
 						
 						DestroyObject(gameObject);
 					}
@@ -62,7 +62,7 @@ public class MeleeBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.DebuffType.Nothing, PrefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, DamageDesc.BuffType.Nothing, PrefDamageEffect));			
 		}
 	}
 }

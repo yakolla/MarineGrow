@@ -70,7 +70,7 @@ public class GrenadeBullet : Bullet {
 				if (dist < m_bombRange/2)
 				{
 					Creature creature = target.GetComponent<Creature>();
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.DebuffType.Nothing, PrefDamageEffect));
+					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.BuffType.Nothing, PrefDamageEffect));
 				}
 			}
 		}

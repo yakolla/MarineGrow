@@ -91,7 +91,7 @@ public class LightningBoltBullet : Bullet
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)
 				{
-					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Lightining, DamageDesc.DebuffType.Nothing, PrefDamageEffect));
+					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Lightining, DamageDesc.BuffType.Nothing, PrefDamageEffect));
 				}
 
 				m_lastDamageTime = Time.time;
