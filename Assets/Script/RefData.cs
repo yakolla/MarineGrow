@@ -29,12 +29,6 @@ public class RefCreatureBaseProperty
 	public float	navMeshBaseOffset;
 }
 
-public class RefProgressUpItem
-{
-	public int				refItemId;
-	public int				count;
-}
-
 public class RefEvolutionFiring
 {
 	public float			angle;
@@ -49,19 +43,14 @@ public class RefWeapon
 
 public class RefPrice
 {
-	public int				goldMedalItem;
-	public int				gold;
-	public int				gem;
-	public int				weaponPartsItem;
-	public int				weaponDNAItem;
+	public int				refItemId;
+	public int				count;
 }
 
 
 public class RefPriceCondition
 {
-	public RefPrice			unlock;
-	public RefPrice			levelup;
-	public RefPrice			evolution;
+	public RefPrice[]		conds;
 }
 
 
@@ -71,11 +60,12 @@ public class RefItem : RefBaseData
 	public 	ItemData.Type 		type;
 	public 	string 				codeName;
 	public	string				icon;
-	public	List<RefProgressUpItem>	levelUpItems = new List<RefProgressUpItem>();
-	public	List<RefProgressUpItem>	evolutionItems = new List<RefProgressUpItem>();
+	public	RefPriceCondition[]	levelup;
+	public	RefPriceCondition[]	evolution;
+	public 	RefPriceCondition[]	unlock;
 	public 	RefEvolutionFiring	evolutionFiring;
 	public  RefWeapon			weapon;
-	public 	RefPriceCondition	price;
+
 }
 
 public class RefItemOptionSpawn

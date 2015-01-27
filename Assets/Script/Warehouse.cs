@@ -7,8 +7,9 @@ using System.IO;
 public class Warehouse {
 
 	List<ItemObject>	m_items = new List<ItemObject>();
-	int					m_gold = 0;
-	int					m_gem = 0;
+
+	ItemObject			m_gold = new ItemObject(new ItemGoldData(0));
+	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
 
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
@@ -36,13 +37,12 @@ public class Warehouse {
 			{
 			case ItemData.Type.Follower:
 			case ItemData.Type.Weapon:
-				break;
-			default:
-				itemObj.Item.Count += item.Count;
-				itemObj.Item.Count = Mathf.Min(itemObj.Item.Count, 999);
-				break;
+			case ItemData.Type.Gold:
+			case ItemData.Type.Gem:
+				return;
 			}
-
+			itemObj.Item.Count += item.Count;
+			itemObj.Item.Count = Mathf.Min(itemObj.Item.Count, 999);
 		}
 	}
 
@@ -59,6 +59,12 @@ public class Warehouse {
 			itemObj.Item.Count -= count;
 			if (itemObj.Item.Count == 0)
 			{
+				switch(itemObj.Item.RefItem.type)
+				{
+				case ItemData.Type.Gold:
+				case ItemData.Type.Gem:
+					return;
+				}
 				RemoveItem(itemObj);
 			}
 		}
@@ -72,6 +78,14 @@ public class Warehouse {
 
 	public ItemObject FindItem(int refItemId)
 	{
+		switch(refItemId)
+		{
+		case 1:
+			return m_gold;
+		case 8:
+			return m_gem;
+		}
+
 		foreach(ItemObject obj in m_items)
 		{
 			if (obj.Item.RefItem.id == refItemId)
@@ -107,15 +121,13 @@ public class Warehouse {
 		get {return m_items;}
 	}
 
-	public int Gold
+	public ItemObject Gold
 	{
 		get { return m_gold; }
-		set { m_gold = value; }
 	}
 
-	public int Gem
+	public ItemObject Gem
 	{
 		get { return m_gem; }
-		set { m_gem = value; }
 	}
 }

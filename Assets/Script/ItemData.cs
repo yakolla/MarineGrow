@@ -46,6 +46,7 @@ public class ItemData {
 		GoldMedal,
 		SilverMedal,
 		MobEgg,
+		Gem,
 		Count
 	}
 
