@@ -15,23 +15,24 @@ public class DamageDesc {
 		Count
 	}
 
-	public enum DebuffType
+	public enum BuffType
 	{
 		Nothing,
-		Airbone,
+		Airborne,
+		Stun,
 		Count,
 	}
 
 	float		m_damage;
 	Type		m_type;
 	GameObject	m_prefEffect;
-	DebuffType	m_debuffType;
+	BuffType	m_buffType;
 
-	public DamageDesc(float damage, Type type, DebuffType debuffType, GameObject prefEffect)
+	public DamageDesc(float damage, Type type, BuffType buffType, GameObject prefEffect)
 	{
 		m_damage = damage;
 		m_type = type;
-		m_debuffType = debuffType;
+		m_buffType = buffType;
 		m_prefEffect = prefEffect;
 	}
 
@@ -45,9 +46,9 @@ public class DamageDesc {
 		get { return m_type;}
 	}
 
-	public DebuffType DamageDeBuffType
+	public BuffType DamageBuffType
 	{
-		get { return m_debuffType;}
+		get { return m_buffType;}
 	}
 
 	public GameObject	PrefEffect

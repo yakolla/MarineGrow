@@ -419,7 +419,19 @@
 						"mobCount":[3,12]
 					},
 					{
-						"refMobIds":[13,11],
+						"refMobIds":[5,6,7],
+						"interval":5,
+						"repeatCount":[3,6],
+						"mobCount":[3,12]
+					},
+					{
+						"refMobIds":[8,9,11],
+						"interval":5,
+						"repeatCount":[3,6],
+						"mobCount":[3,12]
+					},
+					{
+						"refMobIds":[13,14],
 						"interval":5,
 						"repeatCount":[1,1],
 						"mobCount":[1,5],

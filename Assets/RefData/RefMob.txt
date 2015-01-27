@@ -193,7 +193,7 @@
 	{
 		"id":10,
 		"prefBody":"spider_skin",
-		"refWeaponItem":"103",
+		"refWeaponItem":"115",
 		"mobAI":"Rotation",
 		"nearByChampOnSpawn":true,
 		"baseCreatureProperty":
@@ -256,7 +256,26 @@
 	{
 		"id":13,
 		"prefBody":"eye_brain_skin",
-		"refWeaponItem":"113",		
+		"refWeaponItem":"113",
+		"mobAI":"Normal",
+		"baseCreatureProperty":
+		{
+			"maxHP":2,
+			"physicalDamage":5,
+			"physicalDefence":0,
+			"evolutionPerLevel":0.2,
+			"exp":10,
+			"phyDamagePerLevel":1,
+			"phyDefencePerLevel":1,
+			"hpPerLevel":0.5,
+			"moveSpeed":3,
+			"navMeshBaseOffset":0
+		}
+	},
+	{
+		"id":14,
+		"prefBody":"eye_brain_skin",
+		"refWeaponItem":"112",
 		"mobAI":"Normal",
 		"baseCreatureProperty":
 		{

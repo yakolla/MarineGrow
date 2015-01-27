@@ -53,6 +53,9 @@ public class Champ : Creature {
 
 	void UpdateChampMovement()
 	{
+		if (HasCrowdControl())
+			return;
+
 		Vector3 pos = Vector3.zero;
 		float step = 1f;
 		if (Input.anyKey)

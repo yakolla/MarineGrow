@@ -5,6 +5,9 @@ public class GunBullet : Bullet {
 
 	[SerializeField]
 	float	m_speed = 3f;
+
+	[SerializeField]
+	DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
 	// Use this for initialization
 	void Start () {
 
@@ -20,7 +23,7 @@ public class GunBullet : Bullet {
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
 			DestroyObject(this.gameObject);
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Normal, DamageDesc.DebuffType.Nothing, PrefDamageEffect));
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{

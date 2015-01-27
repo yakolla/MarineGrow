@@ -68,15 +68,16 @@ public class Weapon : MonoBehaviour {
 		if ( isCoolTime() == true )
 		{
 			float oriAng = targetAngle.x;
+			float delay = 0f;
 			for(int i = 0; i < firingDescs.Length; ++i)
 			{
 				float ang = firingDescs[i].angle-oriAng;
 				targetAngle.x = ang;
 				StartCoroutine(DelayToStartFiring(targetAngle, firingDescs[i].delayTime));
-
+				delay = firingDescs[i].delayTime;
 			}
 
-			m_lastCreated = Time.time;
+			m_lastCreated = Time.time+delay;
 		}
 
 		m_firing = true;
