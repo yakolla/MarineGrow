@@ -47,6 +47,24 @@ public class RefWeapon
 	public float			range;
 }
 
+public class RefPrice
+{
+	public int				goldMedalItem;
+	public int				gold;
+	public int				gem;
+	public int				weaponPartsItem;
+	public int				weaponDNAItem;
+}
+
+
+public class RefPriceCondition
+{
+	public RefPrice			unlock;
+	public RefPrice			levelup;
+	public RefPrice			evolution;
+}
+
+
 public class RefItem : RefBaseData
 {
 	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
@@ -57,6 +75,7 @@ public class RefItem : RefBaseData
 	public	List<RefProgressUpItem>	evolutionItems = new List<RefProgressUpItem>();
 	public 	RefEvolutionFiring	evolutionFiring;
 	public  RefWeapon			weapon;
+	public 	RefPriceCondition	price;
 }
 
 public class RefItemOptionSpawn

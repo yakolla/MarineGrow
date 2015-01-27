@@ -8,6 +8,7 @@ public class Warehouse {
 
 	List<ItemObject>	m_items = new List<ItemObject>();
 	int					m_gold = 0;
+	int					m_gem = 0;
 
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
@@ -110,5 +111,11 @@ public class Warehouse {
 	{
 		get { return m_gold; }
 		set { m_gold = value; }
+	}
+
+	public int Gem
+	{
+		get { return m_gem; }
+		set { m_gem = value; }
 	}
 }

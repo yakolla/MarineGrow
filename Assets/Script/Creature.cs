@@ -444,7 +444,9 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void Death()
 	{
-		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);	
+
+		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, Quaternion.Euler(0, Random.Range(0, 360), 0));	
+		effect.transform.localScale = transform.localScale;
 
 		DestroyObject(this.gameObject);
 
