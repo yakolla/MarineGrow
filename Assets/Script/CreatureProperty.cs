@@ -23,6 +23,8 @@ public class CreatureProperty {
 	[SerializeField]
 	float	m_alphaMoveSpeed = 0f;
 
+	float	m_betaMoveSpeed = 1f;
+
 	[SerializeField]
 	int		m_level = 1;
 
@@ -137,12 +139,18 @@ public class CreatureProperty {
 
 	public float	MoveSpeed
 	{
-		get {return Mathf.Min(100, m_baseProperty.moveSpeed + AlphaMoveSpeed);}
+		get {return Mathf.Min(100, m_baseProperty.moveSpeed + AlphaMoveSpeed) * BetaMoveSpeed;}
 	}
 	
 	public float	AlphaMoveSpeed
 	{
 		get {return m_alphaMoveSpeed;}
 		set { m_alphaMoveSpeed = value; }
+	}
+
+	public float	BetaMoveSpeed
+	{
+		get {return m_betaMoveSpeed;}
+		set { m_betaMoveSpeed = value; }
 	}
 }

@@ -12,6 +12,9 @@ public class Bullet : MonoBehaviour {
 	[SerializeField]
 	GameObject 		m_prefDamageEffect = null;
 
+	[SerializeField]
+	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
+
 	virtual public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
 		m_gunPoint = gunPoint;

@@ -36,7 +36,7 @@ public class RocketLauncherBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.BuffType.Nothing, PrefDamageEffect));
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
 			transform.position = other.gameObject.transform.position;
 			m_speed = 0;
 			StartCoroutine(destoryObject());

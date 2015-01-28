@@ -142,8 +142,6 @@ public class RefMobSpawn
 	public bool				boss = false;
 	public RefItemSpawn[]	refDropItems;
 
-	[JsonIgnore]
-	public Dictionary<int, RefMob>		refMobs = new Dictionary<int, RefMob>();
 }
 
 public class RefWave
@@ -195,10 +193,6 @@ public class RefData {
 			{
 				foreach(RefMobSpawn mobSpawn in wave.mobSpawns)
 				{
-					foreach(int id in mobSpawn.refMobIds)
-					{
-						mobSpawn.refMobs[id] = m_refMobs[id];
-					}
 
 					if (mobSpawn.refDropItems != null)
 					{

@@ -67,7 +67,6 @@ public class Creature : MonoBehaviour {
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
-		m_navAgent.speed = m_creatureProperty.MoveSpeed;
 	}
 
 	public void ChangeWeapon(ItemWeaponData weaponData)
@@ -134,6 +133,7 @@ public class Creature : MonoBehaviour {
 	{
 		UpdateDamageEffect();
 		UpdatePickupItemEffect();
+		m_navAgent.speed = m_creatureProperty.MoveSpeed;
 	}
 
 	virtual public string[] GetAutoTargetTags()
@@ -347,6 +347,17 @@ public class Creature : MonoBehaviour {
 		m_crowdControl -= (int)CrowdControlType.Stun;
 	}
 
+	IEnumerator EffectSlow()
+	{		
+		m_creatureProperty.BetaMoveSpeed /= 2f;
+
+		yield return new WaitForSeconds(2f);
+		
+		m_buffEffects[(int)DamageDesc.BuffType.Slow].effect = null;
+		m_creatureProperty.BetaMoveSpeed *= 2f;
+
+	}
+
 	public void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
 	{
 		if (m_damageEffects[(int)type].effect == null && prefEffect != null)
@@ -433,6 +444,9 @@ public class Creature : MonoBehaviour {
 					break;
 				case DamageDesc.BuffType.Stun:
 					StartCoroutine(EffectStun());
+					break;
+				case DamageDesc.BuffType.Slow:
+					StartCoroutine(EffectSlow());
 					break;
 				}
 

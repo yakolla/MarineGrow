@@ -20,6 +20,7 @@ public class DamageDesc {
 		Nothing,
 		Airborne,
 		Stun,
+		Slow,
 		Count,
 	}
 

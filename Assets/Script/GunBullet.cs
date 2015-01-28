@@ -6,8 +6,7 @@ public class GunBullet : Bullet {
 	[SerializeField]
 	float	m_speed = 3f;
 
-	[SerializeField]
-	DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
+
 	// Use this for initialization
 	void Start () {
 

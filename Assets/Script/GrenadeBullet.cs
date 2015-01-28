@@ -15,6 +15,9 @@ public class GrenadeBullet : Bullet {
 	[SerializeField]
 	float			m_speed = 7f;
 
+	[SerializeField]
+	int				m_bouncing = 1;
+
 	GameObject m_prefShadow;
 	Parabola	m_parabola;
 	// Use this for initialization
@@ -29,7 +32,7 @@ public class GrenadeBullet : Bullet {
 		m_prefShadow = Resources.Load<GameObject>("Pref/shadow");
 		m_shadow = (GameObject)Instantiate(m_prefShadow, transform.position, m_prefShadow.transform.rotation);
 
-		m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), 10f, -targetAngle.x * Mathf.Deg2Rad, 45f * Mathf.Deg2Rad, 3);
+		m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), 10f, -targetAngle.x * Mathf.Deg2Rad, 45f * Mathf.Deg2Rad, m_bouncing);
 	}
 
 	// Update is called once per frame
@@ -70,7 +73,7 @@ public class GrenadeBullet : Bullet {
 				if (dist < m_bombRange/2)
 				{
 					Creature creature = target.GetComponent<Creature>();
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.BuffType.Nothing, PrefDamageEffect));
+					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
 				}
 			}
 		}

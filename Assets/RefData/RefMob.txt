@@ -193,9 +193,8 @@
 	{
 		"id":10,
 		"prefBody":"spider_skin",
-		"refWeaponItem":"115",
-		"mobAI":"Rotation",
-		"nearByChampOnSpawn":true,
+		"refWeaponItem":"116",
+		"mobAI":"Normal",
 		"baseCreatureProperty":
 		{
 			"maxHP":0.7,

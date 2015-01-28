@@ -163,7 +163,7 @@ public class Spawn : MonoBehaviour {
 				int spawnCount = 0;
 
 
-				foreach(KeyValuePair<int, RefMob> pair in mobSpawn.refMobs)
+				for(int ii = 0;  ii < mobSpawn.refMobIds.Length; ++ii)
 				{
 
 					float waveProgress = Mathf.Min(1f, m_wave / (m_refWorldMap.waves.Length*30));
@@ -175,8 +175,9 @@ public class Spawn : MonoBehaviour {
 						Transform area = getSpawnArea(true);
 						Vector3 cp = area.position;
 						Vector3 scale = area.localScale*0.5f;
-						
-						if (pair.Value.nearByChampOnSpawn == true)
+
+						RefMob refMob = RefData.Instance.RefMobs[mobSpawn.refMobIds[Random.Range(0, mobSpawn.refMobIds.Length)]];
+						if (refMob.nearByChampOnSpawn == true)
 						{
 							if (m_champ)
 							{
@@ -197,7 +198,7 @@ public class Spawn : MonoBehaviour {
 							enemyPos.z += Random.Range(-scale.z,scale.z);
 							
 							++spawnCount;
-							StartCoroutine(  EffectSpawnMob(pair.Value
+							StartCoroutine(  EffectSpawnMob(refMob
 							                                , mobSpawn.refDropItems
 							                                , enemyPos
 							                                , spawnMobLevel()
