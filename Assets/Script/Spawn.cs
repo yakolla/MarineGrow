@@ -328,7 +328,7 @@ public class Spawn : MonoBehaviour {
 		GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";
 		enemyBody.transform.parent = enemyObj.transform;
-		enemyBody.transform.localPosition = prefEnemyBody.transform.localPosition;
+		enemyBody.transform.localPosition = Vector3.zero;
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 		switch(spawnMobType)
 		{

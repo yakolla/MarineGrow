@@ -4,7 +4,6 @@ using System.Collections;
 public class GrenadeBullet : Bullet {
 
 	bool m_isDestroying = false;
-	GameObject		m_shadow;
 
 	[SerializeField]
 	GameObject		m_prefBombEffect = null;
@@ -18,7 +17,6 @@ public class GrenadeBullet : Bullet {
 	[SerializeField]
 	int				m_bouncing = 1;
 
-	GameObject m_prefShadow;
 	Parabola	m_parabola;
 	// Use this for initialization
 	void Start () {
@@ -29,8 +27,6 @@ public class GrenadeBullet : Bullet {
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 
-		m_prefShadow = Resources.Load<GameObject>("Pref/shadow");
-		m_shadow = (GameObject)Instantiate(m_prefShadow, transform.position, m_prefShadow.transform.rotation);
 
 		m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), 10f, -targetAngle.x * Mathf.Deg2Rad, 45f * Mathf.Deg2Rad, m_bouncing);
 	}
@@ -44,14 +40,11 @@ public class GrenadeBullet : Bullet {
 		{
 			bomb();
 		}
-		m_shadow.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-		m_shadow.transform.localScale = m_prefShadow.transform.localScale * ((m_parabola.MaxHeight-transform.position.y+1.5f)/m_parabola.MaxHeight);
+
 	}
 	
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
-		DestroyObject(m_shadow);
-
 		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
 		DestroyObject(this.gameObject);
 		DestroyObject(bombEffect);
