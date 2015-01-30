@@ -183,9 +183,9 @@ public class RefData {
 
 	void Load()
 	{
-		Deserialize(m_refWorldMaps, "RefWorldMap.txt");
-		Deserialize(m_refMobs, "RefMob.txt");
-		Deserialize(m_refItems, "RefItem.txt");
+		Deserialize(m_refWorldMaps, "RefWorldMap");
+		Deserialize(m_refMobs, "RefMob");
+		Deserialize(m_refItems, "RefItem");
 
 		foreach(KeyValuePair<int, RefWorldMap> pair in m_refWorldMaps)
 		{
@@ -233,14 +233,14 @@ public class RefData {
 
 	void Deserialize<T>(Dictionary<int, T> records, string fileName) where T : RefBaseData
 	{ 
-		string filePath = Application.dataPath + "/RefData/" + fileName;
-		if(File.Exists(filePath)) {
-			T[] datas = JsonConvert.DeserializeObject<T[]>(File.ReadAllText(filePath));				
-			foreach(T data in datas)
-			{
-				records[data.id] = data;
-			}
+		TextAsset textDocument =  Resources.Load("RefData/" + fileName) as TextAsset;
+
+		T[] datas = JsonConvert.DeserializeObject<T[]>(textDocument.text);				
+		foreach(T data in datas)
+		{
+			records[data.id] = data;
 		}
+
 	}
 
 	public Dictionary<int, RefWorldMap> RefWorldMaps

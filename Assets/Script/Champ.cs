@@ -6,6 +6,8 @@ public class Champ : Creature {
 	float	m_startChargeTime;
 	bool	m_charging = false;
 
+	Joystick	m_joystick;
+
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
 
@@ -29,7 +31,7 @@ public class Champ : Creature {
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
 
-		//m_material = transform.Find("Body").GetComponent<MeshRenderer>().material;
+		m_joystick = GameObject.Find("LeftJoystick").GetComponent<Joystick>();
 	}
 
 
@@ -58,35 +60,52 @@ public class Champ : Creature {
 
 		Vector3 pos = Vector3.zero;
 		float step = 1f;
-		if (Input.anyKey)
+
+		if (Application.platform == RuntimePlatform.Android)
 		{
-			if(Input.GetKey(KeyCode.W))
-			{
-				pos.z += step;
-			}
-			if(Input.GetKey(KeyCode.S))
-			{
-				pos.z -= step;
-			}
-			if(Input.GetKey(KeyCode.A))
-			{
-				pos.x -= step;
-			}
-			if(Input.GetKey(KeyCode.D))
-			{
-				pos.x += step;
-			}
+			pos.x += m_joystick.position.x;
+			pos.z += m_joystick.position.y;
 
 			if (m_targeting == null)
 			{
 				float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
 				transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
-
+				
 			}
-
+			
 			m_navAgent.SetDestination(transform.position+pos);
 		}
-
+		else
+		{
+			if (Input.anyKey)
+			{
+				if(Input.GetKey(KeyCode.W))
+				{
+					pos.z += step;
+				}
+				if(Input.GetKey(KeyCode.S))
+				{
+					pos.z -= step;
+				}
+				if(Input.GetKey(KeyCode.A))
+				{
+					pos.x -= step;
+				}
+				if(Input.GetKey(KeyCode.D))
+				{
+					pos.x += step;
+				}
+				
+				if (m_targeting == null)
+				{
+					float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
+					transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
+					
+				}
+				
+				m_navAgent.SetDestination(transform.position+pos);
+			}
+		}
 	}
 
 	// Update is called once per frame

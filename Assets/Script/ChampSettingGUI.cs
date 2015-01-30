@@ -45,12 +45,11 @@ public class ChampSettingGUI : MonoBehaviour {
 		get {return m_equipedFollowers;}
 	}
 
-	void OnEnable() {
-		TimeEffector.Instance.StopTime();
-		
+	void Start()
+	{
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
-
+		
 		if (m_cheat == true)
 		{
 			if (Warehouse.Instance.Items.Count == 0)
@@ -70,10 +69,10 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(new ItemGoldMedalData());
 					Warehouse.Instance.PushItem(new ItemSilverMedalData());
 				}
-
+				
 				Warehouse.Instance.Gold.Item.Count = 100000;
 				Warehouse.Instance.Gem.Item.Count = 100000;
-
+				
 				Warehouse.Instance.PushItem(new ItemFollowerData(RefData.Instance.RefMobs[4]));
 			}
 		}
@@ -88,6 +87,10 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			//Save ();
 		}
+	}
+
+	void OnEnable() {
+		TimeEffector.Instance.StopTime();
 	}
 
 	void OnDisable() {
