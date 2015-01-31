@@ -61,7 +61,7 @@ public class ItemWeaponData : ItemData{
 	
 	override public string Description()
 	{
-		return m_weaponName + "\n" +  base.Description();
+		return "<color=white>" + m_weaponName + "</color>" + "\n" +  base.Description();
 	}
 
 	override public bool Compare(ItemData item)

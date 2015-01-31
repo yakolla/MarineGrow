@@ -244,7 +244,6 @@ public class Spawn : MonoBehaviour {
 		Animator eggAni = eggObj.GetComponent<Animator>();
 		eggAni.speed = 0f;
 		Parabola parabola = new Parabola(eggObj, Random.Range(1f, 3f), 5f, Random.Range(-3.14f, 3.14f), Random.Range(-1.5f, 1.5f), 1);
-		parabola.GroundY = -0.7f;
 		while(parabola.Update())
 		{
 			yield return null;

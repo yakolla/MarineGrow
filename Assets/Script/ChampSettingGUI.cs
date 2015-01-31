@@ -34,6 +34,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	float 		m_slotWidth = Screen.width * (1/5f);
 	float 		m_slotHeight = Screen.height * (1/8f);
 
+	int		m_fontSize = (int)(Screen.width*(1/50f));
 
 	public ItemObject	EquipedWeapon
 	{
@@ -47,6 +48,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void Start()
 	{
+		Debug.Log(m_fontSize);
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
 		
@@ -87,6 +89,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			//Save ();
 		}
+
+
 	}
 
 	void OnEnable() {
@@ -100,6 +104,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	void OnGUI()
 	{
 		GUI.skin = m_guiSkin;
+		m_guiSkin.label.fontSize = m_fontSize;
 
 		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
 		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
@@ -224,6 +229,9 @@ public class ChampSettingGUI : MonoBehaviour {
 	}
 	bool makeItemButtonCore(int startX, int startY, int width, int height, int btnHeight, RefPrice[] conds, float itemWorth, string btnName, OnPay functor)
 	{
+		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
+		itemCountStyle.fontSize = m_fontSize;
+
 		GUI.BeginGroup(new Rect(startX, startY, width, btnHeight));
 		if (GUI.Button(new Rect(0, 0, width, btnHeight), ""))
 		{
@@ -234,10 +242,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}
 		
-		GUIStyle style = new GUIStyle();
-		style.alignment = TextAnchor.MiddleCenter;
-		style.richText = true;
-		GUI.Label(new Rect(0, 0, width, height), "<color=white>"+btnName+"</color>", style);
+
+		GUI.Label(new Rect(0, 0, width, height), "<color=white>"+btnName+"</color>");
 		
 		bool able = true;
 		int priceIndex = 0;
@@ -250,7 +256,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			else
 				GUI.Label(new Rect(height*priceIndex, height, height*0.7f, height*0.7f), Resources.Load<Texture>(condRefItem.icon));
 
-			style.alignment = TextAnchor.MiddleRight;
+
 			
 			string str = "<color=white>";
 			
@@ -269,9 +275,9 @@ public class ChampSettingGUI : MonoBehaviour {
 			str += price.count*itemWorth + "</color>";
 
 			if (btnName.CompareTo("") == 0)
-				GUI.Label(new Rect(height*priceIndex, height/5, height, height), str, style);
+				GUI.Label(new Rect(height*priceIndex, height/5, height, height), str, itemCountStyle);
 			else
-				GUI.Label(new Rect(height*priceIndex, height, height, height), str, style);
+				GUI.Label(new Rect(height*priceIndex, height, height, height), str, itemCountStyle);
 			
 			++priceIndex;
 			
@@ -285,12 +291,16 @@ public class ChampSettingGUI : MonoBehaviour {
 	
 	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot)
 	{
+
+		GUIStyle	itemDescStyle = m_guiSkin.GetStyle("Desc");
+		itemDescStyle.fontSize = m_fontSize;
+
 		int size = (int)m_slotHeight;
 		int startX = size*(INVEN_SLOT_COLS+3);
 		int startY = size*2;
 
 
-		GUI.Label(new Rect(startX, startY, Screen.width-size*(INVEN_SLOT_COLS+1), size*3), selectedItem.Item.Description());
+		GUI.Label(new Rect(startX, startY, Screen.width-size*(INVEN_SLOT_COLS+1), size*3), selectedItem.Item.Description(),itemDescStyle);
 
 		if (selectedItem.Item.Lock == true)
 		{
@@ -301,23 +311,27 @@ public class ChampSettingGUI : MonoBehaviour {
 			return;
 		}
 
+
+
 		switch(selectedItem.Item.RefItem.type)
 		{
 		case ItemData.Type.Weapon:
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Unequip"))
+				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), ""))
 				{
 					m_equipedWeapon = null;				
 				}
+				GUI.Label(new Rect(startX, startY+(size*3), size*2, size*2), "<color=white>"+"Unequip"+"</color>");
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Equip"))
+				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), ""))
 				{
 					m_equipedWeapon = selectedItem;				
 				}
+				GUI.Label(new Rect(startX, startY+(size*3), size*2, size*2), "<color=white>"+"Equip"+"</color>");
 			}
 		}break;
 
@@ -392,8 +406,6 @@ public class ChampSettingGUI : MonoBehaviour {
 		int size = (int)m_slotHeight;
 		int startY = size;
 
-		GUI.skin.label.alignment = TextAnchor.UpperLeft;
-
 		if (GUI.Button(new Rect(Screen.width-size, 0, size, size), "X") && m_equipedWeapon != null)
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
@@ -411,17 +423,17 @@ public class ChampSettingGUI : MonoBehaviour {
 			return;
 		}
 
-		GUIStyle style = new GUIStyle();
-		style.alignment = TextAnchor.LowerRight;
-		style.richText = true;
+		GUIStyle columnStyle = m_guiSkin.GetStyle("Column");
+		columnStyle.fontSize = m_fontSize;
 
-		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "Weapon");
+
+		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "<color=white>Weapon</color>", columnStyle);
 		if (GUI.Button(new Rect(0, startY+(size*1), size, size), m_equipedWeapon != null ? m_equipedWeapon.ItemIcon : null))
 		{
 			m_latestSelected = m_equipedWeapon;
 		}
 
-		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "Follower");
+		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "<color=white>Follower</color>", columnStyle);
 		for(int x = 0; x < EQUIP_FOLLOWER_SLOT_MAX; x++)
 		{
 			if (GUI.Button(new Rect(size*(2+x), startY+(size*1), size, size), m_equipedFollowers[x] != null ? m_equipedFollowers[x].ItemIcon : null))
@@ -430,7 +442,12 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}
 
-		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "Items");
+
+
+		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
+		itemCountStyle.fontSize = m_fontSize;
+
+		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
 		itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), (int)(size*4.5), size*4), itemScrollPosition, new Rect(0, 0, size*4, size+size*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS));
 		int itemIndex = 0;
 		foreach(ItemObject item in Warehouse.Instance.Items)
@@ -443,15 +460,13 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 			
 			string str = "<color=white>" +item.Item.Count + "</color>";
-			GUI.Label(new Rect(size*x, (size*(y)), size, size), str, style);
+			GUI.Label(new Rect(size*x, (size*(y)), size, size), str, itemCountStyle);
 
 			++itemIndex;
 		}
 		GUI.EndScrollView();
 
-		GUI.skin.label.alignment = TextAnchor.UpperLeft;
-
-		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+4), startY, size, size), "Desc");
+		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+3), startY, size, size), "<color=white>Desc</color>", columnStyle);
 
 		if (m_latestSelected != null)
 		{
