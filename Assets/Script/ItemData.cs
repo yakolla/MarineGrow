@@ -81,9 +81,11 @@ public class ItemData {
 
 	virtual public string Description()
 	{
-		return "Level:" + Level + "\n" + 
+		return "<color=white>" + 
+				"Level:" + Level + "\n" + 
 				"Evolution:" + Evolution + "\n" + 
-				m_refItem.type.ToString() + OptionsDescription();
+				m_refItem.type.ToString() + OptionsDescription() + 
+				"</color>";
 	}
 
 	protected string OptionsDescription()
