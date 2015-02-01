@@ -74,7 +74,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.Gold.Item.Count = 100000;
 				Warehouse.Instance.Gem.Item.Count = 100000;
 				
-				Warehouse.Instance.PushItem(new ItemFollowerData(RefData.Instance.RefMobs[4]));
+				Warehouse.Instance.PushItem(new ItemFollowerData(RefData.Instance.RefMobs[10001]));
 			}
 		}
 		else

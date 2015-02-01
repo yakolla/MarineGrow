@@ -49,8 +49,8 @@
 							},
 							{
 								"refItemId":7,
-								"minValue":1,
-								"maxValue":4,
+								"minValue":10001,
+								"maxValue":10004,
 								"ratio":0.6
 								
 							}
@@ -58,25 +58,25 @@
 						]
 					},
 					{
-						"refMobIds":[1,2],
+						"refMobIds":[10001,10002],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[6,12]
 					},
 					{
-						"refMobIds":[2,3],
+						"refMobIds":[10002,20001],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[6,12]
 					},
 					{
-						"refMobIds":[10],
+						"refMobIds":[10003],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[3,9]
 					},
 					{
-						"refMobIds":[4],
+						"refMobIds":[11001],
 						"interval":1,
 						"repeatCount":[1,1],
 						"mobCount":[3,9],						
@@ -120,25 +120,25 @@
 				"mobSpawns":
 				[
 					{
-						"refMobIds":[2,3],
+						"refMobIds":[10001,20001],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[6,12]
 					},			
 					{
-						"refMobIds":[1,2,3],
+						"refMobIds":[10002,20002],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[4,12]
 					},			
 					{
-						"refMobIds":[8,10],
+						"refMobIds":[10003,20003],
 						"interval":5,
 						"repeatCount":[1,3],
 						"mobCount":[1,4]
 					},
 					{
-						"refMobIds":[5],
+						"refMobIds":[21001],
 						"interval":3,
 						"repeatCount":[1,1],
 						"mobCount":[1,3],
@@ -188,19 +188,19 @@
 						"mobCount":[1,3]
 					},
 					{
-						"refMobIds":[1,2,3],
+						"refMobIds":[10001,10002,20001],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[4,12]
 					},
 					{
-						"refMobIds":[4,12,10],
+						"refMobIds":[10003,20002,20003],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[2,6],
 					},
 					{
-						"refMobIds":[6],
+						"refMobIds":[21002],
 						"interval":10,
 						"repeatCount":[1,1],
 						"mobCount":[2,6],
@@ -303,8 +303,8 @@
 							},
 							{
 								"refItemId":7,
-								"minValue":1,
-								"maxValue":7,
+								"minValue":10001,
+								"maxValue":10004,
 								"ratio":0.6
 								
 							}
@@ -312,19 +312,19 @@
 						]
 					},
 					{
-						"refMobIds":[1,2,3,4],
+						"refMobIds":[10001,10002,10003,10004],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[3,12],
 					},
 					{
-						"refMobIds":[5,6,10],
+						"refMobIds":[20001,20002,20003],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[3,12],
 					},
 					{
-						"refMobIds":[11],
+						"refMobIds":[21003],
 						"interval":5,
 						"repeatCount":[1,1],
 						"mobCount":[1,5],
@@ -410,8 +410,8 @@
 							},
 							{
 								"refItemId":7,
-								"minValue":1,
-								"maxValue":9,
+								"minValue":10001,
+								"maxValue":10004,
 								"ratio":0.6
 								
 							}
@@ -419,25 +419,19 @@
 						]
 					},
 					{
-						"refMobIds":[1,2,3,4],
+						"refMobIds":[10001,10002,10003,20001],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[3,12]
 					},
 					{
-						"refMobIds":[5,6,7],
+						"refMobIds":[20002,20003],
 						"interval":5,
 						"repeatCount":[3,6],
 						"mobCount":[3,12]
-					},
+					},					
 					{
-						"refMobIds":[8,9,11,10],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[3,12]
-					},
-					{
-						"refMobIds":[13,14],
+						"refMobIds":[21004],
 						"interval":5,
 						"repeatCount":[1,1],
 						"mobCount":[1,5],
