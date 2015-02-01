@@ -8,7 +8,7 @@ public class SuicideBombing : Weapon {
 
 	}
 
-	override public void StartFiring(Vector2 targetAngle, FiringDesc[] firingDescs)
+	override public void StartFiring(Vector2 targetAngle)
 	{
 		m_firing = true;
 	}

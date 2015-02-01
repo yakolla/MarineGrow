@@ -4,11 +4,11 @@ public class GUIConst {
 
 	public enum WindowID
 	{
-		ChampGoods,
 		ChampGuage,
 		ChampSkill,
 		ChampLevelUp,
 		ChampInventory,
+		ChampGoods,
 		PopupShop,
 	}
 }

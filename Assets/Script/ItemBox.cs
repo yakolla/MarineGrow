@@ -18,7 +18,7 @@ public class ItemBox : MonoBehaviour {
 	Creature		m_target = null;
 
 	[SerializeField]
-	GameObject	m_prefPickupItemEffect;
+	GameObject		m_prefPickupItemEffect;
 
 	void Start () {
 		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
@@ -86,7 +86,14 @@ public class ItemBox : MonoBehaviour {
 	public ItemData Item
 	{
 		get { return m_item; }
-		set {m_item = value;}
+		set {
+			m_item = value;
+			GameObject pref = Resources.Load<GameObject>("Pref/ItemBox/ef " + m_item.RefItem.codeName + " eat");
+			if (pref != null)
+			{
+				m_prefPickupItemEffect = pref;
+			}
+		}
 	}
 
 

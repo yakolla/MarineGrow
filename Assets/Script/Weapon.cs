@@ -10,6 +10,9 @@ public class Weapon : MonoBehaviour {
 		public float	delayTime;
 	}
 
+	[SerializeField]
+	public FiringDesc[]			m_firingDescs = null;
+
 	protected GameObject		m_gunPoint;
 
 	[SerializeField]
@@ -34,6 +37,7 @@ public class Weapon : MonoBehaviour {
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
 		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
+
 	}
 
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
@@ -63,18 +67,18 @@ public class Weapon : MonoBehaviour {
 		return m_lastCreated + m_coolTime < Time.time;
 	}
 
-	virtual public void StartFiring(Vector2 targetAngle, FiringDesc[] firingDescs)
+	virtual public void StartFiring(Vector2 targetAngle)
 	{		
 		if ( isCoolTime() == true )
 		{
 			float oriAng = targetAngle.x;
 			float delay = 0f;
-			for(int i = 0; i < firingDescs.Length; ++i)
+			for(int i = 0; i < m_firingDescs.Length; ++i)
 			{
-				float ang = firingDescs[i].angle-oriAng;
+				float ang = m_firingDescs[i].angle-oriAng;
 				targetAngle.x = ang;
-				StartCoroutine(DelayToStartFiring(targetAngle, firingDescs[i].delayTime));
-				delay = firingDescs[i].delayTime;
+				StartCoroutine(DelayToStartFiring(targetAngle, m_firingDescs[i].delayTime));
+				delay = m_firingDescs[i].delayTime;
 			}
 
 			m_lastCreated = Time.time+delay;

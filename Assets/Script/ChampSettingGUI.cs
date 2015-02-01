@@ -48,7 +48,6 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void Start()
 	{
-		Debug.Log(m_fontSize);
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
 		
@@ -105,6 +104,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		GUI.skin = m_guiSkin;
 		m_guiSkin.label.fontSize = m_fontSize;
+		m_guiSkin.button.fontSize = m_fontSize;
 
 		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
 		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");

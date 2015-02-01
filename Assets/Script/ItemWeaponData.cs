@@ -28,29 +28,6 @@ public class ItemWeaponData : ItemData{
 	{
 		obj.ChangeWeapon(this);
 
-		if (RefItem.evolutionFiring == null)
-		{
-			obj.m_firingDescs = new Weapon.FiringDesc[1];
-			obj.m_firingDescs[0].angle = 0;
-			obj.m_firingDescs[0].delayTime = 0;
-		}
-		else
-		{
-			obj.m_firingDescs = new Weapon.FiringDesc[this.Evolution*2+1];
-			for(int i = 0; i < obj.m_firingDescs.Length; ++i)
-			{
-				obj.m_firingDescs[i].angle = RefItem.evolutionFiring.angle*((i+1)/2);
-				if (i % 2 == 1)
-				{
-					obj.m_firingDescs[i].angle *= -1;
-				}
-
-
-				obj.m_firingDescs[i].delayTime = RefItem.evolutionFiring.delay*i;
-
-			}
-		}
-
 		ApplyOptions(obj);
 	}
 

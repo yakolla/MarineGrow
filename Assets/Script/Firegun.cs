@@ -5,15 +5,15 @@ public class Firegun : Weapon {
 
 	GameObject[]	m_bullet;
 
-	override public void StartFiring(Vector2 targetAngle, FiringDesc[] firingDescs)
+	override public void StartFiring(Vector2 targetAngle)
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
-			m_bullet = new GameObject[firingDescs.Length];
+			m_bullet = new GameObject[m_firingDescs.Length];
 
-			for(int i = 0; i < firingDescs.Length; ++i)
+			for(int i = 0; i < m_firingDescs.Length; ++i)
 			{
-				targetAngle.x = firingDescs[i].angle;
+				targetAngle.x = m_firingDescs[i].angle;
 				m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position);
 			}
 		}

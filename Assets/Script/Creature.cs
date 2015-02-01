@@ -33,9 +33,6 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected Type			m_creatureType;
 
-	[SerializeField]
-	public Weapon.FiringDesc[]	m_firingDescs = null;
-
 	GameObject				m_prefDamageGUI;
 	GameObject				m_prefPickupItemGUI;
 
@@ -80,6 +77,29 @@ public class Creature : MonoBehaviour {
 		obj.transform.localPosition = weaponData.PrefWeapon.transform.localPosition;
 		obj.transform.localRotation = weaponData.PrefWeapon.transform.localRotation;
 		obj.transform.localScale = weaponData.PrefWeapon.transform.localScale;
+
+		if (weaponData.RefItem.evolutionFiring == null)
+		{
+			weapon.m_firingDescs = new Weapon.FiringDesc[1];
+			weapon.m_firingDescs[0].angle = 0;
+			weapon.m_firingDescs[0].delayTime = 0;
+		}
+		else
+		{
+			weapon.m_firingDescs = new Weapon.FiringDesc[weaponData.Evolution*2+1];
+			for(int i = 0; i < weapon.m_firingDescs.Length; ++i)
+			{
+				weapon.m_firingDescs[i].angle = weaponData.RefItem.evolutionFiring.angle*((i+1)/2);
+				if (i % 2 == 1)
+				{
+					weapon.m_firingDescs[i].angle *= -1;
+				}
+				
+				
+				weapon.m_firingDescs[i].delayTime = weaponData.RefItem.evolutionFiring.delay*i;
+				
+			}
+		}
 
 		weapon.AttackRange = weaponData.RefItem.weapon.range;
 		weapon.CoolTime = weaponData.RefItem.weapon.coolTime;
@@ -239,7 +259,7 @@ public class Creature : MonoBehaviour {
 
 			if (m_targeting != null)
 			{
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position), m_firingDescs);
+				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position));
 				return true;
 			}
 		}

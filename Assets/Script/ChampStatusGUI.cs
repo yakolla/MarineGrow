@@ -13,6 +13,11 @@ public class ChampStatusGUI : MonoBehaviour {
 	float 		m_slotWidth = Screen.width * (1/5f);
 	float 		m_slotHeight = Screen.height * (1/8f);
 
+	[SerializeField]
+	GUISkin		m_guiSkin = null;
+
+	int			m_fontSize = (int)(Screen.width*(1/50f));
+
 	void Start () {
 
 		m_creature = transform.parent.gameObject.GetComponent<Creature>();
@@ -25,6 +30,10 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void OnGUI()
 	{		
+		GUI.skin = m_guiSkin;
+		m_guiSkin.label.fontSize = m_fontSize;
+		m_guiSkin.button.fontSize = m_fontSize;
+
 		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_guageWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
 		m_skillWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
@@ -34,7 +43,7 @@ public class ChampStatusGUI : MonoBehaviour {
 	{
 		GUI.DrawTextureWithTexCoords(new Rect(size.x, size.y, size.width*ratio, size.height), guage, new Rect(0f, 0f, ratio, 1f));
 		GUIStyle style = new GUIStyle();
-		style.fontSize = 10;
+		style.fontSize = m_fontSize;
 		style.normal.textColor = Color.grey;
 		style.alignment = TextAnchor.MiddleCenter;
 		GUI.Label(new Rect(size.x, size.y, size.width, size.height), lable, style);
@@ -45,18 +54,15 @@ public class ChampStatusGUI : MonoBehaviour {
 	static public void DisplayChampGoodsGUI(int size)
 	{
 		int startX = size/3;
-		int startY = 0;
-		
-		GUIStyle style = new GUIStyle();
-		style.alignment = TextAnchor.MiddleCenter;
-		style.richText = true;
+		int startY = 0;	
+
 		
 		ItemObject goldItemObj = Warehouse.Instance.Gold;
 		ItemObject gemItemObj = Warehouse.Instance.Gem;
 		GUI.Label(new Rect(startX, size*0.2f, size*0.7f, size*0.7f), goldItemObj.ItemIcon);
-		GUI.Label(new Rect(startX+size, 0, size, size), "<color=white>" + goldItemObj.Item.Count + "</color>", style);
-		GUI.Label(new Rect(startX+size*3, size*0.2f, size*0.7f, size*0.7f), gemItemObj.ItemIcon);
-		GUI.Label(new Rect(startX+size*4, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>", style);
+		GUI.Label(new Rect(startX+(size), 0, size, size), "<color=white>" + goldItemObj.Item.Count + "</color>");
+		GUI.Label(new Rect(startX+(size)*3, size*0.2f, size*0.7f, size*0.7f), gemItemObj.ItemIcon);
+		GUI.Label(new Rect(startX+(size)*4, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>");
 	}
 
 	void DisplayGoodsWindow(int windowID)

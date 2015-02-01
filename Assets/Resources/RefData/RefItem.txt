@@ -415,7 +415,7 @@
 		},
 		"weapon":
 		{
-			"coolTime":0.3,
+			"coolTime":0.8,
 			"range":7
 		},
 		"levelup":
