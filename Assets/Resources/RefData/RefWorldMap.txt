@@ -8,16 +8,28 @@
 				"mobSpawns":
 				[					
 					{
-						"refMobIds":[1001],
+						"refMobIds":{
+							"melee":{
+								"ratio":[0.1,0.3],
+								"count":[3,16]
+							},
+							"range":{
+								"ratio":[0.1,0.3],
+								"count":[3,9]
+							}
+						},
 						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,1]
+						"repeatCount":[1,16]
 					},
 					{
-						"refMobIds":[1002],
+						"refMobIds":{
+							"shuttle":{
+								"ratio":[0,1],
+								"count":[1,1]
+							}
+						},
 						"interval":5,
 						"repeatCount":[1,1],
-						"mobCount":[1,1],
 						"refDropItems":
 						[							
 							{
@@ -58,28 +70,70 @@
 						]
 					},
 					{
-						"refMobIds":[10001,10002],
+						"refMobIds":{
+							"melee":{
+								"ratio":[0.3,0.5],
+								"count":[3,16]
+							},
+							"range":{
+								"ratio":[0.3,0.5],
+								"count":[3,9]
+							}
+						},
 						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[6,12]
+						"repeatCount":[1,6]
 					},
 					{
-						"refMobIds":[10002,20001],
+						"refMobIds":{
+							"melee":{
+								"ratio":[0.5,0.7],
+								"count":[3,16]
+							},
+							"range":{
+								"ratio":[0.5,0.7],
+								"count":[3,9]
+							}
+						},
 						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[6,12]
+						"repeatCount":[1,6]
 					},
 					{
-						"refMobIds":[10003],
+						"refMobIds":{
+							"melee":{
+								"ratio":[0.7,0.9],
+								"count":[3,16]
+							},
+							"range":{
+								"ratio":[0.7,0.9],
+								"count":[3,9]
+							}
+						},
 						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[3,9]
+						"repeatCount":[1,6]
 					},
 					{
-						"refMobIds":[11001],
+						"refMobIds":{
+							"melee":{
+								"ratio":[0.8,1],
+								"count":[3,16]
+							},
+							"range":{
+								"ratio":[0.8,1],
+								"count":[3,9]
+							}
+						},
+						"interval":5,
+						"repeatCount":[1,6]
+					},
+					{
+						"refMobIds":{
+							"boss":{
+								"ratio":[0,1],
+								"count":[3,6]
+							}
+						},
 						"interval":1,
 						"repeatCount":[1,1],
-						"mobCount":[3,9],						
 						"boss":true,
 						"refDropItems":
 						[
@@ -113,470 +167,6 @@
 						"minValue":1,
 						"maxValue":10,
 						"ratio":0.1
-					}
-				]
-			},
-			{
-				"mobSpawns":
-				[
-					{
-						"refMobIds":[10001,20001],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[6,12]
-					},			
-					{
-						"refMobIds":[10002,20002],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[4,12]
-					},			
-					{
-						"refMobIds":[10003,20003],
-						"interval":5,
-						"repeatCount":[1,3],
-						"mobCount":[1,4]
-					},
-					{
-						"refMobIds":[21001],
-						"interval":3,
-						"repeatCount":[1,1],
-						"mobCount":[1,3],
-						"boss":true,
-						"refDropItems":
-						[							
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.01
-								
-							},
-							{
-								"refItemId":5,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":6,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-								
-							}
-						]
-					}
-				],
-				"refDropItems":
-				[
-					{
-						"refItemId":1,
-						"minValue":1,
-						"maxValue":10,
-						"ratio":0.1
-					}
-				]
-			},
-			{
-				"mobSpawns":
-				[
-					{
-						"refMobIds":[1001],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,3]
-					},
-					{
-						"refMobIds":[10001,10002,20001],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[4,12]
-					},
-					{
-						"refMobIds":[10003,20002,20003],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[2,6],
-					},
-					{
-						"refMobIds":[21002],
-						"interval":10,
-						"repeatCount":[1,1],
-						"mobCount":[2,6],
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.01
-								
-							},
-							{
-								"refItemId":5,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":6,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-								
-							}
-						]
-					}
-					
-				],
-				"refDropItems":
-				[
-					{
-						"refItemId":1,
-						"minValue":1,
-						"maxValue":10,
-						"ratio":0.1
-					}
-				]
-			},
-			{
-				"mobSpawns":
-				[
-					{
-						"refMobIds":[1001],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[3,3],
-						"refDropItems":
-						[
-							{
-								"refItemId":1,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.01
-								
-							}
-						]
-					},
-					{
-						"refMobIds":[1002],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,1],
-						"refDropItems":
-						[							
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":7,
-								"minValue":10001,
-								"maxValue":10004,
-								"ratio":0.6
-								
-							}
-							
-						]
-					},
-					{
-						"refMobIds":[10001,10002,10003,10004],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[3,12],
-					},
-					{
-						"refMobIds":[20001,20002,20003],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[3,12],
-					},
-					{
-						"refMobIds":[21003],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,5],
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":1,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.01
-								
-							},
-							{
-								"refItemId":5,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-							},
-							{
-								"refItemId":6,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-								
-							}
-						]
-					}					
-				],
-				"refDropItems":
-				[
-					{
-						"refItemId":1,
-						"minValue":1,
-						"maxValue":10,
-						"ratio":0.1
-					}
-				]
-			},
-			{
-				"mobSpawns":
-				[
-					{
-						"refMobIds":[1002],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,1],
-						"refDropItems":
-						[							
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6
-								
-							},
-							{
-								"refItemId":7,
-								"minValue":10001,
-								"maxValue":10004,
-								"ratio":0.6
-								
-							}
-							
-						]
-					},
-					{
-						"refMobIds":[10001,10002,10003,20001],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[3,12]
-					},
-					{
-						"refMobIds":[20002,20003],
-						"interval":5,
-						"repeatCount":[3,6],
-						"mobCount":[3,12]
-					},					
-					{
-						"refMobIds":[21004],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,5],
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":1,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.01
-								
-							},
-							{
-								"refItemId":5,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-							},
-							{
-								"refItemId":6,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-								
-							}
-						]
-					}
-					
-				],
-				"refDropItems":
-				[
-					{
-						"refItemId":1,
-						"minValue":1,
-						"maxValue":10,
-						"ratio":0.1
-					}
-				]
-			}
-		]
-	},
-	{
-		"id":2,
-		"name":"Basic Dungeon",
-		"waves":
-		[
-			{
-				"mobSpawns":
-				[
-					{
-						"refMobIds":[5],
-						"interval":5,
-						"repeatCount":[1,1],
-						"mobCount":[1,1],
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":1,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.01
-								
-							},
-							{
-								"refItemId":5,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-							},
-							{
-								"refItemId":6,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-								
-							}
-						]
-					}
-				]
-			},
-			{
-				"mobSpawns":
-				[					
-					{
-						"refMobIds":[3],
-						"interval":10,
-						"repeatCount":[1,1],
-						"mobCount":[1,1],
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":101,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1,
-								"itemOptionSpawns":
-								[
-									{
-										"type":"PhysicalDmg", "minValue":0, "maxValue":0, "ratio":0
-									}
-								]
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":1
-								
-							},
-							{
-								"refItemId":1,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":1
-							},
-							{
-								"refItemId":3,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":1
-								
-							},
-							{
-								"refItemId":4,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":1
-								
-							}
-						]
 					}
 				]
 			}

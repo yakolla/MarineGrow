@@ -35,6 +35,7 @@ public class Spawn : MonoBehaviour {
 	RefWorldMap		m_refWorldMap;
 	Dungeon			m_dungeon;
 	int				m_wave = 0;
+	int				m_spawningPool = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -83,9 +84,7 @@ public class Spawn : MonoBehaviour {
 	void StartWave(int wave)
 	{
 		m_wave = wave;
-
-		StartCoroutine(EffectWaveText("Wave " + (m_wave + 1), 1));
-		StartCoroutine(spawnMobPer(GetCurrentWave()));
+		StartCoroutine(checkBossAlive());
 	}
 
 	IEnumerator checkBossAlive()
@@ -109,7 +108,10 @@ public class Spawn : MonoBehaviour {
 		else
 		{
 			m_bosses.Clear();
-			StartWave(m_wave+1);
+
+			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_spawningPool%GetCurrentWave().mobSpawns.Length]));
+
+
 		}
 	}
 
@@ -136,19 +138,37 @@ public class Spawn : MonoBehaviour {
 		return m_areas[Random.Range(1,m_areas.Length)];
 	}
 
-	IEnumerator spawnMobPer(RefWave refWave)
+	void	buildSpawnMob(List<RefMob> buildMobs, List<int> buildMobCount, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs)
+	{
+		if (spawnRatioDesc == null)
+			return;
+
+		int minIndex = (int)(spawnRatioDesc.ratio[0] * mobs.Length);
+		int maxIndex = (int)((spawnRatioDesc.ratio[0] * (1f-progress) + spawnRatioDesc.ratio[1] * progress) * mobs.Length);
+
+		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
+
+		buildMobs.Add(mobs[Random.Range(minIndex, maxIndex)]);
+
+		minIndex = (int)(spawnRatioDesc.count[0]);
+		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress) + spawnRatioDesc.count[1] * progress);
+		buildMobCount.Add(Random.Range(minIndex, maxIndex));
+	}
+
+	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
 	{
 		if (m_champ == null)
 		{
 			yield return new WaitForSeconds (1f);
 
-			StartCoroutine(spawnMobPer(refWave));
+			StartCoroutine(spawnMobPer(mobSpawn));
 		}
 		else
 		{
 
+			StartCoroutine(EffectWaveText("Wave " + (m_spawningPool + 1), 1));
 
-			foreach(RefMobSpawn mobSpawn in  refWave.mobSpawns)
+			//foreach(RefMobSpawn mobSpawn in  mobSpawns)
 			{
 				SpawnMobType spawnMobType = SpawnMobType.Normal;
 				if (mobSpawn.boss == true)
@@ -160,23 +180,27 @@ public class Spawn : MonoBehaviour {
 					spawnMobType = SpawnMobType.Boss;
 				}
 
+				float waveProgress = Mathf.Min(1f, (float)m_spawningPool / (GetCurrentWave().mobSpawns.Length * 30));
+				Debug.Log(waveProgress + "," + m_spawningPool);
+
 				int spawnCount = 0;
-
-
-				for(int ii = 0;  ii < mobSpawn.refMobIds.Length; ++ii)
+				int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
+				for(int r = 0; r < mobSpawnRepeatCount; ++r)
 				{
+					List<RefMob>	spawnMobs = new List<RefMob>();
+					List<int> 		spawnMobCount = new List<int>();
+					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
+					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
+					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
+					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
 
-					float waveProgress = Mathf.Min(1f, m_wave / (m_refWorldMap.waves.Length*30));
-
-					int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
-
-					for(int r = 0; r < mobSpawnRepeatCount; ++r)
+					for(int ii = 0;  ii < spawnMobs.Count; ++ii)
 					{
 						Transform area = getSpawnArea(true);
 						Vector3 cp = area.position;
 						Vector3 scale = area.localScale*0.5f;
 
-						RefMob refMob = RefData.Instance.RefMobs[mobSpawn.refMobIds[Random.Range(0, mobSpawn.refMobIds.Length)]];
+						RefMob refMob = spawnMobs[ii];
 						if (refMob.nearByChampOnSpawn == true)
 						{
 							if (m_champ)
@@ -190,8 +214,7 @@ public class Spawn : MonoBehaviour {
 							cp = area.position;
 						}
 
-						int mobSpawnCount = (int)(mobSpawn.mobCount[0] * (1f-waveProgress) + mobSpawn.mobCount[1] * waveProgress);
-						for(int i = 0; i < mobSpawnCount; ++i)
+						for(int i = 0; i < spawnMobCount[ii]; ++i)
 						{
 							Vector3 enemyPos = cp;
 							enemyPos.x += Random.Range(-scale.x,scale.x);
@@ -208,15 +231,14 @@ public class Spawn : MonoBehaviour {
 							
 							
 							yield return new WaitForSeconds (0.5f);
-						}	
-						
-						yield return new WaitForSeconds (mobSpawn.interval);
+						}
 					}
-
+					yield return new WaitForSeconds (mobSpawn.interval);
 				}
+				StartCoroutine(checkBossAlive());
 			}
 
-			StartCoroutine(checkBossAlive());
+			m_spawningPool++;
 
 		}
 	}
@@ -352,10 +374,11 @@ public class Spawn : MonoBehaviour {
 		enemy.m_creatureProperty.Level = mobLevel;
 		//		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
 		
-		if (boss == true)
-		{			
+		if (boss == true)	
+		{
 			m_bosses.Add(enemy.gameObject);
 		}
+
 
 		if (refMob.followerMob != null)
 		{
@@ -364,7 +387,6 @@ public class Spawn : MonoBehaviour {
 				ItemObject follower = new ItemObject(new ItemFollowerData(refMob.followerMob.refMob));
 				follower.Item.Use(enemy);
 			}
-
 		}
 		
 		if (followingCamera == true)
@@ -431,7 +453,7 @@ public class Spawn : MonoBehaviour {
 					item = new ItemWeaponUpgradeFragmentData();					
 					break;
 				case ItemData.Type.Follower:
-					item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
+					//item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
 					break;
 				case ItemData.Type.WeaponDNA:
 					item = new ItemWeaponEvolutionFragmentData();					
@@ -443,7 +465,7 @@ public class Spawn : MonoBehaviour {
 					item = new ItemSilverMedalData();					
 					break;
 				case ItemData.Type.MobEgg:
-					StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMobs[Random.Range(desc.minValue, desc.maxValue)], null, pos, spawnMobLevel()));
+					//StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMobs[Random.Range(desc.minValue, desc.maxValue)], null, pos, spawnMobLevel()));
 					break;
 					/*
 				case ItemData.Type.MobBox:

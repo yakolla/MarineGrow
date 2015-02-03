@@ -6,6 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
+
 public class RefBaseData
 {
 	public int 				id;
@@ -133,9 +134,31 @@ public class RefMob : RefBaseData
 	public MobAIType			mobAI;
 }
 
+public class RefMobClass
+{
+	public RefMob[]				melee;
+	public RefMob[]				range;
+	public RefMob[]				boss;
+	public RefMob[]				shuttle;
+	public RefMob[]				egg;
+}
+
+public class RefMobSpawnRatio
+{
+	public class Desc
+	{
+		public float[]	ratio;
+		public int[]	count;
+	}
+	public Desc	melee;
+	public Desc	range;
+	public Desc	boss;
+	public Desc	shuttle;
+}
+
 public class RefMobSpawn
 {
-	public int[]			refMobIds;	
+	public RefMobSpawnRatio		refMobIds;	
 	public float 			interval;
 	public int[]			repeatCount;
 	public int[]			mobCount;
@@ -161,7 +184,7 @@ public class RefData {
 
 
 	Dictionary<int, RefWorldMap>	m_refWorldMaps = new Dictionary<int, RefWorldMap>();
-	Dictionary<int, RefMob>			m_refMobs = new Dictionary<int, RefMob>();
+	RefMobClass		m_refMobClass = new RefMobClass();
 	Dictionary<int, RefItemSpawn>	m_refItemSpawns = new Dictionary<int, RefItemSpawn>();
 	Dictionary<int, RefItem>		m_refItems = new Dictionary<int, RefItem>();
 
@@ -183,9 +206,9 @@ public class RefData {
 
 	void Load()
 	{
-		Deserialize(m_refWorldMaps, "RefWorldMap");
-		Deserialize(m_refMobs, "RefMob");
-		Deserialize(m_refItems, "RefItem");
+		DeserializeArray(m_refWorldMaps, "RefWorldMap");
+		Deserialize(ref m_refMobClass, "RefMob");
+		DeserializeArray(m_refItems, "RefItem");
 
 		foreach(KeyValuePair<int, RefWorldMap> pair in m_refWorldMaps)
 		{
@@ -213,25 +236,32 @@ public class RefData {
 				}
 			}
 		}
+		RefMob[][] mobs= {m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle};
 
-		foreach(KeyValuePair<int, RefMob> pair in m_refMobs)
+		foreach(RefMob[] refMobs in mobs)
 		{
-			if (pair.Value.eggMob != null)
+			foreach(RefMob refMob in refMobs)
 			{
-				pair.Value.eggMob.refMob = m_refMobs[pair.Value.eggMob.refMobId];
+				if (refMob.eggMob != null)
+				{
+					foreach(RefMob egg in m_refMobClass.egg)
+					{
+						if (refMob.eggMob.refMobId==egg.id)
+						{
+							refMob.eggMob.refMob = egg;
+							break;
+						}
+
+					}
+
+				}
 			}
+
 		}
 
-		foreach(KeyValuePair<int, RefMob> pair in m_refMobs)
-		{
-			if (pair.Value.followerMob != null)
-			{
-				pair.Value.followerMob.refMob = m_refMobs[pair.Value.followerMob.refMobId];
-			}
-		}
 	}
 
-	void Deserialize<T>(Dictionary<int, T> records, string fileName) where T : RefBaseData
+	void DeserializeArray<T>(Dictionary<int, T> records, string fileName) where T : RefBaseData
 	{ 
 		TextAsset textDocument =  Resources.Load("RefData/" + fileName) as TextAsset;
 
@@ -241,6 +271,15 @@ public class RefData {
 			records[data.id] = data;
 		}
 
+	}
+
+	void Deserialize<T>(ref T records, string fileName)
+	{ 
+		TextAsset textDocument =  Resources.Load("RefData/" + fileName) as TextAsset;
+
+		records = JsonConvert.DeserializeObject<T>(textDocument.text);			
+
+		
 	}
 
 	public Dictionary<int, RefWorldMap> RefWorldMaps
@@ -253,8 +292,23 @@ public class RefData {
 		get {return m_refItems;}
 	}
 
-	public Dictionary<int, RefMob> RefMobs
+	public RefMob[] RefMeleeMobs
 	{
-		get {return m_refMobs;}
+		get {return m_refMobClass.melee;}
+	}
+
+	public RefMob[] RefRangeMobs
+	{
+		get {return m_refMobClass.range;}
+	}
+
+	public RefMob[] RefBossMobs
+	{
+		get {return m_refMobClass.boss;}
+	}
+
+	public RefMob[] RefShuttleMobs
+	{
+		get {return m_refMobClass.shuttle;}
 	}
 }
