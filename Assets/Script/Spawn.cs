@@ -35,6 +35,8 @@ public class Spawn : MonoBehaviour {
 	RefWorldMap		m_refWorldMap;
 	Dungeon			m_dungeon;
 	int				m_wave = 0;
+
+	[SerializeField]
 	int				m_spawningPool = 0;
 	// Use this for initialization
 	void Start () {
@@ -180,7 +182,7 @@ public class Spawn : MonoBehaviour {
 					spawnMobType = SpawnMobType.Boss;
 				}
 
-				float waveProgress = Mathf.Min(1f, (float)m_spawningPool / (GetCurrentWave().mobSpawns.Length * 30));
+				float waveProgress = Mathf.Min(1f, m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
 				Debug.Log(waveProgress + "," + m_spawningPool);
 
 				int spawnCount = 0;
@@ -258,6 +260,20 @@ public class Spawn : MonoBehaviour {
 	int spawnMobLevel()
 	{
 		return 1+m_wave/m_refWorldMap.waves.Length;
+	}
+
+	IEnumerator EffectSpawnItemPandora(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos)
+	{
+		GameObject eggObj = Instantiate (Resources.Load<GameObject>("Pref/mon_skin/item_supplybox_skin"), pos, Quaternion.Euler(Vector3.zero)) as GameObject;
+
+		Parabola parabola = new Parabola(eggObj, Random.Range(1f, 3f), 5f, Random.Range(-3.14f, 3.14f), Random.Range(-1.5f, 1.5f), 3);
+		while(parabola.Update())
+		{
+			yield return null;
+		}	
+
+		SpawnMob(refMob, refDropItems, parabola.Position, 1, SpawnMobType.Normal, false);
+		DestroyObject(eggObj);
 	}
 	
 	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
@@ -338,11 +354,15 @@ public class Spawn : MonoBehaviour {
 
 	}
 	
-	void SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
-
+		if (prefEnemyBody == null)
+		{
+			Debug.Log(refMob.prefBody);
+			return null;
+		}
 		Vector3 enemyPos = pos;
 
 		GameObject enemyObj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
@@ -395,6 +415,8 @@ public class Spawn : MonoBehaviour {
 			enemy.SetFollowingCamera(m_champ);
 			TimeEffector.Instance.StopTime();
 		}
+
+		return enemy;
 	}
 	
 	public void SpawnItemBox(RefItemSpawn[] refDropItems, Vector3 pos)
@@ -465,12 +487,11 @@ public class Spawn : MonoBehaviour {
 					item = new ItemSilverMedalData();					
 					break;
 				case ItemData.Type.MobEgg:
-					//StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMobs[Random.Range(desc.minValue, desc.maxValue)], null, pos, spawnMobLevel()));
+					StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], null, pos, spawnMobLevel()));
 					break;
-					/*
-				case ItemData.Type.MobBox:
-					SpawnMob(RefData.Instance.RefMobs[desc.minValue], refDropItems, pos, spawnMobLevel(), SpawnMobType.Normal, false);
-					break;*/
+				case ItemData.Type.ItemPandora:
+					StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], refDropItems, pos));
+					break;
 				}
 				
 				if (item != null)

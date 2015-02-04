@@ -397,7 +397,7 @@ public class Creature : MonoBehaviour {
 			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			dmgEffect.transform.parent = m_aimpoint.transform;
 			dmgEffect.transform.localPosition = Vector3.zero;
-			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
+			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
 			m_pickupItemEffects[(int)type].effect = dmgEffect;
 		}
 

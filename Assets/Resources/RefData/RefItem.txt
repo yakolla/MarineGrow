@@ -48,6 +48,12 @@
 		"icon":"Sprites/Gem"
 	},
 	{
+		"id":9,
+		"codeName":"ItemPandora",
+		"type":"ItemPandora",
+		"icon":"Sprites/swordoftruth"
+	},
+	{
 		"id":101,
 		"codeName":"Firegun",
 		"type":"Weapon",

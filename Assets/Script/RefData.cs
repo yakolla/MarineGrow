@@ -141,6 +141,7 @@ public class RefMobClass
 	public RefMob[]				boss;
 	public RefMob[]				shuttle;
 	public RefMob[]				egg;
+	public RefMob[]				itemPandora;
 }
 
 public class RefMobSpawnRatio
@@ -310,5 +311,10 @@ public class RefData {
 	public RefMob[] RefShuttleMobs
 	{
 		get {return m_refMobClass.shuttle;}
+	}
+
+	public RefMob[] RefItemPandoraMobs
+	{
+		get {return m_refMobClass.itemPandora;}
 	}
 }
