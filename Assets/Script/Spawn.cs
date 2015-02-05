@@ -276,34 +276,11 @@ public class Spawn : MonoBehaviour {
 		DestroyObject(eggObj);
 	}
 	
-	IEnumerator EffectSpawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
+	void spawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
 	{
-		GameObject eggObj = Instantiate (m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
-		Animator eggAni = eggObj.GetComponent<Animator>();
-		eggAni.speed = 0f;
-		Parabola parabola = new Parabola(eggObj, Random.Range(1f, 3f), 5f, Random.Range(-3.14f, 3.14f), Random.Range(-1.5f, 1.5f), 1);
-		while(parabola.Update())
-		{
-			yield return null;
-		}		
-
-		yield return new WaitForSeconds (3f);
-		eggObj.audio.Play();
-		eggAni.speed = 1f;
-		yield return new WaitForSeconds (0.5f);
-
-		SpawnMob(refMob, refDropItems, parabola.Position, mobLevel, SpawnMobType.Egg, false);
-
-		while(eggObj.transform.position.y > parabola.GroundY-1f)
-		{
-			yield return new WaitForSeconds (0.1f);
-			Vector3 eggPos = eggObj.transform.position;
-			eggPos.y -= 0.1f;
-			eggObj.transform.position = eggPos;
-		}
-		
-		DestroyObject(eggObj);
-
+		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
+		Egg egg = eggObj.GetComponent<Egg>();
+		egg.Init(this, refMob, refDropItems, mobLevel);
 	}
 	
 	public void OnKillMob(Mob mob)
@@ -319,7 +296,7 @@ public class Spawn : MonoBehaviour {
 		{
 			for(int i = 0; i < mob.RefMob.eggMob.count; ++i)
 			{
-				StartCoroutine(EffectSpawnMobEgg(mob.RefMob.eggMob.refMob, mob.RefDropItems, mob.transform.position, mob.m_creatureProperty.Level));
+				spawnMobEgg(mob.RefMob.eggMob.refMob, mob.RefDropItems, mob.transform.position, mob.m_creatureProperty.Level);
 			}
 		}
 
@@ -354,7 +331,7 @@ public class Spawn : MonoBehaviour {
 
 	}
 	
-	Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
@@ -431,7 +408,6 @@ public class Spawn : MonoBehaviour {
 			float ratio = Random.Range(0f, 1f);
 			if (ratio <= desc.ratio)
 			{
-
 				float scale = 1f;
 				ItemData item = null;
 				switch(desc.refItem.type)
@@ -487,7 +463,7 @@ public class Spawn : MonoBehaviour {
 					item = new ItemSilverMedalData();					
 					break;
 				case ItemData.Type.MobEgg:
-					StartCoroutine(EffectSpawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], null, pos, spawnMobLevel()));
+					spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], null, pos, spawnMobLevel());
 					break;
 				case ItemData.Type.ItemPandora:
 					StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], refDropItems, pos));
