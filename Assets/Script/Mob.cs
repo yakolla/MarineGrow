@@ -49,6 +49,11 @@ public class Mob : Creature {
 		}
 
 		m_ai.Init(this);
+
+		if (refMob.dropEggMob != null)
+		{
+			StartCoroutine(EffectDropEgg(refMob.dropEggMob.refMob, refMob.dropEggMob.count));
+		}
 	}
 	
 	// Update is called once per frame
@@ -57,6 +62,21 @@ public class Mob : Creature {
 
 		m_ai.Update();
 
+	}
+
+	IEnumerator EffectDropEgg(RefMob eggMob, int maxDrop)
+	{
+
+		while(gameObject != null && maxDrop > 0)
+		{
+			yield return new WaitForSeconds (3f);
+			Egg egg = Spawn.spawnMobEgg(eggMob, RefDropItems, transform.position, m_creatureProperty.Level);
+
+			egg.VRadian[0] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;
+			egg.VRadian[1] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;
+
+			--maxDrop;
+		}
 	}
 
 	public bool Boss

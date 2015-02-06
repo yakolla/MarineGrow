@@ -12,6 +12,10 @@ public class Egg : MonoBehaviour {
 	int			m_mobLevel;
 	Parabola 	m_parabola;
 
+	float[]		m_hSpeed = {1f, 3f};
+	float[]		m_vSpeed = {5f, 5f};
+	float[]		m_vRadian = {-3.14f, 3.14f};
+	float[]		m_hRadian = {1.3f, 1.5f};
 
 	bool		m_ingDeathEffect;
 
@@ -25,9 +29,34 @@ public class Egg : MonoBehaviour {
 
 	}
 
+	public float[]	HSpeed
+	{
+		get{return m_hSpeed;}
+	}
+
+	public float[]	VSpeed
+	{
+		get{return m_vSpeed;}
+	}
+
+	public float[] HRadian
+	{
+		get{return m_hRadian;}
+	}
+
+	public float[] VRadian
+	{
+		get{return m_vRadian;}
+	}
+
 	void Start()
 	{
-		m_parabola = new Parabola(gameObject, Random.Range(1f, 3f), 5f, Random.Range(-3.14f, 3.14f), Random.Range(-1.5f, 1.5f), 1);
+		m_parabola = new Parabola(gameObject, 
+		                          Random.Range(m_hSpeed[0], m_hSpeed[1]), 
+		                          Random.Range(m_vSpeed[0], m_vSpeed[1]), 
+		                          Random.Range(m_vRadian[0], m_vRadian[1]), 
+		                          Random.Range(m_hRadian[0], m_hRadian[1]), 
+		                          1);
 	}
 
 	IEnumerator EffectEgg()

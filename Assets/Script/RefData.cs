@@ -127,6 +127,7 @@ public class RefMob : RefBaseData
 	public int					refWeaponItem;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
+	public RefEggMob			dropEggMob;
 	public RefFollowerMob		followerMob;
 	public RefCreatureBaseProperty		baseCreatureProperty;
 
@@ -255,6 +256,20 @@ public class RefData {
 
 					}
 
+				}
+
+				if (refMob.dropEggMob != null)
+				{
+					foreach(RefMob egg in m_refMobClass.egg)
+					{
+						if (refMob.dropEggMob.refMobId==egg.id)
+						{
+							refMob.dropEggMob.refMob = egg;
+							break;
+						}
+						
+					}
+					
 				}
 			}
 

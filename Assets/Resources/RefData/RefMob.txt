@@ -5,7 +5,7 @@
 			"id":10001,
 			"prefBody":"crazy_dog_skin",
 			"refWeaponItem":"107",
-			"mobAI":"Normal",		
+			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
 				"maxHP":0.6,
@@ -194,7 +194,7 @@
 			"id":20010,
 			"prefBody":"beetle_skin",
 			"refWeaponItem":"105",
-			"mobAI":"Normal",
+			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
 				"maxHP":0.5,
@@ -316,7 +316,12 @@
 			"id":11001,
 			"prefBody":"bat_skin",
 			"refWeaponItem":"110",
-			"mobAI":"Dash",		
+			"mobAI":"Dash",
+			"dropEggMob":
+			{
+				"refMobId":12002,
+				"count":10
+			},
 			"baseCreatureProperty":
 			{
 				"maxHP":1,
@@ -339,7 +344,7 @@
 			"mobAI":"Normal",
 			"eggMob":
 			{
-				"refMobId":22001,
+				"refMobId":12001,
 				"count":2
 			},			
 			"baseCreatureProperty":

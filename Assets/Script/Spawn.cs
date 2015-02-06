@@ -183,7 +183,7 @@ public class Spawn : MonoBehaviour {
 				}
 
 				float waveProgress = Mathf.Min(1f, m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
-				Debug.Log(waveProgress + "," + m_spawningPool);
+				//Debug.Log(waveProgress + "," + m_spawningPool);
 
 				int spawnCount = 0;
 				int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
@@ -259,7 +259,7 @@ public class Spawn : MonoBehaviour {
 
 	int spawnMobLevel()
 	{
-		return 1+m_wave/m_refWorldMap.waves.Length;
+		return 1+m_spawningPool / GetCurrentWave().mobSpawns.Length;
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos)
@@ -276,11 +276,13 @@ public class Spawn : MonoBehaviour {
 		DestroyObject(eggObj);
 	}
 	
-	void spawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
+	public Egg spawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
 	{
 		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
 		Egg egg = eggObj.GetComponent<Egg>();
 		egg.Init(this, refMob, refDropItems, mobLevel);
+
+		return egg;
 	}
 	
 	public void OnKillMob(Mob mob)
@@ -369,7 +371,7 @@ public class Spawn : MonoBehaviour {
 		
 		enemy.SetTarget(m_champ);
 		enemy.m_creatureProperty.Level = mobLevel;
-		//		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
+		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
 		
 		if (boss == true)	
 		{
