@@ -31,7 +31,7 @@ public class FireGunBullet : Bullet {
 		{
 			m_collider.enabled = false;
 		}
-
+		/*
 		RaycastHit hit;
 		Vector3 fwd = transform.TransformDirection(Vector3.right);
 		if (Physics.Raycast(transform.position, fwd, out hit, 10f))
@@ -54,7 +54,7 @@ public class FireGunBullet : Bullet {
 		}
 		else{
 			m_particleSystem.startSpeed = 8f;
-		}
+		}*/
 	}
 
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
@@ -77,12 +77,12 @@ public class FireGunBullet : Bullet {
 
 	void OnTriggerEnter(Collider other) 
 	{
-		return;
+
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
 			float dist = Vector3.Distance(m_ownerCreature.transform.position, creature.transform.position);
-			m_particleSystem.startSpeed = dist;
+			//m_particleSystem.startSpeed = dist;
 
 			m_collider.center = new Vector3(dist/2.6f, m_collider.center.y, m_collider.center.z);
 			m_collider.size = new Vector3(dist, m_collider.size.y, m_collider.size.z);

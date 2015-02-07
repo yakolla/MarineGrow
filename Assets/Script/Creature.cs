@@ -64,6 +64,8 @@ public class Creature : MonoBehaviour {
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
+
+
 	}
 
 	public void ChangeWeapon(ItemWeaponData weaponData)

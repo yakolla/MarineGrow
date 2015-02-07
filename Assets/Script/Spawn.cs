@@ -223,8 +223,18 @@ public class Spawn : MonoBehaviour {
 							enemyPos.z += Random.Range(-scale.z,scale.z);
 							
 							++spawnCount;
+
+							RefItemSpawn[] dropItems = mobSpawn.refDropItems;
+							if (dropItems == null)
+							{
+								if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
+								{
+									dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
+								}
+
+							}
 							StartCoroutine(  EffectSpawnMob(refMob
-							                                , mobSpawn.refDropItems
+							                                , dropItems
 							                                , enemyPos
 							                                , spawnMobLevel()
 							                                , spawnMobType
@@ -275,12 +285,17 @@ public class Spawn : MonoBehaviour {
 		SpawnMob(refMob, refDropItems, parabola.Position, 1, SpawnMobType.Normal, false);
 		DestroyObject(eggObj);
 	}
+
+	public RefItemSpawn[] GetMobItemDrops(RefMob refMob)
+	{
+		return GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id) ? GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems : null;
+	}
 	
-	public Egg spawnMobEgg(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel)
+	public Egg spawnMobEgg(RefMob refMob, Vector3 pos, int mobLevel)
 	{
 		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
 		Egg egg = eggObj.GetComponent<Egg>();
-		egg.Init(this, refMob, refDropItems, mobLevel);
+		egg.Init(this, refMob, GetMobItemDrops(refMob), mobLevel);
 
 		return egg;
 	}
@@ -298,7 +313,7 @@ public class Spawn : MonoBehaviour {
 		{
 			for(int i = 0; i < mob.RefMob.eggMob.count; ++i)
 			{
-				spawnMobEgg(mob.RefMob.eggMob.refMob, mob.RefDropItems, mob.transform.position, mob.m_creatureProperty.Level);
+				spawnMobEgg(mob.RefMob.eggMob.refMob, mob.transform.position, mob.m_creatureProperty.Level);
 			}
 		}
 
@@ -402,92 +417,96 @@ public class Spawn : MonoBehaviour {
 	{		
 		if (refDropItems == null)
 		{
-			refDropItems = GetCurrentWave().refDropItems;
+			refDropItems = GetCurrentWave().itemSpawn.defaultItem;
 		}
 
 		foreach(RefItemSpawn desc in refDropItems)
 		{
-			float ratio = Random.Range(0f, 1f);
-			if (ratio <= desc.ratio)
+			for(int i = 0; i < desc.count; ++i)
 			{
-				float scale = 1f;
-				ItemData item = null;
-				switch(desc.refItem.type)
+				float ratio = Random.Range(0f, 1f);
+				if (ratio <= desc.ratio)
 				{
-				case ItemData.Type.Gold:
-					item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
-					switch(item.Count/3)
+					float scale = 1f;
+					ItemData item = null;
+					switch(desc.refItem.type)
 					{
-					case 0:
-						scale = 0.3f;
+					case ItemData.Type.Gold:
+						item = new ItemGoldData(Random.Range(desc.minValue, desc.maxValue));
+						switch(item.Count/3)
+						{
+						case 0:
+							scale = 0.3f;
+							break;
+						case 1:
+							scale = 0.5f;
+							break;
+						case 2:
+							scale = 0.7f;
+							break;
+						}
 						break;
-					case 1:
-						scale = 0.5f;
+					case ItemData.Type.HealPosion:
+						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
+						switch(item.Count/300)
+						{
+						case 0:
+							scale = 0.3f;
+							break;
+						case 1:
+							scale = 0.5f;
+							break;
+						case 2:
+							scale = 0.7f;
+							break;
+						}
 						break;
-					case 2:
-						scale = 0.7f;
+					case ItemData.Type.Weapon:
+						item = new ItemWeaponData(desc.refItem.id);
+						bindItemOption(item, desc.itemOptionSpawns);
+						
+						break;
+					case ItemData.Type.WeaponParts:
+						item = new ItemWeaponUpgradeFragmentData();					
+						break;
+					case ItemData.Type.Follower:
+						//item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
+						break;
+					case ItemData.Type.WeaponDNA:
+						item = new ItemWeaponEvolutionFragmentData();					
+						break;
+					case ItemData.Type.GoldMedal:
+						item = new ItemGoldMedalData();					
+						break;
+					case ItemData.Type.SilverMedal:
+						item = new ItemSilverMedalData();					
+						break;
+					case ItemData.Type.MobEgg:
+						spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], pos, spawnMobLevel());
+						break;
+					case ItemData.Type.ItemPandora:
+						StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], GetMobItemDrops(RefData.Instance.RefItemPandoraMobs[desc.minValue]), pos));
 						break;
 					}
-					break;
-				case ItemData.Type.HealPosion:
-					item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
-					switch(item.Count/300)
-					{
-					case 0:
-						scale = 0.3f;
-						break;
-					case 1:
-						scale = 0.5f;
-						break;
-					case 2:
-						scale = 0.7f;
-						break;
-					}
-					break;
-				case ItemData.Type.Weapon:
-					item = new ItemWeaponData(desc.refItem.id);
-					bindItemOption(item, desc.itemOptionSpawns);
 					
-					break;
-				case ItemData.Type.WeaponParts:
-					item = new ItemWeaponUpgradeFragmentData();					
-					break;
-				case ItemData.Type.Follower:
-					//item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
-					break;
-				case ItemData.Type.WeaponDNA:
-					item = new ItemWeaponEvolutionFragmentData();					
-					break;
-				case ItemData.Type.GoldMedal:
-					item = new ItemGoldMedalData();					
-					break;
-				case ItemData.Type.SilverMedal:
-					item = new ItemSilverMedalData();					
-					break;
-				case ItemData.Type.MobEgg:
-					spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], null, pos, spawnMobLevel());
-					break;
-				case ItemData.Type.ItemPandora:
-					StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], refDropItems, pos));
-					break;
+					if (item != null)
+					{
+						GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
+						GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
+						itemSkinObj.transform.parent = itemBoxObj.transform;
+						itemSkinObj.transform.localPosition = Vector3.zero;
+						itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
+						itemBoxObj.transform.localScale = Vector3.one * scale;
+						itemBoxObj.SetActive(false);
+						
+						ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
+						itemBox.Item = item;
+						itemBoxObj.SetActive(true);
+					}
+					
 				}
-				
-				if (item != null)
-				{
-					GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
-					GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
-					itemSkinObj.transform.parent = itemBoxObj.transform;
-					itemSkinObj.transform.localPosition = Vector3.zero;
-					itemSkinObj.transform.localRotation = m_prefItemBoxSkins[(int)desc.refItem.type].transform.rotation;
-					itemBoxObj.transform.localScale = Vector3.one * scale;
-					itemBoxObj.SetActive(false);
-
-					ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
-					itemBox.Item = item;
-					itemBoxObj.SetActive(true);
-				}
-				
 			}
+
 		}
 		
 	}

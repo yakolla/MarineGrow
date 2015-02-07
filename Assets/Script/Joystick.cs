@@ -34,7 +34,7 @@ public class Joystick : MonoBehaviour
 	public bool touchPad; 									// Is this a TouchPad?
 	public Rect touchZone;
 	public Vector2 deadZone = Vector2.zero;						// Control when position is output
-	public bool normalize = false; 							// Normalize output after the dead-zone?
+	public bool normalize = true; 							// Normalize output after the dead-zone?
 	public Vector2 position; 									// [-1, 1] in x,y
 	public int tapCount;										// Current tap count
 	
@@ -58,8 +58,8 @@ public class Joystick : MonoBehaviour
 		// Store the default rect for the gui, so we can snap back to it
 		defaultRect = gui.pixelInset;	
 		
-		defaultRect.x = Screen.width/20;
-		defaultRect.y = Screen.height/20;
+		defaultRect.x = Screen.width/10;
+		defaultRect.y = Screen.height/5;
 		defaultRect.width = Screen.width/10;
 		defaultRect.height = Screen.width/10;
 

@@ -88,6 +88,7 @@ public class RefItemSpawn
 	public int 					maxValue;
 	[Range(0F, 1F)]
 	public float				ratio;
+	public int					count = 1;
 	public RefItemOptionSpawn[] itemOptionSpawns;
 
 	[JsonIgnore]
@@ -169,10 +170,25 @@ public class RefMobSpawn
 
 }
 
+public class RefMobItemSpawn
+{
+	public int	refMobId;
+	public RefItemSpawn[]	refDropItems;
+}
+
+public class RefWaveItemSpawn
+{
+	public RefMobItemSpawn[] mobItems;
+	public RefItemSpawn[]	defaultItem;
+
+	[JsonIgnore]
+	public Dictionary<int, RefMobItemSpawn>	 mapMobItems = new Dictionary<int, RefMobItemSpawn>();
+}
+
 public class RefWave
 {
 	public RefMobSpawn[]	mobSpawns;
-	public RefItemSpawn[]	refDropItems;
+	public RefWaveItemSpawn	itemSpawn;
 }
 
 public class RefWorldMap : RefBaseData
@@ -229,11 +245,21 @@ public class RefData {
 
 				}
 
-				if (wave.refDropItems != null)
+				if (wave.itemSpawn != null)
 				{
-					foreach(RefItemSpawn itemSpawn in wave.refDropItems)
+					foreach(RefItemSpawn itemSpawn in wave.itemSpawn.defaultItem)
 					{
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
+					}
+
+					foreach(RefMobItemSpawn mobItemSpawn in wave.itemSpawn.mobItems)
+					{
+						foreach(RefItemSpawn itemSpawn in mobItemSpawn.refDropItems)
+						{
+							itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
+						}
+
+						wave.itemSpawn.mapMobItems[mobItemSpawn.refMobId] = mobItemSpawn;
 					}
 				}
 			}

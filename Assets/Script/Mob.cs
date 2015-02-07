@@ -70,7 +70,7 @@ public class Mob : Creature {
 		while(gameObject != null && maxDrop > 0)
 		{
 			yield return new WaitForSeconds (3f);
-			Egg egg = Spawn.spawnMobEgg(eggMob, RefDropItems, transform.position, m_creatureProperty.Level);
+			Egg egg = Spawn.spawnMobEgg(eggMob, transform.position, m_creatureProperty.Level);
 
 			egg.VRadian[0] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;
 			egg.VRadian[1] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;

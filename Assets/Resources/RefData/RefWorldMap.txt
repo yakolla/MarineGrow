@@ -39,47 +39,8 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[1,1],
-						"refDropItems":
-						[							
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.6								
-							},
-							{
-								"refItemId":7,
-								"minValue":10001,
-								"maxValue":10004,
-								"ratio":0.6								
-							},
-							{
-								"refItemId":9,
-								"minValue":0,
-								"maxValue":0,
-								"ratio":0.6
-							}
-							
-						]
+						"repeatCount":[1,1]
+						
 					},
 					{
 						"refMobIds":{
@@ -186,41 +147,84 @@
 						},
 						"interval":1,
 						"repeatCount":[1,1],
-						"boss":true,
-						"refDropItems":
-						[
-							{
-								"refItemId":5,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-							},
-							{
-								"refItemId":6,
-								"minValue":1,
-								"maxValue":1,
-								"ratio":0.1
-								
-							},
-							{
-								"refItemId":2,
-								"minValue":100,
-								"maxValue":1000,
-								"ratio":0.1
-								
-							}
-						]
+						"boss":true
 					}
 				],
-				"refDropItems":
-				[
-					{
-						"refItemId":1,
-						"minValue":1,
-						"maxValue":10,
-						"ratio":0.1
-					}
-				]
+				"itemSpawn":
+				{
+					"mobItems":
+					[
+						{
+							"refMobId":11001,
+							"refDropItems":
+							[
+								{
+									"refItemId":5,
+									"minValue":1,
+									"maxValue":1,
+									"ratio":0.1
+								},
+								{
+									"refItemId":6,
+									"minValue":1,
+									"maxValue":1,
+									"ratio":0.1
+									
+								},
+								{
+									"refItemId":2,
+									"minValue":100,
+									"maxValue":1000,
+									"ratio":0.1								
+								}
+							]
+						},
+						{
+							"refMobId":1002,
+							"refDropItems":
+							[				
+								
+								{
+									"refItemId":9,
+									"minValue":0,
+									"maxValue":0,
+									"ratio":0.6,
+									"count":3
+								}								
+								
+							]
+						},
+						{
+							"refMobId":2000,
+							"refDropItems":
+							[							
+								{
+									"refItemId":2,
+									"minValue":100,
+									"maxValue":1000,
+									"ratio":0.6,
+									"count":4
+								},								
+								{
+									"refItemId":7,
+									"minValue":10001,
+									"maxValue":10004,
+									"ratio":0.6								
+								}
+								
+							]
+						}
+					],
+					"defaultItem":
+					[
+						{
+							"refItemId":1,
+							"minValue":1,
+							"maxValue":10,
+							"ratio":0.1
+						}
+					]
+				}
 			}
 		]
 	}

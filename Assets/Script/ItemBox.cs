@@ -6,8 +6,6 @@ public class ItemBox : MonoBehaviour {
 	[SerializeField]
 	ItemData			m_item;
 
-	[SerializeField]
-	AudioClip			m_sfxPickupItem;
 
 	[SerializeField]
 	float			m_lifeTime = 15f;
@@ -34,9 +32,6 @@ public class ItemBox : MonoBehaviour {
 
 	public void Pickup(Creature obj)
 	{
-		audio.clip = m_sfxPickupItem;
-		audio.Play();
-
 		m_item.Pickup(obj);
 		SetTarget(obj);
 	}
