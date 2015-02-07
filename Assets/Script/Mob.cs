@@ -71,6 +71,7 @@ public class Mob : Creature {
 		{
 			yield return new WaitForSeconds (3f);
 			Egg egg = Spawn.spawnMobEgg(eggMob, transform.position, m_creatureProperty.Level);
+			egg.audio.Play();
 
 			egg.VRadian[0] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;
 			egg.VRadian[1] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;

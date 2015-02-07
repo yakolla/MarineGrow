@@ -124,8 +124,14 @@ public enum MobAIType
 
 public class RefMob : RefBaseData
 {
+	public class WeaponDesc
+	{
+		public int refItemId;
+		public int level = 1;
+		public int evolution = 0;
+	}
 	public string				prefBody;
-	public int					refWeaponItem;
+	public WeaponDesc			refWeaponItem;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
 	public RefEggMob			dropEggMob;

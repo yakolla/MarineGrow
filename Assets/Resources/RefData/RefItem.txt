@@ -211,15 +211,14 @@
 		"codeName":"Gun",
 		"type":"Weapon",
 		"icon":"Sprites/Gun",
-		
 		"evolutionFiring":
 		{
-			"angle":10,
-			"delay":0
+			"angle":5,
+			"delay":0.1
 		},
 		"weapon":
 		{
-			"coolTime":0.5,
+			"coolTime":1,
 			"range":5
 		}
 	},
@@ -295,8 +294,7 @@
 		"id":108,
 		"codeName":"ChampGun",
 		"type":"Weapon",
-		"icon":"Sprites/Gun",
-		
+		"icon":"Sprites/Gun",		
 		"evolutionFiring":
 		{
 			"angle":2,

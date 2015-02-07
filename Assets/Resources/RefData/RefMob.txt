@@ -4,7 +4,10 @@
 		{
 			"id":10001,
 			"prefBody":"crazy_dog_skin",
-			"refWeaponItem":"107",
+			"refWeaponItem":
+			{
+				"refItemId":"107"
+			},
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
@@ -23,7 +26,10 @@
 		{
 			"id":10010,
 			"prefBody":"small_spider_skin",
-			"refWeaponItem":"107",
+			"refWeaponItem":
+			{
+				"refItemId":"107"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -42,7 +48,10 @@
 		{
 			"id":10020,
 			"prefBody":"spider_skin",
-			"refWeaponItem":"107",
+			"refWeaponItem":
+			{
+				"refItemId":"107"
+			},
 			"mobAI":"Normal",
 			"eggMob":
 			{
@@ -66,7 +75,10 @@
 		{
 			"id":10021,
 			"prefBody":"spider_green_skin",
-			"refWeaponItem":"110",
+			"refWeaponItem":
+			{
+				"refItemId":"110"
+			},
 			"mobAI":"Normal",
 			"eggMob":
 			{
@@ -90,12 +102,15 @@
 		{
 			"id":10030,
 			"prefBody":"slime_skin",
-			"refWeaponItem":"110",
-			"mobAI":"Normal",
-			"eggMob":
+			"refWeaponItem":
+			{
+				"refItemId":"110"
+			},
+			"mobAI":"Normal",			
+			"dropEggMob":
 			{
 				"refMobId":12002,
-				"count":2
+				"count":10
 			},
 			"baseCreatureProperty":
 			{
@@ -117,7 +132,11 @@
 		{
 			"id":20001,
 			"prefBody":"spider_skin",
-			"refWeaponItem":"103",
+			"refWeaponItem":
+			{
+				"refItemId":"103",
+				"evolution":1
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -136,7 +155,10 @@
 		{
 			"id":20002,
 			"prefBody":"spider_skin",
-			"refWeaponItem":"116",
+			"refWeaponItem":
+			{
+				"refItemId":"116"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -155,7 +177,10 @@
 		{
 			"id":20003,
 			"prefBody":"spider_skin",
-			"refWeaponItem":"116",
+			"refWeaponItem":
+			{
+				"refItemId":"116"
+			},
 			"mobAI":"Dash",
 			"baseCreatureProperty":
 			{
@@ -174,7 +199,10 @@
 		{
 			"id":20004,
 			"prefBody":"spider_skin",
-			"refWeaponItem":"105",
+			"refWeaponItem":
+			{
+				"refItemId":"105"
+			},
 			"mobAI":"Dash",
 			"baseCreatureProperty":
 			{
@@ -193,7 +221,10 @@
 		{
 			"id":20010,
 			"prefBody":"beetle_skin",
-			"refWeaponItem":"105",
+			"refWeaponItem":
+			{
+				"refItemId":"105"
+			},
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
@@ -212,7 +243,10 @@
 		{
 			"id":20011,
 			"prefBody":"beetle_skin",
-			"refWeaponItem":"102",
+			"refWeaponItem":
+			{
+				"refItemId":"102"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -234,7 +268,10 @@
 		{
 			"id":12001,
 			"prefBody":"crazy_dog_skin",
-			"refWeaponItem":"107",
+			"refWeaponItem":
+			{
+				"refItemId":"107"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -253,7 +290,10 @@
 		{
 			"id":12002,
 			"prefBody":"slime_skin",
-			"refWeaponItem":"110",
+			"refWeaponItem":
+			{
+				"refItemId":"110"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -272,7 +312,10 @@
 		{
 			"id":12003,
 			"prefBody":"spider_skin",
-			"refWeaponItem":"107",
+			"refWeaponItem":
+			{
+				"refItemId":"107"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -292,7 +335,10 @@
 		{
 			"id":22001,
 			"prefBody":"eye_brain_skin",
-			"refWeaponItem":"104",
+			"refWeaponItem":
+			{
+				"refItemId":"104"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -315,7 +361,10 @@
 		{
 			"id":11001,
 			"prefBody":"bat_skin",
-			"refWeaponItem":"110",
+			"refWeaponItem":
+			{
+				"refItemId":"110"
+			},
 			"mobAI":"Dash",
 			"dropEggMob":
 			{
@@ -340,7 +389,10 @@
 		{
 			"id":21001,
 			"prefBody":"eye_brain_skin",
-			"refWeaponItem":"113",
+			"refWeaponItem":
+			{
+				"refItemId":"113"
+			},
 			"mobAI":"Normal",
 			"eggMob":
 			{
@@ -364,7 +416,10 @@
 		{
 			"id":21002,
 			"prefBody":"eye_brain_skin",
-			"refWeaponItem":"105",		
+			"refWeaponItem":
+			{
+				"refItemId":"105"
+			},	
 			"mobAI":"Normal",
 			"eggMob":
 			{
@@ -388,7 +443,10 @@
 		{
 			"id":21003,
 			"prefBody":"eye_brain_skin",
-			"refWeaponItem":"113",
+			"refWeaponItem":
+			{
+				"refItemId":"113"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -407,7 +465,10 @@
 		{
 			"id":21004,
 			"prefBody":"eye_brain_skin",
-			"refWeaponItem":"112",
+			"refWeaponItem":
+			{
+				"refItemId":"112"
+			},
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
@@ -429,7 +490,10 @@
 		{
 			"id":1002,
 			"prefBody":"plane_skin",
-			"refWeaponItem":"109",
+			"refWeaponItem":
+			{
+				"refItemId":"109"
+			},
 			"mobAI":"ItemShuttle",
 			"baseCreatureProperty":
 			{
@@ -448,7 +512,10 @@
 		{
 			"id":1001,
 			"prefBody":"drumtong_skin",
-			"refWeaponItem":"109",
+			"refWeaponItem":
+			{
+				"refItemId":"109"
+			},
 			"mobAI":"Revolution",		
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
@@ -472,7 +539,10 @@
 		{
 			"id":2000,
 			"prefBody":"item_supplybox_skin",
-			"refWeaponItem":"109",
+			"refWeaponItem":
+			{
+				"refItemId":"109"
+			},
 			"mobAI":"Normal",		
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
