@@ -6,9 +6,9 @@ using System.IO;
 
 public class ChampSettingGUI : MonoBehaviour {
 
-	const int INVEN_SLOT_COLS = 4;
+	const int INVEN_SLOT_COLS = 1;
 	const int INVEN_SLOT_ROWS = 4;
-	const int EQUIP_FOLLOWER_SLOT_MAX = 4;
+	const int EQUIP_ACCESSORY_SLOT_MAX = 4;
 
 	[SerializeField]
 	GameObject		m_prefChamp = null;
@@ -20,7 +20,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	RefItemSpawn[]		m_itemSpawnDesc = null;
 
 	ItemObject		m_equipedWeapon = null;
-	ItemObject[]	m_equipedFollowers = new ItemObject[EQUIP_FOLLOWER_SLOT_MAX];
+	ItemObject[]	m_equipedAccessories = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
 
 	ItemObject		m_latestSelected = null;
 
@@ -43,7 +43,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	public ItemObject[]	EquipedAccessories
 	{
-		get {return m_equipedFollowers;}
+		get {return m_equipedAccessories;}
 	}
 
 	void Start()
@@ -70,7 +70,9 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(new ItemGoldMedalData());
 					Warehouse.Instance.PushItem(new ItemSilverMedalData());
 				}
-				
+
+				Warehouse.Instance.PushItem(new ItemAccessoryData(10));
+
 				Warehouse.Instance.Gold.Item.Count = 100000;
 				Warehouse.Instance.Gem.Item.Count = 100000;
 				
@@ -275,9 +277,9 @@ public class ChampSettingGUI : MonoBehaviour {
 			str += price.count*itemWorth + "</color>";
 
 			if (btnName.CompareTo("") == 0)
-				GUI.Label(new Rect(height*priceIndex, height/5, height, height), str, itemCountStyle);
+				GUI.Label(new Rect(height*priceIndex, height/5, height*0.7f, height*0.7f), str, itemCountStyle);
 			else
-				GUI.Label(new Rect(height*priceIndex, height, height, height), str, itemCountStyle);
+				GUI.Label(new Rect(height*priceIndex, height, height*0.7f, height*0.7f), str, itemCountStyle);
 			
 			++priceIndex;
 			
@@ -289,22 +291,23 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	}
 	
-	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot)
+	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot, int startX, int startY, int width, int height)
 	{
 
 		GUIStyle	itemDescStyle = m_guiSkin.GetStyle("Desc");
 		itemDescStyle.fontSize = m_fontSize;
 
 		int size = (int)m_slotHeight;
-		int startX = size*(INVEN_SLOT_COLS+3);
-		int startY = size*2;
 
+		GUI.BeginGroup(new Rect(startX, startY, width, height));
+		GUI.Label(new Rect(0, 0, width, height), selectedItem.Item.Description(),itemDescStyle);
+		GUI.EndGroup();
 
-		GUI.Label(new Rect(startX, startY, Screen.width-size*(INVEN_SLOT_COLS+1), size*3), selectedItem.Item.Description(),itemDescStyle);
+		startX += width;
 
 		if (selectedItem.Item.Lock == true)
 		{
-			makeItemButton(startX, startY+(size*3), size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
+			makeItemButton(startX, startY, size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
 				selectedItem.Item.Lock = false;
 			});
 
@@ -319,33 +322,34 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), ""))
+				if (GUI.Button(new Rect(startX, startY, size*2, size*2), ""))
 				{
 					m_equipedWeapon = null;				
 				}
-				GUI.Label(new Rect(startX, startY+(size*3), size*2, size*2), "<color=white>"+"Unequip"+"</color>");
+				GUI.Label(new Rect(startX, startY, size*2, size*2), "<color=white>"+"Unequip"+"</color>");
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), ""))
+				if (GUI.Button(new Rect(startX, startY, size*2, size*2), ""))
 				{
 					m_equipedWeapon = selectedItem;				
 				}
-				GUI.Label(new Rect(startX, startY+(size*3), size*2, size*2), "<color=white>"+"Equip"+"</color>");
+				GUI.Label(new Rect(startX, startY, size*2, size*2), "<color=white>"+"Equip"+"</color>");
 			}
 		}break;
-
+		
+		case ItemData.Type.Accessory:
 		case ItemData.Type.Follower:
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Unfollower"))
+				if (GUI.Button(new Rect(startX, startY, size*2, size*2), "Unfollower"))
 				{
-					for(int x = 0; x < m_equipedFollowers.Length; ++x)
+					for(int x = 0; x < m_equipedAccessories.Length; ++x)
 					{
-						if (m_equipedFollowers[x] != null)
+						if (m_equipedAccessories[x] != null)
 						{
-							m_equipedFollowers[x] = null;
+							m_equipedAccessories[x] = null;
 							break;
 						}
 					}					
@@ -353,12 +357,12 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY+(size*3), size*2, size*2), "Follower"))
+				if (GUI.Button(new Rect(startX, startY, size*2, size*2), "Follower"))
 				{
 					bool aleadyExists = false;
-					for(int x = 0; x < m_equipedFollowers.Length; ++x)
+					for(int x = 0; x < m_equipedAccessories.Length; ++x)
 					{
-						if (m_equipedFollowers[x] == selectedItem)
+						if (m_equipedAccessories[x] == selectedItem)
 						{
 							aleadyExists = true;
 							break;
@@ -367,11 +371,11 @@ public class ChampSettingGUI : MonoBehaviour {
 
 					if (aleadyExists == false)
 					{
-						for(int x = 0; x < m_equipedFollowers.Length; ++x)
+						for(int x = 0; x < m_equipedAccessories.Length; ++x)
 						{
-							if (m_equipedFollowers[x] == null)
+							if (m_equipedAccessories[x] == null)
 							{
-								m_equipedFollowers[x] = selectedItem;
+								m_equipedAccessories[x] = selectedItem;
 								break;
 							}
 						}	
@@ -381,11 +385,11 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}break;
 		}
-		int prevWidth = makeItemButton(startX+size*2, startY+(size*3), size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
+		int prevWidth = makeItemButton(startX+size*2, startY, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
 			++selectedItem.Item.Level;
 		});
 
-		makeItemButton(startX+prevWidth+size*2, startY+(size*3), size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
+		makeItemButton(startX+prevWidth+size*2, startY, size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
 			++selectedItem.Item.Evolution;
 		});
 
@@ -404,19 +408,19 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 
 		int size = (int)m_slotHeight;
-		int startY = size;
+		int startY = 0;
 
-		if (GUI.Button(new Rect(Screen.width-size, 0, size, size), "X") && m_equipedWeapon != null)
+		if (GUI.Button(new Rect(Screen.width/2-size, Screen.height-size, size*2, size), "Start") && m_equipedWeapon != null)
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
 			Creature champ = champObj.GetComponent<Creature>();
 
 			m_equipedWeapon.Item.Use(champ);
-			for(int x = 0; x < m_equipedFollowers.Length; ++x)
+			for(int x = 0; x < m_equipedAccessories.Length; ++x)
 			{
-				if (m_equipedFollowers[x] != null)
+				if (m_equipedAccessories[x] != null)
 				{
-					m_equipedFollowers[x].Item.Use(champ);
+					m_equipedAccessories[x].Item.Use(champ);
 				}
 			}	
 			this.enabled = false;
@@ -433,12 +437,12 @@ public class ChampSettingGUI : MonoBehaviour {
 			m_latestSelected = m_equipedWeapon;
 		}
 
-		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "<color=white>Follower</color>", columnStyle);
-		for(int x = 0; x < EQUIP_FOLLOWER_SLOT_MAX; x++)
+		GUI.Label(new Rect(size*2, startY+(size*0), size*2, size), "<color=white>Accessory</color>", columnStyle);
+		for(int x = 0; x < EQUIP_ACCESSORY_SLOT_MAX; x++)
 		{
-			if (GUI.Button(new Rect(size*(2+x), startY+(size*1), size, size), m_equipedFollowers[x] != null ? m_equipedFollowers[x].ItemIcon : null))
+			if (GUI.Button(new Rect(size*(2+x), startY+(size*1), size, size), m_equipedAccessories[x] != null ? m_equipedAccessories[x].ItemIcon : null))
 			{
-				m_latestSelected = m_equipedFollowers[x];
+				m_latestSelected = m_equipedAccessories[x];
 			}
 		}
 
@@ -448,43 +452,40 @@ public class ChampSettingGUI : MonoBehaviour {
 		itemCountStyle.fontSize = m_fontSize;
 
 		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
-		itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), (int)(size*4.5), size*4), itemScrollPosition, new Rect(0, 0, size*4, size+size*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS));
+
+		itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*4), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
 		int itemIndex = 0;
 		foreach(ItemObject item in Warehouse.Instance.Items)
 		{
 			int x = itemIndex%INVEN_SLOT_COLS;
 			int y = itemIndex/INVEN_SLOT_COLS;
-			if (GUI.Button(new Rect(size*x, (size*(y)), size, size), item.ItemIcon))
+			if (GUI.Button(new Rect(size*x, (size*2*(y)+y*size), size*2, size*2), item.ItemIcon))
 			{
 				m_latestSelected = item;
 			}
 			
 			string str = "<color=white>" +item.Item.Count + "</color>";
-			GUI.Label(new Rect(size*x, (size*(y)), size, size), str, itemCountStyle);
+			GUI.Label(new Rect(size*x, (size*2*(y)+y*size), size*2, size*2), str, itemCountStyle);
 
 			++itemIndex;
-		}
-		GUI.EndScrollView();
 
-		GUI.Label(new Rect(size*(INVEN_SLOT_COLS+3), startY, size, size), "<color=white>Desc</color>", columnStyle);
-
-		if (m_latestSelected != null)
-		{
-			bool equiped = m_equipedWeapon == m_latestSelected;
+			bool equiped = m_equipedWeapon == item;
 			if (equiped == false)
 			{
-				for(int x = 0; x < m_equipedFollowers.Length; ++x)
+				for(int e = 0; e < m_equipedAccessories.Length; ++e)
 				{
-					if (m_equipedFollowers[x] == m_latestSelected)
+					if (m_equipedAccessories[e] == item)
 					{
 						equiped = true;
 						break;
 					}
 				}	
 			}
-
-			DisplayItemDesc(m_latestSelected, equiped);
+			
+			DisplayItemDesc(item, equiped, size*3, size*2*(y)+y*size, size*4, size*2);
 		}
+		GUI.EndScrollView();
+
 
 	}
 }

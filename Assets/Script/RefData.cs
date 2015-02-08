@@ -55,6 +55,13 @@ public class RefPriceCondition
 	public RefPrice[]		else_conds;
 }
 
+public class RefItemOption
+{
+	[JsonConverter(typeof(StringEnumConverter))]
+	public ItemData.Option  type;
+
+	public float 			value;
+}
 
 public class RefItem : RefBaseData
 {
@@ -67,6 +74,7 @@ public class RefItem : RefBaseData
 	public 	RefPriceCondition	unlock;
 	public 	RefEvolutionFiring	evolutionFiring;
 	public  RefWeapon			weapon;
+	public 	RefItemOption[]		options; 
 
 }
 

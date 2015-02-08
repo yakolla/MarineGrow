@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-public class ItemOptionDesc
+public class ItemMagicOption
 {
-	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
 	ItemData.Option	m_type;
 	float	m_value;
 	
-	public ItemOptionDesc(ItemData.Option	type, float	value)
+	public ItemMagicOption(ItemData.Option	type, float	value)
 	{
 		m_type = type;
 		m_value = value;
@@ -48,6 +47,7 @@ public class ItemData {
 		MobEgg,
 		Gem,		
 		ItemPandora,
+		Accessory,
 		Count
 	}
 
@@ -68,7 +68,7 @@ public class ItemData {
 	int				m_evoultion = 0;
 	bool			m_lock = false;
 
-	List<ItemOptionDesc>		m_optionDescs = new List<ItemOptionDesc>();
+	List<ItemMagicOption>		m_optionDescs = new List<ItemMagicOption>();
 
 	[JsonIgnore]
 	RefItem				m_refItem;
@@ -78,6 +78,15 @@ public class ItemData {
 		m_refItemId = refItemId;
 		m_count = count;
 		m_refItem = RefData.Instance.RefItems[m_refItemId];
+
+		if (m_refItem.options != null)
+		{
+			foreach(RefItemOption itemOption in m_refItem.options)
+			{
+				m_optionDescs.Add(new ItemMagicOption(itemOption.type, itemOption.value));
+			}
+		}
+
 	}
 
 	virtual public string Description()
@@ -95,7 +104,7 @@ public class ItemData {
 			return "";
 
 		string desc = "\n";
-		foreach(ItemOptionDesc op in OptionDescs)
+		foreach(ItemMagicOption op in OptionDescs)
 		{
 			desc += op.Descript() + "\n";
 		}
@@ -113,7 +122,7 @@ public class ItemData {
 
 	public void ApplyOptions(Creature obj)
 	{
-		foreach(ItemOptionDesc desc in m_optionDescs)
+		foreach(ItemMagicOption desc in m_optionDescs)
 		{
 			switch(desc.Type)
 			{
@@ -121,6 +130,7 @@ public class ItemData {
 				obj.m_creatureProperty.AlphaPhysicalAttackDamage += desc.Value;
 				break;
 			case Option.MovingSpeed:
+				obj.m_creatureProperty.AlphaMoveSpeed += desc.Value;
 				break;
 			case Option.DefencePoint:
 				obj.m_creatureProperty.AlphaPhysicalDefencePoint += desc.Value;
@@ -131,7 +141,7 @@ public class ItemData {
 
 	public void NoApplyOptions(Creature obj)
 	{
-		foreach(ItemOptionDesc desc in m_optionDescs)
+		foreach(ItemMagicOption desc in m_optionDescs)
 		{
 			switch(desc.Type)
 			{
@@ -177,7 +187,7 @@ public class ItemData {
 
 	}
 
-	public List<ItemOptionDesc> OptionDescs
+	public List<ItemMagicOption> OptionDescs
 	{
 		get {return m_optionDescs;}
 	}

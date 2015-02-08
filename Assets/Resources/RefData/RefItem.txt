@@ -54,6 +54,19 @@
 		"icon":"Sprites/swordoftruth"
 	},
 	{
+		"id":10,
+		"codeName":"Boots",
+		"type":"Accessory",
+		"icon":"Sprites/Boots",
+		"options":
+		[
+			{
+				"type":"MovingSpeed",
+				"value":1
+			}
+		]
+	},
+	{
 		"id":101,
 		"codeName":"Firegun",
 		"type":"Weapon",
@@ -214,11 +227,11 @@
 		"evolutionFiring":
 		{
 			"angle":5,
-			"delay":0.1
+			"delay":0.3
 		},
 		"weapon":
 		{
-			"coolTime":1,
+			"coolTime":2,
 			"range":5
 		}
 	},

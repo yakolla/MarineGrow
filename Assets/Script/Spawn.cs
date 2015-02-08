@@ -262,7 +262,7 @@ public class Spawn : MonoBehaviour {
 			float ratio = Random.Range(0f, 1f);
 			if (ratio <= desc.ratio)
 			{
-				item.OptionDescs.Add(new ItemOptionDesc(desc.type, Random.Range(desc.minValue, desc.maxValue)));
+				item.OptionDescs.Add(new ItemMagicOption(desc.type, Random.Range(desc.minValue, desc.maxValue)));
 			}
 		}
 	}

@@ -59,21 +59,21 @@ public class Champ : Creature {
 			return;
 
 		Vector3 pos = Vector3.zero;
-		float step = 1f;
+		float step = m_creatureProperty.MoveSpeed;
 
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			pos.x += m_joystick.position.x;
-			pos.z += m_joystick.position.y;
+			pos.x += m_joystick.position.x*step;
+			pos.z += m_joystick.position.y*step;
 
 			if (m_targeting == null)
 			{
 				float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
-				transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
-				
+				transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);				
 			}
 			
 			m_navAgent.SetDestination(transform.position+pos);
+
 		}
 		else
 		{
