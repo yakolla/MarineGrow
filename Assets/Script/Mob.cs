@@ -14,20 +14,28 @@ public class Mob : Creature {
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 	}
 
-	public void Init(RefMob refMob, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
+	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
 	{
 		RefMob = refMob;
 		Spawn = spawn;
 		RefDropItems = refDropItems;
 		Boss = boss;
 
-		m_creatureProperty.init(this, m_refMob.baseCreatureProperty);
+		m_creatureProperty.init(this, m_refMob.baseCreatureProperty);		
+		m_creatureProperty.Level = mobLevel;
+
 		GameObject prefDeathEffect = Resources.Load<GameObject>("Pref/mon_skin/"+refMob.prefBody+"_death");
 		if (prefDeathEffect != null)
 		{
 			m_prefDeathEffect = prefDeathEffect;
 		}
 
+		foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
+		{
+			ItemObject weapon = new ItemObject(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
+			weapon.Item.Evolution = weaponDesc.evolution+(int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
+			weapon.Item.Use(this);
+		}
 
 		switch(refMob.mobAI)
 		{
@@ -45,6 +53,12 @@ public class Mob : Creature {
 			break;
 		case MobAIType.ItemShuttle:
 			m_ai = new MobAIItemShuttle();
+			break;
+		case MobAIType.Dummy:
+			m_ai = new MobAIDummy();
+			break;
+		case MobAIType.Bomber:
+			m_ai = new MobAIBomber();
 			break;
 		}
 

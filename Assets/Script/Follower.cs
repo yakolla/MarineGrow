@@ -15,7 +15,7 @@ public class Follower : Creature {
 
 		base.Start();
 
-		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId));
+		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId, null));
 		m_weapon.Item.Use(this);
 
 	}
@@ -25,7 +25,7 @@ public class Follower : Creature {
 
 		if (AutoAttack() == false)
 		{
-			m_weaponHolder.GetComponent<WeaponHolder>().GetWeapon().StopFiring();
+			m_weaponHolder.GetComponent<WeaponHolder>().StopFiring();
 			if (m_owner != null)
 				m_navAgent.SetDestination(m_owner.transform.position);
 		}

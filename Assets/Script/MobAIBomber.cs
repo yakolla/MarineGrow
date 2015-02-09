@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MobAIItemShuttle : MobAI {
+public class MobAIBomber : MobAI {
 
 	GameObject[]	m_planeSpots;
 	Vector3	m_start;
@@ -52,29 +52,13 @@ public class MobAIItemShuttle : MobAI {
 		m_elapsed += Time.deltaTime;
 		m_droppedItemTime += Time.deltaTime;
 
-		if (m_elapsed >= m_dropTryTime)
+		if (0.1 > Vector3.Distance(m_mob.transform.position, m_goal))
 		{
-			if (0.1 > Vector3.Distance(m_mob.transform.position, m_goal))
-			{
-				m_mob.Death();
-				return;
-			}
-
-			float ratio = Random.Range(0f, 1f);
-			
-			if (ratio < m_droppedItemTime/m_dropFullTime)
-			{
-				Vector3 pos = m_mob.transform.position;
-				pos.y = m_dropPosY;
-				m_mob.Spawn.SpawnItemBox(m_mob.RefDropItems, pos);
-				m_droppedItemTime = 0f;
-			}
-
-			m_elapsed = 0f;
+			m_mob.Death();
+			return;
 		}
 
-
-
+		m_mob.WeaponHolder.StartFiring(new Vector2(Random.Range(0, 360), 0f));
 
 	}
 

@@ -55,11 +55,11 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(101));
-				Warehouse.Instance.PushItem(new ItemWeaponData(102));
-				Warehouse.Instance.PushItem(new ItemWeaponData(108));
-				Warehouse.Instance.PushItem(new ItemWeaponData(111));
-				Warehouse.Instance.PushItem(new ItemWeaponData(114));
+				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(108, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
 				for(int i = 0 ; i < 1000; ++i)
 				{
 					Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData());
@@ -85,7 +85,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(108));
+				Warehouse.Instance.PushItem(new ItemWeaponData(108, null));
 			}
 			
 			//Save ();
@@ -451,9 +451,28 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
 		itemCountStyle.fontSize = m_fontSize;
 
+		if(Input.touchCount > 0)
+		{
+			Touch touch = Input.touches[0];
+			if (touch.phase == TouchPhase.Moved)
+			{
+				itemScrollPosition.y += touch.deltaPosition.y;
+			}
+		}
+
 		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
 
-		itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*4), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
+		switch (Application.platform)
+		{
+		case RuntimePlatform.WindowsEditor:
+		case RuntimePlatform.WindowsPlayer:
+			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*4), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
+			break;
+		default:
+			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*4), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size),GUIStyle.none,GUIStyle.none);
+			break;
+		}
+
 		int itemIndex = 0;
 		foreach(ItemObject item in Warehouse.Instance.Items)
 		{

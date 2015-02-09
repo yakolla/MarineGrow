@@ -6,11 +6,17 @@ public class ItemWeaponData : ItemData{
 
 	GameObject 	m_prefWeapon;
 	string 	m_weaponName;
+	WeaponStat	m_weaponStat;
 
-	public ItemWeaponData(int refItemId) : base(refItemId, 1)
+	public ItemWeaponData(int refItemId, WeaponStat	weaponStat) : base(refItemId, 1)
 	{
 		m_prefWeapon = Resources.Load<GameObject>("Pref/Weapon/" + RefItem.codeName);
 		m_weaponName = RefItem.codeName;
+		if (weaponStat == null)
+			m_weaponStat = RefItem.weaponStat;
+		else
+			m_weaponStat = weaponStat;
+
 		Lock = true;
 	}
 
@@ -24,9 +30,14 @@ public class ItemWeaponData : ItemData{
 		get{return m_weaponName;}
 	}
 
+	public WeaponStat WeaponStat
+	{
+		get{return m_weaponStat;}
+	}
+
 	override public void Use(Creature obj)
 	{
-		obj.ChangeWeapon(this);
+		obj.EquipWeapon(this);
 
 		ApplyOptions(obj);
 	}

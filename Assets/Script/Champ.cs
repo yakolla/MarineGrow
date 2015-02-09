@@ -127,7 +127,7 @@ public class Champ : Creature {
 			{
 				m_charging = true;
 				m_startChargeTime = Time.time;
-				m_weaponHolder.GetWeapon().StopFiring();
+				m_weaponHolder.StopFiring();
 				Debug.Log("GetMouseButtonDown");
 			}
 			else if (Input.GetMouseButtonUp(1) == true)
@@ -137,14 +137,14 @@ public class Champ : Creature {
 				
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos));
+				m_weaponHolder.StartFiring(RotateToTarget(pos));
 			}
 			
 			if (m_charging == false)
 			{
 				if (AutoAttack() == false)
 				{
-					m_weaponHolder.GetWeapon().StopFiring();
+					m_weaponHolder.StopFiring();
 				}
 				
 			}
@@ -157,11 +157,11 @@ public class Champ : Creature {
 				Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				pos = ray.origin + (ray.direction* 10f);
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(pos));
+				m_weaponHolder.StartFiring(RotateToTarget(pos));
 			}
 			else
 			{
-				m_weaponHolder.GetWeapon().StopFiring();
+				m_weaponHolder.StopFiring();
 			}
 		}
 

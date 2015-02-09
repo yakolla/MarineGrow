@@ -379,14 +379,10 @@ public class Spawn : MonoBehaviour {
 		bool boss = spawnMobType == SpawnMobType.Boss;
 		
 		Mob enemy = enemyObj.GetComponent<Mob>();
-		enemy.Init(refMob, this, refDropItems, boss);
-		ItemObject weapon = new ItemObject(new ItemWeaponData(refMob.refWeaponItem.refItemId));
-		weapon.Item.Evolution = refMob.refWeaponItem.evolution+(int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
-		weapon.Item.Use(enemy);
+		enemy.Init(refMob, mobLevel, this, refDropItems, boss);
 		
 		enemy.SetTarget(m_champ);
-		enemy.m_creatureProperty.Level = mobLevel;
-		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", Evolution : " + weapon.Item.Evolution + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
+		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
 		
 		if (boss == true)	
 		{
@@ -462,7 +458,7 @@ public class Spawn : MonoBehaviour {
 						}
 						break;
 					case ItemData.Type.Weapon:
-						item = new ItemWeaponData(desc.refItem.id);
+						item = new ItemWeaponData(desc.refItem.id, null);
 						bindItemOption(item, desc.itemOptionSpawns);
 						
 						break;

@@ -1,23 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WeaponHolder : MonoBehaviour {
 
-	Weapon			m_weapon = null;
+	List<Weapon>			m_weapons = new List<Weapon>();
 
-	public void ChangeWeapon(Weapon weapon)
+	public void EquipWeapon(Weapon weapon)
 	{
-		if (m_weapon != null)
-		{
-			DestroyObject(m_weapon);
-			m_weapon = null;
-		}
-
-		m_weapon = weapon;
+		m_weapons.Add(weapon);
 	}
 
-	public Weapon GetWeapon()
+	public void StartFiring(Vector2 targetAngle)
 	{
-		return m_weapon;
+		foreach(Weapon weapon in m_weapons)
+		{
+			weapon.StartFiring(targetAngle);
+		}
+	}
+
+	public void StopFiring()
+	{
+		foreach(Weapon weapon in m_weapons)
+		{
+			weapon.StopFiring();
+		}
+	}
+
+	public float AttackRange()
+	{
+		if (m_weapons.Count == 0)
+			return 0f;
+
+		return m_weapons[0].AttackRange;
 	}
 }

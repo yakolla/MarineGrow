@@ -40,6 +40,36 @@ public class Weapon : MonoBehaviour {
 
 	}
 
+	public void Init(ItemWeaponData weaponData)
+	{
+		if (weaponData.RefItem.evolutionFiring == null)
+		{
+			m_firingDescs = new Weapon.FiringDesc[1];
+			m_firingDescs[0].angle = 0;
+			m_firingDescs[0].delayTime = 0;
+		}
+		else
+		{
+			m_firingDescs = new Weapon.FiringDesc[weaponData.Evolution*2+1];
+			for(int i = 0; i < m_firingDescs.Length; ++i)
+			{
+				m_firingDescs[i].angle = weaponData.RefItem.evolutionFiring.angle*((i+1)/2);
+				if (i % 2 == 1)
+				{
+					m_firingDescs[i].angle *= -1;
+				}
+				
+				
+				m_firingDescs[i].delayTime = weaponData.RefItem.evolutionFiring.delay*i;
+				
+			}
+		}
+		
+		AttackRange = weaponData.WeaponStat.range;
+		CoolTime = weaponData.WeaponStat.coolTime;
+
+	}
+
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
 		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;

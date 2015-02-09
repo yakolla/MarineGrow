@@ -12,7 +12,7 @@ public class ItemFollowerData : ItemData{
 	public ItemFollowerData(RefMob refMob) : base(1001, 1)
 	{
 		m_followerName = refMob.prefBody;
-		m_weaponID = refMob.refWeaponItem.refItemId;
+		m_weaponID = refMob.refWeaponItems[0].refItemId;
 		m_baseProperty = refMob.baseCreatureProperty;
 		m_aiType = refMob.mobAI;
 	}

@@ -65,11 +65,11 @@ public class Creature : MonoBehaviour {
 		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 
 
-
 	}
 
-	public void ChangeWeapon(ItemWeaponData weaponData)
+	public void EquipWeapon(ItemWeaponData weaponData)
 	{
+		
 		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
 
 		GameObject obj = Instantiate (weaponData.PrefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
@@ -80,40 +80,17 @@ public class Creature : MonoBehaviour {
 		obj.transform.localRotation = weaponData.PrefWeapon.transform.localRotation;
 		obj.transform.localScale = weaponData.PrefWeapon.transform.localScale;
 
-		if (weaponData.RefItem.evolutionFiring == null)
-		{
-			weapon.m_firingDescs = new Weapon.FiringDesc[1];
-			weapon.m_firingDescs[0].angle = 0;
-			weapon.m_firingDescs[0].delayTime = 0;
-		}
-		else
-		{
-			weapon.m_firingDescs = new Weapon.FiringDesc[weaponData.Evolution*2+1];
-			for(int i = 0; i < weapon.m_firingDescs.Length; ++i)
-			{
-				weapon.m_firingDescs[i].angle = weaponData.RefItem.evolutionFiring.angle*((i+1)/2);
-				if (i % 2 == 1)
-				{
-					weapon.m_firingDescs[i].angle *= -1;
-				}
-				
-				
-				weapon.m_firingDescs[i].delayTime = weaponData.RefItem.evolutionFiring.delay*i;
-				
-			}
-		}
-
-		weapon.AttackRange = weaponData.RefItem.weapon.range;
-		weapon.CoolTime = weaponData.RefItem.weapon.coolTime;
-
-		m_weaponHolder.ChangeWeapon(weapon);
-		m_weaponHolder.GetWeapon().m_callbackCreateBullet = delegate() {
+		weapon.Init(weaponData);
+		weapon.m_callbackCreateBullet = delegate() {
 			if (m_animator != null)
 			{
 				m_animator.SetTrigger("Attack");
 			}
 
 		};
+
+		m_weaponHolder.EquipWeapon(weapon);
+
 	}
 
 	public Spawn Spawn	{
@@ -169,13 +146,18 @@ public class Creature : MonoBehaviour {
 		get {return m_dropItems;}
 	}
 
+	public WeaponHolder WeaponHolder
+	{
+		get {return m_weaponHolder;}
+	}
+
 	protected bool inAttackRange(GameObject targeting, float overrideRange)
 	{
 		float dist = Vector3.Distance(transform.position, targeting.transform.position);
 
 		if (overrideRange == 0f)
 		{
-			if (dist <= m_weaponHolder.GetWeapon().AttackRange)
+			if (dist <= m_weaponHolder.AttackRange())
 			{
 				return true;
 			}
@@ -261,12 +243,12 @@ public class Creature : MonoBehaviour {
 
 			if (m_targeting != null)
 			{
-				m_weaponHolder.GetWeapon().StartFiring(RotateToTarget(m_targeting.transform.position));
+				m_weaponHolder.StartFiring(RotateToTarget(m_targeting.transform.position));
 				return true;
 			}
 		}
 		m_targeting = null;
-		m_weaponHolder.GetWeapon().StopFiring();
+		m_weaponHolder.StopFiring();
 		return false;
 	}
 

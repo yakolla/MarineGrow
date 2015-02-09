@@ -13,7 +13,7 @@ public class Parasite : Creature {
 
 		m_creatureProperty.init(this, m_creatureBaseProperty);
 
-		ChangeWeapon(new ItemWeaponData(m_refWeaponItem));
+		EquipWeapon(new ItemWeaponData(m_refWeaponItem, null));
 	}
 
 	// Update is called once per frame

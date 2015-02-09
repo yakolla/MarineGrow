@@ -36,7 +36,7 @@ public class RefEvolutionFiring
 	public float			delay;
 }
 
-public class RefWeapon
+public class WeaponStat
 {
 	public float			coolTime;
 	public float			range;
@@ -73,7 +73,7 @@ public class RefItem : RefBaseData
 	public	RefPriceCondition	evolution;
 	public 	RefPriceCondition	unlock;
 	public 	RefEvolutionFiring	evolutionFiring;
-	public  RefWeapon			weapon;
+	public  WeaponStat			weaponStat;
 	public 	RefItemOption[]		options; 
 
 }
@@ -128,6 +128,8 @@ public enum MobAIType
 	Dash,
 	Revolution,
 	ItemShuttle,
+	Dummy,
+	Bomber,
 }
 
 public class RefMob : RefBaseData
@@ -137,9 +139,10 @@ public class RefMob : RefBaseData
 		public int refItemId;
 		public int level = 1;
 		public int evolution = 0;
+		public WeaponStat weaponStat;
 	}
 	public string				prefBody;
-	public WeaponDesc			refWeaponItem;
+	public WeaponDesc[]			refWeaponItems;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
 	public RefEggMob			dropEggMob;
