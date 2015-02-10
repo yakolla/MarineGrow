@@ -20,6 +20,8 @@ public class Champ : Creature {
 	[SerializeField]
 	RefCreatureBaseProperty	m_creatureBaseProperty;
 
+	int			m_remainStatPoint = 0;
+
 	new void Start () {
 		
 		m_creatureProperty.init(this, m_creatureBaseProperty);
@@ -34,17 +36,22 @@ public class Champ : Creature {
 		m_joystick = GameObject.Find("LeftJoystick").GetComponent<Joystick>();
 	}
 
+	public int RemainStatPoint
+	{
+		get{return m_remainStatPoint;}
+		set{m_remainStatPoint = value;}
+	}
 
 	void LevelUp()
 	{
+		m_remainStatPoint+=3;
+
 		GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
 		effect.transform.parent = transform;
 		effect.transform.localPosition = m_prefLevelUpEffect.transform.position;
 		effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
 		StartCoroutine(UpdateLevelUpEffect(effect));
-		
-		transform.Find("LevelupGUI").gameObject.SetActive(true);
-		ChampLevelupGUI levelupGUI = transform.Find("LevelupGUI").GetComponent<ChampLevelupGUI>();
+
 	}
 
 	IEnumerator UpdateLevelUpEffect(GameObject effect)

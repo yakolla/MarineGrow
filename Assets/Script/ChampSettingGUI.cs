@@ -219,7 +219,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		int prevWidth = 0;
 		if (condition != null)
 		{			
-			prevWidth = size*condition.conds.Length;
+			prevWidth = size*3;
 			if (false == makeItemButtonCore(startX, startY, prevWidth, size, size*2, condition.conds, itemWorth, btnName, functor))
 			{
 				makeItemButtonCore(startX, startY+size*2, prevWidth, size, size, condition.else_conds, itemWorth, "", functor);
@@ -231,10 +231,11 @@ public class ChampSettingGUI : MonoBehaviour {
 	}
 	bool makeItemButtonCore(int startX, int startY, int width, int height, int btnHeight, RefPrice[] conds, float itemWorth, string btnName, OnPay functor)
 	{
-		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
+		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemReqCount");
 		itemCountStyle.fontSize = m_fontSize;
 
 		GUI.BeginGroup(new Rect(startX, startY, width, btnHeight));
+
 		if (GUI.Button(new Rect(0, 0, width, btnHeight), ""))
 		{
 			if (CheckAvailableItem(conds, itemWorth))
@@ -249,37 +250,37 @@ public class ChampSettingGUI : MonoBehaviour {
 		
 		bool able = true;
 		int priceIndex = 0;
+		startY = height/4;
+		float imgSize = height*0.7f;
+		height = btnHeight-height;
 		foreach(RefPrice price in conds)
 		{
 			RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
 
-			if (btnName.CompareTo("") == 0)
-				GUI.Label(new Rect(height*priceIndex, height/5, height*0.7f, height*0.7f), Resources.Load<Texture>(condRefItem.icon));
-			else
-				GUI.Label(new Rect(height*priceIndex, height, height*0.7f, height*0.7f), Resources.Load<Texture>(condRefItem.icon));
-
-
+			GUI.Label(new Rect((width/(1+conds.Length)-imgSize/2)+(width/(1+conds.Length)-imgSize/2)*2*priceIndex, height, imgSize, imgSize), Resources.Load<Texture>(condRefItem.icon));
 			
 			string str = "<color=white>";
 			
 			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
+			int hasCount = 0;
 			if (inventoryItemObj == null)
 			{
 				str = "<color=red>";
 				able = false;
 			}
-			else if (inventoryItemObj != null && inventoryItemObj.Item.Count < price.count*itemWorth)
+			else if (inventoryItemObj != null)
 			{
-				str = "<color=red>";
-				able = false;
+				if (inventoryItemObj.Item.Count < price.count*itemWorth)
+				{
+					str = "<color=red>";
+					able = false;
+				}
+				hasCount = inventoryItemObj.Item.Count;
 			}
-			
-			str += price.count*itemWorth + "</color>";
-
-			if (btnName.CompareTo("") == 0)
-				GUI.Label(new Rect(height*priceIndex, height/5, height*0.7f, height*0.7f), str, itemCountStyle);
-			else
-				GUI.Label(new Rect(height*priceIndex, height, height*0.7f, height*0.7f), str, itemCountStyle);
+			str += hasCount;
+			str += "/" + price.count*itemWorth;
+			str += "</color>";
+			GUI.Label(new Rect(width/(conds.Length)*priceIndex, startY+height, width/(conds.Length), imgSize), str, itemCountStyle);
 			
 			++priceIndex;
 			
@@ -322,19 +323,19 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY, size*2, size*2), ""))
+				if (GUI.Button(new Rect(startX, startY, size*3, size*2), ""))
 				{
 					m_equipedWeapon = null;				
 				}
-				GUI.Label(new Rect(startX, startY, size*2, size*2), "<color=white>"+"Unequip"+"</color>");
+				GUI.Label(new Rect(startX, startY, size*3, size*2), "<color=white>"+"Unequip"+"</color>");
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY, size*2, size*2), ""))
+				if (GUI.Button(new Rect(startX, startY, size*3, size*2), ""))
 				{
 					m_equipedWeapon = selectedItem;				
 				}
-				GUI.Label(new Rect(startX, startY, size*2, size*2), "<color=white>"+"Equip"+"</color>");
+				GUI.Label(new Rect(startX, startY, size*3, size*2), "<color=white>"+"Equip"+"</color>");
 			}
 		}break;
 		
@@ -343,7 +344,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (true == inEquipSlot)
 			{
-				if (GUI.Button(new Rect(startX, startY, size*2, size*2), "Unfollower"))
+				if (GUI.Button(new Rect(startX, startY, size*3, size*2), "Unfollower"))
 				{
 					for(int x = 0; x < m_equipedAccessories.Length; ++x)
 					{
@@ -357,7 +358,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 			else
 			{
-				if (GUI.Button(new Rect(startX, startY, size*2, size*2), "Follower"))
+				if (GUI.Button(new Rect(startX, startY, size*3, size*2), "Follower"))
 				{
 					bool aleadyExists = false;
 					for(int x = 0; x < m_equipedAccessories.Length; ++x)
@@ -385,19 +386,28 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}break;
 		}
-		int prevWidth = makeItemButton(startX+size*2, startY, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
-			++selectedItem.Item.Level;
-		});
 
-		makeItemButton(startX+prevWidth+size*2, startY, size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
-			++selectedItem.Item.Evolution;
-		});
+		if (selectedItem.Item.Level < 9)
+		{
+			makeItemButton(startX+size*3, startY, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
+				++selectedItem.Item.Level;
+			});
+		}
+		else
+		{
+			makeItemButton(startX+size*3, startY, size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
+				++selectedItem.Item.Evolution;
+				selectedItem.Item.Level = 1;
+			});
+		}
+
 
 	}
 
 	[SerializeField]
 	Vector2 itemScrollPosition;
-
+	
+	float accel = 1f;
 
 	void DisplayGoodsWindow(int windowID)
 	{
@@ -451,15 +461,19 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
 		itemCountStyle.fontSize = m_fontSize;
 
+		float delta = 0f;
 		if(Input.touchCount > 0)
 		{
 			Touch touch = Input.touches[0];
 			if (touch.phase == TouchPhase.Moved)
 			{
-				itemScrollPosition.y += touch.deltaPosition.y;
+				delta = touch.deltaPosition.y;
+				accel = -Input.acceleration.y*5f;
 			}
 		}
-
+		Debug.Log(Input.acceleration);
+		itemScrollPosition.y += delta * accel;
+		accel -= accel*Time.deltaTime;
 		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
 
 		switch (Application.platform)

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ChampStatusGUI : MonoBehaviour {
 
-	Creature	m_creature;
+	Champ	m_champ;
 
 	Rect 		m_guageWindowRect;
 	Rect 		m_skillWindowRect;
@@ -20,7 +20,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void Start () {
 
-		m_creature = transform.parent.gameObject.GetComponent<Creature>();
+		m_champ = transform.parent.gameObject.GetComponent<Champ>();
 		m_guageTexture = Resources.Load<Texture>("Sprites/HP Guage");
 
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
@@ -37,6 +37,18 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_guageWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
 		m_skillWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
+
+		if (m_champ.RemainStatPoint > 0)
+		{
+			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
+			levelupStyle.fontSize = m_fontSize;
+
+			if (GUI.Button(new Rect(0, 0, m_slotHeight, m_slotHeight), "+", levelupStyle))
+			{
+				ChampAbilityGUI abilityGUI = m_champ.transform.Find("ChampAbilityGUI").GetComponent<ChampAbilityGUI>();
+				abilityGUI.gameObject.SetActive(true);
+			}
+		}
 	}
 
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)
@@ -76,12 +88,12 @@ public class ChampStatusGUI : MonoBehaviour {
 		int startY = 0;
 		int size = (int)m_slotHeight/2;
 
-		float hp = m_creature.m_creatureProperty.getHPRemainRatio();
-		string lable = Mathf.FloorToInt(m_creature.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxHP).ToString();
+		float hp = m_champ.m_creatureProperty.getHPRemainRatio();
+		string lable = Mathf.FloorToInt(m_champ.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxHP).ToString();
 		drawGuage(new Rect(0, 0, m_slotWidth, size), hp, lable, m_guageTexture); 
 
-		float expRatio = m_creature.m_creatureProperty.getExpRemainRatio();
-		lable = Mathf.FloorToInt(m_creature.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_creature.m_creatureProperty.MaxExp).ToString();
+		float expRatio = m_champ.m_creatureProperty.getExpRemainRatio();
+		lable = Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();
 		drawGuage(new Rect(0, startY+(size*1), m_slotWidth-size, size), expRatio, lable, m_guageTexture); 
 
 	}
@@ -97,7 +109,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		}
 		if (GUI.Button(new Rect(startX+1*size, 0, size, size), "X"))
 		{
-			m_creature.m_creatureProperty.Heal((int)m_creature.m_creatureProperty.MaxHP);
+			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
 		}
 		GUI.Button(new Rect(startX+2*size, 0, size, size), "C");
 		GUI.Button(new Rect(startX+3*size, 0, size, size), "V");
