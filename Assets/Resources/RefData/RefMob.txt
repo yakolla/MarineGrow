@@ -610,6 +610,33 @@
 		}
 		
 	],
+	"follower":
+	[
+		{
+			"id":30001,
+			"prefBody":"marine_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"108"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":0.3,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.5,
+				"moveSpeed":3,
+				"navMeshBaseOffset":0
+			}
+		}
+	],
 	"itemPandora":
 	[		
 		{

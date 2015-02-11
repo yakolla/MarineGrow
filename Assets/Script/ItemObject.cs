@@ -4,13 +4,13 @@ using System.Collections;
 public class ItemObject {
 
 
-	Texture			m_icon;
+	Texture2D			m_icon;
 	ItemData			m_item;
 
 	public ItemObject(ItemData item)
 	{
 		m_item = item;
-		m_icon = Resources.Load<Texture>(item.RefItem.icon);
+		m_icon = Resources.Load<Texture2D>(item.RefItem.icon);
 	}
 
 	public ItemData Item
@@ -18,7 +18,7 @@ public class ItemObject {
 		get {return m_item;}
 	}
 
-	public Texture ItemIcon
+	public Texture2D ItemIcon
 	{
 		get { return m_icon; }
 	}

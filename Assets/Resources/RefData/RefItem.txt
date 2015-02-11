@@ -657,6 +657,47 @@
 		"codeName":"Follower",
 		"type":"Follower",
 		"icon":"Sprites/Follower",
-		
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":100
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":10
+				}
+			]
+		},
+		"evolution":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":100
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":10
+				}
+			]
+		},
 	}
 ]

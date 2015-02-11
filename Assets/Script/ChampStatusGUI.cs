@@ -18,10 +18,16 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	int			m_fontSize = (int)(Screen.width*(1/50f));
 
+	ChampSettingGUI	m_champSettingGUI = null;
+
+	float[]		m_skillUsedTime = new float[4];
+
 	void Start () {
 
 		m_champ = transform.parent.gameObject.GetComponent<Champ>();
 		m_guageTexture = Resources.Load<Texture>("Sprites/HP Guage");
+
+		m_champSettingGUI = GameObject.Find("ChampSettingGUI").GetComponent<ChampSettingGUI>();
 
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
 		m_guageWindowRect = new Rect(Screen.width/2-m_slotWidth/2, Screen.height-m_slotHeight, m_slotWidth, m_slotHeight);
@@ -102,16 +108,33 @@ public class ChampStatusGUI : MonoBehaviour {
 	{
 		int startX = 0;
 		int size = (int)m_skillWindowRect.width/4;
-		if (GUI.Button(new Rect(startX+0*size, 0, size, size), "Z"))
+
+		for(int i = 0; i < m_skillUsedTime.Length; ++i)
 		{
-			GameObject prefFollower = Resources.Load<GameObject>("Pref/Follower");
-			Instantiate(prefFollower, transform.position, transform.rotation);
+			if (m_champSettingGUI.EquipedAccessories[i] == null)
+				continue;
+
+			Texture2D icon = m_champSettingGUI.EquipedAccessories[i].ItemIcon;
+			if (icon == null)
+				continue;
+
+			if (GUI.Button(new Rect(startX+i*size, 0, size, size), icon ))
+			{
+				m_skillUsedTime[i] = Time.time;
+				m_champSettingGUI.EquipedAccessories[0].Item.Use(m_champ);
+			}
+
+			float usedTime = m_skillUsedTime[i];
+			if (usedTime == 0f)
+				continue;
+			float progress = Mathf.Min(1f, (Time.time - usedTime)/5f);
+			GUI.Button(new Rect(startX+i*size, 0, size, size), Cooldown.ProgressUpdate(m_champSettingGUI.EquipedAccessories[i].ItemIcon, progress, new Color(1f, 1f, 1f, 0.5F)));
+			if (progress == 1f)
+				m_skillUsedTime[i] = 0f;
 		}
-		if (GUI.Button(new Rect(startX+1*size, 0, size, size), "X"))
-		{
-			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
-		}
-		GUI.Button(new Rect(startX+2*size, 0, size, size), "C");
-		GUI.Button(new Rect(startX+3*size, 0, size, size), "V");
+
+
+
+
 	}
 }

@@ -3,9 +3,6 @@ using System.Collections;
 
 public class Follower : Creature {
 
-	[SerializeField]
-	int	m_refItemId = 101;
-
 	ItemObject	m_weapon;
 
 	Creature	m_owner;
@@ -15,7 +12,7 @@ public class Follower : Creature {
 
 		base.Start();
 
-		m_weapon = new ItemObject(new ItemWeaponData(m_refItemId, null));
+
 		m_weapon.Item.Use(this);
 
 	}
@@ -38,9 +35,9 @@ public class Follower : Creature {
 
 	}
 
-	public int WeaponItemID
+	public ItemObject WeaponItem
 	{
-		set {m_refItemId = value;}
+		set {m_weapon = value;}
 	}
 
 	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty)

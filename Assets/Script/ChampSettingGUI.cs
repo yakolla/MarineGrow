@@ -75,8 +75,12 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				Warehouse.Instance.Gold.Item.Count = 100000;
 				Warehouse.Instance.Gem.Item.Count = 100000;
-				
-				//Warehouse.Instance.PushItem(new ItemFollowerData(RefData.Instance.RefMobs[10001]));
+
+				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
+				{
+					Warehouse.Instance.PushItem(new ItemFollowerData(follower));
+				}
+
 			}
 		}
 		else
@@ -423,6 +427,14 @@ public class ChampSettingGUI : MonoBehaviour {
 		if (GUI.Button(new Rect(Screen.width/2-size, Screen.height-size, size*2, size), "Start") && m_equipedWeapon != null)
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
+			GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/marine_skin");
+
+			GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+			enemyBody.name = "Body";
+			enemyBody.transform.parent = champObj.transform;
+			enemyBody.transform.localPosition = Vector3.zero;
+			enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+
 			Creature champ = champObj.GetComponent<Creature>();
 
 			m_equipedWeapon.Item.Use(champ);
@@ -471,7 +483,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				accel = -Input.acceleration.y*5f;
 			}
 		}
-		Debug.Log(Input.acceleration);
 		itemScrollPosition.y += delta * accel;
 		accel -= accel*Time.deltaTime;
 		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
@@ -496,7 +507,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				m_latestSelected = item;
 			}
-			
+
 			string str = "<color=white>" +item.Item.Count + "</color>";
 			GUI.Label(new Rect(size*x, (size*2*(y)+y*size), size*2, size*2), str, itemCountStyle);
 

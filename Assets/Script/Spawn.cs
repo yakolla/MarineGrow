@@ -389,15 +389,6 @@ public class Spawn : MonoBehaviour {
 			m_bosses.Add(enemy.gameObject);
 		}
 
-
-		if (refMob.followerMob != null)
-		{
-			for(int i = 0; i < refMob.followerMob.count; ++i)
-			{
-				ItemObject follower = new ItemObject(new ItemFollowerData(refMob.followerMob.refMob));
-				follower.Item.Use(enemy);
-			}
-		}
 		
 		if (followingCamera == true)
 		{

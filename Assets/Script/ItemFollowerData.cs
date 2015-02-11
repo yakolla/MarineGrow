@@ -36,7 +36,11 @@ public class ItemFollowerData : ItemData{
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 
 		Follower follower = (Follower)followerObj.GetComponent<Follower>();
-		follower.WeaponItemID = m_weaponID;
+
+		ItemObject weapon = new ItemObject(new ItemWeaponData(m_weaponID, null));
+		weapon.Item.Level = Level;
+		weapon.Item.Evolution = Evolution;
+		follower.WeaponItem = weapon;
 		follower.Init(obj, m_aiType, m_baseProperty);
 		follower.m_creatureProperty.Level = obj.m_creatureProperty.Level;
 	

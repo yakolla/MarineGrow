@@ -112,15 +112,6 @@ public class RefEggMob
 	public RefMob				refMob;
 }
 
-public class RefFollowerMob
-{
-	public int					refMobId;
-	public int					count;
-	
-	[JsonIgnore]
-	public RefMob				refMob;
-}
-
 public enum MobAIType
 {
 	Normal,
@@ -146,7 +137,6 @@ public class RefMob : RefBaseData
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
 	public RefEggMob			dropEggMob;
-	public RefFollowerMob		followerMob;
 	public RefCreatureBaseProperty		baseCreatureProperty;
 
 	[JsonConverter(typeof(StringEnumConverter))]
@@ -161,6 +151,7 @@ public class RefMobClass
 	public RefMob[]				shuttle;
 	public RefMob[]				egg;
 	public RefMob[]				itemPandora;
+	public RefMob[]				follower;
 }
 
 public class RefMobSpawnRatio
@@ -301,6 +292,7 @@ public class RefData {
 
 				}
 
+
 				if (refMob.dropEggMob != null)
 				{
 					foreach(RefMob egg in m_refMobClass.egg)
@@ -374,5 +366,10 @@ public class RefData {
 	public RefMob[] RefItemPandoraMobs
 	{
 		get {return m_refMobClass.itemPandora;}
+	}
+
+	public RefMob[] RefFollowerMobs
+	{
+		get {return m_refMobClass.follower;}
 	}
 }
