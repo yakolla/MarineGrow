@@ -78,9 +78,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
-					Debug.Log(follower.id);
 					Warehouse.Instance.PushItem(new ItemFollowerData(follower));
-					Debug.Log(Warehouse.Instance.Items.Count);
 				}
 
 			}

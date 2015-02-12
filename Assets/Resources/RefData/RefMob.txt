@@ -624,7 +624,7 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":0.3,
+				"maxHP":2,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
@@ -642,13 +642,13 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"104"
+					"refItemId":"108"
 				}
 			],
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":0.3,
+				"maxHP":2,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
@@ -666,13 +666,13 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"105"
+					"refItemId":"111"
 				}
 			],
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":0.3,
+				"maxHP":2,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
