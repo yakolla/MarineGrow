@@ -618,7 +618,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"108"
+					"refItemId":"103"
 				}
 			],
 			"mobAI":"Normal",
@@ -632,7 +632,55 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1.5,
+				"navMeshBaseOffset":0
+			}
+		},
+		{
+			"id":30002,
+			"prefBody":"marine_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"104"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":0.3,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.5,
+				"moveSpeed":1.5,
+				"navMeshBaseOffset":0
+			}
+		},
+		{
+			"id":30003,
+			"prefBody":"marine_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"105"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":0.3,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.5,
+				"moveSpeed":1.5,
 				"navMeshBaseOffset":0
 			}
 		}

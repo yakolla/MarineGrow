@@ -9,10 +9,10 @@ public class ItemHealPosionData : ItemData{
 	}
 
 	override public void Pickup(Creature obj){
-		Use(obj);
+		Equip(obj);
 	}
 
-	override public void Use(Creature obj){
+	override public void Equip(Creature obj){
 		obj.m_creatureProperty.Heal(Count);
 	}
 

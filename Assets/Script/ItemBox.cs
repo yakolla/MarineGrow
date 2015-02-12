@@ -37,7 +37,7 @@ public class ItemBox : MonoBehaviour {
 	}
 
 	public void Use(Creature obj){
-		m_item.Use(obj);
+		m_item.Equip(obj);
 	}
 
 	public string Description()

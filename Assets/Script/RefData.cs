@@ -272,7 +272,7 @@ public class RefData {
 				}
 			}
 		}
-		RefMob[][] mobs= {m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle};
+		RefMob[][] mobs= {m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle, m_refMobClass.follower};
 
 		foreach(RefMob[] refMobs in mobs)
 		{

@@ -13,7 +13,7 @@ public class Follower : Creature {
 		base.Start();
 
 
-		m_weapon.Item.Use(this);
+		m_weapon.Item.Equip(this);
 
 	}
 
@@ -32,7 +32,7 @@ public class Follower : Creature {
 			m_navAgent.SetDestination(m_targeting.transform.position);
 			m_ai.Update();
 		}
-
+		base.Update();
 	}
 
 	public ItemObject WeaponItem

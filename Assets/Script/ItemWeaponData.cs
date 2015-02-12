@@ -35,7 +35,7 @@ public class ItemWeaponData : ItemData{
 		get{return m_weaponStat;}
 	}
 
-	override public void Use(Creature obj)
+	override public void Equip(Creature obj)
 	{
 		obj.EquipWeapon(this);
 

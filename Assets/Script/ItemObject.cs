@@ -22,5 +22,4 @@ public class ItemObject {
 	{
 		get { return m_icon; }
 	}
-
 }

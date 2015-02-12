@@ -26,7 +26,7 @@ public class Warehouse {
 
 	public void PushItem(ItemData item)
 	{
-		ItemObject itemObj = FindItem(item.RefItem.id);
+		ItemObject itemObj = FindItem(item.RefItem.id, item);
 		if (itemObj == null)
 		{
 			m_items.Add(new ItemObject(item));
@@ -46,9 +46,8 @@ public class Warehouse {
 		}
 	}
 
-	public void PullItem(int refItemId, int count)
+	public void PullItem(ItemObject itemObj, int count)
 	{
-		ItemObject itemObj = FindItem(refItemId);
 		if (itemObj == null)
 		{
 			return;
@@ -76,7 +75,7 @@ public class Warehouse {
 		m_items.Remove(obj);
 	}
 
-	public ItemObject FindItem(int refItemId)
+	public ItemObject FindItem(int refItemId, ItemData item)
 	{
 		switch(refItemId)
 		{
@@ -88,9 +87,17 @@ public class Warehouse {
 
 		foreach(ItemObject obj in m_items)
 		{
-			if (obj.Item.RefItem.id == refItemId)
+			if (refItemId == 1001)
 			{
-				return obj;
+				if (obj.Item.Compare(item))
+					return obj;
+			}
+			else
+			{
+				if (obj.Item.RefItem.id == refItemId)
+				{
+					return obj;
+				}
 			}
 		}
 

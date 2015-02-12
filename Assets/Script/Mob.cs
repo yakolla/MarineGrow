@@ -34,7 +34,7 @@ public class Mob : Creature {
 		{
 			ItemObject weapon = new ItemObject(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
 			weapon.Item.Evolution = weaponDesc.evolution+(int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
-			weapon.Item.Use(this);
+			weapon.Item.Equip(this);
 		}
 
 		switch(refMob.mobAI)

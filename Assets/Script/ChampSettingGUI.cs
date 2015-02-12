@@ -78,7 +78,9 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
+					Debug.Log(follower.id);
 					Warehouse.Instance.PushItem(new ItemFollowerData(follower));
+					Debug.Log(Warehouse.Instance.Items.Count);
 				}
 
 			}
@@ -158,7 +160,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				continue;
 			}
 
-			ItemObject itemObj = Warehouse.Instance.FindItem(refPrice.refItemId);
+			ItemObject itemObj = Warehouse.Instance.FindItem(refPrice.refItemId, null);
 			if (itemObj != null && refPrice.count <= itemObj.Item.Count)
 			{
 				desc[i].able = true;
@@ -195,7 +197,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		foreach(RefPrice price in conds)
 		{
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
+			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
 			if (inventoryItemObj == null)
 				return false;
 
@@ -213,7 +215,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		foreach(RefPrice price in conds)
 		{
-			Warehouse.Instance.PullItem(price.refItemId, (int)(price.count*itemWorth));
+			Warehouse.Instance.PullItem(Warehouse.Instance.FindItem(price.refItemId, null), (int)(price.count*itemWorth));
 		}
 	}
 
@@ -265,7 +267,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			string str = "<color=white>";
 			
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
+			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
 			int hasCount = 0;
 			if (inventoryItemObj == null)
 			{
@@ -354,8 +356,12 @@ public class ChampSettingGUI : MonoBehaviour {
 					{
 						if (m_equipedAccessories[x] != null)
 						{
-							m_equipedAccessories[x] = null;
-							break;
+							if (m_equipedAccessories[x].Item.Compare(selectedItem.Item))
+							{
+								m_equipedAccessories[x] = null;
+								break;
+							}
+
 						}
 					}					
 				}
@@ -437,12 +443,12 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			Creature champ = champObj.GetComponent<Creature>();
 
-			m_equipedWeapon.Item.Use(champ);
+			m_equipedWeapon.Item.Equip(champ);
 			for(int x = 0; x < m_equipedAccessories.Length; ++x)
 			{
 				if (m_equipedAccessories[x] != null)
 				{
-					m_equipedAccessories[x].Item.Use(champ);
+					m_equipedAccessories[x].Item.Equip(champ);
 				}
 			}	
 			this.enabled = false;

@@ -121,7 +121,7 @@ public class ChampStatusGUI : MonoBehaviour {
 			if (GUI.Button(new Rect(startX+i*size, 0, size, size), icon ))
 			{
 				m_skillUsedTime[i] = Time.time;
-				m_champSettingGUI.EquipedAccessories[0].Item.Use(m_champ);
+				m_champSettingGUI.EquipedAccessories[i].Item.Use(m_champ);
 			}
 
 			float usedTime = m_skillUsedTime[i];

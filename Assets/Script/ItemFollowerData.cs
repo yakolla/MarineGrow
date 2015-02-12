@@ -52,16 +52,16 @@ public class ItemFollowerData : ItemData{
 	
 	override public string Description()
 	{
-		return m_followerName + "\n" +  base.Description();
+		return "<color=white>" + m_followerName + "</color>" + "\n" +  base.Description();
 	}
 
 	override public bool Compare(ItemData item)
 	{
-		if (item.RefItem.type != ItemData.Type.Weapon)
-			return base.Compare(item);
+		if (item.RefItem.type != ItemData.Type.Follower)
+			return false;
 
-		ItemWeaponData weapon = (ItemWeaponData)item;
-		return FollowerName.CompareTo(weapon.WeaponName) == 0;
+		ItemFollowerData itemFollowerData = item as ItemFollowerData;
+		return m_weaponID == itemFollowerData.m_weaponID;
 	}
 
 }

@@ -11,11 +11,11 @@ public class ItemGoldData : ItemData{
 	}
 
 	override public void Pickup(Creature obj){
-		Use(obj);
+		Warehouse.Instance.Gold.Item.Count += Count;
 	}
 
-	override public void Use(Creature obj){
-		Warehouse.Instance.Gold.Item.Count += Count;
+	override public void Equip(Creature obj){
+
 	}
 
 }

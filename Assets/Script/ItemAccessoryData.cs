@@ -10,7 +10,7 @@ public class ItemAccessoryData : ItemData{
 
 	}
 
-	override public void Use(Creature obj)
+	override public void Equip(Creature obj)
 	{
 		ApplyOptions(obj);
 	}

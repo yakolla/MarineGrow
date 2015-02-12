@@ -113,6 +113,7 @@ public class ItemData {
 	}
 
 	virtual public void Pickup(Creature obj){Warehouse.Instance.PushItem(this);}
+	virtual public void Equip(Creature obj){}
 	virtual public void Use(Creature obj){}
 	virtual public void NoUse(Creature obj){}
 	virtual public bool Compare(ItemData item)
