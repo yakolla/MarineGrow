@@ -1,6 +1,30 @@
 {
 	"melee":
-	[
+	[		
+		{
+			"id":10002,
+			"prefBody":"ghost_slime_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"107"					
+				}
+			],
+			"mobAI":"Normal",			
+			"baseCreatureProperty":
+			{
+				"maxHP":0.3,
+				"physicalDamage":5,
+				"physicalDefence":1,
+				"evolutionPerLevel":0.3,
+				"exp":10,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":2,
+				"moveSpeed":3,
+				"navMeshBaseOffset":0
+			}
+		},
 		{
 			"id":10001,
 			"prefBody":"crazy_dog_skin",
