@@ -9,9 +9,9 @@ public class Firegun : Weapon {
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
-			m_bullet = new GameObject[m_firingDescs.Length];
+			m_bullet = new GameObject[m_firingDescs.Count];
 
-			for(int i = 0; i < m_firingDescs.Length; ++i)
+			for(int i = 0; i < m_firingDescs.Count; ++i)
 			{
 				targetAngle.x = m_firingDescs[i].angle;
 				m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position);

@@ -58,10 +58,10 @@ public class Joystick : MonoBehaviour
 		// Store the default rect for the gui, so we can snap back to it
 		defaultRect = gui.pixelInset;	
 		
-		defaultRect.x = Screen.width/10;
-		defaultRect.y = Screen.height/5;
-		defaultRect.width = Screen.width/10;
-		defaultRect.height = Screen.width/10;
+		defaultRect.x = Screen.width/gui.pixelInset.x;
+		defaultRect.y = Screen.height/gui.pixelInset.y;
+		defaultRect.width = Screen.width/gui.pixelInset.width;
+		defaultRect.height = Screen.width/gui.pixelInset.height;
 
 		
 		if ( touchPad )

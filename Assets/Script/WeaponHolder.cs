@@ -27,6 +27,14 @@ public class WeaponHolder : MonoBehaviour {
 		}
 	}
 
+	public void Evolution()
+	{
+		foreach(Weapon weapon in m_weapons)
+		{
+			weapon.Evolution();
+		}
+	}
+
 	public float AttackRange()
 	{
 		if (m_weapons.Count == 0)

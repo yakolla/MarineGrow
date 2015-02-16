@@ -4,9 +4,9 @@ using System.Collections;
 public class Champ : Creature {
 
 	float	m_startChargeTime;
-	bool	m_charging = false;
 
-	Joystick	m_joystick;
+	Joystick	m_leftJoystick;
+	Joystick	m_rightJoystick;
 
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
@@ -21,6 +21,7 @@ public class Champ : Creature {
 	RefCreatureBaseProperty	m_creatureBaseProperty;
 
 	int			m_remainStatPoint = 0;
+	int			m_remainMasteryPoint = 0;
 
 	new void Start () {
 		
@@ -33,7 +34,8 @@ public class Champ : Creature {
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
 
-		m_joystick = GameObject.Find("LeftJoystick").GetComponent<Joystick>();
+		m_leftJoystick = GameObject.Find("LeftJoystick").GetComponent<Joystick>();
+		m_rightJoystick = GameObject.Find("RightJoystick").GetComponent<Joystick>();
 	}
 
 	public int RemainStatPoint
@@ -42,9 +44,16 @@ public class Champ : Creature {
 		set{m_remainStatPoint = value;}
 	}
 
+	public int RemainMasteryPoint
+	{
+		get{return m_remainMasteryPoint;}
+		set{m_remainMasteryPoint = value;}
+	}
+
 	void LevelUp()
 	{
-		m_remainStatPoint+=3;
+		m_remainStatPoint+=1;
+		m_remainMasteryPoint+=1;
 
 		GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
 		effect.transform.parent = transform;
@@ -70,8 +79,8 @@ public class Champ : Creature {
 
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			pos.x += m_joystick.position.x*step;
-			pos.z += m_joystick.position.y*step;
+			pos.x = m_leftJoystick.position.x*step;
+			pos.z = m_leftJoystick.position.y*step;
 
 			if (m_targeting == null)
 			{
@@ -123,53 +132,46 @@ public class Champ : Creature {
 
 		if (m_enableAutoTarget)
 		{
-			if (Input.GetMouseButton(1) == true)
+			if (AutoAttack() == false)
 			{
-				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				
-				RotateToTarget(pos);
-			}
-			
-			if (Input.GetMouseButtonDown(1) == true)
-			{
-				m_charging = true;
-				m_startChargeTime = Time.time;
 				m_weaponHolder.StopFiring();
-				Debug.Log("GetMouseButtonDown");
-			}
-			else if (Input.GetMouseButtonUp(1) == true)
-			{
-				Debug.Log("GetMouseButtonUp");
-				m_charging = false;
-				
-				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				
-				m_weaponHolder.StartFiring(RotateToTarget(pos));
-			}
-			
-			if (m_charging == false)
-			{
-				if (AutoAttack() == false)
-				{
-					m_weaponHolder.StopFiring();
-				}
-				
 			}
 		}
 		else
 		{
-			if (Input.GetMouseButton(1) == true)
+			if (Application.platform == RuntimePlatform.Android)
 			{
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
-				Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				pos = ray.origin + (ray.direction* 10f);
-				m_weaponHolder.StartFiring(RotateToTarget(pos));
+				Vector3 pos = Vector3.zero;
+				
+				pos.x = m_rightJoystick.position.x*3;
+				pos.z = m_rightJoystick.position.y*3;
+
+				if (pos.x == 0f && pos.z == 0f)
+				{
+					m_weaponHolder.StopFiring();
+				}
+				else
+				{
+					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
+				}
+
+				
 			}
 			else
 			{
-				m_weaponHolder.StopFiring();
+				if (Input.GetMouseButton(1) == true)
+				{
+					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+					Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+					pos = ray.origin + (ray.direction* 10f);
+					m_weaponHolder.StartFiring(RotateToTarget(pos));
+				}
+				else
+				{
+					m_weaponHolder.StopFiring();
+				}
 			}
+
 		}
 
 		TimeEffector.Instance.Update();

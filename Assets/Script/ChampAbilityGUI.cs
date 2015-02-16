@@ -75,7 +75,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 		{
 			for(int x = 0; x < (MasteryColumns-1); ++x)
 			{
-				GUI.Button(new Rect(padding+size*x+padding*x, size+padding+y*size+padding*y, size, size), icon);
+				if (GUI.Button(new Rect(padding+size*x+padding*x, size+padding+y*size+padding*y, size, size), icon) && m_champ.RemainMasteryPoint > 0)
+				{
+					m_champ.WeaponHolder.Evolution();
+					m_champ.RemainMasteryPoint--;
+				}
 				GUI.Label(new Rect(padding+size*x+padding*x, size+padding+y*size+padding*y, size, size), "<color=white>0/0</color>", itemCountStyle);
 			}
 		}
@@ -96,8 +100,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 			return;
 		}
 
-		GUI.Label(new Rect(0, startY+(size*0), size, size), Resources.Load<Texture>("Sprites/level"));
-		GUI.Label(new Rect(size, startY+(size*0), size, size), m_champ.RemainStatPoint.ToString());
+		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "StatPoint:");
+		GUI.Label(new Rect(size*2, startY+(size*0), size, size), m_champ.RemainStatPoint.ToString());
+
+		GUI.Label(new Rect(size*3, startY+(size*0), size*2, size), "MasteryPoint:");
+		GUI.Label(new Rect(size*5, startY+(size*0), size, size), m_champ.RemainMasteryPoint.ToString());
 
 		int masteryWidth = Screen.width/3;
 		displayMastery(new Rect(0, size, masteryWidth, Screen.height), 

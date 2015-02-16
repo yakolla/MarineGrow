@@ -22,8 +22,13 @@ public class LightningBoltBullet : Bullet
 
 	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
 	{
+		Vector3 scale = transform.localScale;
+
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
-		this.transform.parent = m_gunPoint.transform;
+		transform.parent = m_gunPoint.transform;
+		transform.localPosition = Vector3.zero;
+		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.x, 0));
+		transform.localScale = scale;
 	}
 	
 	void Start()
@@ -51,25 +56,13 @@ public class LightningBoltBullet : Bullet
 
 		Creature[] targets = new Creature[5];
 		int hittedTargetCount = 0;
+		/*
 		if (m_ownerCreature.m_targeting)
 		{
 			targets[0] = m_ownerCreature.m_targeting.GetComponent<Creature>();
-			hittedTargetCount++;
-
-
-			for(int i = 1; i < targets.Length; ++i)
-			{
-				GameObject chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetAutoTargetTags(), targets, 3f);
-				if (chaningTargetObj == null)
-					break;
-
-				targets[i] = chaningTargetObj.GetComponent<Creature>();
-				hittedTargetCount++;
-			}
-
 			mobHitted = true;
 		}
-		else
+		else*/
 		{
 			RaycastHit hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
@@ -80,13 +73,24 @@ public class LightningBoltBullet : Bullet
 				{				
 					targets[0] = creature;
 					mobHitted = true;
-					hittedTargetCount++;
 				}
 			}
 		}
 
 		if (mobHitted == true)
 		{
+			hittedTargetCount = 1;
+
+			for(int i = 1; i < targets.Length; ++i)
+			{
+				GameObject chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetAutoTargetTags(), targets, 3f);
+				if (chaningTargetObj == null)
+					break;
+				
+				targets[i] = chaningTargetObj.GetComponent<Creature>();
+				hittedTargetCount++;
+			}
+
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)
@@ -96,25 +100,28 @@ public class LightningBoltBullet : Bullet
 
 				m_lastDamageTime = Time.time;
 			}
+
+			int perParticles = particles.Length/hittedTargetCount;
+			createChanningParticle(transform.position, targets[0].transform.position, 0, perParticles);
+			for(int i = 0; i < hittedTargetCount-1; ++i)
+			{
+				createChanningParticle(targets[i].transform.position, targets[i+1].transform.position, perParticles*(i+1), perParticles*(i+1)+perParticles);
+			}
+			
+			particleEmitter.particles = particles;
 		}
 		else
-		{/*
-			targetPos[0].x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
-			targetPos[0].z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
-			targetPos[0].x += transform.position.x;
-			targetPos[0].z += transform.position.z;*/
-		}
-
-
-
-		int perParticles = particles.Length/hittedTargetCount;
-		createChanningParticle(transform.position, targets[0].transform.position, 0, perParticles);
-		for(int i = 0; i < hittedTargetCount-1; ++i)
 		{
-			createChanningParticle(targets[i].transform.position, targets[i+1].transform.position, perParticles*(i+1), perParticles*(i+1)+perParticles);
-		}
+			Vector3 targetPos = new Vector3();
+			targetPos.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
+			targetPos.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
+			targetPos.x += transform.position.x;
+			targetPos.z += transform.position.z;
 
-		particleEmitter.particles = particles;
+			createChanningParticle(transform.position, targetPos, 0, particles.Length);
+			
+			particleEmitter.particles = particles;
+		}
 	}	
 
 	void createChanningParticle(Vector3 start, Vector3 dest, int particleStartIndex, int particleFinishIndex)

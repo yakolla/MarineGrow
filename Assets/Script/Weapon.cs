@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour {
 
@@ -11,7 +12,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 	[SerializeField]
-	public FiringDesc[]			m_firingDescs = null;
+	public List<FiringDesc>			m_firingDescs = new List<FiringDesc>();
 
 	protected GameObject		m_gunPoint;
 
@@ -33,6 +34,11 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	protected float		m_attackRange;
 
+	int					m_evolution;
+	int					m_level;
+
+	RefItem				m_refItem;
+
 	protected void Start()
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
@@ -42,32 +48,47 @@ public class Weapon : MonoBehaviour {
 
 	public void Init(ItemWeaponData weaponData)
 	{
-		if (weaponData.RefItem.evolutionFiring == null)
-		{
-			m_firingDescs = new Weapon.FiringDesc[1];
-			m_firingDescs[0].angle = 0;
-			m_firingDescs[0].delayTime = 0;
-		}
-		else
-		{
-			m_firingDescs = new Weapon.FiringDesc[weaponData.Evolution*2+1];
-			for(int i = 0; i < m_firingDescs.Length; ++i)
-			{
-				m_firingDescs[i].angle = weaponData.RefItem.evolutionFiring.angle*((i+1)/2);
-				if (i % 2 == 1)
-				{
-					m_firingDescs[i].angle *= -1;
-				}
-				
-				
-				m_firingDescs[i].delayTime = weaponData.RefItem.evolutionFiring.delay*i;
-				
-			}
-		}
-		
+		m_refItem = weaponData.RefItem;
+
+		Weapon.FiringDesc desc = new Weapon.FiringDesc();
+		desc.angle = 0;
+		desc.delayTime = 0;
+
+		m_firingDescs.Add(desc);
+	
+		for(int i = 0; i < weaponData.Evolution; ++i)
+			Evolution();
+
 		AttackRange = weaponData.WeaponStat.range;
 		CoolTime = weaponData.WeaponStat.coolTime;
 
+	}
+
+	public void Evolution()
+	{
+		if (m_refItem.evolutionFiring == null)
+			return;
+
+		
+		++m_evolution;
+
+		float angle = m_refItem.evolutionFiring.angle*((m_evolution+1)/2);
+		if (m_evolution % 2 == 1)
+		{
+			angle *= -1;
+		}
+		
+		float delay = m_refItem.evolutionFiring.delay*m_evolution;
+
+
+		Weapon.FiringDesc desc = new Weapon.FiringDesc();
+		desc.angle = angle;
+		desc.delayTime = delay;
+
+		m_firingDescs.Add(desc);
+
+
+		Debug.Log(m_evolution);
 	}
 
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
@@ -103,7 +124,7 @@ public class Weapon : MonoBehaviour {
 		{
 			float oriAng = targetAngle.x;
 			float delay = 0f;
-			for(int i = 0; i < m_firingDescs.Length; ++i)
+			for(int i = 0; i < m_firingDescs.Count; ++i)
 			{
 				float ang = m_firingDescs[i].angle-oriAng;
 				targetAngle.x = ang;
