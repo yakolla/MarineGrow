@@ -20,7 +20,7 @@ public class MeleeBullet : Bullet {
 		{
 			m_collider.enabled = true;
 			m_lastDamageTime = Time.time;
-
+			/*
 			RaycastHit hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
 			if (Physics.Raycast(transform.position, fwd, out hit, 10f))
@@ -38,7 +38,7 @@ public class MeleeBullet : Bullet {
 					}
 
 				}
-			}
+			}*/
 		}
 		else
 		{
@@ -58,11 +58,11 @@ public class MeleeBullet : Bullet {
 
 	void OnTriggerEnter(Collider other) 
 	{
-		return;
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
 			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));			
+			DestroyObject(gameObject);
 		}
 	}
 }

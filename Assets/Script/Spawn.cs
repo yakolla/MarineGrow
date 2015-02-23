@@ -238,7 +238,7 @@ public class Spawn : MonoBehaviour {
 							                                , enemyPos
 							                                , spawnMobLevel()
 							                                , spawnMobType
-							                                , spawnMobType == SpawnMobType.Boss && spawnCount == 1)
+							                                , false)
 							               );
 							
 							

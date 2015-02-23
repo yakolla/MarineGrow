@@ -30,8 +30,8 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_champSettingGUI = GameObject.Find("ChampSettingGUI").GetComponent<ChampSettingGUI>();
 
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
-		m_guageWindowRect = new Rect(Screen.width/2-m_slotWidth/2, Screen.height-m_slotHeight, m_slotWidth, m_slotHeight);
-		m_skillWindowRect = new Rect(Screen.width/2-m_slotWidth, Screen.height-m_slotHeight-m_slotHeight, m_slotWidth+m_slotWidth, m_slotHeight);
+		m_guageWindowRect = new Rect(0, 0, m_slotWidth, m_slotHeight);
+		m_skillWindowRect = new Rect(Screen.width/2-m_slotWidth, Screen.height-m_slotHeight, m_slotWidth+m_slotWidth, m_slotHeight);
 	}
 
 	void OnGUI()

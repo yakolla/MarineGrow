@@ -13,7 +13,7 @@
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
-				"maxHP":0.3,
+				"maxHP":0.1,
 				"physicalDamage":5,
 				"physicalDefence":1,
 				"evolutionPerLevel":0.3,
@@ -21,7 +21,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -37,7 +37,7 @@
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
-				"maxHP":0.6,
+				"maxHP":0.2,
 				"physicalDamage":5,
 				"physicalDefence":1,
 				"evolutionPerLevel":0.3,
@@ -45,7 +45,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -69,7 +69,7 @@
 				"phyDamagePerLevel":2,
 				"phyDefencePerLevel":0.2,
 				"hpPerLevel":0.5,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -98,7 +98,7 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -127,7 +127,7 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -156,13 +156,13 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":8,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},	
 	],
 	"range"	:
-	[
+	[		
 		{
 			"id":20001,
 			"prefBody":"spider_skin",
@@ -184,7 +184,7 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -208,17 +208,17 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
-		},	
+		},
 		{
 			"id":20003,
-			"prefBody":"spider_skin",
+			"prefBody":"robot_skin",
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"116"
+					"refItemId":"103"
 				}
 			],
 			"mobAI":"Dash",
@@ -232,13 +232,13 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},	
 		{
 			"id":20004,
-			"prefBody":"spider_skin",
+			"prefBody":"robot_skin",
 			"refWeaponItems":
 			[
 				{
@@ -256,7 +256,7 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},	
@@ -280,7 +280,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":3,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},	
@@ -304,7 +304,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":3,
-				"moveSpeed":2,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		}
@@ -331,7 +331,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -355,7 +355,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -379,7 +379,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -404,7 +404,7 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		}
@@ -437,7 +437,7 @@
 				"phyDamagePerLevel":3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":1
 			}
 		},
@@ -470,7 +470,7 @@
 				"phyDamagePerLevel":5,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -499,7 +499,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -523,7 +523,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -547,7 +547,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		}
@@ -579,7 +579,7 @@
 				"phyDamagePerLevel":0,
 				"phyDefencePerLevel":0,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -603,7 +603,7 @@
 				"phyDamagePerLevel":0,
 				"phyDefencePerLevel":0,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -628,7 +628,7 @@
 				"phyDamagePerLevel":0,
 				"phyDefencePerLevel":0,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		}
@@ -656,7 +656,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":1.5,
+				"moveSpeed":0,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -680,7 +680,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":1.5,
+				"moveSpeed":0,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -704,7 +704,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":1.5,
+				"moveSpeed":0,
 				"navMeshBaseOffset":0
 			}
 		}

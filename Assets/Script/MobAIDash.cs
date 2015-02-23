@@ -12,8 +12,8 @@ public class MobAIDash : MobAI {
 	{
 		base.Init(mob);
 
-		m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-
+		m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;		
+		m_navAgent.autoBraking = false;
 		m_prefAttackGuidedLine = Resources.Load<GameObject>("Pref/ef laser point");
 	}
 
@@ -61,6 +61,7 @@ public class MobAIDash : MobAI {
 			if (m_breakMode == false)
 			{
 				m_speed += Time.deltaTime*10.5f;
+				m_speed = Mathf.Min(10f, m_speed);
 			}
 			else
 			{
@@ -72,7 +73,6 @@ public class MobAIDash : MobAI {
 				}
 			}
 			m_navAgent.speed = m_speed;
-			m_navAgent.autoBraking = false;
 			float d = Vector3.Distance(m_mob.transform.position, m_goal);
 			if (d <= 1.1f)
 			{

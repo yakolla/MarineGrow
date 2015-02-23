@@ -15,7 +15,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[2,16]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{
@@ -29,8 +29,8 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[1,16]
-					},
+						"repeatCount":[4,16]
+					},/*
 					{
 						"refMobIds":{
 							"shuttle":{
@@ -41,7 +41,7 @@
 						"interval":5,
 						"repeatCount":[1,1]
 						
-					},
+					},*/
 					{
 						"refMobIds":{
 							"melee":{
@@ -50,7 +50,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[3,6]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{
@@ -64,7 +64,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[1,6]
+						"repeatCount":[4,16]
 					},
 					{
 						"refMobIds":{
@@ -88,7 +88,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[1,6]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{
@@ -98,7 +98,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[2,6]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{
@@ -112,7 +112,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[1,6]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{
@@ -122,7 +122,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[2,6]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{
@@ -136,7 +136,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[1,6]
+						"repeatCount":[7,16]
 					},
 					{
 						"refMobIds":{

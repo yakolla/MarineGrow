@@ -87,8 +87,6 @@ public class Weapon : MonoBehaviour {
 
 		m_firingDescs.Add(desc);
 
-
-		Debug.Log(m_evolution);
 	}
 
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
