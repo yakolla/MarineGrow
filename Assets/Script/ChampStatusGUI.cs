@@ -49,7 +49,7 @@ public class ChampStatusGUI : MonoBehaviour {
 			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
 			levelupStyle.fontSize = m_fontSize;
 
-			if (GUI.Button(new Rect(0, 0, m_slotHeight, m_slotHeight), "+", levelupStyle))
+			if (GUI.Button(new Rect(Screen.width-m_slotWidth, 0, m_slotHeight, m_slotHeight), "+", levelupStyle))
 			{
 				ChampAbilityGUI abilityGUI = m_champ.transform.Find("ChampAbilityGUI").GetComponent<ChampAbilityGUI>();
 				abilityGUI.gameObject.SetActive(true);

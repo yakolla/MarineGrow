@@ -75,7 +75,7 @@ public class CreatureProperty {
 
 	public int MaxExp
 	{
-		get { return Mathf.FloorToInt(m_level*350*1.1f); }
+		get { return Mathf.FloorToInt(m_level*250*1.1f); }
 	}
 
 	public int Exp	

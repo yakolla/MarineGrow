@@ -282,13 +282,76 @@
 		
 		"evolutionFiring":
 		{
-			"angle":30,
+			"angle":3,
 			"delay":0
 		},
 		"weaponStat":
 		{
-			"coolTime":0.5,
+			"coolTime":1,
 			"range":5
+		},		
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":100
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":10
+				}
+			]
+		},
+		"evolution":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":100
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":10
+				}
+			]
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":100
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":10
+				}
+			]
 		}
 	},
 	{
