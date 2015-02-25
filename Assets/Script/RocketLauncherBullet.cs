@@ -5,7 +5,7 @@ public class RocketLauncherBullet : Bullet {
 
 	[SerializeField]
 	float m_speed = 1f;
-	float	m_elpasedTime = 0f;
+	float	m_accel = 0f;
 	// Use this for initialization
 	void Start () {
 	}
@@ -14,8 +14,8 @@ public class RocketLauncherBullet : Bullet {
 	// Update is called once per frame
 	void Update () {
 
-		transform.Translate(m_elpasedTime, 0, 0, transform);
-		m_elpasedTime += Time.deltaTime*0.1f*m_speed;
+		transform.Translate(m_accel, 0, 0, transform);
+		m_accel += Time.deltaTime*0.1f*m_speed;
 
 
 	}

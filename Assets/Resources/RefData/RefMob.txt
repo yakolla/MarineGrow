@@ -276,7 +276,12 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"105"
+					"refItemId":"105",
+					"weaponStat":
+					{
+						"coolTime":5,
+						"range":8
+					}
 				}
 			],
 			"mobAI":"Normal",			
@@ -300,7 +305,12 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"102"
+					"refItemId":"102",
+					"weaponStat":
+					{
+						"coolTime":5,
+						"range":7
+					}
 				}
 			],
 			"mobAI":"Normal",
