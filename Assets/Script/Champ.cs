@@ -82,12 +82,6 @@ public class Champ : Creature {
 			pos.x = m_leftJoystick.position.x*step;
 			pos.z = m_leftJoystick.position.y*step;
 
-			if (m_targeting == null)
-			{
-				float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
-				transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);				
-			}
-			
 			m_navAgent.SetDestination(transform.position+pos);
 
 		}
@@ -110,13 +104,6 @@ public class Champ : Creature {
 				if(Input.GetKey(KeyCode.D))
 				{
 					pos.x += step;
-				}
-				
-				if (m_targeting == null)
-				{
-					float targetHorAngle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
-					transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
-					
 				}
 				
 				m_navAgent.SetDestination(transform.position+pos);

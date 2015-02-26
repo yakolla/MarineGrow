@@ -5,6 +5,18 @@ using System.Collections.Generic;
 public class WeaponHolder : MonoBehaviour {
 
 	List<Weapon>			m_weapons = new List<Weapon>();
+	float					m_weaponChangeCoolTime = 15f;
+	float					m_weaponChangedTime = 0f;
+	int						m_curWeaponIndex = 0;
+
+	void Update()
+	{
+		if (m_weaponChangedTime+m_weaponChangeCoolTime < Time.time)
+		{
+			m_weaponChangedTime = Time.time;
+			m_curWeaponIndex = (m_curWeaponIndex + 1) % m_weapons.Count;
+		}
+	}
 
 	public void EquipWeapon(Weapon weapon)
 	{
@@ -13,10 +25,7 @@ public class WeaponHolder : MonoBehaviour {
 
 	public void StartFiring(Vector2 targetAngle)
 	{
-		foreach(Weapon weapon in m_weapons)
-		{
-			weapon.StartFiring(targetAngle);
-		}
+		m_weapons[m_curWeaponIndex].StartFiring(targetAngle);
 	}
 
 	public void StopFiring()
@@ -40,6 +49,6 @@ public class WeaponHolder : MonoBehaviour {
 		if (m_weapons.Count == 0)
 			return 0f;
 
-		return m_weapons[0].AttackRange;
+		return m_weapons[m_curWeaponIndex].AttackRange;
 	}
 }

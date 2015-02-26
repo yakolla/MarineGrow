@@ -430,37 +430,7 @@
 		}
 	],
 	"boss":
-	[
-	// melee
-		{
-			"id":11001,
-			"prefBody":"bat_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"110"
-				}
-			],
-			"mobAI":"Dash",
-			"dropEggMob":
-			{
-				"refMobId":12002,
-				"count":10
-			},
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":150,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.3,
-				"exp":30,
-				"phyDamagePerLevel":3,
-				"phyDefencePerLevel":3,
-				"hpPerLevel":3,
-				"moveSpeed":1,
-				"navMeshBaseOffset":1
-			}
-		},
+	[	
 	// range
 		{
 			"id":21001,
@@ -468,25 +438,41 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"113"
+					"refItemId":"113",
+					"evolution":1,
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":8
+					}
 				},
 				{
-					"refItemId":"105"
+					"refItemId":"105",
+					"evolution":1,
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":5
+					}
+				},
+				{
+					"refItemId":"103",
+					"evolution":1,
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":7
+					}
 				}
 			],
 			"mobAI":"Normal",
-			"eggMob":
-			{
-				"refMobId":12001,
-				"count":2
-			},			
 			"baseCreatureProperty":
 			{
 				"maxHP":1.3,
 				"physicalDamage":150,
-				"physicalDefence":0,
+				"physicalDefence":10,
 				"evolutionPerLevel":0.5,
-				"exp":50,
+				"exp":500,
 				"phyDamagePerLevel":5,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":5,

@@ -133,7 +133,7 @@ public class Mob : Creature {
 
 		DestroyObject(this.gameObject);
 		
-		ShakeCamera();
+		ShakeCamera(0.1f);
 
 	}
 

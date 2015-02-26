@@ -351,11 +351,11 @@ public class Creature : MonoBehaviour {
 		m_crowdControl -= (int)CrowdControlType.Stun;
 	}
 
-	IEnumerator EffectSlow()
+	IEnumerator EffectSlow(float time)
 	{		
 		m_creatureProperty.BetaMoveSpeed /= 2f;
 
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Slow].effect = null;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
@@ -433,7 +433,10 @@ public class Creature : MonoBehaviour {
 		}
 
 		ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
-
+		if (m_buffEffects[(int)DamageDesc.BuffType.Slow].effect == null)
+		{
+			StartCoroutine(EffectSlow(0.2f));
+		}
 
 		if (damageDesc.DamageBuffType != DamageDesc.BuffType.Nothing)
 		{
@@ -450,7 +453,7 @@ public class Creature : MonoBehaviour {
 					StartCoroutine(EffectStun());
 					break;
 				case DamageDesc.BuffType.Slow:
-					StartCoroutine(EffectSlow());
+					StartCoroutine(EffectSlow(2f));
 					break;
 				}
 
@@ -480,10 +483,10 @@ public class Creature : MonoBehaviour {
 		}
 	}
 
-	protected void ShakeCamera()
+	public void ShakeCamera(float time)
 	{
 		CameraShake shake = Camera.main.gameObject.GetComponent<CameraShake>();
-		shake.shake = 0.1f;
+		shake.shake = time;
 		shake.enabled = true;
 	}
 	
@@ -495,7 +498,7 @@ public class Creature : MonoBehaviour {
 
 		DestroyObject(this.gameObject);
 
-		ShakeCamera();
+		ShakeCamera(0.1f);
 	}
 
 }

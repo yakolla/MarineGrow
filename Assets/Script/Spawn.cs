@@ -168,87 +168,89 @@ public class Spawn : MonoBehaviour {
 		else
 		{
 
-			StartCoroutine(EffectWaveText("Wave " + (m_spawningPool + 1), 1));
 
-			//foreach(RefMobSpawn mobSpawn in  mobSpawns)
+
+			SpawnMobType spawnMobType = SpawnMobType.Normal;
+			if (mobSpawn.boss == true)
 			{
-				SpawnMobType spawnMobType = SpawnMobType.Normal;
-				if (mobSpawn.boss == true)
-				{
-					guiText.text = "Boss";
-					Color color = guiText.color;
-					color.a = 1;
-					guiText.color = color;
-					spawnMobType = SpawnMobType.Boss;
-				}
+				spawnMobType = SpawnMobType.Boss;
 
-				float waveProgress = Mathf.Min(1f, m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
-				//Debug.Log(waveProgress + "," + m_spawningPool);
-
-				int spawnCount = 0;
-				int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
-				for(int r = 0; r < mobSpawnRepeatCount; ++r)
-				{
-					List<RefMob>	spawnMobs = new List<RefMob>();
-					List<int> 		spawnMobCount = new List<int>();
-					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
-					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
-					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
-					buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
-
-					for(int ii = 0;  ii < spawnMobs.Count; ++ii)
-					{
-						Transform area = getSpawnArea(true);
-						Vector3 cp = area.position;
-						Vector3 scale = area.localScale*0.5f;
-
-						RefMob refMob = spawnMobs[ii];
-						if (refMob.nearByChampOnSpawn == true)
-						{
-							if (m_champ)
-							{
-								cp = m_champ.transform.position;
-							}
-							
-						}
-						else
-						{
-							cp = area.position;
-						}
-
-						for(int i = 0; i < spawnMobCount[ii]; ++i)
-						{
-							Vector3 enemyPos = cp;
-							enemyPos.x += Random.Range(-scale.x,scale.x);
-							enemyPos.z += Random.Range(-scale.z,scale.z);
-							
-							++spawnCount;
-
-							RefItemSpawn[] dropItems = mobSpawn.refDropItems;
-							if (dropItems == null)
-							{
-								if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
-								{
-									dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
-								}
-
-							}
-							StartCoroutine(  EffectSpawnMob(refMob
-							                                , dropItems
-							                                , enemyPos
-							                                , spawnMobLevel()
-							                                , spawnMobType
-							                                , false)
-							               );
-							
-							
-							yield return new WaitForSeconds (0.5f);
-						}
-					}
-					yield return new WaitForSeconds (mobSpawn.interval);
-				}
-				StartCoroutine(checkBossAlive());
+				StartCoroutine(EffectWaveText("Boss", 1));
+				Champ champ = m_champ.GetComponent<Champ>();
+				champ.ShakeCamera(5f);
 			}
+			else
+			{
+				StartCoroutine(EffectWaveText("Wave " + (m_spawningPool + 1), 1));
+			}
+
+			float waveProgress = Mathf.Min(1f, m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
+			//Debug.Log(waveProgress + "," + m_spawningPool);
+
+			int spawnCount = 0;
+			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
+			for(int r = 0; r < mobSpawnRepeatCount; ++r)
+			{
+				List<RefMob>	spawnMobs = new List<RefMob>();
+				List<int> 		spawnMobCount = new List<int>();
+				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
+				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
+				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
+				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
+
+				for(int ii = 0;  ii < spawnMobs.Count; ++ii)
+				{
+					Transform area = getSpawnArea(true);
+					Vector3 cp = area.position;
+					Vector3 scale = area.localScale*0.5f;
+
+					RefMob refMob = spawnMobs[ii];
+					if (refMob.nearByChampOnSpawn == true)
+					{
+						if (m_champ)
+						{
+							cp = m_champ.transform.position;
+						}
+						
+					}
+					else
+					{
+						cp = area.position;
+					}
+
+					for(int i = 0; i < spawnMobCount[ii]; ++i)
+					{
+						Vector3 enemyPos = cp;
+						enemyPos.x += Random.Range(-scale.x,scale.x);
+						enemyPos.z += Random.Range(-scale.z,scale.z);
+						
+						++spawnCount;
+
+						RefItemSpawn[] dropItems = mobSpawn.refDropItems;
+						if (dropItems == null)
+						{
+							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
+							{
+								dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
+							}
+
+						}
+						StartCoroutine(  EffectSpawnMob(refMob
+						                                , dropItems
+						                                , enemyPos
+						                                , spawnMobLevel()
+						                                , spawnMobType
+						                                , false)
+						               );
+						
+						
+						yield return new WaitForSeconds (0.5f);
+					}
+				}
+				yield return new WaitForSeconds (mobSpawn.interval);
+			}
+			StartCoroutine(checkBossAlive());
+
 
 			m_spawningPool++;
 
@@ -384,7 +386,7 @@ public class Spawn : MonoBehaviour {
 		enemy.SetTarget(m_champ);
 		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
 		
-		if (boss == true)	
+		//if (boss == true)	
 		{
 			m_bosses.Add(enemy.gameObject);
 		}
