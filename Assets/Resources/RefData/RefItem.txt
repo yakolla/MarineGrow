@@ -721,6 +721,23 @@
 		}
 	},
 	{
+		"id":117,
+		"codeName":"BlazeLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",
+		
+		"evolutionFiring":
+		{
+			"angle":10,
+			"delay":0
+		},
+		"weaponStat":
+		{
+			"coolTime":2,
+			"range":5
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"30001",
 		"type":"Follower",

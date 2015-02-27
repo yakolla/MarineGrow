@@ -10,5 +10,6 @@ public class GUIConst {
 		ChampInventory,
 		ChampGoods,
 		PopupShop,
+		MainMenu,
 	}
 }

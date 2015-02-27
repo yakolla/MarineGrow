@@ -22,12 +22,6 @@ public class SuicideBombingBullet : Bullet {
 	{
 
 	}
-	
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
-	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
-			
-	}
 
 
 	IEnumerator destoryObject(float t)

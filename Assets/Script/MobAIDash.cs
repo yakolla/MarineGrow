@@ -7,6 +7,8 @@ public class MobAIDash : MobAI {
 	bool	m_breakMode = false;
 	float	m_speed;
 	GameObject	m_prefAttackGuidedLine;
+	const float DashSpeed = 10f;
+	float	m_dashTimeout = 0f;
 
 	override public void Init(Creature mob)
 	{
@@ -24,11 +26,16 @@ public class MobAIDash : MobAI {
 		if (obj != null)
 			m_goal = obj.transform.position;
 
-		m_mob.RotateToTarget(m_goal);
+
+		float d = Vector3.Distance(m_mob.transform.position, m_goal);
+		if (d < 10f)
+		{
+			d = 50f;
+		}
+		m_dashTimeout = d/DashSpeed + Time.time;
 		m_navAgent.SetDestination(m_goal);
 		m_speed = 0;
 		m_breakMode = false;
-
 		m_mob.Spawn.StartCoroutine(EffectAttackGudiedLine(m_mob.transform.position, m_goal, 0));
 
 	}
@@ -38,7 +45,7 @@ public class MobAIDash : MobAI {
 		float targetHorAngle = Mathf.Atan2(goal.z-start.z, goal.x-start.x) * Mathf.Rad2Deg;
 		GameObject guidedLine = MonoBehaviour.Instantiate (m_prefAttackGuidedLine, start, Quaternion.Euler (0, -targetHorAngle, 0)) as GameObject;
 		Vector3 scale = Vector3.one;
-		scale.x = Vector3.Distance(start, goal);
+		scale.x = Vector3.Distance(start, goal)*2;
 		guidedLine.transform.localScale = scale;
 		while(t < 1f)
 		{
@@ -60,21 +67,17 @@ public class MobAIDash : MobAI {
 		{
 			if (m_breakMode == false)
 			{
-				m_speed += Time.deltaTime*10.5f;
-				m_speed = Mathf.Min(10f, m_speed);
+				m_speed = DashSpeed;
 			}
 			else
-			{
-				m_speed -= Time.deltaTime*10.2f;
-				if (m_speed <= 0)
-				{			
-					m_speed = 0f;
-					SetTarget(m_target);
-				}
+			{							
+				m_speed = 0f;
+				SetTarget(m_target);
+
 			}
+			m_mob.RotateToTarget(m_goal);
 			m_navAgent.speed = m_speed;
-			float d = Vector3.Distance(m_mob.transform.position, m_goal);
-			if (d <= 1.1f)
+			if (m_dashTimeout < Time.time)
 			{
 				m_breakMode = true;
 			}

@@ -7,7 +7,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"107"					
+					"refItemId":"107"
 				}
 			],
 			"mobAI":"Normal",			
@@ -431,7 +431,7 @@
 	],
 	"boss":
 	[	
-	// range
+	
 		{
 			"id":21001,
 			"prefBody":"eye_brain_skin",
@@ -456,13 +456,13 @@
 					}
 				},
 				{
-					"refItemId":"103",
+					"refItemId":"117",
 					"evolution":1,
 					"weaponStat":
 					{
-						"coolTime":3,
+						"coolTime":6,
 						"range":7
-					}
+					}	
 				}
 			],
 			"mobAI":"Normal",
@@ -476,6 +476,30 @@
 				"phyDamagePerLevel":5,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":5,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0
+			}
+		},
+		{
+			"id":21005,
+			"prefBody":"crazy_dog_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"107"					
+				}
+			],
+			"mobAI":"Dash",			
+			"baseCreatureProperty":
+			{
+				"maxHP":0.2,
+				"physicalDamage":15,
+				"physicalDefence":1,
+				"evolutionPerLevel":0.3,
+				"exp":10,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":2,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
