@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class LightningBoltLauncher : Weapon {
+public class LightningLauncher : Weapon {
 
 	GameObject[]	m_bullet;
 	

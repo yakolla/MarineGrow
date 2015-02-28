@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LightningBoltBullet : Bullet
+public class LightningBullet : Bullet
 {
 	public int zigs = 100;
 	public float speed = 1f;
@@ -14,6 +14,7 @@ public class LightningBoltBullet : Bullet
 	public float	m_coolTime = 0.3f;
 	public Color	m_color = Color.white;
 	float			m_lastDamageTime = 0f;
+	public int	m_maxChaining = 5;
 
 	Perlin noise;
 	float oneOverZigs;
@@ -54,16 +55,11 @@ public class LightningBoltBullet : Bullet
 
 		bool mobHitted = false;
 
-		Creature[] targets = new Creature[5];
+		Creature[] targets = null;
 		int hittedTargetCount = 0;
-		/*
-		if (m_ownerCreature.m_targeting)
+		if (m_maxChaining > 0)
 		{
-			targets[0] = m_ownerCreature.m_targeting.GetComponent<Creature>();
-			mobHitted = true;
-		}
-		else*/
-		{
+			targets = new Creature[m_maxChaining];
 			RaycastHit hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
 			if (Physics.Raycast(transform.position, fwd, out hit, length))
@@ -73,44 +69,64 @@ public class LightningBoltBullet : Bullet
 				{				
 					targets[0] = creature;
 					mobHitted = true;
+					hittedTargetCount = 1;
+					
+					for(int i = 1; i < targets.Length; ++i)
+					{
+						GameObject chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetAutoTargetTags(), targets, 3f);
+						if (chaningTargetObj == null)
+							break;
+						
+						targets[i] = chaningTargetObj.GetComponent<Creature>();
+						hittedTargetCount++;
+					}
+					
+					int perParticles = particles.Length/hittedTargetCount;
+					createChanningParticle(transform.position, targets[0].transform.position, 0, perParticles);
+					for(int i = 0; i < hittedTargetCount-1; ++i)
+					{
+						createChanningParticle(targets[i].transform.position, targets[i+1].transform.position, perParticles*(i+1), perParticles*(i+1)+perParticles);
+					}
+					
+					particleEmitter.particles = particles;
 				}
 			}
 		}
-
-		if (mobHitted == true)
+		else
 		{
-			hittedTargetCount = 1;
-
-			for(int i = 1; i < targets.Length; ++i)
+			RaycastHit[] hit;
+			Vector3 fwd = transform.TransformDirection(Vector3.right);
+			hit = Physics.RaycastAll(transform.position, fwd, length);
+			if (hit.Length > 0)
 			{
-				GameObject chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetAutoTargetTags(), targets, 3f);
-				if (chaningTargetObj == null)
-					break;
-				
-				targets[i] = chaningTargetObj.GetComponent<Creature>();
-				hittedTargetCount++;
-			}
+				targets = new Creature[hit.Length];
+				for(int i = 0; i < hit.Length; ++i)
+				{
+					Creature creature = hit[i].transform.gameObject.GetComponent<Creature>();
+					if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+					{				
+						targets[hittedTargetCount] = creature;
+						hittedTargetCount += 1;
+					}
+				}
 
+			}
+		}
+
+		if (targets != null)
+		{
 			if (m_lastDamageTime+m_coolTime<Time.time)
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)
 				{
 					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Lightining, m_damageBuffType, PrefDamageEffect));
 				}
-
+				
 				m_lastDamageTime = Time.time;
 			}
-
-			int perParticles = particles.Length/hittedTargetCount;
-			createChanningParticle(transform.position, targets[0].transform.position, 0, perParticles);
-			for(int i = 0; i < hittedTargetCount-1; ++i)
-			{
-				createChanningParticle(targets[i].transform.position, targets[i+1].transform.position, perParticles*(i+1), perParticles*(i+1)+perParticles);
-			}
-			
-			particleEmitter.particles = particles;
 		}
-		else
+
+		if (mobHitted == false)
 		{
 			Vector3 targetPos = new Vector3();
 			targetPos.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
