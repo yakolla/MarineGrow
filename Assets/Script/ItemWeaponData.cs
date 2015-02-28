@@ -13,9 +13,22 @@ public class ItemWeaponData : ItemData{
 		m_prefWeapon = Resources.Load<GameObject>("Pref/Weapon/" + RefItem.codeName);
 		m_weaponName = RefItem.codeName;
 		if (weaponStat == null)
+		{
 			m_weaponStat = RefItem.weaponStat;
+		}
 		else
+		{
 			m_weaponStat = weaponStat;
+			if (m_weaponStat.coolTime == 0)
+			{
+				m_weaponStat.coolTime = RefItem.weaponStat.coolTime;
+			}
+
+			if (m_weaponStat.range == 0)
+			{
+				m_weaponStat.range = RefItem.weaponStat.range;
+			}
+		}
 
 		Lock = true;
 	}

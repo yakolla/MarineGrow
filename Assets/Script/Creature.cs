@@ -412,9 +412,12 @@ public class Creature : MonoBehaviour {
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 
-		float dmg = damageDesc.Damage;
-		dmg *= 1-m_creatureProperty.PhysicalDefencePoint/100f;
-		dmg= Mathf.Max(0, Mathf.FloorToInt(dmg));
+		float dmg = damageDesc.Damage-m_creatureProperty.PhysicalDefencePoint;
+		dmg = Mathf.Max(0, Mathf.FloorToInt(dmg));
+		if (dmg == 0)
+		{
+			dmg = Random.Range(0, 2);
+		}
 		
 		if (m_ingTakenDamageEffect == false)
 		{

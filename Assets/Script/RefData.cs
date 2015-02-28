@@ -127,6 +127,7 @@ public class RefMob : RefBaseData
 {
 	public class WeaponDesc
 	{
+		public int reqLevel = 0;
 		public int refItemId;
 		public int level = 1;
 		public int evolution = 0;

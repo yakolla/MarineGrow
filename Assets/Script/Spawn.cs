@@ -147,7 +147,7 @@ public class Spawn : MonoBehaviour {
 
 		int minIndex = (int)(spawnRatioDesc.ratio[0] * mobs.Length);
 		int maxIndex = (int)((spawnRatioDesc.ratio[0] * (1f-progress) + spawnRatioDesc.ratio[1] * progress) * mobs.Length);
-
+		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress + ", minRatio:" + spawnRatioDesc.ratio[0]+", maxRatio:" + spawnRatioDesc.ratio[1]);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
 		buildMobs.Add(mobs[Random.Range(minIndex, maxIndex)]);
@@ -184,8 +184,8 @@ public class Spawn : MonoBehaviour {
 				StartCoroutine(EffectWaveText("Wave " + (m_spawningPool + 1), 1));
 			}
 
-			float waveProgress = Mathf.Min(1f, m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
-			//Debug.Log(waveProgress + "," + m_spawningPool);
+			float waveProgress = Mathf.Min(1f, (float)m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
+			Debug.Log(waveProgress + "," + m_spawningPool);
 
 			int spawnCount = 0;
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
@@ -452,23 +452,21 @@ public class Spawn : MonoBehaviour {
 						break;
 					case ItemData.Type.Weapon:
 						item = new ItemWeaponData(desc.refItem.id, null);
-						bindItemOption(item, desc.itemOptionSpawns);
-						
 						break;
 					case ItemData.Type.WeaponParts:
-						item = new ItemWeaponUpgradeFragmentData();					
+						item = new ItemWeaponUpgradeFragmentData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.Follower:
 						//item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
 						break;
 					case ItemData.Type.WeaponDNA:
-						item = new ItemWeaponEvolutionFragmentData();					
+						item = new ItemWeaponEvolutionFragmentData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.GoldMedal:
-						item = new ItemGoldMedalData();					
+						item = new ItemGoldMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.SilverMedal:
-						item = new ItemSilverMedalData();					
+						item = new ItemSilverMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.MobEgg:
 						spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], pos, spawnMobLevel());

@@ -89,6 +89,11 @@ public class Weapon : MonoBehaviour {
 
 	}
 
+	public void LevelUp()
+	{
+		++m_level;
+	}
+
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
 		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;

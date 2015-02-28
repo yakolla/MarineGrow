@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class ItemSilverMedalData : ItemData{
 
-	public ItemSilverMedalData() : base(6, 1)
+	public ItemSilverMedalData(int count) : base(6, count)
 	{
 
 	}

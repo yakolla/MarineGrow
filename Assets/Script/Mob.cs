@@ -32,6 +32,9 @@ public class Mob : Creature {
 
 		foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
 		{
+			if (weaponDesc.reqLevel > mobLevel)
+				continue;
+
 			ItemObject weapon = new ItemObject(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
 			weapon.Item.Evolution = weaponDesc.evolution+(int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
 			weapon.Item.Equip(this);

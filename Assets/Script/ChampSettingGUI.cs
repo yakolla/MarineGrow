@@ -62,16 +62,10 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
-				for(int i = 0 ; i < 1000; ++i)
-				{
-					Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData());
-					Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData());
-				}
-				for(int i = 0 ; i < 200; ++i)
-				{
-					Warehouse.Instance.PushItem(new ItemGoldMedalData());
-					Warehouse.Instance.PushItem(new ItemSilverMedalData());
-				}
+				Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData(1000));
+				Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData(1000));
+				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
+				Warehouse.Instance.PushItem(new ItemSilverMedalData(200));
 
 				Warehouse.Instance.PushItem(new ItemAccessoryData(10));
 
@@ -91,7 +85,9 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(108, null));
+				ItemWeaponData itemWeaponData = new ItemWeaponData(108, null);
+				itemWeaponData.Lock = false;
+				Warehouse.Instance.PushItem(itemWeaponData);
 			}
 			
 			//Save ();

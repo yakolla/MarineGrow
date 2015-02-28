@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ChampAbilityGUI : MonoBehaviour {
 
@@ -15,15 +16,87 @@ public class ChampAbilityGUI : MonoBehaviour {
 	float 		m_height = Screen.height * (1/8f);
 	int		m_fontSize = (int)(Screen.width*(1/50f));
 
+	delegate void OnAbility();
+	class Ability
+	{
+		public float		m_ratio;
+		public string		m_name;
+		public OnAbility	m_functor;
+
+
+		public Ability(float ratio, string name, OnAbility functor)
+		{
+			m_ratio = ratio;
+			m_name = name;
+			m_functor = functor;
+		}
+	}
+
+	List<Ability>	m_abilities = new List<Ability>();
+	int[]	m_randomAbility = new int[3];
+
+	void Awake()
+	{
+		m_abilities.Add(new Ability(0.3f, "Inc Attack", ()=>{
+			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=1;
+			--m_champ.RemainStatPoint;
+		}));
+		
+		m_abilities.Add(new Ability(0.3f, "Inc Defence", ()=>{
+			m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=1;
+			--m_champ.RemainStatPoint;
+		}));
+		
+		m_abilities.Add(new Ability(0.3f, "Inc MaxHP", ()=>{
+			m_champ.m_creatureProperty.AlphaMaxHP+=1;
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.01f, "Weapon Evolution", ()=>{
+			m_champ.WeaponHolder.Evolution();
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.05f, "Weapon Levelup", ()=>{
+			m_champ.WeaponHolder.Evolution();
+			--m_champ.RemainStatPoint;
+		}));
+	}
+
 	void Start () {
 
 		m_champ = transform.parent.gameObject.GetComponent<Champ>();
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
+
+	}
+
+	void RandomAbility()
+	{
+		List<int> indexs = new List<int>();
+		for(int i = 0; i < m_abilities.Count; ++i)
+		{
+			indexs.Add(i);
+		}
+
+		int selectCount = 0;
+		while(selectCount < m_randomAbility.Length)
+		{
+			int rid = Random.Range(0, indexs.Count);
+			float ratio = Random.Range(0f, 1f);
+			if (ratio > m_abilities[indexs[rid]].m_ratio)
+				continue;
+			Debug.Log(ratio);
+
+			m_randomAbility[selectCount] = indexs[rid];
+			indexs.RemoveAt(rid);
+			++selectCount;
+		}
+
 	}
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
-
+		RandomAbility();
 	}
 
 	void OnDisable() {
@@ -43,48 +116,15 @@ public class ChampAbilityGUI : MonoBehaviour {
 	}
 
 	Vector2[] masterySrollPosition = new Vector2[MasteryTypes];
-	delegate void OnChampStat();
-	void displayMastery(Rect rect, Texture2D icon, float statPoint, ref Vector2 scrollPosition, OnChampStat onChampStat)
+	void displayMastery(Rect rect, Ability ability)
 	{
 		int size = (int)rect.width/MasteryColumns;
 		GUI.BeginGroup(rect);
-		GUI.Label(new Rect(0, 0, size, size), icon);
-		GUI.Label(new Rect(size, 0, size, size), statPoint.ToString());
-		if (GUI.Button(new Rect(size*3, 0, size, size), "+") && m_champ.RemainStatPoint > 0)
+		if (GUI.Button(new Rect(0, 0, rect.width, rect.height), ability.m_name) && m_champ.RemainStatPoint > 0)
 		{
-			onChampStat();
+			ability.m_functor();
 		}
 
-		int padding = size/MasteryColumns;
-
-		switch (Application.platform)
-		{
-		case RuntimePlatform.WindowsEditor:
-		case RuntimePlatform.WindowsPlayer:
-			scrollPosition = GUI.BeginScrollView(new Rect(0, size+padding, size*MasteryColumns, size*4), scrollPosition, new Rect(0, size, size*MasteryColumns-padding*2, size*8));
-			break;
-		default:
-			scrollPosition = GUI.BeginScrollView(new Rect(0, size+padding, size*MasteryColumns, size*4), scrollPosition, new Rect(0, size+padding, size*MasteryColumns-padding*2, size*8),GUIStyle.none,GUIStyle.none);
-			break;
-		}
-
-		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
-		itemCountStyle.fontSize = m_fontSize;
-
-		for(int y = 0; y < 6; ++y)
-		{
-			for(int x = 0; x < (MasteryColumns-1); ++x)
-			{
-				if (GUI.Button(new Rect(padding+size*x+padding*x, size+padding+y*size+padding*y, size, size), icon) && m_champ.RemainMasteryPoint > 0)
-				{
-					m_champ.WeaponHolder.Evolution();
-					m_champ.RemainMasteryPoint--;
-				}
-				GUI.Label(new Rect(padding+size*x+padding*x, size+padding+y*size+padding*y, size, size), "<color=white>0/0</color>", itemCountStyle);
-			}
-		}
-
-		GUI.EndScrollView();
 		GUI.EndGroup();
 	}
 	
@@ -107,34 +147,16 @@ public class ChampAbilityGUI : MonoBehaviour {
 		GUI.Label(new Rect(size*5, startY+(size*0), size, size), m_champ.RemainMasteryPoint.ToString());
 
 		int masteryWidth = Screen.width/3;
-		displayMastery(new Rect(0, size, masteryWidth, Screen.height), 
-		               Resources.Load<Texture2D>("Sprites/swordoftruth"), 
-		               m_champ.m_creatureProperty.PhysicalAttackDamage, 
-		               ref masterySrollPosition[0],
-		               ()=>{
-							m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=1;
-							--m_champ.RemainStatPoint;
-						}
+		displayMastery(new Rect(0, size, masteryWidth, Screen.height-size*2), 		              
+		               m_abilities[m_randomAbility[0]]
 		);
 
-		displayMastery(new Rect(masteryWidth, size, masteryWidth, Screen.height), 
-		               Resources.Load<Texture2D>("Sprites/staffoflight"), 
-		               m_champ.m_creatureProperty.PhysicalDefencePoint, 
-		               ref masterySrollPosition[1],
-		               ()=>{
-							m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=1;
-							--m_champ.RemainStatPoint;
-						}
+		displayMastery(new Rect(masteryWidth, size, masteryWidth, Screen.height-size*2), 
+		               m_abilities[m_randomAbility[1]]
 		);
 
-		displayMastery(new Rect(masteryWidth*2, size, masteryWidth, Screen.height), 
-		               Resources.Load<Texture2D>("Sprites/robeofpower"), 
-		               m_champ.m_creatureProperty.MaxHP, 
-		               ref masterySrollPosition[2],
-		               ()=>{
-							m_champ.m_creatureProperty.AlphaMaxHP+=1;
-							--m_champ.RemainStatPoint;
-						}
+		displayMastery(new Rect(masteryWidth*2, size, masteryWidth, Screen.height-size*2), 
+		               m_abilities[m_randomAbility[2]]
 		);
 
 

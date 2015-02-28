@@ -44,6 +44,14 @@ public class WeaponHolder : MonoBehaviour {
 		}
 	}
 
+	public void LevelUp()
+	{
+		foreach(Weapon weapon in m_weapons)
+		{
+			weapon.LevelUp();
+		}
+	}
+
 	public float AttackRange()
 	{
 		if (m_weapons.Count == 0)

@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class ItemWeaponUpgradeFragmentData : ItemData{
 
-	public ItemWeaponUpgradeFragmentData() : base(3, 1)
+	public ItemWeaponUpgradeFragmentData(int count) : base(3, count)
 	{
 
 	}

@@ -176,6 +176,24 @@
 						"coolTime":6,
 						"range":7
 					}
+				},
+				{
+					"reqLevel":2,
+					"refItemId":"101",
+					"evolution":0,
+					"weaponStat":
+					{
+						"coolTime":6
+					}
+				},
+				{
+					"reqLevel":3,
+					"refItemId":"102",
+					"evolution":0,
+					"weaponStat":
+					{
+						"coolTime":6
+					}
 				}
 			],
 			"mobAI":"Normal",
@@ -229,6 +247,10 @@
 			[
 				{
 					"refItemId":"103"
+				},
+				{
+					"reqLevel":2,
+					"refItemId":"102"
 				}
 			],
 			"mobAI":"Dash",
@@ -253,6 +275,10 @@
 			[
 				{
 					"refItemId":"105"
+				},
+				{
+					"reqLevel":2,
+					"refItemId":"112"
 				}
 			],
 			"mobAI":"Dash",
@@ -468,9 +494,9 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":1.3,
+				"maxHP":10,
 				"physicalDamage":150,
-				"physicalDefence":10,
+				"physicalDefence":5,
 				"evolutionPerLevel":0.5,
 				"exp":500,
 				"phyDamagePerLevel":5,
