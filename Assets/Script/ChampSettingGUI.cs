@@ -112,6 +112,11 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
 		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
+
+		if (Input.GetKeyDown(KeyCode.Escape)) 
+		{ 
+			Application.LoadLevel("Worldmap");
+		}
 	}
 
 	public void Save() {
