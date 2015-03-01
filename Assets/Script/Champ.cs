@@ -130,8 +130,8 @@ public class Champ : Creature {
 			{
 				Vector3 pos = Vector3.zero;
 				
-				pos.x = m_rightJoystick.position.x*1000;
-				pos.z = m_rightJoystick.position.y*1000;
+				pos.x = m_rightJoystick.position.x*10;
+				pos.z = m_rightJoystick.position.y*10;
 
 				if (pos.x == 0f && pos.z == 0f)
 				{

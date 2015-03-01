@@ -115,7 +115,7 @@ public class Weapon : MonoBehaviour {
 
 	protected bool isCoolTime()
 	{
-		return m_lastCreated + m_coolTime < Time.time;
+		return m_lastCreated + (m_coolTime-m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) < Time.time;
 	}
 
 	virtual public void StartFiring(Vector2 targetAngle)

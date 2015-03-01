@@ -37,6 +37,9 @@ public class CreatureProperty {
 	[SerializeField]
 	float	m_alphaGainExtraExp = 0f;
 
+	[SerializeField]
+	float	m_alphaAttackCoolTime = 0f;
+
 
 	[SerializeField]
 	int		m_level = 1;
@@ -212,21 +215,33 @@ public class CreatureProperty {
 		set { m_alphaGainExtraExp = value; }
 	}
 
+	public float	AttackCoolTime
+	{
+		get {return Mathf.Min(AlphaAttackCoolTime, 0.8f);}
+	}
+	
+	public float	AlphaAttackCoolTime
+	{
+		get {return m_alphaAttackCoolTime;}
+		set { m_alphaAttackCoolTime = value; }
+	}
+
 	public void CopyTo(CreatureProperty other)
 	{
 		other.m_owner = m_owner;
 		
 		other.m_baseProperty = m_baseProperty;
-		other.m_hp = m_hp;		
-		other.m_alphaMaxHP = m_alphaMaxHP;		
+		other.m_hp = m_hp;
+		other.m_alphaMaxHP = m_alphaMaxHP;
 		other.m_alphaPhysicalDamage = m_alphaPhysicalDamage;
 		other.m_alphaCriticalRatio = m_alphaCriticalRatio;
 		other.m_alphaCriticalDamage = m_alphaCriticalDamage;
-		other.m_alphaPhysicalDefencePoint = m_alphaPhysicalDefencePoint;		
-		other.m_alphaMoveSpeed = m_alphaMoveSpeed;		
-		other.m_betaMoveSpeed = m_betaMoveSpeed;		
+		other.m_alphaPhysicalDefencePoint = m_alphaPhysicalDefencePoint;
+		other.m_alphaMoveSpeed = m_alphaMoveSpeed;
+		other.m_betaMoveSpeed = m_betaMoveSpeed;
 		other.m_alphaLifeSteal = m_alphaLifeSteal;
 		other.m_alphaGainExtraExp = m_alphaGainExtraExp;
+		other.m_alphaAttackCoolTime = m_alphaAttackCoolTime;
 		other.m_level = m_level;
 		other.m_exp = m_exp;
 	}
