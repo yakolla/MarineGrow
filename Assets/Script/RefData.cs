@@ -28,6 +28,9 @@ public class RefCreatureBaseProperty
 	[Range (0, 100)]
 	public float	moveSpeed;
 	public float	navMeshBaseOffset;
+	public float	lifeSteal;
+	public float	criticalRatio;
+	public float	criticalDamage;
 }
 
 public class RefEvolutionFiring

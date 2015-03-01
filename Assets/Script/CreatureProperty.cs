@@ -12,18 +12,31 @@ public class CreatureProperty {
 	float 	m_hp;
 
 	[SerializeField]
-	float	m_alphaMaxHP = 0;
+	float	m_alphaMaxHP = 0f;
 
 	[SerializeField]
-	float	m_alphaPhysicalDamage = 0;
+	float	m_alphaPhysicalDamage = 0f;
 
 	[SerializeField]
-	float	m_alphaPhysicalDefencePoint = 0;
+	float	m_alphaCriticalRatio = 0f;
+
+	[SerializeField]
+	float	m_alphaCriticalDamage = 0f;
+
+	[SerializeField]
+	float	m_alphaPhysicalDefencePoint = 0f;
 
 	[SerializeField]
 	float	m_alphaMoveSpeed = 0f;
 
 	float	m_betaMoveSpeed = 1f;
+
+	[SerializeField]
+	float	m_alphaLifeSteal = 0f;
+
+	[SerializeField]
+	float	m_alphaGainExtraExp = 0f;
+
 
 	[SerializeField]
 	int		m_level = 1;
@@ -117,7 +130,7 @@ public class CreatureProperty {
 
 	public float	PhysicalAttackDamage
 	{
-		get {return m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage + (m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_baseProperty.phyDamagePerLevel;}
+		get {return (m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage + (m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_baseProperty.phyDamagePerLevel);}
 	}
 
 	public float	AlphaPhysicalAttackDamage
@@ -152,5 +165,69 @@ public class CreatureProperty {
 	{
 		get {return m_betaMoveSpeed;}
 		set { m_betaMoveSpeed = value; }
+	}
+
+
+	public float LifeSteal
+	{
+		get{return m_baseProperty.lifeSteal + AlphaLifeSteal;}
+	}
+
+	public float AlphaLifeSteal
+	{
+		get { return m_alphaLifeSteal; }
+		set { m_alphaLifeSteal = value; }
+	}
+
+	public float	CriticalRatio
+	{
+		get {return Mathf.Min(100, m_baseProperty.criticalRatio + AlphaCriticalRatio);}
+	}
+
+	public float	AlphaCriticalRatio
+	{
+		get {return m_alphaCriticalRatio;}
+		set { m_alphaCriticalRatio = value; }
+	}
+
+	public float	CriticalDamage
+	{
+		get {return m_baseProperty.criticalDamage + AlphaCriticalDamage;}
+	}
+	
+	public float	AlphaCriticalDamage
+	{
+		get {return m_alphaCriticalDamage;}
+		set { m_alphaCriticalDamage = value; }
+	}
+
+	public float	GainExtraExp
+	{
+		get {return AlphaGainExtraExp;}
+	}
+	
+	public float	AlphaGainExtraExp
+	{
+		get {return m_alphaGainExtraExp;}
+		set { m_alphaGainExtraExp = value; }
+	}
+
+	public void CopyTo(CreatureProperty other)
+	{
+		other.m_owner = m_owner;
+		
+		other.m_baseProperty = m_baseProperty;
+		other.m_hp = m_hp;		
+		other.m_alphaMaxHP = m_alphaMaxHP;		
+		other.m_alphaPhysicalDamage = m_alphaPhysicalDamage;
+		other.m_alphaCriticalRatio = m_alphaCriticalRatio;
+		other.m_alphaCriticalDamage = m_alphaCriticalDamage;
+		other.m_alphaPhysicalDefencePoint = m_alphaPhysicalDefencePoint;		
+		other.m_alphaMoveSpeed = m_alphaMoveSpeed;		
+		other.m_betaMoveSpeed = m_betaMoveSpeed;		
+		other.m_alphaLifeSteal = m_alphaLifeSteal;
+		other.m_alphaGainExtraExp = m_alphaGainExtraExp;
+		other.m_level = m_level;
+		other.m_exp = m_exp;
 	}
 }

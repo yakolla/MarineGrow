@@ -16,19 +16,24 @@ public class ChampAbilityGUI : MonoBehaviour {
 	float 		m_height = Screen.height * (1/8f);
 	int		m_fontSize = (int)(Screen.width*(1/50f));
 
+	CreatureProperty	m_backup = new CreatureProperty();
+
 	delegate void OnAbility();
+	delegate string OnCompareAbility();
 	class Ability
 	{
 		public float		m_ratio;
 		public string		m_name;
+		public OnCompareAbility m_compare;
 		public OnAbility	m_functor;
 
 
-		public Ability(float ratio, string name, OnAbility functor)
+		public Ability(float ratio, string name, OnCompareAbility compare, OnAbility functor)
 		{
 			m_ratio = ratio;
 			m_name = name;
 			m_functor = functor;
+			m_compare = compare;
 		}
 	}
 
@@ -37,28 +42,82 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	void Awake()
 	{
-		m_abilities.Add(new Ability(0.3f, "Inc Attack", ()=>{
+		m_abilities.Add(new Ability(0.3f, "Inc Strength", 
+		()=>{
+			m_backup.AlphaPhysicalAttackDamage+=1;
+			return m_champ.m_creatureProperty.PhysicalAttackDamage + " -> " + "<color=yellow>+" + (m_backup.PhysicalAttackDamage) + "</color>";
+		},
+		()=>{
 			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=1;
 			--m_champ.RemainStatPoint;
 		}));
 		
-		m_abilities.Add(new Ability(0.3f, "Inc Defence", ()=>{
+		m_abilities.Add(new Ability(0.3f, "Inc Defence", 
+		()=>{
+			m_backup.AlphaPhysicalDefencePoint+=1;
+			return m_champ.m_creatureProperty.PhysicalDefencePoint + " -> " + "<color=yellow>+" + (m_backup.PhysicalDefencePoint) + "</color>";
+		},
+		()=>{
 			m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=1;
 			--m_champ.RemainStatPoint;
 		}));
 		
-		m_abilities.Add(new Ability(0.3f, "Inc MaxHP", ()=>{
+		m_abilities.Add(new Ability(0.3f, "Inc Health", 
+		()=>{
+			m_backup.AlphaMaxHP+=1;
+			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>+" + (m_backup.MaxHP) + "</color>";
+		},
+		()=>{
 			m_champ.m_creatureProperty.AlphaMaxHP+=1;
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.01f, "Weapon Evolution", ()=>{
+		m_abilities.Add(new Ability(0.01f, "Weapon Evolution", 
+		()=>{
+			return "";
+		},
+		()=>{
 			m_champ.WeaponHolder.Evolution();
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.05f, "Weapon Levelup", ()=>{
-			m_champ.WeaponHolder.Evolution();
+		m_abilities.Add(new Ability(0.3f, "Inc Critical Success %", 
+		()=>{
+			m_backup.AlphaCriticalRatio += 0.03f;
+			return m_champ.m_creatureProperty.CriticalRatio + " -> " + "<color=yellow>+" + (m_backup.CriticalRatio) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.03f;
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.3f, "Inc Critical Damage %", 
+		                            ()=>{
+			m_backup.AlphaCriticalDamage += 5f;
+			return m_champ.m_creatureProperty.CriticalDamage + " -> " + "<color=yellow>+" + (m_backup.CriticalDamage) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaCriticalDamage += 5f;
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal%", 
+		()=>{
+			m_backup.AlphaLifeSteal += 0.1f;
+			return m_champ.m_creatureProperty.LifeSteal + " -> " + "<color=yellow>+" + (m_backup.LifeSteal) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaLifeSteal += 0.1f;
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra Exp%", 
+		                            ()=>{
+			m_backup.AlphaGainExtraExp += 0.3f;
+			return m_champ.m_creatureProperty.GainExtraExp + " -> " + "<color=yellow>+" + (m_backup.GainExtraExp) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
 			--m_champ.RemainStatPoint;
 		}));
 	}
@@ -120,9 +179,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 	{
 		int size = (int)rect.width/MasteryColumns;
 		GUI.BeginGroup(rect);
-		if (GUI.Button(new Rect(0, 0, rect.width, rect.height), ability.m_name) && m_champ.RemainStatPoint > 0)
+		if (GUI.Button(new Rect(0, 0, rect.width, rect.height), ability.m_name + "\n" + ability.m_compare()) && m_champ.RemainStatPoint > 0)
 		{
 			ability.m_functor();
+			RandomAbility();
 		}
 
 		GUI.EndGroup();
@@ -145,6 +205,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		GUI.Label(new Rect(size*3, startY+(size*0), size*2, size), "MasteryPoint:");
 		GUI.Label(new Rect(size*5, startY+(size*0), size, size), m_champ.RemainMasteryPoint.ToString());
+
+		m_champ.m_creatureProperty.CopyTo(m_backup);
 
 		int masteryWidth = Screen.width/3;
 		displayMastery(new Rect(0, size, masteryWidth, Screen.height-size*2), 		              

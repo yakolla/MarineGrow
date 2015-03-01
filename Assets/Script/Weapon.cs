@@ -35,9 +35,9 @@ public class Weapon : MonoBehaviour {
 	protected float		m_attackRange;
 
 	int					m_evolution;
-	int					m_level;
 
 	RefItem				m_refItem;
+
 
 	protected void Start()
 	{
@@ -89,10 +89,7 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	public void LevelUp()
-	{
-		++m_level;
-	}
+
 
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{

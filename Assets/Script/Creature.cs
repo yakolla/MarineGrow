@@ -411,8 +411,16 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
+		float criticalDamage = 0f;
+		if (offender != null)
+		{
+			if (Random.Range(0, 1f) < offender.m_creatureProperty.CriticalRatio)
+			{
+				criticalDamage = offender.m_creatureProperty.CriticalDamage;
+			}
+		}
 
-		float dmg = damageDesc.Damage-m_creatureProperty.PhysicalDefencePoint;
+		float dmg = (damageDesc.Damage+damageDesc.Damage*criticalDamage)-m_creatureProperty.PhysicalDefencePoint;
 		dmg = Mathf.Max(0, Mathf.FloorToInt(dmg));
 		if (dmg == 0)
 		{
@@ -427,6 +435,14 @@ public class Creature : MonoBehaviour {
 			if (dmg == 0)
 			{
 				strDamage = "Block";
+			}
+			else
+			{
+				if (criticalDamage > 0f)
+				{
+					strDamage = "Critical " + dmg.ToString();
+				}
+
 			}
 
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
@@ -463,10 +479,18 @@ public class Creature : MonoBehaviour {
 			}
 		}
 
+		if (offender != null)
+		{
+			offender.m_creatureProperty.Heal((int)(dmg*offender.m_creatureProperty.LifeSteal));
+		}
 
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
 		{
-			offender.GiveExp(m_creatureProperty.Exp);
+			if (offender != null)
+			{
+				offender.GiveExp(m_creatureProperty.Exp);
+			}
+
 			Death();
 		}
 
@@ -474,7 +498,7 @@ public class Creature : MonoBehaviour {
 
 	virtual public void GiveExp(int exp)
 	{
-		m_creatureProperty.giveExp(exp);
+		m_creatureProperty.giveExp((int)(exp+exp*m_creatureProperty.GainExtraExp));
 	}
 
 	public Type CreatureType
