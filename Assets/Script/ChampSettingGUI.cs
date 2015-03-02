@@ -58,7 +58,9 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(108, null));
+				ItemWeaponData itemWeaponData = new ItemWeaponData(108, null);
+				itemWeaponData.Lock = false;
+				Warehouse.Instance.PushItem(itemWeaponData);
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
@@ -186,12 +188,12 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	float getItemLevelupWorth(ItemObject itemObj)
 	{
-		return itemObj.Item.Level * 5;
+		return itemObj.Item.Level + itemObj.Item.Evolution * 9;
 	}
 
 	float getItemEvolutionWorth(ItemObject itemObj)
 	{
-		return (itemObj.Item.Evolution+1) * 50;
+		return itemObj.Item.Evolution+1;
 	}
 
 	bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
@@ -505,9 +507,11 @@ public class ChampSettingGUI : MonoBehaviour {
 			break;
 		}
 
-		int itemIndex = 0;
-		foreach(ItemObject item in Warehouse.Instance.Items)
+
+		for(int itemIndex = 0; itemIndex < Warehouse.Instance.Items.Count; ++itemIndex)
 		{
+			ItemObject item = Warehouse.Instance.Items[itemIndex];
+
 			int x = itemIndex%INVEN_SLOT_COLS;
 			int y = itemIndex/INVEN_SLOT_COLS;
 			if (GUI.Button(new Rect(size*x, (size*2*(y)+y*size), size*2, size*2), item.ItemIcon))
@@ -517,8 +521,6 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			string str = "<color=white>" +item.Item.Count + "</color>";
 			GUI.Label(new Rect(size*x, (size*2*(y)+y*size), size*2, size*2), str, itemCountStyle);
-
-			++itemIndex;
 
 			bool equiped = m_equipedWeapon == item;
 			if (equiped == false)

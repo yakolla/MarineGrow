@@ -119,7 +119,7 @@ public class LightningBullet : Bullet
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)
 				{
-					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Lightining, m_damageBuffType, PrefDamageEffect));
+					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Lightining, m_damageBuffType, PrefDamageEffect));
 				}
 				
 				m_lastDamageTime = Time.time;

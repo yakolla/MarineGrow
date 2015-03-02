@@ -44,21 +44,21 @@ public class ChampAbilityGUI : MonoBehaviour {
 	{
 		m_abilities.Add(new Ability(0.3f, "Inc Strength", 
 		()=>{
-			m_backup.AlphaPhysicalAttackDamage+=1;
+			m_backup.AlphaPhysicalAttackDamage+=3;
 			return m_champ.m_creatureProperty.PhysicalAttackDamage + " -> " + "<color=yellow>" + (m_backup.PhysicalAttackDamage) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=1;
+			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=3;
 			--m_champ.RemainStatPoint;
 		}));
 		
 		m_abilities.Add(new Ability(0.3f, "Inc Defence", 
 		()=>{
-			m_backup.AlphaPhysicalDefencePoint+=1;
+			m_backup.AlphaPhysicalDefencePoint+=3;
 			return m_champ.m_creatureProperty.PhysicalDefencePoint + " -> " + "<color=yellow>" + (m_backup.PhysicalDefencePoint) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=1;
+			m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=3;
 			--m_champ.RemainStatPoint;
 		}));
 		

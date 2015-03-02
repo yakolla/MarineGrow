@@ -86,7 +86,7 @@ public class FireGunBullet : Bullet {
 
 			//m_collider.center = new Vector3(dist/2.6f, m_collider.center.y, m_collider.center.z);
 			//m_collider.size = new Vector3(dist, m_collider.size.y, m_collider.size.z);
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));			
 		}
 	}
 }

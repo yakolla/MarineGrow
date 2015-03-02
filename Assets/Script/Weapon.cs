@@ -35,6 +35,7 @@ public class Weapon : MonoBehaviour {
 	protected float		m_attackRange;
 
 	int					m_evolution;
+	int					m_level;
 
 	RefItem				m_refItem;
 
@@ -61,6 +62,7 @@ public class Weapon : MonoBehaviour {
 
 		AttackRange = weaponData.WeaponStat.range;
 		CoolTime = weaponData.WeaponStat.coolTime;
+		m_level = weaponData.Level;
 
 	}
 
@@ -95,7 +97,8 @@ public class Weapon : MonoBehaviour {
 	{
 		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage, targetAngle);
+		float damageRatio = m_evolution*9+m_level;
+		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage*damageRatio, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 

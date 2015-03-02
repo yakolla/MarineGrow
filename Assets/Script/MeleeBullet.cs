@@ -61,7 +61,7 @@ public class MeleeBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));			
+			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));			
 			DestroyObject(gameObject);
 		}
 	}
