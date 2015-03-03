@@ -217,7 +217,7 @@ public class CreatureProperty {
 
 	public float	AttackCoolTime
 	{
-		get {return Mathf.Min(AlphaAttackCoolTime, 0.8f);}
+		get {return Mathf.Max(m_baseProperty.attackCoolTime + AlphaAttackCoolTime, 0.2f);}
 	}
 	
 	public float	AlphaAttackCoolTime

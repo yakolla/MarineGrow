@@ -21,6 +21,7 @@ public class DamageDesc {
 		Airborne,
 		Stun,
 		Slow,
+		SteamPack,
 		Count,
 	}
 

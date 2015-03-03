@@ -362,6 +362,19 @@ public class Creature : MonoBehaviour {
 
 	}
 
+	IEnumerator EffectSteamPack(float time)
+	{		
+		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
+		m_creatureProperty.BetaMoveSpeed *= 2f;
+		
+		yield return new WaitForSeconds(time);
+		
+		m_buffEffects[(int)DamageDesc.BuffType.SteamPack].effect = null;
+		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
+		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+		
+	}
+
 	public void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
 	{
 		if (m_damageEffects[(int)type].effect == null && prefEffect != null)
@@ -371,6 +384,25 @@ public class Creature : MonoBehaviour {
 			dmgEffect.transform.localPosition = Vector3.zero;
 			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
 			m_damageEffects[(int)type].effect = dmgEffect;
+		}
+	}
+
+	public void ApplyBuff(DamageDesc.BuffType type, float time)
+	{
+		switch(type)
+		{
+		case DamageDesc.BuffType.Airborne:
+			StartCoroutine(EffectAirborne());
+			break;
+		case DamageDesc.BuffType.Stun:
+			StartCoroutine(EffectStun());
+			break;
+		case DamageDesc.BuffType.Slow:
+			StartCoroutine(EffectSlow(time));
+			break;
+		case DamageDesc.BuffType.SteamPack:
+			StartCoroutine(EffectSteamPack(time));
+			break;
 		}
 	}
 
@@ -454,30 +486,10 @@ public class Creature : MonoBehaviour {
 		ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
 		if (m_buffEffects[(int)DamageDesc.BuffType.Slow].effect == null)
 		{
-			StartCoroutine(EffectSlow(0.2f));
+			ApplyBuff(DamageDesc.BuffType.Slow, 0.2f);
 		}
 
-		if (damageDesc.DamageBuffType != DamageDesc.BuffType.Nothing)
-		{
-			if (m_buffEffects[(int)damageDesc.DamageBuffType].effect == null)
-			{
-				m_buffEffects[(int)damageDesc.DamageBuffType].effect = damageDesc.PrefEffect;
-
-				switch(damageDesc.DamageBuffType)
-				{
-				case DamageDesc.BuffType.Airborne:
-					StartCoroutine(EffectAirborne());
-					break;
-				case DamageDesc.BuffType.Stun:
-					StartCoroutine(EffectStun());
-					break;
-				case DamageDesc.BuffType.Slow:
-					StartCoroutine(EffectSlow(2f));
-					break;
-				}
-
-			}
-		}
+		ApplyBuff(damageDesc.DamageBuffType, 2f);
 
 		if (offender != null)
 		{

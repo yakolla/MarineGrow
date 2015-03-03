@@ -30,7 +30,8 @@ public class RefCreatureBaseProperty
 	public float	navMeshBaseOffset;
 	public float	lifeSteal;
 	public float	criticalRatio;
-	public float	criticalDamage;
+	public float	criticalDamage = 1f;
+	public float	attackCoolTime = 1f;
 }
 
 public class RefEvolutionFiring
@@ -43,6 +44,7 @@ public class WeaponStat
 {
 	public float			coolTime;
 	public float			range;
+	public int				firingCount;
 }
 
 public class RefPrice

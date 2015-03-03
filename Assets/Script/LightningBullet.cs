@@ -11,7 +11,7 @@ public class LightningBullet : Bullet
 	public float speed = 1f;
 	public float scale = 1f;
 	public float length = 10f;
-	public float	m_coolTime = 0.3f;
+	public float	m_damageOnTime = 1f;
 	public Color	m_color = Color.white;
 	float			m_lastDamageTime = 0f;
 	public int	m_maxChaining = 5;
@@ -115,7 +115,7 @@ public class LightningBullet : Bullet
 
 		if (targets != null)
 		{
-			if (m_lastDamageTime+m_coolTime<Time.time)
+			if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)
 				{

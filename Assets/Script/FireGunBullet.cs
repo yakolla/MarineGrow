@@ -21,7 +21,7 @@ public class FireGunBullet : Bullet {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (m_lastDamageTime+m_damageOnTime<Time.time)
+		if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
 		{
 			m_collider.enabled = true;
 

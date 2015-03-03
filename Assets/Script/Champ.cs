@@ -61,6 +61,8 @@ public class Champ : Creature {
 		effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
 		StartCoroutine(UpdateLevelUpEffect(effect));
 
+		ApplyBuff(DamageDesc.BuffType.SteamPack, 10f);
+
 	}
 
 	IEnumerator UpdateLevelUpEffect(GameObject effect)

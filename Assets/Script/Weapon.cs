@@ -57,6 +57,9 @@ public class Weapon : MonoBehaviour {
 
 		m_firingDescs.Add(desc);
 	
+		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
+			MoreFire();
+
 		for(int i = 0; i < weaponData.Evolution; ++i)
 			Evolution();
 
@@ -66,29 +69,33 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	public void Evolution()
+	public void MoreFire()
 	{
 		if (m_refItem.evolutionFiring == null)
 			return;
 
-		
-		++m_evolution;
+		int count = m_firingDescs.Count;
 
-		float angle = m_refItem.evolutionFiring.angle*((m_evolution+1)/2);
-		if (m_evolution % 2 == 1)
+		float angle = m_refItem.evolutionFiring.angle*(count/2);
+		if (m_firingDescs.Count % 2 == 1)
 		{
 			angle *= -1;
 		}
 		
-		float delay = m_refItem.evolutionFiring.delay*m_evolution;
-
-
+		float delay = m_refItem.evolutionFiring.delay*count;
+		
+		
 		Weapon.FiringDesc desc = new Weapon.FiringDesc();
 		desc.angle = angle;
 		desc.delayTime = delay;
-
+		
 		m_firingDescs.Add(desc);
+	}
 
+	public void Evolution()
+	{
+		++m_evolution;
+		MoreFire();
 	}
 
 
@@ -118,7 +125,7 @@ public class Weapon : MonoBehaviour {
 
 	protected bool isCoolTime()
 	{
-		return m_lastCreated + (m_coolTime-m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) < Time.time;
+		return m_lastCreated + (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) < Time.time;
 	}
 
 	virtual public void StartFiring(Vector2 targetAngle)

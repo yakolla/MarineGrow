@@ -170,17 +170,16 @@
 			[
 				{
 					"refItemId":"103",
-					"evolution":1,
 					"weaponStat":
 					{
 						"coolTime":6,
-						"range":7
+						"range":7,
+						"firingCount":1
 					}
 				},
 				{
 					"reqLevel":2,
 					"refItemId":"101",
-					"evolution":0,
 					"weaponStat":
 					{
 						"coolTime":6
@@ -189,7 +188,6 @@
 				{
 					"reqLevel":3,
 					"refItemId":"102",
-					"evolution":0,
 					"weaponStat":
 					{
 						"coolTime":6
@@ -464,30 +462,30 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"113",
-					"evolution":1,
+					"refItemId":"113",					
 					"weaponStat":
 					{
 						"coolTime":3,
-						"range":8
+						"range":8,
+						"firingCount":1
 					}
 				},
 				{
 					"refItemId":"105",
-					"evolution":1,
 					"weaponStat":
 					{
 						"coolTime":3,
-						"range":5
+						"range":5,
+						"firingCount":1
 					}
 				},
 				{
 					"refItemId":"117",
-					"evolution":1,
 					"weaponStat":
 					{
 						"coolTime":6,
-						"range":7
+						"range":7,
+						"firingCount":1
 					}	
 				}
 			],
