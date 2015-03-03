@@ -496,7 +496,7 @@
 				"physicalDamage":150,
 				"physicalDefence":5,
 				"evolutionPerLevel":0.5,
-				"exp":500,
+				"exp":1000,
 				"phyDamagePerLevel":5,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":5,
