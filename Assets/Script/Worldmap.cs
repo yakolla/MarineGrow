@@ -23,7 +23,7 @@ public class Worldmap : MonoBehaviour {
 
 	void OnGUI()
 	{
-		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.MainMenu, m_statusWindowRect, DisplayStatusWindow, "");	
+		m_statusWindowRect = GUI.Window ((int)Const.GUI_WindowID.MainMenu, m_statusWindowRect, DisplayStatusWindow, "");	
 
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 
@@ -116,20 +116,22 @@ public class Worldmap : MonoBehaviour {
 			Application.LoadLevel("Basic Dungeon");
 		}
 		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*1, size*3, size), "Google+"))
-		{
-			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-				// enables saving game progress.
-				.EnableSavedGames()
-					.Build();
-			
-			PlayGamesPlatform.InitializeInstance(config);
-			// recommended for debugging:
-			PlayGamesPlatform.DebugLogEnabled = true;
-			// Activate the Google Play Games platform
-			PlayGamesPlatform.Activate();
-			
+		{			
 			Social.localUser.Authenticate((bool success) => {
 				// handle success or failure
+				if (success == true)
+				{
+					PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+						// enables saving game progress.
+						.EnableSavedGames()
+							.Build();
+					
+					PlayGamesPlatform.InitializeInstance(config);
+					// recommended for debugging:
+					PlayGamesPlatform.DebugLogEnabled = true;
+					// Activate the Google Play Games platform
+					PlayGamesPlatform.Activate();
+				}
 			});
 		}
 		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*2, size*3, size), "Load"))

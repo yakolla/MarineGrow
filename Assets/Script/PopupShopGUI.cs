@@ -31,7 +31,7 @@ public class PopupShopGUI : MonoBehaviour {
 	{
 		GUI.skin = m_guiSkin;
 		
-		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.PopupShop, m_statusWindowRect, DisplayStatusWindow, "");	
+		m_statusWindowRect = GUI.Window ((int)Const.GUI_WindowID.PopupShop, m_statusWindowRect, DisplayStatusWindow, "");	
 	}
 
 

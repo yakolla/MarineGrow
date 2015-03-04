@@ -21,7 +21,6 @@ public class Champ : Creature {
 	RefCreatureBaseProperty	m_creatureBaseProperty;
 
 	int			m_remainStatPoint = 0;
-	int			m_remainMasteryPoint = 0;
 
 	new void Start () {
 		
@@ -34,8 +33,8 @@ public class Champ : Creature {
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
 
-		m_leftJoystick = GameObject.Find("LeftJoystick").GetComponent<Joystick>();
-		m_rightJoystick = GameObject.Find("RightJoystick").GetComponent<Joystick>();
+		m_leftJoystick = GameObject.Find("Joystick/LeftJoystick").GetComponent<Joystick>();
+		m_rightJoystick = GameObject.Find("Joystick/RightJoystick").GetComponent<Joystick>();
 	}
 
 	public int RemainStatPoint
@@ -44,16 +43,11 @@ public class Champ : Creature {
 		set{m_remainStatPoint = value;}
 	}
 
-	public int RemainMasteryPoint
-	{
-		get{return m_remainMasteryPoint;}
-		set{m_remainMasteryPoint = value;}
-	}
+
 
 	void LevelUp()
 	{
 		m_remainStatPoint+=1;
-		m_remainMasteryPoint+=1;
 
 		GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
 		effect.transform.parent = transform;

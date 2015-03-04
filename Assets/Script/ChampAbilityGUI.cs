@@ -15,7 +15,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	float 		m_width = Screen.width * (1/5f);
 	float 		m_height = Screen.height * (1/8f);
 	int		m_fontSize = (int)(Screen.width*(1/50f));
-
+	int			m_usedCountOfRandomAbilityItem = 0;
 	CreatureProperty	m_backup = new CreatureProperty();
 
 	delegate void OnAbility();
@@ -38,7 +38,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	}
 
 	List<Ability>	m_abilities = new List<Ability>();
-	int[]	m_randomAbility = new int[3];
+	int[]	m_abilitySlots = new int[3];
 
 	void Awake()
 	{
@@ -79,6 +79,24 @@ public class ChampAbilityGUI : MonoBehaviour {
 		},
 		()=>{
 			m_champ.WeaponHolder.Evolution();
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.05f, "Weapon More", 
+		                            ()=>{
+			return "";
+		},
+		()=>{
+			m_champ.WeaponHolder.MoreFire();
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(new Ability(0.05f, "Weapon Levelup", 
+		                            ()=>{
+			return "";
+		},
+		()=>{
+			m_champ.WeaponHolder.LevelUp();
 			--m_champ.RemainStatPoint;
 		}));
 
@@ -149,15 +167,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 
 		int selectCount = 0;
-		while(selectCount < m_randomAbility.Length)
+		while(selectCount < m_abilitySlots.Length)
 		{
 			int rid = Random.Range(0, indexs.Count);
 			float ratio = Random.Range(0f, 1f);
 			if (ratio > m_abilities[indexs[rid]].m_ratio)
 				continue;
-			Debug.Log(ratio);
 
-			m_randomAbility[selectCount] = indexs[rid];
+			m_abilitySlots[selectCount] = indexs[rid];
 			indexs.RemoveAt(rid);
 			++selectCount;
 		}
@@ -177,7 +194,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	{
 		GUI.skin = m_guiSkin;
 
-		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampLevelUp, m_statusWindowRect, DisplayStatusWindow, "");	
+		m_statusWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampLevelUp, m_statusWindowRect, DisplayStatusWindow, "");	
 	}
 
 	void Update()
@@ -202,34 +219,43 @@ public class ChampAbilityGUI : MonoBehaviour {
 	//Setting up the Inventory window
 	void DisplayStatusWindow(int windowID)
 	{
+		int startX = 0;
 		int startY = 0;
 		int size = (int)m_height;
 
-		if (GUI.Button(new Rect(Screen.width/2-size/2, Screen.height-size, size, size), "OK"))
+		if (GUI.Button(new Rect(Screen.width/2-(size*4)/2, Screen.height-size*2, size*2, size*2), "OK"))
 		{
 			this.gameObject.SetActive(false);
 			return;
 		}
 
+		if (m_champ.RemainStatPoint > 0)
+		{
+			Const.makeItemButton(m_guiSkin, m_fontSize, Screen.width/2-size/2+size, Screen.height-size*2, size, RefData.Instance.RefItems[1002].levelup, 1f+m_usedCountOfRandomAbilityItem, "Roll", ()=>{
+				RandomAbility();
+				++m_usedCountOfRandomAbilityItem;
+			});
+		}
+
+
 		GUI.Label(new Rect(0, startY+(size*0), size*2, size), "StatPoint:");
 		GUI.Label(new Rect(size*2, startY+(size*0), size, size), m_champ.RemainStatPoint.ToString());
 
 		GUI.Label(new Rect(size*3, startY+(size*0), size*2, size), "MasteryPoint:");
-		GUI.Label(new Rect(size*5, startY+(size*0), size, size), m_champ.RemainMasteryPoint.ToString());
 
 		m_champ.m_creatureProperty.CopyTo(m_backup);
 
 		int masteryWidth = Screen.width/3;
-		displayMastery(new Rect(0, size, masteryWidth, Screen.height-size*2), 		              
-		               m_abilities[m_randomAbility[0]]
+		displayMastery(new Rect(0, size, masteryWidth, Screen.height-size*3), 		              
+		               m_abilities[m_abilitySlots[0]]
 		);
 
-		displayMastery(new Rect(masteryWidth, size, masteryWidth, Screen.height-size*2), 
-		               m_abilities[m_randomAbility[1]]
+		displayMastery(new Rect(masteryWidth, size, masteryWidth, Screen.height-size*3), 
+		               m_abilities[m_abilitySlots[1]]
 		);
 
-		displayMastery(new Rect(masteryWidth*2, size, masteryWidth, Screen.height-size*2), 
-		               m_abilities[m_randomAbility[2]]
+		displayMastery(new Rect(masteryWidth*2, size, masteryWidth, Screen.height-size*3), 
+		               m_abilities[m_abilitySlots[2]]
 		);
 
 

@@ -95,9 +95,18 @@ public class Weapon : MonoBehaviour {
 	public void Evolution()
 	{
 		++m_evolution;
+		m_level = 1;
 		MoreFire();
 	}
 
+	public void LevelUp()
+	{
+		++m_level;
+		if (m_level >= Const.ItemMaxLevel)
+		{
+			Evolution();
+		}
+	}
 
 
 	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)

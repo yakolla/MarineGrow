@@ -48,6 +48,7 @@ public class ItemData {
 		Gem,		
 		ItemPandora,
 		Accessory,
+		RandomAbility,
 		Count
 	}
 

@@ -112,8 +112,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		m_guiSkin.label.fontSize = m_fontSize;
 		m_guiSkin.button.fontSize = m_fontSize;
 
-		m_statusWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
-		m_goodsWindowRect = GUI.Window ((int)GUIConst.WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
+		m_statusWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
+		m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 
@@ -142,53 +142,9 @@ public class ChampSettingGUI : MonoBehaviour {
 	}
 
 
-	class CheckPriceDesc
-	{
-		public bool 	able;
-		public string 	colofulDesc;	
-	}
-
-	bool GetPriceConditionDesc(RefPriceCondition refPriceCondition, CheckPriceDesc[] desc)
-	{
-		bool able = true;
-		int i = 0;
-		foreach(RefPrice refPrice in refPriceCondition.conds)
-		{
-			desc[i] = new CheckPriceDesc();
-			RefItem refItem = RefData.Instance.RefItems[refPrice.refItemId];
-			if (refItem == null)
-			{
-				Debug.Log("no refItemId:" + refPrice.refItemId);
-				able = false;
-				continue;
-			}
-
-			ItemObject itemObj = Warehouse.Instance.FindItem(refPrice.refItemId, null);
-			if (itemObj != null && refPrice.count <= itemObj.Item.Count)
-			{
-				desc[i].able = true;
-				desc[i].colofulDesc = "<color=white>";
-			}
-			else
-			{
-				desc[i].able = false;
-				desc[i].colofulDesc = "<color=red>";
-				able = false;
-			}
-
-
-			desc[i].colofulDesc += refItem.codeName + ":" + refPrice.count;
-			desc[i].colofulDesc += "</color>";
-
-			++i;
-		}
-
-		return able;
-	}
-
 	float getItemLevelupWorth(ItemObject itemObj)
 	{
-		return itemObj.Item.Level + itemObj.Item.Evolution * 9;
+		return itemObj.Item.Level + itemObj.Item.Evolution * Const.ItemMaxLevel;
 	}
 
 	float getItemEvolutionWorth(ItemObject itemObj)
@@ -196,110 +152,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		return itemObj.Item.Evolution+1;
 	}
 
-	bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
-	{
-		foreach(RefPrice price in conds)
-		{
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
-			if (inventoryItemObj == null)
-				return false;
 
-			if (inventoryItemObj != null)
-			{
-				if (inventoryItemObj.Item.Count < price.count*itemWorth)
-					return false;
-			}
-		}
-
-		return true;
-	}
-
-	void PayPriceItem(RefPrice[] conds, float itemWorth)
-	{
-		foreach(RefPrice price in conds)
-		{
-			Warehouse.Instance.PullItem(Warehouse.Instance.FindItem(price.refItemId, null), (int)(price.count*itemWorth));
-		}
-	}
-
-	delegate void OnPay();
-	int makeItemButton(int startX, int startY, int size, RefPriceCondition condition, float itemWorth, string btnName, OnPay functor)
-	{
-		int prevWidth = 0;
-		if (condition != null)
-		{			
-			prevWidth = size*3;
-			if (false == makeItemButtonCore(startX, startY, prevWidth, size, size*2, condition.conds, itemWorth, btnName, functor))
-			{
-				makeItemButtonCore(startX, startY+size*2, prevWidth, size, size, condition.else_conds, itemWorth, "", functor);
-			}
-			
-		}
-		
-		return prevWidth;
-	}
-	bool makeItemButtonCore(int startX, int startY, int width, int height, int btnHeight, RefPrice[] conds, float itemWorth, string btnName, OnPay functor)
-	{
-		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemReqCount");
-		itemCountStyle.fontSize = m_fontSize;
-
-		GUI.BeginGroup(new Rect(startX, startY, width, btnHeight));
-
-		if (GUI.Button(new Rect(0, 0, width, btnHeight), ""))
-		{
-			if (CheckAvailableItem(conds, itemWorth))
-			{
-				PayPriceItem(conds, itemWorth);
-				functor();
-			}
-		}
-		
-
-		GUI.Label(new Rect(0, 0, width, height), "<color=white>"+btnName+"</color>");
-		
-		bool able = true;
-		int priceIndex = 0;
-		startY = height/4;
-		float imgSize = height*0.7f;
-		height = btnHeight-height;
-		foreach(RefPrice price in conds)
-		{
-			RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
-
-			GUI.Label(new Rect((width/(1+conds.Length)-imgSize/2)+(width/(1+conds.Length)-imgSize/2)*2*priceIndex, height, imgSize, imgSize), Resources.Load<Texture>(condRefItem.icon));
-			
-			string str = "<color=white>";
-			
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
-			int hasCount = 0;
-			if (inventoryItemObj == null)
-			{
-				str = "<color=red>";
-				able = false;
-			}
-			else if (inventoryItemObj != null)
-			{
-				if (inventoryItemObj.Item.Count < price.count*itemWorth)
-				{
-					str = "<color=red>";
-					able = false;
-				}
-				hasCount = inventoryItemObj.Item.Count;
-			}
-			str += hasCount;
-			str += "/" + price.count*itemWorth;
-			str += "</color>";
-			GUI.Label(new Rect(width/(conds.Length)*priceIndex, startY+height, width/(conds.Length), imgSize), str, itemCountStyle);
-			
-			++priceIndex;
-			
-		}
-		
-		GUI.EndGroup();
-
-		return able;
-
-	}
 	
 	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot, int startX, int startY, int width, int height)
 	{
@@ -317,7 +170,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (selectedItem.Item.Lock == true)
 		{
-			makeItemButton(startX, startY, size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, startX, startY, size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
 				selectedItem.Item.Lock = false;
 			});
 
@@ -400,15 +253,15 @@ public class ChampSettingGUI : MonoBehaviour {
 		}break;
 		}
 
-		if (selectedItem.Item.Level < 9)
+		if (selectedItem.Item.Level < Const.ItemMaxLevel)
 		{
-			makeItemButton(startX+size*3, startY, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
 				++selectedItem.Item.Level;
 			});
 		}
 		else
 		{
-			makeItemButton(startX+size*3, startY, size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
 				++selectedItem.Item.Evolution;
 				selectedItem.Item.Level = 1;
 			});

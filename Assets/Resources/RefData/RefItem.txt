@@ -842,5 +842,21 @@
 				}
 			]
 		},
+	},
+	{
+		"id":1002,
+		"codeName":"RandomAbility",
+		"type":"RandomAbility",
+		"icon":"Sprites/Follower",
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":15
+				}
+			]
+		}
 	}
 ]
