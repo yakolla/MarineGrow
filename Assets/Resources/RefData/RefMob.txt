@@ -130,36 +130,7 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
-		},
-		{
-			"id":10030,
-			"prefBody":"slime_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"110"
-				}
-			],
-			"mobAI":"Normal",			
-			"dropEggMob":
-			{
-				"refMobId":12002,
-				"count":10
-			},
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":20,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.5,
-				"exp":50,
-				"phyDamagePerLevel":1,
-				"phyDefencePerLevel":3,
-				"hpPerLevel":8,
-				"moveSpeed":1,
-				"navMeshBaseOffset":0
-			}
-		},	
+		}	
 	],
 	"range"	:
 	[		
@@ -457,6 +428,54 @@
 	[	
 	
 		{
+			"id":21006,
+			"prefBody":"slime_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"103",					
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":8,
+						"firingCount":1
+					}
+				},
+				{
+					"refItemId":"105",
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":5,
+						"firingCount":1
+					}
+				},
+				{
+					"refItemId":"104",
+					"weaponStat":
+					{
+						"coolTime":6,
+						"range":7,
+						"firingCount":1
+					}	
+				}
+			],
+			"mobAI":"Normal",			
+			"baseCreatureProperty":
+			{
+				"maxHP":10,
+				"physicalDamage":35,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.5,
+				"exp":1000,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
+				"hpPerLevel":5,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0
+			}
+		},
+		{
 			"id":21001,
 			"prefBody":"eye_brain_skin",
 			"refWeaponItems":
@@ -484,16 +503,15 @@
 					"weaponStat":
 					{
 						"coolTime":6,
-						"range":7,
-						"firingCount":1
+						"range":7
 					}	
 				}
 			],
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":10,
-				"physicalDamage":150,
+				"maxHP":15,
+				"physicalDamage":50,
 				"physicalDefence":5,
 				"evolutionPerLevel":0.5,
 				"exp":1000,
