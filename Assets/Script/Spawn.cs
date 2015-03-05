@@ -167,17 +167,14 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-
-
-
 			SpawnMobType spawnMobType = SpawnMobType.Normal;
 			if (mobSpawn.boss == true)
 			{
 				spawnMobType = SpawnMobType.Boss;
 
-				StartCoroutine(EffectWaveText("Boss", 1));
+				StartCoroutine(EffectWaveText("Boss", 3));
 				Champ champ = m_champ.GetComponent<Champ>();
-				champ.ShakeCamera(5f);
+				champ.ShakeCamera(3f);
 			}
 			else
 			{

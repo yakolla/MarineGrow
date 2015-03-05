@@ -206,6 +206,46 @@
 							]
 						},
 						{
+							"refMobId":21006,
+							"refDropItems":
+							[
+								{
+									"refItemId":1,
+									"minValue":1,
+									"maxValue":10,
+									"ratio":0.5,
+									"count":30
+								},
+								{
+									"refItemId":2,
+									"minValue":10,
+									"maxValue":100,
+									"ratio":0.5,
+									"count":3
+								},
+								{
+									"refItemId":3,
+									"minValue":1,
+									"maxValue":10,
+									"ratio":0.3,
+									"count":10
+								},
+								{
+									"refItemId":4,
+									"minValue":1,
+									"maxValue":10,
+									"ratio":0.3,
+									"count":10
+								},
+								{
+									"refItemId":102,
+									"minValue":1,
+									"maxValue":1,
+									"ratio":1
+								}
+							]
+						},
+						{
 							"refMobId":1002,
 							"refDropItems":
 							[				

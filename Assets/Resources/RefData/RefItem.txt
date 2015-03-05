@@ -137,7 +137,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -221,7 +221,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0
+			"delay":0.3
 		},
 	},
 	{
@@ -249,7 +249,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -283,7 +283,7 @@
 		"evolutionFiring":
 		{
 			"angle":3,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -363,7 +363,7 @@
 		"evolutionFiring":
 		{
 			"angle":0,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -470,7 +470,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -555,7 +555,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -572,7 +572,7 @@
 		"evolutionFiring":
 		{
 			"angle":10,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -589,7 +589,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -674,7 +674,7 @@
 		"evolutionFiring":
 		{
 			"angle":10,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -691,7 +691,7 @@
 		"evolutionFiring":
 		{
 			"angle":10,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
@@ -708,7 +708,7 @@
 		"evolutionFiring":
 		{
 			"angle":10,
-			"delay":0
+			"delay":0.3
 		},
 		"weaponStat":
 		{
