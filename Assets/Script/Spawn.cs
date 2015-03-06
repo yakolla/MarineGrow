@@ -182,7 +182,7 @@ public class Spawn : MonoBehaviour {
 			}
 
 			float waveProgress = Mathf.Min(1f, (float)m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
-			Debug.Log(waveProgress + "," + m_spawningPool);
+			Debug.Log("waveProgress:" + waveProgress + "," + m_spawningPool);
 
 			int spawnCount = 0;
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);

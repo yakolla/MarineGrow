@@ -56,7 +56,7 @@ public class DamageNumberGUI : MonoBehaviour {
 
 		}
 		else {
-			Destroy(gameObject);
+			DestroyObject(gameObject);
 		}
 	}
 }

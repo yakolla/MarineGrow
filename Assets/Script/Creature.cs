@@ -35,9 +35,10 @@ public class Creature : MonoBehaviour {
 
 	GameObject				m_prefDamageGUI;
 	GameObject				m_prefPickupItemGUI;
+	GameObject				m_prefDamageSprite;
 
 	public CreatureProperty	m_creatureProperty;
-	bool					m_ingTakenDamageEffect = false;
+	int						m_ingTakenDamageEffect = 0;
 
 	GameObject				m_aimpoint;
 
@@ -63,7 +64,7 @@ public class Creature : MonoBehaviour {
 
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
-
+		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 
 	}
 
@@ -288,7 +289,7 @@ public class Creature : MonoBehaviour {
 				}
 			}
 		}
-		m_ingTakenDamageEffect = false;
+		--m_ingTakenDamageEffect;
 	}
 
 
@@ -424,18 +425,16 @@ public class Creature : MonoBehaviour {
 		{
 		case ItemData.Type.Gold:
 			{
-				GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-				Color color = Color.yellow;
-				Vector3 offset = new Vector3(0.2f, 0.5f, 0.2f);
-				gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, color, offset);
+			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
+				DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
+			sprite.Init(gameObject, strDamage, Color.yellow, DamageNumberSprite.MovementType.Up);
 			}
 			break;
 		case ItemData.Type.HealPosion:
 			{
-				GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-				Color color = Color.green;
-				Vector3 offset = new Vector3(0.5f, 1f, 0.5f);
-				gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, color, offset);
+			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
+				DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
+			sprite.Init(gameObject, strDamage, Color.green, DamageNumberSprite.MovementType.Up);
 			}
 			break;
 		}
@@ -459,9 +458,9 @@ public class Creature : MonoBehaviour {
 			dmg = Random.Range(0, 2);
 		}
 		
-		if (m_ingTakenDamageEffect == false)
+		if (m_ingTakenDamageEffect < Const.ShowMaxDamageNumber)
 		{
-			m_ingTakenDamageEffect = true;
+			++m_ingTakenDamageEffect;
 
 			string strDamage = dmg.ToString();
 			if (dmg == 0)
@@ -476,9 +475,16 @@ public class Creature : MonoBehaviour {
 				}
 
 			}
-
+			/*
 			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, Color.red, Vector3.zero);
+*/
+
+
+
+			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
+			DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
+			sprite.Init(gameObject, strDamage, Color.white, DamageNumberSprite.MovementType.Parabola);
 
 			StartCoroutine(BodyRedColoredOnTakenDamage());
 		}

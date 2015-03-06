@@ -14,6 +14,7 @@ public class Const {
 	}
 
 	public const int ItemMaxLevel = 9;
+	public const int ShowMaxDamageNumber = 3;
 
 	public static bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
 	{
