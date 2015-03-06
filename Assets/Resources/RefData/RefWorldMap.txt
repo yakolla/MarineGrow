@@ -127,30 +127,6 @@
 					},
 					{
 						"refMobIds":{
-							"melee":{
-								"ratio":[0.8,1],
-								"count":[3,16]
-							}
-						},
-						"interval":5,
-						"repeatCount":[7,16]
-					},
-					{
-						"refMobIds":{
-							"melee":{
-								"ratio":[0.8,1],
-								"count":[3,16]
-							},
-							"range":{
-								"ratio":[0.8,1],
-								"count":[1,9]
-							}
-						},
-						"interval":5,
-						"repeatCount":[7,16]
-					},
-					{
-						"refMobIds":{
 							"boss":{
 								"ratio":[0,1],
 								"count":[1,6]
