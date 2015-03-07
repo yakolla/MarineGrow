@@ -417,7 +417,7 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":2
 			}
 		},
 		{
@@ -445,7 +445,7 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":2
 			}
 		},	
 		{
@@ -473,7 +473,7 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":2
 			}
 		},	
 		{
@@ -501,7 +501,7 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":3,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":2
 			}
 		},	
 		{
