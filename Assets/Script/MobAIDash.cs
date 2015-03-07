@@ -16,7 +16,7 @@ public class MobAIDash : MobAI {
 
 		m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;		
 		m_navAgent.autoBraking = false;
-		m_prefAttackGuidedLine = Resources.Load<GameObject>("Pref/ef laser point");
+		m_prefAttackGuidedLine = Resources.Load<GameObject>("Pref/ef laser point _enemy");
 	}
 
 	override public void SetTarget(GameObject obj )
