@@ -4,7 +4,7 @@ using System.Collections;
 public class MineBullet : Bullet {
 
 	bool m_isDestroying = false;
-	GameObject		m_shadow;
+
 
 	[SerializeField]
 	GameObject		m_prefBombEffect = null;
@@ -15,8 +15,6 @@ public class MineBullet : Bullet {
 	float			m_elapsed = 0f;
 	float			m_bombTime = 5f;
 
-	GameObject m_prefShadow;
-
 	// Use this for initialization
 	void Start () {
 
@@ -26,14 +24,8 @@ public class MineBullet : Bullet {
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 
-		m_prefShadow = Resources.Load<GameObject>("Pref/shadow");
-
-		m_shadow = (GameObject)Instantiate(m_prefShadow, transform.position, m_prefShadow.transform.rotation);
-		Vector3 scale = Vector3.one;
-		scale.x += m_bombRange/2f;
-		scale.y += m_bombRange/2f;
-		m_shadow.transform.localScale = scale;
-
+	
+	
 		m_elapsed = Time.time+m_bombTime;
 
 	}
@@ -51,8 +43,6 @@ public class MineBullet : Bullet {
 	
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
-		DestroyObject(m_shadow);
-
 		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
 		DestroyObject(this.gameObject);
 		DestroyObject(bombEffect);
@@ -71,7 +61,7 @@ public class MineBullet : Bullet {
 			foreach(GameObject target in targets)
 			{
 				float dist = Vector3.Distance(pos, target.transform.position);
-				if (dist < m_bombRange)
+				if (dist < m_bombRange/2)
 				{
 					Creature creature = target.GetComponent<Creature>();
 					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));

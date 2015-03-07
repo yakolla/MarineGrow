@@ -29,7 +29,7 @@ public class BlazeBullet : Bullet {
 
 		m_boxCollider = GetComponent<BoxCollider>();
 		m_boxCollider.enabled = false;
-		m_particleSystem = transform.Find("Body/Particle System").GetComponent<ParticleSystem>();
+		m_particleSystem = m_prefBombEffect.particleSystem;
 		m_particleSystem.enableEmission = false;
 
 		int[] angles = {0, 90};
@@ -52,9 +52,19 @@ public class BlazeBullet : Bullet {
 				m_particleSystem.enableEmission = true;
 				m_boxCollider.enabled = true;
 				m_bombTime = Time.time;
+				Vector3 rotation = m_prefBombEffect.transform.eulerAngles;
+				rotation.y = transform.eulerAngles.y;
 
-				GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, transform.rotation);
-				bombEffect.particleSystem.startSize = m_bombRange*2;
+				GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, Quaternion.Euler(rotation));
+				Vector3 scale = Vector3.one;
+				scale.x = m_bombRange;
+
+				transform.localScale = scale;
+
+				scale.x = m_bombRange*2.5f;
+				bombEffect.transform.localScale = scale;
+
+
 				StartCoroutine(destoryObject(bombEffect));
 			}
 		}

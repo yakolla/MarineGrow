@@ -150,7 +150,7 @@ public class Spawn : MonoBehaviour {
 		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress + ", minRatio:" + spawnRatioDesc.ratio[0]+", maxRatio:" + spawnRatioDesc.ratio[1]);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
-		buildMobs.Add(mobs[Random.Range(minIndex, maxIndex)]);
+		buildMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
 
 		minIndex = (int)(spawnRatioDesc.count[0]);
 		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress) + spawnRatioDesc.count[1] * progress);
