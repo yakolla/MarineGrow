@@ -3,13 +3,93 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+
 
 public class Warehouse {
+
+	class WarehouseData
+	{
+		static public MemoryStream Serialize(Warehouse obj)
+		{
+			MemoryStream stream = new MemoryStream();
+
+			StreamWriter writer = new StreamWriter(stream);
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_items.Count));
+			foreach(ItemObject itemObj in obj.m_items)
+			{
+				writer.WriteLine(JsonConvert.SerializeObject(itemObj.Item.RefItem.type));
+				writer.WriteLine(JsonConvert.SerializeObject(itemObj.Item));
+			}
+
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_waveIndex));
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gold.Item));
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gem.Item));
+
+
+			writer.Close();
+			return stream;
+		}
+
+		static public void Deserialize(Warehouse obj, byte[] data)
+		{
+			obj.m_items.Clear();
+
+			MemoryStream stream = new MemoryStream(data);
+			
+			StreamReader reader = new StreamReader(stream);
+			int count = JsonConvert.DeserializeObject<int>(reader.ReadLine());
+
+			for(int i = 0; i < count; ++i)
+			{
+				ItemData.Type type = JsonConvert.DeserializeObject<ItemData.Type>(reader.ReadLine());
+
+				switch(type)
+				{
+				case ItemData.Type.Weapon:
+					ItemWeaponData weaponData = JsonConvert.DeserializeObject<ItemWeaponData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(weaponData));
+					break;
+				case ItemData.Type.GoldMedal:
+					ItemGoldMedalData goldMedalData = JsonConvert.DeserializeObject<ItemGoldMedalData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(goldMedalData));
+					break;
+				case ItemData.Type.WeaponDNA:
+					ItemWeaponDNAData weaponDNAData = JsonConvert.DeserializeObject<ItemWeaponDNAData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(weaponDNAData));
+					break;
+				case ItemData.Type.WeaponParts:
+					ItemWeaponPartsData weaponPartsData = JsonConvert.DeserializeObject<ItemWeaponPartsData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(weaponPartsData));
+					break;
+				default:
+					Debug.DebugBreak();
+					break;
+				}
+			}
+
+			uint waveIndex = JsonConvert.DeserializeObject<uint>(reader.ReadLine());
+			obj.m_waveIndex = waveIndex;
+
+			ItemGoldData goldData = JsonConvert.DeserializeObject<ItemGoldData>(reader.ReadLine());
+			obj.m_gold = new ItemObject(goldData);
+
+			ItemGemData gemData = JsonConvert.DeserializeObject<ItemGemData>(reader.ReadLine());
+			obj.m_gem = new ItemObject(gemData);
+			
+			reader.Close();
+		}
+
+	}
+
 
 	List<ItemObject>	m_items = new List<ItemObject>();
 
 	ItemObject			m_gold = new ItemObject(new ItemGoldData(0));
 	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
+	uint				m_waveIndex = 0;
 
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
@@ -105,22 +185,16 @@ public class Warehouse {
 	}
 
 
-	public void Save(BinaryFormatter bf, FileStream file)
+	public byte[] Serialize()
 	{
-		bf.Serialize(file, m_items.Count);
-		foreach(ItemObject obj in m_items)
-		{
-			bf.Serialize(file, obj.Item);
-		}
+		MemoryStream stream = WarehouseData.Serialize(this);
+
+		return stream.ToArray();
 	}
 
-	public void Load(BinaryFormatter bf, FileStream file)
+	public void Deserialize(byte[] data)
 	{
-		int length = (int)bf.Deserialize(file);
-		for(int i = 0; i < length;  ++i)
-		{
-			m_items.Add(new ItemObject((ItemData)bf.Deserialize(file)));
-		}
+		WarehouseData.Deserialize(this, data);
 	}
 
 	public List<ItemObject> Items
@@ -136,5 +210,11 @@ public class Warehouse {
 	public ItemObject Gem
 	{
 		get { return m_gem; }
+	}
+
+	public uint WaveIndex
+	{
+		get {return m_waveIndex;}
+		set {m_waveIndex = value;}
 	}
 }

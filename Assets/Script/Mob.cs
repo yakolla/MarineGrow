@@ -14,7 +14,7 @@ public class Mob : Creature {
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 	}
 
-	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
+	public void Init(RefMob refMob, uint mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
 	{
 		RefMob = refMob;
 		Spawn = spawn;
@@ -123,6 +123,14 @@ public class Mob : Creature {
 	override public void Death()
 	{
 		Spawn.OnKillMob(this);
+
+		if (RefMob.eggMob != null)
+		{
+			for(int i = 0; i < RefMob.eggMob.count; ++i)
+			{
+				Spawn.spawnMobEgg(RefMob.eggMob.refMob, transform.position, m_creatureProperty.Level);
+			}
+		}
 
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;

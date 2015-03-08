@@ -7,9 +7,9 @@ public class EggBroken : MonoBehaviour {
 	Spawn		m_spawn;
 	RefMob		m_refMob;
 	RefItemSpawn[]	m_refDropItems;
-	int			m_mobLevel;
+	uint			m_mobLevel;
 
-	public void Init(Spawn spawn, RefMob refMob, RefItemSpawn[] refDropItems, int mobLevel)
+	public void Init(Spawn spawn, RefMob refMob, RefItemSpawn[] refDropItems, uint mobLevel)
 	{
 		m_spawn = spawn;
 		m_refMob = refMob;

@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections;
+using Newtonsoft.Json;
 
-[System.Serializable]
 public class ItemWeaponData : ItemData{
 
-	GameObject 	m_prefWeapon;
+	string 	m_prefWeapon;
 	string 	m_weaponName;
 	WeaponStat	m_weaponStat;
 
 	public ItemWeaponData(int refItemId, WeaponStat	weaponStat) : base(refItemId, 1)
 	{
-		m_prefWeapon = Resources.Load<GameObject>("Pref/Weapon/" + RefItem.codeName);
+		m_prefWeapon = "Pref/Weapon/" + RefItem.codeName;
 		m_weaponName = RefItem.codeName;
 		if (weaponStat == null)
 		{
@@ -33,9 +33,10 @@ public class ItemWeaponData : ItemData{
 		Lock = true;
 	}
 
+	[JsonIgnore]
 	public GameObject PrefWeapon
 	{
-		get {return m_prefWeapon;}
+		get {return Resources.Load<GameObject>(m_prefWeapon);}
 	}
 
 	public string WeaponName

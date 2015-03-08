@@ -9,7 +9,7 @@ public class Egg : MonoBehaviour {
 	Spawn		m_spawn;
 	RefMob		m_refMob;
 	RefItemSpawn[]	m_refDropItems;
-	int			m_mobLevel;
+	uint			m_mobLevel;
 	Parabola 	m_parabola;
 
 	float[]		m_hSpeed = {1f, 3f};
@@ -20,7 +20,7 @@ public class Egg : MonoBehaviour {
 	bool		m_ingDeathEffect;
 
 
-	public void Init(Spawn spawn, RefMob refMob, RefItemSpawn[] refDropItems, int mobLevel)
+	public void Init(Spawn spawn, RefMob refMob, RefItemSpawn[] refDropItems, uint mobLevel)
 	{
 		m_spawn = spawn;
 		m_refMob = refMob;

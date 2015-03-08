@@ -71,7 +71,7 @@ public class ItemData {
 
 	List<ItemMagicOption>		m_optionDescs = new List<ItemMagicOption>();
 
-	[JsonIgnore]
+
 	RefItem				m_refItem;
 
 	public ItemData(int refItemId, int count)
@@ -159,6 +159,11 @@ public class ItemData {
 		}
 	}
 
+	public int RefItemID
+	{
+		get {return m_refItemId;}
+	}
+
 	public int Level
 	{
 		get {return m_level;}
@@ -177,6 +182,7 @@ public class ItemData {
 		set {m_count = value;}
 	}
 
+	[JsonIgnore]
 	public RefItem RefItem
 	{
 		get {return m_refItem;}

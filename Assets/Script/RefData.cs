@@ -180,7 +180,6 @@ public class RefMobSpawn
 	public int[]			repeatCount;
 	public int[]			mobCount;
 	public bool				boss = false;
-	public RefItemSpawn[]	refDropItems;
 
 }
 
@@ -194,6 +193,7 @@ public class RefWaveItemSpawn
 {
 	public RefMobItemSpawn[] mobItems;
 	public RefItemSpawn[]	defaultItem;
+	public RefItemSpawn[]	bossDefaultItem;
 
 	[JsonIgnore]
 	public Dictionary<int, RefMobItemSpawn>	 mapMobItems = new Dictionary<int, RefMobItemSpawn>();
@@ -246,18 +246,6 @@ public class RefData {
 		{
 			foreach(RefWave wave in pair.Value.waves)
 			{
-				foreach(RefMobSpawn mobSpawn in wave.mobSpawns)
-				{
-
-					if (mobSpawn.refDropItems != null)
-					{
-						foreach(RefItemSpawn itemSpawn in mobSpawn.refDropItems)
-						{
-							itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
-						}
-					}
-
-				}
 
 				if (wave.itemSpawn != null)
 				{

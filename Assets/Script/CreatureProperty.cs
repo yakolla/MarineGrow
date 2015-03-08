@@ -42,7 +42,7 @@ public class CreatureProperty {
 
 
 	[SerializeField]
-	int		m_level = 1;
+	uint		m_level = 1;
 
 	[SerializeField]
 	int		m_exp = 0;
@@ -75,7 +75,7 @@ public class CreatureProperty {
 		get { return m_hp; }
 	}
 
-	public int Level
+	public uint Level
 	{
 		get { return m_level; }
 		set {

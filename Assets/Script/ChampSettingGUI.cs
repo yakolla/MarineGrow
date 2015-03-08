@@ -64,8 +64,8 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
-				Warehouse.Instance.PushItem(new ItemWeaponUpgradeFragmentData(1000));
-				Warehouse.Instance.PushItem(new ItemWeaponEvolutionFragmentData(1000));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(1000));
+				Warehouse.Instance.PushItem(new ItemWeaponDNAData(1000));
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 				Warehouse.Instance.PushItem(new ItemSilverMedalData(200));
 
@@ -92,7 +92,8 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(itemWeaponData);
 			}
 			
-			//Save ();
+			byte[] data = Warehouse.Instance.Serialize();
+			Warehouse.Instance.Deserialize(data);
 		}
 
 
@@ -120,27 +121,6 @@ public class ChampSettingGUI : MonoBehaviour {
 			Application.LoadLevel("Worldmap");
 		}
 	}
-
-	public void Save() {
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create (Application.persistentDataPath + "/savedGames.gd");
-
-		Warehouse.Instance.Save(bf, file);
-
-		file.Close();
-	}
-
-	public void Load() {
-		if(File.Exists(Application.persistentDataPath + "/savedGames.gd")) {
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
-
-			Warehouse.Instance.Load(bf, file);
-
-			file.Close();
-		}
-	}
-
 
 	float getItemLevelupWorth(ItemObject itemObj)
 	{

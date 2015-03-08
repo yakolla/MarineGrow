@@ -24,6 +24,7 @@ public class BlazeBullet : Bullet {
 	int				m_triggerFrame = 0;
 	float			m_duration = 10f;
 	float			m_damageOnTime = 1f;
+	float			m_dropTime = 0f;
 	// Use this for initialization
 	void Start () {
 
@@ -47,7 +48,15 @@ public class BlazeBullet : Bullet {
 	void Update () {
 		if (m_parabola.Update() == false)
 		{
-			if (m_boxCollider.enabled == false)
+			if (m_boxCollider.enabled == false && m_dropTime == 0f)
+			{
+				m_dropTime = Time.time+1f;
+				Vector3 scale = Vector3.one;
+				scale.x = m_bombRange;
+				transform.localScale = scale;
+			}
+
+			if (m_boxCollider.enabled == false && m_dropTime < Time.time)
 			{
 				m_particleSystem.enableEmission = true;
 				m_boxCollider.enabled = true;
@@ -57,10 +66,6 @@ public class BlazeBullet : Bullet {
 
 				GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, Quaternion.Euler(rotation));
 				Vector3 scale = Vector3.one;
-				scale.x = m_bombRange;
-
-				transform.localScale = scale;
-
 				scale.x = m_bombRange*2.5f;
 				bombEffect.transform.localScale = scale;
 

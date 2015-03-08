@@ -37,7 +37,7 @@ public class Spawn : MonoBehaviour {
 	int				m_wave = 0;
 
 	[SerializeField]
-	int				m_spawningPool = 0;
+	uint				m_spawningPool = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -58,6 +58,9 @@ public class Spawn : MonoBehaviour {
 
 		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
 		m_areas = transform.GetComponentsInChildren<Transform>();
+
+		
+		m_spawningPool = Warehouse.Instance.WaveIndex;
 		StartWave(0);
 	}
 
@@ -223,7 +226,7 @@ public class Spawn : MonoBehaviour {
 						
 						++spawnCount;
 
-						RefItemSpawn[] dropItems = mobSpawn.refDropItems;
+						RefItemSpawn[] dropItems = GetCurrentWave().itemSpawn.defaultItem;
 						if (dropItems == null)
 						{
 							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
@@ -250,7 +253,7 @@ public class Spawn : MonoBehaviour {
 
 
 			m_spawningPool++;
-
+			//Warehouse.Instance.WaveIndex = m_spawningPool;
 		}
 	}
 
@@ -266,9 +269,9 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
-	int spawnMobLevel()
+	uint spawnMobLevel()
 	{
-		return 1+m_spawningPool / GetCurrentWave().mobSpawns.Length;
+		return (uint)(1+m_spawningPool / GetCurrentWave().mobSpawns.Length);
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos)
@@ -290,7 +293,7 @@ public class Spawn : MonoBehaviour {
 		return GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id) ? GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems : null;
 	}
 	
-	public Egg spawnMobEgg(RefMob refMob, Vector3 pos, int mobLevel)
+	public Egg spawnMobEgg(RefMob refMob, Vector3 pos, uint mobLevel)
 	{
 		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
 		Egg egg = eggObj.GetComponent<Egg>();
@@ -301,22 +304,12 @@ public class Spawn : MonoBehaviour {
 	
 	public void OnKillMob(Mob mob)
 	{
-
 		SpawnItemBox(mob.RefDropItems, mob.transform.position);
-		
-		if (mob.Boss == true)
-		{
-			m_effectBulletTime = 1f;
-		}
-		if (mob.RefMob.eggMob != null)
-		{
-			for(int i = 0; i < mob.RefMob.eggMob.count; ++i)
-			{
-				spawnMobEgg(mob.RefMob.eggMob.refMob, mob.transform.position, mob.m_creatureProperty.Level);
-			}
-		}
 
-
+		if (mob.Boss)
+		{
+			SpawnItemBox(GetCurrentWave().itemSpawn.bossDefaultItem, mob.transform.position);
+		}
 	}
 
 	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
@@ -327,7 +320,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -347,7 +340,7 @@ public class Spawn : MonoBehaviour {
 
 	}
 	
-	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, SpawnMobType spawnMobType, bool followingCamera)
 	{
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
@@ -451,13 +444,13 @@ public class Spawn : MonoBehaviour {
 						item = new ItemWeaponData(desc.refItem.id, null);
 						break;
 					case ItemData.Type.WeaponParts:
-						item = new ItemWeaponUpgradeFragmentData(Random.Range(desc.minValue, desc.maxValue));					
+						item = new ItemWeaponPartsData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.Follower:
 						//item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
 						break;
 					case ItemData.Type.WeaponDNA:
-						item = new ItemWeaponEvolutionFragmentData(Random.Range(desc.minValue, desc.maxValue));					
+						item = new ItemWeaponDNAData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.GoldMedal:
 						item = new ItemGoldMedalData(Random.Range(desc.minValue, desc.maxValue));					
