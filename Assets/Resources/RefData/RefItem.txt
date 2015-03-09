@@ -796,6 +796,22 @@
 		},
 	},
 	{
+		"id":119,
+		"codeName":"Gun",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":2,
+			"range":5
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"30001",
 		"type":"Follower",
