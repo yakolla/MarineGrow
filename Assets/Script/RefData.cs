@@ -15,11 +15,11 @@ public class RefBaseData
 [System.Serializable]
 public class RefCreatureBaseProperty
 {
-	public float	maxHP;
-	public float	physicalDamage;
+	public int	maxHP;
+	public int	physicalDamage;
 
 	[Range (0, 100)]
-	public float	physicalDefence;
+	public int	physicalDefence;
 	public float	evolutionPerLevel;
 	public int		exp;
 	public float 	phyDamagePerLevel;
@@ -128,6 +128,7 @@ public enum MobAIType
 	Bomber,
 }
 
+
 public class RefMob : RefBaseData
 {
 	public class WeaponDesc
@@ -147,12 +148,14 @@ public class RefMob : RefBaseData
 
 	[JsonConverter(typeof(StringEnumConverter))]
 	public MobAIType			mobAI;
+	public float				scale = 1f;
 }
 
 public class RefMobClass
 {
 	public RefMob[]				melee;
-	public RefMob[]				range;
+	public RefMob[]				range;	
+	public RefMob[]				miniBoss;
 	public RefMob[]				boss;
 	public RefMob[]				shuttle;
 	public RefMob[]				egg;
@@ -169,6 +172,7 @@ public class RefMobSpawnRatio
 	}
 	public Desc	melee;
 	public Desc	range;
+	public Desc	miniBoss;
 	public Desc	boss;
 	public Desc	shuttle;
 }
@@ -179,6 +183,7 @@ public class RefMobSpawn
 	public float 			interval;
 	public int[]			repeatCount;
 	public int[]			mobCount;
+
 	public bool				boss = false;
 
 }
@@ -250,6 +255,11 @@ public class RefData {
 				if (wave.itemSpawn != null)
 				{
 					foreach(RefItemSpawn itemSpawn in wave.itemSpawn.defaultItem)
+					{
+						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
+					}
+
+					foreach(RefItemSpawn itemSpawn in wave.itemSpawn.bossDefaultItem)
 					{
 						itemSpawn.refItem = m_refItems[itemSpawn.refItemId];
 					}
@@ -350,6 +360,11 @@ public class RefData {
 	public RefMob[] RefBossMobs
 	{
 		get {return m_refMobClass.boss;}
+	}
+
+	public RefMob[] RefMiniBossMobs
+	{
+		get {return m_refMobClass.miniBoss;}
 	}
 
 	public RefMob[] RefShuttleMobs

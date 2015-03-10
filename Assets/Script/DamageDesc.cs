@@ -25,12 +25,12 @@ public class DamageDesc {
 		Count,
 	}
 
-	float		m_damage;
+	int		m_damage;
 	Type		m_type;
 	GameObject	m_prefEffect;
 	BuffType	m_buffType;
 
-	public DamageDesc(float damage, Type type, BuffType buffType, GameObject prefEffect)
+	public DamageDesc(int damage, Type type, BuffType buffType, GameObject prefEffect)
 	{
 		m_damage = damage;
 		m_type = type;
@@ -38,7 +38,7 @@ public class DamageDesc {
 		m_prefEffect = prefEffect;
 	}
 
-	public float Damage
+	public int Damage
 	{
 		get { return m_damage;}
 	}

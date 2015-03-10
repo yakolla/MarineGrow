@@ -28,7 +28,7 @@ public class EggBroken : MonoBehaviour {
 		audio.Play();
 		yield return new WaitForSeconds (0.5f);
 		
-		m_spawn.SpawnMob(m_refMob, m_refDropItems, transform.position, m_mobLevel, Spawn.SpawnMobType.Egg, false);
+		m_spawn.SpawnMob(m_refMob, m_refDropItems, transform.position, m_mobLevel, 0.5f, false);
 
 		while(transform.position.y > -1f)
 		{

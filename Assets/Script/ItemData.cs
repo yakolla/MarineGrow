@@ -129,13 +129,13 @@ public class ItemData {
 			switch(desc.Type)
 			{
 			case Option.PhysicalDmg:
-				obj.m_creatureProperty.AlphaPhysicalAttackDamage += desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalAttackDamage += (int)desc.Value;
 				break;
 			case Option.MovingSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed += desc.Value;
 				break;
 			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint += desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)desc.Value;
 				break;
 			}
 		}
@@ -148,12 +148,13 @@ public class ItemData {
 			switch(desc.Type)
 			{
 			case Option.PhysicalDmg:
-				obj.m_creatureProperty.AlphaPhysicalAttackDamage -= desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalAttackDamage -= (int)desc.Value;
 				break;
 			case Option.MovingSpeed:
+				obj.m_creatureProperty.AlphaMoveSpeed -= desc.Value;
 				break;
 			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= (int)desc.Value;
 				break;
 			}
 		}

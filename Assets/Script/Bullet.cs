@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour {
 
 	protected GameObject	m_gunPoint = null;
 	bool					m_firing = false;
-	protected	float		m_damage;
+	protected	int		m_damage;
 	protected 	Vector2		m_targetAngle;
 	protected	Creature	m_ownerCreature;
 
@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour {
 	[SerializeField]
 	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
 
-	virtual public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
+	virtual public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		m_gunPoint = gunPoint;
 		m_ownerCreature = ownerCreature;

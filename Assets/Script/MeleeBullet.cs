@@ -46,7 +46,7 @@ public class MeleeBullet : Bullet {
 		}
 	}
 	
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		Vector3 scale = transform.localScale;
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);

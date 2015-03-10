@@ -12,6 +12,9 @@ public class Mob : Creature {
 		base.Start();
 
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
+		Vector3 scale = transform.localScale;
+		scale *= m_refMob.scale;
+		transform.localScale = scale;
 	}
 
 	public void Init(RefMob refMob, uint mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)

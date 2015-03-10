@@ -36,7 +36,7 @@ public class BlazeBullet : Bullet {
 		int[] angles = {0, 90};
 		transform.eulerAngles = new Vector3(0, angles[Random.Range(0, angles.Length)], 0);
 	}
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 

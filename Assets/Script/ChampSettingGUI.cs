@@ -124,7 +124,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	float getItemLevelupWorth(ItemObject itemObj)
 	{
-		return itemObj.Item.Level + itemObj.Item.Evolution * Const.ItemMaxLevel;
+		return itemObj.Item.Level + (itemObj.Item.Level-1) * 7f;
 	}
 
 	float getItemEvolutionWorth(ItemObject itemObj)
@@ -239,13 +239,13 @@ public class ChampSettingGUI : MonoBehaviour {
 				++selectedItem.Item.Level;
 			});
 		}
-		else
+		/*else
 		{
 			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, selectedItem.Item.RefItem.evolution, getItemEvolutionWorth(selectedItem), "Evolution", ()=>{
 				++selectedItem.Item.Evolution;
 				selectedItem.Item.Level = 1;
 			});
-		}
+		}*/
 
 
 	}

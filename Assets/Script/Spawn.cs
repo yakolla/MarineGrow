@@ -5,12 +5,7 @@ using Enum = System.Enum;
 
 public class Spawn : MonoBehaviour {
 
-	public enum SpawnMobType
-	{
-		Normal,
-		Boss,
-		Egg,
-	}
+
 
 	[SerializeField]
 	GameObject		m_champ = null;
@@ -143,7 +138,13 @@ public class Spawn : MonoBehaviour {
 		return m_areas[Random.Range(1,m_areas.Length)];
 	}
 
-	void	buildSpawnMob(List<RefMob> buildMobs, List<int> buildMobCount, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs)
+	class SpawnMobDescResult
+	{
+		public List<RefMob>	spawnMobs = new List<RefMob>();
+		public List<int> 		spawnMobCount = new List<int>();
+	}
+
+	void	buildSpawnMob(SpawnMobDescResult result, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs)
 	{
 		if (spawnRatioDesc == null)
 			return;
@@ -153,12 +154,14 @@ public class Spawn : MonoBehaviour {
 		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress + ", minRatio:" + spawnRatioDesc.ratio[0]+", maxRatio:" + spawnRatioDesc.ratio[1]);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
-		buildMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
+		result.spawnMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
 
 		minIndex = (int)(spawnRatioDesc.count[0]);
 		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress) + spawnRatioDesc.count[1] * progress);
-		buildMobCount.Add(Random.Range(minIndex, maxIndex));
+		result.spawnMobCount.Add(Random.Range(minIndex, maxIndex));
 	}
+
+
 
 	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
 	{
@@ -170,11 +173,8 @@ public class Spawn : MonoBehaviour {
 		}
 		else
 		{
-			SpawnMobType spawnMobType = SpawnMobType.Normal;
 			if (mobSpawn.boss == true)
 			{
-				spawnMobType = SpawnMobType.Boss;
-
 				StartCoroutine(EffectWaveText("Boss", 3));
 				Champ champ = m_champ.GetComponent<Champ>();
 				champ.ShakeCamera(3f);
@@ -184,6 +184,7 @@ public class Spawn : MonoBehaviour {
 				StartCoroutine(EffectWaveText("Wave " + (m_spawningPool + 1), 1));
 			}
 
+
 			float waveProgress = Mathf.Min(1f, (float)m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
 			Debug.Log("waveProgress:" + waveProgress + "," + m_spawningPool);
 
@@ -191,20 +192,21 @@ public class Spawn : MonoBehaviour {
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
 			for(int r = 0; r < mobSpawnRepeatCount; ++r)
 			{
-				List<RefMob>	spawnMobs = new List<RefMob>();
-				List<int> 		spawnMobCount = new List<int>();
-				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
-				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
-				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
-				buildSpawnMob(spawnMobs, spawnMobCount, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
+				SpawnMobDescResult spawnMobDescResult = new SpawnMobDescResult();
 
-				for(int ii = 0;  ii < spawnMobs.Count; ++ii)
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs);
+
+				for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
 				{
 					Transform area = getSpawnArea(true);
 					Vector3 cp = area.position;
 					Vector3 scale = area.localScale*0.5f;
 
-					RefMob refMob = spawnMobs[ii];
+					RefMob refMob = spawnMobDescResult.spawnMobs[ii];
 					if (refMob.nearByChampOnSpawn == true)
 					{
 						if (m_champ)
@@ -218,12 +220,12 @@ public class Spawn : MonoBehaviour {
 						cp = area.position;
 					}
 
-					for(int i = 0; i < spawnMobCount[ii]; ++i)
+					for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
 					{
 						Vector3 enemyPos = cp;
 						enemyPos.x += Random.Range(-scale.x,scale.x);
 						enemyPos.z += Random.Range(-scale.z,scale.z);
-						
+
 						++spawnCount;
 
 						RefItemSpawn[] dropItems = GetCurrentWave().itemSpawn.defaultItem;
@@ -239,12 +241,12 @@ public class Spawn : MonoBehaviour {
 						                                , dropItems
 						                                , enemyPos
 						                                , spawnMobLevel()
-						                                , spawnMobType
-						                                , false)
+						                                , 1f
+						                                , mobSpawn.boss)
 						               );
 						
 						
-						yield return new WaitForSeconds (0.5f);
+						//yield return new WaitForSeconds (0.5f);
 					}
 				}
 				yield return new WaitForSeconds (mobSpawn.interval);
@@ -284,7 +286,7 @@ public class Spawn : MonoBehaviour {
 			yield return null;
 		}	
 
-		SpawnMob(refMob, refDropItems, parabola.Position, 1, SpawnMobType.Normal, false);
+		SpawnMob(refMob, refDropItems, parabola.Position, 1, 1f, false);
 		DestroyObject(eggObj);
 	}
 
@@ -320,7 +322,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, float mobScale, bool boss)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -336,11 +338,11 @@ public class Spawn : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		
-		SpawnMob(refMob, refDropItems, enemyPos, mobLevel, spawnMobType, followingCamera);
+		SpawnMob(refMob, refDropItems, enemyPos, mobLevel, mobScale, boss);
 
 	}
 	
-	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, SpawnMobType spawnMobType, bool followingCamera)
+	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, float scale, bool boss)
 	{
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
@@ -357,37 +359,15 @@ public class Spawn : MonoBehaviour {
 		enemyBody.transform.parent = enemyObj.transform;
 		enemyBody.transform.localPosition = Vector3.zero;
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-		switch(spawnMobType)
-		{
-		case SpawnMobType.Normal:
-			break;
-		case SpawnMobType.Boss:
-			break;
-		case SpawnMobType.Egg:
-			enemyObj.transform.localScale *= 0.5f;
-			break;
-		}
-		
-		bool boss = spawnMobType == SpawnMobType.Boss;
-		
+		enemyObj.transform.localScale *= scale;
+
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, mobLevel, this, refDropItems, boss);
 		
 		enemy.SetTarget(m_champ);
-		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint);
-		
-		//if (boss == true)	
-		{
-			m_bosses.Add(enemy.gameObject);
-		}
-
-		
-		if (followingCamera == true)
-		{
-			m_effectBulletTime = 1f;
-			enemy.SetFollowingCamera(m_champ);
-			TimeEffector.Instance.StopTime();
-		}
+		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + scale);
+	
+		m_bosses.Add(enemy.gameObject);
 
 		return enemy;
 	}

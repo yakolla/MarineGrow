@@ -64,21 +64,12 @@ public class ChampAbilityGUI : MonoBehaviour {
 		
 		m_abilities.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
-			m_backup.AlphaMaxHP+=1;
+			m_backup.AlphaMaxHP+=100;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaMaxHP+=1;
+			m_champ.m_creatureProperty.AlphaMaxHP+=100;
 			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
-			--m_champ.RemainStatPoint;
-		}));
-
-		m_abilities.Add(new Ability(0.01f, "Weapon Evolution", 
-		()=>{
-			return "";
-		},
-		()=>{
-			m_champ.WeaponHolder.Evolution();
 			--m_champ.RemainStatPoint;
 		}));
 
@@ -122,11 +113,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal%", 
 		()=>{
-			m_backup.AlphaLifeSteal += 0.1f;
+			m_backup.AlphaLifeSteal += 0.01f;
 			return m_champ.m_creatureProperty.LifeSteal + " -> " + "<color=yellow>" + (m_backup.LifeSteal*100) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaLifeSteal += 0.1f;
+			m_champ.m_creatureProperty.AlphaLifeSteal += 0.01f;
 			--m_champ.RemainStatPoint;
 		}));
 
@@ -137,16 +128,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
-			--m_champ.RemainStatPoint;
-		}));
-
-		m_abilities.Add(new Ability(0.3f, "Reduce Attack CoolTime%", 
-		                            ()=>{
-			m_backup.AlphaAttackCoolTime -= 0.03f;
-			return m_champ.m_creatureProperty.AttackCoolTime*100 + " -> " + "<color=yellow>" + "-" + (m_backup.AttackCoolTime*100) + "</color>";
-		},
-		()=>{
-			m_champ.m_creatureProperty.AlphaAttackCoolTime -= 0.03f;
 			--m_champ.RemainStatPoint;
 		}));
 	}
