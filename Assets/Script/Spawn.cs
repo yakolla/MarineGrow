@@ -32,7 +32,7 @@ public class Spawn : MonoBehaviour {
 	int				m_wave = 0;
 
 	[SerializeField]
-	uint				m_spawningPool = 0;
+	int				m_spawningPool = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -110,31 +110,12 @@ public class Spawn : MonoBehaviour {
 			m_bosses.Clear();
 
 			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_spawningPool%GetCurrentWave().mobSpawns.Length]));
-
-
 		}
 	}
 
 
 	Transform	getSpawnArea(bool champAreaExcept)
 	{
-		if (m_champ != null && champAreaExcept == true)
-		{
-			List<Transform> areas = new List<Transform>();
-
-			for(int i = 1; i < m_areas.Length; ++i)
-			{
-				Transform area = m_areas[i];
-				float dist = Vector3.Distance(area.position, m_champ.transform.position);
-				if (dist > 5f)
-				{
-					areas.Add(area);
-
-				}
-			}
-			return areas[Random.Range(1,areas.Count)];
-		}
-
 		return m_areas[Random.Range(1,m_areas.Length)];
 	}
 
@@ -202,26 +183,26 @@ public class Spawn : MonoBehaviour {
 
 				for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
 				{
-					Transform area = getSpawnArea(true);
-					Vector3 cp = area.position;
-					Vector3 scale = area.localScale*0.5f;
-
-					RefMob refMob = spawnMobDescResult.spawnMobs[ii];
-					if (refMob.nearByChampOnSpawn == true)
-					{
-						if (m_champ)
-						{
-							cp = m_champ.transform.position;
-						}
-						
-					}
-					else
-					{
-						cp = area.position;
-					}
-
 					for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
 					{
+						Transform area = getSpawnArea(true);
+						Vector3 cp = area.position;
+						Vector3 scale = area.localScale*0.5f;
+						
+						RefMob refMob = spawnMobDescResult.spawnMobs[ii];
+						if (refMob.nearByChampOnSpawn == true)
+						{
+							if (m_champ)
+							{
+								cp = m_champ.transform.position;
+							}
+							
+						}
+						else
+						{
+							cp = area.position;
+						}
+
 						Vector3 enemyPos = cp;
 						enemyPos.x += Random.Range(-scale.x,scale.x);
 						enemyPos.z += Random.Range(-scale.z,scale.z);
@@ -271,9 +252,9 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
-	uint spawnMobLevel()
+	int spawnMobLevel()
 	{
-		return (uint)(1+m_spawningPool / GetCurrentWave().mobSpawns.Length);
+		return (int)(1+m_spawningPool / GetCurrentWave().mobSpawns.Length);
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos)
@@ -295,7 +276,7 @@ public class Spawn : MonoBehaviour {
 		return GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id) ? GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems : null;
 	}
 	
-	public Egg spawnMobEgg(RefMob refMob, Vector3 pos, uint mobLevel)
+	public Egg spawnMobEgg(RefMob refMob, Vector3 pos, int mobLevel)
 	{
 		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
 		Egg egg = eggObj.GetComponent<Egg>();
@@ -322,7 +303,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, float mobScale, bool boss)
+	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, float mobScale, bool boss)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -342,7 +323,7 @@ public class Spawn : MonoBehaviour {
 
 	}
 	
-	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, uint mobLevel, float scale, bool boss)
+	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, float scale, bool boss)
 	{
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);

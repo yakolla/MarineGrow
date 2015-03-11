@@ -21,12 +21,18 @@ public class GunBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			DestroyObject(this.gameObject);
 			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
+			DestroyObject(this.gameObject);
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
 			DestroyObject(this.gameObject);
 		}
+	}
+
+	public float	BulletSpeed
+	{
+		get {return m_speed;}
+		set {m_speed = value;}
 	}
 }

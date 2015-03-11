@@ -26,7 +26,6 @@ public class Weapon : MonoBehaviour {
 
 	float						m_lastCreated = 0;
 	protected Creature 			m_creature;
-	float						m_chargingTime;
 	float						m_damageRatio = 1f;
 
 	public delegate void CallbackOnCreateBullet();
@@ -36,7 +35,7 @@ public class Weapon : MonoBehaviour {
 	protected float		m_attackRange;
 
 	int					m_evolution;
-	int					m_level;
+	protected int		m_level;
 
 	RefItem				m_refItem;
 
@@ -103,7 +102,7 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	public void LevelUp()
+	virtual public void LevelUp()
 	{
 		++m_level;
 		if (m_level % 2 == 0)
@@ -117,7 +116,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	virtual public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
+	virtual public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
 		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
@@ -128,7 +127,7 @@ public class Weapon : MonoBehaviour {
 		this.audio.Play();
 
 		m_callbackCreateBullet();
-		return obj;
+		return bullet;
 	}
 
 	protected IEnumerator DelayToStartFiring(Vector2 targetAngle, float delay)

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Mob : Creature {
@@ -17,7 +17,7 @@ public class Mob : Creature {
 		transform.localScale = scale;
 	}
 
-	public void Init(RefMob refMob, uint mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
+	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
 	{
 		RefMob = refMob;
 		Spawn = spawn;

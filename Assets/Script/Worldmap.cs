@@ -11,23 +11,6 @@ public class Worldmap : MonoBehaviour {
 	float 		m_height = Screen.height * (1/8f);
 	string		log = "log";
 	GameObject	m_selectedMap;
-	ISavedGameMetadata m_openGame = null;
-	// Use this for initialization
-	void Start () {
-
-	}
-	void Awake() {
-		DontDestroyOnLoad(transform.gameObject);
-	}
-	// Update is called once per frame
-	void Update () {
-
-	}
-
-	void OnEnable()
-	{
-		enabled = true;
-	}
 
 	void OnGUI()
 	{
@@ -41,7 +24,28 @@ public class Worldmap : MonoBehaviour {
 	
 	public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
-			m_openGame = game;
+			Warehouse.Instance.FileName = game.Filename;
+		} else {
+			// handle error
+		}
+		log = "OnSavedGameOpened:" + status + game;
+	}
+
+	public void OnSavedGameOpenedForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
+		if (status == SavedGameRequestStatus.Success) {
+			GPlusPlatform.Instance.LoadGame(game, OnSavedGameDataRead);
+			Warehouse.Instance.FileName = game.Filename;
+		} else {
+			// handle error
+		}
+		log = "OnSavedGameOpened:" + status + game;
+	}
+
+	public void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
+		if (status == SavedGameRequestStatus.Success) {
+			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*6);
+			
+			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
 		} else {
 			// handle error
 		}
@@ -74,50 +78,40 @@ public class Worldmap : MonoBehaviour {
 		if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY, size*3, size), "Start"))
 		{			
 			Application.LoadLevel("Basic Dungeon");
-			enabled = false;
 		}
 		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*1, size*3, size), "Google+"))
 		{			
+			log = "xx";
 			GPlusPlatform.Instance.Login((bool success) => {
 				// handle success or failure
 				if (success == true)
 				{
 					log = "login";
+					GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
+						if (status == SelectUIStatus.SavedGameSelected) {
+							
+							string fileName = game.Filename;
+							if (fileName.Equals(""))
+							{
+								fileName = System.DateTime.Now.Ticks.ToString();
+								GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpened);
+								
+							}
+							else
+							{
+								GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);
+							}
+
+							
+						} else {
+							// handle cancel or error
+						}
+					});
 				}
 			});
-			log = "xx";
-		}
-		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*2, size*3, size), "Select a Slot"))
-		{
-			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
-				if (status == SelectUIStatus.SavedGameSelected) {
-
-					string fileName = game.Filename;
-					if (fileName.Equals(""))
-					{
-						GPlusPlatform.Instance.OpenGame(System.DateTime.Now.Ticks.ToString(), OnSavedGameOpened);
-					}
-					else
-					{
-						GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpened);
-					}
-
-				} else {
-					// handle cancel or error
-				}
-			});
-		}
-		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*3, size*3, size), "Load"))
-		{
-			GPlusPlatform.Instance.LoadGame(m_openGame, OnSavedGameDataRead);
-		}
-		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*4, size*3, size), "Save"))
-		{
-			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*6);
-
-			GPlusPlatform.Instance.SaveGame(m_openGame, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
 
 		}
+
 		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*5, size*3, size), "Leaderboard"))
 		{
 			GPlusPlatform.Instance.ShowLeaderboardUI();

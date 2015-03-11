@@ -3,13 +3,13 @@ using System.Collections;
 
 public class Firegun : Weapon {
 
-	GameObject[]	m_bullet;
+	Bullet[]	m_bullet;
 
 	override public void StartFiring(Vector2 targetAngle)
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
-			m_bullet = new GameObject[m_firingDescs.Count];
+			m_bullet = new Bullet[m_firingDescs.Count];
 
 			for(int i = 0; i < m_firingDescs.Count; ++i)
 			{
@@ -27,9 +27,8 @@ public class Firegun : Weapon {
 		this.audio.Stop();
 		if (m_bullet != null)
 		{
-			foreach(GameObject obj in m_bullet)
+			foreach(Bullet bullet in m_bullet)
 			{
-				Bullet bullet = (Bullet)obj.GetComponent<Bullet>();
 				bullet.StopFiring();
 			}
 

@@ -375,7 +375,8 @@
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			}
 		},
 		{
@@ -400,7 +401,8 @@
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			}
 		}
 	],
@@ -443,7 +445,8 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":5,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			},
 			"dropEggMob":
 			{
@@ -496,7 +499,8 @@
 				"phyDefencePerLevel":5,
 				"hpPerLevel":5,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			}
 		}
 	],

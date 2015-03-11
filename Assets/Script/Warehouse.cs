@@ -70,7 +70,7 @@ public class Warehouse {
 				}
 			}
 
-			uint waveIndex = JsonConvert.DeserializeObject<uint>(reader.ReadLine());
+			int waveIndex = JsonConvert.DeserializeObject<int>(reader.ReadLine());
 			obj.m_waveIndex = waveIndex;
 
 			ItemGoldData goldData = JsonConvert.DeserializeObject<ItemGoldData>(reader.ReadLine());
@@ -84,12 +84,12 @@ public class Warehouse {
 
 	}
 
-
+	string				m_fileName;
 	List<ItemObject>	m_items = new List<ItemObject>();
 
 	ItemObject			m_gold = new ItemObject(new ItemGoldData(0));
 	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
-	uint				m_waveIndex = 0;
+	int				m_waveIndex = 0;
 
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
@@ -212,9 +212,15 @@ public class Warehouse {
 		get { return m_gem; }
 	}
 
-	public uint WaveIndex
+	public int WaveIndex
 	{
 		get {return m_waveIndex;}
 		set {m_waveIndex = value;}
+	}
+
+	public string FileName
+	{
+		get {return m_fileName;}
+		set {m_fileName = value;}
 	}
 }

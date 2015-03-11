@@ -7,14 +7,28 @@ using System.Collections;
 
 public class LightningBullet : Bullet
 {
-	public int zigs = 100;
-	public float speed = 1f;
-	public float scale = 1f;
-	public float length = 10f;
-	public float	m_damageOnTime = 1f;
-	public Color	m_color = Color.white;
+	[SerializeField]
+	int zigs = 100;
+
+	[SerializeField]
+	float speed = 1f;
+
+	[SerializeField]
+	float scale = 1f;
+
+	[SerializeField]
+	float length = 10f;
+
+	[SerializeField]
+	float	m_damageOnTime = 1f;
+
+	[SerializeField]
+	Color	m_color = Color.white;
+
 	float			m_lastDamageTime = 0f;
-	public int	m_maxChaining = 5;
+
+	[SerializeField]
+	int	m_maxChaining = 5;
 
 	Perlin noise;
 	float oneOverZigs;
@@ -162,10 +176,10 @@ public class LightningBullet : Bullet
 			particles[particleStartIndex+i].energy = 1f;
 		}
 	}
-	
-	override public void StopFiring()
+
+	public int MaxChaining
 	{
-		base.StopFiring();
-		DestroyObject(this.gameObject);
+		get { return m_maxChaining; }
+		set { m_maxChaining = value;}
 	}
 }

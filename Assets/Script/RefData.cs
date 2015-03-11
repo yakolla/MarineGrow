@@ -32,6 +32,7 @@ public class RefCreatureBaseProperty
 	public float	criticalRatio;
 	public float	criticalDamage = 1f;
 	public float	attackCoolTime = 1f;
+	public bool		backwardOnDamage = true;
 }
 
 public class RefEvolutionFiring

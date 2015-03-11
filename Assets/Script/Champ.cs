@@ -1,5 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
+using UnityEngine.SocialPlatforms;
 
 public class Champ : Creature {
 
@@ -22,10 +26,13 @@ public class Champ : Creature {
 
 	int			m_remainStatPoint = 0;
 
+	float		m_creationTime = 0;
+
 	new void Start () {
 		
 		m_creatureProperty.init(this, m_creatureBaseProperty);
 		m_creatureProperty.Level = 1;
+		m_creationTime = Time.time;
 
 		base.Start();
 
@@ -148,6 +155,7 @@ public class Champ : Creature {
 					Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 					pos = ray.origin + (ray.direction* 10f);
 					m_weaponHolder.StartFiring(RotateToTarget(pos));
+
 				}
 				else
 				{
@@ -168,6 +176,29 @@ public class Champ : Creature {
 	override public void Death()
 	{
 		base.Death();
+		GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, OnSavedGameOpenedForSaving);
+
+	}
+
+	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
+		if (status == SavedGameRequestStatus.Success) {
+			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
+			totalPlayingTime.Add(new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime)));
+			
+			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
+		} else {
+			// handle error
+		}
+
+	}
+
+	void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
+		if (status == SavedGameRequestStatus.Success) {
+			// handle reading or writing of saved game.
+		} else {
+			// handle error
+		}
+
 		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(2);
 	}
 

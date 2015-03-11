@@ -56,6 +56,11 @@ public class Creature : MonoBehaviour {
 
 	DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
 
+	float		m_backwardSpeed = 0f;
+
+	Texture damagedTexture;
+	Texture normalTexture;
+
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_aimpoint = transform.Find("Aimpoint").gameObject;
@@ -65,7 +70,8 @@ public class Creature : MonoBehaviour {
 		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
-
+		damagedTexture = Resources.Load<Texture>("ani/damage monster");
+		normalTexture = Resources.Load<Texture>("ani/monster");
 	}
 
 	public void EquipWeapon(ItemWeaponData weaponData)
@@ -101,19 +107,22 @@ public class Creature : MonoBehaviour {
 
 	public Vector2 RotateToTarget(Vector3 pos)
 	{
-
 		Vector3 gunPoint = m_weaponHolder.transform.position;
-		//gunPoint.x = transform.position.x;
-		//gunPoint.z = transform.position.z;
+		gunPoint.x = transform.position.x;
+		gunPoint.z = transform.position.z;
 		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
-		transform.eulerAngles = new Vector3(0, -targetHorAngle, 0);
+		Vector3 euler = transform.eulerAngles;
+		euler.y = -targetHorAngle;
+		transform.eulerAngles = euler;
 
 		return new Vector2(targetHorAngle, 0f);
 	}
 
 	public Vector2 RotateToTarget(float angle)
-	{		
-		transform.eulerAngles = new Vector3(0, -angle, 0);
+	{	
+		Vector3 euler = transform.eulerAngles;
+		euler.y = -angle;
+		transform.eulerAngles = euler;
 		
 		return new Vector2(angle, 0f);
 	}
@@ -134,6 +143,21 @@ public class Creature : MonoBehaviour {
 		UpdateDamageEffect();
 		UpdatePickupItemEffect();
 		m_navAgent.speed = m_creatureProperty.MoveSpeed;
+
+		if (m_backwardSpeed > 0)
+		{
+
+			m_navAgent.updateRotation = false;
+			m_backwardSpeed -= 1f;
+
+		}
+		else
+		{
+			m_navAgent.updateRotation = true;
+			rigidbody.velocity = Vector3.zero;
+
+		}
+
 	}
 
 	virtual public string[] GetAutoTargetTags()
@@ -258,8 +282,7 @@ public class Creature : MonoBehaviour {
 		Renderer[] renders = GetComponentsInChildren<Renderer>();
 		if (renders != null)
 		{
-			Texture dtex = Resources.Load<Texture>("ani/damage monster");
-			Texture tex = Resources.Load<Texture>("ani/monster");
+
 			Color color = new Color(0f,1f,0f,0f);
 			int len = renders.Length;
 
@@ -269,7 +292,7 @@ public class Creature : MonoBehaviour {
 				{
 					if (renders[i].material.mainTexture.name.CompareTo("monster") == 0)
 					{
-						renders[i].material.mainTexture = dtex;
+						renders[i].material.mainTexture = damagedTexture;
 					}
 
 				}
@@ -283,7 +306,7 @@ public class Creature : MonoBehaviour {
 				{
 					if (renders[i].material.mainTexture.name.CompareTo("damage monster") == 0)
 					{
-						renders[i].material.mainTexture = tex;
+						renders[i].material.mainTexture = normalTexture;
 					}
 					
 				}
@@ -362,6 +385,9 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.BetaMoveSpeed *= 2f;
 
 	}
+
+
+
 
 	IEnumerator EffectSteamPack(float time)
 	{		
@@ -490,9 +516,13 @@ public class Creature : MonoBehaviour {
 		}
 
 		ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
-		if (m_buffEffects[(int)DamageDesc.BuffType.Slow].effect == null)
+
+		if (true == m_creatureProperty.BackwardOnDamage)
 		{
-			ApplyBuff(DamageDesc.BuffType.Slow, 0.2f);
+			m_backwardSpeed = 10f;
+			rigidbody.AddForce(transform.right*-1f, ForceMode.Impulse);
+			rigidbody.AddTorque(transform.forward*1f, ForceMode.Impulse);
+			rigidbody.maxAngularVelocity = 1f;
 		}
 
 		ApplyBuff(damageDesc.DamageBuffType, 2f);

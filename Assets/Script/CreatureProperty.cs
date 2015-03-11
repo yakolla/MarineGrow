@@ -42,7 +42,7 @@ public class CreatureProperty {
 
 
 	[SerializeField]
-	uint		m_level = 1;
+	int		m_level = 1;
 
 	[SerializeField]
 	int		m_exp = 0;
@@ -75,7 +75,7 @@ public class CreatureProperty {
 		get { return m_hp; }
 	}
 
-	public uint Level
+	public int Level
 	{
 		get { return m_level; }
 		set {
@@ -224,6 +224,11 @@ public class CreatureProperty {
 	{
 		get {return m_alphaAttackCoolTime;}
 		set { m_alphaAttackCoolTime = value; }
+	}
+
+	public bool		BackwardOnDamage
+	{
+		get {return m_baseProperty.backwardOnDamage;}
 	}
 
 	public void CopyTo(CreatureProperty other)

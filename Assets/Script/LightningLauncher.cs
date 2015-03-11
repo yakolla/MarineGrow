@@ -4,21 +4,30 @@ using System.Collections.Generic;
 
 public class LightningLauncher : Weapon {
 
-	GameObject[]	m_bullet;
-	
+	LightningBullet	m_bullet;
+	int		m_maxChaining = 1;
+	 
+
 	override public void StartFiring(Vector2 targetAngle)
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
-			m_bullet = new GameObject[m_firingDescs.Count];
-			
-			for(int i = 0; i < m_firingDescs.Count; ++i)
+			if (null == m_bullet)
 			{
-				targetAngle.x = m_firingDescs[i].angle;
-				m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position);
+				m_bullet = CreateBullet(targetAngle, m_gunPoint.transform.position) as LightningBullet;
 			}
+			m_bullet.gameObject.SetActive(true);
+			m_bullet.MaxChaining = m_maxChaining;
+
 		}
-		
+		if (null != m_bullet)
+		{
+			Vector3 euler = m_bullet.transform.rotation.eulerAngles;
+			euler.y = transform.eulerAngles.y;
+			m_bullet.transform.eulerAngles = euler;
+		}
+
+
 		m_firing = true;
 	}
 	
@@ -28,14 +37,24 @@ public class LightningLauncher : Weapon {
 		this.audio.Stop();
 		if (m_bullet != null)
 		{
-			foreach(GameObject obj in m_bullet)
-			{
-				Bullet bullet = (Bullet)obj.GetComponent<Bullet>();
-				bullet.StopFiring();
-			}
-			
-			m_bullet = null;
+			m_bullet.StopFiring();
+			m_bullet.gameObject.SetActive(false);
 		}
 		
+	}
+
+	override public void LevelUp()
+	{
+		base.LevelUp();
+
+		if (m_level % 2 == 0)
+		{
+			
+		}
+		else
+		{
+			m_maxChaining += m_level;
+		}
+
 	}
 }

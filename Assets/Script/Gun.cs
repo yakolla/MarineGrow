@@ -8,9 +8,9 @@ public class Gun : Weapon {
 
 	GameObject		m_gunPointEffect;
 
-	override public GameObject CreateBullet(Vector2 targetAngle, Vector3 startPos)
+	override public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
-		GameObject bullet = base.CreateBullet(targetAngle, startPos);
+		Bullet bullet = base.CreateBullet(targetAngle, startPos);
 
 		if (m_gunPointEffect)
 		{
