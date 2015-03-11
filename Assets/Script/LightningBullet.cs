@@ -21,7 +21,7 @@ public class LightningBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, float damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		Vector3 scale = transform.localScale;
 

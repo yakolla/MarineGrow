@@ -14,33 +14,33 @@
 								"count":[1,6]
 							}
 						},
-						"interval":10,
+						"interval":0,
 						"repeatCount":[1,1],
 						"boss":true
 					},*/
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.1,0.3],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							}
 						},
 						"interval":5,
-						"repeatCount":[7,16]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.1,0.3],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							},
 							"range":{
-								"ratio":[0.1,0.3],
+								"ratio":[0,1],
 								"count":[1,9]
 							}
 						},
 						"interval":5,
-						"repeatCount":[4,16]
+						"repeatCount":[4,4]
 					},/*
 					{
 						"refMobIds":{
@@ -56,88 +56,96 @@
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.3,0.5],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							}
 						},
 						"interval":5,
-						"repeatCount":[7,16]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.3,0.5],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							},
 							"range":{
-								"ratio":[0.3,0.5],
+								"ratio":[0,1],
 								"count":[1,9]
 							}
 						},
 						"interval":5,
-						"repeatCount":[4,16]
+						"repeatCount":[4,4]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.5,0.8],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
+							},
+							"miniBoss":{
+								"ratio":[0,1],
+								"count":[1,1]
 							}
 						},
 						"interval":5,
-						"repeatCount":[2,6]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.5,0.8],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							},
 							"range":{
-								"ratio":[0.5,0.8],
+								"ratio":[0,1],
 								"count":[1,9]
 							}
 						},
 						"interval":5,
-						"repeatCount":[7,16]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.7,1],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							}
 						},
 						"interval":5,
-						"repeatCount":[7,16]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.7,1],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							},
 							"range":{
-								"ratio":[0.7,1],
+								"ratio":[0,1],
 								"count":[1,9]
 							}
 						},
 						"interval":5,
-						"repeatCount":[7,16]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
 							"melee":{
-								"ratio":[0.9,1],
-								"count":[3,16]
+								"ratio":[0,1],
+								"count":[6,24]
 							},
 							"range":{
-								"ratio":[0.9,1],
+								"ratio":[0,1],
 								"count":[1,9]
+							},
+							"miniBoss":{
+								"ratio":[0,1],
+								"count":[1,1]
 							}
 						},
 						"interval":5,
-						"repeatCount":[7,16]
+						"repeatCount":[3,3]
 					},
 					{
 						"refMobIds":{
@@ -156,7 +164,7 @@
 					"mobItems":
 					[
 						{
-							"refMobId":21001,
+							"refMobId":50001,
 							"refDropItems":
 							[								
 								{
@@ -168,7 +176,7 @@
 							]
 						},
 						{
-							"refMobId":21006,
+							"refMobId":50002,
 							"refDropItems":
 							[								
 								{

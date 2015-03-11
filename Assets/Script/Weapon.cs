@@ -27,6 +27,7 @@ public class Weapon : MonoBehaviour {
 	float						m_lastCreated = 0;
 	protected Creature 			m_creature;
 	float						m_chargingTime;
+	float						m_damageRatio = 1f;
 
 	public delegate void CallbackOnCreateBullet();
 	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
@@ -56,6 +57,9 @@ public class Weapon : MonoBehaviour {
 		desc.delayTime = 0;
 
 		m_firingDescs.Add(desc);
+
+		AttackRange = weaponData.WeaponStat.range;
+		CoolTime = weaponData.WeaponStat.coolTime;
 	
 		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
 			MoreFire();
@@ -63,9 +67,10 @@ public class Weapon : MonoBehaviour {
 		for(int i = 0; i < weaponData.Evolution; ++i)
 			Evolution();
 
-		AttackRange = weaponData.WeaponStat.range;
-		CoolTime = weaponData.WeaponStat.coolTime;
-		m_level = weaponData.Level;
+		for(int i = 0; i < weaponData.Level; ++i)
+			LevelUp();
+
+
 
 	}
 
@@ -76,8 +81,8 @@ public class Weapon : MonoBehaviour {
 
 		int count = m_firingDescs.Count;
 
-		float angle = m_refItem.evolutionFiring.angle*(count/2);
-		if (m_firingDescs.Count % 2 == 1)
+		float angle = m_refItem.evolutionFiring.angle*((count+1)/2);
+		if (count % 2 == 1)
 		{
 			angle *= -1;
 		}
@@ -95,16 +100,19 @@ public class Weapon : MonoBehaviour {
 	public void Evolution()
 	{
 		++m_evolution;
-		m_level = 1;
-		MoreFire();
+
 	}
 
 	public void LevelUp()
 	{
 		++m_level;
-		if (m_level >= Const.ItemMaxLevel)
+		if (m_level % 2 == 0)
 		{
-			Evolution();
+			MoreFire();
+		}
+		else
+		{
+			m_damageRatio += m_level / 2;
 		}
 	}
 
@@ -113,8 +121,7 @@ public class Weapon : MonoBehaviour {
 	{
 		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
-		float damageRatio = m_evolution*9+m_level;
-		bullet.Init(m_creature, m_gunPoint, m_creature.m_creatureProperty.PhysicalAttackDamage*damageRatio, targetAngle);
+		bullet.Init(m_creature, m_gunPoint, (int)(m_creature.m_creatureProperty.PhysicalAttackDamage*m_damageRatio), targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 
