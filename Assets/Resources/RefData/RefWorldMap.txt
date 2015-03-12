@@ -6,7 +6,7 @@
 		[
 			{
 				"mobSpawns":
-				[	/*
+				[	
 					{
 						"refMobIds":{
 							"boss":{
@@ -17,7 +17,7 @@
 						"interval":0,
 						"repeatCount":[1,1],
 						"boss":true
-					},*/
+					},
 					{
 						"refMobIds":{
 							"melee":{

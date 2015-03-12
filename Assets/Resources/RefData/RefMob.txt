@@ -408,7 +408,55 @@
 	],
 	"boss":
 	[	
-		
+		{
+			"id":50003,
+			"prefBody":"big_Worm_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"103",					
+					"weaponStat":
+					{
+						"coolTime":1,
+						"range":8,
+						"firingCount":1
+					}
+				},
+				{
+					"refItemId":"105",
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":5,
+						"firingCount":1
+					}
+				},
+				{
+					"refItemId":"117",
+					"weaponStat":
+					{
+						"coolTime":1,
+						"range":7,
+						"firingCount":1
+					}	
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":1500,
+				"physicalDamage":50,
+				"physicalDefence":5,
+				"evolutionPerLevel":0.5,
+				"exp":1000,
+				"phyDamagePerLevel":5,
+				"phyDefencePerLevel":5,
+				"hpPerLevel":5,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			}
+		},
 		{
 			"id":50001,
 			"prefBody":"slime_skin",
