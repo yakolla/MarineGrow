@@ -209,15 +209,17 @@ public class Spawn : MonoBehaviour {
 
 						++spawnCount;
 
-						RefItemSpawn[] dropItems = GetCurrentWave().itemSpawn.defaultItem;
-						if (dropItems == null)
-						{
-							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
-							{
-								dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
-							}
 
+						RefItemSpawn[] dropItems = null;
+						if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
+						{
+							dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
 						}
+						else
+						{
+							dropItems = GetCurrentWave().itemSpawn.defaultItem;
+						}
+
 						StartCoroutine(  EffectSpawnMob(refMob
 						                                , dropItems
 						                                , enemyPos

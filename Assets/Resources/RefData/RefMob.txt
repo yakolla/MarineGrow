@@ -408,36 +408,7 @@
 	],
 	"boss":
 	[	
-		{
-			"id":50003,
-			"prefBody":"big_Worm_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				}
-			],
-			"mobAI":"Normal",
-			"baseCreatureProperty":
-			{
-				"maxHP":2000,
-				"physicalDamage":70,
-				"physicalDefence":5,
-				"evolutionPerLevel":0.5,
-				"exp":2000,
-				"phyDamagePerLevel":5,
-				"phyDefencePerLevel":5,
-				"hpPerLevel":5,
-				"moveSpeed":1,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":30004,
-				"count":12
-			}
-		},
+		
 		{
 			"id":50001,
 			"prefBody":"slime_skin",
@@ -530,6 +501,36 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
+			}
+		},
+		{
+			"id":50003,
+			"prefBody":"big_Worm_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"109"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":2000,
+				"physicalDamage":70,
+				"physicalDefence":5,
+				"evolutionPerLevel":0.5,
+				"exp":2000,
+				"phyDamagePerLevel":5,
+				"phyDefencePerLevel":5,
+				"hpPerLevel":5,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"refMobId":30004,
+				"count":12
 			}
 		}
 	],
