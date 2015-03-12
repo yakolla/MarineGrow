@@ -3,18 +3,25 @@ using System.Collections;
 
 public class Firegun : Weapon {
 
-	Bullet[]	m_bullet;
+	FireGunBullet[]	m_bullet;
 
 	override public void StartFiring(Vector2 targetAngle)
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
-			m_bullet = new Bullet[m_firingDescs.Count];
-
 			for(int i = 0; i < m_firingDescs.Count; ++i)
 			{
 				targetAngle.x = m_firingDescs[i].angle;
-				m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position);
+				if (m_bullet[i] == null)
+				{
+					m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position) as FireGunBullet;
+				}
+
+				m_bullet[i].gameObject.SetActive(true);
+
+				Vector3 euler = m_bullet[i].transform.rotation.eulerAngles;
+				euler.y = transform.eulerAngles.y+targetAngle.x;
+				m_bullet[i].transform.eulerAngles = euler;
 			}
 		}
 
@@ -29,11 +36,30 @@ public class Firegun : Weapon {
 		{
 			foreach(Bullet bullet in m_bullet)
 			{
-				bullet.StopFiring();
-			}
+				if (bullet == null)
+					continue;
 
-			m_bullet = null;
+				bullet.StopFiring();				
+				bullet.gameObject.SetActive(false);
+			}
 		}
 
+	}
+
+	override public void LevelUp()
+	{
+		base.LevelUp();
+
+		m_bullet = new FireGunBullet[m_firingDescs.Count];
+
+		if (m_level % 2 == 0)
+		{
+
+		}
+		else
+		{
+
+		}
+		
 	}
 }

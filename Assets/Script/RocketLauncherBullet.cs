@@ -6,6 +6,15 @@ public class RocketLauncherBullet : Bullet {
 	[SerializeField]
 	float m_speed = 1f;
 	float	m_accel = 0f;
+
+	[SerializeField]
+	GameObject		m_prefBombEffect = null;
+	
+	[SerializeField]
+	float			m_bombRange = 5f;
+
+	bool m_isDestroying = false;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -21,15 +30,52 @@ public class RocketLauncherBullet : Bullet {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		if (m_isDestroying == true)
+			return;
+
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
-			DestroyObject(this.gameObject);
+			bomb();
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
 			DestroyObject(this.gameObject);
 		}
+	}
+
+	IEnumerator destoryObject(GameObject bombEffect)
+	{
+		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
+		DestroyObject(this.gameObject);
+		DestroyObject(bombEffect);
+	}
+
+	void bomb()
+	{
+		m_isDestroying = true;
+		
+		string[] tags = m_ownerCreature.GetAutoTargetTags();
+		foreach(string tag in tags)
+		{
+			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+			Vector3 pos = transform.position;
+			//pos.y = 0;
+			foreach(GameObject target in targets)
+			{
+				float dist = Vector3.Distance(pos, target.transform.position);
+				if (dist < m_bombRange/2)
+				{
+					Creature creature = target.GetComponent<Creature>();
+					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
+				}
+			}
+		}
+		
+		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
+		this.audio.Play();
+		StartCoroutine(destoryObject(bombEffect));
+
+		gameObject.SetActive(false);
 	}
 }

@@ -148,12 +148,14 @@ public class Creature : MonoBehaviour {
 		{
 
 			m_navAgent.updateRotation = false;
+			m_navAgent.updatePosition = false;
 			m_backwardSpeed -= 1f;
 
 		}
 		else
 		{
 			m_navAgent.updateRotation = true;
+			m_navAgent.updatePosition = true;
 			rigidbody.velocity = Vector3.zero;
 
 		}
@@ -520,9 +522,9 @@ public class Creature : MonoBehaviour {
 		if (true == m_creatureProperty.BackwardOnDamage)
 		{
 			m_backwardSpeed = 10f;
-			rigidbody.AddForce(transform.right*-1f, ForceMode.Impulse);
-			rigidbody.AddTorque(transform.forward*1f, ForceMode.Impulse);
-			rigidbody.maxAngularVelocity = 1f;
+			rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
+			rigidbody.AddTorque(transform.forward*2f, ForceMode.Impulse);
+			rigidbody.maxAngularVelocity = 2f;
 		}
 
 		ApplyBuff(damageDesc.DamageBuffType, 2f);

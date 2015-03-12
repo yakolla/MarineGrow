@@ -39,6 +39,11 @@ public class GPlusPlatform {
 		Social.localUser.Authenticate(callback);
 	}
 
+	public bool IsAuthenticated()
+	{
+		return PlayGamesPlatform.Instance.IsAuthenticated();
+	}
+
 	public void OpenGame(string filename, System.Action<SavedGameRequestStatus, ISavedGameMetadata> callback) {
 		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
 		savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,

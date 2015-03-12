@@ -594,7 +594,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"103"
+					"refItemId":"105"
 				}
 			],
 			"mobAI":"Normal",
@@ -608,7 +608,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":0,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -632,7 +632,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":0,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -656,7 +656,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":0,
+				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
 		}

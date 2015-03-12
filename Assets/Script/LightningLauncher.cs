@@ -40,7 +40,7 @@ public class LightningLauncher : Weapon {
 			m_bullet.StopFiring();
 			m_bullet.gameObject.SetActive(false);
 		}
-		
+
 	}
 
 	override public void LevelUp()
