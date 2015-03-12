@@ -176,14 +176,22 @@ public class Champ : Creature {
 	override public void Death()
 	{
 		base.Death();
-		GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, OnSavedGameOpenedForSaving);
+
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, OnSavedGameOpenedForSaving);
+		}
+		else
+		{
+			GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(2);
+		}
 
 	}
 
 	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-			totalPlayingTime.Add(new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime)));
+			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime));
 			
 			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
 		} else {

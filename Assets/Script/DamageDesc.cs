@@ -25,7 +25,7 @@ public class DamageDesc {
 		Count,
 	}
 
-	int		m_damage;
+	int			m_damage;
 	Type		m_type;
 	GameObject	m_prefEffect;
 	BuffType	m_buffType;

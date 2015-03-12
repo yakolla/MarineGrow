@@ -10,12 +10,10 @@ public class FireGunBullet : Bullet {
 
 	ParticleSystem	m_particleSystem;
 
-	// Use this for initialization
-	void Start () 
+	void Awake()
 	{
 		m_collider = GetComponent<BoxCollider>();
 		m_particleSystem = transform.Find("Body/Particle System").particleSystem;
-
 	}
 	
 	// Update is called once per frame
@@ -72,7 +70,7 @@ public class FireGunBullet : Bullet {
 	override public void StopFiring()
 	{
 		base.StopFiring();
-		DestroyObject(this.gameObject);
+		m_particleSystem.Clear();
 	}
 
 	void OnTriggerEnter(Collider other) 
