@@ -118,7 +118,11 @@ public class Worldmap : MonoBehaviour {
 
 		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*5, size*3, size), "Leaderboard"))
 		{
-			GPlusPlatform.Instance.ShowLeaderboardUI();
+		//	GPlusPlatform.Instance.ShowLeaderboardUI();
+			PlayGamesPlatform.Instance.IncrementAchievement(
+				"CgkIrKGfsOUeEAIQAw", 5, (bool success) => {
+				Social.ShowAchievementsUI();
+			}); 
 		}
 		GUI.TextArea(new Rect(0, startY+size*6, m_statusWindowRect.width, size), log);
 		GUI.EndGroup();

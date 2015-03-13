@@ -17,18 +17,21 @@ public class SuicideBombing : Weapon {
 	{
 		if (m_destroy == true)
 		{
-			CreateBullet(Vector2.zero, m_gunPoint.transform.position);
-			m_creature.Death();
+
 			return;
 		}
 
 		if (m_creature.m_targeting != null)
 		{
-			float d = Vector3.Distance(m_creature.transform.position, transform.position);
+			float d = Vector3.Distance(m_creature.transform.position, m_creature.m_targeting.transform.position);
 			if (d < AttackRange)
 			{
+				CreateBullet(Vector2.zero, transform.position);
+				m_creature.Death();
+
 				m_destroy = true;
 			}
+
 		}
 	}
 

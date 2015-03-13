@@ -188,12 +188,24 @@ public class Champ : Creature {
 
 	}
 
+	public Texture2D getScreenshot() {
+		// Create a 2D texture that is 1024x700 pixels from which the PNG will be
+		// extracted
+		Texture2D screenShot = new Texture2D(1024, 700);
+		
+		// Takes the screenshot from top left hand corner of screen and maps to top
+		// left hand corner of screenShot texture
+		screenShot.ReadPixels(
+			new Rect(0, 0, Screen.width, (Screen.width/1024)*700), 0, 0);
+		return screenShot;
+	}
+
 	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
 			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime));
 			
-			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
+			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, getScreenshot(), OnSavedGameWritten);
 		} else {
 			// handle error
 		}

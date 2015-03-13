@@ -124,36 +124,7 @@
 	],
 	"range"	:
 	[		
-	{
-			"id":20012,
-			"prefBody":"beetle_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"105",
-					"weaponStat":
-					{
-						"coolTime":5,
-						"range":8
-					}
-				}
-			],
-			"mobAI":"Normal",			
-			"baseCreatureProperty":
-			{
-				"maxHP":50,
-				"physicalDamage":30,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.3,
-				"exp":50,
-				"phyDamagePerLevel":1,
-				"phyDefencePerLevel":5,
-				"hpPerLevel":0.2,
-				"moveSpeed":1,
-				"navMeshBaseOffset":0
-			},
-			"mass":3
-		},
+		
 		{
 			"id":20001,
 			"prefBody":"spider_skin",
