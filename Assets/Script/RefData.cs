@@ -150,6 +150,7 @@ public class RefMob : RefBaseData
 	[JsonConverter(typeof(StringEnumConverter))]
 	public MobAIType			mobAI;
 	public float				scale = 1f;
+	public float				mass = 1f;
 }
 
 public class RefMobClass

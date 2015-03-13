@@ -55,7 +55,7 @@ public class Spawn : MonoBehaviour {
 		m_areas = transform.GetComponentsInChildren<Transform>();
 
 		
-		m_spawningPool = Warehouse.Instance.WaveIndex;
+		//m_spawningPool = Warehouse.Instance.WaveIndex;
 		StartWave(0);
 	}
 
@@ -122,7 +122,7 @@ public class Spawn : MonoBehaviour {
 	class SpawnMobDescResult
 	{
 		public List<RefMob>	spawnMobs = new List<RefMob>();
-		public List<int> 		spawnMobCount = new List<int>();
+		public List<int> 	spawnMobCount = new List<int>();
 	}
 
 	void	buildSpawnMob(SpawnMobDescResult result, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs)
@@ -130,15 +130,15 @@ public class Spawn : MonoBehaviour {
 		if (spawnRatioDesc == null)
 			return;
 
-		int minIndex = (int)(spawnRatioDesc.ratio[0] * mobs.Length);
-		int maxIndex = (int)((spawnRatioDesc.ratio[0] * (1f-progress) + spawnRatioDesc.ratio[1] * progress) * mobs.Length);
-		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress + ", minRatio:" + spawnRatioDesc.ratio[0]+", maxRatio:" + spawnRatioDesc.ratio[1]);
+		int minIndex = 0;
+		int maxIndex = Mathf.Min((int)progress, mobs.Length-1);
+		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
 		result.spawnMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
 
 		minIndex = (int)(spawnRatioDesc.count[0]);
-		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress) + spawnRatioDesc.count[1] * progress);
+		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress*0.1f) + spawnRatioDesc.count[1] * progress*0.1f);
 		result.spawnMobCount.Add(Random.Range(minIndex, maxIndex));
 	}
 
@@ -166,11 +166,11 @@ public class Spawn : MonoBehaviour {
 			}
 
 
-			float waveProgress = Mathf.Min(1f, (float)m_spawningPool / GetCurrentWave().mobSpawns.Length * 0.1f);
+			float waveProgress = (float)m_spawningPool / GetCurrentWave().mobSpawns.Length;
 			Debug.Log("waveProgress:" + waveProgress + "," + m_spawningPool);
 
 			int spawnCount = 0;
-			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress) + mobSpawn.repeatCount[1] * waveProgress);
+			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
 			for(int r = 0; r < mobSpawnRepeatCount; ++r)
 			{
 				SpawnMobDescResult spawnMobDescResult = new SpawnMobDescResult();
@@ -181,57 +181,103 @@ public class Spawn : MonoBehaviour {
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs);
 
-				for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
+
+				if (Random.Range(0, 2) == 0)
 				{
-					for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
+					Transform area = getSpawnArea(true);
+					Vector3 cp = m_champ.transform.position;
+					Vector3 scale = area.localScale*0.5f;
+					
+					for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
 					{
-						Transform area = getSpawnArea(true);
-						Vector3 cp = area.position;
-						Vector3 scale = area.localScale*0.5f;
-						
-						RefMob refMob = spawnMobDescResult.spawnMobs[ii];
-						if (refMob.nearByChampOnSpawn == true)
+						for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
 						{
-							if (m_champ)
+							
+							RefMob refMob = spawnMobDescResult.spawnMobs[ii];
+							Vector3 enemyPos = cp;
+							float angle = Random.Range(0f, 3.14f*2);
+							enemyPos.x += Mathf.Cos(angle) * 5f;
+							enemyPos.z += Mathf.Sin(angle) * 5f;
+							
+							
+							++spawnCount;
+							
+							
+							RefItemSpawn[] dropItems = null;
+							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
 							{
-								cp = m_champ.transform.position;
+								dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
+							}
+							else
+							{
+								dropItems = GetCurrentWave().itemSpawn.defaultItem;
 							}
 							
+							StartCoroutine(  EffectSpawnMob(refMob
+							                                , dropItems
+							                                , enemyPos
+							                                , spawnMobLevel()
+							                                , 1f
+							                                , mobSpawn.boss)
+							               );						
+							
 						}
-						else
-						{
-							cp = area.position;
-						}
-
-						Vector3 enemyPos = cp;
-						enemyPos.x += Random.Range(-scale.x,scale.x);
-						enemyPos.z += Random.Range(-scale.z,scale.z);
-
-						++spawnCount;
-
-
-						RefItemSpawn[] dropItems = null;
-						if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
-						{
-							dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
-						}
-						else
-						{
-							dropItems = GetCurrentWave().itemSpawn.defaultItem;
-						}
-
-						StartCoroutine(  EffectSpawnMob(refMob
-						                                , dropItems
-						                                , enemyPos
-						                                , spawnMobLevel()
-						                                , 1f
-						                                , mobSpawn.boss)
-						               );
-						
-						
-						//yield return new WaitForSeconds (0.5f);
 					}
 				}
+				else
+				{
+					for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
+					{
+						for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
+						{
+							Transform area = getSpawnArea(true);
+							Vector3 cp = area.position;
+							Vector3 scale = area.localScale*0.5f;
+							
+							RefMob refMob = spawnMobDescResult.spawnMobs[ii];
+							if (refMob.nearByChampOnSpawn == true)
+							{
+								if (m_champ)
+								{
+									cp = m_champ.transform.position;
+								}
+								
+							}
+							else
+							{
+								cp = area.position;
+							}
+							
+							Vector3 enemyPos = cp;
+							enemyPos.x += Random.Range(-scale.x,scale.x);
+							enemyPos.z += Random.Range(-scale.z,scale.z);
+							
+							
+							++spawnCount;
+							
+							
+							RefItemSpawn[] dropItems = null;
+							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
+							{
+								dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
+							}
+							else
+							{
+								dropItems = GetCurrentWave().itemSpawn.defaultItem;
+							}
+							
+							StartCoroutine(  EffectSpawnMob(refMob
+							                                , dropItems
+							                                , enemyPos
+							                                , spawnMobLevel()
+							                                , 1f
+							                                , mobSpawn.boss)
+							               );						
+							
+						}
+					}
+				}
+
 				yield return new WaitForSeconds (mobSpawn.interval);
 			}
 			StartCoroutine(checkBossAlive());

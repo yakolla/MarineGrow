@@ -521,7 +521,7 @@ public class Creature : MonoBehaviour {
 
 		if (true == m_creatureProperty.BackwardOnDamage)
 		{
-			m_backwardSpeed = 10f;
+			m_backwardSpeed = 10f / rigidbody.mass;
 			rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
 			rigidbody.AddTorque(transform.forward*2f, ForceMode.Impulse);
 			rigidbody.maxAngularVelocity = 2f;

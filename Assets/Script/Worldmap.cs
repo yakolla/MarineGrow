@@ -47,7 +47,7 @@ public class Worldmap : MonoBehaviour {
 		if (status == SavedGameRequestStatus.Success) {
 			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*6);
 			
-			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
+			GPlusPlatform.Instance.SaveGame(game, new byte[1], totalPlayingTime, null, OnSavedGameWritten);
 		} else {
 			// handle error
 		}
@@ -56,7 +56,7 @@ public class Worldmap : MonoBehaviour {
 
 	public void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
-			// handle reading or writing of saved game.
+			Application.LoadLevel("Basic Dungeon");
 		} else {
 			// handle error
 		}
@@ -94,7 +94,7 @@ public class Worldmap : MonoBehaviour {
 								if (fileName.Equals(""))
 								{
 									fileName = System.DateTime.Now.Ticks.ToString();
-									GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpened);
+									GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForSaving);
 									
 								}
 								else

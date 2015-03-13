@@ -3,7 +3,8 @@ using System.Collections;
 
 public class FireGunBullet : Bullet {
 
-	public float	m_damageOnTime = 0.3f;
+	[SerializeField]
+	float	m_damageOnTime = 0.3f;
 
 	float			m_lastDamageTime = 0f;
 	BoxCollider		m_collider;

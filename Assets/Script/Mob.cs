@@ -23,6 +23,7 @@ public class Mob : Creature {
 		Spawn = spawn;
 		RefDropItems = refDropItems;
 		Boss = boss;
+		rigidbody.mass = refMob.mass;
 
 		m_creatureProperty.init(this, m_refMob.baseCreatureProperty);		
 		m_creatureProperty.Level = mobLevel;
