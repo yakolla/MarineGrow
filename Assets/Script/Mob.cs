@@ -15,6 +15,11 @@ public class Mob : Creature {
 		Vector3 scale = transform.localScale;
 		scale *= m_refMob.scale;
 		transform.localScale = scale;
+
+		if (true == Boss)
+		{
+			transform.Find("FloatingHealthBarGUI").gameObject.SetActive(true);
+		}
 	}
 
 	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
