@@ -258,7 +258,7 @@
 	"egg":
 	[
 		{
-			"id":30001,
+			"id":31001,
 			"prefBody":"crazy_dog_skin",
 			"refWeaponItems":
 			[
@@ -282,7 +282,7 @@
 			}
 		},
 		{
-			"id":30002,
+			"id":31002,
 			"prefBody":"ghost_slime_skin",
 			"refWeaponItems":
 			[
@@ -306,7 +306,7 @@
 			}
 		},
 		{
-			"id":30003,
+			"id":31003,
 			"prefBody":"spider_skin",
 			"refWeaponItems":
 			[
@@ -330,7 +330,7 @@
 			}
 		},
 		{
-			"id":30004,
+			"id":31004,
 			"prefBody":"big_Worm_skin",
 			"refWeaponItems":
 			[
@@ -352,6 +352,36 @@
 				"moveSpeed":2,
 				"navMeshBaseOffset":0
 			}
+		},
+		{
+			"id":31005,
+			"prefBody":"egg_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"109"
+				}
+			],
+			"mobAI":"Egg",
+			"baseCreatureProperty":
+			{
+				"maxHP":500,
+				"physicalDamage":8,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":5,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":1,
+				"hpPerLevel":0.1,
+				"moveSpeed":2,
+				"navMeshBaseOffset":0
+			},
+			"eggMob":
+			{
+				"refMobId":31001,
+				"count":1
+			}
+			
 		}
 	],
 	"miniBoss":
@@ -380,7 +410,12 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			},
-			"mass":3
+			"mass":3,
+			"dropEggMob":
+			{
+				"refMobId":31005,
+				"count":1
+			}
 		},
 		{
 			"id":40002,
@@ -406,7 +441,12 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			},
-			"mass":3
+			"mass":3,
+			"eggMob":
+			{
+				"refMobId":31005,
+				"count":1
+			}
 		}
 	],
 	"boss":
@@ -453,7 +493,7 @@
 			},
 			"dropEggMob":
 			{
-				"refMobId":30002,
+				"refMobId":31002,
 				"count":12
 			}
 		},
@@ -532,7 +572,7 @@
 			},
 			"dropEggMob":
 			{
-				"refMobId":30004,
+				"refMobId":31004,
 				"count":12
 			}
 		}

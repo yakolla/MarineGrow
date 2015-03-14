@@ -203,20 +203,10 @@ public class Spawn : MonoBehaviour {
 							++spawnCount;
 							
 							
-							RefItemSpawn[] dropItems = null;
-							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
-							{
-								dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
-							}
-							else
-							{
-								dropItems = GetCurrentWave().itemSpawn.defaultItem;
-							}
+
 							
 							StartCoroutine(  EffectSpawnMob(refMob
-							                                , dropItems
 							                                , enemyPos
-							                                , spawnMobLevel()
 							                                , 1f
 							                                , mobSpawn.boss)
 							               );						
@@ -267,9 +257,7 @@ public class Spawn : MonoBehaviour {
 							}
 							
 							StartCoroutine(  EffectSpawnMob(refMob
-							                                , dropItems
 							                                , enemyPos
-							                                , spawnMobLevel()
 							                                , 1f
 							                                , mobSpawn.boss)
 							               );						
@@ -300,12 +288,12 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
-	int spawnMobLevel()
+	public int SpawnMobLevel()
 	{
 		return (int)(1+m_spawningPool / GetCurrentWave().mobSpawns.Length);
 	}
 
-	IEnumerator EffectSpawnItemPandora(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos)
+	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)
 	{
 		GameObject eggObj = Instantiate (Resources.Load<GameObject>("Pref/mon_skin/item_supplybox_skin"), pos, Quaternion.Euler(Vector3.zero)) as GameObject;
 
@@ -315,20 +303,15 @@ public class Spawn : MonoBehaviour {
 			yield return null;
 		}	
 
-		SpawnMob(refMob, refDropItems, parabola.Position, 1, 1f, false);
+		SpawnMob(refMob, parabola.Position, 1f, false);
 		DestroyObject(eggObj);
 	}
-
-	public RefItemSpawn[] GetMobItemDrops(RefMob refMob)
-	{
-		return GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id) ? GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems : null;
-	}
 	
-	public Egg spawnMobEgg(RefMob refMob, Vector3 pos, int mobLevel)
+	public Egg spawnMobEgg(RefMob refMob, Vector3 pos)
 	{
 		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
 		Egg egg = eggObj.GetComponent<Egg>();
-		egg.Init(this, refMob, GetMobItemDrops(refMob), mobLevel);
+		egg.Init(this, refMob, SpawnMobLevel());
 
 		return egg;
 	}
@@ -351,7 +334,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, float mobScale, bool boss)
+	IEnumerator EffectSpawnMob(RefMob refMob, Vector3 pos, float mobScale, bool boss)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -367,12 +350,23 @@ public class Spawn : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		
-		SpawnMob(refMob, refDropItems, enemyPos, mobLevel, mobScale, boss);
+		SpawnMob(refMob, enemyPos, mobScale, boss);
 
 	}
 	
-	public Mob SpawnMob(RefMob refMob, RefItemSpawn[] refDropItems, Vector3 pos, int mobLevel, float scale, bool boss)
+	public Mob SpawnMob(RefMob refMob, Vector3 pos, float scale, bool boss)
 	{
+		RefItemSpawn[] refDropItems = null;
+		if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
+		{
+			refDropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
+		}
+		else
+		{
+			refDropItems = GetCurrentWave().itemSpawn.defaultItem;
+		}
+
+		int mobLevel = SpawnMobLevel();
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
 		if (prefEnemyBody == null)
@@ -468,10 +462,10 @@ public class Spawn : MonoBehaviour {
 						item = new ItemSilverMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.MobEgg:
-						spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], pos, spawnMobLevel());
+						spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], pos);
 						break;
 					case ItemData.Type.ItemPandora:
-						StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], GetMobItemDrops(RefData.Instance.RefItemPandoraMobs[desc.minValue]), pos));
+						StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], pos));
 						break;
 					}
 					

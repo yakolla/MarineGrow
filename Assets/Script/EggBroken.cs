@@ -6,29 +6,27 @@ public class EggBroken : MonoBehaviour {
 
 	Spawn		m_spawn;
 	RefMob		m_refMob;
-	RefItemSpawn[]	m_refDropItems;
 	int			m_mobLevel;
 
-	public void Init(Spawn spawn, RefMob refMob, RefItemSpawn[] refDropItems, int mobLevel)
+	public void Init(Spawn spawn, RefMob refMob, int mobLevel)
 	{
 		m_spawn = spawn;
 		m_refMob = refMob;
-		m_refDropItems = refDropItems;
 		m_mobLevel = mobLevel;
 
 	}
 
 	void Start()
 	{
-		StartCoroutine(EffectEgg(m_refMob, m_refDropItems));
+		StartCoroutine(EffectEgg(m_refMob));
 	}
 
-	IEnumerator EffectEgg(RefMob refMob, RefItemSpawn[] refDropItems)
+	IEnumerator EffectEgg(RefMob refMob)
 	{
 		audio.Play();
 		yield return new WaitForSeconds (0.5f);
 		
-		m_spawn.SpawnMob(m_refMob, m_refDropItems, transform.position, m_mobLevel, 0.5f, false);
+		m_spawn.SpawnMob(m_refMob, transform.position, 0.5f, false);
 
 		while(transform.position.y > -1f)
 		{

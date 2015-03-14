@@ -127,6 +127,7 @@ public enum MobAIType
 	ItemShuttle,
 	Dummy,
 	Bomber,
+	Egg,
 }
 
 
@@ -226,6 +227,7 @@ public class RefData {
 	RefMobClass		m_refMobClass = new RefMobClass();
 	Dictionary<int, RefItemSpawn>	m_refItemSpawns = new Dictionary<int, RefItemSpawn>();
 	Dictionary<int, RefItem>		m_refItems = new Dictionary<int, RefItem>();
+	Dictionary<int, RefMob>		m_refMobs = new Dictionary<int, RefMob>();
 
 	static RefData m_ins = null;
 	static public RefData Instance
@@ -278,46 +280,44 @@ public class RefData {
 				}
 			}
 		}
-		RefMob[][] mobs= {m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle, m_refMobClass.follower};
+		RefMob[][] mobs= {m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle, m_refMobClass.follower, m_refMobClass.miniBoss};
 
 		foreach(RefMob[] refMobs in mobs)
 		{
 			foreach(RefMob refMob in refMobs)
 			{
-				if (refMob.eggMob != null)
+				if (true == m_refMobs.ContainsKey(refMob.id))
 				{
-					foreach(RefMob egg in m_refMobClass.egg)
-					{
-						if (refMob.eggMob.refMobId==egg.id)
-						{
-							refMob.eggMob.refMob = egg;
-							break;
-						}
-
-					}
-
+					Debug.Log("duplicated mob key:" + refMob.id);
 				}
-
-
-				if (refMob.dropEggMob != null)
-				{
-					foreach(RefMob egg in m_refMobClass.egg)
-					{
-						if (refMob.dropEggMob.refMobId==egg.id)
-						{
-							refMob.dropEggMob.refMob = egg;
-							break;
-						}
-						
-					}
-					
-				}
+				m_refMobs.Add(refMob.id, refMob);
 			}
-
 		}
 
+		foreach(KeyValuePair<int, RefMob> pair  in m_refMobs)
+		{
+			RefMob refMob = pair.Value;
+			if (refMob.eggMob != null)
+			{
+				refMob.eggMob.refMob = m_refMobs[refMob.eggMob.refMobId];
+				if (refMob.eggMob.refMob == null)
+				{
+					Debug.Log("null refMob.eggMob.refMobId:" + refMob.eggMob.refMobId);
+				}				
+			}			
+			
+			if (refMob.dropEggMob != null)
+			{
+				refMob.dropEggMob.refMob = m_refMobs[refMob.dropEggMob.refMobId];
+				if (refMob.dropEggMob.refMob == null)
+				{
+					Debug.Log("null refMob.dropEggMob.refMobId:" + refMob.dropEggMob.refMobId);
+				}
+			}
+		}
+		
 	}
-
+	
 	void DeserializeArray<T>(Dictionary<int, T> records, string fileName) where T : RefBaseData
 	{ 
 		TextAsset textDocument =  Resources.Load("RefData/" + fileName) as TextAsset;

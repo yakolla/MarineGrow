@@ -8,7 +8,6 @@ public class Egg : MonoBehaviour {
 
 	Spawn		m_spawn;
 	RefMob		m_refMob;
-	RefItemSpawn[]	m_refDropItems;
 	int			m_mobLevel;
 	Parabola 	m_parabola;
 
@@ -20,11 +19,10 @@ public class Egg : MonoBehaviour {
 	bool		m_ingDeathEffect;
 
 
-	public void Init(Spawn spawn, RefMob refMob, RefItemSpawn[] refDropItems, int mobLevel)
+	public void Init(Spawn spawn, RefMob refMob, int mobLevel)
 	{
 		m_spawn = spawn;
 		m_refMob = refMob;
-		m_refDropItems = refDropItems;
 		m_mobLevel = mobLevel;
 
 	}
@@ -65,7 +63,7 @@ public class Egg : MonoBehaviour {
 		
 		GameObject eggObj = Instantiate (m_prefEggDeath, m_parabola.Position, transform.rotation) as GameObject;
 		EggBroken	eggBroken = eggObj.GetComponent<EggBroken>();
-		eggBroken.Init(m_spawn, m_refMob, m_refDropItems, m_mobLevel);		
+		eggBroken.Init(m_spawn, m_refMob, m_mobLevel);		
 		
 		DestroyObject(this.gameObject);
 	}

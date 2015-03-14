@@ -72,6 +72,9 @@ public class Mob : Creature {
 		case MobAIType.Bomber:
 			m_ai = new MobAIBomber();
 			break;
+		case MobAIType.Egg:
+			m_ai = new MobAIEgg();
+			break;
 		}
 
 		m_ai.Init(this);
@@ -96,11 +99,7 @@ public class Mob : Creature {
 		while(gameObject != null && maxDrop > 0)
 		{
 			yield return new WaitForSeconds (3f);
-			Egg egg = Spawn.spawnMobEgg(eggMob, transform.position, m_creatureProperty.Level);
-			egg.audio.Play();
-
-			egg.VRadian[0] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;
-			egg.VRadian[1] = (transform.localEulerAngles.y-180) * Mathf.Deg2Rad;
+			Spawn.SpawnMob(eggMob, transform.position, 0.5f, false);
 
 			--maxDrop;
 		}
@@ -137,7 +136,7 @@ public class Mob : Creature {
 		{
 			for(int i = 0; i < RefMob.eggMob.count; ++i)
 			{
-				Spawn.spawnMobEgg(RefMob.eggMob.refMob, transform.position, m_creatureProperty.Level);
+				Spawn.SpawnMob(RefMob.eggMob.refMob, transform.position, 0.5f, false);
 			}
 		}
 
