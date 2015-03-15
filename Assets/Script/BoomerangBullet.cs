@@ -5,7 +5,13 @@ public class BoomerangBullet : Bullet {
 
 	[SerializeField]
 	float	m_speed = 3f;
+
+	[SerializeField]
 	float	m_lifeTime = 4f;
+
+	[SerializeField]
+	float	m_length = 10f;
+
 	float	m_elapsed;
 
 	Vector3	m_start;
@@ -16,7 +22,7 @@ public class BoomerangBullet : Bullet {
 	void Start () {
 
 		m_start = transform.position;
-		m_goal = m_start+transform.right*10;
+		m_goal = m_start+transform.right*m_length;
 
 		Debug.Log("start:" + m_start + ", goal:" + m_goal);
 	}
@@ -24,7 +30,7 @@ public class BoomerangBullet : Bullet {
 	// Update is called once per frame
 	void Update () {
 		transform.position = Vector3.Lerp(m_start, m_goal, m_elapsed/m_lifeTime);
-		m_elapsed += Time.deltaTime;
+		m_elapsed += Time.deltaTime*m_speed;
 
 		if (m_elapsed/m_lifeTime > 1)
 		{

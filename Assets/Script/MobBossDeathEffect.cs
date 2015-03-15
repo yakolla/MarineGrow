@@ -14,15 +14,7 @@ public class MobBossDeathEffect : MonoBehaviour {
 	{
 		if (m_ani.GetCurrentAnimatorStateInfo(0).IsName("Death Done") == true)
 		{
-			Vector3 pos = transform.position;
-			pos.y -= Time.deltaTime;
-
-			transform.position = pos;
-
-			if (transform.position.y < -3)
-			{
-				DestroyObject(this.gameObject);
-			}
+			DestroyObject(gameObject);
 		}
 	}
 
