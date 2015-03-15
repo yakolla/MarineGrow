@@ -469,8 +469,8 @@
 		
 		"evolutionFiring":
 		{
-			"angle":30,
-			"delay":0.3
+			"angle":5,
+			"delay":0.03
 		},
 		"weaponStat":
 		{

@@ -12,9 +12,6 @@ public class Mob : Creature {
 		base.Start();
 
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
-		Vector3 scale = transform.localScale;
-		scale *= m_refMob.scale;
-		transform.localScale = scale;
 
 		if (true == Boss)
 		{
@@ -99,7 +96,7 @@ public class Mob : Creature {
 		while(gameObject != null && maxDrop > 0)
 		{
 			yield return new WaitForSeconds (3f);
-			Spawn.SpawnMob(eggMob, transform.position, 0.5f, false);
+			Spawn.SpawnMob(eggMob, transform.position, false);
 
 			--maxDrop;
 		}
@@ -136,7 +133,7 @@ public class Mob : Creature {
 		{
 			for(int i = 0; i < RefMob.eggMob.count; ++i)
 			{
-				Spawn.SpawnMob(RefMob.eggMob.refMob, transform.position, 0.5f, false);
+				Spawn.SpawnMob(RefMob.eggMob.refMob, transform.position, false);
 			}
 		}
 

@@ -26,6 +26,8 @@ public class Weapon : MonoBehaviour {
 
 	float						m_lastCreated = 0;
 	protected Creature 			m_creature;
+
+	[SerializeField]
 	float						m_damageRatio = 1f;
 
 	public delegate void CallbackOnCreateBullet();
@@ -43,12 +45,14 @@ public class Weapon : MonoBehaviour {
 	protected void Start()
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
-		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
+
 
 	}
 
 	public void Init(ItemWeaponData weaponData)
 	{
+		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
+
 		m_refItem = weaponData.RefItem;
 
 		Weapon.FiringDesc desc = new Weapon.FiringDesc();
@@ -112,6 +116,7 @@ public class Weapon : MonoBehaviour {
 		else
 		{
 			m_damageRatio += m_level / 2;
+			m_creature.m_creatureProperty.AlphaAttackCoolTime -= 0.1f;
 		}
 	}
 

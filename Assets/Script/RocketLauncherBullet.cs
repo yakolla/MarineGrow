@@ -4,8 +4,8 @@ using System.Collections;
 public class RocketLauncherBullet : Bullet {
 
 	[SerializeField]
-	float m_speed = 1f;
-	float	m_accel = 0f;
+	protected float m_speed = 1f;
+	protected float	m_accel = 0f;
 
 	[SerializeField]
 	GameObject		m_prefBombEffect = null;
@@ -22,6 +22,8 @@ public class RocketLauncherBullet : Bullet {
 
 	// Update is called once per frame
 	void Update () {
+		if (m_isDestroying == true)
+			return;
 
 		transform.Translate(m_accel, 0, 0, transform);
 		m_accel += Time.deltaTime*0.1f*m_speed;
@@ -76,6 +78,6 @@ public class RocketLauncherBullet : Bullet {
 		this.audio.Play();
 		StartCoroutine(destoryObject(bombEffect));
 
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
 	}
 }

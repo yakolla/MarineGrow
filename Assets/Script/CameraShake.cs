@@ -24,14 +24,14 @@ public class CameraShake : MonoBehaviour
 	{
 		if (shake > 0)
 		{
-			transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+			transform.localPosition += Random.insideUnitSphere * shakeAmount;
 			
 			shake -= Time.deltaTime * decreaseFactor;
 		}
 		else
 		{
 			shake = 0f;
-			transform.localPosition = originalPos;
+			//transform.localPosition = originalPos;
 			this.enabled = false;
 		}
 	}

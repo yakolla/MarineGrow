@@ -73,7 +73,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.05f, "Weapon More", 
+		m_abilities.Add(new Ability(0.01f, "Bullet More", 
 		                            ()=>{
 			return "";
 		},
@@ -82,7 +82,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.05f, "Weapon Levelup", 
+		m_abilities.Add(new Ability(0.01f, "Weapon Levelup", 
 		                            ()=>{
 			return "";
 		},
@@ -94,7 +94,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Critical Success %", 
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.03f;
-			return m_champ.m_creatureProperty.CriticalRatio + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
+			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.03f;
@@ -114,7 +114,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal%", 
 		()=>{
 			m_backup.AlphaLifeSteal += 0.01f;
-			return m_champ.m_creatureProperty.LifeSteal + " -> " + "<color=yellow>" + (m_backup.LifeSteal*100) + "</color>";
+			return (m_champ.m_creatureProperty.LifeSteal*100) + " -> " + "<color=yellow>" + (m_backup.LifeSteal*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaLifeSteal += 0.01f;
@@ -124,7 +124,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra Exp%", 
 		                            ()=>{
 			m_backup.AlphaGainExtraExp += 0.3f;
-			return m_champ.m_creatureProperty.GainExtraExp + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";
+			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;

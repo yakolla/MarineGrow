@@ -29,7 +29,9 @@ public class Follower : Creature {
 		else
 		{
 			m_ai.SetTarget(m_targeting);
-			m_navAgent.SetDestination(m_targeting.transform.position);
+			//m_navAgent.SetDestination(m_targeting.transform.position);
+			if (m_owner != null)
+				m_navAgent.SetDestination(m_owner.transform.position);
 			m_ai.Update();
 		}
 		base.Update();

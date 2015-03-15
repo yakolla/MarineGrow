@@ -19,8 +19,7 @@ public class Spawn : MonoBehaviour {
 	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
 	GameObject		m_prefItemBox;
 
-	[SerializeField]
-	GameObject		m_prefEgg;
+
 	float			m_effectBulletTime = 0f;
 
 	FollowingCamera	m_followingCamera = null;
@@ -207,7 +206,6 @@ public class Spawn : MonoBehaviour {
 							
 							StartCoroutine(  EffectSpawnMob(refMob
 							                                , enemyPos
-							                                , 1f
 							                                , mobSpawn.boss)
 							               );						
 							
@@ -258,7 +256,6 @@ public class Spawn : MonoBehaviour {
 							
 							StartCoroutine(  EffectSpawnMob(refMob
 							                                , enemyPos
-							                                , 1f
 							                                , mobSpawn.boss)
 							               );						
 							
@@ -303,19 +300,10 @@ public class Spawn : MonoBehaviour {
 			yield return null;
 		}	
 
-		SpawnMob(refMob, parabola.Position, 1f, false);
+		SpawnMob(refMob, parabola.Position, false);
 		DestroyObject(eggObj);
-	}
-	
-	public Egg spawnMobEgg(RefMob refMob, Vector3 pos)
-	{
-		GameObject eggObj = Instantiate(m_prefEgg, pos, m_prefEgg.transform.rotation) as GameObject;
-		Egg egg = eggObj.GetComponent<Egg>();
-		egg.Init(this, refMob, SpawnMobLevel());
+	}	
 
-		return egg;
-	}
-	
 	public void OnKillMob(Mob mob)
 	{
 		SpawnItemBox(mob.RefDropItems, mob.transform.position);
@@ -334,7 +322,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, Vector3 pos, float mobScale, bool boss)
+	IEnumerator EffectSpawnMob(RefMob refMob, Vector3 pos, bool boss)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -350,11 +338,11 @@ public class Spawn : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		
-		SpawnMob(refMob, enemyPos, mobScale, boss);
+		SpawnMob(refMob, enemyPos, boss);
 
 	}
 	
-	public Mob SpawnMob(RefMob refMob, Vector3 pos, float scale, bool boss)
+	public Mob SpawnMob(RefMob refMob, Vector3 pos, bool boss)
 	{
 		RefItemSpawn[] refDropItems = null;
 		if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
@@ -382,13 +370,13 @@ public class Spawn : MonoBehaviour {
 		enemyBody.transform.parent = enemyObj.transform;
 		enemyBody.transform.localPosition = Vector3.zero;
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-		enemyObj.transform.localScale *= scale;
+		enemyObj.transform.localScale = new Vector3(refMob.scale, refMob.scale, refMob.scale);
 
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, mobLevel, this, refDropItems, boss);
 		
 		enemy.SetTarget(m_champ);
-		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + scale);
+		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + refMob.scale);
 	
 		m_bosses.Add(enemy.gameObject);
 
@@ -462,7 +450,6 @@ public class Spawn : MonoBehaviour {
 						item = new ItemSilverMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.MobEgg:
-						spawnMobEgg(RefData.Instance.RefMeleeMobs[Random.Range(0, RefData.Instance.RefMeleeMobs.Length)], pos);
 						break;
 					case ItemData.Type.ItemPandora:
 						StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], pos));
