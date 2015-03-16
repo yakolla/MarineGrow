@@ -8,6 +8,10 @@
 			[				
 				{
 					"refItemId":"107"
+				},
+				{
+					"reqLevel":2,
+					"refItemId":"121"
 				}
 			],
 			"mobAI":"Normal",			
@@ -506,6 +510,14 @@
 						"firingCount":5
 					}	
 				},
+				{
+					"refItemId":"121",
+					"weaponStat":
+					{
+						"coolTime":5,
+						"range":10
+					}	
+				}
 			],
 			"mobAI":"Normal",			
 			"baseCreatureProperty":

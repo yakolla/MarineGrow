@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	protected float				m_coolTime = 0.5f;
 
-	float						m_lastCreated = 0;
+	protected float				m_lastCreated = 0;
 	protected Creature 			m_creature;
 
 	[SerializeField]

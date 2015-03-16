@@ -16,6 +16,7 @@ public class Creature : MonoBehaviour {
 		Nothing = 0x0,
 		Airborne = 0x1,
 		Stun = 0x2,
+		LeapStrike = 0x4,
 	}
 
 	int	m_crowdControl = (int)CrowdControlType.Nothing;
@@ -137,6 +138,12 @@ public class Creature : MonoBehaviour {
 		return a.CreatureType != b.CreatureType;
 	}
 
+	public void EnableNavmesh(bool enable)
+	{
+		m_navAgent.updatePosition = enable;
+		m_navAgent.updateRotation = enable;
+	}
+
 
 	protected void Update()
 	{
@@ -146,19 +153,15 @@ public class Creature : MonoBehaviour {
 
 		if (m_backwardSpeed > 0)
 		{
-
-			m_navAgent.updateRotation = false;
-			m_navAgent.updatePosition = false;
 			m_backwardSpeed -= 1f;
-
+			EnableNavmesh(false);
 		}
 		else
 		{
-			m_navAgent.updateRotation = true;
-			m_navAgent.updatePosition = true;
+			EnableNavmesh(true);
 			rigidbody.velocity = Vector3.zero;
-
 		}
+
 
 	}
 
@@ -353,10 +356,21 @@ public class Creature : MonoBehaviour {
 		
 	}
 
+	public void CrowdControl(CrowdControlType type, bool enable)
+	{
+		if (enable == true)
+		{
+			m_crowdControl |= (int)type;
+		}
+		else
+		{
+			m_crowdControl &= ~(int)type;
+		}
+	}
+
 	IEnumerator EffectAirborne()
 	{		
-		
-		m_crowdControl += (int)CrowdControlType.Airborne;
+		CrowdControl(CrowdControlType.Airborne, true);
 		Parabola parabola = new Parabola(gameObject, 0, 7f, 0f, 1.5f, 1);
 		while(parabola.Update())
 		{
@@ -365,16 +379,16 @@ public class Creature : MonoBehaviour {
 		}
 
 		m_buffEffects[(int)DamageDesc.BuffType.Airborne].effect = null;
-		m_crowdControl -= (int)CrowdControlType.Airborne;
+		CrowdControl(CrowdControlType.Airborne, false);
 	}
 
 	IEnumerator EffectStun()
 	{		
-		m_crowdControl += (int)CrowdControlType.Stun;
+		CrowdControl(CrowdControlType.Stun, true);
 		yield return new WaitForSeconds(2f);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Stun].effect = null;
-		m_crowdControl -= (int)CrowdControlType.Stun;
+		CrowdControl(CrowdControlType.Stun, false);
 	}
 
 	IEnumerator EffectSlow(float time)
@@ -525,6 +539,7 @@ public class Creature : MonoBehaviour {
 			rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
 			rigidbody.AddTorque(transform.forward*2f, ForceMode.Impulse);
 			rigidbody.maxAngularVelocity = 2f;
+			EnableNavmesh(false);
 		}
 
 		ApplyBuff(damageDesc.DamageBuffType, 2f);

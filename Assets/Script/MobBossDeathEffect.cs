@@ -12,6 +12,14 @@ public class MobBossDeathEffect : MonoBehaviour {
 
 	void Update()
 	{
+		if (transform.position.y > 0f)
+		{
+			Vector3	pos = transform.position;
+			pos.y -= Time.deltaTime*6f;
+			pos.y = Mathf.Max(pos.y, 0);
+			transform.position = pos;
+		}
+
 		if (m_ani.GetCurrentAnimatorStateInfo(0).IsName("Death Done") == true)
 		{
 			DestroyObject(gameObject);

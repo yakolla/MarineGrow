@@ -882,6 +882,81 @@
 		}
 	},
 	{
+		"id":121,
+		"codeName":"LeapStrikeLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/LeapStrike",		
+		
+		"weaponStat":
+		{
+			"coolTime":5,
+			"range":5
+		},
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"evolution":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"30001",
 		"type":"Follower",
