@@ -55,7 +55,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(122, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
 				ItemWeaponData itemWeaponData = new ItemWeaponData(108, null);

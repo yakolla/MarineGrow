@@ -50,14 +50,15 @@ public class Creature : MonoBehaviour {
 	struct DamageEffect
 	{
 		public float endTime;
-		public GameObject effect;
+		public bool	m_run;
 	}
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
-	DamageEffect[]	m_pickupItemEffects = new DamageEffect[(int)ItemData.Type.Count];
 
 	DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
 
-	float		m_backwardSpeed = 0f;
+
+
+	float		m_pushbackSpeedOnDamage = 0f;
 
 	Texture damagedTexture;
 	Texture normalTexture;
@@ -147,13 +148,12 @@ public class Creature : MonoBehaviour {
 
 	protected void Update()
 	{
-		UpdateDamageEffect();
-		UpdatePickupItemEffect();
+
 		m_navAgent.speed = m_creatureProperty.MoveSpeed;
 
-		if (m_backwardSpeed > 0)
+		if (m_pushbackSpeedOnDamage > 0)
 		{
-			m_backwardSpeed -= 1f;
+			m_pushbackSpeedOnDamage -= 1f;
 			EnableNavmesh(false);
 		}
 		else
@@ -322,38 +322,22 @@ public class Creature : MonoBehaviour {
 
 
 
-	void UpdateDamageEffect()
+	IEnumerator UpdateDamageEffect(GameObject effect)
 	{
-		for(int i = 0; i < (int)DamageDesc.Type.Count; ++i)
+		while(effect.particleSystem.IsAlive())
 		{
-			if (m_damageEffects[i].effect != null)
-			{
-				if (m_damageEffects[i].effect.particleSystem.IsAlive() == false)
-				{
-					DestroyObject(m_damageEffects[i].effect);
-					m_damageEffects[i].effect = null;
-				}
-			}
-
+			yield return null;
 		}
-
+		DestroyObject(effect);
 	}
 
-	void UpdatePickupItemEffect()
+	IEnumerator UpdatePickupItemEffect(GameObject effect)
 	{
-		for(int i = 0; i < (int)ItemData.Type.Count; ++i)
+		while(effect.particleSystem.IsAlive())
 		{
-			if (m_pickupItemEffects[i].effect != null)
-			{
-				if (m_pickupItemEffects[i].effect.particleSystem.IsAlive() == false)
-				{
-					DestroyObject(m_pickupItemEffects[i].effect);
-					m_pickupItemEffects[i].effect = null;
-				}
-			}
-			
+			yield return null;
 		}
-		
+		DestroyObject(effect);
 	}
 
 	public void CrowdControl(CrowdControlType type, bool enable)
@@ -378,7 +362,7 @@ public class Creature : MonoBehaviour {
 			yield return null;
 		}
 
-		m_buffEffects[(int)DamageDesc.BuffType.Airborne].effect = null;
+		m_buffEffects[(int)DamageDesc.BuffType.Airborne].m_run = false;
 		CrowdControl(CrowdControlType.Airborne, false);
 	}
 
@@ -387,7 +371,7 @@ public class Creature : MonoBehaviour {
 		CrowdControl(CrowdControlType.Stun, true);
 		yield return new WaitForSeconds(2f);
 		
-		m_buffEffects[(int)DamageDesc.BuffType.Stun].effect = null;
+		m_buffEffects[(int)DamageDesc.BuffType.Stun].m_run = false;
 		CrowdControl(CrowdControlType.Stun, false);
 	}
 
@@ -397,7 +381,7 @@ public class Creature : MonoBehaviour {
 
 		yield return new WaitForSeconds(time);
 		
-		m_buffEffects[(int)DamageDesc.BuffType.Slow].effect = null;
+		m_buffEffects[(int)DamageDesc.BuffType.Slow].m_run = false;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
 
 	}
@@ -412,26 +396,43 @@ public class Creature : MonoBehaviour {
 		
 		yield return new WaitForSeconds(time);
 		
-		m_buffEffects[(int)DamageDesc.BuffType.SteamPack].effect = null;
+		m_buffEffects[(int)DamageDesc.BuffType.SteamPack].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
 		
 	}
 
-	public void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
+	IEnumerator EffectBurning(float time, DamageDesc damageDesc)
+	{		
+		while(time > 0)
+		{
+			yield return new WaitForSeconds(0.3f);
+			time -= 0.3f;
+			damageDesc.PushbackOnDamage = false;
+			TakeDamage(null, damageDesc);
+		}
+		m_buffEffects[(int)DamageDesc.BuffType.Burning].m_run = false;
+	}
+
+	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
 	{
-		if (m_damageEffects[(int)type].effect == null && prefEffect != null)
+		if (prefEffect != null)
 		{
 			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			dmgEffect.transform.parent = m_aimpoint.transform;
 			dmgEffect.transform.localPosition = Vector3.zero;
 			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
-			m_damageEffects[(int)type].effect = dmgEffect;
+			StartCoroutine(UpdateDamageEffect(dmgEffect));
 		}
 	}
 
-	public void ApplyBuff(DamageDesc.BuffType type, float time)
+	public void ApplyBuff(DamageDesc.BuffType type, float time, DamageDesc damageDesc)
 	{
+		if (m_buffEffects[(int)type].m_run == true)
+			return;
+
+		m_buffEffects[(int)type].m_run = true;
+
 		switch(type)
 		{
 		case DamageDesc.BuffType.Airborne:
@@ -446,21 +447,22 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.SteamPack:
 			StartCoroutine(EffectSteamPack(time));
 			break;
+		case DamageDesc.BuffType.Burning:
+			StartCoroutine(EffectBurning(time, damageDesc));
+			break;
 		}
+
+
 	}
 
 	public void ApplyPickUpItemEffect(ItemData.Type type, GameObject prefEffect, int value)
 	{
-		if (m_pickupItemEffects[(int)type].effect == null)
-		{
-			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-			dmgEffect.transform.parent = m_aimpoint.transform;
-			dmgEffect.transform.localPosition = Vector3.zero;
-			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
-			m_pickupItemEffects[(int)type].effect = dmgEffect;
-		}
-
-
+		GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+		dmgEffect.transform.parent = m_aimpoint.transform;
+		dmgEffect.transform.localPosition = Vector3.zero;
+		dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
+		StartCoroutine(UpdatePickupItemEffect(dmgEffect));
+	
 		string strDamage = value.ToString();			
 
 		switch(type)
@@ -517,32 +519,28 @@ public class Creature : MonoBehaviour {
 				}
 
 			}
-			/*
-			GameObject gui = (GameObject)Instantiate(m_prefDamageGUI, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-			gui.GetComponent<DamageNumberGUI>().Init(gameObject, strDamage, Color.red, Vector3.zero);
-*/
-
-
 
 			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
 			DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
 			sprite.Init(gameObject, strDamage, Color.white, DamageNumberSprite.MovementType.Parabola);
 
 			StartCoroutine(BodyRedColoredOnTakenDamage());
-		}
 
-		ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
+			ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
+		}
 
 		if (true == m_creatureProperty.BackwardOnDamage)
 		{
-			m_backwardSpeed = 10f / rigidbody.mass;
-			rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
+			m_pushbackSpeedOnDamage = 10f / rigidbody.mass;
+			if (damageDesc.PushbackOnDamage)
+				rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
+
 			rigidbody.AddTorque(transform.forward*2f, ForceMode.Impulse);
 			rigidbody.maxAngularVelocity = 2f;
 			EnableNavmesh(false);
 		}
 
-		ApplyBuff(damageDesc.DamageBuffType, 2f);
+		ApplyBuff(damageDesc.DamageBuffType, 2f, damageDesc);
 
 		if (offender != null)
 		{

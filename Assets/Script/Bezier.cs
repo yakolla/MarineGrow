@@ -22,16 +22,6 @@ public class Bezier {
 		m_target = target;
 	}
 
-	public Bezier(GameObject obj, Vector3 end, Vector3 handle1, Vector3 handle2, float step)
-	{
-		m_owner = obj;
-		m_start = obj.transform.position;
-		m_end = end;
-		m_handle1 = handle1;
-		m_handle2 = handle2;
-		m_step = step;
-	}
-
 	public void Destroy()
 	{
 		MonoBehaviour.DestroyObject(m_owner);

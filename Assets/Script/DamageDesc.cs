@@ -22,6 +22,7 @@ public class DamageDesc {
 		Stun,
 		Slow,
 		SteamPack,
+		Burning,
 		Count,
 	}
 
@@ -29,6 +30,7 @@ public class DamageDesc {
 	Type		m_type;
 	GameObject	m_prefEffect;
 	BuffType	m_buffType;
+	bool		m_pushbackOnDamage;
 
 	public DamageDesc(int damage, Type type, BuffType buffType, GameObject prefEffect)
 	{
@@ -36,6 +38,7 @@ public class DamageDesc {
 		m_type = type;
 		m_buffType = buffType;
 		m_prefEffect = prefEffect;
+		m_pushbackOnDamage	= true;
 	}
 
 	public int Damage
@@ -56,5 +59,11 @@ public class DamageDesc {
 	public GameObject	PrefEffect
 	{
 		get { return m_prefEffect;}
+	}
+
+	public bool	PushbackOnDamage
+	{
+		get { return m_pushbackOnDamage;}
+		set {m_pushbackOnDamage = value;}
 	}
 }
