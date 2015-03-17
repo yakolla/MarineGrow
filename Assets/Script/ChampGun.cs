@@ -21,7 +21,7 @@ public class ChampGun : Gun {
 	
 	override public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
-		Bullet bullet = base.CreateBullet(new Vector2(transform.rotation.eulerAngles.y, 0), m_gunPoint.transform.position);
+		Bullet bullet = base.CreateBullet(new Vector2(transform.rotation.eulerAngles.y+targetAngle.y, 0), m_gunPoint.transform.position);
 		bullet.GetComponent<GunBullet>().BulletSpeed = m_bulletSpeed;
 		return bullet;
 	}

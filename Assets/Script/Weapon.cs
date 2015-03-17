@@ -158,6 +158,7 @@ public class Weapon : MonoBehaviour {
 			{
 				float ang = m_firingDescs[i].angle-oriAng;
 				targetAngle.x = ang;
+				targetAngle.y = m_firingDescs[i].angle;
 				StartCoroutine(DelayToStartFiring(targetAngle, m_firingDescs[i].delayTime));
 				delay = m_firingDescs[i].delayTime;
 			}
