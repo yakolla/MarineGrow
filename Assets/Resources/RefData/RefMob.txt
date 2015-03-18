@@ -618,6 +618,75 @@
 				"refMobId":31004,
 				"count":12
 			}
+		},
+		{
+			"id":50004,
+			"prefBody":"robot_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"109"
+				},
+				{
+					"refItemId":"101"
+				}
+			],
+			"mobAI":"Dash",
+			"baseCreatureProperty":
+			{
+				"maxHP":1300,
+				"physicalDamage":55,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.5,
+				"exp":1300,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
+				"hpPerLevel":0.2,
+				"moveSpeed":1,
+				"navMeshBaseOffset":2,
+				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"refMobId":31004,
+				"count":12
+			}
+		},
+		{
+			"id":50005,
+			"prefBody":"bat_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"109"
+				},
+				{
+					"refItemId":"101"
+				},
+				{
+					"refItemId":"102"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":1400,
+				"physicalDamage":60,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.5,
+				"exp":1400,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
+				"hpPerLevel":0.2,
+				"moveSpeed":1,
+				"navMeshBaseOffset":2,
+				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"refMobId":31004,
+				"count":12
+			}
 		}
 	],
 	"shuttle":
