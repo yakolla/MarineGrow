@@ -93,6 +93,11 @@ public class GPlusPlatform {
 		Social.ShowLeaderboardUI();
 	}
 
+	public void ShowAchievementsUI()
+	{
+		Social.ShowAchievementsUI();
+	}
+
 	public void ReportProgress(string code, int progress, System.Action<bool> callback)
 	{
 		PlayGamesPlatform.Instance.ReportProgress(
@@ -107,4 +112,8 @@ public class GPlusPlatform {
 			callback(success);
 		}); 
 	}
+
+
+
+
 }

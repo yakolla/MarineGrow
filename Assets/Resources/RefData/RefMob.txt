@@ -577,12 +577,12 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":1100,
-				"physicalDamage":50,
-				"physicalDefence":5,
+				"physicalDamage":40,
+				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":1100,
-				"phyDamagePerLevel":5,
-				"phyDefencePerLevel":5,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
 				"hpPerLevel":0.2,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
@@ -602,12 +602,12 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":1200,
-				"physicalDamage":70,
-				"physicalDefence":5,
+				"physicalDamage":45,
+				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":1200,
-				"phyDamagePerLevel":5,
-				"phyDefencePerLevel":5,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
 				"hpPerLevel":0.2,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,

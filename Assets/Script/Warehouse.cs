@@ -99,10 +99,10 @@ public class Warehouse {
 
 	public class 	Statistics
 	{
-		public	int		m_totalKills;
+		public	int		m_totalKills = 0;
 	}
 
-	Statistics			m_stats;
+	Statistics			m_stats = new Statistics();
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
 	{
@@ -114,6 +114,17 @@ public class Warehouse {
 
 			return m_ins;
 		}
+	}
+
+	public void Reset()
+	{
+		m_items = new List<ItemObject>();
+		
+		m_gold = new ItemObject(new ItemGoldData(0));
+		m_gem	= new ItemObject(new ItemGemData(0));
+		m_waveIndex = 0;
+
+		m_stats = new Statistics();
 	}
 
 	public void PushItem(ItemData item)
