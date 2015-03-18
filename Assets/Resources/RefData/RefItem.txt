@@ -68,7 +68,7 @@
 	},
 	{
 		"id":101,
-		"codeName":"Firegun",
+		"codeName":"ChampFiregun",
 		"type":"Weapon",
 		"icon":"Sprites/Firegun",
 		"levelup":
@@ -710,7 +710,7 @@
 		"id":118,
 		"codeName":"LaserBeam",
 		"type":"Weapon",
-		"icon":"Sprites/LightningBolt",
+		"icon":"Sprites/LaserBeam",
 		"weaponStat":
 		{
 			"coolTime":0.5,
@@ -958,7 +958,7 @@
 	},
 	{
 		"id":122,
-		"codeName":"ChampFiregun",
+		"codeName":"Firegun",
 		"type":"Weapon",
 		"icon":"Sprites/Firegun",
 		"levelup":

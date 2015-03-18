@@ -45,9 +45,9 @@ public class Worldmap : MonoBehaviour {
 
 	public void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
-			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*6);
-			
-			GPlusPlatform.Instance.SaveGame(game, new byte[1], totalPlayingTime, null, OnSavedGameWritten);
+			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*0);
+			Warehouse.Instance.Reset();
+			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
 		} else {
 			// handle error
 		}
@@ -115,14 +115,13 @@ public class Worldmap : MonoBehaviour {
 				Application.LoadLevel("Basic Dungeon");
 			}
 		}
-
+		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*4, size*3, size), "Achievement"))
+		{
+			GPlusPlatform.Instance.ShowAchievementsUI();
+		}
 		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*5, size*3, size), "Leaderboard"))
 		{
-		//	GPlusPlatform.Instance.ShowLeaderboardUI();
-			PlayGamesPlatform.Instance.ReportProgress(
-				"CgkIrKGfsOUeEAIQAw", 100, (bool success) => {
-				Social.ShowAchievementsUI();
-			}); 
+			GPlusPlatform.Instance.ShowLeaderboardUI();
 		}
 		GUI.TextArea(new Rect(0, startY+size*6, m_statusWindowRect.width, size), log);
 		GUI.EndGroup();

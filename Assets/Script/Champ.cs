@@ -3,7 +3,6 @@ using System.Collections;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-using UnityEngine.SocialPlatforms;
 
 public class Champ : Creature {
 
@@ -189,15 +188,10 @@ public class Champ : Creature {
 	}
 
 	public Texture2D getScreenshot() {
-		// Create a 2D texture that is 1024x700 pixels from which the PNG will be
-		// extracted
-		Texture2D screenShot = new Texture2D(1024, 700);
-		
-		// Takes the screenshot from top left hand corner of screen and maps to top
-		// left hand corner of screenShot texture
-		screenShot.ReadPixels(
-			new Rect(0, 0, Screen.width, (Screen.width/1024)*700), 0, 0);
-		return screenShot;
+		Texture2D tex = new Texture2D(Screen.width, Screen.height);
+		tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
+		tex.Apply();
+		return tex;
 	}
 
 	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
@@ -206,6 +200,10 @@ public class Champ : Creature {
 			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime));
 			
 			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, getScreenshot(), OnSavedGameWritten);
+
+			GPlusPlatform.Instance.ReportScore("CgkIrKGfsOUeEAIQAQ", Warehouse.Instance.Stats.m_totalKills, (bool success) => {
+				// handle success or failure
+			});
 		} else {
 			// handle error
 		}

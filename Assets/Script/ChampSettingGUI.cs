@@ -55,7 +55,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				Warehouse.Instance.PushItem(new ItemWeaponData(122, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
 				ItemWeaponData itemWeaponData = new ItemWeaponData(108, null);
@@ -153,6 +153,40 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			Const.makeItemButton(m_guiSkin, m_fontSize, startX, startY, size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
 				selectedItem.Item.Lock = false;
+				switch(selectedItem.Item.RefItem.id)
+				{
+				case 101:
+					GPlusPlatform.Instance.ReportProgress(
+						"CgkIrKGfsOUeEAIQAg", 100, (bool success) => {
+					});  
+					break;
+				case 102:
+					GPlusPlatform.Instance.ReportProgress(
+						"CgkIrKGfsOUeEAIQBw", 100, (bool success) => {
+					});  
+					break;
+				case 111:
+					GPlusPlatform.Instance.ReportProgress(
+						"CgkIrKGfsOUeEAIQCA", 100, (bool success) => {
+					});  
+					break;
+				case 106:
+					GPlusPlatform.Instance.ReportProgress(
+						"CgkIrKGfsOUeEAIQCQ", 100, (bool success) => {
+					});  
+					break;
+				case 118:
+					GPlusPlatform.Instance.ReportProgress(
+						"CgkIrKGfsOUeEAIQCg", 100, (bool success) => {
+					});  
+					break;
+				case 120:
+					GPlusPlatform.Instance.ReportProgress(
+						"CgkIrKGfsOUeEAIQCw", 100, (bool success) => {
+					});  
+					break;
+				}
+
 			});
 
 			return;
