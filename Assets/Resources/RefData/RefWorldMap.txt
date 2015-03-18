@@ -188,6 +188,18 @@
 							]
 						},
 						{
+							"refMobId":50003,
+							"refDropItems":
+							[								
+								{
+									"refItemId":111,
+									"minValue":1,
+									"maxValue":1,
+									"ratio":1
+								}
+							]
+						},
+						{
 							"refMobId":1002,
 							"refDropItems":
 							[				

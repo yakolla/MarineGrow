@@ -17,6 +17,7 @@ public class Warehouse {
 			MemoryStream stream = new MemoryStream();
 
 			StreamWriter writer = new StreamWriter(stream);
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_version));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_items.Count));
 			foreach(ItemObject itemObj in obj.m_items)
 			{
@@ -28,6 +29,7 @@ public class Warehouse {
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gold.Item));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gem.Item));
 
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_stats));
 
 			writer.Close();
 			return stream;
@@ -40,6 +42,8 @@ public class Warehouse {
 			MemoryStream stream = new MemoryStream(data);
 			
 			StreamReader reader = new StreamReader(stream);
+
+			int version = JsonConvert.DeserializeObject<int>(reader.ReadLine());
 			int count = JsonConvert.DeserializeObject<int>(reader.ReadLine());
 
 			for(int i = 0; i < count; ++i)
@@ -78,19 +82,27 @@ public class Warehouse {
 
 			ItemGemData gemData = JsonConvert.DeserializeObject<ItemGemData>(reader.ReadLine());
 			obj.m_gem = new ItemObject(gemData);
+
+			obj.m_stats = JsonConvert.DeserializeObject<Statistics>(reader.ReadLine());
 			
 			reader.Close();
 		}
 
 	}
-
+	int					m_version = 1;
 	string				m_fileName;
 	List<ItemObject>	m_items = new List<ItemObject>();
 
 	ItemObject			m_gold = new ItemObject(new ItemGoldData(0));
 	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
-	int				m_waveIndex = 0;
+	int					m_waveIndex = 0;
 
+	public class 	Statistics
+	{
+		public	int		m_totalKills;
+	}
+
+	Statistics			m_stats;
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
 	{
@@ -222,5 +234,10 @@ public class Warehouse {
 	{
 		get {return m_fileName;}
 		set {m_fileName = value;}
+	}
+
+	public Statistics Stats
+	{
+		get {return m_stats;}
 	}
 }

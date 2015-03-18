@@ -24,10 +24,12 @@ public class ItemFollowerData : ItemData{
 
 	override public void Use(Creature obj)
 	{
-		GameObject followerObj = (GameObject)GameObject.Instantiate(Resources.Load<GameObject>("Pref/Follower"), obj.transform.position, obj.transform.rotation);
-		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + m_followerName);
-		
 		Vector3 enemyPos = obj.transform.position;
+		float angle = Random.Range(-3.14f, 3.14f);
+		enemyPos.x += Mathf.Cos(angle) * 1f;
+		enemyPos.z += Mathf.Sin(angle) * 1f;
+		GameObject followerObj = (GameObject)GameObject.Instantiate(Resources.Load<GameObject>("Pref/Follower"), enemyPos, obj.transform.rotation);
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + m_followerName);
 		
 		GameObject enemyBody = GameObject.Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";

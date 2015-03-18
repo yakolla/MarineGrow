@@ -145,7 +145,7 @@
 				},
 				{
 					"reqLevel":2,
-					"refItemId":"101",
+					"refItemId":"122",
 					"weaponStat":
 					{
 						"coolTime":6
@@ -710,7 +710,11 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"105"
+					"refItemId":"105",
+					"weaponStat":
+					{
+						"range":10
+					}
 				}
 			],
 			"mobAI":"Normal",
@@ -724,7 +728,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":1,
+				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
@@ -735,7 +739,11 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"108"
+					"refItemId":"108",
+					"weaponStat":
+					{
+						"range":15
+					}
 				}
 			],
 			"mobAI":"Normal",
@@ -749,7 +757,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":1,
+				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
@@ -760,7 +768,11 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"111"
+					"refItemId":"111",
+					"weaponStat":
+					{
+						"range":10
+					}
 				}
 			],
 			"mobAI":"Normal",
@@ -774,7 +786,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":1,
+				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
