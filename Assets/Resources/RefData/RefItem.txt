@@ -1037,7 +1037,7 @@
 	},
 	{
 		"id":1001,
-		"codeName":"30001",
+		"codeName":"Follower",
 		"type":"Follower",
 		"icon":"Sprites/Follower",
 		"levelup":

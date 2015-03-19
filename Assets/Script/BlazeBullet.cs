@@ -66,7 +66,7 @@ public class BlazeBullet : Bullet {
 
 				GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, Quaternion.Euler(rotation));
 				Vector3 scale = Vector3.one;
-				scale.x = m_bombRange*4f;
+				scale.x = m_bombRange*3f;
 				bombEffect.transform.localScale = scale;
 
 

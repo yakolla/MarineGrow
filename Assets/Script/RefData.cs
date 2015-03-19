@@ -227,7 +227,7 @@ public class RefData {
 	RefMobClass		m_refMobClass = new RefMobClass();
 	Dictionary<int, RefItemSpawn>	m_refItemSpawns = new Dictionary<int, RefItemSpawn>();
 	Dictionary<int, RefItem>		m_refItems = new Dictionary<int, RefItem>();
-	Dictionary<int, RefMob>		m_refMobs = new Dictionary<int, RefMob>();
+	Dictionary<int, RefMob>			m_refMobs = new Dictionary<int, RefMob>();
 
 	static RefData m_ins = null;
 	static public RefData Instance
@@ -349,6 +349,11 @@ public class RefData {
 		get {return m_refItems;}
 	}
 
+	public Dictionary<int, RefMob> RefMobs
+	{
+		get {return m_refMobs;}
+	}
+
 	public RefMob[] RefMeleeMobs
 	{
 		get {return m_refMobClass.melee;}
@@ -383,4 +388,5 @@ public class RefData {
 	{
 		get {return m_refMobClass.follower;}
 	}
+
 }

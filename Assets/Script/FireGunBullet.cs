@@ -15,6 +15,8 @@ public class FireGunBullet : Bullet {
 	{
 		m_collider = GetComponent<BoxCollider>();
 		m_particleSystem = transform.Find("Body/Particle System").particleSystem;
+		m_particleSystem.startSpeed *= m_collider.size.x;
+		m_particleSystem.startSize *= m_collider.size.x;
 	}
 	
 	// Update is called once per frame

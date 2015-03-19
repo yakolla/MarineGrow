@@ -7,6 +7,9 @@ public class Mob : Creature {
 	bool				m_boss = false;
 	MobAI				m_ai;
 	GameObject			m_goalForNavigation;
+
+	[SerializeField]
+	GameObject			m_prefEffectBlood;
 	// Use this for initialization
 	new void Start () {
 		base.Start();
@@ -122,6 +125,18 @@ public class Mob : Creature {
 	public void SetTarget(GameObject obj )
 	{
 		m_ai.SetTarget(obj);
+
+	}
+
+	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
+	{
+		base.TakeDamage(offender, damageDesc);
+
+		if (m_prefEffectBlood != null)
+		{
+			GameObject effect = (GameObject)Instantiate(m_prefEffectBlood, transform.position, transform.rotation);
+			effect.transform.localScale = transform.localScale;
+		}
 
 	}
 
