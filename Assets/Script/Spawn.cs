@@ -172,6 +172,12 @@ public class Spawn : MonoBehaviour {
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
 			for(int r = 0; r < mobSpawnRepeatCount; ++r)
 			{
+
+				if (m_champ == null)
+				{
+					break;
+				}
+
 				SpawnMobDescResult spawnMobDescResult = new SpawnMobDescResult();
 
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
@@ -438,7 +444,7 @@ public class Spawn : MonoBehaviour {
 						item = new ItemWeaponPartsData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.Follower:
-						//item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
+						item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
 						break;
 					case ItemData.Type.WeaponDNA:
 						item = new ItemWeaponDNAData(Random.Range(desc.minValue, desc.maxValue));					

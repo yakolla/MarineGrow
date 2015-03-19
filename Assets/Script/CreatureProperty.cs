@@ -51,7 +51,6 @@ public class CreatureProperty {
 	{
 		m_owner = owner;
 		m_baseProperty = baseProperty;
-		m_exp = m_baseProperty.exp;
 	}
 
 	public float getHPRemainRatio()
@@ -80,7 +79,8 @@ public class CreatureProperty {
 		get { return m_level; }
 		set {
 			m_level = value;
-			m_hp = MaxHP;
+			m_hp = MaxHP;			
+			m_exp = (int)(m_baseProperty.exp * (Level-1)*m_baseProperty.hpPerLevel);
 		}
 	}
 
