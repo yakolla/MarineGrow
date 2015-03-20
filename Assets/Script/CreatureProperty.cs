@@ -80,7 +80,7 @@ public class CreatureProperty {
 		set {
 			m_level = value;
 			m_hp = MaxHP;			
-			m_exp = (int)(m_baseProperty.exp * (Level-1)*m_baseProperty.hpPerLevel);
+			m_exp = (int)(m_baseProperty.exp + m_baseProperty.exp * (Level-1)*m_baseProperty.hpPerLevel);
 		}
 	}
 

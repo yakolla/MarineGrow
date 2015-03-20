@@ -8,10 +8,6 @@
 			[				
 				{
 					"refItemId":"107"
-				},
-				{
-					"reqLevel":2,
-					"refItemId":"121"
 				}
 			],
 			"mobAI":"Normal",			
@@ -22,6 +18,30 @@
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":10,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.2,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0
+			}
+		},
+		{
+			"id":10002,
+			"prefBody":"ghost_slime_b_skin",
+			"refWeaponItems":
+			[				
+				{
+					"refItemId":"121"
+				}
+			],
+			"mobAI":"Normal",			
+			"baseCreatureProperty":
+			{
+				"maxHP":15,
+				"physicalDamage":7,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.3,
+				"exp":15,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.2,
@@ -207,6 +227,34 @@
 				"navMeshBaseOffset":2,
 				"backwardOnDamage":false
 			}
+		},
+		{
+			"id":20003,
+			"prefBody":"spider_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"116",
+					"weaponStat":
+					{
+						"coolTime":6
+					}
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":50,
+				"physicalDamage":15,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":50,
+				"phyDamagePerLevel":1.8,
+				"phyDefencePerLevel":3,
+				"hpPerLevel":0.3,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0
+			}
 		},		
 		{
 			"id":20005,
@@ -224,11 +272,11 @@
 			"mobAI":"Dash",
 			"baseCreatureProperty":
 			{
-				"maxHP":40,
+				"maxHP":60,
 				"physicalDamage":20,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
-				"exp":40,
+				"exp":60,
 				"phyDamagePerLevel":1.8,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.2,
@@ -249,11 +297,11 @@
 			"mobAI":"Dash",
 			"baseCreatureProperty":
 			{
-				"maxHP":40,
-				"physicalDamage":20,
+				"maxHP":70,
+				"physicalDamage":25,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
-				"exp":40,
+				"exp":70,
 				"phyDamagePerLevel":1.8,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.2,
@@ -279,18 +327,18 @@
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
-				"maxHP":50,
+				"maxHP":80,
 				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
-				"exp":50,
+				"exp":80,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":0.2,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			}
-		}		
+		}
 	],
 	"egg":
 	[
