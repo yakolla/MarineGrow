@@ -72,7 +72,31 @@
 				"moveSpeed":2,
 				"navMeshBaseOffset":0
 			}
-		},
+		},		
+		{
+			"id":10004,
+			"prefBody":"spider_green_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"110"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":30,
+				"physicalDamage":15,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.3,
+				"exp":30,
+				"phyDamagePerLevel":1.8,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.2,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0
+			}
+		}	,
 		{
 			"id":10005,
 			"prefBody":"small_spider_skin",
@@ -120,31 +144,7 @@
 				"moveSpeed":2.5,
 				"navMeshBaseOffset":0
 			}
-		},		
-		{
-			"id":10009,
-			"prefBody":"spider_green_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"110"
-				}
-			],
-			"mobAI":"Normal",
-			"baseCreatureProperty":
-			{
-				"maxHP":30,
-				"physicalDamage":15,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.3,
-				"exp":30,
-				"phyDamagePerLevel":1.8,
-				"phyDefencePerLevel":2,
-				"hpPerLevel":0.2,
-				"moveSpeed":1,
-				"navMeshBaseOffset":0
-			}
-		}		
+		}	
 	],
 	"range"	:
 	[		
