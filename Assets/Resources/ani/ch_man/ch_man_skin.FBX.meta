@@ -31,6 +31,7 @@ ModelImporter:
     100050: ch_gun
     100052: ch_man
     100054: //RootNode
+    100056: Bip001 Footsteps
     400000: Bip001
     400002: Bip001 Head
     400004: Bip001 HeadNub
@@ -59,6 +60,7 @@ ModelImporter:
     400050: ch_gun
     400052: ch_man
     400054: //RootNode
+    400056: Bip001 Footsteps
     2300000: ch_gun
     3300000: ch_gun
     4300000: ch_man
