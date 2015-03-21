@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
+
 public class ItemFollowerData : ItemData{
 
-	string 	m_followerName;
-	int		m_weaponID;
-	RefCreatureBaseProperty	m_baseProperty;
-	MobAIType	m_aiType;
+	public string 	m_followerName;
+	public int		m_weaponID;
+	public RefCreatureBaseProperty	m_baseProperty;
+	public MobAIType	m_aiType;
 
 	public ItemFollowerData(RefMob refMob) : base(1001, 1)
 	{
@@ -15,6 +15,11 @@ public class ItemFollowerData : ItemData{
 		m_weaponID = refMob.refWeaponItems[0].refItemId;
 		m_baseProperty = refMob.baseCreatureProperty;
 		m_aiType = refMob.mobAI;
+	}
+
+	public ItemFollowerData() : base(1001, 1)
+	{
+
 	}
 
 	public string FollowerName

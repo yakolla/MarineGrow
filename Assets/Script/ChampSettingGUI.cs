@@ -372,12 +372,13 @@ public class ChampSettingGUI : MonoBehaviour {
 		if(Input.touchCount > 0)
 		{
 			Touch touch = Input.touches[0];
-			if (touch.position.y < 0.7f)
+
+			if (touch.position.normalized.y < 0.7f)
 			{
 				if (touch.phase == TouchPhase.Moved)
 				{
 					delta = touch.deltaPosition.y;
-					accel = -Input.acceleration.y*2f;
+					accel = Input.acceleration.y*3f;
 				}
 			}
 		}
