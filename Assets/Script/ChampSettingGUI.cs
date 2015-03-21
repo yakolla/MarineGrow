@@ -58,9 +58,10 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
-				ItemWeaponData itemWeaponData = new ItemWeaponData(108, null);
-				itemWeaponData.Lock = false;
-				Warehouse.Instance.PushItem(itemWeaponData);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(108, null);
+				gunWeaponData.Lock = false;
+
+				Warehouse.Instance.PushItem(gunWeaponData);
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
@@ -70,7 +71,9 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 				Warehouse.Instance.PushItem(new ItemSilverMedalData(200));
 
-				Warehouse.Instance.PushItem(new ItemAccessoryData(10));
+				ItemAccessoryData bootsData = new ItemAccessoryData(10);
+				bootsData.OptionDescs.Add(new ItemMagicOption(ItemData.Option.Weapon, 125));
+				Warehouse.Instance.PushItem(bootsData);
 
 				Warehouse.Instance.Gold.Item.Count = 100000;
 				Warehouse.Instance.Gem.Item.Count = 100000;

@@ -58,6 +58,7 @@ public class ItemData {
 		PhysicalDmg,
 		DefencePoint,
 		MovingSpeed,
+		Weapon,
 		Count
 	}
 
@@ -136,6 +137,9 @@ public class ItemData {
 				break;
 			case Option.DefencePoint:
 				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)desc.Value;
+				break;
+			case Option.Weapon:
+				obj.EquipWeapon(new ItemWeaponData((int)desc.Value, null));
 				break;
 			}
 		}
