@@ -64,7 +64,7 @@ public class SpiderWebBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
+			GiveDamage(creature);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class SpiderWebBullet : Bullet {
 				if (dist < m_bombRange)
 				{
 					Creature creature = target.GetComponent<Creature>();
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
+					GiveDamage(creature);
 				}
 			}
 		}

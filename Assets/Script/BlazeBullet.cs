@@ -32,6 +32,7 @@ public class BlazeBullet : Bullet {
 		m_boxCollider.enabled = false;
 		m_particleSystem = m_prefBombEffect.particleSystem;
 		m_particleSystem.enableEmission = false;
+		m_damageType = DamageDesc.Type.Fire;
 
 		int[] angles = {0, 90};
 		transform.eulerAngles = new Vector3(0, angles[Random.Range(0, angles.Length)], 0);
@@ -101,7 +102,7 @@ public class BlazeBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));
+			GiveDamage(creature);
 		}
 
 	}

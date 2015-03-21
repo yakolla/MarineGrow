@@ -114,8 +114,9 @@ public class ChampSettingGUI : MonoBehaviour {
 		m_guiSkin.label.fontSize = m_fontSize;
 		m_guiSkin.button.fontSize = m_fontSize;
 
+		//m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_statusWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampInventory, m_statusWindowRect, DisplayStatusWindow, "");
-		m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
+
 
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 
@@ -290,13 +291,27 @@ public class ChampSettingGUI : MonoBehaviour {
 	
 	float accel = 1f;
 
-	void DisplayGoodsWindow(int windowID)
+	void DisplayGoodsWindow()
 	{
-		ChampStatusGUI.DisplayChampGoodsGUI((int)m_slotHeight);
+		int size = (int)m_slotHeight;
+		int startX = size/3;
+		int startY = 0;	
+		
+		
+		ItemObject goldItemObj = Warehouse.Instance.Gold;
+		ItemObject gemItemObj = Warehouse.Instance.Gem;
+
+		GUI.BeginGroup(m_goodsWindowRect);
+		GUI.Label(new Rect(startX, size*0.2f, size*0.7f, size*0.7f), goldItemObj.ItemIcon);
+		GUI.Label(new Rect(startX+(size), 0, size, size), "<color=white>" + goldItemObj.Item.Count + "</color>");
+		GUI.Label(new Rect(startX+(size)*3, size*0.2f, size*0.7f, size*0.7f), gemItemObj.ItemIcon);
+		GUI.Label(new Rect(startX+(size)*4, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>");
+		GUI.EndGroup();
 	}
 
 	void DisplayStatusWindow(int windowID)
 	{
+		DisplayGoodsWindow();
 
 		int size = (int)m_slotHeight;
 		int startY = 0;
@@ -354,10 +369,13 @@ public class ChampSettingGUI : MonoBehaviour {
 		if(Input.touchCount > 0)
 		{
 			Touch touch = Input.touches[0];
-			if (touch.phase == TouchPhase.Moved)
+			if (touch.position.y < 0.7f)
 			{
-				delta = touch.deltaPosition.y;
-				accel = -Input.acceleration.y*5f;
+				if (touch.phase == TouchPhase.Moved)
+				{
+					delta = touch.deltaPosition.y;
+					accel = -Input.acceleration.y*2f;
+				}
 			}
 		}
 		itemScrollPosition.y += delta * accel;
@@ -368,10 +386,10 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 		case RuntimePlatform.WindowsEditor:
 		case RuntimePlatform.WindowsPlayer:
-			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*4), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
+			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*3.5f), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
 			break;
 		default:
-			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*4), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size),GUIStyle.none,GUIStyle.none);
+			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*3.5f), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size),GUIStyle.none,GUIStyle.none);
 			break;
 		}
 
@@ -406,6 +424,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			DisplayItemDesc(item, equiped, size*3, size*2*(y)+y*size, size*4, size*2);
 		}
 		GUI.EndScrollView();
+
 
 
 	}

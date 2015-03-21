@@ -21,7 +21,7 @@ public class GunBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
+			GiveDamage(creature);
 			DestroyObject(this.gameObject);
 		}
 		else if (other.tag.CompareTo("Wall") == 0)

@@ -5,12 +5,14 @@ public class Bullet : MonoBehaviour {
 
 	protected GameObject	m_gunPoint = null;
 	bool					m_firing = false;
-	protected	int		m_damage;
+	int						m_damage;
 	protected 	Vector2		m_targetAngle;
 	protected	Creature	m_ownerCreature;
 
 	[SerializeField]
 	GameObject 		m_prefDamageEffect = null;
+
+	protected DamageDesc.Type			m_damageType = DamageDesc.Type.Normal;
 
 	[SerializeField]
 	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
@@ -40,6 +42,16 @@ public class Bullet : MonoBehaviour {
 	public bool IsFiring()
 	{
 		return m_firing;
+	}
+
+	protected void GiveDamage(Creature target)
+	{
+		target.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, m_damageType, m_damageBuffType, PrefDamageEffect));
+	}
+
+	public int Damage
+	{
+		set {m_damage = value;}
 	}
 
 	protected GameObject PrefDamageEffect

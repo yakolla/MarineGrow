@@ -165,7 +165,7 @@
 				},
 				{
 					"reqLevel":2,
-					"refItemId":"122",
+					"refItemId":"123",
 					"weaponStat":
 					{
 						"coolTime":6
@@ -173,7 +173,7 @@
 				},
 				{
 					"reqLevel":3,
-					"refItemId":"102",
+					"refItemId":"122",
 					"weaponStat":
 					{
 						"coolTime":6
@@ -209,7 +209,7 @@
 				},
 				{
 					"reqLevel":3,
-					"refItemId":"102"
+					"refItemId":"123"
 				}
 			],
 			"mobAI":"Rotation",
@@ -759,7 +759,7 @@
 					"refItemId":"101"
 				},
 				{
-					"refItemId":"102"
+					"refItemId":"123"
 				}
 			],
 			"mobAI":"Normal",
@@ -874,7 +874,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"106",
+					"refItemId":"124",
 					"weaponStat":
 					{
 						"range":10

@@ -18,6 +18,7 @@ public class Firegun : Weapon {
 				}
 
 				m_bullet[i].gameObject.SetActive(true);
+				m_bullet[i].Damage = Damage;
 
 				Vector3 euler = m_bullet[i].transform.rotation.eulerAngles;
 				euler.y = transform.eulerAngles.y+targetAngle.x;

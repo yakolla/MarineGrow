@@ -136,7 +136,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_champ = transform.parent.gameObject.GetComponent<Champ>();
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
-
+		RandomAbility();
 	}
 
 	void RandomAbility()
@@ -164,7 +164,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
-		RandomAbility();
+
 	}
 
 	void OnDisable() {

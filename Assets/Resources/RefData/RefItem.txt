@@ -147,12 +147,12 @@
 	},
 	{
 		"id":102,
-		"codeName":"LightningLauncher",
+		"codeName":"ChampLightningLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/LightningBolt",
 		"weaponStat":
 		{
-			"coolTime":0.5,
+			"coolTime":0.2,
 			"range":5
 		},
 		"levelup":
@@ -276,7 +276,7 @@
 	},
 	{
 		"id":106,
-		"codeName":"GuidedRocketLauncher",
+		"codeName":"ChampGuidedRocketLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
 		
@@ -287,7 +287,7 @@
 		},
 		"weaponStat":
 		{
-			"coolTime":1,
+			"coolTime":0.5,
 			"range":5
 		},		
 		"levelup":
@@ -375,15 +375,11 @@
 		"id":108,
 		"codeName":"ChampGun",
 		"type":"Weapon",
-		"icon":"Sprites/Gun",		
-		"evolutionFiring":
-		{
-			"angle":3,
-			"delay":0.1
-		},
+		"icon":"Sprites/Gun",	
+		
 		"weaponStat":
 		{
-			"coolTime":0.1,
+			"coolTime":0.2,
 			"range":7
 		},
 		"levelup":
@@ -474,7 +470,7 @@
 		},
 		"weaponStat":
 		{
-			"coolTime":1,
+			"coolTime":0.5,
 			"range":8
 		},		
 		"levelup":
@@ -1033,6 +1029,165 @@
 		{
 			"coolTime":0.5,
 			"range":3
+		}
+	},
+	{
+		"id":123,
+		"codeName":"LightningLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/LightningBolt",
+		"weaponStat":
+		{
+			"coolTime":0.5,
+			"range":5
+		},
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"evolution":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
+		},
+	},
+	{
+		"id":124,
+		"codeName":"GuidedRocketLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/RocketLauncher",
+		
+		"evolutionFiring":
+		{
+			"angle":3,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":1,
+			"range":5
+		},		
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"evolution":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
 		}
 	},
 	{

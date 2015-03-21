@@ -26,7 +26,7 @@ public class TornadoBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, DamageDesc.BuffType.Airborne, PrefDamageEffect));
+			GiveDamage(creature);
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{

@@ -120,12 +120,16 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
+	public int Damage
+	{
+		get {return (int)(m_creature.m_creatureProperty.PhysicalAttackDamage*m_damageRatio);}
+	}
 
 	virtual public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
-		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, targetAngle.x, 0)) as GameObject;
+		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.y, 0)) as GameObject;
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_gunPoint, (int)(m_creature.m_creatureProperty.PhysicalAttackDamage*m_damageRatio), targetAngle);
+		bullet.Init(m_creature, m_gunPoint, Damage, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 

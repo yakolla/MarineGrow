@@ -48,6 +48,8 @@ public class LightningBullet : Bullet
 	
 	void Start()
 	{
+		m_damageType = DamageDesc.Type.Lightining;
+
 		oneOverZigs = 1f / (float)zigs;
 		particleEmitter.emit = false;
 
@@ -133,7 +135,7 @@ public class LightningBullet : Bullet
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)
 				{
-					targets[i].TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Lightining, m_damageBuffType, PrefDamageEffect));
+					GiveDamage(targets[i]);
 				}
 				
 				m_lastDamageTime = Time.time;

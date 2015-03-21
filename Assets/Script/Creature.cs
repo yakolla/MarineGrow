@@ -402,14 +402,14 @@ public class Creature : MonoBehaviour {
 		
 	}
 
-	IEnumerator EffectBurning(float time, DamageDesc damageDesc)
+	IEnumerator EffectBurning(float time, Creature offender, DamageDesc damageDesc)
 	{		
 		while(time > 0)
 		{
 			yield return new WaitForSeconds(0.3f);
 			time -= 0.3f;
 			damageDesc.PushbackOnDamage = false;
-			TakeDamage(null, damageDesc);
+			TakeDamage(offender, damageDesc);
 		}
 		m_buffEffects[(int)DamageDesc.BuffType.Burning].m_run = false;
 	}
@@ -426,7 +426,7 @@ public class Creature : MonoBehaviour {
 		}
 	}
 
-	public void ApplyBuff(DamageDesc.BuffType type, float time, DamageDesc damageDesc)
+	public void ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
 	{
 		if (m_buffEffects[(int)type].m_run == true)
 			return;
@@ -448,7 +448,7 @@ public class Creature : MonoBehaviour {
 			StartCoroutine(EffectSteamPack(time));
 			break;
 		case DamageDesc.BuffType.Burning:
-			StartCoroutine(EffectBurning(time, damageDesc));
+			StartCoroutine(EffectBurning(time, offender, damageDesc));
 			break;
 		}
 
@@ -540,7 +540,7 @@ public class Creature : MonoBehaviour {
 			EnableNavmesh(false);
 		}
 
-		ApplyBuff(damageDesc.DamageBuffType, 2f, damageDesc);
+		ApplyBuff(offender, damageDesc.DamageBuffType, 2f, damageDesc);
 
 		if (offender != null)
 		{

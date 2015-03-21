@@ -69,7 +69,7 @@ public class RocketLauncherBullet : Bullet {
 				if (dist < m_bombRange/2)
 				{
 					Creature creature = target.GetComponent<Creature>();
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Normal, m_damageBuffType, PrefDamageEffect));
+					GiveDamage(creature);
 				}
 			}
 		}

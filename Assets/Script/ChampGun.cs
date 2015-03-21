@@ -15,7 +15,7 @@ public class ChampGun : Gun {
 		}
 		else
 		{
-			m_bulletSpeed += m_level;
+			m_creature.m_creatureProperty.AlphaAttackCoolTime-=0.01f;
 		}
 	}
 	

@@ -68,8 +68,17 @@ public class Warehouse {
 					ItemWeaponPartsData weaponPartsData = JsonConvert.DeserializeObject<ItemWeaponPartsData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(weaponPartsData));
 					break;
+				case ItemData.Type.Follower:
+					ItemFollowerData followerData = JsonConvert.DeserializeObject<ItemFollowerData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(followerData));
+					break;
+				case ItemData.Type.Accessory:
+					ItemAccessoryData accessoryData = JsonConvert.DeserializeObject<ItemAccessoryData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(accessoryData));
+					break;
 				default:
-					Debug.DebugBreak();
+					Debug.Log(type);
+					reader.ReadLine();
 					break;
 				}
 			}

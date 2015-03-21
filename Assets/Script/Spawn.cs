@@ -208,7 +208,7 @@ public class Spawn : MonoBehaviour {
 							++spawnCount;
 							
 							
-
+							yield return new WaitForSeconds (0.02f);
 							
 							StartCoroutine(  EffectSpawnMob(refMob
 							                                , enemyPos
@@ -259,6 +259,8 @@ public class Spawn : MonoBehaviour {
 							{
 								dropItems = GetCurrentWave().itemSpawn.defaultItem;
 							}
+
+							yield return new WaitForSeconds (0.02f);
 							
 							StartCoroutine(  EffectSpawnMob(refMob
 							                                , enemyPos

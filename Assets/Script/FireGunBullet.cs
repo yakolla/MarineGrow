@@ -17,6 +17,7 @@ public class FireGunBullet : Bullet {
 		m_particleSystem = transform.Find("Body/Particle System").particleSystem;
 		m_particleSystem.startSpeed *= m_collider.size.x;
 		m_particleSystem.startSize *= m_collider.size.x;
+		m_damageType = DamageDesc.Type.Fire;
 	}
 	
 	// Update is called once per frame
@@ -82,12 +83,7 @@ public class FireGunBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			float dist = Vector3.Distance(m_ownerCreature.transform.position, creature.transform.position);
-			//m_particleSystem.startSpeed = dist;
-
-			//m_collider.center = new Vector3(dist/2.6f, m_collider.center.y, m_collider.center.z);
-			//m_collider.size = new Vector3(dist, m_collider.size.y, m_collider.size.z);
-			creature.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));			
+			GiveDamage(creature);
 		}
 	}
 }

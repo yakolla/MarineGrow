@@ -16,6 +16,7 @@ public class LightningLauncher : Weapon {
 			{
 				m_bullet = CreateBullet(targetAngle, m_gunPoint.transform.position) as LightningBullet;
 			}
+			m_bullet.Damage = Damage;
 			m_bullet.gameObject.SetActive(true);
 			m_bullet.MaxChaining = m_maxChaining;
 
