@@ -1191,6 +1191,86 @@
 		}
 	},
 	{
+		"id":125,
+		"codeName":"FireSparkLaucnher",
+		"type":"Weapon",
+		"icon":"Sprites/FireSparkLauncher",
+		
+		"evolutionFiring":
+		{
+			"angle":3,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":1,
+			"range":5
+		},		
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"evolution":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				},
+				{
+					"refItemId":3, 
+					"count":10
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":1
+				}
+			]
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",

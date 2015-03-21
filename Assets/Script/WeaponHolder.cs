@@ -9,6 +9,9 @@ public class WeaponHolder : MonoBehaviour {
 	float					m_weaponChangedTime = 0f;
 	int						m_curWeaponIndex = 0;
 
+	[SerializeField]
+	bool					m_conWeapon = false;
+
 	void Update()
 	{
 		if (m_weaponChangedTime+m_weaponChangeCoolTime < Time.time)
@@ -25,7 +28,17 @@ public class WeaponHolder : MonoBehaviour {
 
 	public void StartFiring(Vector2 targetAngle)
 	{
-		m_weapons[m_curWeaponIndex].StartFiring(targetAngle);
+		if (m_conWeapon == false)
+		{
+			m_weapons[m_curWeaponIndex].StartFiring(targetAngle);
+		}
+		else
+		{
+			foreach(Weapon weapon in m_weapons)
+			{
+				weapon.StartFiring(targetAngle);
+			}
+		}
 	}
 
 	public void StopFiring()

@@ -386,9 +386,6 @@ public class Creature : MonoBehaviour {
 
 	}
 
-
-
-
 	IEnumerator EffectSteamPack(float time)
 	{		
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
@@ -529,14 +526,13 @@ public class Creature : MonoBehaviour {
 			ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
 		}
 
-		if (true == m_creatureProperty.BackwardOnDamage)
+		if (true == m_creatureProperty.BackwardOnDamage && damageDesc.PushbackOnDamage)
 		{
 			m_pushbackSpeedOnDamage = 10f / rigidbody.mass;
-			if (damageDesc.PushbackOnDamage)
-				rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
-
+			rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);
 			rigidbody.AddTorque(transform.forward*2f, ForceMode.Impulse);
 			rigidbody.maxAngularVelocity = 2f;
+		
 			EnableNavmesh(false);
 		}
 
