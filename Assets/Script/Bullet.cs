@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour {
 		StartFiring();
 	}
 
-	public void StartFiring()
+	virtual public void StartFiring()
 	{
 		m_firing = true;
 

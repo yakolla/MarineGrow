@@ -10,6 +10,10 @@ public class FireGunBullet : Bullet {
 	BoxCollider		m_collider;
 
 	ParticleSystem	m_particleSystem;
+	float			m_firingStartTime;
+
+	Vector3			m_oriColliderCenter;
+	Vector3			m_oriColliderSize;
 
 	void Awake()
 	{
@@ -18,6 +22,9 @@ public class FireGunBullet : Bullet {
 		m_particleSystem.startSpeed *= m_collider.size.x;
 		m_particleSystem.startSize *= m_collider.size.x;
 		m_damageType = DamageDesc.Type.Fire;
+
+		m_oriColliderCenter = m_collider.center;
+		m_oriColliderSize = m_collider.size;
 	}
 	
 	// Update is called once per frame
@@ -33,30 +40,11 @@ public class FireGunBullet : Bullet {
 		{
 			m_collider.enabled = false;
 		}
-		/*
-		RaycastHit hit;
-		Vector3 fwd = transform.TransformDirection(Vector3.right);
-		if (Physics.Raycast(transform.position, fwd, out hit, 10f))
-		{
-			Creature creature = hit.transform.gameObject.GetComponent<Creature>();
-			if (creature && Creature.IsEnemy(creature, m_ownerCreature))
-			{				
-				float dist = Mathf.Min(Vector3.Distance(m_ownerCreature.transform.position, creature.transform.position)+2, 8f);
-				m_particleSystem.startSpeed = dist;
 
-				m_collider.center = new Vector3(dist/2.6f, m_collider.center.y, m_collider.center.z);
-				m_collider.size = new Vector3(dist, m_collider.size.y, m_collider.size.z);
+		float t = Mathf.Min(1f, (Time.time - m_firingStartTime)*1.2f);
+		m_collider.center = new Vector3(m_oriColliderCenter.x*t, m_collider.center.y, m_collider.center.z);
+		m_collider.size = new Vector3(m_oriColliderSize.x*t, m_collider.size.y, m_collider.size.z);
 
-				if (m_collider.enabled)
-				{
-					creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));	
-				}
-
-			}
-		}
-		else{
-			m_particleSystem.startSpeed = 8f;
-		}*/
 	}
 
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
@@ -69,6 +57,12 @@ public class FireGunBullet : Bullet {
 		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.x, 0));
 		transform.localScale = scale;
 
+	}
+
+	override public void StartFiring()
+	{
+		base.StartFiring();
+		m_firingStartTime = Time.time;
 	}
 
 	override public void StopFiring()
@@ -86,4 +80,5 @@ public class FireGunBullet : Bullet {
 			GiveDamage(creature);
 		}
 	}
+
 }

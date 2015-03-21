@@ -17,6 +17,7 @@ public class Firegun : Weapon {
 					m_bullet[i] = CreateBullet(targetAngle, m_gunPoint.transform.position) as FireGunBullet;
 				}
 
+				m_bullet[i].StartFiring();
 				m_bullet[i].gameObject.SetActive(true);
 				m_bullet[i].Damage = Damage;
 
