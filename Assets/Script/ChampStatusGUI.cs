@@ -40,7 +40,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_guiSkin.label.fontSize = m_fontSize;
 		m_guiSkin.button.fontSize = m_fontSize;
 
-		//m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
+		m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_guageWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
 		m_skillWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
 
@@ -85,7 +85,9 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void DisplayGoodsWindow(int windowID)
 	{
-		DisplayChampGoodsGUI((int)m_slotHeight);
+		int startY = 0;
+		int size = (int)m_slotHeight/2;
+		GUI.Label(new Rect(0, startY+(size*0), m_slotWidth-size, size), "<color=white>Total Mob Kills:" + Warehouse.Instance.Stats.m_totalKills +  "</color>");
 	}
 
 	//Setting up the Inventory window
@@ -101,6 +103,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		float expRatio = m_champ.m_creatureProperty.getExpRemainRatio();
 		lable = Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();
 		drawGuage(new Rect(0, startY+(size*1), m_slotWidth-size, size), expRatio, lable, m_guageTexture); 
+
 
 	}
 
