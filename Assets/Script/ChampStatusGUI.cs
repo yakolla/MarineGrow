@@ -68,26 +68,11 @@ public class ChampStatusGUI : MonoBehaviour {
 		style.normal.textColor = Color.black;
 		GUI.Label(new Rect(size.x+1, size.y+1, size.width, size.height), lable, style);
 	}
-
-	static public void DisplayChampGoodsGUI(int size)
-	{
-		int startX = size/3;
-		int startY = 0;	
-
-
-		ItemObject goldItemObj = Warehouse.Instance.Gold;
-		ItemObject gemItemObj = Warehouse.Instance.Gem;
-		GUI.Label(new Rect(startX, size*0.2f, size*0.7f, size*0.7f), goldItemObj.ItemIcon);
-		GUI.Label(new Rect(startX+(size), 0, size, size), "<color=white>" + goldItemObj.Item.Count + "</color>");
-		GUI.Label(new Rect(startX+(size)*3, size*0.2f, size*0.7f, size*0.7f), gemItemObj.ItemIcon);
-		GUI.Label(new Rect(startX+(size)*4, 0, size, size), "<color=white>" +gemItemObj.Item.Count + "</color>");
-	}
-
 	void DisplayGoodsWindow(int windowID)
 	{
 		int startY = 0;
 		int size = (int)m_slotHeight/2;
-		GUI.Label(new Rect(0, startY+(size*0), m_slotWidth-size, size), "<color=white>Total Mob Kills:" + Warehouse.Instance.Stats.m_totalKills +  "</color>");
+		GUI.Label(new Rect(0, startY+(size*0), m_goodsWindowRect.width, size), "<color=white>Total Mob Kills:" + Warehouse.Instance.Stats.m_totalKills +  "</color>");
 	}
 
 	//Setting up the Inventory window

@@ -106,7 +106,7 @@ public class GPlusPlatform {
 		});  
 	}
 
-	public void ReportScore(string code, int score, System.Action<bool> callback)
+	public void ReportScore(string code, long score, System.Action<bool> callback)
 	{
 		Social.ReportScore(score, code, (bool success) => {
 			callback(success);
