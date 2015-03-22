@@ -451,6 +451,9 @@ public class Spawn : MonoBehaviour {
 					case ItemData.Type.WeaponDNA:
 						item = new ItemWeaponDNAData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
+					case ItemData.Type.Accessory:
+						item = new ItemAccessoryData(desc.refItem.id);					
+						break;
 					case ItemData.Type.GoldMedal:
 						item = new ItemGoldMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;

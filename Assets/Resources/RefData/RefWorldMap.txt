@@ -172,13 +172,6 @@
 									"minValue":1,
 									"maxValue":1,
 									"ratio":1
-								},
-								{
-									"refItemId":1001,
-									"minValue":1,
-									"maxValue":30001,
-									"ratio":0.1,
-									"count":1
 								}
 							]
 						},
@@ -191,13 +184,6 @@
 									"minValue":1,
 									"maxValue":1,
 									"ratio":1
-								},
-								{
-									"refItemId":1001,
-									"minValue":1,
-									"maxValue":30002,
-									"ratio":0.1,
-									"count":1
 								}
 							]
 						},
@@ -225,7 +211,7 @@
 							"refDropItems":
 							[								
 								{
-									"refItemId":111,
+									"refItemId":106,
 									"minValue":1,
 									"maxValue":1,
 									"ratio":1
@@ -244,7 +230,7 @@
 							"refDropItems":
 							[								
 								{
-									"refItemId":106,
+									"refItemId":120,
 									"minValue":1,
 									"maxValue":1,
 									"ratio":1
@@ -263,10 +249,11 @@
 							"refDropItems":
 							[								
 								{
-									"refItemId":118,
+									"refItemId":1001,
 									"minValue":1,
-									"maxValue":1,
-									"ratio":1
+									"maxValue":30001,
+									"ratio":0.1,
+									"count":1
 								}
 							]
 						},
@@ -275,10 +262,18 @@
 							"refDropItems":
 							[								
 								{
-									"refItemId":120,
+									"refItemId":1001,
+									"minValue":1,
+									"maxValue":30002,
+									"ratio":0.1,
+									"count":1
+								},
+								{
+									"refItemId":10,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":1
+									"ratio":0.1,
+									"count":1
 								}
 							]
 						},
