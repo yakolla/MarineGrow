@@ -88,7 +88,7 @@
 			[
 				{
 					"refItemId":8,
-					"count":30
+					"count":3
 				}
 			]
 		},
@@ -123,14 +123,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":300
+					"count":30
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":30
+					"count":3
 				}
 			]
 		},
@@ -165,14 +165,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":600
+					"count":60
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":60
+					"count":6
 				}
 			]
 		},
@@ -207,14 +207,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":600
+					"count":60
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":60
+					"count":6
 				}
 			]
 		},
@@ -300,14 +300,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":1200
+					"count":120
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":120
+					"count":12
 				}
 			]
 		},
@@ -342,14 +342,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":1200
+					"count":120
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":120
+					"count":12
 				}
 			]
 		}
@@ -388,7 +388,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":30
+					"count":300
 				},
 				{
 					"refItemId":3, 
@@ -483,14 +483,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":900
+					"count":90
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":90
+					"count":9
 				}
 			]
 		},
@@ -525,14 +525,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":900
+					"count":90
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":90
+					"count":9
 				}
 			]
 		}
@@ -823,14 +823,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":1500
+					"count":150
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":150
+					"count":15
 				}
 			]
 		},
@@ -865,14 +865,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":1500
+					"count":150
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":150
+					"count":15
 				}
 			]
 		}
