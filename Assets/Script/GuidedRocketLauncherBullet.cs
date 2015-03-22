@@ -13,6 +13,8 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	float	m_angleElpased = 1f;
 	float	m_srcAngle = 0f;
 
+	[SerializeField]
+	float	m_searchRange = 3f;
 
 	// Use this for initialization
 	void Start () {
@@ -45,7 +47,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 		if (m_target == null && m_lastSearchTime <= Time.time)
 		{
-			m_target = SearchTarget(m_ownerCreature.GetAutoTargetTags(), 3f);
+			m_target = SearchTarget(m_ownerCreature.GetAutoTargetTags(), m_searchRange);
 			m_lastSearchTime = Time.time + m_searchCoolTime;
 
 			if (m_target != null)

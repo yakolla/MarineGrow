@@ -283,7 +283,7 @@
 		"evolutionFiring":
 		{
 			"angle":3,
-			"delay":0.3
+			"delay":0.1
 		},
 		"weaponStat":
 		{
