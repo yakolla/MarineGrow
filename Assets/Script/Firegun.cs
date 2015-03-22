@@ -48,6 +48,13 @@ public class Firegun : Weapon {
 
 	}
 
+	override public void MoreFire()
+	{
+		base.MoreFire();
+
+		m_bullet = new FireGunBullet[m_firingDescs.Count];
+	}
+
 	override public void LevelUp()
 	{
 		base.LevelUp();

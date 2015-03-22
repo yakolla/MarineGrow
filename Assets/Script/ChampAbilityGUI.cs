@@ -73,7 +73,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.01f, "Bullet More", 
+		m_abilities.Add(new Ability(1f, "Bullet More", 
 		                            ()=>{
 			return "";
 		},

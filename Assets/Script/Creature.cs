@@ -557,7 +557,7 @@ public class Creature : MonoBehaviour {
 
 	virtual public void GiveExp(int exp)
 	{
-		m_creatureProperty.giveExp((int)(exp+exp*m_creatureProperty.GainExtraExp));
+
 	}
 
 	public Type CreatureType

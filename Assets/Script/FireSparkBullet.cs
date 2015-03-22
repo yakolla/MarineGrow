@@ -7,17 +7,36 @@ public class FireSparkBullet : Bullet {
 	GameObject		m_prefBombEffect = null;
 	
 	[SerializeField]
-	float			m_bombRange = 5f;	
+	float			m_bombRange = 5f;
+	
 
 
+	
 	ParticleSystem	m_particleSystem;
 	BoxCollider		m_boxCollider;
-
+	Parabola	m_parabola;
+	
+	protected enum Status
+	{
+		Dropping,
+		Dropped,
+		Charging,
+		Firing,
+	}
+	
+	protected Status			m_status = Status.Dropped;
+	
 	float			m_bombTime = 0f;
-	int				m_triggerFrame = 0;
+	
+	[SerializeField]
 	float			m_duration = 10f;
+	
+	[SerializeField]
 	float			m_damageOnTime = 1f;
+	
 	float			m_dropTime = 0f;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -26,37 +45,60 @@ public class FireSparkBullet : Bullet {
 		m_particleSystem = m_prefBombEffect.particleSystem;
 		m_particleSystem.enableEmission = false;
 		m_damageType = DamageDesc.Type.Fire;
-
+		
+		int[] angles = {0, 90};
+		transform.eulerAngles = new Vector3(0, angles[Random.Range(0, angles.Length)], 0);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-		if (m_boxCollider.enabled == false && m_dropTime == 0f)
+	protected void Update () {
+		
+		switch(m_status)
 		{
-			m_dropTime = Time.time+1f;
-			Vector3 scale = Vector3.one;
-			scale.x = m_bombRange;
-			transform.localScale = scale;
+		case Status.Dropping:
+			break;
+		case Status.Dropped:
+			{
+				m_dropTime = Time.time+1f;
+				Vector3 scale = Vector3.one;
+				scale.x = m_bombRange;
+				transform.localScale = scale;
+				
+				m_particleSystem.enableEmission = true;
+				m_status = Status.Charging;				
+			}
+			break;
+		case Status.Charging:
+			if (m_dropTime < Time.time)
+			{
+				m_status = Status.Firing;
+				
+				m_boxCollider.enabled = true;
+				m_bombTime = Time.time + m_damageOnTime;
+				Vector3 rotation = m_prefBombEffect.transform.eulerAngles;
+				rotation.y = transform.eulerAngles.y;
+				
+				GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, Quaternion.Euler(rotation));
+				Vector3 scale = Vector3.one;
+				scale.x = m_bombRange*3f;
+				bombEffect.transform.localScale = scale;
+				
+				StartCoroutine(destoryObject(bombEffect));
+			}
+			break;
+		case Status.Firing:
+			if (m_bombTime < Time.time)
+			{
+				m_bombTime = Time.time + m_damageOnTime;
+				m_boxCollider.enabled = false;
+			}
+			else
+			{
+				m_boxCollider.enabled = true;
+			}
+			break;
 		}
 		
-		if (m_boxCollider.enabled == false && m_dropTime < Time.time)
-		{
-			m_particleSystem.enableEmission = true;
-			m_boxCollider.enabled = true;
-			m_bombTime = Time.time;
-			Vector3 rotation = m_prefBombEffect.transform.eulerAngles;
-			rotation.y = transform.eulerAngles.y;
-			
-			GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, Quaternion.Euler(rotation));
-			Vector3 scale = Vector3.one;
-			scale.x = m_bombRange*3f;
-			bombEffect.transform.localScale = scale;
-			
-			
-			StartCoroutine(destoryObject(bombEffect));
-		}
-
 		
 	}
 	
@@ -67,26 +109,13 @@ public class FireSparkBullet : Bullet {
 		DestroyObject(bombEffect);
 	}
 	
-	
-	void OnTriggerStay(Collider other) {
-		
-		
-		if (m_triggerFrame != Time.frameCount)
-		{
-			if (m_bombTime + m_damageOnTime >= Time.time)
-			{
-				return;
-			}
-			
-			m_bombTime = Time.time;
-			m_triggerFrame = Time.frameCount;
-		}
+	void OnTriggerEnter(Collider other) 
+	{
 		
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
 			GiveDamage(creature);
 		}
-		
 	}
 }

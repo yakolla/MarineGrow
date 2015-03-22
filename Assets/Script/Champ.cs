@@ -172,6 +172,11 @@ public class Champ : Creature {
 		return new string[]{Creature.Type.Mob.ToString()};
 	}
 
+	override public void GiveExp(int exp)
+	{
+		m_creatureProperty.giveExp((int)(exp+exp*m_creatureProperty.GainExtraExp));
+	}
+
 	override public void Death()
 	{
 		base.Death();

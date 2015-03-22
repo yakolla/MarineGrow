@@ -77,7 +77,7 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	public void MoreFire()
+	virtual public void MoreFire()
 	{
 		if (m_refItem.evolutionFiring == null)
 			return;

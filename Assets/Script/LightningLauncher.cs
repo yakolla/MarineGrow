@@ -44,6 +44,13 @@ public class LightningLauncher : Weapon {
 
 	}
 
+	override public void MoreFire()
+	{
+		base.MoreFire();
+		
+		m_maxChaining += 1;
+	}
+
 	override public void LevelUp()
 	{
 		base.LevelUp();
@@ -54,7 +61,7 @@ public class LightningLauncher : Weapon {
 		}
 		else
 		{
-			m_maxChaining += m_level;
+			m_maxChaining += 1;
 		}
 
 	}
