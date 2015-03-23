@@ -30,12 +30,16 @@ public class Spawn : MonoBehaviour {
 	Dungeon			m_dungeon;
 	int				m_wave = 0;
 
+	TypogenicText	m_killComboGUI;
+
 	[SerializeField]
 	int				m_spawningPool = 0;
 	// Use this for initialization
 	void Start () {
 
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
+
+		m_killComboGUI = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<TypogenicText>();
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -54,8 +58,6 @@ public class Spawn : MonoBehaviour {
 		m_areas = transform.GetComponentsInChildren<Transform>();
 
 	}
-
-
 
 	IEnumerator EffectWaveText(string msg, float alpha)
 	{
@@ -160,7 +162,10 @@ public class Spawn : MonoBehaviour {
 			}
 			else
 			{
-				StartCoroutine(EffectWaveText("Wave " + (m_spawningPool + 1), 1));
+				if (m_spawningPool % GetCurrentWave().mobSpawns.Length == 0)
+				{
+					StartCoroutine(EffectWaveText("Stage " + (m_spawningPool/GetCurrentWave().mobSpawns.Length + 1), 1));
+				}
 			}
 
 
@@ -494,6 +499,8 @@ public class Spawn : MonoBehaviour {
 		{
 			m_champ = GameObject.Find("Champ(Clone)");
 		}
+
+		m_killComboGUI.Text = "Combo:" + Warehouse.Instance.Stats.m_totalKills;
 	}
 
 }

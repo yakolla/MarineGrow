@@ -34,7 +34,6 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected Type			m_creatureType;
 
-	GameObject				m_prefDamageGUI;
 	GameObject				m_prefPickupItemGUI;
 	GameObject				m_prefDamageSprite;
 
@@ -69,7 +68,6 @@ public class Creature : MonoBehaviour {
 
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
-		m_prefDamageGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 		damagedTexture = Resources.Load<Texture>("ani/damage monster");
@@ -483,6 +481,9 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
+		if (m_creatureProperty.HP == 0)
+			return;
+		Debug.Log("hp:"+m_creatureProperty.HP);
 		float criticalDamage = 0f;
 		if (offender != null)
 		{
@@ -578,7 +579,6 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void Death()
 	{
-
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, Quaternion.Euler(0, Random.Range(0, 360), 0));	
 		effect.transform.localScale = transform.localScale;
 

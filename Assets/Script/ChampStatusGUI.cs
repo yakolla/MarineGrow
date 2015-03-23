@@ -43,7 +43,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_guiSkin.label.fontSize = m_fontSize;
 		m_guiSkin.button.fontSize = m_fontSize;
 
-		m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
+		//m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_guageWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
 		m_skillWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
 

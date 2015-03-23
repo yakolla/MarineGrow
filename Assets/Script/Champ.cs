@@ -177,6 +177,12 @@ public class Champ : Creature {
 		m_creatureProperty.giveExp((int)(exp+exp*m_creatureProperty.GainExtraExp));
 	}
 
+	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
+	{
+		base.TakeDamage(offender, damageDesc);
+		Warehouse.Instance.Stats.m_totalKills = 0;
+	}
+
 	override public void Death()
 	{
 		base.Death();
