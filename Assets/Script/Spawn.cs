@@ -53,9 +53,6 @@ public class Spawn : MonoBehaviour {
 		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
 		m_areas = transform.GetComponentsInChildren<Transform>();
 
-		
-		//m_spawningPool = Warehouse.Instance.WaveIndex;
-		StartWave(0);
 	}
 
 
@@ -80,9 +77,10 @@ public class Spawn : MonoBehaviour {
 		return m_refWorldMap.waves[m_wave%m_refWorldMap.waves.Length];
 	}
 
-	void StartWave(int wave)
+	void StartWave(int[] param)
 	{
-		m_wave = wave;
+		m_wave = param[0];
+		m_spawningPool = param[1]*GetCurrentWave().mobSpawns.Length;
 		StartCoroutine(checkBossAlive());
 	}
 
@@ -145,6 +143,7 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
 	{
+
 		if (m_champ == null)
 		{
 			yield return new WaitForSeconds (1f);

@@ -212,7 +212,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		if (m_champ.RemainStatPoint > 0)
 		{
-			Const.makeItemButton(m_guiSkin, m_fontSize, Screen.width/2-size/2+size, Screen.height-size*2, size, RefData.Instance.RefItems[1002].levelup, 1f+m_usedCountOfRandomAbilityItem, "Roll", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, Screen.width/2-size/2+size, Screen.height-size*2, size, size, RefData.Instance.RefItems[1002].levelup, 1f+m_usedCountOfRandomAbilityItem, "Roll", ()=>{
 				RandomAbility();
 				++m_usedCountOfRandomAbilityItem;
 			});

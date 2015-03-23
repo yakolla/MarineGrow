@@ -31,10 +31,14 @@ public class ChampSettingGUI : MonoBehaviour {
 	[SerializeField]
 	GUISkin		m_guiSkin = null;
 
-	float 		m_slotWidth = Screen.width * (1/5f);
+	float 		m_slotWidth = Screen.width * (1/14f);
 	float 		m_slotHeight = Screen.height * (1/8f);
 
 	int		m_fontSize = (int)(Screen.width*(1/50f));
+
+	int			m_stage = 1;
+
+	GameObject		m_spawn;
 
 	public ItemObject	EquipedWeapon
 	{
@@ -48,8 +52,10 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void Start()
 	{
+		m_spawn = GameObject.Find("Dungeon/Spawn");
+
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
-		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth, 0, m_slotWidth*2, m_slotHeight);
+		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth*3, 0, m_slotWidth*6, m_slotHeight);
 		
 		if (m_cheat == true)
 		{
@@ -145,7 +151,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUIStyle	itemDescStyle = m_guiSkin.GetStyle("Desc");
 		itemDescStyle.fontSize = m_fontSize;
 
-		int size = (int)m_slotHeight;
+		int size = (int)m_slotWidth;
 
 		GUI.BeginGroup(new Rect(startX, startY, width, height));
 		GUI.Label(new Rect(0, 0, width, height), selectedItem.Item.Description(),itemDescStyle);
@@ -155,7 +161,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (selectedItem.Item.Lock == true)
 		{
-			Const.makeItemButton(m_guiSkin, m_fontSize, startX, startY, size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, startX, startY, size, size, selectedItem.Item.RefItem.unlock, 1f, "Unlock", ()=>{
 				selectedItem.Item.Lock = false;
 				switch(selectedItem.Item.RefItem.id)
 				{
@@ -274,7 +280,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (selectedItem.Item.Level < Const.ItemMaxLevel)
 		{
-			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
 				++selectedItem.Item.Level;
 			});
 		}
@@ -296,7 +302,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void DisplayGoodsWindow()
 	{
-		int size = (int)m_slotHeight;
+		int size = (int)m_slotWidth;
 		int startX = size/3;
 		int startY = 0;	
 		
@@ -316,33 +322,50 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		DisplayGoodsWindow();
 
-		int size = (int)m_slotHeight;
+		int size = (int)m_slotWidth;
 		int startY = 0;
 
-		if (GUI.Button(new Rect(Screen.width/2-size, Screen.height-size, size*2, size), "Start") && m_equipedWeapon != null)
+		int stageStartX = (size*7)/2;
+		if (GUI.Button(new Rect(stageStartX, Screen.height-size*2, size, size), "+"))
 		{
-			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
-			GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/marine_skin");
-
-			GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
-			enemyBody.name = "Body";
-			enemyBody.transform.parent = champObj.transform;
-			enemyBody.transform.localPosition = Vector3.zero;
-			enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-
-			Creature champ = champObj.GetComponent<Creature>();
-
-			m_equipedWeapon.Item.Equip(champ);
-			for(int x = 0; x < m_equipedAccessories.Length; ++x)
-			{
-				if (m_equipedAccessories[x] != null)
-				{
-					m_equipedAccessories[x].Item.Equip(champ);
-				}
-			}	
-			this.enabled = false;
-			return;
+			++m_stage;
 		}
+		if (GUI.Button(new Rect(stageStartX, Screen.height-size, size, size), "-"))
+		{
+			--m_stage;
+			m_stage = Mathf.Max(1, m_stage);
+		}
+		GUI.Label(new Rect(stageStartX+size, Screen.height-size-size/2, size*2, size), "Stage:" + m_stage);
+
+		Const.makeItemButton(m_guiSkin, m_fontSize, stageStartX+size*4, Screen.height-size*2, size, (int)m_slotHeight, RefData.Instance.RefItems[1003].levelup, (m_stage-1)*(m_stage-1)*(m_stage-1), "Start", ()=>{
+			if (m_equipedWeapon != null)
+			{
+				GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
+				GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/marine_skin");
+				
+				GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+				enemyBody.name = "Body";
+				enemyBody.transform.parent = champObj.transform;
+				enemyBody.transform.localPosition = Vector3.zero;
+				enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+				
+				Creature champ = champObj.GetComponent<Creature>();
+				
+				m_equipedWeapon.Item.Equip(champ);
+				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				{
+					if (m_equipedAccessories[x] != null)
+					{
+						m_equipedAccessories[x].Item.Equip(champ);
+					}
+				}	
+
+				int[] param = {0, m_stage-1};
+
+				m_spawn.SendMessage("StartWave", param);
+				this.enabled = false;
+			}
+		});
 
 		GUIStyle columnStyle = m_guiSkin.GetStyle("Column");
 		columnStyle.fontSize = m_fontSize;
@@ -385,15 +408,16 @@ public class ChampSettingGUI : MonoBehaviour {
 		itemScrollPosition.y += delta * accel;
 		accel -= accel*Time.deltaTime;
 		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
+		int paddingY = size/2;
 
 		switch (Application.platform)
 		{
 		case RuntimePlatform.WindowsEditor:
 		case RuntimePlatform.WindowsPlayer:
-			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*3.5f), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
+			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2)-paddingY, Screen.width, m_slotHeight*3.5f), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size));
 			break;
 		default:
-			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2), Screen.width, size*3.5f), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size),GUIStyle.none,GUIStyle.none);
+			itemScrollPosition = GUI.BeginScrollView(new Rect(0, startY+size+(size*2)-paddingY, Screen.width, m_slotHeight*3.5f), itemScrollPosition, new Rect(0, 0, Screen.width-size, size+size*2*Warehouse.Instance.Items.Count/INVEN_SLOT_COLS+Warehouse.Instance.Items.Count/INVEN_SLOT_COLS*size),GUIStyle.none,GUIStyle.none);
 			break;
 		}
 

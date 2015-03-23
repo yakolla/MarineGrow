@@ -43,16 +43,22 @@ public class Const {
 	}
 	
 	public delegate void OnPay();
-	public static int makeItemButton(GUISkin guiSkin, int fontSize, int startX, int startY, int size, RefPriceCondition condition, float itemWorth, string btnName, OnPay functor)
+	public static int makeItemButton(GUISkin guiSkin, int fontSize, int startX, int startY, int width, int height, RefPriceCondition condition, float itemWorth, string btnName, OnPay functor)
 	{
 		int prevWidth = 0;
 		if (condition != null)
 		{			
-			prevWidth = size*3;
-			if (false == makeItemButtonCore(guiSkin, fontSize, startX, startY, prevWidth, size, size*2, condition.conds, itemWorth, btnName, functor))
+			prevWidth = width*3;
+			int btnHeight = height;
+			if (btnName.Equals("") == false)
+			{
+				btnHeight += height;
+			}
+
+			if (false == makeItemButtonCore(guiSkin, fontSize, startX, startY, prevWidth, height, btnHeight, condition.conds, itemWorth, btnName, functor))
 			{
 				if (condition.else_conds != null)
-					makeItemButtonCore(guiSkin, fontSize, startX, startY+size*2, prevWidth, size, size, condition.else_conds, itemWorth, "", functor);
+					makeItemButtonCore(guiSkin, fontSize, startX, startY+width*2, prevWidth, height, height, condition.else_conds, itemWorth, "", functor);
 			}
 			
 		}
@@ -90,6 +96,7 @@ public class Const {
 			GUI.Label(new Rect((width/(1+conds.Length)-imgSize/2)+(width/(1+conds.Length)-imgSize/2)*2*priceIndex, height, imgSize, imgSize), Resources.Load<Texture>(condRefItem.icon));
 			
 			string str = "<color=white>";
+			int cost = (int)(price.count*itemWorth);
 			
 			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
 			int hasCount = 0;
@@ -100,7 +107,7 @@ public class Const {
 			}
 			else if (inventoryItemObj != null)
 			{
-				if (inventoryItemObj.Item.Count < price.count*itemWorth)
+				if (inventoryItemObj.Item.Count < cost)
 				{
 					str = "<color=red>";
 					able = false;
@@ -108,7 +115,7 @@ public class Const {
 				hasCount = inventoryItemObj.Item.Count;
 			}
 			str += hasCount;
-			str += "/" + price.count*itemWorth;
+			str += "/" + cost;
 			str += "</color>";
 			GUI.Label(new Rect(width/(conds.Length)*priceIndex, startY+height, width/(conds.Length), imgSize), str, itemCountStyle);
 			
