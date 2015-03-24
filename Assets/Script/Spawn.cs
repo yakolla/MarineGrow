@@ -8,7 +8,7 @@ public class Spawn : MonoBehaviour {
 
 
 	[SerializeField]
-	GameObject		m_champ = null;
+	Champ		m_champ = null;
 
 	[SerializeField]
 	Transform[]		m_areas = null;
@@ -31,7 +31,7 @@ public class Spawn : MonoBehaviour {
 	int				m_wave = 0;
 
 	TypogenicText	m_killComboGUI;
-
+	ComboGUIShake	m_comboGUIShake;
 	[SerializeField]
 	int				m_spawningPool = 0;
 	// Use this for initialization
@@ -40,6 +40,7 @@ public class Spawn : MonoBehaviour {
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
 
 		m_killComboGUI = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<TypogenicText>();
+		m_comboGUIShake = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<ComboGUIShake>();
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -157,8 +158,7 @@ public class Spawn : MonoBehaviour {
 			if (mobSpawn.boss == true)
 			{
 				StartCoroutine(EffectWaveText("Boss", 3));
-				Champ champ = m_champ.GetComponent<Champ>();
-				champ.ShakeCamera(3f);
+				m_champ.ShakeCamera(3f);
 			}
 			else
 			{
@@ -324,6 +324,17 @@ public class Spawn : MonoBehaviour {
 		{
 			SpawnItemBox(GetCurrentWave().itemSpawn.bossDefaultItem, mob.transform.position);
 		}
+
+		if (m_champ)
+		{
+			++m_champ.ComboKills;
+			if (Warehouse.Instance.Stats.m_comboKills < m_champ.ComboKills)
+			{
+				Warehouse.Instance.Stats.m_comboKills = m_champ.ComboKills;
+			}
+			m_comboGUIShake.enabled = true;
+			m_comboGUIShake.shake = 2f;
+		}
 	}
 
 	IEnumerator SpawnEffectDestroy(GameObject obj, float delay)
@@ -386,8 +397,10 @@ public class Spawn : MonoBehaviour {
 
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, mobLevel, this, refDropItems, boss);
-		
-		enemy.SetTarget(m_champ);
+
+		if (m_champ != null)
+			enemy.SetTarget(m_champ.gameObject);
+
 		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + refMob.scale);
 	
 		m_bosses.Add(enemy.gameObject);
@@ -497,10 +510,18 @@ public class Spawn : MonoBehaviour {
 	void Update () {
 		if (m_champ == null)
 		{
-			m_champ = GameObject.Find("Champ(Clone)");
+			GameObject obj = GameObject.Find("Champ(Clone)");
+			if (obj != null)
+			{
+				m_champ = obj.GetComponent<Champ>();
+			}
 		}
 
-		m_killComboGUI.Text = "Combo:" + Warehouse.Instance.Stats.m_totalKills;
+		if (m_champ != null)
+		{
+			m_killComboGUI.Text = "x" + m_champ.ComboKills;
+		}
+
 	}
 
 }

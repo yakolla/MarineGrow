@@ -27,6 +27,8 @@ public class Champ : Creature {
 
 	float		m_creationTime = 0;
 
+	int			m_comboKills;
+
 	new void Start () {
 		
 		m_creatureProperty.init(this, m_creatureBaseProperty);
@@ -180,7 +182,7 @@ public class Champ : Creature {
 	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 		base.TakeDamage(offender, damageDesc);
-		Warehouse.Instance.Stats.m_totalKills = 0;
+		m_comboKills = 0;
 	}
 
 	override public void Death()
@@ -198,7 +200,13 @@ public class Champ : Creature {
 
 	}
 
-	public Texture2D getScreenshot() {
+	public int ComboKills
+	{
+		get {return m_comboKills;}
+		set {m_comboKills = value;}
+	}
+
+	Texture2D getScreenshot() {
 		Texture2D tex = new Texture2D(Screen.width, Screen.height);
 		tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
 		tex.Apply();
@@ -212,7 +220,7 @@ public class Champ : Creature {
 			
 			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, getScreenshot(), OnSavedGameWritten);
 
-			GPlusPlatform.Instance.ReportScore("CgkIrKGfsOUeEAIQAQ", Warehouse.Instance.Stats.m_totalKills, (bool success) => {
+			GPlusPlatform.Instance.ReportScore(Const.LEAD_COMBO_MAX_KILLS, Warehouse.Instance.Stats.m_comboKills, (bool success) => {
 				// handle success or failure
 			});
 		} else {
@@ -228,7 +236,7 @@ public class Champ : Creature {
 			// handle error
 		}
 
-		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(2);
+		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(0);
 	}
 
 	void OnTriggerEnter(Collider other) {

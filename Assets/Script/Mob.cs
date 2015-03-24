@@ -144,8 +144,6 @@ public class Mob : Creature {
 	{
 		Spawn.OnKillMob(this);
 
-		++Warehouse.Instance.Stats.m_totalKills;
-
 		if (RefMob.eggMob != null)
 		{
 			for(int i = 0; i < RefMob.eggMob.count; ++i)

@@ -75,7 +75,7 @@ public class ChampStatusGUI : MonoBehaviour {
 	{
 		int startY = 0;
 		int size = (int)m_slotHeight/2;
-		GUI.Label(new Rect(0, startY+(size*0), m_goodsWindowRect.width, size), "<color=white>Total Mob Kills:" + Warehouse.Instance.Stats.m_totalKills +  "</color>");
+		GUI.Label(new Rect(0, startY+(size*0), m_goodsWindowRect.width, size), "<color=white>Total Mob Kills:" + Warehouse.Instance.Stats.m_comboKills +  "</color>");
 	}
 
 	//Setting up the Inventory window

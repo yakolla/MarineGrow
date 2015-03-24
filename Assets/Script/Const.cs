@@ -16,6 +16,33 @@ public class Const {
 	public const int ItemMaxLevel = 9;
 	public const int ShowMaxDamageNumber = 3;
 
+
+	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
+	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";
+	public const string ACH_SURVIVAL_DURATION_10_WAVES = "CgkIrKGfsOUeEAIQBA";
+	public const string ACH_SURVIVAL_DURATION_20_WAVES = "CgkIrKGfsOUeEAIQBQ";
+	public const string ACH_SURVIVAL_DURATION_30_WAVES = "CgkIrKGfsOUeEAIQBg";
+	public const string ACH_UNLOCKED_THE_LIGHTNINGLAUNCHER = "CgkIrKGfsOUeEAIQBw";
+	public const string ACH_UNLOCKED_THE_ROCKETLAUNCHER = "CgkIrKGfsOUeEAIQCA";
+	public const string ACH_UNLOCKED_THE_GUIDEDROCKETLAUNCHER = "CgkIrKGfsOUeEAIQCQ";
+	public const string ACH_UNLOCKED_THE_LASERBEAM = "CgkIrKGfsOUeEAIQCg";
+	public const string ACH_UNLOCKED_THE_BOOMERANGLAUNCHER = "CgkIrKGfsOUeEAIQCw";
+	public const string ACH_KILL_THE_BOSS_OF_STAGE_2 = "CgkIrKGfsOUeEAIQDA";
+	public const string ACH_KILL_THE_BOSS_OF_STAGE_3 = "CgkIrKGfsOUeEAIQDQ";
+	public const string ACH_KILL_THE_BOSS_OF_STAGE_4 = "CgkIrKGfsOUeEAIQDg";
+	public const string ACH_KILL_THE_BOSS_OF_STAGE_5 = "CgkIrKGfsOUeEAIQDw";
+	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQEA";
+	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_2 = "CgkIrKGfsOUeEAIQEQ";
+	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_3 = "CgkIrKGfsOUeEAIQEg";
+	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_4 = "CgkIrKGfsOUeEAIQEw";
+	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_5 = "CgkIrKGfsOUeEAIQFA";
+	public const string ACH_COMBO_KILLS_100 = "CgkIrKGfsOUeEAIQFQ";
+	public const string ACH_COMBO_KILLS_200 = "CgkIrKGfsOUeEAIQFg";
+	public const string ACH_COMBO_KILLS_300 = "CgkIrKGfsOUeEAIQFw";
+	public const string LEAD_COMBO_MAX_KILLS = "CgkIrKGfsOUeEAIQAQ";
+
+
+
 	public static bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
 	{
 		foreach(RefPrice price in conds)

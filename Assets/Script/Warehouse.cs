@@ -111,7 +111,7 @@ public class Warehouse {
 
 	public class 	Statistics
 	{
-		public	long		m_totalKills = 0;
+		public	long		m_comboKills = 0;
 	}
 
 	Statistics			m_stats = new Statistics();

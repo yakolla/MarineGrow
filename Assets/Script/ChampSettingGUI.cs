@@ -167,32 +167,32 @@ public class ChampSettingGUI : MonoBehaviour {
 				{
 				case 101:
 					GPlusPlatform.Instance.ReportProgress(
-						"CgkIrKGfsOUeEAIQAg", 100, (bool success) => {
+						Const.ACH_UNLOCKED_THE_FIREGUN, 100, (bool success) => {
 					});  
 					break;
 				case 102:
 					GPlusPlatform.Instance.ReportProgress(
-						"CgkIrKGfsOUeEAIQBw", 100, (bool success) => {
+						Const.ACH_UNLOCKED_THE_LIGHTNINGLAUNCHER, 100, (bool success) => {
 					});  
 					break;
 				case 111:
 					GPlusPlatform.Instance.ReportProgress(
-						"CgkIrKGfsOUeEAIQCA", 100, (bool success) => {
+						Const.ACH_UNLOCKED_THE_ROCKETLAUNCHER, 100, (bool success) => {
 					});  
 					break;
 				case 106:
 					GPlusPlatform.Instance.ReportProgress(
-						"CgkIrKGfsOUeEAIQCQ", 100, (bool success) => {
+						Const.ACH_UNLOCKED_THE_GUIDEDROCKETLAUNCHER, 100, (bool success) => {
 					});  
 					break;
 				case 118:
 					GPlusPlatform.Instance.ReportProgress(
-						"CgkIrKGfsOUeEAIQCg", 100, (bool success) => {
+						Const.ACH_UNLOCKED_THE_LASERBEAM, 100, (bool success) => {
 					});  
 					break;
 				case 120:
 					GPlusPlatform.Instance.ReportProgress(
-						"CgkIrKGfsOUeEAIQCw", 100, (bool success) => {
+						Const.ACH_UNLOCKED_THE_BOOMERANGLAUNCHER, 100, (bool success) => {
 					});  
 					break;
 				}
