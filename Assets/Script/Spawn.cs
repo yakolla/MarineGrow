@@ -28,12 +28,12 @@ public class Spawn : MonoBehaviour {
 
 	RefWorldMap		m_refWorldMap;
 	Dungeon			m_dungeon;
-	int				m_wave = 0;
+	int				m_hive = 0;
 
 	TypogenicText	m_killComboGUI;
 	ComboGUIShake	m_comboGUIShake;
 	[SerializeField]
-	int				m_spawningPool = 0;
+	int				m_wave = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -75,15 +75,14 @@ public class Spawn : MonoBehaviour {
 
 	}
 
-	RefWave	GetCurrentWave()
+	public RefWave	GetCurrentWave()
 	{
-		return m_refWorldMap.waves[m_wave%m_refWorldMap.waves.Length];
+		return m_refWorldMap.waves[m_hive];
 	}
 
-	void StartWave(int[] param)
+	public void StartWave(int wave)
 	{
-		m_wave = param[0];
-		m_spawningPool = param[1]*GetCurrentWave().mobSpawns.Length;
+		m_wave = wave*GetCurrentWave().mobSpawns.Length;
 		StartCoroutine(checkBossAlive());
 	}
 
@@ -109,7 +108,7 @@ public class Spawn : MonoBehaviour {
 		{
 			m_bosses.Clear();
 
-			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_spawningPool%GetCurrentWave().mobSpawns.Length]));
+			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_wave%GetCurrentWave().mobSpawns.Length]));
 		}
 	}
 
@@ -142,6 +141,10 @@ public class Spawn : MonoBehaviour {
 		result.spawnMobCount.Add(Random.Range(minIndex, maxIndex));
 	}
 
+	public int GetStage(int wave)
+	{
+		return wave/GetCurrentWave().mobSpawns.Length + 1;
+	}
 
 
 	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
@@ -162,15 +165,15 @@ public class Spawn : MonoBehaviour {
 			}
 			else
 			{
-				if (m_spawningPool % GetCurrentWave().mobSpawns.Length == 0)
+				if (m_wave % GetCurrentWave().mobSpawns.Length == 0)
 				{
-					StartCoroutine(EffectWaveText("Stage " + (m_spawningPool/GetCurrentWave().mobSpawns.Length + 1), 1));
+					StartCoroutine(EffectWaveText("Stage " + GetStage(m_wave), 1));
 				}
 			}
 
 
-			float waveProgress = (float)m_spawningPool / GetCurrentWave().mobSpawns.Length;
-			Debug.Log("waveProgress:" + waveProgress + "," + m_spawningPool);
+			float waveProgress = (float)m_wave / GetCurrentWave().mobSpawns.Length;
+			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
 
 			int spawnCount = 0;
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
@@ -280,8 +283,8 @@ public class Spawn : MonoBehaviour {
 			StartCoroutine(checkBossAlive());
 
 
-			m_spawningPool++;
-			//Warehouse.Instance.WaveIndex = m_spawningPool;
+			m_wave++;
+			Warehouse.Instance.WaveIndex = m_wave;
 		}
 	}
 
@@ -299,7 +302,7 @@ public class Spawn : MonoBehaviour {
 
 	public int SpawnMobLevel()
 	{
-		return (int)(1+m_spawningPool / GetCurrentWave().mobSpawns.Length);
+		return (int)(1+m_wave / GetCurrentWave().mobSpawns.Length);
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)
@@ -328,12 +331,53 @@ public class Spawn : MonoBehaviour {
 		if (m_champ)
 		{
 			++m_champ.ComboKills;
+			switch(m_champ.ComboKills)
+			{
+			case 100:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_100, 100, (bool success)=>{
+				});
+				break;
+			case 200:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_200, 100, (bool success)=>{
+				});
+				break;
+			case 300:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_300, 100, (bool success)=>{
+				});
+				break;
+			}
+
 			if (Warehouse.Instance.Stats.m_comboKills < m_champ.ComboKills)
 			{
 				Warehouse.Instance.Stats.m_comboKills = m_champ.ComboKills;
 			}
+
 			m_comboGUIShake.enabled = true;
 			m_comboGUIShake.shake = 2f;
+
+			switch(mob.RefMob.id)
+			{
+			case 50001:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_KILL_THE_BOSS_OF_STAGE_1, 100, (bool success)=>{
+				});
+				break;
+			case 50002:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_KILL_THE_BOSS_OF_STAGE_2, 100, (bool success)=>{
+				});
+				break;
+			case 50003:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_KILL_THE_BOSS_OF_STAGE_3, 100, (bool success)=>{
+				});
+				break;
+			case 50004:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_KILL_THE_BOSS_OF_STAGE_4, 100, (bool success)=>{
+				});
+				break;
+			case 50005:
+				GPlusPlatform.Instance.ReportProgress(Const.ACH_KILL_THE_BOSS_OF_STAGE_5, 100, (bool success)=>{
+				});
+				break;
+			}
 		}
 	}
 
@@ -405,6 +449,30 @@ public class Spawn : MonoBehaviour {
 	
 		m_bosses.Add(enemy.gameObject);
 
+		switch(refMob.id)
+		{
+		case 50001:
+			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_1, 100, (bool success)=>{
+			});
+			break;
+		case 50002:
+			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_2, 100, (bool success)=>{
+			});
+			break;
+		case 50003:
+			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_3, 100, (bool success)=>{
+			});
+			break;
+		case 50004:
+			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_4, 100, (bool success)=>{
+			});
+			break;
+		case 50005:
+			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_5, 100, (bool success)=>{
+			});
+			break;
+		}
+
 		return enemy;
 	}
 	
@@ -414,6 +482,8 @@ public class Spawn : MonoBehaviour {
 		{
 			refDropItems = GetCurrentWave().itemSpawn.defaultItem;
 		}
+
+		float goldAlpha = m_wave*0.1f;
 
 		foreach(RefItemSpawn desc in refDropItems)
 		{
@@ -440,6 +510,7 @@ public class Spawn : MonoBehaviour {
 							scale = 0.7f;
 							break;
 						}
+						item.Count += (int)(item.Count*goldAlpha);
 						break;
 					case ItemData.Type.HealPosion:
 						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));

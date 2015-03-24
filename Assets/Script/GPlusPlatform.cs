@@ -9,7 +9,7 @@ using UnityEngine.SocialPlatforms;
 
 public class GPlusPlatform {
 
-
+	GoogleAnalyticsV3 m_ga;
 	static GPlusPlatform m_ins = null;
 	static public GPlusPlatform Instance
 	{
@@ -112,6 +112,18 @@ public class GPlusPlatform {
 			callback(success);
 		}); 
 	}
+
+	public void InitAnalytics(GoogleAnalyticsV3 ga)
+	{
+		m_ga = ga;		
+	}
+
+	public void AnalyticsTrackEvent(string eventCategory, string eventLabel, string eventAction, int eventValue)
+	{
+		m_ga.LogEvent(eventCategory,eventLabel,eventAction,eventValue);
+	}
+
+
 
 
 

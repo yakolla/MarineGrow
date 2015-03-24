@@ -38,7 +38,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	int			m_stage = 1;
 
-	GameObject		m_spawn;
+	Spawn		m_spawn;
 
 	public ItemObject	EquipedWeapon
 	{
@@ -52,7 +52,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void Start()
 	{
-		m_spawn = GameObject.Find("Dungeon/Spawn");
+		m_spawn = GameObject.Find("Dungeon/Spawn").GetComponent<Spawn>();
+		GPlusPlatform.Instance.InitAnalytics(GameObject.Find("GAv3").GetComponent<GoogleAnalyticsV3>());
 
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth*3, 0, m_slotWidth*6, m_slotHeight);
@@ -282,6 +283,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
 				++selectedItem.Item.Level;
+
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", m_equipedWeapon.Item.RefItem.codeName, m_equipedWeapon.Item.Level);
 			});
 		}
 		/*else
@@ -324,18 +327,20 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		int size = (int)m_slotWidth;
 		int startY = 0;
-
+		int maxStage = m_spawn.GetStage(Warehouse.Instance.WaveIndex);
 		int stageStartX = (size*7)/2;
 		if (GUI.Button(new Rect(stageStartX, Screen.height-size*2, size, size), "+"))
 		{
 			++m_stage;
+			m_stage = Mathf.Min(maxStage, m_stage);
 		}
 		if (GUI.Button(new Rect(stageStartX, Screen.height-size, size, size), "-"))
 		{
 			--m_stage;
 			m_stage = Mathf.Max(1, m_stage);
 		}
-		GUI.Label(new Rect(stageStartX+size, Screen.height-size-size/2, size*2, size), "Stage:" + m_stage);
+
+		GUI.Label(new Rect(stageStartX+size, Screen.height-size-size/2, size*2, size), "Stage:" + m_stage + "/" + maxStage);
 
 		Const.makeItemButton(m_guiSkin, m_fontSize, stageStartX+size*4, Screen.height-size*2, size, (int)m_slotHeight, RefData.Instance.RefItems[1003].levelup, (m_stage-1)*(m_stage-1)*(m_stage-1), "Start", ()=>{
 			if (m_equipedWeapon != null)
@@ -360,10 +365,14 @@ public class ChampSettingGUI : MonoBehaviour {
 					}
 				}	
 
-				int[] param = {0, m_stage-1};
+				m_spawn.StartWave(m_stage-1);
 
-				m_spawn.SendMessage("StartWave", param);
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage", m_stage);
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName, m_equipedWeapon.Item.Level);
+
+
 				this.enabled = false;
+
 			}
 		});
 
