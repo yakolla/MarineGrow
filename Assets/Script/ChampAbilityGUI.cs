@@ -191,6 +191,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		if (GUI.Button(new Rect(0, 0, rect.width, rect.height), ability.m_name + "\n" + ability.m_compare()) && m_champ.RemainStatPoint > 0)
 		{
 			ability.m_functor();
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Ability", ability.m_name, 0);
 			RandomAbility();
 		}
 

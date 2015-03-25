@@ -118,9 +118,9 @@ public class GPlusPlatform {
 		m_ga = ga;		
 	}
 
-	public void AnalyticsTrackEvent(string eventCategory, string eventLabel, string eventAction, int eventValue)
+	public void AnalyticsTrackEvent(string eventCategory, string eventAction, string eventLabel, int eventValue)
 	{
-		m_ga.LogEvent(eventCategory,eventLabel,eventAction,eventValue);
+		m_ga.LogEvent(eventCategory,eventAction, eventLabel,eventValue);
 	}
 
 

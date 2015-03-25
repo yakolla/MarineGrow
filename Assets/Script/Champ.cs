@@ -207,19 +207,41 @@ public class Champ : Creature {
 	}
 
 	IEnumerator EffectCombo100()
-	{		
-		Debug.Log("EffectCombo100 On");
-		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
+	{	
 		m_creatureProperty.BetaMoveSpeed *= 2f;
 		while(m_comboKills >= Const.ComboKill_1)
 		{
 			yield return new WaitForSeconds(0.3f);
 		}
 
-		Debug.Log("EffectCombo100 Off");
 		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
-		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+	}
+
+	IEnumerator EffectCombo200()
+	{	
+		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
+		while(m_comboKills >= Const.ComboKill_1)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		
+		m_buffEffects[(int)DamageDesc.BuffType.Combo200].m_run = false;
+		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
+
+	}
+
+	IEnumerator EffectCombo300()
+	{	
+		m_creatureProperty.AlphaCriticalRatio += 10;
+
+		while(m_comboKills >= Const.ComboKill_1)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		
+		m_buffEffects[(int)DamageDesc.BuffType.Combo300].m_run = false;
+		m_creatureProperty.AlphaCriticalRatio -= 10;
 	}
 
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
@@ -236,14 +258,17 @@ public class Champ : Creature {
 		case DamageDesc.BuffType.Combo100:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectCombo100());
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo100", 0);
 			break;
 		case DamageDesc.BuffType.Combo200:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo100());
+			StartCoroutine(EffectCombo200());
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo200", 0);
 			break;
 		case DamageDesc.BuffType.Combo300:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo100());
+			StartCoroutine(EffectCombo300());
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo300", 0);
 			break;
 		}
 		return true;

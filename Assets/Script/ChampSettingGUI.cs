@@ -288,7 +288,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem, selectedItem.Item.RefItem.levelup), "Levelup", ()=>{
 				++selectedItem.Item.Level;
 
-				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", selectedItem.Item.RefItem.codeName, selectedItem.Item.Level);
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", selectedItem.Item.RefItem.codeName + "_Lv:" + selectedItem.Item.Level, 0);
 			});
 		}
 		/*else
@@ -371,8 +371,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				m_spawn.StartWave(m_stage-1);
 
-				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage", m_stage);
-				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName, m_equipedWeapon.Item.Level);
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.Item.Level, 0);
 
 
 				this.enabled = false;
