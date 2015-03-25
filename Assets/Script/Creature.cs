@@ -393,7 +393,7 @@ public class Creature : MonoBehaviour {
 		
 		yield return new WaitForSeconds(time);
 		
-		m_buffEffects[(int)DamageDesc.BuffType.SteamPack].m_run = false;
+		m_buffEffects[(int)DamageDesc.BuffType.LevelUp].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
 		
@@ -441,7 +441,7 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.Slow:
 			StartCoroutine(EffectSlow(time));
 			break;
-		case DamageDesc.BuffType.SteamPack:
+		case DamageDesc.BuffType.LevelUp:
 			StartCoroutine(EffectSteamPack(time));
 			break;
 		case DamageDesc.BuffType.Burning:

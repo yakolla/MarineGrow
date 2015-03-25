@@ -63,7 +63,7 @@ public class Champ : Creature {
 		effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
 		StartCoroutine(UpdateLevelUpEffect(effect));
 
-		ApplyBuff(null, DamageDesc.BuffType.SteamPack, 10f, null);
+		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 
 	}
 
@@ -252,7 +252,7 @@ public class Champ : Creature {
 		switch(type)
 		{
 		case DamageDesc.BuffType.Airborne:
-		case DamageDesc.BuffType.SteamPack:
+		case DamageDesc.BuffType.LevelUp:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			break;
 		case DamageDesc.BuffType.Combo100:

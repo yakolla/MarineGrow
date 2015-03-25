@@ -21,7 +21,7 @@ public class DamageDesc {
 		Airborne,
 		Stun,
 		Slow,
-		SteamPack,
+		LevelUp,
 		Burning,
 		Combo100,
 		Combo200,
