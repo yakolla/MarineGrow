@@ -331,6 +331,7 @@ public class Spawn : MonoBehaviour {
 		if (mob.Boss)
 		{
 			SpawnItemBox(GetCurrentWave().itemSpawn.bossDefaultItem, mob.transform.position);
+			TimeEffector.Instance.BulletTime(0.005f);
 		}
 
 		if (m_champ)

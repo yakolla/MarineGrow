@@ -52,12 +52,6 @@ public class FollowingCamera : MonoBehaviour
 		Vector3 myCharacterPosition = Vector3.Lerp(m_from, m_target.transform.position-m_cameraOffset, Mathf.Min(1f, m_elapsedTime));
 		Camera.main.transform.position = myCharacterPosition;
 
-		if (m_elapsedTime >= 1f && m_done == false && m_target != m_mainTarget)
-		{
-			TimeEffector.Instance.BulletTime();
-			m_done = true;
-		}
-
 		if (m_elapsedTime >= 2f)
 		{
 			if (m_nextTarget != null)

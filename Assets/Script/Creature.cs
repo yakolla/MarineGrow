@@ -433,18 +433,15 @@ public class Creature : MonoBehaviour {
 		switch(type)
 		{
 		case DamageDesc.BuffType.Airborne:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectAirborne());
 			break;
 		case DamageDesc.BuffType.Stun:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectStun());
 			break;
 		case DamageDesc.BuffType.Slow:
 			StartCoroutine(EffectSlow(time));
 			break;
 		case DamageDesc.BuffType.SteamPack:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectSteamPack(time));
 			break;
 		case DamageDesc.BuffType.Burning:
@@ -546,15 +543,18 @@ public class Creature : MonoBehaviour {
 
 		ApplyBuff(offender, damageDesc.DamageBuffType, 2f, damageDesc);
 
-		if (offender != null)
-		{
-			offender.m_creatureProperty.Heal((int)(dmg*offender.m_creatureProperty.LifeSteal));
-		}
+
 
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
 		{
 			if (offender != null)
 			{
+				int lifeSteal = (int)(dmg*offender.m_creatureProperty.LifeSteal);
+				if (lifeSteal > 0)
+				{
+					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.Up);
+					offender.m_creatureProperty.Heal(lifeSteal);
+				}
 				offender.GiveExp(m_creatureProperty.Exp);
 			}
 

@@ -15,6 +15,8 @@ public class TimeEffector {
 
 	Type	m_type = Type.Start;
 	float	m_bulletTime = 0f;
+	float	m_decreaseFactor = 0f;
+	float	m_elapsed = 0f;
 
 	static TimeEffector m_ins = null;
 	static public TimeEffector Instance
@@ -39,10 +41,12 @@ public class TimeEffector {
 		m_type = Type.Stop;
 	}
 
-	public void BulletTime()
+	public void BulletTime(float decreaseFactor)
 	{
 		m_type = Type.BulletTime;
 		m_bulletTime = 1f;
+		m_decreaseFactor = decreaseFactor;
+		m_elapsed = Time.time;
 	}
 
 	public bool IsStop()
@@ -64,8 +68,9 @@ public class TimeEffector {
 			float t = m_bulletTime;
 			if (t > 0)
 			{
+
 				Time.timeScale = 1.1f-t;
-				m_bulletTime -= 0.01f;
+				m_bulletTime -= (Time.time-m_elapsed)*m_decreaseFactor;
 			}	
 
 			break;

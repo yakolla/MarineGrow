@@ -113,11 +113,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal%", 
 		()=>{
-			m_backup.AlphaLifeSteal += 0.01f;
+			m_backup.AlphaLifeSteal += 0.03f;
 			return (m_champ.m_creatureProperty.LifeSteal*100) + " -> " + "<color=yellow>" + (m_backup.LifeSteal*100) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaLifeSteal += 0.01f;
+			m_champ.m_creatureProperty.AlphaLifeSteal += 0.03f;
 			--m_champ.RemainStatPoint;
 		}));
 

@@ -229,6 +229,10 @@ public class Champ : Creature {
 
 		switch(type)
 		{
+		case DamageDesc.BuffType.Airborne:
+		case DamageDesc.BuffType.SteamPack:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			break;
 		case DamageDesc.BuffType.Combo100:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectCombo100());
