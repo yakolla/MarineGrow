@@ -115,6 +115,12 @@ public class Champ : Creature {
 		}
 	}
 
+	public int ComboKills
+	{
+		get {return m_comboKills;}
+		set {m_comboKills = value;}
+	}
+
 	// Update is called once per frame
 	new void Update () {
 		base.Update();
@@ -182,7 +188,7 @@ public class Champ : Creature {
 	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 		base.TakeDamage(offender, damageDesc);
-		m_comboKills = 0;
+		ComboKills = 0;
 	}
 
 	override public void Death()
@@ -200,11 +206,45 @@ public class Champ : Creature {
 
 	}
 
-	public int ComboKills
-	{
-		get {return m_comboKills;}
-		set {m_comboKills = value;}
+	IEnumerator EffectCombo100()
+	{		
+		Debug.Log("EffectCombo100 On");
+		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
+		m_creatureProperty.BetaMoveSpeed *= 2f;
+		while(m_comboKills >= Const.ComboKill_1)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+
+		Debug.Log("EffectCombo100 Off");
+		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
+		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
+		m_creatureProperty.BetaMoveSpeed *= 0.5f;
 	}
+
+	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
+	{
+		if (false == base.ApplyBuff(offender, type, time, damageDesc))
+			return false;
+
+		switch(type)
+		{
+		case DamageDesc.BuffType.Combo100:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			StartCoroutine(EffectCombo100());
+			break;
+		case DamageDesc.BuffType.Combo200:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			StartCoroutine(EffectCombo100());
+			break;
+		case DamageDesc.BuffType.Combo300:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			StartCoroutine(EffectCombo100());
+			break;
+		}
+		return true;
+	}
+
 
 	Texture2D getScreenshot() {
 		Texture2D tex = new Texture2D(Screen.width, Screen.height);

@@ -90,7 +90,8 @@
 					"refItemId":8,
 					"count":3
 				}
-			]
+			],
+			"pricePerLevel":2
 		},
 		"evolution":
 		{
@@ -174,7 +175,8 @@
 					"refItemId":8,
 					"count":4
 				}
-			]
+			],
+			"pricePerLevel":3
 		},
 		"evolution":
 		{
@@ -309,7 +311,8 @@
 					"refItemId":8,
 					"count":5
 				}
-			]
+			],
+			"pricePerLevel":2
 		},
 		"evolution":
 		{
@@ -405,7 +408,8 @@
 					"refItemId":8,
 					"count":1
 				}
-			]
+			],
+			"pricePerLevel":1
 		},
 		"evolution":
 		{
@@ -496,7 +500,8 @@
 					"refItemId":8,
 					"count":6
 				}
-			]
+			],
+			"pricePerLevel":3
 		},
 		"evolution":
 		{
@@ -836,7 +841,8 @@
 					"refItemId":8,
 					"count":10
 				}
-			]
+			],
+			"pricePerLevel":3
 		},
 		"evolution":
 		{
@@ -1285,18 +1291,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":30
+					"count":300
 				},
 				{
 					"refItemId":3, 
-					"count":10
+					"count":30
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":1
+					"count":3
 				}
 			]
 		},

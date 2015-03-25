@@ -58,7 +58,8 @@ public class RefPrice
 public class RefPriceCondition
 {
 	public RefPrice[]		conds;
-	public RefPrice[]		else_conds;
+	public RefPrice[]		else_conds;	
+	public float			pricePerLevel = 1f;
 }
 
 public class RefItemOption

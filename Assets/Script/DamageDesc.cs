@@ -23,6 +23,9 @@ public class DamageDesc {
 		Slow,
 		SteamPack,
 		Burning,
+		Combo100,
+		Combo200,
+		Combo300,
 		Count,
 	}
 

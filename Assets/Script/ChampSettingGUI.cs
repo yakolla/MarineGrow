@@ -134,9 +134,13 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
-	float getItemLevelupWorth(ItemObject itemObj)
+	float getItemLevelupWorth(ItemObject itemObj, RefPriceCondition refPriceCondition)
 	{
-		return itemObj.Item.Level + (itemObj.Item.Level-1) * 7f;
+		float pricePerLevel = 1f;
+		if (refPriceCondition != null)
+			pricePerLevel = refPriceCondition.pricePerLevel;
+
+		return 1f + (itemObj.Item.Level-1) * pricePerLevel;
 	}
 
 	float getItemEvolutionWorth(ItemObject itemObj)
@@ -281,10 +285,10 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (selectedItem.Item.Level < Const.ItemMaxLevel)
 		{
-			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem), "Levelup", ()=>{
+			Const.makeItemButton(m_guiSkin, m_fontSize, startX+size*3, startY, size, size, selectedItem.Item.RefItem.levelup, getItemLevelupWorth(selectedItem, selectedItem.Item.RefItem.levelup), "Levelup", ()=>{
 				++selectedItem.Item.Level;
 
-				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", m_equipedWeapon.Item.RefItem.codeName, m_equipedWeapon.Item.Level);
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", selectedItem.Item.RefItem.codeName, selectedItem.Item.Level);
 			});
 		}
 		/*else

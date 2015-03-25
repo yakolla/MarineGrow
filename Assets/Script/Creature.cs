@@ -46,14 +46,14 @@ public class Creature : MonoBehaviour {
 	
 	Spawn					m_spawn;
 	RefItemSpawn[]			m_dropItems;
-	struct DamageEffect
+	protected struct DamageEffect
 	{
 		public float endTime;
 		public bool	m_run;
 	}
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
 
-	DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
+	protected DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
 
 
 
@@ -61,6 +61,8 @@ public class Creature : MonoBehaviour {
 
 	Texture damagedTexture;
 	Texture normalTexture;
+
+
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
@@ -421,25 +423,28 @@ public class Creature : MonoBehaviour {
 		}
 	}
 
-	public void ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
+	virtual public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
 	{
 		if (m_buffEffects[(int)type].m_run == true)
-			return;
+			return false;
 
 		m_buffEffects[(int)type].m_run = true;
 
 		switch(type)
 		{
 		case DamageDesc.BuffType.Airborne:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectAirborne());
 			break;
 		case DamageDesc.BuffType.Stun:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectStun());
 			break;
 		case DamageDesc.BuffType.Slow:
 			StartCoroutine(EffectSlow(time));
 			break;
 		case DamageDesc.BuffType.SteamPack:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
 			StartCoroutine(EffectSteamPack(time));
 			break;
 		case DamageDesc.BuffType.Burning:
@@ -447,7 +452,7 @@ public class Creature : MonoBehaviour {
 			break;
 		}
 
-
+		return true;
 	}
 
 	public void ApplyPickUpItemEffect(ItemData.Type type, GameObject prefEffect, int value)
@@ -464,26 +469,29 @@ public class Creature : MonoBehaviour {
 		{
 		case ItemData.Type.Gold:
 			{
-			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
-				DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
-			sprite.Init(gameObject, strDamage, Color.yellow, DamageNumberSprite.MovementType.Up);
+
+				DamageText(strDamage, Color.yellow, DamageNumberSprite.MovementType.Up);
 			}
 			break;
 		case ItemData.Type.HealPosion:
 			{
-			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
-				DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
-			sprite.Init(gameObject, strDamage, Color.green, DamageNumberSprite.MovementType.Up);
+				DamageText(strDamage, Color.green, DamageNumberSprite.MovementType.Up);
 			}
 			break;
 		}
 	}
+
+	public void DamageText(string damage, Color color, DamageNumberSprite.MovementType movementType)
+	{
+		GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
+		DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
+		sprite.Init(gameObject, damage, color, movementType);
+	}
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
-		if (m_creatureProperty.HP == 0)
-			return;
-		Debug.Log("hp:"+m_creatureProperty.HP);
+
+
 		float criticalDamage = 0f;
 		if (offender != null)
 		{
@@ -518,9 +526,8 @@ public class Creature : MonoBehaviour {
 
 			}
 
-			GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
-			DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
-			sprite.Init(gameObject, strDamage, Color.white, DamageNumberSprite.MovementType.Parabola);
+
+			DamageText(strDamage, Color.white, DamageNumberSprite.MovementType.Parabola);
 
 			StartCoroutine(BodyRedColoredOnTakenDamage());
 

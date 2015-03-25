@@ -172,7 +172,7 @@ public class Spawn : MonoBehaviour {
 			}
 
 
-			float waveProgress = (float)m_wave / GetCurrentWave().mobSpawns.Length;
+			float waveProgress = ProgressStage();
 			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
 
 			int spawnCount = 0;
@@ -305,6 +305,11 @@ public class Spawn : MonoBehaviour {
 		return (int)(1+m_wave / GetCurrentWave().mobSpawns.Length);
 	}
 
+	public float ProgressStage()
+	{
+		return (float)m_wave / GetCurrentWave().mobSpawns.Length;
+	}
+
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)
 	{
 		GameObject eggObj = Instantiate (Resources.Load<GameObject>("Pref/mon_skin/item_supplybox_skin"), pos, Quaternion.Euler(Vector3.zero)) as GameObject;
@@ -333,15 +338,18 @@ public class Spawn : MonoBehaviour {
 			++m_champ.ComboKills;
 			switch(m_champ.ComboKills)
 			{
-			case 100:
+			case Const.ComboKill_1:
+				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 0f, null);
 				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_100, 100, (bool success)=>{
 				});
 				break;
-			case 200:
+			case Const.ComboKill_2:
+				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo200, 0f, null);
 				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_200, 100, (bool success)=>{
 				});
 				break;
-			case 300:
+			case Const.ComboKill_3:
+				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo300, 0f, null);
 				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_300, 100, (bool success)=>{
 				});
 				break;
@@ -441,6 +449,8 @@ public class Spawn : MonoBehaviour {
 
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, mobLevel, this, refDropItems, boss);
+		enemy.m_creatureProperty.AlphaMaxHP=(int)(enemy.m_creatureProperty.MaxHP*ProgressStage());
+		enemy.m_creatureProperty.Heal(enemy.m_creatureProperty.MaxHP);
 
 		if (m_champ != null)
 			enemy.SetTarget(m_champ.gameObject);
