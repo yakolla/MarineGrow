@@ -52,9 +52,9 @@ public class SuicideBombingBullet : Bullet {
 		
 		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
 		bombEffect.transform.parent = transform;
-		bombEffect.transform.localPosition = Vector3.zero;
+		bombEffect.transform.localPosition = m_prefBombEffect.transform.position;
 		bombEffect.transform.localRotation = m_prefBombEffect.transform.rotation;
-		bombEffect.particleSystem.startSize = m_bombRange*2;
+		bombEffect.particleSystem.startSize = m_bombRange;
 		this.audio.Play();
 
 		StartCoroutine(destoryObject(bombEffect.particleSystem.duration));

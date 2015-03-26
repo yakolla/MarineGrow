@@ -136,26 +136,49 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_champ = transform.parent.gameObject.GetComponent<Champ>();
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
-		RandomAbility();
+		RandomAbility(null);
 	}
 
-	void RandomAbility()
+	void RandomAbility(int[] slots)
 	{
+		if (slots == null)
+		{
+			slots = new int[]{0,1,2};
+		}
+
+		foreach(int slot in slots)
+		{
+			m_abilitySlots[slot] = -1;
+		}
+
 		List<int> indexs = new List<int>();
 		for(int i = 0; i < m_abilities.Count; ++i)
 		{
+			bool skip = false;
+			foreach(int slot in m_abilitySlots)
+			{
+				if (slot == i)
+				{
+					skip = true;
+					break;
+				}
+			}
+
+			if (skip == true)
+				continue;
+
 			indexs.Add(i);
 		}
 
 		int selectCount = 0;
-		while(selectCount < m_abilitySlots.Length)
+		while(selectCount < slots.Length)
 		{
 			int rid = Random.Range(0, indexs.Count);
 			float ratio = Random.Range(0f, 1f);
 			if (ratio > m_abilities[indexs[rid]].m_ratio)
 				continue;
 
-			m_abilitySlots[selectCount] = indexs[rid];
+			m_abilitySlots[slots[selectCount]] = indexs[rid];
 			indexs.RemoveAt(rid);
 			++selectCount;
 		}
@@ -184,7 +207,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	}
 
 	Vector2[] masterySrollPosition = new Vector2[MasteryTypes];
-	void displayMastery(Rect rect, Ability ability)
+	void displayMastery(int slot, Rect rect, Ability ability)
 	{
 		int size = (int)rect.width/MasteryColumns;
 		GUI.BeginGroup(rect);
@@ -192,7 +215,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		{
 			ability.m_functor();
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Ability", ability.m_name, 0);
-			RandomAbility();
+			RandomAbility(new int[]{slot});
 		}
 
 		GUI.EndGroup();
@@ -214,7 +237,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		if (m_champ.RemainStatPoint > 0)
 		{
 			Const.makeItemButton(m_guiSkin, m_fontSize, Screen.width/2-size/2+size, Screen.height-size*2, size, size, RefData.Instance.RefItems[1002].levelup, 1f+m_usedCountOfRandomAbilityItem, "Roll", ()=>{
-				RandomAbility();
+				RandomAbility(null);
 				++m_usedCountOfRandomAbilityItem;
 			});
 		}
@@ -228,15 +251,15 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_champ.m_creatureProperty.CopyTo(m_backup);
 
 		int masteryWidth = Screen.width/3;
-		displayMastery(new Rect(0, size, masteryWidth, Screen.height-size*3), 		              
+		displayMastery(0, new Rect(0, size, masteryWidth, Screen.height-size*3), 		              
 		               m_abilities[m_abilitySlots[0]]
 		);
 
-		displayMastery(new Rect(masteryWidth, size, masteryWidth, Screen.height-size*3), 
+		displayMastery(1, new Rect(masteryWidth, size, masteryWidth, Screen.height-size*3), 
 		               m_abilities[m_abilitySlots[1]]
 		);
 
-		displayMastery(new Rect(masteryWidth*2, size, masteryWidth, Screen.height-size*3), 
+		displayMastery(2, new Rect(masteryWidth*2, size, masteryWidth, Screen.height-size*3), 
 		               m_abilities[m_abilitySlots[2]]
 		);
 

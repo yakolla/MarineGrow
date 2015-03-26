@@ -82,7 +82,9 @@ public class Spawn : MonoBehaviour {
 
 	public void StartWave(int wave)
 	{
-		m_wave = wave*GetCurrentWave().mobSpawns.Length;
+		if (m_wave == 0)
+			m_wave = wave*GetCurrentWave().mobSpawns.Length;
+
 		StartCoroutine(checkBossAlive());
 	}
 
