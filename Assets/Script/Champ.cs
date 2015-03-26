@@ -23,6 +23,7 @@ public class Champ : Creature {
 	[SerializeField]
 	RefCreatureBaseProperty	m_creatureBaseProperty;
 
+	[SerializeField]
 	int			m_remainStatPoint = 0;
 
 	float		m_creationTime = 0;
@@ -252,8 +253,11 @@ public class Champ : Creature {
 		switch(type)
 		{
 		case DamageDesc.BuffType.Airborne:
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			break;
 		case DamageDesc.BuffType.LevelUp:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "ChampLevelUp", "ChampLV:" + m_creatureProperty.Level, 0);
 			break;
 		case DamageDesc.BuffType.Combo100:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
