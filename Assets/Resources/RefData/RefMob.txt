@@ -96,9 +96,38 @@
 				"moveSpeed":2.2,
 				"navMeshBaseOffset":0
 			}
-		}	,
+		},
 		{
 			"id":10005,
+			"prefBody":"sky_egg_skin",
+			"refWeaponItems":
+			[				
+				{
+					"refItemId":"126"
+				}
+			],
+			"mobAI":"FallingEgg",			
+			"baseCreatureProperty":
+			{
+				"maxHP":10,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.3,
+				"exp":10,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.8,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0
+			},
+			"eggMob":
+			{
+				"refMobId":31001,
+				"maxCount":1
+			}
+		},
+		{
+			"id":10006,
 			"prefBody":"small_spider_skin",
 			"refWeaponItems":
 			[
@@ -477,9 +506,34 @@
 			"eggMob":
 			{
 				"refMobId":31001,
-				"count":1
+				"maxCount":1
 			}
 			
+		},
+		{
+			"id":31006,
+			"prefBody":"sky_egg_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"126"
+				}
+			],
+			"mobAI":"FallingEgg",
+			"scale":0.5,
+			"baseCreatureProperty":
+			{
+				"maxHP":5,
+				"physicalDamage":8,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":5,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":1,
+				"hpPerLevel":0.1,
+				"moveSpeed":2,
+				"navMeshBaseOffset":0
+			}
 		}
 	],
 	"miniBoss":
@@ -508,11 +562,14 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
 			},
-			"mass":3,
+			"mass":3,			
 			"dropEggMob":
 			{
-				"refMobId":31002,
-				"count":1
+				"reqLevel":1,
+				"refMobId":31006,
+				"maxCount":3,
+				"perCount":3,
+				"perTime":0.3
 			}
 		},
 		{
@@ -547,7 +604,7 @@
 			"eggMob":
 			{
 				"refMobId":31005,
-				"count":1
+				"maxCount":1
 			}
 		},
 		{
@@ -578,7 +635,7 @@
 			"dropEggMob":
 			{
 				"refMobId":31005,
-				"count":3
+				"maxCount":3
 			}
 		}
 	],
@@ -631,12 +688,7 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":31002,
-				"count":12
-			}
+			}			
 		},
 		{
 			"id":50002,
@@ -685,6 +737,14 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"reqLevel":1,
+				"refMobId":31006,
+				"maxCount":36,
+				"perCount":5,
+				"perTime":0.3
 			}
 		},
 		{
@@ -723,7 +783,7 @@
 			"dropEggMob":
 			{
 				"refMobId":31004,
-				"count":12
+				"maxCount":12
 			}
 		},
 		{
@@ -760,7 +820,7 @@
 			"dropEggMob":
 			{
 				"refMobId":31004,
-				"count":12
+				"maxCount":12
 			}
 		},
 		{
@@ -796,7 +856,7 @@
 			"dropEggMob":
 			{
 				"refMobId":31004,
-				"count":12
+				"maxCount":12
 			}
 		}
 	],

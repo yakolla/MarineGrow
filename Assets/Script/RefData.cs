@@ -112,8 +112,11 @@ public class RefItemSpawn
 
 public class RefEggMob
 {
+	public int					reqLevel = 1;
 	public int					refMobId;
-	public int					count;
+	public int					perCount = 1;
+	public float				perTime = 0f;
+	public int					maxCount;
 
 	[JsonIgnore]
 	public RefMob				refMob;
@@ -129,6 +132,7 @@ public enum MobAIType
 	Dummy,
 	Bomber,
 	Egg,
+	FallingEgg,
 }
 
 
