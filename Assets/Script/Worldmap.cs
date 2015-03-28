@@ -45,8 +45,10 @@ public class Worldmap : MonoBehaviour {
 
 	public void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
+
 			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*0);
 			Warehouse.Instance.Reset();
+			Warehouse.Instance.FileName = game.Filename;
 			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
 		} else {
 			// handle error
