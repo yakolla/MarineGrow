@@ -45,7 +45,7 @@ public class Weapon : MonoBehaviour {
 	protected void Start()
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
-
+		m_lastCreated = Time.time;
 
 	}
 
