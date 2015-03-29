@@ -1,6 +1,6 @@
 {
 	"melee":
-	[		
+	[	
 		{
 			"id":10001,
 			"prefBody":"ghost_slime_skin",
@@ -61,7 +61,7 @@
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
-				"maxHP":15,
+				"maxHP":20,
 				"physicalDamage":7,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
@@ -72,9 +72,34 @@
 				"moveSpeed":2,
 				"navMeshBaseOffset":0
 			}
-		},		
+		},
 		{
 			"id":10004,
+			"prefBody":"mon_boomber_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"110"
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":25,
+				"physicalDamage":15,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.3,
+				"exp":30,
+				
+				"phyDamagePerLevel":1.8,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.8,
+				"moveSpeed":2.2,
+				"navMeshBaseOffset":0
+			}
+		},		
+		{
+			"id":10008,
 			"prefBody":"spider_green_skin",
 			"refWeaponItems":
 			[
@@ -98,7 +123,7 @@
 			}
 		},
 		{
-			"id":10005,
+			"id":10010,
 			"prefBody":"sky_egg_skin",
 			"refWeaponItems":
 			[				
@@ -127,7 +152,7 @@
 			}
 		},
 		{
-			"id":10006,
+			"id":10015,
 			"prefBody":"small_spider_skin",
 			"refWeaponItems":
 			[
@@ -138,11 +163,11 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":20,
+				"maxHP":40,
 				"physicalDamage":9,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
-				"exp":20,
+				"exp":40,
 				"phyDamagePerLevel":2,
 				"phyDefencePerLevel":0.2,
 				"hpPerLevel":0.8,
@@ -151,7 +176,7 @@
 			}
 		},		
 		{
-			"id":10007,
+			"id":10020,
 			"prefBody":"spider_skin",
 			"refWeaponItems":
 			[
@@ -162,11 +187,11 @@
 			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
-				"maxHP":25,
+				"maxHP":45,
 				"physicalDamage":13,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
-				"exp":25,
+				"exp":45,
 				"phyDamagePerLevel":1.8,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.8,
@@ -534,6 +559,36 @@
 				"moveSpeed":2,
 				"navMeshBaseOffset":0
 			}
+		},
+		{
+			"id":31007,
+			"prefBody":"sky_egg_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"126"
+				}
+			],
+			"mobAI":"FallingEgg",
+			"scale":0.5,
+			"baseCreatureProperty":
+			{
+				"maxHP":5,
+				"physicalDamage":8,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":5,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":1,
+				"hpPerLevel":0.1,
+				"moveSpeed":2,
+				"navMeshBaseOffset":0
+			},
+			"eggMob":
+			{
+				"refMobId":31001,
+				"maxCount":1
+			}
 		}
 	],
 	"miniBoss":
@@ -641,7 +696,51 @@
 	],
 	"boss":
 	[	
-		
+		{
+			"id":50002,
+			"prefBody":"mon_kingbug_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"107",
+					"weaponStat":
+					{
+						"coolTime":1,
+						"range":3
+					}
+				},
+				{
+					"refItemId":"121",
+					"weaponStat":
+					{
+						"coolTime":6
+					}
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":1100,
+				"physicalDamage":40,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.5,
+				"exp":1100,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
+				"hpPerLevel":0.8,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"reqLevel":1,
+				"refMobId":31007,
+				"maxCount":36,
+				"perCount":5,
+				"perTime":0.3
+			}
+		},
 		{
 			"id":50001,
 			"prefBody":"slime_skin",
@@ -691,7 +790,7 @@
 			}			
 		},
 		{
-			"id":50002,
+			"id":50003,
 			"prefBody":"eye_brain_skin",
 			"refWeaponItems":
 			[
@@ -748,7 +847,7 @@
 			}
 		},
 		{
-			"id":50003,
+			"id":50004,
 			"prefBody":"big_Worm_skin",
 			"refWeaponItems":
 			[
@@ -778,43 +877,6 @@
 				"hpPerLevel":0.8,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":31004,
-				"maxCount":12
-			}
-		},
-		{
-			"id":50004,
-			"prefBody":"robot_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				},
-				{
-					"refItemId":"101"
-				},
-				{
-					"refItemId":"125"
-				}
-			],
-			"mobAI":"Dash",
-			"scale":2,
-			"baseCreatureProperty":
-			{
-				"maxHP":1300,
-				"physicalDamage":55,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.5,
-				"exp":1300,
-				"phyDamagePerLevel":1,
-				"phyDefencePerLevel":3,
-				"hpPerLevel":0.8,
-				"moveSpeed":1,
-				"navMeshBaseOffset":2,
 				"backwardOnDamage":false
 			},
 			"dropEggMob":
@@ -946,7 +1008,7 @@
 	[
 		{
 			"id":30001,
-			"prefBody":"marine_skin",
+			"prefBody":"ch_main_man_skin",
 			"refWeaponItems":
 			[
 				{
@@ -975,7 +1037,7 @@
 		},
 		{
 			"id":30002,
-			"prefBody":"marine_skin",
+			"prefBody":"ch_main_man_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1004,7 +1066,7 @@
 		},
 		{
 			"id":30003,
-			"prefBody":"marine_skin",
+			"prefBody":"ch_main_man_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1033,7 +1095,7 @@
 		},
 		{
 			"id":30004,
-			"prefBody":"marine_skin",
+			"prefBody":"ch_main_man_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1062,7 +1124,7 @@
 		},
 		{
 			"id":30005,
-			"prefBody":"marine_skin",
+			"prefBody":"ch_main_man_skin",
 			"refWeaponItems":
 			[
 				{

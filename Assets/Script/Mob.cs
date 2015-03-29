@@ -168,9 +168,11 @@ public class Mob : Creature {
 
 		if (RefMob.eggMob != null)
 		{
+			Vector3 pos = transform.position;
+			pos.y = 0f;
 			for(int i = 0; i < RefMob.eggMob.maxCount; ++i)
 			{
-				Spawn.SpawnMob(RefMob.eggMob.refMob, transform.position, false);
+				Spawn.SpawnMob(RefMob.eggMob.refMob, pos, false);
 			}
 		}
 

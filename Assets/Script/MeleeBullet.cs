@@ -49,12 +49,10 @@ public class MeleeBullet : Bullet {
 	
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
-		Vector3 scale = transform.localScale;
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 		
 		transform.parent = m_gunPoint.transform;
 		transform.localPosition = Vector3.zero;
-		transform.localScale = scale;
 	}
 
 	void OnTriggerEnter(Collider other) 

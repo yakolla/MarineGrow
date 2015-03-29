@@ -173,6 +173,8 @@ public class Spawn : MonoBehaviour {
 				}
 			}
 
+			
+			Warehouse.Instance.WaveIndex = m_wave;
 
 			float waveProgress = ProgressStage();
 			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
@@ -181,6 +183,7 @@ public class Spawn : MonoBehaviour {
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
 			for(int r = 0; r < mobSpawnRepeatCount; ++r)
 			{
+				yield return new WaitForSeconds (mobSpawn.interval);
 
 				if (m_champ == null)
 				{
@@ -280,13 +283,12 @@ public class Spawn : MonoBehaviour {
 					}
 				}
 
-				yield return new WaitForSeconds (mobSpawn.interval);
+
 			}
 			StartCoroutine(checkBossAlive());
 
 
 			m_wave++;
-			Warehouse.Instance.WaveIndex = m_wave;
 		}
 	}
 
