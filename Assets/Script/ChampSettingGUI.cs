@@ -40,6 +40,9 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	Spawn		m_spawn;
 
+	float		touchedDelta = 0f;
+	string		log;
+
 	public ItemObject	EquipedWeapon
 	{
 		get {return m_equipedWeapon;}
@@ -404,22 +407,25 @@ public class ChampSettingGUI : MonoBehaviour {
 		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
 		itemCountStyle.fontSize = m_fontSize;
 
-		float delta = 0f;
 		if(Input.touchCount > 0)
 		{
 			Touch touch = Input.touches[0];
 
-			if (touch.position.normalized.y < 0.7f)
+			if (touch.position.normalized.y >= 0.2f)
 			{
 				if (touch.phase == TouchPhase.Moved)
 				{
-					delta = touch.deltaPosition.y;
-					accel = Input.acceleration.y*3f;
+					touchedDelta = touch.deltaPosition.y;
+					accel = Input.acceleration.y*10f;
 				}
+
+				log = "" + touch.position.normalized.y;
 			}
 		}
-		itemScrollPosition.y += delta * accel;
+		itemScrollPosition.y += touchedDelta * accel;
 		accel -= accel*Time.deltaTime;
+		accel = Mathf.Max(0f, accel);
+
 		GUI.Label(new Rect(0, startY+(size*2), size*2, size), "<color=white>Items</color>", columnStyle);
 		int paddingY = size/2;
 
