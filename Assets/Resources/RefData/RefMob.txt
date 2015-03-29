@@ -695,52 +695,7 @@
 		}
 	],
 	"boss":
-	[	
-		{
-			"id":50002,
-			"prefBody":"mon_kingbug_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"107",
-					"weaponStat":
-					{
-						"coolTime":1,
-						"range":3
-					}
-				},
-				{
-					"refItemId":"121",
-					"weaponStat":
-					{
-						"coolTime":6
-					}
-				}
-			],
-			"mobAI":"Normal",
-			"baseCreatureProperty":
-			{
-				"maxHP":1100,
-				"physicalDamage":40,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.5,
-				"exp":1100,
-				"phyDamagePerLevel":1,
-				"phyDefencePerLevel":3,
-				"hpPerLevel":0.8,
-				"moveSpeed":1,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
-			}
-		},
+	[			
 		{
 			"id":50001,
 			"prefBody":"slime_skin",
@@ -790,6 +745,51 @@
 			}			
 		},
 		{
+			"id":50002,
+			"prefBody":"mon_kingbug_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"107",
+					"weaponStat":
+					{
+						"coolTime":1,
+						"range":3
+					}
+				},
+				{
+					"refItemId":"121",
+					"weaponStat":
+					{
+						"coolTime":6
+					}
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":1100,
+				"physicalDamage":40,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.5,
+				"exp":1100,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":3,
+				"hpPerLevel":0.8,
+				"moveSpeed":1,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"reqLevel":1,
+				"refMobId":31007,
+				"maxCount":36,
+				"perCount":5,
+				"perTime":0.3
+			}
+		},
+		{
 			"id":50003,
 			"prefBody":"eye_brain_skin",
 			"refWeaponItems":
@@ -825,11 +825,11 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":1100,
-				"physicalDamage":40,
+				"maxHP":1200,
+				"physicalDamage":45,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":1100,
+				"exp":1200,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.8,
@@ -867,11 +867,11 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":1200,
-				"physicalDamage":45,
+				"maxHP":1300,
+				"physicalDamage":50,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":1200,
+				"exp":1300,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.8,
@@ -1015,7 +1015,7 @@
 					"refItemId":"124",
 					"weaponStat":
 					{
-						"range":10
+						"range":15
 					}
 				}
 			],
@@ -1073,7 +1073,7 @@
 					"refItemId":"101",
 					"weaponStat":
 					{
-						"range":10
+						"range":15
 					}
 				}
 			],
@@ -1102,7 +1102,7 @@
 					"refItemId":"120",
 					"weaponStat":
 					{
-						"range":8
+						"range":15
 					}
 				}
 			],
