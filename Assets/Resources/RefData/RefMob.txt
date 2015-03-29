@@ -746,19 +746,20 @@
 		},
 		{
 			"id":50002,
-			"prefBody":"mon_kingbug_skin",
+			"prefBody":"ch_main_man_skin",
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"107",
+					"refItemId":"103",
 					"weaponStat":
 					{
 						"coolTime":1,
-						"range":3
+						"range":10
 					}
 				},
 				{
-					"refItemId":"121",
+					"reqLevel":2,
+					"refItemId":"101",
 					"weaponStat":
 					{
 						"coolTime":6
@@ -887,7 +888,7 @@
 		},
 		{
 			"id":50005,
-			"prefBody":"bat_skin",
+			"prefBody":"mon_kingbug_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1022,8 +1023,8 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":200,
-				"physicalDamage":15,
+				"maxHP":100,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":0,
@@ -1051,8 +1052,8 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":200,
-				"physicalDamage":15,
+				"maxHP":100,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":0,
@@ -1080,8 +1081,8 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":200,
-				"physicalDamage":15,
+				"maxHP":100,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":0,
@@ -1109,8 +1110,8 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":200,
-				"physicalDamage":15,
+				"maxHP":100,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":0,
@@ -1138,8 +1139,8 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":200,
-				"physicalDamage":15,
+				"maxHP":100,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":0,

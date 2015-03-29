@@ -42,13 +42,13 @@ public class Follower : Creature {
 		set {m_weapon = value;}
 	}
 
-	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty)
+	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty, int level)
 	{
 		m_owner = owner;
 		if (m_owner)
 		{
 			CreatureType = m_owner.CreatureType;
-			m_creatureProperty.init(this, baseProperty);
+			m_creatureProperty.init(this, baseProperty, level);
 			Spawn = owner.Spawn;
 
 			switch(aiType)

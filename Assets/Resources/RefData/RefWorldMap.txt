@@ -162,7 +162,7 @@
 				"itemSpawn":
 				{
 					"mobItems":
-					[
+					[						
 						{
 							"refMobId":50001,
 							"refDropItems":
@@ -178,31 +178,27 @@
 						{
 							"refMobId":50002,
 							"refDropItems":
-							[								
+							[			
 								{
-									"refItemId":102,
+									"refItemId":1001,
 									"minValue":1,
-									"maxValue":1,
-									"ratio":1
-								}
+									"maxValue":30003,
+									"ratio":1,
+									"count":1
+								}					
+								
 							]
 						},
 						{
 							"refMobId":50003,
 							"refDropItems":
 							[								
+								
 								{
-									"refItemId":111,
+									"refItemId":102,
 									"minValue":1,
 									"maxValue":1,
 									"ratio":1
-								},
-								{
-									"refItemId":1001,
-									"minValue":1,
-									"maxValue":30003,
-									"ratio":0.1,
-									"count":1
 								}
 							]
 						},
@@ -247,7 +243,13 @@
 						{
 							"refMobId":50006,
 							"refDropItems":
-							[								
+							[
+								{
+									"refItemId":111,
+									"minValue":1,
+									"maxValue":1,
+									"ratio":1
+								},								
 								{
 									"refItemId":1001,
 									"minValue":1,

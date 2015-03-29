@@ -29,6 +29,8 @@ public class Warehouse {
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gold.Item));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gem.Item));
 
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_champStat));
+
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_stats));
 
 			writer.Close();
@@ -95,6 +97,8 @@ public class Warehouse {
 			ItemGemData gemData = JsonConvert.DeserializeObject<ItemGemData>(reader.ReadLine());
 			obj.m_gem = new ItemObject(gemData);
 
+			obj.m_champStat = JsonConvert.DeserializeObject<ChampAbility>(reader.ReadLine());
+
 			obj.m_stats = JsonConvert.DeserializeObject<Statistics>(reader.ReadLine());
 			
 			reader.Close();
@@ -114,7 +118,15 @@ public class Warehouse {
 		public	long		m_comboKills = 0;
 	}
 
+	public class ChampAbility
+	{
+		public int m_level = 1;
+		public int m_abilityPoint = 0;
+	}
+
 	Statistics			m_stats = new Statistics();
+	ChampAbility			m_champStat = new ChampAbility();
+
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
 	{
@@ -137,6 +149,7 @@ public class Warehouse {
 		m_waveIndex = 0;
 
 		m_stats = new Statistics();
+		m_champStat = new ChampAbility();
 	}
 
 	public void PushItem(ItemData item)
@@ -262,5 +275,10 @@ public class Warehouse {
 	public Statistics Stats
 	{
 		get {return m_stats;}
+	}
+
+	public ChampAbility	champAbility
+	{
+		get {return m_champStat;}
 	}
 }

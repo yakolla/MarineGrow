@@ -43,7 +43,6 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_guiSkin.label.fontSize = m_fontSize;
 		m_guiSkin.button.fontSize = m_fontSize;
 
-		//m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_guageWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
 		m_skillWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
 
@@ -52,11 +51,16 @@ public class ChampStatusGUI : MonoBehaviour {
 			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
 			levelupStyle.fontSize = m_fontSize;
 
-			if (GUI.Button(new Rect(Screen.width-m_slotWidth, 0, m_slotHeight, m_slotHeight), "+", levelupStyle))
+			if (GUI.Button(new Rect(Screen.width-m_slotWidth, 0, m_slotHeight, m_slotHeight), "", levelupStyle))
 			{
 				ChampAbilityGUI abilityGUI = m_champ.transform.Find("ChampAbilityGUI").GetComponent<ChampAbilityGUI>();
 				abilityGUI.gameObject.SetActive(true);
 			}
+
+			GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
+			itemCountStyle.fontSize = m_fontSize;
+
+			GUI.Label(new Rect(Screen.width-m_slotWidth, 0, m_slotHeight, m_slotHeight), "<color=black>" + m_champ.RemainStatPoint +"</color>", itemCountStyle);
 		}
 	}
 
@@ -71,12 +75,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		style.normal.textColor = Color.black;
 		GUI.Label(new Rect(size.x+1, size.y+1, size.width, size.height), lable, style);
 	}
-	void DisplayGoodsWindow(int windowID)
-	{
-		int startY = 0;
-		int size = (int)m_slotHeight/2;
-		GUI.Label(new Rect(0, startY+(size*0), m_goodsWindowRect.width, size), "<color=white>Total Mob Kills:" + Warehouse.Instance.Stats.m_comboKills +  "</color>");
-	}
+
 
 	//Setting up the Inventory window
 	void DisplayStatusWindow(int windowID)

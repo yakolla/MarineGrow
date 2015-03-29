@@ -30,10 +30,14 @@ public class Champ : Creature {
 
 	int			m_comboKills;
 
+	int			m_level = 1;
+
 	new void Start () {
-		
-		m_creatureProperty.init(this, m_creatureBaseProperty);
-		m_creatureProperty.Level = 1;
+
+		m_level = Warehouse.Instance.champAbility.m_level;
+		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
+		m_remainStatPoint = Warehouse.Instance.champAbility.m_abilityPoint;
+
 		m_creationTime = Time.time;
 
 		base.Start();
@@ -52,11 +56,10 @@ public class Champ : Creature {
 		set{m_remainStatPoint = value;}
 	}
 
-
-
 	void LevelUp()
 	{
 		m_remainStatPoint+=1;
+		++m_level;
 
 		GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
 		effect.transform.parent = transform;
@@ -196,8 +199,12 @@ public class Champ : Creature {
 	{
 		base.Death();
 
+		Warehouse.Instance.champAbility.m_level = 1;
+		Warehouse.Instance.champAbility.m_abilityPoint = (int)(m_level*0.5f);
+
 		if (Application.platform == RuntimePlatform.Android)
 		{
+
 			GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, OnSavedGameOpenedForSaving);
 		}
 		else
@@ -290,7 +297,8 @@ public class Champ : Creature {
 		if (status == SavedGameRequestStatus.Success) {
 			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
 			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime));
-			
+
+
 			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, getScreenshot(), OnSavedGameWritten);
 
 			GPlusPlatform.Instance.ReportScore(Const.LEAD_COMBO_MAX_KILLS, Warehouse.Instance.Stats.m_comboKills, (bool success) => {

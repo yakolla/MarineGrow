@@ -27,6 +27,12 @@ public class ItemFollowerData : ItemData{
 		get{return m_followerName;}
 	}
 
+	override public void Pickup(Creature obj)
+	{
+		base.Pickup(obj);
+		Use (obj);
+	}
+
 	override public void Use(Creature obj)
 	{
 		Vector3 enemyPos = obj.transform.position;
@@ -48,8 +54,7 @@ public class ItemFollowerData : ItemData{
 		weapon.Item.Level = Level;
 		weapon.Item.Evolution = Evolution;
 		follower.WeaponItem = weapon;
-		follower.Init(obj, m_aiType, m_baseProperty);
-		follower.m_creatureProperty.Level = obj.m_creatureProperty.Level;
+		follower.Init(obj, m_aiType, m_baseProperty, Level);
 	
 	}
 

@@ -47,12 +47,12 @@ public class CreatureProperty {
 	[SerializeField]
 	int		m_exp = 0;
 
-	public void 	init(Creature owner, RefCreatureBaseProperty baseProperty)
+	public void 	init(Creature owner, RefCreatureBaseProperty baseProperty, int level)
 	{
 		m_owner = owner;
 		m_baseProperty = baseProperty;
-		
-		m_exp = m_baseProperty.exp;
+		Level = level;
+		m_exp = (int)(m_baseProperty.exp+m_baseProperty.exp*(level-1)*m_baseProperty.hpPerLevel);
 	}
 
 	public float getHPRemainRatio()
@@ -79,7 +79,7 @@ public class CreatureProperty {
 	public int Level
 	{
 		get { return m_level; }
-		set {
+		private set {
 			m_level = value;
 			m_hp = MaxHP;
 		}
