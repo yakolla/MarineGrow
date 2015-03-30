@@ -64,11 +64,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 		
 		m_abilities.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
-			m_backup.AlphaMaxHP+=100;
+			m_backup.AlphaMaxHP+=50;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaMaxHP+=100;
+			m_champ.m_creatureProperty.AlphaMaxHP+=50;
 			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
 			--m_champ.RemainStatPoint;
 		}));
@@ -111,7 +111,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal%", 
+		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal %", 
 		()=>{
 			m_backup.AlphaLifeSteal += 0.03f;
 			return (m_champ.m_creatureProperty.LifeSteal*100) + " -> " + "<color=yellow>" + (m_backup.LifeSteal*100) + "</color>";
@@ -121,7 +121,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra Exp%", 
+		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra Exp %", 
 		                            ()=>{
 			m_backup.AlphaGainExtraExp += 0.3f;
 			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";

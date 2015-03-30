@@ -115,7 +115,7 @@ public class Weapon : MonoBehaviour {
 		}
 		else
 		{
-			m_damageRatio += m_level / 2;
+			//m_damageRatio += m_level / 2;
 			m_creature.m_creatureProperty.AlphaAttackCoolTime -= 0.1f;
 		}
 	}

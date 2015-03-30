@@ -52,7 +52,7 @@ public class CreatureProperty {
 		m_owner = owner;
 		m_baseProperty = baseProperty;
 		Level = level;
-		m_exp = (int)(m_baseProperty.exp+m_baseProperty.exp*(level-1)*m_baseProperty.hpPerLevel);
+		m_exp = m_baseProperty.exp;
 	}
 
 	public float getHPRemainRatio()

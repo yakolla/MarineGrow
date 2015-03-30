@@ -36,6 +36,9 @@ public class FireSparkBullet : Bullet {
 	
 	float			m_dropTime = 0f;
 
+	[SerializeField]
+	float			m_charingTime = 1f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -59,7 +62,7 @@ public class FireSparkBullet : Bullet {
 			break;
 		case Status.Dropped:
 			{
-				m_dropTime = Time.time+1f;
+				m_dropTime = Time.time+m_charingTime;
 				Vector3 scale = Vector3.one;
 				scale.x = m_bombRange;
 				transform.localScale = scale;

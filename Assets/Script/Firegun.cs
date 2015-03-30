@@ -24,6 +24,8 @@ public class Firegun : Weapon {
 				Vector3 euler = m_bullet[i].transform.rotation.eulerAngles;
 				euler.y = transform.eulerAngles.y+targetAngle.x;
 				m_bullet[i].transform.eulerAngles = euler;
+
+				this.audio.Play();
 			}
 		}
 
