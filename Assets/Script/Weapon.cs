@@ -41,11 +41,14 @@ public class Weapon : MonoBehaviour {
 
 	RefItem				m_refItem;
 
+	protected AudioSource			audio;
+
 
 	protected void Start()
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
 		m_lastCreated = Time.time;
+		audio = GetComponent<AudioSource>();
 
 	}
 
@@ -133,7 +136,7 @@ public class Weapon : MonoBehaviour {
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 
-		this.audio.Play();
+		audio.Play();
 
 		m_callbackCreateBullet();
 		return bullet;

@@ -16,7 +16,7 @@ public class BillBoard : MonoBehaviour {
 	
 	void Awake () {
 		if (_renderer == null) {
-			_renderer = renderer;
+			_renderer = GetComponent<Renderer>();
 		}
 	}
 

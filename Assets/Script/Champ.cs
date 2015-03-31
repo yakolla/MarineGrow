@@ -73,7 +73,7 @@ public class Champ : Creature {
 
 	IEnumerator UpdateLevelUpEffect(GameObject effect)
 	{
-		yield return new WaitForSeconds(effect.particleSystem.duration);
+		yield return new WaitForSeconds(effect.GetComponent<ParticleSystem>().duration);
 		DestroyObject(effect);
 	} 
 
@@ -241,7 +241,7 @@ public class Champ : Creature {
 
 	IEnumerator EffectCombo300()
 	{	
-		m_creatureProperty.AlphaCriticalRatio += 10;
+		m_creatureProperty.AlphaCriticalRatio += 0.3f;
 
 		while(m_comboKills >= Const.ComboKill_1)
 		{
@@ -249,7 +249,7 @@ public class Champ : Creature {
 		}
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Combo300].m_run = false;
-		m_creatureProperty.AlphaCriticalRatio -= 10;
+		m_creatureProperty.AlphaCriticalRatio -= 0.3f;
 	}
 
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)

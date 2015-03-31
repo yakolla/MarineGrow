@@ -54,10 +54,11 @@ public class SuicideBombingBullet : Bullet {
 		bombEffect.transform.parent = transform;
 		bombEffect.transform.localPosition = m_prefBombEffect.transform.position;
 		bombEffect.transform.localRotation = m_prefBombEffect.transform.rotation;
-		bombEffect.particleSystem.startSize = m_bombRange;
-		this.audio.Play();
+		ParticleSystem particleSystem = bombEffect.GetComponent<ParticleSystem>();
+		particleSystem.startSize = m_bombRange;
+		this.GetComponent<AudioSource>().Play();
 
-		StartCoroutine(destoryObject(bombEffect.particleSystem.duration));
+		StartCoroutine(destoryObject(particleSystem.duration));
 
 	}
 }

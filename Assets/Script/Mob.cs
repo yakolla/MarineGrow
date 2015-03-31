@@ -10,6 +10,8 @@ public class Mob : Creature {
 
 	[SerializeField]
 	GameObject			m_prefEffectBlood;
+
+	Rigidbody			rigidbody;
 	// Use this for initialization
 	new void Start () {
 		base.Start();
@@ -20,6 +22,9 @@ public class Mob : Creature {
 		{
 			transform.Find("FloatingHealthBarGUI").gameObject.SetActive(true);
 		}
+
+		rigidbody = GetComponent<Rigidbody>();
+		rigidbody.mass = m_refMob.mass;
 	}
 
 	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
@@ -28,7 +33,8 @@ public class Mob : Creature {
 		Spawn = spawn;
 		RefDropItems = refDropItems;
 		Boss = boss;
-		rigidbody.mass = refMob.mass;
+
+
 
 		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);		
 
@@ -181,8 +187,9 @@ public class Mob : Creature {
 		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
 		if (sfx != null)
 		{
-			effect.audio.clip = sfx;
-			effect.audio.Play();
+			AudioSource	audio = effect.GetComponent<AudioSource>();
+			audio.clip = sfx;
+			audio.Play();
 		}
 
 		DestroyObject(this.gameObject);

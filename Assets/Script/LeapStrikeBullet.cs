@@ -53,10 +53,12 @@ public class LeapStrikeBullet : Bullet {
 		bombEffect.transform.parent = transform;
 		bombEffect.transform.localPosition = Vector3.zero;
 		bombEffect.transform.localRotation = m_prefBombEffect.transform.rotation;
-		bombEffect.particleSystem.startSize = m_bombRange*2;
-		this.audio.Play();
+
+		ParticleSystem particleSystem = bombEffect.GetComponent<ParticleSystem>();
+		particleSystem.startSize = m_bombRange*2;
+		this.GetComponent<AudioSource>().Play();
 		
-		StartCoroutine(destoryObject(bombEffect.particleSystem.duration));
+		StartCoroutine(destoryObject(particleSystem.duration));
 		
 	}
 }
