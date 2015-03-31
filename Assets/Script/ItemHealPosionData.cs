@@ -13,7 +13,7 @@ public class ItemHealPosionData : ItemData{
 	}
 
 	override public void Equip(Creature obj){
-		obj.m_creatureProperty.Heal(Count);
+		obj.m_creatureProperty.Heal((int)(obj.m_creatureProperty.MaxHP*(Count/100f)));
 	}
 
 }
