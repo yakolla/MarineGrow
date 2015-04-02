@@ -1,51 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FloatingHealthBarGUI : MonoBehaviour {
+public class FloatingHealthBarGUI : FloatingGuageBarGUI {
 
-	Vector3 targetPos;
-	GameObject	m_owner;
-	Creature	m_creature;
-
-	[SerializeField]
-	Texture		m_gague = null;
-
-	[SerializeField]
-	Texture		m_gagueEdge = null;
-
-	// Use this for initialization
-	void Start () {
-		m_owner = transform.parent.gameObject;
-		m_creature = m_owner.GetComponent<Creature>();
-		Mob mob = m_creature.GetComponent<Mob>();
-		if (mob != null)
-		{
-			if (mob.Boss == true)
-			{
-				m_gague = Resources.Load<Texture>("png/boss gage");
-			}
-		}
-	}
-
-	// Update is called once per frame
-	void Update () {
-
-		targetPos = m_owner.transform.position;
-	}
-
-	void OnGUI()
+	override protected float guageRemainRatio()
 	{
-
-		Vector2 pos = Camera.main.WorldToViewportPoint(targetPos);
-		float startX = pos.x*Screen.width-25;
-		float startY = (1-pos.y)*Screen.height-40;
-		int size = 5;
-
-		float ratio = m_creature.m_creatureProperty.getHPRemainRatio();
-
-		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (50-size)*ratio, size), m_gague, new Rect(0f, 0f, ratio, 1f));
-		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (50-size), size), m_gagueEdge, new Rect(0f, 0f, 1f, 1f));
-
+		return m_creature.m_creatureProperty.getHPRemainRatio();
 	}
 }
 
