@@ -222,10 +222,9 @@ public class Spawn : MonoBehaviour {
 							
 							yield return new WaitForSeconds (0.02f);
 
-
-							StartCoroutine(  EffectSpawnMob(enemyPos,
-							                                SpawnMob(refMob, enemyPos, mobSpawn.boss))
-							               );						
+							Creature cre = SpawnMob(refMob, enemyPos, mobSpawn.boss);
+							cre.gameObject.SetActive(false);
+							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
 							
 						}
 					}
@@ -274,9 +273,9 @@ public class Spawn : MonoBehaviour {
 
 							yield return new WaitForSeconds (0.02f);
 							
-							StartCoroutine(  EffectSpawnMob(enemyPos,
-							                                SpawnMob(refMob, enemyPos, mobSpawn.boss))
-							               );						
+							Creature cre = SpawnMob(refMob, enemyPos, mobSpawn.boss);
+							cre.gameObject.SetActive(false);
+							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
 							
 						}
 					}
@@ -416,7 +415,7 @@ public class Spawn : MonoBehaviour {
 		}
 
 		yield return new WaitForSeconds (1f);
-		creature.enabled = true;
+		creature.gameObject.SetActive(true);
 
 
 	}
