@@ -31,7 +31,9 @@ public class Weapon : MonoBehaviour {
 	float						m_damageRatio = 1f;
 
 	[SerializeField]
-	Vector2						m_chargingSpeed = new Vector2(0.1f, 0.6f);
+	Vector2						m_oriChargingSpeed = new Vector2(0.2f, 0.7f);
+
+	Vector2						m_chargingSpeed;
 
 	public delegate void CallbackOnCreateBullet();
 	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
@@ -49,7 +51,7 @@ public class Weapon : MonoBehaviour {
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
 		m_lastCreated = Time.time;
-
+		m_chargingSpeed += m_oriChargingSpeed;
 	}
 
 
@@ -123,8 +125,8 @@ public class Weapon : MonoBehaviour {
 			m_creature.m_creatureProperty.AlphaAttackCoolTime -= 0.1f;
 		}
 
-		m_chargingSpeed.x += 0.1f;
-		m_chargingSpeed.y += 0.05f;
+		m_chargingSpeed.x += m_oriChargingSpeed.x;
+		m_chargingSpeed.y += (1-m_oriChargingSpeed.y)/(Const.ItemMaxLevel+1);
 	}
 
 	public int Damage

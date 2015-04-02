@@ -73,9 +73,11 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
-				//Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
-				//Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(120, null));
+
+				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
+
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(3, 500));
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(11, 500));
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(12, 500));
@@ -106,9 +108,16 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				ItemWeaponData itemWeaponData = new ItemWeaponData(108, null);
-				itemWeaponData.Lock = false;
-				Warehouse.Instance.PushItem(itemWeaponData);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(108, null);
+				gunWeaponData.Lock = false;				
+				Warehouse.Instance.PushItem(gunWeaponData);
+				
+				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(120, null));
+
 			}
 			
 			byte[] data = Warehouse.Instance.Serialize();

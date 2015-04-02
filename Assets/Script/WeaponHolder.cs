@@ -12,6 +12,7 @@ public class WeaponHolder : MonoBehaviour {
 	[SerializeField]
 	bool					m_multipleWeapon = false;
 
+	[SerializeField]
 	Vector2				m_chargingSpeed = Vector2.zero;
 	
 	[SerializeField]
