@@ -13,7 +13,7 @@ public class MobAIFallingEgg : MobAI {
 	float		m_elapsed = 0f;
 	float		m_speed = 0.8f;
 
-	GameObject	m_prefEffectTargetPoint = Resources.Load<GameObject>("Pref/ef Grenade damage");
+	GameObject	m_prefEffectTargetPoint = Resources.Load<GameObject>("Pref/ef_targeting");
 
 	GameObject	m_effectTargetPoint;
 

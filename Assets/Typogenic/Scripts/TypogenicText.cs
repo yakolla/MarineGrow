@@ -77,7 +77,6 @@ public class TypogenicText : MonoBehaviour
 	bool _drawGlyphBoundsGizmos;
 	int _materialCount;
 	int _currentMaterial;
-	Renderer	renderer;
 
 	public bool AutoRebuild = true;
 	public bool IsDirty
@@ -104,10 +103,8 @@ public class TypogenicText : MonoBehaviour
 		}
 	}
 
-
 	void OnEnable()
 	{
-		renderer = GetComponent<Renderer>();
 		GetComponent<MeshFilter>().mesh = m_Mesh = new Mesh();
 		m_Mesh.name = "Text Mesh";
 		m_Mesh.hideFlags = HideFlags.HideAndDontSave;

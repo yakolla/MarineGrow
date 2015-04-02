@@ -9,13 +9,6 @@ public class ScrollBehaviour : MonoBehaviour
 
     Vector2 uvOffset = Vector2.zero;
 
-	Renderer	renderer;
-
-	void Start()
-	{
-		renderer = GetComponent<Renderer>();
-	}
-
     void LateUpdate()
     {
         uvOffset += (uvAnimationRate * Time.deltaTime);

@@ -18,7 +18,7 @@ public class FireGunBullet : Bullet {
 	void Awake()
 	{
 		m_collider = GetComponent<BoxCollider>();
-		m_particleSystem = transform.Find("Body/Particle System").GetComponent<ParticleSystem>();
+		m_particleSystem = transform.Find("Body/Particle System").particleSystem;
 		m_particleSystem.startSpeed *= m_collider.size.x;
 		m_particleSystem.startSize *= m_collider.size.x;
 		m_damageType = DamageDesc.Type.Fire;

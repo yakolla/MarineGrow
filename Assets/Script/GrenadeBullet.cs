@@ -45,7 +45,7 @@ public class GrenadeBullet : Bullet {
 	
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
-		yield return new WaitForSeconds (bombEffect.GetComponent<ParticleSystem>().duration);
+		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
 		DestroyObject(this.gameObject);
 		DestroyObject(bombEffect);
 	}
@@ -72,8 +72,8 @@ public class GrenadeBullet : Bullet {
 		}
 
 		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
-		bombEffect.GetComponent<ParticleSystem>().startSize = m_bombRange*2;
-		this.GetComponent<AudioSource>().Play();
+		bombEffect.particleSystem.startSize = m_bombRange*2;
+		this.audio.Play();
 		StartCoroutine(destoryObject(bombEffect));
 	}
 }
