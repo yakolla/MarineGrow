@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour {
 	float						m_damageRatio = 1f;
 
 	[SerializeField]
-	Vector2						m_chargingSpeed = new Vector2(0.1f, 0.1f);
+	Vector2						m_chargingSpeed = new Vector2(0.1f, 0.6f);
 
 	public delegate void CallbackOnCreateBullet();
 	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
@@ -123,8 +123,8 @@ public class Weapon : MonoBehaviour {
 			m_creature.m_creatureProperty.AlphaAttackCoolTime -= 0.1f;
 		}
 
-		m_chargingSpeed.x = m_level*0.1f;
-		m_chargingSpeed.y = m_level*0.1f;
+		m_chargingSpeed.x += 0.1f;
+		m_chargingSpeed.y += 0.05f;
 	}
 
 	public int Damage

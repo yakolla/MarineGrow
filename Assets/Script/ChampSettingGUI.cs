@@ -65,19 +65,24 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (Warehouse.Instance.Items.Count == 0)
 			{
+				ItemWeaponData gunWeaponData = new ItemWeaponData(108, null);
+				gunWeaponData.Lock = false;				
+				Warehouse.Instance.PushItem(gunWeaponData);
+
 				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
-				ItemWeaponData gunWeaponData = new ItemWeaponData(108, null);
-				gunWeaponData.Lock = false;
-
-				Warehouse.Instance.PushItem(gunWeaponData);
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
+				//Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
+				//Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(120, null));
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(1000));
-				Warehouse.Instance.PushItem(new ItemWeaponDNAData(1000));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(3, 500));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(11, 500));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(12, 500));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(13, 500));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(14, 500));
+				Warehouse.Instance.PushItem(new ItemWeaponPartsData(15, 500));
+				Warehouse.Instance.PushItem(new ItemWeaponDNAData(500));
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 				Warehouse.Instance.PushItem(new ItemSilverMedalData(200));
 
@@ -353,7 +358,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (m_equipedWeapon != null)
 			{
 				GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
-				GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/marine_skin");
+				GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/champ_skin");
 				
 				GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 				enemyBody.name = "Body";

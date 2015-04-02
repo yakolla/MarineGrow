@@ -545,7 +545,7 @@ public class Spawn : MonoBehaviour {
 						item = new ItemWeaponData(desc.refItem.id, null);
 						break;
 					case ItemData.Type.WeaponParts:
-						item = new ItemWeaponPartsData(Random.Range(desc.minValue, desc.maxValue));					
+						item = new ItemWeaponPartsData(desc.refItemId, Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.Follower:
 						item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					

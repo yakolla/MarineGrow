@@ -745,7 +745,7 @@
 		},
 		{
 			"id":50002,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1008,7 +1008,7 @@
 	[
 		{
 			"id":30001,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1037,7 +1037,7 @@
 		},
 		{
 			"id":30002,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1066,7 +1066,7 @@
 		},
 		{
 			"id":30003,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1095,7 +1095,7 @@
 		},
 		{
 			"id":30004,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1124,7 +1124,7 @@
 		},
 		{
 			"id":30005,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{

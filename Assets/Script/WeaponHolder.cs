@@ -12,8 +12,7 @@ public class WeaponHolder : MonoBehaviour {
 	[SerializeField]
 	bool					m_multipleWeapon = false;
 
-	[SerializeField]
-	Vector2				m_chargingSpeed = new Vector2(0.1f, 0.1f);
+	Vector2				m_chargingSpeed = Vector2.zero;
 	
 	[SerializeField]
 	float				m_chargingGuage = 1f;
@@ -35,7 +34,7 @@ public class WeaponHolder : MonoBehaviour {
 		{
 			if (m_firing)
 			{
-				m_chargingGuage -= (1-m_chargingSpeed.y)*Time.deltaTime;
+				m_chargingGuage -= (1-Mathf.Min(1f, m_chargingSpeed.y))*Time.deltaTime;
 				m_chargingGuage = Mathf.Max(0, m_chargingGuage);
 
 				if (m_chargingGuage == 0f)
