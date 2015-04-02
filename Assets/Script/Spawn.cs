@@ -306,12 +306,12 @@ public class Spawn : MonoBehaviour {
 
 	public int SpawnMobLevel()
 	{
-		return (int)(1+m_wave / GetCurrentWave().mobSpawns.Length);
+		return (int)(1 + ProgressStage());
 	}
 
 	public float ProgressStage()
 	{
-		return (float)m_wave / GetCurrentWave().mobSpawns.Length;
+		return (float)(m_wave-1)/GetCurrentWave().mobSpawns.Length;
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)

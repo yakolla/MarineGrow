@@ -325,9 +325,9 @@
 						},
 						{
 							"refItemId":2,
-							"minValue":1,
-							"maxValue":10,
-							"ratio":0.1,
+							"minValue":10,
+							"maxValue":30,
+							"ratio":0.01,
 							"count":1
 						},
 						{
@@ -355,7 +355,7 @@
 						{
 							"refItemId":2,
 							"minValue":10,
-							"maxValue":100,
+							"maxValue":30,
 							"ratio":0.5,
 							"count":3
 						},
