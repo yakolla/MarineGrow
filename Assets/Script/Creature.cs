@@ -34,7 +34,6 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected Type			m_creatureType;
 
-	GameObject				m_prefPickupItemGUI;
 	GameObject				m_prefDamageSprite;
 
 	public CreatureProperty	m_creatureProperty;
@@ -70,7 +69,6 @@ public class Creature : MonoBehaviour {
 
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
-		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 		damagedTexture = Resources.Load<Texture>("ani/damage monster");
 		normalTexture = Resources.Load<Texture>("ani/monster");

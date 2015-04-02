@@ -156,7 +156,7 @@ public class Spawn : MonoBehaviour {
 		{
 			yield return new WaitForSeconds (1f);
 
-			StartCoroutine(spawnMobPer(mobSpawn));
+			yield return null;
 		}
 		else
 		{
@@ -221,10 +221,10 @@ public class Spawn : MonoBehaviour {
 							
 							
 							yield return new WaitForSeconds (0.02f);
-							
-							StartCoroutine(  EffectSpawnMob(refMob
-							                                , enemyPos
-							                                , mobSpawn.boss)
+
+
+							StartCoroutine(  EffectSpawnMob(enemyPos,
+							                                SpawnMob(refMob, enemyPos, mobSpawn.boss))
 							               );						
 							
 						}
@@ -274,9 +274,8 @@ public class Spawn : MonoBehaviour {
 
 							yield return new WaitForSeconds (0.02f);
 							
-							StartCoroutine(  EffectSpawnMob(refMob
-							                                , enemyPos
-							                                , mobSpawn.boss)
+							StartCoroutine(  EffectSpawnMob(enemyPos,
+							                                SpawnMob(refMob, enemyPos, mobSpawn.boss))
 							               );						
 							
 						}
@@ -311,7 +310,7 @@ public class Spawn : MonoBehaviour {
 
 	public float ProgressStage()
 	{
-		return (float)(m_wave-1)/GetCurrentWave().mobSpawns.Length;
+		return (float)(m_wave)/GetCurrentWave().mobSpawns.Length;
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)
@@ -402,7 +401,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, Vector3 pos, bool boss)
+	IEnumerator EffectSpawnMob(Vector3 pos, Creature creature)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -417,8 +416,8 @@ public class Spawn : MonoBehaviour {
 		}
 
 		yield return new WaitForSeconds (1f);
-		
-		SpawnMob(refMob, enemyPos, boss);
+		creature.enabled = true;
+
 
 	}
 	
