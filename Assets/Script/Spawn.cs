@@ -339,23 +339,11 @@ public class Spawn : MonoBehaviour {
 		if (m_champ)
 		{
 			++m_champ.ComboKills;
-			switch(m_champ.ComboKills)
+			if (m_champ.ComboKills % Const.ComboSkillStackOnCombo == 0)
 			{
-			case Const.ComboKill_1:
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 0f, null);
+				++m_champ.ComboSkillStack;
 				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_100, 100, (bool success)=>{
 				});
-				break;
-			case Const.ComboKill_2:
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo200, 0f, null);
-				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_200, 100, (bool success)=>{
-				});
-				break;
-			case Const.ComboKill_3:
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo300, 0f, null);
-				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_300, 100, (bool success)=>{
-				});
-				break;
 			}
 
 			if (Warehouse.Instance.Stats.m_comboKills < m_champ.ComboKills)

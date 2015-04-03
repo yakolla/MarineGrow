@@ -445,6 +445,9 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.Burning:
 			StartCoroutine(EffectBurning(time, offender, damageDesc));
 			break;
+		case DamageDesc.BuffType.Combo100:
+			StartCoroutine(EffectSteamPack(time));
+			break;
 		}
 
 		return true;

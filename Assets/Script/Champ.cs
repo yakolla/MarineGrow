@@ -30,6 +30,8 @@ public class Champ : Creature {
 
 	int			m_comboKills;
 
+	int			m_comboSkillStacks = 0;
+
 	int			m_level = 1;
 
 	new void Start () {
@@ -125,6 +127,12 @@ public class Champ : Creature {
 		set {m_comboKills = value;}
 	}
 
+	public int ComboSkillStack
+	{
+		get {return m_comboSkillStacks;}
+		set {m_comboSkillStacks = value;}
+	}
+
 	// Update is called once per frame
 	new void Update () {
 		base.Update();
@@ -214,44 +222,6 @@ public class Champ : Creature {
 
 	}
 
-	IEnumerator EffectCombo100()
-	{	
-		m_creatureProperty.BetaMoveSpeed *= 2f;
-		while(m_comboKills >= Const.ComboKill_1)
-		{
-			yield return new WaitForSeconds(0.3f);
-		}
-
-		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
-		m_creatureProperty.BetaMoveSpeed *= 0.5f;
-	}
-
-	IEnumerator EffectCombo200()
-	{	
-		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
-		while(m_comboKills >= Const.ComboKill_1)
-		{
-			yield return new WaitForSeconds(0.3f);
-		}
-		
-		m_buffEffects[(int)DamageDesc.BuffType.Combo200].m_run = false;
-		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
-
-	}
-
-	IEnumerator EffectCombo300()
-	{	
-		m_creatureProperty.AlphaCriticalRatio += 10;
-
-		while(m_comboKills >= Const.ComboKill_1)
-		{
-			yield return new WaitForSeconds(0.3f);
-		}
-		
-		m_buffEffects[(int)DamageDesc.BuffType.Combo300].m_run = false;
-		m_creatureProperty.AlphaCriticalRatio -= 10;
-	}
-
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
 	{
 		if (false == base.ApplyBuff(offender, type, time, damageDesc))
@@ -268,19 +238,8 @@ public class Champ : Creature {
 			break;
 		case DamageDesc.BuffType.Combo100:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo100());
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo100", 0);
-			break;
-		case DamageDesc.BuffType.Combo200:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo200());
-			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo200", 0);
-			break;
-		case DamageDesc.BuffType.Combo300:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo300());
-			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo300", 0);
-			break;
+			break;		
 		}
 		return true;
 	}
