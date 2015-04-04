@@ -34,6 +34,8 @@ public class Champ : Creature {
 
 	int			m_level = 1;
 
+	Animator	m_bloodWarningAnimator;
+
 	new void Start () {
 
 		m_level = Warehouse.Instance.champAbility.m_level;
@@ -50,6 +52,8 @@ public class Champ : Creature {
 
 		m_leftJoystick = GameObject.Find("HudGUI/LeftJoystick").GetComponent<Joystick>();
 		m_rightJoystick = GameObject.Find("HudGUI/RightJoystick").GetComponent<Joystick>();
+
+		m_bloodWarningAnimator = GameObject.Find("HudGUI/Blood Warning").GetComponent<Animator>();
 	}
 
 	public int RemainStatPoint
@@ -201,6 +205,7 @@ public class Champ : Creature {
 	{
 		base.TakeDamage(offender, damageDesc);
 		ComboKills = 0;
+		m_bloodWarningAnimator.SetTrigger("Warning");
 	}
 
 	override public void Death()
