@@ -150,7 +150,6 @@ public class Spawn : MonoBehaviour {
 		return wave/GetCurrentWave().mobSpawns.Length + 1;
 	}
 
-
 	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
 	{
 
@@ -409,6 +408,13 @@ public class Spawn : MonoBehaviour {
 
 
 	}
+
+	IEnumerator EffectSpawnItemBox(ItemBox itemBox, float time)
+	{				
+		yield return new WaitForSeconds (time);
+		itemBox.gameObject.SetActive(true);
+		
+	}
 	
 	public Mob SpawnMob(RefMob refMob, Vector3 pos, bool boss)
 	{
@@ -575,7 +581,8 @@ public class Spawn : MonoBehaviour {
 						itemBox.PickupCallback = (Creature obj)=>{
 							m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 						};
-						itemBoxObj.SetActive(true);
+
+						StartCoroutine(EffectSpawnItemBox(itemBox, 0.1f));
 					}
 					
 				}

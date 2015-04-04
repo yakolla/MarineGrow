@@ -727,7 +727,8 @@
 					}	
 				}
 			],
-			"mobAI":"Normal",			
+			"mobAI":"Normal",		
+			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
 				"maxHP":800,
@@ -765,7 +766,8 @@
 					}
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Normal",		
+			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
 				"maxHP":1100,
@@ -822,7 +824,8 @@
 					}	
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Normal",		
+			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
 				"maxHP":1400,
@@ -864,7 +867,8 @@
 					}	
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Normal",		
+			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
 				"maxHP":1700,
@@ -900,7 +904,8 @@
 					"refItemId":"123"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Normal",		
+			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
 				"maxHP":2000,

@@ -12,6 +12,7 @@ public class Parabola {
 	int				m_bouncing = 0;
 	bool			m_finish = false;
 	float			m_groundY = 0f;
+	float			m_timeScale = 1f;
 	GameObject		m_obj;
 
 	public Parabola(GameObject obj, float hspeed, float vspeed, float hRadian, float vRadian, int bouncing)
@@ -46,6 +47,11 @@ public class Parabola {
 		get {return m_obj.transform.position;}
 	}
 
+	public float TimeScale
+	{
+		set {m_timeScale = value;}
+	}
+
 	public void Destroy()
 	{
 		MonoBehaviour.DestroyObject(m_obj);
@@ -57,7 +63,7 @@ public class Parabola {
 		if (m_finish == true)
 			return false;
 
-		float elapse = Time.time - m_startTime;
+		float elapse = (Time.time - m_startTime)*m_timeScale;
 		float x = m_oriPos.x+m_vel.x*elapse;
 		float z = m_oriPos.z+m_vel.z*elapse;
 		float y = m_oriPos.y+m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);

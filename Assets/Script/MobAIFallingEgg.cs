@@ -13,9 +13,7 @@ public class MobAIFallingEgg : MobAI {
 	float		m_elapsed = 0f;
 	float		m_speed = 0.8f;
 
-	GameObject	m_prefEffectTargetPoint = Resources.Load<GameObject>("Pref/ef_targeting");
-
-	GameObject	m_effectTargetPoint;
+	EffectTargetingPoint	m_effectTargetingPoint = new EffectTargetingPoint();
 
 	override public void	Init(Creature mob)
 	{
@@ -23,9 +21,7 @@ public class MobAIFallingEgg : MobAI {
 		m_targetPos = mob.transform.position;
 		m_targetPos.y = 0;
 
-		m_effectTargetPoint = GameObject.Instantiate (m_prefEffectTargetPoint, m_targetPos, m_prefEffectTargetPoint.transform.localRotation) as GameObject;
-		ParticleSystem particle = m_effectTargetPoint.GetComponent<ParticleSystem>();
-		particle.Play();
+		m_effectTargetingPoint.Init(m_targetPos);
 
 		Vector3 pos = mob.gameObject.transform.position;
 		pos.y = 40f;
@@ -44,7 +40,7 @@ public class MobAIFallingEgg : MobAI {
 			if (m_ingDeathEffect == false)
 			{
 				m_ingDeathEffect = true;
-				GameObject.DestroyObject(m_effectTargetPoint);
+				m_effectTargetingPoint.Death();
 
 			}
 		}

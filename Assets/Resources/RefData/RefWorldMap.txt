@@ -154,7 +154,7 @@
 								"count":[1,6]
 							}
 						},
-						"interval":10,
+						"interval":1.5,
 						"repeatCount":[1,1],
 						"boss":true
 					}
