@@ -64,21 +64,12 @@ public class ChampAbilityGUI : MonoBehaviour {
 		
 		m_abilities.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
-			m_backup.AlphaMaxHP+=50;
+			m_backup.AlphaMaxHP+=30;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaMaxHP+=50;
+			m_champ.m_creatureProperty.AlphaMaxHP+=30;
 			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
-			--m_champ.RemainStatPoint;
-		}));
-
-		m_abilities.Add(new Ability(0.01f, "Bullet More", 
-		                            ()=>{
-			return "";
-		},
-		()=>{
-			m_champ.WeaponHolder.MoreFire();
 			--m_champ.RemainStatPoint;
 		}));
 
@@ -111,13 +102,13 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.3f, "Inc LifeSteal %", 
+		m_abilities.Add(new Ability(0.1f, "Life Per Kill", 
 		()=>{
-			m_backup.AlphaLifeSteal += 0.03f;
-			return (m_champ.m_creatureProperty.LifeSteal*100) + " -> " + "<color=yellow>" + (m_backup.LifeSteal*100) + "</color>";
+			m_backup.AlphaLifeSteal += 1f;
+			return (m_champ.m_creatureProperty.LifeSteal) + " -> " + "<color=yellow>" + (m_backup.LifeSteal) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaLifeSteal += 0.03f;
+			m_champ.m_creatureProperty.AlphaLifeSteal += 1f;
 			--m_champ.RemainStatPoint;
 		}));
 

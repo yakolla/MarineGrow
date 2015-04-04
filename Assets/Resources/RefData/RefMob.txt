@@ -698,19 +698,18 @@
 	[			
 		{
 			"id":50001,
-			"prefBody":"slime_skin",
+			"prefBody":"slime_king_skin",
 			"refWeaponItems":
 			[				
 				{
-					"refItemId":"117",
+					"refItemId":"107",
 					"weaponStat":
 					{
-						"coolTime":1,
-						"range":7,
-						"firingCount":1
+						"coolTime":3
 					}	
 				},
 				{
+					"reqLevel":2,
 					"refItemId":"119",
 					"weaponStat":
 					{
@@ -739,14 +738,14 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.8,
-				"moveSpeed":1,
+				"moveSpeed":1.5,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}			
 		},
 		{
 			"id":50002,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1009,7 +1008,7 @@
 	[
 		{
 			"id":30001,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1038,7 +1037,7 @@
 		},
 		{
 			"id":30002,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1067,7 +1066,7 @@
 		},
 		{
 			"id":30003,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1096,7 +1095,7 @@
 		},
 		{
 			"id":30004,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1125,7 +1124,7 @@
 		},
 		{
 			"id":30005,
-			"prefBody":"ch_main_man_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{

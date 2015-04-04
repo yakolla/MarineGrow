@@ -30,19 +30,19 @@ public class Spawn : MonoBehaviour {
 	Dungeon			m_dungeon;
 	int				m_hive = 0;
 
-	TypogenicText	m_killComboGUI;
 	ComboGUIShake	m_comboGUIShake;
+	GoldGUISmooth	m_goldGUIShake;
+
 	[SerializeField]
 	int				m_wave = 0;
-
-	GUIText guiText;
 	// Use this for initialization
 	void Start () {
 
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
 
-		m_killComboGUI = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<TypogenicText>();
 		m_comboGUIShake = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<ComboGUIShake>();
+		m_goldGUIShake = Camera.main.gameObject.transform.Find("Gold").gameObject.GetComponent<GoldGUISmooth>();
+		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -56,8 +56,6 @@ public class Spawn : MonoBehaviour {
 			if (m_prefItemBoxSkins[i] == null)
 				Debug.Log("Pref/ItemBox/item_" + itemTypeNames[i] + "_skin");
 		}
-
-		guiText = GetComponent<GUIText>();
 
 		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
 		m_areas = transform.GetComponentsInChildren<Transform>();
@@ -160,7 +158,7 @@ public class Spawn : MonoBehaviour {
 		{
 			yield return new WaitForSeconds (1f);
 
-			StartCoroutine(spawnMobPer(mobSpawn));
+			yield return null;
 		}
 		else
 		{
@@ -225,11 +223,10 @@ public class Spawn : MonoBehaviour {
 							
 							
 							yield return new WaitForSeconds (0.02f);
-							
-							StartCoroutine(  EffectSpawnMob(refMob
-							                                , enemyPos
-							                                , mobSpawn.boss)
-							               );						
+
+							Creature cre = SpawnMob(refMob, enemyPos, mobSpawn.boss);
+							cre.gameObject.SetActive(false);
+							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
 							
 						}
 					}
@@ -278,10 +275,9 @@ public class Spawn : MonoBehaviour {
 
 							yield return new WaitForSeconds (0.02f);
 							
-							StartCoroutine(  EffectSpawnMob(refMob
-							                                , enemyPos
-							                                , mobSpawn.boss)
-							               );						
+							Creature cre = SpawnMob(refMob, enemyPos, mobSpawn.boss);
+							cre.gameObject.SetActive(false);
+							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
 							
 						}
 					}
@@ -310,12 +306,12 @@ public class Spawn : MonoBehaviour {
 
 	public int SpawnMobLevel()
 	{
-		return (int)(1+m_wave / GetCurrentWave().mobSpawns.Length);
+		return (int)(1 + ProgressStage());
 	}
 
 	public float ProgressStage()
 	{
-		return (float)m_wave / GetCurrentWave().mobSpawns.Length;
+		return (float)(m_wave)/GetCurrentWave().mobSpawns.Length;
 	}
 
 	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)
@@ -345,23 +341,11 @@ public class Spawn : MonoBehaviour {
 		if (m_champ)
 		{
 			++m_champ.ComboKills;
-			switch(m_champ.ComboKills)
+			if (m_champ.ComboKills % Const.ComboSkillStackOnCombo == 0)
 			{
-			case Const.ComboKill_1:
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 0f, null);
+				++m_champ.ComboSkillStack;
 				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_100, 100, (bool success)=>{
 				});
-				break;
-			case Const.ComboKill_2:
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo200, 0f, null);
-				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_200, 100, (bool success)=>{
-				});
-				break;
-			case Const.ComboKill_3:
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo300, 0f, null);
-				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_300, 100, (bool success)=>{
-				});
-				break;
 			}
 
 			if (Warehouse.Instance.Stats.m_comboKills < m_champ.ComboKills)
@@ -406,7 +390,7 @@ public class Spawn : MonoBehaviour {
 	}
 
 
-	IEnumerator EffectSpawnMob(RefMob refMob, Vector3 pos, bool boss)
+	IEnumerator EffectSpawnMob(Vector3 pos, Creature creature)
 	{		
 
 		Vector3 enemyPos = pos;
@@ -421,8 +405,8 @@ public class Spawn : MonoBehaviour {
 		}
 
 		yield return new WaitForSeconds (1f);
-		
-		SpawnMob(refMob, enemyPos, boss);
+		creature.gameObject.SetActive(true);
+
 
 	}
 	
@@ -531,6 +515,7 @@ public class Spawn : MonoBehaviour {
 							break;
 						}
 						item.Count += (int)(item.Count*goldAlpha);
+
 						break;
 					case ItemData.Type.HealPosion:
 						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
@@ -551,7 +536,7 @@ public class Spawn : MonoBehaviour {
 						item = new ItemWeaponData(desc.refItem.id, null);
 						break;
 					case ItemData.Type.WeaponParts:
-						item = new ItemWeaponPartsData(Random.Range(desc.minValue, desc.maxValue));					
+						item = new ItemWeaponPartsData(desc.refItemId, Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.Follower:
 						item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
@@ -587,6 +572,9 @@ public class Spawn : MonoBehaviour {
 						
 						ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
 						itemBox.Item = item;
+						itemBox.PickupCallback = (Creature obj)=>{
+							m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
+						};
 						itemBoxObj.SetActive(true);
 					}
 					
@@ -610,7 +598,7 @@ public class Spawn : MonoBehaviour {
 
 		if (m_champ != null)
 		{
-			m_killComboGUI.Text = "x" + m_champ.ComboKills;
+			m_comboGUIShake.Text = "x" + m_champ.ComboKills;
 		}
 
 	}

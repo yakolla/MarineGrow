@@ -35,8 +35,6 @@ public class LightningBullet : Bullet
 	
 	private Particle[] particles;
 
-	ParticleEmitter particleEmitter;
-
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		Vector3 scale = transform.localScale;
@@ -53,9 +51,6 @@ public class LightningBullet : Bullet
 		m_damageType = DamageDesc.Type.Lightining;
 
 		oneOverZigs = 1f / (float)zigs;
-
-		particleEmitter = GetComponent<ParticleEmitter>();
-
 		particleEmitter.emit = false;
 
 		particleEmitter.Emit(zigs);

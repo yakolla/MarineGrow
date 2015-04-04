@@ -67,6 +67,36 @@
 		]
 	},
 	{
+		"id":11,
+		"codeName":"FireGunParts",
+		"type":"WeaponParts",
+		"icon":"Sprites/FiregunParts"		
+	},
+	{
+		"id":12,
+		"codeName":"LightningParts",
+		"type":"WeaponParts",
+		"icon":"Sprites/LightningParts"		
+	},
+	{
+		"id":13,
+		"codeName":"RocketParts",
+		"type":"WeaponParts",
+		"icon":"Sprites/RocketParts"		
+	},
+	{
+		"id":14,
+		"codeName":"GuidedRocketParts",
+		"type":"WeaponParts",
+		"icon":"Sprites/GuidedRocketParts"		
+	},
+	{
+		"id":15,
+		"codeName":"BoomerangParts",
+		"type":"WeaponParts",
+		"icon":"Sprites/BoomerangParts"		
+	},
+	{
 		"id":101,
 		"codeName":"ChampFiregun",
 		"type":"Weapon",
@@ -123,7 +153,7 @@
 					"count":300
 				},
 				{
-					"refItemId":3, 
+					"refItemId":11, 
 					"count":30
 				}
 			],
@@ -208,7 +238,7 @@
 					"count":400
 				},
 				{
-					"refItemId":3, 
+					"refItemId":12, 
 					"count":40
 				}
 			],
@@ -344,7 +374,7 @@
 					"count":500
 				},
 				{
-					"refItemId":3, 
+					"refItemId":14, 
 					"count":50
 				}
 			],
@@ -533,7 +563,7 @@
 					"count":600
 				},
 				{
-					"refItemId":3, 
+					"refItemId":13, 
 					"count":60
 				}
 			],
@@ -874,7 +904,7 @@
 					"count":1000
 				},
 				{
-					"refItemId":3, 
+					"refItemId":15, 
 					"count":100
 				}
 			],

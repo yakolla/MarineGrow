@@ -30,6 +30,8 @@ public class Champ : Creature {
 
 	int			m_comboKills;
 
+	int			m_comboSkillStacks = 0;
+
 	int			m_level = 1;
 
 	new void Start () {
@@ -46,8 +48,8 @@ public class Champ : Creature {
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
 
-		m_leftJoystick = GameObject.Find("Joystick/LeftJoystick").GetComponent<Joystick>();
-		m_rightJoystick = GameObject.Find("Joystick/RightJoystick").GetComponent<Joystick>();
+		m_leftJoystick = GameObject.Find("HudGUI/LeftJoystick").GetComponent<Joystick>();
+		m_rightJoystick = GameObject.Find("HudGUI/RightJoystick").GetComponent<Joystick>();
 	}
 
 	public int RemainStatPoint
@@ -73,7 +75,7 @@ public class Champ : Creature {
 
 	IEnumerator UpdateLevelUpEffect(GameObject effect)
 	{
-		yield return new WaitForSeconds(effect.GetComponent<ParticleSystem>().duration);
+		yield return new WaitForSeconds(effect.particleSystem.duration);
 		DestroyObject(effect);
 	} 
 
@@ -123,6 +125,12 @@ public class Champ : Creature {
 	{
 		get {return m_comboKills;}
 		set {m_comboKills = value;}
+	}
+
+	public int ComboSkillStack
+	{
+		get {return m_comboSkillStacks;}
+		set {m_comboSkillStacks = value;}
 	}
 
 	// Update is called once per frame
@@ -214,44 +222,6 @@ public class Champ : Creature {
 
 	}
 
-	IEnumerator EffectCombo100()
-	{	
-		m_creatureProperty.BetaMoveSpeed *= 2f;
-		while(m_comboKills >= Const.ComboKill_1)
-		{
-			yield return new WaitForSeconds(0.3f);
-		}
-
-		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
-		m_creatureProperty.BetaMoveSpeed *= 0.5f;
-	}
-
-	IEnumerator EffectCombo200()
-	{	
-		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
-		while(m_comboKills >= Const.ComboKill_1)
-		{
-			yield return new WaitForSeconds(0.3f);
-		}
-		
-		m_buffEffects[(int)DamageDesc.BuffType.Combo200].m_run = false;
-		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
-
-	}
-
-	IEnumerator EffectCombo300()
-	{	
-		m_creatureProperty.AlphaCriticalRatio += 0.3f;
-
-		while(m_comboKills >= Const.ComboKill_1)
-		{
-			yield return new WaitForSeconds(0.3f);
-		}
-		
-		m_buffEffects[(int)DamageDesc.BuffType.Combo300].m_run = false;
-		m_creatureProperty.AlphaCriticalRatio -= 0.3f;
-	}
-
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
 	{
 		if (false == base.ApplyBuff(offender, type, time, damageDesc))
@@ -268,19 +238,8 @@ public class Champ : Creature {
 			break;
 		case DamageDesc.BuffType.Combo100:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo100());
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo100", 0);
-			break;
-		case DamageDesc.BuffType.Combo200:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo200());
-			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo200", 0);
-			break;
-		case DamageDesc.BuffType.Combo300:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
-			StartCoroutine(EffectCombo300());
-			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo300", 0);
-			break;
+			break;		
 		}
 		return true;
 	}
@@ -326,7 +285,7 @@ public class Champ : Creature {
 			if (2f > Vector3.Distance(transform.position, other.transform.position))
 			{
 				ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
-				itemBox.Pickup(this);
+				itemBox.StartPickupEffect(this);
 			}
 		};
 

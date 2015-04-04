@@ -15,7 +15,7 @@ public class Const {
 
 	public const int ItemMaxLevel = 9;
 	public const int ShowMaxDamageNumber = 3;
-	public const int ComboKill_1 = 100;
+	public const int ComboSkillStackOnCombo = 100;
 	public const int ComboKill_2 = 200;
 	public const int ComboKill_3 = 300;
 

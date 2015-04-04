@@ -34,7 +34,6 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected Type			m_creatureType;
 
-	GameObject				m_prefPickupItemGUI;
 	GameObject				m_prefDamageSprite;
 
 	public CreatureProperty	m_creatureProperty;
@@ -62,18 +61,14 @@ public class Creature : MonoBehaviour {
 	Texture damagedTexture;
 	Texture normalTexture;
 
-	Rigidbody	rigidbody;
 
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
-		rigidbody = GetComponent<Rigidbody>();
-
 		m_aimpoint = transform.Find("Aimpoint").gameObject;
 
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
-		m_prefPickupItemGUI = Resources.Load<GameObject>("Pref/DamageNumberGUI");
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 		damagedTexture = Resources.Load<Texture>("ani/damage monster");
 		normalTexture = Resources.Load<Texture>("ani/monster");
@@ -327,8 +322,7 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator UpdateDamageEffect(GameObject effect)
 	{
-		ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
-		while(particleSystem.IsAlive())
+		while(effect.particleSystem.IsAlive())
 		{
 			yield return null;
 		}
@@ -337,8 +331,7 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator UpdatePickupItemEffect(GameObject effect)
 	{
-		ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
-		while(particleSystem.IsAlive())
+		while(effect.particleSystem.IsAlive())
 		{
 			yield return null;
 		}
@@ -393,14 +386,20 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectSteamPack(float time)
 	{		
+
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
-		
+
+		WeaponHolder.EnableChargingGuage = false;
+		WeaponHolder.ChargingGuage = 1f;
+
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.LevelUp].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+
+		WeaponHolder.EnableChargingGuage = true;
 		
 	}
 
@@ -423,7 +422,7 @@ public class Creature : MonoBehaviour {
 			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			dmgEffect.transform.parent = m_aimpoint.transform;
 			dmgEffect.transform.localPosition = Vector3.zero;
-			dmgEffect.GetComponent<ParticleSystem>().startSize = gameObject.transform.localScale.x;
+			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
 			StartCoroutine(UpdateDamageEffect(dmgEffect));
 		}
 	}
@@ -452,6 +451,9 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.Burning:
 			StartCoroutine(EffectBurning(time, offender, damageDesc));
 			break;
+		case DamageDesc.BuffType.Combo100:
+			StartCoroutine(EffectSteamPack(time));
+			break;
 		}
 
 		return true;
@@ -462,7 +464,7 @@ public class Creature : MonoBehaviour {
 		GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 		dmgEffect.transform.parent = m_aimpoint.transform;
 		dmgEffect.transform.localPosition = Vector3.zero;
-		dmgEffect.GetComponent<ParticleSystem>().startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
+		dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
 		StartCoroutine(UpdatePickupItemEffect(dmgEffect));
 	
 		string strDamage = value.ToString();			
@@ -554,7 +556,7 @@ public class Creature : MonoBehaviour {
 		{
 			if (offender != null)
 			{
-				int lifeSteal = (int)(dmg*offender.m_creatureProperty.LifeSteal);
+				int lifeSteal = (int)(offender.m_creatureProperty.LifeSteal);
 				if (lifeSteal > 0)
 				{
 					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.Up);
