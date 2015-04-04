@@ -45,7 +45,7 @@ public class FireSparkBullet : Bullet {
 		
 		m_boxCollider = GetComponent<BoxCollider>();
 		m_boxCollider.enabled = false;
-		m_particleSystem = m_prefBombEffect.particleSystem;
+		m_particleSystem = m_prefBombEffect.GetComponent<ParticleSystem>();
 		m_particleSystem.enableEmission = false;
 		m_damageType = DamageDesc.Type.Fire;
 		

@@ -34,6 +34,8 @@ public class Spawn : MonoBehaviour {
 	ComboGUIShake	m_comboGUIShake;
 	[SerializeField]
 	int				m_wave = 0;
+
+	GUIText guiText;
 	// Use this for initialization
 	void Start () {
 
@@ -54,6 +56,8 @@ public class Spawn : MonoBehaviour {
 			if (m_prefItemBoxSkins[i] == null)
 				Debug.Log("Pref/ItemBox/item_" + itemTypeNames[i] + "_skin");
 		}
+
+		guiText = GetComponent<GUIText>();
 
 		guiText.pixelOffset = new Vector2(Screen.width/2, -Screen.height/4);
 		m_areas = transform.GetComponentsInChildren<Transform>();

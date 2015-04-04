@@ -48,7 +48,7 @@ public class RocketLauncherBullet : Bullet {
 
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
-		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
+		yield return new WaitForSeconds (bombEffect.GetComponent<ParticleSystem>().duration);
 		DestroyObject(this.gameObject);
 		DestroyObject(bombEffect);
 	}
@@ -75,7 +75,7 @@ public class RocketLauncherBullet : Bullet {
 		}
 		
 		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
-		this.audio.Play();
+		this.GetComponent<AudioSource>().Play();
 		StartCoroutine(destoryObject(bombEffect));
 
 		//gameObject.SetActive(false);

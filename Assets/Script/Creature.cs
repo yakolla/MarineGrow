@@ -62,10 +62,13 @@ public class Creature : MonoBehaviour {
 	Texture damagedTexture;
 	Texture normalTexture;
 
+	Rigidbody	rigidbody;
 
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
+		rigidbody = GetComponent<Rigidbody>();
+
 		m_aimpoint = transform.Find("Aimpoint").gameObject;
 
 		m_animator = transform.Find("Body").GetComponent<Animator>();
@@ -324,7 +327,8 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator UpdateDamageEffect(GameObject effect)
 	{
-		while(effect.particleSystem.IsAlive())
+		ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+		while(particleSystem.IsAlive())
 		{
 			yield return null;
 		}
@@ -333,7 +337,8 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator UpdatePickupItemEffect(GameObject effect)
 	{
-		while(effect.particleSystem.IsAlive())
+		ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+		while(particleSystem.IsAlive())
 		{
 			yield return null;
 		}
@@ -418,7 +423,7 @@ public class Creature : MonoBehaviour {
 			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 			dmgEffect.transform.parent = m_aimpoint.transform;
 			dmgEffect.transform.localPosition = Vector3.zero;
-			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
+			dmgEffect.GetComponent<ParticleSystem>().startSize = gameObject.transform.localScale.x;
 			StartCoroutine(UpdateDamageEffect(dmgEffect));
 		}
 	}
@@ -457,7 +462,7 @@ public class Creature : MonoBehaviour {
 		GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
 		dmgEffect.transform.parent = m_aimpoint.transform;
 		dmgEffect.transform.localPosition = Vector3.zero;
-		dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
+		dmgEffect.GetComponent<ParticleSystem>().startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
 		StartCoroutine(UpdatePickupItemEffect(dmgEffect));
 	
 		string strDamage = value.ToString();			
