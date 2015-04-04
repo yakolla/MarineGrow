@@ -285,7 +285,7 @@ public class Champ : Creature {
 			if (2f > Vector3.Distance(transform.position, other.transform.position))
 			{
 				ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
-				itemBox.Pickup(this);
+				itemBox.StartPickupEffect(this);
 			}
 		};
 

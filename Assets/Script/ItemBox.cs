@@ -18,9 +18,12 @@ public class ItemBox : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_prefPickupItemEffect;
 
+	BoxCollider		m_collider;
+
 	System.Action<Creature> m_callbackOnPickup;
 
 	void Start () {
+		m_collider = GetComponent<BoxCollider>();
 		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
 		m_parabola.GroundY = 0.5f;
 		m_timeToDeath = Time.time + m_lifeTime;
@@ -29,18 +32,20 @@ public class ItemBox : MonoBehaviour {
 	void SetTarget(Creature target)
 	{
 		m_target = target;
-		m_bezier = new Bezier(gameObject, target.gameObject, transform.position, target.transform.position, 0.07f);
+		Vector3 handle1 = transform.position;
+		handle1 += transform.forward*5;
+		handle1.y = 3;
+		Vector3 handle2 = target.transform.position;
+
+		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.07f);
 	}
 
-	public void Pickup(Creature obj)
+	public void StartPickupEffect(Creature obj)
 	{
-		m_item.Pickup(obj);
+		m_collider.enabled = false;
+
 		SetTarget(obj);
 
-		if (m_callbackOnPickup != null)
-		{
-			m_callbackOnPickup(obj);
-		}
 	}
 
 	public void Use(Creature obj){
@@ -54,24 +59,29 @@ public class ItemBox : MonoBehaviour {
 
 	void Update()
 	{
-		if (m_target == null)
-		{
-			if (m_parabola.Update() == false)
-			{
-				if (Time.time > m_timeToDeath)
-					Death();
-			}
-		}
-		else
-		{
-			if (m_bezier.Update() == false)
-			{
 
+		if (m_parabola.Update() == false)
+		{
+			if (Time.time > m_timeToDeath)
+				Death();
+		}
+
+		if (m_bezier != null && m_bezier.Update() == false)
+		{
+			if (m_target != null)
+			{
 				m_target.ApplyPickUpItemEffect(ItemType, m_prefPickupItemEffect, Item.Count);
 
-				Death();
+				m_item.Pickup(m_target);
+				if (m_callbackOnPickup != null)
+				{
+					m_callbackOnPickup(m_target);
+				}
 			}
+
+			Death();
 		}
+
 
 	}
 
