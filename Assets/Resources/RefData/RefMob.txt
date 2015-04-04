@@ -1171,16 +1171,17 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":10,
-				"physicalDamage":15,
+				"maxHP":30,
+				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
-				"exp":10,
+				"exp":0,
 				"phyDamagePerLevel":0,
 				"phyDefencePerLevel":0,
 				"hpPerLevel":0.8,
 				"moveSpeed":0,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			}
 		}		
 	]

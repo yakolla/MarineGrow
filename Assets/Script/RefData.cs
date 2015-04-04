@@ -182,7 +182,7 @@ public class RefMobSpawnRatio
 	public Desc	range;
 	public Desc	miniBoss;
 	public Desc	boss;
-	public Desc	shuttle;
+	public Desc	itemPandora;
 }
 
 public class RefMobSpawn
@@ -215,6 +215,7 @@ public class RefWaveItemSpawn
 public class RefWave
 {
 	public RefMobSpawn[]	mobSpawns;
+	public RefMobSpawn[]	randomMobSpawns;
 	public RefWaveItemSpawn	itemSpawn;
 }
 

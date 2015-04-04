@@ -24,7 +24,7 @@ public class ItemBox : MonoBehaviour {
 
 	void Start () {
 		m_collider = GetComponent<BoxCollider>();
-		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
+		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(7f, 9f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
 		m_parabola.GroundY = 0.5f;
 		m_timeToDeath = Time.time + m_lifeTime;
 	}
@@ -33,11 +33,10 @@ public class ItemBox : MonoBehaviour {
 	{
 		m_target = target;
 		Vector3 handle1 = transform.position;
-		handle1 += transform.forward*3;
-		handle1.y = 3;
+		handle1 += (transform.forward+transform.up)*(Vector3.Distance(transform.position, target.transform.position)*0.5f);
 		Vector3 handle2 = target.transform.position;
-
-		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.02f);
+		handle2.y = 3f;
+		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.06f);
 	}
 
 	public void StartPickupEffect(Creature obj)

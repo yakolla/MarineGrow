@@ -6,18 +6,7 @@
 		[
 			{
 				"mobSpawns":
-				[	/*
-					{
-						"refMobIds":{
-							"boss":{
-								"ratio":[0,1],
-								"count":[1,6]
-							}
-						},
-						"interval":0,
-						"repeatCount":[1,1],
-						"boss":true
-					},*/
+				[	
 					{
 						"refMobIds":{
 							"melee":{
@@ -41,18 +30,7 @@
 						},
 						"interval":5,
 						"repeatCount":[4,4]
-					},/*
-					{
-						"refMobIds":{
-							"shuttle":{
-								"ratio":[0,1],
-								"count":[1,1]
-							}
-						},
-						"interval":5,
-						"repeatCount":[1,1]
-						
-					},*/
+					},
 					{
 						"refMobIds":{
 							"melee":{
@@ -157,6 +135,19 @@
 						"interval":1.5,
 						"repeatCount":[1,1],
 						"boss":true
+					}
+				],
+				"randomMobSpawns":
+				[
+					{
+						"refMobIds":{
+							"itemPandora":{
+								"ratio":[0,1],
+								"count":[1,1]
+							}
+						},
+						"interval":5,
+						"repeatCount":[1,1]
 					}
 				],
 				"itemSpawn":
@@ -306,18 +297,18 @@
 							[							
 								{
 									"refItemId":2,
-									"minValue":100,
-									"maxValue":1000,
-									"ratio":0.6,
+									"minValue":10,
+									"maxValue":30,
+									"ratio":0.1,
 									"count":4
-								},								
+								},
 								{
-									"refItemId":7,
-									"minValue":10001,
-									"maxValue":10004,
-									"ratio":0.6
-								}
-								
+									"refItemId":1,
+									"minValue":1,
+									"maxValue":20,
+									"ratio":0.5,
+									"count":10
+								}									
 							]
 						}
 					],

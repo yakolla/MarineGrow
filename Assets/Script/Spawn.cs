@@ -113,6 +113,8 @@ public class Spawn : MonoBehaviour {
 			m_bosses.Clear();
 
 			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_wave%GetCurrentWave().mobSpawns.Length]));
+
+
 		}
 	}
 
@@ -170,7 +172,7 @@ public class Spawn : MonoBehaviour {
 			{
 				if (m_wave % GetCurrentWave().mobSpawns.Length == 0)
 				{
-					StartCoroutine(EffectWaveText("Stage " + GetStage(m_wave), 1));
+					StartCoroutine(EffectWaveText("Stage " + GetStage(m_wave), 3));
 				}
 			}
 
@@ -196,9 +198,18 @@ public class Spawn : MonoBehaviour {
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.shuttle, RefData.Instance.RefShuttleMobs);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs);
 
+				if (Random.Range(0, 100) < 50)
+				{
+					RefMobSpawn	randomMobSpawn = GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length];
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs);
+				}
 
 				if (Random.Range(0, 2) == 0)
 				{
@@ -494,7 +505,7 @@ public class Spawn : MonoBehaviour {
 		}
 
 		float goldAlpha = m_wave*0.1f;
-
+		int spawnedItemCount = 0;
 		foreach(RefItemSpawn desc in refDropItems)
 		{
 			for(int i = 0; i < desc.count; ++i)
@@ -568,6 +579,8 @@ public class Spawn : MonoBehaviour {
 					
 					if (item != null)
 					{
+						++spawnedItemCount;
+
 						GameObject itemBoxObj = (GameObject)Instantiate(m_prefItemBox, pos, Quaternion.Euler(0f, 0f, 0f));
 						GameObject itemSkinObj = (GameObject)Instantiate(m_prefItemBoxSkins[(int)desc.refItem.type], pos, Quaternion.Euler(0f, 0f, 0f));
 						itemSkinObj.transform.parent = itemBoxObj.transform;
@@ -582,7 +595,7 @@ public class Spawn : MonoBehaviour {
 							m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 						};
 
-						StartCoroutine(EffectSpawnItemBox(itemBox, 0.1f));
+						StartCoroutine(EffectSpawnItemBox(itemBox, 0.15f*spawnedItemCount));
 					}
 					
 				}
