@@ -28,7 +28,7 @@ public class LightningLauncher : Weapon {
 			m_bullet.transform.eulerAngles = euler;
 		}
 
-
+		playGunPointEffect();
 		m_firing = true;
 	}
 	
@@ -41,6 +41,8 @@ public class LightningLauncher : Weapon {
 			m_bullet.StopFiring();
 			m_bullet.gameObject.SetActive(false);
 		}
+
+		stopGunPointEffect();
 
 	}
 

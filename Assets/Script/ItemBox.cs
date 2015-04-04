@@ -33,11 +33,11 @@ public class ItemBox : MonoBehaviour {
 	{
 		m_target = target;
 		Vector3 handle1 = transform.position;
-		handle1 += transform.forward*5;
+		handle1 += transform.forward*3;
 		handle1.y = 3;
 		Vector3 handle2 = target.transform.position;
 
-		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.07f);
+		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.02f);
 	}
 
 	public void StartPickupEffect(Creature obj)
@@ -46,15 +46,6 @@ public class ItemBox : MonoBehaviour {
 
 		SetTarget(obj);
 
-	}
-
-	public void Use(Creature obj){
-		m_item.Equip(obj);
-	}
-
-	public string Description()
-	{
-		return m_item.Description();
 	}
 
 	void Update()
@@ -85,7 +76,7 @@ public class ItemBox : MonoBehaviour {
 
 	}
 
-	public void Death()
+	void Death()
 	{
 		DestroyObject(this.gameObject);
 	}

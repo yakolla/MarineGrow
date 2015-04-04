@@ -282,7 +282,7 @@ public class Champ : Creature {
 	void OnTriggerEnter(Collider other) {
 		if (other.tag.CompareTo("ItemBox") == 0)
 		{
-			if (2f > Vector3.Distance(transform.position, other.transform.position))
+			if (3f > Vector3.Distance(transform.position, other.transform.position))
 			{
 				ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
 				itemBox.StartPickupEffect(this);

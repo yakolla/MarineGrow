@@ -19,6 +19,10 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	GameObject					m_prefBullet = null;
 
+	[SerializeField]
+	GameObject					m_prefGunPointEffect = null;
+	ParticleSystem				m_gunPointEffect;
+
 	protected	bool			m_firing = false;
 
 	[SerializeField]
@@ -52,6 +56,19 @@ public class Weapon : MonoBehaviour {
 		m_gunPoint = this.transform.parent.transform.gameObject;
 		m_lastCreated = Time.time;
 		m_chargingSpeed += m_oriChargingSpeed;
+
+		if (m_prefGunPointEffect != null)
+		{
+
+			GameObject obj = Instantiate (m_prefGunPointEffect, Vector3.zero, transform.rotation) as GameObject;
+			
+			obj.transform.parent = m_gunPoint.transform;
+			obj.transform.localPosition = Vector3.zero;
+			obj.transform.localScale = m_prefGunPointEffect.transform.localScale;
+			obj.transform.localRotation = m_prefGunPointEffect.transform.localRotation;
+			m_gunPointEffect = obj.GetComponent<ParticleSystem>();
+
+		}
 	}
 
 
@@ -134,6 +151,28 @@ public class Weapon : MonoBehaviour {
 		get {return (int)(m_creature.m_creatureProperty.PhysicalAttackDamage*m_damageRatio);}
 	}
 
+	protected void playGunPointEffect()
+	{
+		if (m_gunPointEffect != null)
+		{
+			m_gunPointEffect.gameObject.SetActive(true);
+			if (m_gunPointEffect.isPaused || m_gunPointEffect.isStopped)
+			{
+				m_gunPointEffect.Play();
+			}
+			
+		}
+	}
+
+	protected void stopGunPointEffect()
+	{
+		if (m_gunPointEffect != null)
+		{
+			m_gunPointEffect.gameObject.SetActive(false);
+			m_gunPointEffect.Stop();
+		}
+	}
+
 	virtual public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
 		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.y, 0)) as GameObject;
@@ -141,6 +180,7 @@ public class Weapon : MonoBehaviour {
 		bullet.Init(m_creature, m_gunPoint, Damage, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
+		playGunPointEffect();
 
 		this.audio.Play();
 
@@ -185,6 +225,13 @@ public class Weapon : MonoBehaviour {
 	virtual public void StopFiring()
 	{
 		m_firing = false;
+
+		if (m_gunPointEffect != null)
+		{
+			//m_gunPointEffect.gameObject.SetActive(false);
+			//m_gunPointEffect.Stop();
+		}
+
 	}
 
 	public float CoolTime
