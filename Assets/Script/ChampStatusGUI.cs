@@ -81,7 +81,7 @@ public class ChampStatusGUI : MonoBehaviour {
 			GUI.Label(new Rect(Screen.width-m_slotWidth, m_slotHeight*2, m_slotHeight, m_slotHeight), "<color=black>" + m_champ.ComboSkillStack +"</color>", itemCountStyle);
 		}
 
-		DisplayGoodsWindow();
+		//DisplayGoodsWindow();
 	}
 
 	void drawGuage(Rect size, float ratio, string lable, Texture guage)

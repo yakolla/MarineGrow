@@ -386,14 +386,20 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectSteamPack(float time)
 	{		
+
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
-		
+
+		WeaponHolder.EnableChargingGuage = false;
+		WeaponHolder.ChargingGuage = 1f;
+
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.LevelUp].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+
+		WeaponHolder.EnableChargingGuage = true;
 		
 	}
 
@@ -550,7 +556,7 @@ public class Creature : MonoBehaviour {
 		{
 			if (offender != null)
 			{
-				int lifeSteal = (int)(dmg*offender.m_creatureProperty.LifeSteal);
+				int lifeSteal = (int)(offender.m_creatureProperty.LifeSteal);
 				if (lifeSteal > 0)
 				{
 					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.Up);

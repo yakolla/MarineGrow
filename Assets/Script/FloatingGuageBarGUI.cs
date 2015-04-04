@@ -28,14 +28,15 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 	{
 
 		Vector2 pos = Camera.main.WorldToViewportPoint(targetPos);
-		float startX = pos.x*Screen.width-25;
-		float startY = (1-pos.y)*Screen.height-transform.transform.localPosition.y;
-		int size = 5;
+		float startX = pos.x*Screen.width-Screen.width/25;
+		float startY = (1-pos.y)*Screen.height-Screen.height/transform.transform.localPosition.y;
+		int size = Screen.width/120;
+		int maxSize = size*10;
 
 		float ratio = guageRemainRatio();
 
-		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (50-size)*ratio, size), m_gague, new Rect(0f, 0f, ratio, 1f));
-		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (50-size), size), m_gagueEdge, new Rect(0f, 0f, 1f, 1f));
+		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (maxSize-size)*ratio, size), m_gague, new Rect(0f, 0f, ratio, 1f));
+		GUI.DrawTextureWithTexCoords(new Rect(startX, startY, (maxSize-size), size), m_gagueEdge, new Rect(0f, 0f, 1f, 1f));
 
 	}
 

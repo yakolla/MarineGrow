@@ -18,6 +18,8 @@ public class ItemBox : MonoBehaviour {
 	[SerializeField]
 	GameObject		m_prefPickupItemEffect;
 
+	System.Action<Creature> m_callbackOnPickup;
+
 	void Start () {
 		m_parabola = new Parabola(gameObject, Random.Range(0f, 2f), Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
 		m_parabola.GroundY = 0.5f;
@@ -34,6 +36,11 @@ public class ItemBox : MonoBehaviour {
 	{
 		m_item.Pickup(obj);
 		SetTarget(obj);
+
+		if (m_callbackOnPickup != null)
+		{
+			m_callbackOnPickup(obj);
+		}
 	}
 
 	public void Use(Creature obj){
@@ -91,5 +98,9 @@ public class ItemBox : MonoBehaviour {
 		}
 	}
 
+	public System.Action<Creature> PickupCallback
+	{
+		set { m_callbackOnPickup = value;}
+	}
 
 }

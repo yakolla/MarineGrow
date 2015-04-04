@@ -10,6 +10,13 @@ public class ComboGUIShake : MonoBehaviour
 	float decreaseFactor = 10.0f;
 	
 	Vector3 originalPos;
+
+	TypogenicText	m_killComboGUI;
+
+	void Start()
+	{
+		m_killComboGUI = GetComponent<TypogenicText>();
+	}
 	
 	void OnEnable()
 	{
@@ -30,5 +37,11 @@ public class ComboGUIShake : MonoBehaviour
 			transform.localScale = Vector3.one;
 			this.enabled = false;
 		}
+	}
+
+	public string Text
+	{
+		get{return m_killComboGUI.Text;}
+		set{m_killComboGUI.Text = value;}
 	}
 }

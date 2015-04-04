@@ -30,8 +30,9 @@ public class Spawn : MonoBehaviour {
 	Dungeon			m_dungeon;
 	int				m_hive = 0;
 
-	TypogenicText	m_killComboGUI;
 	ComboGUIShake	m_comboGUIShake;
+	GoldGUISmooth	m_goldGUIShake;
+
 	[SerializeField]
 	int				m_wave = 0;
 	// Use this for initialization
@@ -39,8 +40,9 @@ public class Spawn : MonoBehaviour {
 
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
 
-		m_killComboGUI = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<TypogenicText>();
 		m_comboGUIShake = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<ComboGUIShake>();
+		m_goldGUIShake = Camera.main.gameObject.transform.Find("Gold").gameObject.GetComponent<GoldGUISmooth>();
+		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -513,6 +515,7 @@ public class Spawn : MonoBehaviour {
 							break;
 						}
 						item.Count += (int)(item.Count*goldAlpha);
+
 						break;
 					case ItemData.Type.HealPosion:
 						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
@@ -569,6 +572,9 @@ public class Spawn : MonoBehaviour {
 						
 						ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
 						itemBox.Item = item;
+						itemBox.PickupCallback = (Creature obj)=>{
+							m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
+						};
 						itemBoxObj.SetActive(true);
 					}
 					
@@ -592,7 +598,7 @@ public class Spawn : MonoBehaviour {
 
 		if (m_champ != null)
 		{
-			m_killComboGUI.Text = "x" + m_champ.ComboKills;
+			m_comboGUIShake.Text = "x" + m_champ.ComboKills;
 		}
 
 	}

@@ -48,8 +48,8 @@ public class Champ : Creature {
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
 
-		m_leftJoystick = GameObject.Find("Joystick/LeftJoystick").GetComponent<Joystick>();
-		m_rightJoystick = GameObject.Find("Joystick/RightJoystick").GetComponent<Joystick>();
+		m_leftJoystick = GameObject.Find("HudGUI/LeftJoystick").GetComponent<Joystick>();
+		m_rightJoystick = GameObject.Find("HudGUI/RightJoystick").GetComponent<Joystick>();
 	}
 
 	public int RemainStatPoint

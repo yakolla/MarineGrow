@@ -121,6 +121,13 @@ public class WeaponHolder : MonoBehaviour {
 
 	public float ChargingGuage
 	{
+		set{m_chargingGuage = value;}
 		get{return m_chargingGuage;}
+	}
+
+	public bool EnableChargingGuage
+	{
+		get{return m_enableCharging;}
+		set{m_enableCharging = value;}
 	}
 }
