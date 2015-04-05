@@ -42,7 +42,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	// Update is called once per frame
 	void Update () {
 
-		if (m_collider.enabled == false)
+		if (m_isDestroying == true)
 			return;
 
 		if (m_target == null && m_lastSearchTime <= Time.time)

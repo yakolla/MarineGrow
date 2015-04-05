@@ -13,7 +13,7 @@ public class RocketLauncherBullet : Bullet {
 	[SerializeField]
 	float			m_bombRange = 5f;
 
-	bool m_isDestroying = false;
+	protected bool m_isDestroying = false;
 
 	// Use this for initialization
 	void Start () {

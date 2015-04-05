@@ -691,7 +691,7 @@
 				"navMeshBaseOffset":0
 			},
 			"mass":3,
-			"dropEggMob":
+			"eggMob":
 			{
 				"refMobId":31005,
 				"maxCount":3
@@ -768,6 +768,10 @@
 					{
 						"coolTime":6
 					}
+				},
+				{
+					"reqLevel":3,
+					"refItemId":"127"
 				}
 			],
 			"mobAI":"Normal",		
@@ -826,6 +830,9 @@
 						"range":7,
 						"firingCount":1
 					}	
+				},
+				{
+					"refItemId":"127"
 				}
 			],
 			"mobAI":"Normal",		
@@ -869,6 +876,9 @@
 						"range":7,
 						"firingCount":1
 					}	
+				},
+				{
+					"refItemId":"127"
 				}
 			],
 			"mobAI":"Normal",		
@@ -902,10 +912,14 @@
 					"refItemId":"109"
 				},
 				{
+					"reqLevel":8,
 					"refItemId":"101"
 				},
 				{
 					"refItemId":"123"
+				},
+				{
+					"refItemId":"127"
 				}
 			],
 			"mobAI":"Normal",		

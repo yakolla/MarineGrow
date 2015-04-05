@@ -27,7 +27,7 @@ public class Parabola {
 		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
 
 		m_startTime = Time.time;
-		m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
+		m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2);
 
 	}
 
@@ -69,7 +69,7 @@ public class Parabola {
 		float y = m_oriPos.y+m_vel.y*elapse -0.5f*m_gravity*(elapse*elapse);
 		m_obj.transform.position = new Vector3(x, Mathf.Max(y, m_groundY), z);
 
-		if (Time.time > m_finishTime && y <= m_groundY)
+		if (elapse > m_finishTime && y <= m_groundY)
 		{
 			++m_bouncing;
 			if (m_maxBouncing <= m_bouncing)
@@ -82,7 +82,7 @@ public class Parabola {
 			m_oriPos = m_obj.transform.position;
 			m_vel *= 1-(float)m_bouncing/m_maxBouncing;
 			m_startTime = Time.time;
-			m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2)+m_startTime;
+			m_finishTime = Mathf.Abs((m_vel.y/m_gravity)*2);
 		}
 
 		return true;
