@@ -430,6 +430,10 @@ public class ChampSettingGUI : MonoBehaviour {
 				if (touch.phase == TouchPhase.Moved)
 				{
 					touchedDelta = touch.deltaPosition.y;
+					accel = 1f;
+				}
+				else if (touch.phase == TouchPhase.Ended)
+				{					
 					accel = Input.acceleration.y*5f;
 				}
 

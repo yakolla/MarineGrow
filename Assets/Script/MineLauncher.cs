@@ -13,6 +13,7 @@ public class MineLauncher : Weapon {
 
 		startPos.x += Random.Range(-m_attackRange/2, m_attackRange/2);
 		startPos.z += Random.Range(-m_attackRange/2, m_attackRange/2);
+		startPos.y = 0;
 
 		return base.CreateBullet(targetAngle, startPos);
 	}

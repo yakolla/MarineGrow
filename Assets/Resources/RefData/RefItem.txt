@@ -1311,22 +1311,6 @@
 		}
 	},
 	{
-		"id":126,
-		"codeName":"FallenSuicideBombing",
-		"type":"Weapon",
-		"icon":"Sprites/FallenSuicideBombing",		
-		"evolutionFiring":
-		{
-			"angle":10,
-			"delay":0
-		},
-		"weaponStat":
-		{
-			"coolTime":1,
-			"range":1.2
-		}
-	},
-	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
@@ -1373,6 +1357,23 @@
 				}
 			]
 		},
+	},
+	{
+		"id":127,
+		"codeName":"SummonMobLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/SummonMob",
+		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":1
+		},
+		"weaponStat":
+		{
+			"coolTime":5,
+			"range":5
+		}
 	},
 	{
 		"id":1002,

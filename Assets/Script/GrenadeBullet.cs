@@ -12,12 +12,12 @@ public class GrenadeBullet : Bullet {
 	float			m_bombRange = 5f;
 
 	[SerializeField]
-	float			m_speed = 7f;
+	protected float			m_speed = 7f;
 
 	[SerializeField]
-	int				m_bouncing = 1;
+	protected int				m_bouncing = 1;
 
-	Parabola	m_parabola;
+	protected Parabola	m_parabola;
 	// Use this for initialization
 	void Start () {
 
@@ -26,13 +26,16 @@ public class GrenadeBullet : Bullet {
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
+		createParabola(targetAngle);
+	}
 
-
+	protected virtual void createParabola(Vector2 targetAngle)
+	{
 		m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), 10f, -targetAngle.x * Mathf.Deg2Rad, 45f * Mathf.Deg2Rad, m_bouncing);
 	}
 
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 		if (m_isDestroying == true)
 			return;
 
@@ -50,7 +53,7 @@ public class GrenadeBullet : Bullet {
 		DestroyObject(bombEffect);
 	}
 
-	void bomb()
+	protected virtual void bomb()
 	{
 		m_isDestroying = true;
 
@@ -71,7 +74,10 @@ public class GrenadeBullet : Bullet {
 			}
 		}
 
-		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
+		Vector3 bombPos = transform.position;
+		bombPos.y = m_prefBombEffect.transform.position.y;
+
+		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, bombPos, m_prefBombEffect.transform.rotation);
 		bombEffect.particleSystem.startSize = m_bombRange*2;
 		this.audio.Play();
 		StartCoroutine(destoryObject(bombEffect));

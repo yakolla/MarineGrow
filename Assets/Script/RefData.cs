@@ -131,8 +131,7 @@ public enum MobAIType
 	ItemShuttle,
 	Dummy,
 	Bomber,
-	Egg,
-	FallingEgg,
+	Egg
 }
 
 

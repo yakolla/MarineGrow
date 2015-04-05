@@ -13,7 +13,9 @@ public class MineBullet : Bullet {
 	float			m_bombRange = 5f;
 
 	float			m_elapsed = 0f;
-	float			m_bombTime = 5f;
+
+	[SerializeField]
+	float			m_bombTime = 3f;
 
 	// Use this for initialization
 	void Start () {
@@ -69,7 +71,10 @@ public class MineBullet : Bullet {
 			}
 		}
 
-		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
+		Vector3 bombPos = transform.position;
+		bombPos.y = m_prefBombEffect.transform.position.y;
+		
+		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, bombPos, m_prefBombEffect.transform.rotation);
 		bombEffect.particleSystem.startSize = m_bombRange*2;
 		this.audio.Play();
 		StartCoroutine(destoryObject(bombEffect));

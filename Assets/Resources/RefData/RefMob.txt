@@ -23,6 +23,11 @@
 				"hpPerLevel":0.8,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
+			},
+			"dropEggMob":
+			{
+				"refMobId":31001,
+				"maxCount":1
 			}
 		},
 		{
@@ -128,10 +133,10 @@
 			"refWeaponItems":
 			[				
 				{
-					"refItemId":"126"
+					"refItemId":"112"
 				}
 			],
-			"mobAI":"FallingEgg",			
+			"mobAI":"Normal",			
 			"baseCreatureProperty":
 			{
 				"maxHP":10,
@@ -541,10 +546,10 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"126"
+					"refItemId":"110"
 				}
 			],
-			"mobAI":"FallingEgg",
+			"mobAI":"Normal",
 			"scale":0.5,
 			"baseCreatureProperty":
 			{
@@ -556,7 +561,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.1,
-				"moveSpeed":2,
+				"moveSpeed":0,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -566,10 +571,10 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"126"
+					"refItemId":"112"
 				}
 			],
-			"mobAI":"FallingEgg",
+			"mobAI":"Normal",
 			"scale":0.5,
 			"baseCreatureProperty":
 			{
@@ -581,7 +586,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.1,
-				"moveSpeed":2,
+				"moveSpeed":0,
 				"navMeshBaseOffset":0
 			},
 			"eggMob":
@@ -600,6 +605,9 @@
 			[
 				{
 					"refItemId":"107"
+				},
+				{
+					"refItemId":"127"
 				}
 			],
 			"mobAI":"Normal",
@@ -620,11 +628,7 @@
 			"mass":3,			
 			"dropEggMob":
 			{
-				"reqLevel":1,
-				"refMobId":31006,
-				"maxCount":3,
-				"perCount":3,
-				"perTime":0.3
+				"refMobId":31006
 			}
 		},
 		{
