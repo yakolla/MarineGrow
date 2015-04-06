@@ -50,7 +50,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.8,
-				"moveSpeed":1,
+				"moveSpeed":1.7,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -735,11 +735,11 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":800,
+				"maxHP":500,
 				"physicalDamage":35,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":800,
+				"exp":500,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.8,
@@ -778,11 +778,11 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":1100,
+				"maxHP":700,
 				"physicalDamage":40,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":1100,
+				"exp":700,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.8,
