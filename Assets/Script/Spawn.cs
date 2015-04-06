@@ -127,11 +127,12 @@ public class Spawn : MonoBehaviour {
 	class SpawnMobDescResult
 	{
 		public List<RefMob>	spawnMobs = new List<RefMob>();
+		public List<bool> 	spawnMobBoss = new List<bool>();
 		public List<int> 	spawnMobCount = new List<int>();
 		public List<bool> 	spawnMobMonitored = new List<bool>();
 	}
 
-	void	buildSpawnMob(SpawnMobDescResult result, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs, bool monitoredDeath)
+	void	buildSpawnMob(SpawnMobDescResult result, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs, bool monitoredDeath, bool boss)
 	{
 		if (spawnRatioDesc == null)
 			return;
@@ -147,6 +148,7 @@ public class Spawn : MonoBehaviour {
 		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress*0.1f) + spawnRatioDesc.count[1] * progress*0.1f);
 		result.spawnMobCount.Add(Random.Range(minIndex, maxIndex));
 		result.spawnMobMonitored.Add(monitoredDeath);
+		result.spawnMobBoss.Add(boss);
 	}
 
 	public int GetStage(int wave)
@@ -195,20 +197,20 @@ public class Spawn : MonoBehaviour {
 
 				SpawnMobDescResult spawnMobDescResult = new SpawnMobDescResult();
 
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, true);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, true);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, true);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, true);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, true, false);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, true, false);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, true, true);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, true, false);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true, false);
 
-				if (Random.Range(0, 100) < 10)
+				if (Random.Range(0, 100) < 100)
 				{
 					RefMobSpawn	randomMobSpawn = GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length];
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, false);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, false, false);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, false, false);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, false, false);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false, false);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, false, false);
 				}
 
 				if (Random.Range(0, 2) == 0)
@@ -234,7 +236,7 @@ public class Spawn : MonoBehaviour {
 							
 							yield return new WaitForSeconds (0.02f);
 
-							Creature cre = SpawnMob(refMob, enemyPos, mobSpawn.boss, spawnMobDescResult.spawnMobMonitored[ii]);
+							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
 							cre.gameObject.SetActive(false);
 							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
 							
@@ -285,7 +287,7 @@ public class Spawn : MonoBehaviour {
 
 							yield return new WaitForSeconds (0.02f);
 							
-							Creature cre = SpawnMob(refMob, enemyPos, mobSpawn.boss, spawnMobDescResult.spawnMobMonitored[ii]);
+							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
 							cre.gameObject.SetActive(false);
 							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
 							

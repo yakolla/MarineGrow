@@ -35,7 +35,7 @@ public class GrenadeBullet : Bullet {
 	}
 
 	// Update is called once per frame
-	protected virtual void Update () {
+	protected void Update () {
 		if (m_isDestroying == true)
 			return;
 

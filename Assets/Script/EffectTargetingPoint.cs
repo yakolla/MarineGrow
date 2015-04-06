@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class EffectTargetingPoint {
 
-	GameObject	m_prefEffectTargetPoint = Resources.Load<GameObject>("Pref/ef_targeting");
+
 	
 	GameObject	m_effectTargetPoint;
 
 	public void	Init(Vector3 targetPos)
 	{
+
 		targetPos.y = 0;
 
 		if (m_effectTargetPoint == null)
 		{
-			m_effectTargetPoint = GameObject.Instantiate (m_prefEffectTargetPoint, targetPos, m_prefEffectTargetPoint.transform.localRotation) as GameObject;
+			GameObject	prefEffectTargetPoint = Resources.Load<GameObject>("Pref/ef_targeting");
+			m_effectTargetPoint = GameObject.Instantiate (prefEffectTargetPoint, targetPos, prefEffectTargetPoint.transform.localRotation) as GameObject;
 		}
 
 		SetActive(true);

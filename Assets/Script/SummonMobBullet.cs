@@ -6,10 +6,7 @@ public class SummonMobBullet : GrenadeBullet {
 	EffectTargetingPoint	m_effectTargetingPoint = new EffectTargetingPoint();
 	Creature		m_spawnedMob = null;
 	// Use this for initialization
-	void Start () {
 
-
-	}
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
@@ -30,7 +27,7 @@ public class SummonMobBullet : GrenadeBullet {
 	}
 
 	// Update is called once per frame
-	protected override void Update () {
+	new void Update () {
 		base.Update();
 
 		if (m_spawnedMob != null)
