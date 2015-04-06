@@ -35,7 +35,7 @@ public class Weapon : MonoBehaviour {
 	float						m_damageRatio = 1f;
 
 	[SerializeField]
-	Vector2						m_oriChargingSpeed = new Vector2(0.05f, 0.7f);
+	Vector2						m_oriChargingSpeed = new Vector2(0.2f, 0.7f);
 
 	Vector2						m_chargingSpeed;
 
@@ -144,7 +144,7 @@ public class Weapon : MonoBehaviour {
 
 		if (m_level % 3 == 0)
 		{
-			m_chargingSpeed.x += m_oriChargingSpeed.x;
+			m_chargingSpeed.x += 0.01f;
 		}
 		m_chargingSpeed.y += (1-m_oriChargingSpeed.y)/(Const.ItemMaxLevel+1);
 	}
