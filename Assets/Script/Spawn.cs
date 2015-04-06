@@ -42,7 +42,7 @@ public class Spawn : MonoBehaviour {
 
 		m_comboGUIShake = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<ComboGUIShake>();
 		m_goldGUIShake = Camera.main.gameObject.transform.Find("Gold").gameObject.GetComponent<GoldGUISmooth>();
-		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
+
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -87,6 +87,7 @@ public class Spawn : MonoBehaviour {
 		if (m_wave == 0)
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
 
+		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 		StartCoroutine(checkBossAlive());
 	}
 

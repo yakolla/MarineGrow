@@ -107,7 +107,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":300
+					"count":500
 				},
 				{
 					"refItemId":3, 
@@ -150,7 +150,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":300
+					"count":500
 				},
 				{
 					"refItemId":11, 
@@ -192,7 +192,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":400
+					"count":1000
 				},
 				{
 					"refItemId":3, 
@@ -235,7 +235,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":400
+					"count":1000
 				},
 				{
 					"refItemId":12, 
@@ -328,7 +328,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":900
 				},
 				{
 					"refItemId":3, 
@@ -371,7 +371,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":900
 				},
 				{
 					"refItemId":14, 
@@ -425,7 +425,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":100
+					"count":400
 				},
 				{
 					"refItemId":3, 
@@ -517,7 +517,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":600
+					"count":900
 				},
 				{
 					"refItemId":3, 
@@ -560,7 +560,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":600
+					"count":900
 				},
 				{
 					"refItemId":13, 
@@ -858,7 +858,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":1000
+					"count":1500
 				},
 				{
 					"refItemId":3, 
@@ -901,7 +901,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":1000
+					"count":1500
 				},
 				{
 					"refItemId":15, 
@@ -927,139 +927,14 @@
 		{
 			"coolTime":5,
 			"range":5
-		},
-		"levelup":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
 		}
+		
 	},
 	{
 		"id":122,
 		"codeName":"Firegun",
 		"type":"Weapon",
-		"icon":"Sprites/Firegun",
-		"levelup":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		"icon":"Sprites/Firegun",		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -1080,70 +955,7 @@
 		{
 			"coolTime":0.5,
 			"range":5
-		},
-		"levelup":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		},		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -1165,70 +977,8 @@
 		{
 			"coolTime":1,
 			"range":5
-		},		
-		"levelup":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
 		}
+		
 	},
 	{
 		"id":125,
@@ -1245,70 +995,8 @@
 		{
 			"coolTime":1,
 			"range":5
-		},		
-		"levelup":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":3, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
 		}
+		
 	},
 	{
 		"id":127,
@@ -1386,7 +1074,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":15
+					"count":35
 				}
 			]
 		}
