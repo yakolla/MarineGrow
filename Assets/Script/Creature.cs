@@ -53,9 +53,6 @@ public class Creature : MonoBehaviour {
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
 
 	protected DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
-
-
-
 	float		m_pushbackSpeedOnDamage = 0f;
 
 	Texture damagedTexture;
@@ -65,7 +62,7 @@ public class Creature : MonoBehaviour {
 
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
-		m_aimpoint = transform.Find("Aimpoint").gameObject;
+		m_aimpoint = transform.Find("Body/Aimpoint").gameObject;
 
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
@@ -487,7 +484,7 @@ public class Creature : MonoBehaviour {
 
 	public void DamageText(string damage, Color color, DamageNumberSprite.MovementType movementType)
 	{
-		GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, transform.position, m_prefDamageSprite.transform.localRotation);
+		GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, m_aimpoint.transform.position, m_prefDamageSprite.transform.localRotation);
 		DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
 		sprite.Init(gameObject, damage, color, movementType);
 	}
