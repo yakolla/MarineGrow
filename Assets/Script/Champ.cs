@@ -40,7 +40,7 @@ public class Champ : Creature {
 
 		m_level = Warehouse.Instance.champAbility.m_level;
 		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
-		m_remainStatPoint = Warehouse.Instance.champAbility.m_abilityPoint;
+		//m_remainStatPoint = Warehouse.Instance.champAbility.m_abilityPoint;
 
 		m_creationTime = Time.time;
 

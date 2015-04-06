@@ -111,14 +111,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":30
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":3
+					"count":5
 				}
 			],
 			"pricePerLevel":2
@@ -154,14 +154,14 @@
 				},
 				{
 					"refItemId":11, 
-					"count":30
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":3
+					"count":5
 				}
 			]
 		},
@@ -196,14 +196,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":40
+					"count":10
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":4
+					"count":10
 				}
 			],
 			"pricePerLevel":3
@@ -239,14 +239,14 @@
 				},
 				{
 					"refItemId":12, 
-					"count":40
+					"count":10
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":4
+					"count":10
 				}
 			]
 		},
@@ -332,14 +332,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":50
+					"count":9
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":9
 				}
 			],
 			"pricePerLevel":2
@@ -375,14 +375,14 @@
 				},
 				{
 					"refItemId":14, 
-					"count":50
+					"count":9
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":9
 				}
 			]
 		}
@@ -429,14 +429,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":10
+					"count":4
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":1
+					"count":4
 				}
 			],
 			"pricePerLevel":1
@@ -521,14 +521,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":60
+					"count":9
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":6
+					"count":9
 				}
 			],
 			"pricePerLevel":3
@@ -564,14 +564,14 @@
 				},
 				{
 					"refItemId":13, 
-					"count":60
+					"count":9
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":6
+					"count":9
 				}
 			]
 		}
@@ -862,14 +862,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":100
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":10
+					"count":15
 				}
 			],
 			"pricePerLevel":3
@@ -905,14 +905,14 @@
 				},
 				{
 					"refItemId":15, 
-					"count":100
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":10
+					"count":15
 				}
 			]
 		}
@@ -1026,7 +1026,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":300
+					"count":3000
 				},
 				{
 					"refItemId":3, 
@@ -1037,7 +1037,7 @@
 			[
 				{
 					"refItemId":8,
-					"count":3
+					"count":30
 				}
 			]
 		},
