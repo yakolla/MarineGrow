@@ -20,12 +20,16 @@ public class LightningLauncher : Weapon {
 			m_bullet.gameObject.SetActive(true);
 			m_bullet.MaxChaining = m_maxChaining;
 
+			this.audio.Play();
+
 		}
 		if (null != m_bullet)
 		{
 			Vector3 euler = m_bullet.transform.rotation.eulerAngles;
 			euler.y = transform.eulerAngles.y;
 			m_bullet.transform.eulerAngles = euler;
+
+
 		}
 
 		playGunPointEffect();

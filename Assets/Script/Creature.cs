@@ -535,7 +535,7 @@ public class Creature : MonoBehaviour {
 			ApplyDamageEffect(damageDesc.DamageType, damageDesc.PrefEffect);
 		}
 
-		if (true == m_creatureProperty.BackwardOnDamage && damageDesc.PushbackOnDamage)
+		if (true == m_creatureProperty.BackwardOnDamage && damageDesc.PushbackOnDamage && m_pushbackSpeedOnDamage == 0f)
 		{
 			m_pushbackSpeedOnDamage = 10f / rigidbody.mass;
 			rigidbody.AddForce(transform.right*-2f, ForceMode.Impulse);

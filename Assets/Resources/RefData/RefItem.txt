@@ -110,7 +110,7 @@
 					"count":500
 				},
 				{
-					"refItemId":3, 
+					"refItemId":11, 
 					"count":5
 				}
 			],
@@ -195,7 +195,7 @@
 					"count":1000
 				},
 				{
-					"refItemId":3, 
+					"refItemId":12, 
 					"count":10
 				}
 			],
@@ -235,18 +235,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":1000
+					"count":1500
 				},
 				{
 					"refItemId":12, 
-					"count":10
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":10
+					"count":5
 				}
 			]
 		},
@@ -331,7 +331,7 @@
 					"count":900
 				},
 				{
-					"refItemId":3, 
+					"refItemId":14, 
 					"count":9
 				}
 			],
@@ -371,18 +371,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":900
+					"count":2000
 				},
 				{
 					"refItemId":14, 
-					"count":9
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":9
+					"count":5
 				}
 			]
 		}
@@ -520,7 +520,7 @@
 					"count":900
 				},
 				{
-					"refItemId":3, 
+					"refItemId":13, 
 					"count":9
 				}
 			],
@@ -560,18 +560,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":900
+					"count":2500
 				},
 				{
 					"refItemId":13, 
-					"count":9
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":9
+					"count":5
 				}
 			]
 		}
@@ -678,14 +678,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":10
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":1
+					"count":5
 				}
 			]
 		}
@@ -803,14 +803,14 @@
 				},
 				{
 					"refItemId":3, 
-					"count":10
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":1
+					"count":5
 				}
 			]
 		},
@@ -861,7 +861,7 @@
 					"count":1500
 				},
 				{
-					"refItemId":3, 
+					"refItemId":15, 
 					"count":15
 				}
 			],
@@ -901,18 +901,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":1500
+					"count":3000
 				},
 				{
 					"refItemId":15, 
-					"count":15
+					"count":5
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":15
+					"count":5
 				}
 			]
 		}

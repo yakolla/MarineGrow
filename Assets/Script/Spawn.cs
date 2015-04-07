@@ -204,7 +204,7 @@ public class Spawn : MonoBehaviour {
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, true, false);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true, false);
 
-				if (Random.Range(0, 100) < 10)
+				if (Random.Range(0, 100) < 100)
 				{
 					RefMobSpawn	randomMobSpawn = GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length];
 					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, false, false);
@@ -560,7 +560,7 @@ public class Spawn : MonoBehaviour {
 						item = new ItemWeaponPartsData(desc.refItemId, Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.Follower:
-						item = new ItemFollowerData(RefData.Instance.RefMobs[desc.maxValue]);					
+						item = new ItemFollowerData(RefData.Instance.RefFollowerMobs[Random.Range(0, RefData.Instance.RefFollowerMobs.Length)]);
 						break;
 					case ItemData.Type.WeaponDNA:
 						item = new ItemWeaponDNAData(Random.Range(desc.minValue, desc.maxValue));					
