@@ -3,7 +3,7 @@
 	[	
 		{
 			"id":10001,
-			"prefBody":"beetle_skin",
+			"prefBody":"ghost_slime_skin",
 			"refWeaponItems":
 			[				
 				{
