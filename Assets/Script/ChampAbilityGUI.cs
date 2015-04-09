@@ -64,11 +64,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 		
 		m_abilities.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
-			m_backup.AlphaMaxHP+=30;
+			m_backup.AlphaMaxHP+=10;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaMaxHP+=30;
+			m_champ.m_creatureProperty.AlphaMaxHP+=10;
 			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
 			--m_champ.RemainStatPoint;
 		}));
@@ -82,7 +82,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.3f, "Inc Critical Success %", 
+		m_abilities.Add(new Ability(0.3f, "Inc Critical Chance %", 
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.03f;
 			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
