@@ -22,6 +22,7 @@ public class Parabola {
 	{
 		m_obj = obj;
 		m_oriPos = obj.transform.position;
+		m_oriPos.y = 0;
 		m_maxBouncing = bouncing;
 		m_vRadian = vRadian;
 
@@ -35,7 +36,7 @@ public class Parabola {
 
 
 		m_destPos.Set(m_oriPos.x+((m_vel.x*m_vel.x*Mathf.Sin(2*m_vRadian))/m_gravity*(m_vel.x >= 0 ? 1 : -1)), 0.1f, m_oriPos.z+((m_vel.z*m_vel.z*Mathf.Sin(2*m_vRadian))/m_gravity*(m_vel.z >= 0 ? 1 : -1)));
-		Debug.Log("ori:" + m_oriPos + " dest:" + m_destPos + " hRadian:" + hRadian + " vRadian:" + vRadian);
+
 	}
 
 	public float GroundY

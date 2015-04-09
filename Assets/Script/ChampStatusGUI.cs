@@ -52,7 +52,9 @@ public class ChampStatusGUI : MonoBehaviour {
 			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
 			levelupStyle.fontSize = m_fontSize;
 
-			if (GUI.Button(new Rect(Screen.width-m_slotWidth*3, 0, m_slotHeight, m_slotHeight), "", levelupStyle))
+			Rect levelUpButton = new Rect(Screen.width-m_slotWidth*3, 0, m_slotHeight, m_slotHeight);
+
+			if (GUI.Button(levelUpButton, "", levelupStyle))
 			{
 				ChampAbilityGUI abilityGUI = m_champ.transform.Find("ChampAbilityGUI").GetComponent<ChampAbilityGUI>();
 				abilityGUI.gameObject.SetActive(true);
@@ -61,19 +63,20 @@ public class ChampStatusGUI : MonoBehaviour {
 			GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
 			itemCountStyle.fontSize = m_fontSize;
 
-			GUI.Label(new Rect(Screen.width-m_slotWidth*3, 0, m_slotHeight, m_slotHeight), "<color=black>" + m_champ.RemainStatPoint +"</color>", itemCountStyle);
+			GUI.Label(levelUpButton, "<color=black>" + m_champ.RemainStatPoint +"</color>", itemCountStyle);
 		}
 
 		if (m_champ.ComboSkillStack > 0)
 		{
 			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
 			levelupStyle.fontSize = m_fontSize;
-			
-			if (GUI.Button(new Rect(Screen.width-m_slotWidth, m_slotHeight*2, m_slotHeight, m_slotHeight), "", levelupStyle))
-			{
+
+			Rect levelUpButton = new Rect(Screen.width-m_slotWidth, m_slotHeight*2, m_slotHeight, m_slotHeight);
+
+			Const.GuiButtonMultitouchable(levelUpButton, "", levelupStyle, ()=>{
 				--m_champ.ComboSkillStack;
 				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 10f, null);
-			}
+			});
 			
 			GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
 			itemCountStyle.fontSize = m_fontSize;
@@ -124,7 +127,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		lable = Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();
 		drawGuage(new Rect(0, startY+(size*1), m_guageWindowRect.width, size), expRatio, lable, m_guageTexture); 
 
-		float chargingRatio = m_champ.WeaponHolder.ChargingGuage;
+		float chargingRatio = 1f;
 		lable = "Weapon Enegy";
 		drawGuage(new Rect(0, startY+(size*2), m_guageWindowRect.width, size), chargingRatio, lable, m_guageTexture); 
 

@@ -158,4 +158,36 @@ public class Const {
 		return able;
 		
 	}
+
+	public static void GuiButtonMultitouchable(Rect rect, string name, GUIStyle style, System.Action callback)
+	{
+		switch (Application.platform)
+		{
+		case RuntimePlatform.WindowsEditor:
+		case RuntimePlatform.WindowsPlayer:
+			{
+				if (GUI.Button(rect, name, style))
+				{
+					callback();
+				}
+			}
+			break;
+		default:
+			{
+				foreach(Touch t in Input.touches)
+				{
+					Vector2 vec = t.position;
+					vec.y = Screen.height - vec.y; // You need to invert since GUI and screen have differnet coordinate system
+					if(rect.Contains(vec))// Do something
+					{
+						callback();
+					}
+				}
+				
+				GUI.Label(rect, name, style);
+			}
+			break;
+		}
+
+	}
 }

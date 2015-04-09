@@ -5,7 +5,7 @@ public class FloatingWeaponChargingGuageGUI : FloatingGuageBarGUI {
 
 	override protected float guageRemainRatio()
 	{
-		return m_creature.WeaponHolder.ChargingGuage;
+		return 1f;
 	}
 }
 

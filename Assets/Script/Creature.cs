@@ -387,8 +387,6 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
 
-		WeaponHolder.EnableChargingGuage = false;
-		WeaponHolder.ChargingGuage = 1f;
 
 		yield return new WaitForSeconds(time);
 		
@@ -396,7 +394,7 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
 
-		WeaponHolder.EnableChargingGuage = true;
+
 		
 	}
 
