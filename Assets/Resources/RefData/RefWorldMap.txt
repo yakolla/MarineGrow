@@ -57,6 +57,7 @@
 					},
 					{
 						"refMobIds":{
+						
 							"melee":{
 								"ratio":[0,1],
 								"count":[12,36]

@@ -24,7 +24,7 @@ public class ItemBox : MonoBehaviour {
 
 	void Start () {
 		m_collider = GetComponent<BoxCollider>();
-		m_parabola = new Parabola(gameObject, Random.Range(0f, 1f), Random.Range(7f, 9f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
+		m_parabola = new Parabola(gameObject, Random.Range(5f, 8f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.57f), 2);
 		m_parabola.GroundY = 0.5f;
 		m_parabola.TimeScale = 1.5f;
 		m_timeToDeath = Time.time + m_lifeTime;

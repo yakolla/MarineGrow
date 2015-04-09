@@ -43,7 +43,7 @@ public class DamageNumberSprite : MonoBehaviour {
 		text.ColorTopLeft = color;
 
 		if (movementType == MovementType.Parabola)
-			m_parabola = new Parabola(gameObject, 0f, 7f, 0f, 1f, 1);
+			m_parabola = new Parabola(gameObject, 5f, 0f, 1.3f, 1);
 	}
 	
 	// Update is called once per frame

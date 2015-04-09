@@ -8,9 +8,6 @@ public class EffectTargetingPoint {
 
 	public void	Init(Vector3 targetPos)
 	{
-
-		targetPos.y = 0;
-
 		if (m_effectTargetPoint == null)
 		{
 			GameObject	prefEffectTargetPoint = Resources.Load<GameObject>("Pref/ef_targeting");

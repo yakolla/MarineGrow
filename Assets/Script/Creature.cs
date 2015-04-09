@@ -350,7 +350,7 @@ public class Creature : MonoBehaviour {
 	IEnumerator EffectAirborne()
 	{		
 		CrowdControl(CrowdControlType.Airborne, true);
-		Parabola parabola = new Parabola(gameObject, 0, 7f, 0f, 1.5f, 1);
+		Parabola parabola = new Parabola(gameObject, 8, 0f, 90*Mathf.Deg2Rad, 1);
 		while(parabola.Update())
 		{
 

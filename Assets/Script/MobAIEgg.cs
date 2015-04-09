@@ -5,8 +5,7 @@ public class MobAIEgg : MobAI {
 
 	Parabola 	m_parabola;
 	
-	float[]		m_hSpeed = {1f, 3f};
-	float[]		m_vSpeed = {5f, 5f};
+	float[]		m_hSpeed = {5f, 7f};
 	float[]		m_vRadian = {-3.14f, 3.14f};
 	float[]		m_hRadian = {1.3f, 1.5f};
 	bool		m_ingDeathEffect;
@@ -17,8 +16,7 @@ public class MobAIEgg : MobAI {
 
 		m_parabola = new Parabola(mob.gameObject, 
 		                          Random.Range(m_hSpeed[0], m_hSpeed[1]), 
-		                          Random.Range(m_vSpeed[0], m_vSpeed[1]), 
-		                          Random.Range(m_vRadian[0], m_vRadian[1]), 
+		                           Random.Range(m_vRadian[0], m_vRadian[1]), 
 		                          Random.Range(m_hRadian[0], m_hRadian[1]), 
 		                          1);
 	}

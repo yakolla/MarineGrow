@@ -11,7 +11,7 @@ public class LeapStrikeLauncher : Weapon {
 		{
 			float d = Vector3.Distance(m_creature.transform.position, m_creature.m_targeting.transform.position);
 
-			m_parabola = new Parabola(m_creature.gameObject, d, Random.Range(5f, 7f), targetAngle.x*Mathf.Deg2Rad, Random.Range(1.3f, 1.57f), 1);
+			m_parabola = new Parabola(m_creature.gameObject, d*1.7f, targetAngle.x*Mathf.Deg2Rad, 70*Mathf.Deg2Rad, 1);
 			m_parabola.TimeScale = 0.80f;
 
 			m_creature.CrowdControl(Creature.CrowdControlType.LeapStrike, true);

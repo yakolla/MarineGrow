@@ -331,7 +331,7 @@ public class Spawn : MonoBehaviour {
 	{
 		GameObject eggObj = Instantiate (Resources.Load<GameObject>("Pref/mon_skin/item_supplybox_skin"), pos, Quaternion.Euler(Vector3.zero)) as GameObject;
 
-		Parabola parabola = new Parabola(eggObj, Random.Range(1f, 3f), 5f, Random.Range(-3.14f, 3.14f), Random.Range(-1.5f, 1.5f), 3);
+		Parabola parabola = new Parabola(eggObj, Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.5f), 3);
 		while(parabola.Update())
 		{
 			yield return null;
