@@ -13,6 +13,13 @@ public class Const {
 		MainMenu,
 	}
 
+
+	public static float 		m_slotWidth = Screen.width * (1/14f);
+	public static float 		m_slotHeight = Screen.height * (1/8f);
+	
+
+	public static int		m_fontSize = (int)(Screen.width*(1/50f));
+
 	public const int ItemMaxLevel = 9;
 	public const int ShowMaxDamageNumber = 3;
 	public const int ComboSkillStackOnCombo = 100;
@@ -176,11 +183,14 @@ public class Const {
 			{
 				foreach(Touch t in Input.touches)
 				{
-					Vector2 vec = t.position;
-					vec.y = Screen.height - vec.y; // You need to invert since GUI and screen have differnet coordinate system
-					if(rect.Contains(vec))// Do something
+					if (t.phase == TouchPhase.Ended)
 					{
-						callback();
+						Vector2 vec = t.position;
+						vec.y = Screen.height - vec.y; // You need to invert since GUI and screen have differnet coordinate system
+						if(rect.Contains(vec))// Do something
+						{
+							callback();
+						}
 					}
 				}
 				

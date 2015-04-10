@@ -58,8 +58,6 @@ public class Creature : MonoBehaviour {
 	Texture damagedTexture;
 	Texture normalTexture;
 
-
-
 	protected void Start () {
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_aimpoint = transform.Find("Body/Aimpoint").gameObject;
@@ -382,19 +380,27 @@ public class Creature : MonoBehaviour {
 	}
 
 	IEnumerator EffectSteamPack(float time)
-	{		
-
+	{
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
-
 
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.LevelUp].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+	}
 
-
+	IEnumerator EffectRush(Vector3 dir, float time)
+	{		
+		float finished = Time.time + time;
+		while(Time.time < finished)
+		{
+			rigidbody.AddForce(dir*10f, ForceMode.Impulse);
+			yield return null;
+		}
+		
+		m_buffEffects[(int)DamageDesc.BuffType.Rush].m_run = false;
 		
 	}
 
@@ -448,6 +454,9 @@ public class Creature : MonoBehaviour {
 			break;
 		case DamageDesc.BuffType.Combo100:
 			StartCoroutine(EffectSteamPack(time));
+			break;
+		case DamageDesc.BuffType.Rush:
+			StartCoroutine(EffectRush(damageDesc.Dir, time));
 			break;
 		}
 

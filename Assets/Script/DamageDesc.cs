@@ -24,6 +24,7 @@ public class DamageDesc {
 		LevelUp,
 		Burning,
 		Combo100,
+		Rush,
 		Count,
 	}
 
@@ -32,6 +33,7 @@ public class DamageDesc {
 	GameObject	m_prefEffect;
 	BuffType	m_buffType;
 	bool		m_pushbackOnDamage;
+	Vector3		m_dir;
 
 	public DamageDesc(int damage, Type type, BuffType buffType, GameObject prefEffect)
 	{
@@ -66,5 +68,11 @@ public class DamageDesc {
 	{
 		get { return m_pushbackOnDamage;}
 		set {m_pushbackOnDamage = value;}
+	}
+
+	public Vector3 Dir
+	{
+		get { return m_dir;}
+		set {m_dir = value;}
 	}
 }

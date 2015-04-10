@@ -11,6 +11,8 @@ public class Champ : Creature {
 	Joystick	m_leftJoystick;
 	Joystick	m_rightJoystick;
 
+
+
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
 
@@ -35,6 +37,9 @@ public class Champ : Creature {
 	int			m_level = 1;
 
 	Animator	m_bloodWarningAnimator;
+
+	[SerializeField]
+	GUISkin		m_guiSkin = null;
 
 	new void Start () {
 
@@ -121,8 +126,28 @@ public class Champ : Creature {
 				}
 				
 				m_navAgent.SetDestination(transform.position+pos);
+
 			}
 		}
+
+		GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
+		levelupStyle.fontSize = Const.m_fontSize;
+		
+		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
+		itemCountStyle.fontSize = Const.m_fontSize;
+
+		Rect skillButton = new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*2, Const.m_slotHeight, Const.m_slotHeight);
+		
+		Const.GuiButtonMultitouchable(skillButton, "", levelupStyle, ()=>{
+
+			if (pos != Vector3.zero)
+			{
+				DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Rush, null);
+				desc.Dir = pos.normalized;
+				ApplyBuff(null, DamageDesc.BuffType.Rush, 0.5f, desc);
+			}
+
+		});
 	}
 
 	public int ComboKills
@@ -137,11 +162,16 @@ public class Champ : Creature {
 		set {m_comboSkillStacks = value;}
 	}
 
+	void OnGUI()
+	{
+		UpdateChampMovement();
+	}
+
 	// Update is called once per frame
 	new void Update () {
 		base.Update();
 
-		UpdateChampMovement();
+
 
 		if (m_enableAutoTarget)
 		{
@@ -178,7 +208,6 @@ public class Champ : Creature {
 					Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 					pos = ray.origin + (ray.direction* 10f);
 					m_weaponHolder.StartFiring(RotateToTarget(pos));
-
 				}
 				else
 				{

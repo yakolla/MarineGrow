@@ -277,7 +277,7 @@
 									"refItemId":3,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":0.01,
+									"ratio":0.1,
 									"count":10
 								}
 							]
@@ -304,7 +304,7 @@
 									"refItemId":11,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":0.01,
+									"ratio":0.1,
 									"count":10
 								}
 							]
@@ -331,7 +331,7 @@
 									"refItemId":12,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":0.01,
+									"ratio":0.1,
 									"count":10
 								}
 							]
@@ -358,7 +358,7 @@
 									"refItemId":13,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":0.01,
+									"ratio":0.1,
 									"count":10
 								}
 							]
@@ -385,7 +385,7 @@
 									"refItemId":14,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":0.01,
+									"ratio":0.1,
 									"count":10
 								}
 							]
@@ -412,7 +412,7 @@
 									"refItemId":15,
 									"minValue":1,
 									"maxValue":1,
-									"ratio":0.01,
+									"ratio":0.1,
 									"count":10
 								}
 							]

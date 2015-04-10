@@ -10,13 +10,10 @@ public class ChampStatusGUI : MonoBehaviour {
 	Rect		m_goodsWindowRect;
 
 	Texture		m_guageTexture;
-	float 		m_slotWidth = Screen.width * (1/14f);
-	float 		m_slotHeight = Screen.height * (1/8f);
 
 	[SerializeField]
 	GUISkin		m_guiSkin = null;
 
-	int			m_fontSize = (int)(Screen.width*(1/50f));
 
 	ChampSettingGUI	m_champSettingGUI = null;
 
@@ -29,30 +26,34 @@ public class ChampStatusGUI : MonoBehaviour {
 
 		m_champSettingGUI = GameObject.Find("ChampSettingGUI").GetComponent<ChampSettingGUI>();
 
-		m_goodsWindowRect = new Rect(Screen.width/2-m_slotWidth*3/2, 0, m_slotWidth*3, m_slotHeight);
-		m_guageWindowRect = new Rect(0, 0, m_slotWidth*3, m_slotHeight);
+		m_goodsWindowRect = new Rect(Screen.width/2-Const.m_slotWidth*3/2, 0, Const.m_slotWidth*3, Const.m_slotHeight);
+		m_guageWindowRect = new Rect(0, 0, Const.m_slotWidth*3, Const.m_slotHeight);
 
-		float width = m_slotWidth*0.7f;
-		float height = m_slotHeight*0.7f;
+		float width = Const.m_slotWidth*0.7f;
+		float height = Const.m_slotHeight*0.7f;
 		m_skillWindowRect = new Rect(Screen.width/2-width, (Screen.height-height), (width+width), height);
 	}
 
 	void OnGUI()
 	{		
 		GUI.skin = m_guiSkin;
-		m_guiSkin.label.fontSize = m_fontSize;
-		m_guiSkin.button.fontSize = m_fontSize;
+		m_guiSkin.label.fontSize = Const.m_fontSize;
+		m_guiSkin.button.fontSize = Const.m_fontSize;
 
 		//m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
 		m_guageWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
 		m_skillWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
 
+		GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
+		levelupStyle.fontSize = Const.m_fontSize;
+
+		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
+		itemCountStyle.fontSize = Const.m_fontSize;
+
 		if (m_champ.RemainStatPoint > 0)
 		{
-			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
-			levelupStyle.fontSize = m_fontSize;
-
-			Rect levelUpButton = new Rect(Screen.width-m_slotWidth*3, 0, m_slotHeight, m_slotHeight);
+		
+			Rect levelUpButton = new Rect(Screen.width-Const.m_slotWidth*3, 0, Const.m_slotHeight, Const.m_slotHeight);
 
 			if (GUI.Button(levelUpButton, "", levelupStyle))
 			{
@@ -60,29 +61,24 @@ public class ChampStatusGUI : MonoBehaviour {
 				abilityGUI.gameObject.SetActive(true);
 			}
 
-			GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
-			itemCountStyle.fontSize = m_fontSize;
-
 			GUI.Label(levelUpButton, "<color=black>" + m_champ.RemainStatPoint +"</color>", itemCountStyle);
 		}
 
 		if (m_champ.ComboSkillStack > 0)
 		{
-			GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
-			levelupStyle.fontSize = m_fontSize;
 
-			Rect levelUpButton = new Rect(Screen.width-m_slotWidth, m_slotHeight*2, m_slotHeight, m_slotHeight);
+			Rect levelUpButton = new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*1, Const.m_slotHeight, Const.m_slotHeight);
 
 			Const.GuiButtonMultitouchable(levelUpButton, "", levelupStyle, ()=>{
 				--m_champ.ComboSkillStack;
 				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 10f, null);
 			});
 			
-			GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
-			itemCountStyle.fontSize = m_fontSize;
-			
-			GUI.Label(new Rect(Screen.width-m_slotWidth, m_slotHeight*2, m_slotHeight, m_slotHeight), "<color=black>" + m_champ.ComboSkillStack +"</color>", itemCountStyle);
+
+			GUI.Label(new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*2, Const.m_slotHeight, Const.m_slotHeight), "<color=black>" + m_champ.ComboSkillStack +"</color>", itemCountStyle);
 		}
+
+
 
 		//DisplayGoodsWindow();
 	}
@@ -91,7 +87,7 @@ public class ChampStatusGUI : MonoBehaviour {
 	{
 		GUI.DrawTextureWithTexCoords(new Rect(size.x, size.y, size.width*ratio, size.height), guage, new Rect(0f, 0f, ratio, 1f));
 		GUIStyle style = new GUIStyle();
-		style.fontSize = m_fontSize;
+		style.fontSize = Const.m_fontSize;
 		style.normal.textColor = Color.grey;
 		style.alignment = TextAnchor.MiddleCenter;
 		GUI.Label(new Rect(size.x, size.y, size.width, size.height), lable, style);
@@ -101,7 +97,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void DisplayGoodsWindow()
 	{
-		int size = (int)m_slotWidth;
+		int size = (int)Const.m_slotWidth;
 		int startX = size/3;
 		int startY = 0;			
 		
@@ -117,7 +113,7 @@ public class ChampStatusGUI : MonoBehaviour {
 	void DisplayStatusWindow(int windowID)
 	{
 		int startY = 0;
-		int size = (int)m_slotHeight/3;
+		int size = (int)Const.m_slotHeight/3;
 
 		float hp = m_champ.m_creatureProperty.getHPRemainRatio();
 		string lable = Mathf.FloorToInt(m_champ.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxHP).ToString();
