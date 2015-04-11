@@ -633,6 +633,31 @@
 		},
 		{
 			"id":40002,
+			"prefBody":"ghost_slime_b_skin",
+			"refWeaponItems":
+			[				
+				{
+					"refItemId":"121"
+				}
+			],
+			"mobAI":"Normal",
+			"scale":2,
+			"baseCreatureProperty":
+			{
+				"maxHP":110,
+				"physicalDamage":7,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.3,
+				"exp":110,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.5,
+				"moveSpeed":1.7,
+				"navMeshBaseOffset":0
+			}
+		},
+		{
+			"id":40005,
 			"prefBody":"crazy_dog_skin",
 			"refWeaponItems":
 			[
@@ -645,7 +670,7 @@
 				}
 			],
 			"mobAI":"Dash",		
-			"scale":2,	
+			"scale":1.7,	
 			"baseCreatureProperty":
 			{
 				"maxHP":150,
@@ -667,7 +692,7 @@
 			}
 		},
 		{
-			"id":40003,
+			"id":40006,
 			"prefBody":"egg_skin",
 			"refWeaponItems":
 			[
