@@ -142,7 +142,7 @@ public class Champ : Creature {
 
 			if (pos != Vector3.zero)
 			{
-				DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Rush, null);
+				DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Rush, Resources.Load<GameObject>("Pref/ef_dash"));
 				desc.Dir = pos.normalized;
 				ApplyBuff(null, DamageDesc.BuffType.Rush, 0.5f, desc);
 			}

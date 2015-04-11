@@ -1016,6 +1016,22 @@
 		}
 	},
 	{
+		"id":128,
+		"codeName":"BossGun",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",
+		"evolutionFiring":
+		{
+			"angle":5,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":2,
+			"range":8
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
