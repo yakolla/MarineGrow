@@ -200,4 +200,11 @@ public class Const {
 		}
 
 	}
+
+	public static Texture2D getScreenshot() {
+		Texture2D tex = new Texture2D(Screen.width, Screen.height);
+		tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
+		tex.Apply();
+		return tex;
+	}
 }

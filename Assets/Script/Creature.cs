@@ -391,17 +391,21 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
 	}
 
-	IEnumerator EffectRush(Vector3 dir, float time)
-	{		
+	IEnumerator EffectRush(DamageDesc damageDesc, float time)
+	{	
+		Vector3 pos = transform.position;
+		pos.y = damageDesc.PrefEffect.transform.position.y;
+		GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, pos, damageDesc.PrefEffect.transform.rotation);
+
 		float finished = Time.time + time;
 		while(Time.time < finished)
 		{
-			rigidbody.AddForce(dir*10f, ForceMode.Impulse);
+			rigidbody.AddForce(damageDesc.Dir*10f, ForceMode.Impulse);
 			yield return null;
 		}
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Rush].m_run = false;
-		
+		DestroyObject(dmgEffect);
 	}
 
 	IEnumerator EffectBurning(float time, Creature offender, DamageDesc damageDesc)
@@ -414,6 +418,16 @@ public class Creature : MonoBehaviour {
 			TakeDamage(offender, damageDesc);
 		}
 		m_buffEffects[(int)DamageDesc.BuffType.Burning].m_run = false;
+	}
+
+	IEnumerator EffectCombo100(float time)
+	{
+		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
+		
+		yield return new WaitForSeconds(time);
+		
+		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
+		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 	}
 
 	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
@@ -453,10 +467,10 @@ public class Creature : MonoBehaviour {
 			StartCoroutine(EffectBurning(time, offender, damageDesc));
 			break;
 		case DamageDesc.BuffType.Combo100:
-			StartCoroutine(EffectSteamPack(time));
+			StartCoroutine(EffectCombo100(time));
 			break;
 		case DamageDesc.BuffType.Rush:
-			StartCoroutine(EffectRush(damageDesc.Dir, time));
+			StartCoroutine(EffectRush(damageDesc, time));
 			break;
 		}
 

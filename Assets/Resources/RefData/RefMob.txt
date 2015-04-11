@@ -55,7 +55,7 @@
 			}
 		},
 		{
-			"id":10004,
+			"id":10003,
 			"prefBody":"mon_boomber_skin",
 			"refWeaponItems":
 			[
@@ -80,7 +80,7 @@
 			}
 		},		
 		{
-			"id":10008,
+			"id":10004,
 			"prefBody":"spider_green_skin",
 			"refWeaponItems":
 			[
@@ -104,7 +104,7 @@
 			}
 		},
 		{
-			"id":10003,
+			"id":10005,
 			"prefBody":"crazy_dog_skin",
 			"refWeaponItems":
 			[

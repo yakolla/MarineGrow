@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Enum = System.Enum;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
 
 public class Spawn : MonoBehaviour {
 
@@ -19,6 +22,7 @@ public class Spawn : MonoBehaviour {
 	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
 	GameObject		m_prefItemBox;
 
+	float		m_creationTime = 0;
 
 	float			m_effectBulletTime = 0f;
 
@@ -88,6 +92,8 @@ public class Spawn : MonoBehaviour {
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
 
 		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
+		m_creationTime = Time.time;
+
 		StartCoroutine(checkBossAlive());
 	}
 
@@ -113,12 +119,33 @@ public class Spawn : MonoBehaviour {
 		{
 			m_bosses.Clear();
 
+			if (Application.platform == RuntimePlatform.Android)
+			{
+				GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, (SavedGameRequestStatus status, ISavedGameMetadata game)=>{
+					if (status == SavedGameRequestStatus.Success) 
+					{
+						System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
+						totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-CreationTime));					
+						
+						GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), (SavedGameRequestStatus a, ISavedGameMetadata b)=>{});					
+					} 
+					else {
+						// handle error
+					}
+				});
+			}
+
+
 			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_wave%GetCurrentWave().mobSpawns.Length]));
 
 
 		}
 	}
 
+	public float CreationTime
+	{
+		get {return m_creationTime;}
+	}
 
 	Transform	getSpawnArea(bool champAreaExcept)
 	{

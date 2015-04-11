@@ -28,7 +28,7 @@ public class Champ : Creature {
 	[SerializeField]
 	int			m_remainStatPoint = 0;
 
-	float		m_creationTime = 0;
+
 
 	int			m_comboKills;
 
@@ -47,7 +47,7 @@ public class Champ : Creature {
 		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
 		//m_remainStatPoint = Warehouse.Instance.champAbility.m_abilityPoint;
 
-		m_creationTime = Time.time;
+
 
 		base.Start();
 
@@ -155,6 +155,8 @@ public class Champ : Creature {
 		get {return m_comboKills;}
 		set {m_comboKills = value;}
 	}
+
+
 
 	public int ComboSkillStack
 	{
@@ -279,20 +281,15 @@ public class Champ : Creature {
 	}
 
 
-	Texture2D getScreenshot() {
-		Texture2D tex = new Texture2D(Screen.width, Screen.height);
-		tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
-		tex.Apply();
-		return tex;
-	}
+
 
 	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-m_creationTime));
+			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-Spawn.CreationTime));
 
 
-			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, getScreenshot(), OnSavedGameWritten);
+			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), OnSavedGameWritten);
 
 			GPlusPlatform.Instance.ReportScore(Const.LEAD_COMBO_MAX_KILLS, Warehouse.Instance.Stats.m_comboKills, (bool success) => {
 				// handle success or failure
