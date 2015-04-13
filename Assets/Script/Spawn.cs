@@ -127,7 +127,9 @@ public class Spawn : MonoBehaviour {
 						System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
 						totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-CreationTime));					
 						
-						GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), (SavedGameRequestStatus a, ISavedGameMetadata b)=>{});					
+						GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), (SavedGameRequestStatus a, ISavedGameMetadata b)=>{
+							m_creationTime = Time.time;
+						});
 					} 
 					else {
 						// handle error
