@@ -426,7 +426,7 @@ public class Spawn : MonoBehaviour {
 	{		
 		yield return new WaitForSeconds (delay);
 		
-		DestroyObject(obj);		
+		GameObjectPool.Instance.Free(obj);		
 	}
 
 
@@ -438,7 +438,7 @@ public class Spawn : MonoBehaviour {
 
 		if (m_prefSpawnEffect != null)
 		{
-			GameObject spawnEffect = Instantiate (m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
+			GameObject spawnEffect = GameObjectPool.Instance.Alloc(m_prefSpawnEffect, enemyPos, m_prefSpawnEffect.transform.rotation) as GameObject;
 			ParticleSystem particle = spawnEffect.GetComponentInChildren<ParticleSystem>();
 			
 			StartCoroutine(SpawnEffectDestroy(spawnEffect, particle.duration));
