@@ -22,7 +22,6 @@ public class Parabola {
 	{
 		m_obj = obj;
 		m_oriPos = obj.transform.position;
-		m_oriPos.y = 0;
 		m_maxBouncing = bouncing;
 		m_vRadian = vRadian;
 
@@ -32,8 +31,7 @@ public class Parabola {
 		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
 
 		m_startTime = Time.time;
-		m_finishTime = (m_vel.y/m_gravity)*2;
-
+		m_finishTime = (m_vel.y/m_gravity)*2;// - (((m_vel.y/m_gravity)* m_oriPos.y)/m_height);
 
 		m_destPos.Set(m_oriPos.x+((m_vel.x*m_vel.x*Mathf.Sin(2*m_vRadian))/m_gravity*(m_vel.x >= 0 ? 1 : -1)), 0.1f, m_oriPos.z+((m_vel.z*m_vel.z*Mathf.Sin(2*m_vRadian))/m_gravity*(m_vel.z >= 0 ? 1 : -1)));
 

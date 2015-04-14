@@ -43,7 +43,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":15,
-				"physicalDamage":7,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":15,
@@ -67,12 +67,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":25,
-				"physicalDamage":15,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
-				"exp":30,
-				
-				"phyDamagePerLevel":1.8,
+				"exp":25,				
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
 				"moveSpeed":2.2,
@@ -92,11 +91,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":30,
-				"physicalDamage":15,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":30,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
 				"moveSpeed":2.2,
@@ -116,7 +115,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":20,
-				"physicalDamage":7,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":15,
@@ -169,11 +168,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":40,
-				"physicalDamage":9,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":40,
-				"phyDamagePerLevel":2,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":0.2,
 				"hpPerLevel":0.5,
 				"moveSpeed":2.7,
@@ -193,11 +192,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":45,
-				"physicalDamage":13,
+				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":45,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
 				"moveSpeed":3,
@@ -247,7 +246,7 @@
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":30,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.3,
 				"moveSpeed":1,
@@ -275,11 +274,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":40,
-				"physicalDamage":20,
+				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":40,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
 				"moveSpeed":1.2,
@@ -304,11 +303,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":50,
-				"physicalDamage":15,
+				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":50,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.3,
 				"moveSpeed":1.4,
@@ -336,11 +335,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":60,
-				"physicalDamage":20,
+				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":60,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
 				"moveSpeed":1.6,
@@ -365,11 +364,11 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":70,
-				"physicalDamage":25,
+				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":70,
-				"phyDamagePerLevel":1.8,
+				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
 				"moveSpeed":1.8,
@@ -395,7 +394,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":80,
-				"physicalDamage":30,
+				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":80,
@@ -423,7 +422,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":5,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":5,
@@ -448,7 +447,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":5,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":5,
@@ -473,7 +472,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":5,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":5,
@@ -498,7 +497,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":200,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":200,
@@ -523,7 +522,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":500,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":5,
@@ -554,7 +553,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":5,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":5,
@@ -579,7 +578,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":5,
-				"physicalDamage":8,
+				"physicalDamage":3,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":5,
@@ -615,7 +614,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":100,
-				"physicalDamage":5,
+				"physicalDamage":15,
 				"physicalDefence":1,
 				"evolutionPerLevel":0.3,
 				"exp":100,
@@ -645,7 +644,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":110,
-				"physicalDamage":7,
+				"physicalDamage":15,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":110,
@@ -674,7 +673,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":150,
-				"physicalDamage":7,
+				"physicalDamage":15,
 				"physicalDefence":1,
 				"evolutionPerLevel":0.3,
 				"exp":150,
@@ -705,7 +704,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":200,
-				"physicalDamage":7,
+				"physicalDamage":15,
 				"physicalDefence":1,
 				"evolutionPerLevel":0.3,
 				"exp":200,
@@ -761,7 +760,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":500,
-				"physicalDamage":35,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":500,
@@ -805,7 +804,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":700,
-				"physicalDamage":40,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":700,
@@ -866,7 +865,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":1400,
-				"physicalDamage":45,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":1400,
@@ -912,7 +911,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":1700,
-				"physicalDamage":50,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":1700,
@@ -953,7 +952,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":2000,
-				"physicalDamage":60,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":2000,
@@ -991,7 +990,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":30,
-				"physicalDamage":15,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
 				"exp":10,
@@ -1015,7 +1014,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":30,
-				"physicalDamage":15,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
 				"exp":10,
@@ -1040,7 +1039,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":30,
-				"physicalDamage":15,
+				"physicalDamage":30,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
 				"exp":10,
