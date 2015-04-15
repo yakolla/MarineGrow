@@ -37,10 +37,15 @@ public class Spawn : MonoBehaviour {
 	ComboGUIShake	m_comboGUIShake;
 	GoldGUISmooth	m_goldGUIShake;
 
+	DropShip		m_dropShip;
+
 	[SerializeField]
 	int				m_wave = 0;
 	// Use this for initialization
 	void Start () {
+
+		m_dropShip = transform.parent.Find("dropship").GetComponent<DropShip>();
+
 
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
 
@@ -86,13 +91,16 @@ public class Spawn : MonoBehaviour {
 		return m_refWorldMap.waves[m_hive];
 	}
 
-	public void StartWave(int wave)
+	public void StartWave(int wave, Champ champ)
 	{
 		if (m_wave == 0)
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
 
 		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 		m_creationTime = Time.time;
+
+		m_dropShip.SetChamp(champ);
+		m_dropShip.GetComponent<Animator>().SetTrigger("Move");
 
 		StartCoroutine(checkBossAlive());
 	}
@@ -641,7 +649,7 @@ public class Spawn : MonoBehaviour {
 	void Update () {
 		if (m_champ == null)
 		{
-			GameObject obj = GameObject.Find("Champ(Clone)");
+			GameObject obj = GameObject.Find("Champ");
 			if (obj != null)
 			{
 				m_champ = obj.GetComponent<Champ>();
