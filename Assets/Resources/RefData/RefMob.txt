@@ -262,8 +262,12 @@
 					"refItemId":"122"
 				},
 				{
-					"reqLevel":2,
-					"refItemId":"103"
+					"refItemId":"105",
+					"weaponStat":
+					{
+						"coolTime":5,
+						"range":8
+					}				
 				},
 				{
 					"reqLevel":3,

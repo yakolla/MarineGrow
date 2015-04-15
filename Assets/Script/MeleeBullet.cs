@@ -11,7 +11,8 @@ public class MeleeBullet : Bullet {
 	void Start () 
 	{
 		m_collider = GetComponent<BoxCollider>();
-		m_damageType = DamageDesc.Type.Fire;
+		m_damageType = DamageDesc.Type.Normal;
+		m_lastDamageTime = Time.time;
 	}
 	
 	// Update is called once per frame
