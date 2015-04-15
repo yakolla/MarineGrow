@@ -37,7 +37,7 @@ public class ItemBox : MonoBehaviour {
 		handle1 += (transform.forward+transform.up)*(Vector3.Distance(transform.position, target.transform.position)*0.5f);
 		Vector3 handle2 = target.transform.position;
 		handle2.y = 3f;
-		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.06f);
+		m_bezier = new Bezier(gameObject, target.gameObject, handle1, handle2, 0.02f);
 	}
 
 	public void StartPickupEffect(Creature obj)

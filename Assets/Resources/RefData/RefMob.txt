@@ -74,7 +74,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":2.2,
+				"moveSpeed":3,
 				"navMeshBaseOffset":0
 			}
 		},		
@@ -550,9 +550,18 @@
 			[
 				{
 					"refItemId":"110"
+				},
+				{
+					"reqLevel":2,
+					"refItemId":"105",
+					"weaponStat":
+					{
+						"coolTime":3,
+						"range":10
+					}
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Rotation",
 			"scale":0.5,
 			"baseCreatureProperty":
 			{

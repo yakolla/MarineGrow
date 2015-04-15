@@ -404,7 +404,7 @@ public class Creature : MonoBehaviour {
 			yield return null;
 		}
 		
-		m_buffEffects[(int)DamageDesc.BuffType.Rush].m_run = false;
+		m_buffEffects[(int)DamageDesc.BuffType.Dash].m_run = false;
 		DestroyObject(dmgEffect);
 	}
 
@@ -469,7 +469,7 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.Combo100:
 			StartCoroutine(EffectCombo100(time));
 			break;
-		case DamageDesc.BuffType.Rush:
+		case DamageDesc.BuffType.Dash:
 			StartCoroutine(EffectRush(damageDesc, time));
 			break;
 		}

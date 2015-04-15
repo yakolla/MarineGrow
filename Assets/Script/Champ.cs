@@ -130,11 +130,8 @@ public class Champ : Creature {
 			}
 		}
 
-		GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
-		levelupStyle.fontSize = Const.m_fontSize;
-		
-		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
-		itemCountStyle.fontSize = Const.m_fontSize;
+		GUIStyle levelupStyle = m_guiSkin.GetStyle("DashSkill");
+		levelupStyle.fontSize = Const.m_fontSize;		
 
 		Rect skillButton = new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*2, Const.m_slotHeight, Const.m_slotHeight);
 		
@@ -142,9 +139,9 @@ public class Champ : Creature {
 
 			if (pos != Vector3.zero)
 			{
-				DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Rush, Resources.Load<GameObject>("Pref/ef_dash"));
+				DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Dash, Resources.Load<GameObject>("Pref/ef_dash"));
 				desc.Dir = pos.normalized;
-				ApplyBuff(null, DamageDesc.BuffType.Rush, 0.5f, desc);
+				ApplyBuff(null, DamageDesc.BuffType.Dash, 0.5f, desc);
 			}
 
 		});
