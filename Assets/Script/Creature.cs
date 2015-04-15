@@ -391,7 +391,7 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
 	}
 
-	IEnumerator EffectRush(DamageDesc damageDesc, float time)
+	IEnumerator EffectDash(DamageDesc damageDesc, float time)
 	{	
 		Vector3 pos = transform.position;
 		pos.y = damageDesc.PrefEffect.transform.position.y;
@@ -470,7 +470,7 @@ public class Creature : MonoBehaviour {
 			StartCoroutine(EffectCombo100(time));
 			break;
 		case DamageDesc.BuffType.Dash:
-			StartCoroutine(EffectRush(damageDesc, time));
+			StartCoroutine(EffectDash(damageDesc, time));
 			break;
 		}
 
