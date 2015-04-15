@@ -51,7 +51,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=3;
 			--m_champ.RemainStatPoint;
 		}));
-		
+		/*
 		m_abilities.Add(new Ability(0.3f, "Inc Defence", 
 		()=>{
 			m_backup.AlphaPhysicalDefencePoint+=3;
@@ -61,7 +61,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=3;
 			--m_champ.RemainStatPoint;
 		}));
-		
+		*/
 		m_abilities.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
 			m_backup.AlphaMaxHP+=10;

@@ -73,9 +73,7 @@ public class Weapon : MonoBehaviour {
 
 		m_refItem = weaponData.RefItem;
 
-		Weapon.FiringDesc desc = new Weapon.FiringDesc();
-		desc.angle = 0;
-		desc.delayTime = 0;
+		Weapon.FiringDesc desc = DefaultFiringDesc();
 
 		m_firingDescs.Add(desc);
 
@@ -90,9 +88,15 @@ public class Weapon : MonoBehaviour {
 
 		for(int i = 0; i < weaponData.Level; ++i)
 			LevelUp();
+	}
 
+	virtual protected Weapon.FiringDesc DefaultFiringDesc()
+	{
+		Weapon.FiringDesc desc = new Weapon.FiringDesc();
+		desc.angle = 0;
+		desc.delayTime = 0;
 
-
+		return desc;
 	}
 
 	virtual public void MoreFire()

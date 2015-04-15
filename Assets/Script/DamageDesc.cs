@@ -24,7 +24,7 @@ public class DamageDesc {
 		LevelUp,
 		Burning,
 		Combo100,
-		Rush,
+		Dash,
 		Count,
 	}
 
