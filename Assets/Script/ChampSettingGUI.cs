@@ -368,14 +368,16 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
 				GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/champ_skin");
-				
+
+				champObj.name = "Champ";
+
 				GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 				enemyBody.name = "Body";
 				enemyBody.transform.parent = champObj.transform;
 				enemyBody.transform.localPosition = Vector3.zero;
 				enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 				
-				Creature champ = champObj.GetComponent<Creature>();
+				Champ champ = champObj.GetComponent<Champ>();
 				
 				m_equipedWeapon.Item.Equip(champ);
 				for(int x = 0; x < m_equipedAccessories.Length; ++x)
@@ -386,7 +388,7 @@ public class ChampSettingGUI : MonoBehaviour {
 					}
 				}	
 
-				m_spawn.StartWave(m_stage-1);
+				m_spawn.StartWave(m_stage-1, champ);
 
 				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
 				GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.Item.Level, 0);
@@ -394,6 +396,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				this.enabled = false;
 
+				champObj.SetActive(false);
 			}
 		});
 

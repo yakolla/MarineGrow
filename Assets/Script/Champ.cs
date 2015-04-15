@@ -286,8 +286,6 @@ public class Champ : Creature {
 	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-			totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-Spawn.CreationTime));
-
 
 			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), OnSavedGameWritten);
 
