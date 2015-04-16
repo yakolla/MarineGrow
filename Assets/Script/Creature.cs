@@ -432,14 +432,14 @@ public class Creature : MonoBehaviour {
 
 	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
 	{
-		if (prefEffect != null)
-		{
-			GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
-			dmgEffect.transform.parent = m_aimpoint.transform;
-			dmgEffect.transform.localPosition = Vector3.zero;
-			dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x;
-			StartCoroutine(UpdateDamageEffect(dmgEffect));
-		}
+		if (prefEffect == null)
+			return;
+
+		GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+		dmgEffect.transform.parent = m_aimpoint.transform;
+		dmgEffect.transform.localPosition = Vector3.zero;
+		dmgEffect.transform.localScale = m_aimpoint.transform.localScale;
+		StartCoroutine(UpdateDamageEffect(dmgEffect));	
 	}
 
 	virtual public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)

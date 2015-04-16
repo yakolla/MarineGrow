@@ -553,12 +553,12 @@
 				},
 				{
 					"reqLevel":2,
-					"refItemId":"105",
+					"refItemId":"127",
 					"weaponStat":
 					{
-						"coolTime":3,
-						"range":10
-					}
+						"coolTime":2,
+						"range":7
+					}	
 				}
 			],
 			"mobAI":"Rotation",
@@ -575,6 +575,10 @@
 				"hpPerLevel":0.1,
 				"moveSpeed":0,
 				"navMeshBaseOffset":0
+			},			
+			"dropEggMob":
+			{
+				"refMobId":31001
 			}
 		},
 		{
