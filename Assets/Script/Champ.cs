@@ -250,9 +250,16 @@ public class Champ : Creature {
 		}
 		else
 		{
-			GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(2);
+			LoadTitleScene(2);
+
 		}
 
+	}
+
+	void LoadTitleScene(float delay)
+	{
+		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowInterstitial();
+		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(delay);
 	}
 
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
@@ -302,7 +309,7 @@ public class Champ : Creature {
 			// handle error
 		}
 
-		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(0);
+		LoadTitleScene(0);
 	}
 
 	void OnTriggerEnter(Collider other) {

@@ -16,7 +16,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 	float 		m_height = Screen.height * (1/8f);
 	int		m_fontSize = (int)(Screen.width*(1/50f));
 	int			m_usedCountOfRandomAbilityItem = 0;
+
 	CreatureProperty	m_backup = new CreatureProperty();
+
+	ADMob		m_adMob;
 
 	delegate void OnAbility();
 	delegate string OnCompareAbility();
@@ -124,7 +127,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 	}
 
 	void Start () {
-
 		m_champ = transform.parent.gameObject.GetComponent<Champ>();
 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
 		RandomAbility(null);
@@ -178,11 +180,12 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
-
+		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowBanner(true);
 	}
 
 	void OnDisable() {
 		TimeEffector.Instance.StartTime();
+		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowBanner(false);
 	}
 
 	void OnGUI()
