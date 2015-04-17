@@ -556,7 +556,7 @@
 					"refItemId":"127",
 					"weaponStat":
 					{
-						"coolTime":2,
+						"coolTime":4,
 						"range":7
 					}	
 				}
