@@ -180,7 +180,15 @@ public class Spawn : MonoBehaviour {
 		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
-		result.spawnMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
+		if (boss == true && progress < 3f)
+		{
+			result.spawnMobs.Add(mobs[maxIndex]);
+		}
+		else
+		{
+			result.spawnMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
+		}
+
 
 		minIndex = (int)(spawnRatioDesc.count[0]);
 		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress*0.1f) + spawnRatioDesc.count[1] * progress*0.1f);
