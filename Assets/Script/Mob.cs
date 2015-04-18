@@ -124,6 +124,11 @@ public class Mob : Creature {
 
 	override public void Death()
 	{
+		if (m_behaviourType == BehaviourType.Death)
+			return;
+
+		m_behaviourType = BehaviourType.Death;
+
 		Spawn.OnKillMob(this);
 
 		if (RefMob.eggMob != null)

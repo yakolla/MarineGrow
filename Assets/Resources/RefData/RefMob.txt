@@ -255,7 +255,7 @@
 		},		
 		{
 			"id":20002,
-			"prefBody":"bat_skin",
+			"prefBody":"turret_skin",
 			"refWeaponItems":
 			[
 				{
@@ -286,7 +286,7 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
 				"moveSpeed":1.2,
-				"navMeshBaseOffset":2,
+				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
 		},

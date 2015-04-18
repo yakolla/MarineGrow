@@ -19,6 +19,14 @@ public class Creature : MonoBehaviour {
 		LeapStrike = 0x4,
 	}
 
+	public enum BehaviourType
+	{
+		ALive,
+		Death,
+	}
+
+	protected	BehaviourType	m_behaviourType = BehaviourType.ALive;
+
 	int	m_crowdControl = (int)CrowdControlType.Nothing;
 	// Use this for initialization
 	protected NavMeshAgent	m_navAgent;
@@ -72,6 +80,7 @@ public class Creature : MonoBehaviour {
 		m_targeting = null;
 		m_ingTakenDamageEffect = 0;
 		m_pushbackSpeedOnDamage = 0;
+		m_behaviourType = BehaviourType.ALive;
 
 		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
 		m_weaponHolder.Init();
@@ -633,7 +642,7 @@ public class Creature : MonoBehaviour {
 	{
 		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, Quaternion.Euler(0, Random.Range(0, 360), 0));	
 		effect.transform.localScale = transform.localScale;
-
+		m_behaviourType = BehaviourType.Death;
 		DestroyObject(this.gameObject);
 
 		ShakeCamera(0.1f);

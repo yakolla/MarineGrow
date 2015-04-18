@@ -42,6 +42,7 @@ public class GameObjectPool {
 
 		obj.transform.position = pos;
 		obj.transform.rotation = rotation;
+		obj.transform.localScale = pref.transform.localScale;
 		obj.SetActive(true);
 		return obj;
 	}
