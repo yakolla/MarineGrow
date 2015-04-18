@@ -378,7 +378,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 				
 				Champ champ = champObj.GetComponent<Champ>();
-				
+				champ.Init();
 				m_equipedWeapon.Item.Equip(champ);
 				for(int x = 0; x < m_equipedAccessories.Length; ++x)
 				{

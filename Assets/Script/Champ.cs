@@ -28,8 +28,6 @@ public class Champ : Creature {
 	[SerializeField]
 	int			m_remainStatPoint = 0;
 
-
-
 	int			m_comboKills;
 
 	int			m_comboSkillStacks = 0;
@@ -43,12 +41,6 @@ public class Champ : Creature {
 
 	new void Start () {
 
-		m_level = Warehouse.Instance.champAbility.m_level;
-		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
-		//m_remainStatPoint = Warehouse.Instance.champAbility.m_abilityPoint;
-
-
-
 		base.Start();
 
 		SetFollowingCamera(null);
@@ -59,6 +51,19 @@ public class Champ : Creature {
 		m_rightJoystick = GameObject.Find("HudGUI/RightJoystick").GetComponent<Joystick>();
 
 		m_bloodWarningAnimator = GameObject.Find("HudGUI/Blood Warning").GetComponent<Animator>();
+	}
+
+	override public void Init()
+	{
+		base.Init();
+
+		m_level = Warehouse.Instance.champAbility.m_level;
+		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
+		m_remainStatPoint = 0;
+		m_comboKills = 0;
+		m_comboSkillStacks = 0;
+		m_startChargeTime = 0f;
+
 	}
 
 	public int RemainStatPoint

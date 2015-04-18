@@ -69,6 +69,13 @@ public class Creature : MonoBehaviour {
 		normalTexture = Resources.Load<Texture>("ani/monster");
 	}
 
+	virtual public void Init()
+	{
+		m_targeting = null;
+		m_ingTakenDamageEffect = 0;
+		m_pushbackSpeedOnDamage = 0;
+	}
+
 	public void EquipWeapon(ItemWeaponData weaponData)
 	{
 		

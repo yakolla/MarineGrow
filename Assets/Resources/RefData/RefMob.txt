@@ -553,7 +553,7 @@
 				},
 				{
 					"reqLevel":2,
-					"refItemId":"127",
+					"refItemId":"126",
 					"weaponStat":
 					{
 						"coolTime":4,
@@ -623,7 +623,7 @@
 					"refItemId":"107"
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",
@@ -870,7 +870,7 @@
 					}	
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		
@@ -916,7 +916,7 @@
 					}	
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		
@@ -964,7 +964,7 @@
 					}
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		
@@ -1008,7 +1008,7 @@
 					"refItemId":"123"
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		
@@ -1056,7 +1056,7 @@
 					}
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		
@@ -1107,7 +1107,7 @@
 					}
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		
@@ -1158,7 +1158,7 @@
 					}
 				},
 				{
-					"refItemId":"127"
+					
 				}
 			],
 			"mobAI":"Normal",		
@@ -1209,7 +1209,7 @@
 					}
 				},
 				{
-					"refItemId":"127"
+					"refItemId":"126"
 				}
 			],
 			"mobAI":"Normal",		

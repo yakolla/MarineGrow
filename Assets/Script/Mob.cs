@@ -24,10 +24,12 @@ public class Mob : Creature {
 
 	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
 	{
+		base.Init();
+
 		RefMob = refMob;
-		Spawn = spawn;
 		RefDropItems = refDropItems;
 		Boss = boss;
+		Spawn = spawn;
 		rigidbody.mass = refMob.mass;
 
 		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);		
@@ -139,7 +141,7 @@ public class Mob : Creature {
 			}
 		}
 
-		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
+		GameObject effect = (GameObject)GameObjectPool.Instance.Alloc(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
 
 		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");

@@ -22,7 +22,7 @@ public class MobBossDeathEffect : MonoBehaviour {
 
 		if (m_ani.GetCurrentAnimatorStateInfo(0).IsName("Death Done") == true)
 		{
-			DestroyObject(gameObject);
+			GameObjectPool.Instance.Free(gameObject);
 		}
 	}
 
