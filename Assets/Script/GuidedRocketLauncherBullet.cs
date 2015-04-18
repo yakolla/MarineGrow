@@ -6,7 +6,6 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	[SerializeField]
 	float m_searchCoolTime = 0.3f;
 	float m_lastSearchTime = 0f;
-	BoxCollider m_collider;
 	GameObject	m_target = null;
 
 	float	m_destAngle = 0f;
@@ -18,25 +17,18 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 	// Use this for initialization
 	void Start () {
-		m_collider = GetComponent<BoxCollider>();
+
 	}
 
-	public GameObject SearchTarget(string[] targetTags, float range)
+	new void OnEnable()
 	{
-		foreach(string tag in targetTags)
-		{
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-			foreach(GameObject target in targets)
-			{				
-				float dist = Vector3.Distance(transform.position, target.transform.position);
-				if (dist <= range)
-				{
-					return target;
-				}
-			}
-		}
-		
-		return null;
+		base.OnEnable();
+
+		m_lastSearchTime = 0f;
+		m_target = null;
+		m_destAngle = transform.rotation.eulerAngles.y;
+		m_angleElpased = 0f;
+		m_srcAngle = transform.rotation.eulerAngles.y;
 	}
 
 	// Update is called once per frame

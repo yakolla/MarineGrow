@@ -9,9 +9,6 @@ public class FireSparkBullet : Bullet {
 	[SerializeField]
 	float			m_bombRange = 5f;
 	
-
-
-	
 	ParticleSystem	m_particleSystem;
 	BoxCollider		m_boxCollider;
 	Parabola	m_parabola;
@@ -43,14 +40,24 @@ public class FireSparkBullet : Bullet {
 	// Use this for initialization
 	void Start () {
 		
+
+		m_damageType = DamageDesc.Type.Fire;	
+
+	}
+
+	void OnEnable()
+	{
 		m_boxCollider = GetComponent<BoxCollider>();
-		m_boxCollider.enabled = false;
 		m_particleSystem = m_prefBombEffect.particleSystem;
+		m_boxCollider.enabled = false;
 		m_particleSystem.enableEmission = false;
-		m_damageType = DamageDesc.Type.Fire;
-		
 		int[] angles = {0, 90};
 		transform.eulerAngles = new Vector3(0, angles[Random.Range(0, angles.Length)], 0);
+
+		m_dropTime = 0f;
+		m_bombTime = 0f;
+
+		m_status = Status.Dropped;
 	}
 	
 	// Update is called once per frame
@@ -108,7 +115,7 @@ public class FireSparkBullet : Bullet {
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
 		yield return new WaitForSeconds (m_duration);
-		DestroyObject(this.gameObject);
+		GameObjectPool.Instance.Free(this.gameObject);
 		DestroyObject(bombEffect);
 	}
 	

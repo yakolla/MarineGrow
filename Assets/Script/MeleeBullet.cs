@@ -62,7 +62,6 @@ public class MeleeBullet : Bullet {
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
 			GiveDamage(creature);
-			DestroyObject(gameObject);
 		}
 	}
 }

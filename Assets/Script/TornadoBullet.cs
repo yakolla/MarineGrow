@@ -5,10 +5,18 @@ public class TornadoBullet : Bullet {
 
 	[SerializeField]
 	float	m_speed = 3f;
+
+	[SerializeField]
 	float	m_lifeTime = 4f;
+
 	float	m_elapsed;
 	// Use this for initialization
 	void Start () {
+
+	}
+
+	void OnEnable()
+	{
 		m_elapsed = Time.time + m_lifeTime;
 	}
 	
@@ -16,7 +24,7 @@ public class TornadoBullet : Bullet {
 	void Update () {
 		if (m_elapsed < Time.time)
 		{
-			DestroyObject(gameObject);
+			GameObjectPool.Instance.Free(gameObject);
 			return;
 		}
 		transform.Translate(m_speed*Time.deltaTime, 0, 0, transform);
@@ -30,7 +38,7 @@ public class TornadoBullet : Bullet {
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
-			DestroyObject(this.gameObject);
+			GameObjectPool.Instance.Free(this.gameObject);
 		}
 	}
 }

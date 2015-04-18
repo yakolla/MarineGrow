@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MineBullet : Bullet {
 
-	bool m_isDestroying = false;
 
 
 	[SerializeField]
@@ -20,13 +19,11 @@ public class MineBullet : Bullet {
 	// Use this for initialization
 	void Start () {
 
-
 	}
+
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
-
-	
 	
 		m_elapsed = Time.time+m_bombTime;
 
@@ -39,44 +36,8 @@ public class MineBullet : Bullet {
 
 		if (m_elapsed < Time.time)
 		{
-			bomb();
+			bomb(m_bombRange, m_prefBombEffect);
 		}
 	}
-	
-	IEnumerator destoryObject(GameObject bombEffect)
-	{
-		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
-		DestroyObject(this.gameObject);
-		DestroyObject(bombEffect);
-	}
 
-	void bomb()
-	{
-		m_isDestroying = true;
-
-		string[] tags = m_ownerCreature.GetAutoTargetTags();
-		foreach(string tag in tags)
-		{
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-			Vector3 pos = transform.position;
-			//pos.y = 0;
-			foreach(GameObject target in targets)
-			{
-				float dist = Vector3.Distance(pos, target.transform.position);
-				if (dist < m_bombRange/2)
-				{
-					Creature creature = target.GetComponent<Creature>();
-					GiveDamage(creature);
-				}
-			}
-		}
-
-		Vector3 bombPos = transform.position;
-		bombPos.y = m_prefBombEffect.transform.position.y;
-		
-		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, bombPos, m_prefBombEffect.transform.rotation);
-		bombEffect.particleSystem.startSize = m_bombRange*2;
-		this.audio.Play();
-		StartCoroutine(destoryObject(bombEffect));
-	}
 }

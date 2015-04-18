@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 
+	protected bool 			m_isDestroying = false;
 	protected GameObject	m_gunPoint = null;
 	bool					m_firing = false;
 	int						m_damage;
@@ -12,7 +13,7 @@ public class Bullet : MonoBehaviour {
 	[SerializeField]
 	GameObject 		m_prefDamageEffect = null;
 
-	protected DamageDesc.Type			m_damageType = DamageDesc.Type.Normal;
+	protected DamageDesc.Type	m_damageType = DamageDesc.Type.Normal;
 
 	[SerializeField]
 	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
@@ -23,9 +24,64 @@ public class Bullet : MonoBehaviour {
 		m_ownerCreature = ownerCreature;
 		m_damage = damage;
 		m_targetAngle = targetAngle;
-
+		m_isDestroying = false;
 
 		StartFiring();
+	}
+
+	public GameObject SearchTarget(string[] targetTags, float range)
+	{
+		foreach(string tag in targetTags)
+		{
+			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+			foreach(GameObject target in targets)
+			{				
+				float dist = Vector3.Distance(transform.position, target.transform.position);
+				if (dist <= range)
+				{
+					return target;
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	IEnumerator destoryBombObject(GameObject bombEffect)
+	{
+		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
+		GameObjectPool.Instance.Free(this.gameObject);
+		DestroyObject(bombEffect);
+	}
+
+	virtual protected void bomb(float bombRange, GameObject prefBombEffect)
+	{
+		m_isDestroying = true;
+		
+		string[] tags = m_ownerCreature.GetAutoTargetTags();
+		foreach(string tag in tags)
+		{
+			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+			Vector3 pos = transform.position;
+			//pos.y = 0;
+			foreach(GameObject target in targets)
+			{
+				float dist = Vector3.Distance(pos, target.transform.position);
+				if (dist < bombRange/2)
+				{
+					Creature creature = target.GetComponent<Creature>();
+					GiveDamage(creature);
+				}
+			}
+		}
+		
+		Vector3 bombPos = transform.position;
+		bombPos.y = prefBombEffect.transform.position.y;
+		
+		GameObject bombEffect = (GameObject)Instantiate(prefBombEffect, bombPos, prefBombEffect.transform.rotation);
+		bombEffect.particleSystem.startSize = bombRange*2;
+		this.audio.Play();
+		StartCoroutine(destoryBombObject(bombEffect));
 	}
 
 	virtual public void StartFiring()

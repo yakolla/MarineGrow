@@ -69,14 +69,14 @@ public class ChampSettingGUI : MonoBehaviour {
 				gunWeaponData.Lock = false;				
 				Warehouse.Instance.PushItem(gunWeaponData);
 
-				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(120, null));
+				for(int w = 101; w < 128; ++w)
+				{
+					if (w == 108)
+						continue;
 
-				Warehouse.Instance.PushItem(new ItemWeaponData(114, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(118, null));
+					Warehouse.Instance.PushItem(new ItemWeaponData(w, null));
+				}
+
 
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(3, 500));
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(11, 500));

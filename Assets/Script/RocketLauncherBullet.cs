@@ -13,10 +13,14 @@ public class RocketLauncherBullet : Bullet {
 	[SerializeField]
 	float			m_bombRange = 5f;
 
-	protected bool m_isDestroying = false;
-
 	// Use this for initialization
 	void Start () {
+	}
+
+	protected void OnEnable()
+	{
+		m_isDestroying = false;
+		m_accel = 0f;
 	}
 
 
@@ -42,14 +46,14 @@ public class RocketLauncherBullet : Bullet {
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
-			DestroyObject(this.gameObject);
+			GameObjectPool.Instance.Free(this.gameObject);
 		}
 	}
 
 	IEnumerator destoryObject(GameObject bombEffect)
 	{
 		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
-		DestroyObject(this.gameObject);
+		GameObjectPool.Instance.Free(this.gameObject);
 		DestroyObject(bombEffect);
 	}
 

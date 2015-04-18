@@ -270,6 +270,27 @@
 		{
 			"coolTime":2,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -287,6 +308,27 @@
 		{
 			"coolTime":0.9,
 			"range":9
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -304,6 +346,27 @@
 		{
 			"coolTime":5,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -402,6 +465,27 @@
 		{
 			"coolTime":1,
 			"range":1.5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -581,7 +665,6 @@
 		"codeName":"MineLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
-		
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -591,6 +674,27 @@
 		{
 			"coolTime":1,
 			"range":8
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -705,6 +809,27 @@
 		{
 			"coolTime":0.5,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -722,6 +847,27 @@
 		{
 			"coolTime":2,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -739,6 +885,27 @@
 		{
 			"coolTime":2,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
@@ -927,6 +1094,27 @@
 		{
 			"coolTime":5,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 		
 	},
@@ -995,11 +1183,32 @@
 		{
 			"coolTime":1,
 			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 		
 	},
 	{
-		"id":127,
+		"id":126,
 		"codeName":"SummonMobLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",
@@ -1013,10 +1222,31 @@
 		{
 			"coolTime":2,
 			"range":8
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{
-		"id":128,
+		"id":127,
 		"codeName":"BossGun",
 		"type":"Weapon",
 		"icon":"Sprites/Gun",

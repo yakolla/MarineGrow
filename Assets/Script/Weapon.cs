@@ -74,7 +74,7 @@ public class Weapon : MonoBehaviour {
 		m_refItem = weaponData.RefItem;
 
 		Weapon.FiringDesc desc = DefaultFiringDesc();
-
+		m_firingDescs.Clear();
 		m_firingDescs.Add(desc);
 
 		AttackRange = weaponData.WeaponStat.range;
@@ -172,7 +172,7 @@ public class Weapon : MonoBehaviour {
 
 	virtual public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
 	{
-		GameObject obj = Instantiate (m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.y, 0)) as GameObject;
+		GameObject obj = GameObjectPool.Instance.Alloc(m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.y, 0));
 		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_gunPoint, Damage, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;

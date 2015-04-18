@@ -12,7 +12,7 @@ public class SummonMobBullet : GrenadeBullet {
 		m_effectTargetingPoint = new EffectTargetingPoint();
 		base.Init(ownerCreature, gunPoint, damage, targetAngle);
 
-		Mob ownerMob = (Mob)m_ownerCreature;
+		Mob ownerMob = m_ownerCreature as Mob;
 		if (ownerMob != null)
 		{
 			m_spawnedMob = m_ownerCreature.Spawn.SpawnMob(ownerMob.RefMob.dropEggMob.refMob, gameObject.transform.position, false, false);
@@ -35,9 +35,9 @@ public class SummonMobBullet : GrenadeBullet {
 			m_spawnedMob.transform.position = m_parabola.Position;
 	}	
 
-	protected override void bomb()
+	protected override void bomb(float bombRange, GameObject prefBombEffect)
 	{
-		base.bomb();
+		base.bomb(bombRange, prefBombEffect);
 		m_effectTargetingPoint.Death();
 	}
 }

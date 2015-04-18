@@ -6,10 +6,14 @@ public class GunBullet : Bullet {
 	[SerializeField]
 	float	m_speed = 3f;
 
-	bool	m_isDestroying = false;
 	// Use this for initialization
 	void Start () {
 
+	}
+
+	void OnEnable()
+	{
+		m_isDestroying = false;
 	}
 	
 	// Update is called once per frame
@@ -26,12 +30,12 @@ public class GunBullet : Bullet {
 		{
 			GiveDamage(creature);
 			m_isDestroying = true;
-			DestroyObject(this.gameObject);
+			GameObjectPool.Instance.Free(this.gameObject);
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
 			m_isDestroying = true;
-			DestroyObject(this.gameObject);
+			GameObjectPool.Instance.Free(this.gameObject);
 		}
 	}
 

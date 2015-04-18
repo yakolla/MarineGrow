@@ -21,10 +21,14 @@ public class BoomerangBullet : Bullet {
 	// Use this for initialization
 	void Start () {
 
+	}
+
+	void OnEnable()
+	{
 		m_start = transform.position;
 		m_goal = m_start+transform.right*m_length;
-
-		Debug.Log("start:" + m_start + ", goal:" + m_goal);
+		m_elapsed = 0f;
+		m_returnPhase = false;
 	}
 	
 	// Update is called once per frame
@@ -36,7 +40,8 @@ public class BoomerangBullet : Bullet {
 		{
 			if (m_returnPhase == true)
 			{
-				DestroyObject(gameObject);
+				GameObjectPool.Instance.Free(gameObject);
+				return;
 			}
 			else
 			{
