@@ -6,7 +6,6 @@ public class Mob : Creature {
 	RefMob				m_refMob;
 	bool				m_boss = false;
 	MobAI				m_ai;
-	GameObject			m_goalForNavigation;
 
 	[SerializeField]
 	GameObject			m_prefEffectBlood;
@@ -147,7 +146,14 @@ public class Mob : Creature {
 			effect.audio.Play();
 		}
 
-		DestroyObject(this.gameObject);
+		Const.DestroyChildrenObjects(m_weaponHolder.gameObject);
+
+		Const.DestroyChildrenObjects(m_aimpoint);
+
+		GameObject body = gameObject.transform.Find("Body").gameObject;
+		body.transform.parent = null;
+		GameObjectPool.Instance.Free(body);
+		DestroyObject(gameObject);
 		
 		ShakeCamera(0.1f);
 

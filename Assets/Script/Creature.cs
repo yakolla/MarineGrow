@@ -39,7 +39,7 @@ public class Creature : MonoBehaviour {
 	public CreatureProperty	m_creatureProperty;
 	int						m_ingTakenDamageEffect = 0;
 
-	GameObject				m_aimpoint;
+	protected GameObject	m_aimpoint;
 
 	Animator				m_animator;
 	
@@ -63,8 +63,7 @@ public class Creature : MonoBehaviour {
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
-		damagedTexture = Resources.Load<Texture>("ani/damage monster");
-		normalTexture = Resources.Load<Texture>("ani/monster");
+
 	}
 
 	virtual public void Init()
@@ -75,7 +74,11 @@ public class Creature : MonoBehaviour {
 		m_pushbackSpeedOnDamage = 0;
 
 		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
+		m_weaponHolder.Init();
 
+		damagedTexture = Resources.Load<Texture>("ani/damage monster");
+		normalTexture = Resources.Load<Texture>("ani/monster");
+		ChangeNormalColor();
 	}
 
 	public void EquipWeapon(ItemWeaponData weaponData)
@@ -282,6 +285,26 @@ public class Creature : MonoBehaviour {
 		return false;
 	}
 
+	void ChangeNormalColor()
+	{
+		Renderer[] renders = GetComponentsInChildren<Renderer>();
+		if (renders != null)
+		{
+			int len = renders.Length;
+			for(int i = 0; i < len; ++i)
+			{
+				if (renders[i] && renders[i].material && renders[i].material.mainTexture)
+				{
+					if (renders[i].material.mainTexture.name.CompareTo("damage monster") == 0)
+					{
+						renders[i].material.mainTexture = normalTexture;
+					}
+					
+				}
+			}
+		}
+	}
+
 	protected IEnumerator BodyRedColoredOnTakenDamage()
 	{
 		Renderer[] renders = GetComponentsInChildren<Renderer>();
@@ -302,21 +325,11 @@ public class Creature : MonoBehaviour {
 
 				}
 			}
-			
-			yield return new WaitForSeconds(0.3f);
-			
-			for(int i = 0; i < len; ++i)
-			{
-				if (renders[i] && renders[i].material && renders[i].material.mainTexture)
-				{
-					if (renders[i].material.mainTexture.name.CompareTo("damage monster") == 0)
-					{
-						renders[i].material.mainTexture = normalTexture;
-					}
-					
-				}
-			}
 		}
+
+		yield return new WaitForSeconds(0.3f);
+			
+		ChangeNormalColor();
 		--m_ingTakenDamageEffect;
 	}
 

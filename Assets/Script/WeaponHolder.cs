@@ -22,8 +22,14 @@ public class WeaponHolder : MonoBehaviour {
 			m_weaponChangedTime = Time.time;
 			m_curWeaponIndex = (m_curWeaponIndex + 1) % m_weapons.Count;
 		}
+	}
 
-
+	public void Init()
+	{
+		m_curWeaponIndex = 0;
+		m_weaponChangedTime = 0;
+		m_weapons.Clear();
+		m_firing = false;
 	}
 
 	public void EquipWeapon(Weapon weapon)

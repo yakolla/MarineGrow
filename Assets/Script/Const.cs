@@ -207,4 +207,16 @@ public class Const {
 		tex.Apply();
 		return tex;
 	}
+
+	public static void DestroyChildrenObjects(GameObject obj)
+	{
+		Transform[] children = obj.transform.GetComponentsInChildren<Transform>();
+		for(int i = 0; i < children.Length; ++i)
+		{
+			if (children[i].gameObject == obj)
+				continue;
+
+			GameObject.DestroyObject(children[i].gameObject);
+		}
+	}
 }

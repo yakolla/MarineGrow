@@ -112,7 +112,7 @@ public class Spawn : MonoBehaviour {
 		bool existBoss = false;
 		foreach(GameObject boss in m_bosses)
 		{
-			if (boss != null)
+			if (boss != null && boss.activeSelf == true)
 			{
 				existBoss = true;
 				break;
@@ -495,8 +495,8 @@ public class Spawn : MonoBehaviour {
 		}
 		Vector3 enemyPos = pos;
 
-		GameObject enemyObj = Instantiate (prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-		GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+		GameObject enemyObj = Instantiate(prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+		GameObject enemyBody = GameObjectPool.Instance.Alloc(prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";
 		enemyBody.transform.parent = enemyObj.transform;
 		enemyBody.transform.localPosition = Vector3.zero;
