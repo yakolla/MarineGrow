@@ -10,17 +10,6 @@ public class Mob : Creature {
 
 	[SerializeField]
 	GameObject			m_prefEffectBlood;
-	// Use this for initialization
-	new void Start () {
-		base.Start();
-
-		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
-
-		if (true == Boss)
-		{
-			transform.Find("FloatingHealthBarGUI").gameObject.SetActive(true);
-		}
-	}
 
 	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
 	{
@@ -32,7 +21,14 @@ public class Mob : Creature {
 		Spawn = spawn;
 		rigidbody.mass = refMob.mass;
 
-		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);		
+		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);	
+
+		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
+		
+		if (true == Boss)
+		{
+			transform.Find("FloatingHealthBarGUI").gameObject.SetActive(true);
+		}
 
 		GameObject prefDeathEffect = Resources.Load<GameObject>("Pref/mon_skin/"+refMob.prefBody+"_death");
 		if (prefDeathEffect != null)

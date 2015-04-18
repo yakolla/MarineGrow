@@ -7,7 +7,6 @@ public class CreatureDeathEffect : MonoBehaviour {
 
 	void Start () {
 
-
 	}
 
 	void OnEnable()

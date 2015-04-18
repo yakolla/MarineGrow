@@ -59,9 +59,7 @@ public class Creature : MonoBehaviour {
 	Texture normalTexture;
 
 	protected void Start () {
-		m_navAgent = GetComponent<NavMeshAgent>();
 		m_aimpoint = transform.Find("Body/Aimpoint").gameObject;
-
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
@@ -71,15 +69,17 @@ public class Creature : MonoBehaviour {
 
 	virtual public void Init()
 	{
+		m_navAgent = GetComponent<NavMeshAgent>();
 		m_targeting = null;
 		m_ingTakenDamageEffect = 0;
 		m_pushbackSpeedOnDamage = 0;
+
+		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
+
 	}
 
 	public void EquipWeapon(ItemWeaponData weaponData)
-	{
-		
-		m_weaponHolder = this.transform.Find("WeaponHolder").gameObject.GetComponent<WeaponHolder>();
+	{		
 
 		GameObject obj = Instantiate (weaponData.PrefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
 		Weapon weapon = obj.GetComponent<Weapon>();

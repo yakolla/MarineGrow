@@ -276,10 +276,8 @@ public class Spawn : MonoBehaviour {
 							enemyPos.x += Mathf.Cos(angle) * 5f;
 							enemyPos.z += Mathf.Sin(angle) * 5f;
 							
-							
 							++spawnCount;
-							
-							
+
 							yield return new WaitForSeconds (0.02f);
 
 							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);

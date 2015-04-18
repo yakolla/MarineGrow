@@ -50,7 +50,6 @@ public class Weapon : MonoBehaviour {
 	protected void Start()
 	{
 		m_gunPoint = this.transform.parent.transform.gameObject;
-		m_lastCreated = Time.time;
 
 		if (m_prefGunPointEffect != null)
 		{
@@ -76,6 +75,11 @@ public class Weapon : MonoBehaviour {
 		Weapon.FiringDesc desc = DefaultFiringDesc();
 		m_firingDescs.Clear();
 		m_firingDescs.Add(desc);
+
+		m_lastCreated = Time.time;
+		m_firing = false;
+		m_level = 0;
+		m_evolution = 0;
 
 		AttackRange = weaponData.WeaponStat.range;
 		CoolTime = weaponData.WeaponStat.coolTime;
