@@ -61,7 +61,6 @@ public class Champ : Creature {
 
 		m_level = Warehouse.Instance.champAbility.m_level;
 		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
-		m_remainStatPoint = 0;
 		m_comboKills = 0;
 		m_comboSkillStacks = 0;
 		m_startChargeTime = 0f;
