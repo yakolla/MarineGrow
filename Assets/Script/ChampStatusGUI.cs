@@ -1,165 +1,161 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ChampStatusGUI : MonoBehaviour {
 
 	Champ	m_champ;
 
-	Rect 		m_guageWindowRect;
-	Rect 		m_skillWindowRect;
-	Rect		m_goodsWindowRect;
-
-	Texture		m_guageTexture;
-
-	[SerializeField]
-	GUISkin		m_guiSkin = null;
-
-
 	ChampSettingGUI	m_champSettingGUI = null;
 
-	float[]		m_skillUsedTime = new float[4];
+	GameObject	m_guageGUI;
+	GameObject	m_accessoryGUI;
+	GameObject	m_specialGUI;
+
+	class GUIButton
+	{
+		Button	m_button;
+		Text	m_text;
+		System.Func<bool>	m_enableChecker;
+
+		public GUIButton(GameObject obj, string name, System.Func<bool> enableChecker)
+		{
+			m_button = obj.transform.Find(name).GetComponent<Button>();
+			m_text = obj.transform.Find(name + "/Text").GetComponent<Text>();
+			m_enableChecker = enableChecker;
+		}
+
+		public void Update()
+		{
+			m_button.gameObject.SetActive( m_enableChecker() );
+		}
+	}
+
+	class GUIGuage
+	{
+		Image	m_guage;
+		Text	m_text;
+		System.Func<float>	m_fillAmountGetter;
+		System.Func<string>	m_lableGetter;
+
+		public GUIGuage(GameObject obj, string name, System.Func<float>	fillAmountGetter, System.Func<string> lableGetter)
+		{
+			m_guage = obj.transform.Find(name).GetComponent<Image>();
+			m_text = obj.transform.Find(name + "/Text").GetComponent<Text>();
+			m_fillAmountGetter = fillAmountGetter;
+			m_lableGetter = lableGetter;
+		}
+
+		public void Update()
+		{
+			m_guage.fillAmount = m_fillAmountGetter();
+			m_text.text = m_lableGetter();
+		}
+	}
+
+	GUIButton[]	m_specialButtons = new GUIButton[3];
+	GUIGuage[] m_guages = new GUIGuage[3];
 
 	void Start () {
 
-		m_champ = transform.parent.gameObject.GetComponent<Champ>();
-		m_guageTexture = Resources.Load<Texture>("Sprites/HP Guage");
+		m_guageGUI = transform.Find("Guage").gameObject;
+		m_accessoryGUI = transform.Find("Accessory").gameObject;
+		m_specialGUI = transform.Find("Special").gameObject;
 
-		m_champSettingGUI = GameObject.Find("ChampSettingGUI").GetComponent<ChampSettingGUI>();
+		m_specialButtons[0] = new GUIButton(gameObject, "Special/Button0", ()=>{
+			return m_champ.RemainStatPoint > 0;
+		});
+		m_specialButtons[1] = new GUIButton(gameObject, "Special/Button1", ()=>{
+			return m_champ.ComboSkillStack > 0;
+		});
+		m_specialButtons[2] = new GUIButton(gameObject, "Special/Button2", ()=>{
+			return true;
+		});
 
-		m_goodsWindowRect = new Rect(Screen.width/2-Const.m_slotWidth*3/2, 0, Const.m_slotWidth*3, Const.m_slotHeight);
-		m_guageWindowRect = new Rect(0, 0, Const.m_slotWidth*3, Const.m_slotHeight);
+		m_guages[0] = new GUIGuage(gameObject, "Guage/HP", 
+			()=>{return m_champ.m_creatureProperty.getHPRemainRatio();}, 
+			()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxHP).ToString(); }
+		);
 
-		float width = Const.m_slotWidth*0.7f;
-		float height = Const.m_slotHeight*0.7f;
-		m_skillWindowRect = new Rect(Screen.width/2-width, (Screen.height-height), (width+width), height);
+		m_guages[1] = new GUIGuage(gameObject, "Guage/XP", 
+		                           ()=>{return m_champ.m_creatureProperty.getExpRemainRatio();}, 
+		()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();}
+		);
+
+		m_guages[2] = new GUIGuage(gameObject, "Guage/SP", 
+		                           ()=>{return 1f;}, 
+		()=>{return "Weapon Enegy"; }
+		);
+	}
+
+	public void OnClickLevelUp()
+	{
+		if (m_champ.RemainStatPoint == 0)
+			return;
+
+		ChampAbilityGUI abilityGUI = m_champ.transform.Find("ChampAbilityGUI").GetComponent<ChampAbilityGUI>();
+		abilityGUI.gameObject.SetActive(true);
+	}
+
+	public void OnClickComboSkill()
+	{
+		if (m_champ.ComboSkillStack == 0)
+			return;
+
+		--m_champ.ComboSkillStack;
+		m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 10f, null);
+	}
+
+	public void OnClickAccessory(int slot)
+	{
+		if (m_champSettingGUI.EquipedAccessories[slot] == null)
+			return;
+
+		m_champSettingGUI.EquipedAccessories[slot].Item.Use(m_champ);
+	}
+
+	public void OnClickDashSkill()
+	{
+		if (m_champ.MoveDir == Vector3.zero)
+			return;
+
+		DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Dash, Resources.Load<GameObject>("Pref/ef_dash"));
+		desc.Dir = m_champ.MoveDir;
+		m_champ.ApplyBuff(null, DamageDesc.BuffType.Dash, 0.5f, desc);
+	}
+
+	void SetActiveGUI(bool active)
+	{
+		m_guageGUI.SetActive(active);
+		m_accessoryGUI.SetActive(active);
+		m_specialGUI.SetActive(active);
 	}
 
 	void OnGUI()
 	{		
-		GUI.skin = m_guiSkin;
-		m_guiSkin.label.fontSize = Const.m_fontSize;
-		m_guiSkin.button.fontSize = Const.m_fontSize;
-
-		//m_goodsWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGoods, m_goodsWindowRect, DisplayGoodsWindow, "");
-		m_guageWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampGuage, m_guageWindowRect, DisplayStatusWindow, "");
-		m_skillWindowRect = GUI.Window ((int)Const.GUI_WindowID.ChampSkill, m_skillWindowRect, DisplaySkillWindow, "");
-
-		GUIStyle levelupStyle = m_guiSkin.GetStyle("LevelUp");
-		levelupStyle.fontSize = Const.m_fontSize;
-
-		GUIStyle itemCountStyle = m_guiSkin.GetStyle("ItemCount");
-		itemCountStyle.fontSize = Const.m_fontSize;
-
-		if (m_champ.RemainStatPoint > 0)
+		if (m_champ == null)
 		{
-		
-			Rect levelUpButton = new Rect(Screen.width-Const.m_slotWidth*3, 0, Const.m_slotHeight, Const.m_slotHeight);
-
-			if (GUI.Button(levelUpButton, "", levelupStyle))
+			GameObject obj = GameObject.Find("Champ");
+			if (obj == null)
 			{
-				ChampAbilityGUI abilityGUI = m_champ.transform.Find("ChampAbilityGUI").GetComponent<ChampAbilityGUI>();
-				abilityGUI.gameObject.SetActive(true);
+				SetActiveGUI(false);
+				return;
 			}
 
-			GUI.Label(levelUpButton, "<color=black>" + m_champ.RemainStatPoint +"</color>", itemCountStyle);
+			m_champ = obj.GetComponent<Champ>();
+			SetActiveGUI(true);
+			return;
 		}
 
-		if (m_champ.ComboSkillStack > 0)
+		foreach(GUIButton button in m_specialButtons)
 		{
-
-			Rect levelUpButton = new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*1, Const.m_slotHeight, Const.m_slotHeight);
-
-			Const.GuiButtonMultitouchable(levelUpButton, "", levelupStyle, ()=>{
-				--m_champ.ComboSkillStack;
-				m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 10f, null);
-			});
-			
-
-			GUI.Label(new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*2, Const.m_slotHeight, Const.m_slotHeight), "<color=black>" + m_champ.ComboSkillStack +"</color>", itemCountStyle);
+			button.Update();
 		}
 
-
-
-		//DisplayGoodsWindow();
-	}
-
-	void drawGuage(Rect size, float ratio, string lable, Texture guage)
-	{
-		GUI.DrawTextureWithTexCoords(new Rect(size.x, size.y, size.width*ratio, size.height), guage, new Rect(0f, 0f, ratio, 1f));
-		GUIStyle style = new GUIStyle();
-		style.fontSize = Const.m_fontSize;
-		style.normal.textColor = Color.grey;
-		style.alignment = TextAnchor.MiddleCenter;
-		GUI.Label(new Rect(size.x, size.y, size.width, size.height), lable, style);
-		style.normal.textColor = Color.black;
-		GUI.Label(new Rect(size.x+1, size.y+1, size.width, size.height), lable, style);
-	}
-
-	void DisplayGoodsWindow()
-	{
-		int size = (int)Const.m_slotWidth;
-		int startX = size/3;
-		int startY = 0;			
-		
-		ItemObject goldItemObj = Warehouse.Instance.Gold;
-
-		GUI.BeginGroup(m_goodsWindowRect);
-		GUI.Label(new Rect(startX, size*0.2f, size*0.7f, size*0.7f), goldItemObj.ItemIcon);
-		GUI.Label(new Rect(startX+(size), 0, size, size), "<color=white>" + goldItemObj.Item.Count + "</color>");
-		GUI.EndGroup();
-	}
-
-	//Setting up the Inventory window
-	void DisplayStatusWindow(int windowID)
-	{
-		int startY = 0;
-		int size = (int)Const.m_slotHeight/3;
-
-		float hp = m_champ.m_creatureProperty.getHPRemainRatio();
-		string lable = Mathf.FloorToInt(m_champ.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxHP).ToString();
-		drawGuage(new Rect(0, 0, m_guageWindowRect.width, size), hp, lable, m_guageTexture); 
-
-		float expRatio = m_champ.m_creatureProperty.getExpRemainRatio();
-		lable = Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();
-		drawGuage(new Rect(0, startY+(size*1), m_guageWindowRect.width, size), expRatio, lable, m_guageTexture); 
-
-		float chargingRatio = 1f;
-		lable = "Weapon Enegy";
-		drawGuage(new Rect(0, startY+(size*2), m_guageWindowRect.width, size), chargingRatio, lable, m_guageTexture); 
-
-	}
-
-	void DisplaySkillWindow(int windowID)
-	{
-		int startX = 0;
-		int size = (int)m_skillWindowRect.width/4;
-
-		for(int i = 0; i < m_skillUsedTime.Length; ++i)
+		foreach(GUIGuage guage in m_guages)
 		{
-			if (m_champSettingGUI.EquipedAccessories[i] == null)
-				continue;
-
-			Texture2D icon = m_champSettingGUI.EquipedAccessories[i].ItemIcon;
-			if (icon == null)
-				continue;
-
-			if (GUI.Button(new Rect(startX+i*size, 0, size, size), icon ))
-			{
-				m_skillUsedTime[i] = Time.time;
-				m_champSettingGUI.EquipedAccessories[i].Item.Use(m_champ);
-			}
-
-			float usedTime = m_skillUsedTime[i];
-			if (usedTime == 0f)
-				continue;
-			float progress = Mathf.Min(1f, (Time.time - usedTime)/5f);
-			GUI.Button(new Rect(startX+i*size, 0, size, size), Cooldown.ProgressUpdate(m_champSettingGUI.EquipedAccessories[i].ItemIcon, progress, new Color(1f, 1f, 1f, 0.5F)));
-			if (progress == 1f)
-				m_skillUsedTime[i] = 0f;
+			guage.Update();
 		}
-
-
-
-
 	}
+
 }

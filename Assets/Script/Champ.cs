@@ -36,6 +36,8 @@ public class Champ : Creature {
 
 	Animator	m_bloodWarningAnimator;
 
+	Vector3		m_moveDir;
+
 	[SerializeField]
 	GUISkin		m_guiSkin = null;
 
@@ -95,6 +97,7 @@ public class Champ : Creature {
 
 	void UpdateChampMovement()
 	{
+		m_moveDir = Vector3.zero;
 		if (HasCrowdControl())
 			return;
 
@@ -135,21 +138,7 @@ public class Champ : Creature {
 			}
 		}
 
-		GUIStyle levelupStyle = m_guiSkin.GetStyle("DashSkill");
-		levelupStyle.fontSize = Const.m_fontSize;		
-
-		Rect skillButton = new Rect(Screen.width-Const.m_slotWidth, Const.m_slotHeight*2, Const.m_slotHeight, Const.m_slotHeight);
-		
-		Const.GuiButtonMultitouchable(skillButton, "", levelupStyle, ()=>{
-
-			if (pos != Vector3.zero)
-			{
-				DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Dash, Resources.Load<GameObject>("Pref/ef_dash"));
-				desc.Dir = pos.normalized;
-				ApplyBuff(null, DamageDesc.BuffType.Dash, 0.5f, desc);
-			}
-
-		});
+		m_moveDir = pos.normalized;
 	}
 
 	public int ComboKills
@@ -158,7 +147,10 @@ public class Champ : Creature {
 		set {m_comboKills = value;}
 	}
 
-
+	public Vector3 MoveDir
+	{
+		get {return m_moveDir;}
+	}
 
 	public int ComboSkillStack
 	{

@@ -44,6 +44,7 @@ public class Follower : Creature {
 
 	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty, int level)
 	{
+		base.Init();
 		m_owner = owner;
 		if (m_owner)
 		{

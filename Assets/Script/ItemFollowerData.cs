@@ -50,6 +50,7 @@ public class ItemFollowerData : ItemData{
 
 		Follower follower = (Follower)followerObj.GetComponent<Follower>();
 
+
 		ItemObject weapon = new ItemObject(new ItemWeaponData(m_weaponID, null));
 		weapon.Item.Level = Level;
 		weapon.Item.Evolution = Evolution;
