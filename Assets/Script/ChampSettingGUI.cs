@@ -14,6 +14,9 @@ public class ChampSettingGUI : MonoBehaviour {
 	GameObject		m_prefChamp = null;
 
 	[SerializeField]
+	Transform		m_spawnChamp;
+
+	[SerializeField]
 	bool		m_cheat = true;
 
 	[SerializeField]
@@ -366,7 +369,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		Const.makeItemButton(m_guiSkin, m_fontSize, stageStartX+size*4, Screen.height-size*2, size, (int)m_slotHeight, RefData.Instance.RefItems[1003].levelup, (m_stage-1)*(m_stage-1)*(m_stage-1), "Start", ()=>{
 			if (m_equipedWeapon != null)
 			{
-				GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_prefChamp.transform.position, m_prefChamp.transform.localRotation);
+				GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_spawnChamp.position, m_spawnChamp.localRotation);
 				GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/champ_skin");
 
 				champObj.name = "Champ";

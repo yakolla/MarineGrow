@@ -188,21 +188,20 @@ public class Champ : Creature {
 		{
 			if (Application.platform == RuntimePlatform.Android)
 			{
-				Vector3 pos = Vector3.zero;
-				
-				pos.x = m_rightJoystick.position.x*10;
-				pos.z = m_rightJoystick.position.y*10;
 
-				if (pos.x == 0f && pos.z == 0f)
+
+				if (m_rightJoystick.IsFingerDown() == true)
 				{
-					m_weaponHolder.StopFiring();
+					Vector3 pos = Vector3.zero;
+					pos.x = m_rightJoystick.position.x*10;
+					pos.z = m_rightJoystick.position.y*10;
+
+					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
 				}
 				else
 				{
-					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
+					m_weaponHolder.StopFiring();
 				}
-
-				
 			}
 			else
 			{

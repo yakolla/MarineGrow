@@ -115,7 +115,7 @@ public class Joystick : MonoBehaviour
 		}
 	}
 	
-	bool IsFingerDown()
+	public bool IsFingerDown()
 	{
 		return (lastFingerId != -1);
 	}
