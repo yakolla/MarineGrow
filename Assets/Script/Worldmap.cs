@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
@@ -6,23 +7,25 @@ using GooglePlayGames.BasicApi.SavedGame;
 using UnityEngine.SocialPlatforms;
 
 public class Worldmap : MonoBehaviour {
-	Rect 		m_statusWindowRect = new Rect(0, 0, Screen.width, Screen.height);
-	float 		m_width = Screen.width * (1/5f);
-	float 		m_height = Screen.height * (1/8f);
+
 	string		log = "log";
 	GameObject	m_selectedMap;
 
-	void OnGUI()
-	{
-		m_statusWindowRect = GUI.Window ((int)Const.GUI_WindowID.MainMenu, m_statusWindowRect, DisplayStatusWindow, "");	
+	Button		m_btnStart;
+	Button		m_btnLeaderBoard;
+	Button		m_btnAchievement;
 
-		if (Input.GetKeyDown(KeyCode.Escape)) 
-		{ 
-			//Application.Quit();
-		}
+	void Start()
+	{
+		m_btnStart = transform.Find("ButtonStart").GetComponent<Button>();
+		m_btnLeaderBoard = transform.Find("ButtonLeaderBoard").GetComponent<Button>();
+		m_btnAchievement = transform.Find("ButtonAchievement").GetComponent<Button>();
+
+		m_btnLeaderBoard.interactable = GPlusPlatform.Instance.IsAuthenticated();
+		m_btnAchievement.interactable = GPlusPlatform.Instance.IsAuthenticated();
 	}
 	
-	public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			Warehouse.Instance.FileName = game.Filename;
 			Application.LoadLevel("Basic Dungeon");
@@ -32,7 +35,7 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
-	public void OnSavedGameOpenedForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnSavedGameOpenedForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			GPlusPlatform.Instance.LoadGame(game, OnSavedGameDataRead);
 			Warehouse.Instance.FileName = game.Filename;
@@ -43,7 +46,7 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
-	public void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 
 			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*0);
@@ -56,7 +59,7 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
-	public void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			Application.LoadLevel("Basic Dungeon");
 		} else {
@@ -65,7 +68,7 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameWritten:" + status + game;
 	}
 
-	public void OnSavedGameDataRead (SavedGameRequestStatus status, byte[] data) {
+	void OnSavedGameDataRead (SavedGameRequestStatus status, byte[] data) {
 		log = "OnSavedGameDataRead:" + status;
 		if (status == SavedGameRequestStatus.Success) {
 			Warehouse.Instance.Deserialize(data);
@@ -75,57 +78,54 @@ public class Worldmap : MonoBehaviour {
 		}
 	}
 
-	void DisplayStatusWindow(int windowID)
+	public void OnClickStart()
 	{
-		int startY = 0;
-		int size = (int)m_height;
-		GUI.BeginGroup(m_statusWindowRect);
-		if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY, size*3, size), "Start"))
+		if (Application.platform == RuntimePlatform.Android)
 		{
-			if (Application.platform == RuntimePlatform.Android)
-			{
-				GPlusPlatform.Instance.Login((bool success) => {
-					// handle success or failure
-					if (success == true)
-					{
-						log = "login";
-						GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
-							if (status == SelectUIStatus.SavedGameSelected) {
+			GPlusPlatform.Instance.Login((bool success) => {
+				// handle success or failure
+				m_btnLeaderBoard.interactable = success;
+				m_btnAchievement.interactable = success;
+
+				if (success == true)
+				{
+					log = "login";
+					GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
+						if (status == SelectUIStatus.SavedGameSelected) {
+							
+							string fileName = game.Filename;
+							if (fileName.Equals(""))
+							{
+								fileName = System.DateTime.Now.Ticks.ToString();
+								GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForSaving);
 								
-								string fileName = game.Filename;
-								if (fileName.Equals(""))
-								{
-									fileName = System.DateTime.Now.Ticks.ToString();
-									GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForSaving);
-									
-								}
-								else
-								{
-									GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);
-								}
-								
-								
-							} else {
-								// handle cancel or error
 							}
-						});
-					}
-				});
-			}
-			else
-			{
-				Application.LoadLevel("Basic Dungeon");
-			}
+							else
+							{
+								GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);
+							}
+							
+							
+						} else {
+							// handle cancel or error
+						}
+					});
+				}
+			});
 		}
-		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*4, size*3, size), "Achievement"))
+		else
 		{
-			GPlusPlatform.Instance.ShowAchievementsUI();
+			Application.LoadLevel("Basic Dungeon");
 		}
-		else if (GUI.Button(new Rect(m_statusWindowRect.width/2-(size*3)/2, startY+size*5, size*3, size), "Leaderboard"))
-		{
-			GPlusPlatform.Instance.ShowLeaderboardUI();
-		}
-		GUI.TextArea(new Rect(0, startY+size*6, m_statusWindowRect.width, size), log);
-		GUI.EndGroup();
+	}
+
+	public void OnClickLeaderBoard()
+	{
+		GPlusPlatform.Instance.ShowLeaderboardUI();
+	}
+
+	public void OnClickAchievement()
+	{
+		GPlusPlatform.Instance.ShowAchievementsUI();
 	}
 }
