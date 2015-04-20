@@ -8,6 +8,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	YGUISystem.GUIButton[]	m_statButtons = new YGUISystem.GUIButton[3];
 	YGUISystem.GUIText		m_remainPointText;
+	YGUISystem.GUIPriceButton	m_rollButton;
 
 	int			m_usedCountOfRandomAbilityItem = 0;
 
@@ -129,6 +130,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_remainPointText = new YGUISystem.GUIText(gameObject, "RemainPointText");
 
+		m_rollButton = new YGUISystem.GUIPriceButton(gameObject, "RollingButton", ()=>{return true;}, RefData.Instance.RefItems[1002].levelup.conds, RefData.Instance.RefItems[1002].levelup.else_conds);
+
+
+
 		RandomAbility(null);
 	}
 
@@ -208,8 +213,13 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	public void OnClickRoll()
 	{
-		RandomAbility(null);
-		++m_usedCountOfRandomAbilityItem;
+		if (true == m_rollButton.TryToNormalPay())
+		{
+			RandomAbility(null);
+			++m_usedCountOfRandomAbilityItem;
+
+			m_rollButton.NormalWorth = 1f+m_usedCountOfRandomAbilityItem;
+		}
 	}
 
 	void OnGUI()
@@ -236,6 +246,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 
 		m_remainPointText.Lable = m_champ.RemainStatPoint.ToString();
+
+
+		m_rollButton.Update();
+
 	}
 
 	void Update()
