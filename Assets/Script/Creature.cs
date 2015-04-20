@@ -49,6 +49,8 @@ public class Creature : MonoBehaviour {
 
 	protected GameObject	m_aimpoint;
 
+	bool					m_checkOnDeath = false;
+
 	Animator				m_animator;
 	
 	Spawn					m_spawn;
@@ -117,6 +119,12 @@ public class Creature : MonoBehaviour {
 	public Spawn Spawn	{
 		set {m_spawn = value;}
 		get {return m_spawn;}
+	}
+
+	public bool CheckOnDeath
+	{
+		set {m_checkOnDeath = value;}
+		get {return m_checkOnDeath;}
 	}
 
 	public Vector2 RotateToTarget(Vector3 pos)

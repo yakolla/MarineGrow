@@ -795,7 +795,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"128",
+					"refItemId":"127",
 					"weaponStat":
 					{
 						"coolTime":2,
@@ -804,7 +804,7 @@
 					}
 				},
 				{
-					"refItemId":"124",
+					"refItemId":"121",
 					"weaponStat":
 					{
 						"coolTime":1,
@@ -817,7 +817,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":700,
-				"physicalDamage":30,
+				"physicalDamage":20,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
 				"exp":700,
@@ -830,11 +830,7 @@
 			},
 			"dropEggMob":
 			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
+				"refMobId":31007
 			}
 		},
 		{
@@ -947,7 +943,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"128",
+					"refItemId":"127",
 					"weaponStat":
 					{
 						"coolTime":2,
@@ -959,7 +955,7 @@
 					"refItemId":"104",
 					"weaponStat":
 					{
-						"coolTime":1,
+						"coolTime":2,
 						"range":10
 					}
 				},
@@ -1039,7 +1035,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"128",
+					"refItemId":"127",
 					"weaponStat":
 					{
 						"coolTime":2,
@@ -1090,7 +1086,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"128",
+					"refItemId":"127",
 					"weaponStat":
 					{
 						"coolTime":2,
@@ -1141,7 +1137,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"128",
+					"refItemId":"127",
 					"weaponStat":
 					{
 						"coolTime":2,
@@ -1192,7 +1188,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"128",
+					"refItemId":"127",
 					"weaponStat":
 					{
 						"coolTime":2,
