@@ -28,7 +28,7 @@ public class Spawn : MonoBehaviour {
 
 	FollowingCamera	m_followingCamera = null;
 
-	List<GameObject>	m_bosses = new List<GameObject>();
+	int				m_mobsOfCheckOnDeath = 0;
 
 	RefWorldMap		m_refWorldMap;
 	Dungeon			m_dungeon;
@@ -108,25 +108,13 @@ public class Spawn : MonoBehaviour {
 	IEnumerator checkBossAlive()
 	{
 		yield return new WaitForSeconds (3f);
-
-		bool existBoss = false;
-		foreach(GameObject boss in m_bosses)
-		{
-			if (boss != null && boss.activeSelf == true)
-			{
-				existBoss = true;
-				break;
-			}
-		}
-
-		if (existBoss == true)
+	
+		if (m_mobsOfCheckOnDeath > 0)
 		{
 			StartCoroutine(checkBossAlive());
 		}
 		else
 		{
-			m_bosses.Clear();
-
 			if (Application.platform == RuntimePlatform.Android)
 			{
 				GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, (SavedGameRequestStatus status, ISavedGameMetadata game)=>{
@@ -394,6 +382,11 @@ public class Spawn : MonoBehaviour {
 			TimeEffector.Instance.BulletTime(0.005f);
 		}
 
+		if (true == mob.CheckOnDeath)
+		{
+			m_mobsOfCheckOnDeath--;
+		}
+
 		if (m_champ)
 		{
 			++m_champ.ComboKills;
@@ -514,7 +507,10 @@ public class Spawn : MonoBehaviour {
 		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + refMob.scale);
 	
 		if (monitoredDeath == true)
-			m_bosses.Add(enemy.gameObject);
+		{
+			enemy.CheckOnDeath = true;
+			m_mobsOfCheckOnDeath++;
+		}
 
 		switch(refMob.id)
 		{
