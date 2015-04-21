@@ -99,7 +99,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.3f;
 			--m_champ.RemainStatPoint;
 		}));
-
+/*
 		m_abilities.Add(new Ability(0.1f, "Life Per Kill", 
 		()=>{
 			m_backup.AlphaLifeSteal += 1f;
@@ -109,7 +109,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaLifeSteal += 1f;
 			--m_champ.RemainStatPoint;
 		}));
-
+*/
 		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra XP %", 
 		                            ()=>{
 			m_backup.AlphaGainExtraExp += 0.3f;

@@ -79,7 +79,7 @@ public class Bullet : MonoBehaviour {
 		bombPos.y = prefBombEffect.transform.position.y;
 		
 		GameObject bombEffect = (GameObject)Instantiate(prefBombEffect, bombPos, prefBombEffect.transform.rotation);
-		bombEffect.particleSystem.startSize = bombRange*2;
+		bombEffect.particleSystem.startSize *= bombRange*2;
 		this.audio.Play();
 		StartCoroutine(destoryBombObject(bombEffect));
 	}
