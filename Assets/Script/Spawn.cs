@@ -156,11 +156,15 @@ public class Spawn : MonoBehaviour {
 		public List<bool> 	spawnMobBoss = new List<bool>();
 		public List<int> 	spawnMobCount = new List<int>();
 		public List<bool> 	spawnMobMonitored = new List<bool>();
+		public List<MobSpawnEffectType> spawnEffectType = new List<MobSpawnEffectType>();
 	}
 
 	void	buildSpawnMob(SpawnMobDescResult result, float progress, RefMobSpawnRatio.Desc spawnRatioDesc, RefMob[] mobs, bool monitoredDeath, bool boss)
 	{
 		if (spawnRatioDesc == null)
+			return;
+
+		if (spawnRatioDesc.chance < Random.Range(0f, 1f))
 			return;
 
 		int minIndex = 0;
@@ -183,6 +187,7 @@ public class Spawn : MonoBehaviour {
 		result.spawnMobCount.Add(Random.Range(minIndex, maxIndex));
 		result.spawnMobMonitored.Add(monitoredDeath);
 		result.spawnMobBoss.Add(boss);
+		result.spawnEffectType.Add(spawnRatioDesc.spawnEffectType);
 	}
 
 	public int GetStage(int wave)
@@ -218,7 +223,7 @@ public class Spawn : MonoBehaviour {
 			float waveProgress = ProgressStage();
 			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
 
-			int spawnCount = 0;
+
 			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
 			for(int r = 0; r < mobSpawnRepeatCount; ++r)
 			{
@@ -234,7 +239,8 @@ public class Spawn : MonoBehaviour {
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, true, false);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, true, false);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, true, true);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, true, false);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false, false);
+				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemDummy, RefData.Instance.RefItemDummyMobs, false, false);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true, false);
 
 				if (Random.Range(0, 100) < 10)
@@ -244,6 +250,7 @@ public class Spawn : MonoBehaviour {
 					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, false, false);
 					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, false, false);
 					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false, false);
+					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemDummy, RefData.Instance.RefItemDummyMobs, false, false);
 					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, false, false);
 				}
 
@@ -262,15 +269,23 @@ public class Spawn : MonoBehaviour {
 							Vector3 enemyPos = cp;
 							float angle = Random.Range(0f, 3.14f*2);
 							enemyPos.x += Mathf.Cos(angle) * 5f;
-							enemyPos.z += Mathf.Sin(angle) * 5f;
-							
-							++spawnCount;
+							enemyPos.z += Mathf.Sin(angle) * 5f;							
 
 							yield return new WaitForSeconds (0.02f);
 
 							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
 							cre.gameObject.SetActive(false);
-							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
+
+							switch(spawnMobDescResult.spawnEffectType[ii])
+							{
+							case MobSpawnEffectType.Falling:
+								StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
+								break;
+							default:
+								StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
+								break;
+							}
+
 							
 						}
 					}
@@ -302,11 +317,7 @@ public class Spawn : MonoBehaviour {
 							Vector3 enemyPos = cp;
 							enemyPos.x += Random.Range(-scale.x,scale.x);
 							enemyPos.z += Random.Range(-scale.z,scale.z);
-							
-							
-							++spawnCount;
-							
-							
+
 							RefItemSpawn[] dropItems = null;
 							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
 							{
@@ -321,7 +332,16 @@ public class Spawn : MonoBehaviour {
 							
 							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
 							cre.gameObject.SetActive(false);
-							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );						
+
+							switch(spawnMobDescResult.spawnEffectType[ii])
+							{
+							case MobSpawnEffectType.Falling:
+								StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
+								break;
+							default:
+								StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
+								break;
+							}					
 							
 						}
 					}
@@ -357,20 +377,6 @@ public class Spawn : MonoBehaviour {
 	{
 		return (float)(m_wave)/GetCurrentWave().mobSpawns.Length;
 	}
-
-	IEnumerator EffectSpawnItemPandora(RefMob refMob, Vector3 pos)
-	{
-		GameObject eggObj = Instantiate (Resources.Load<GameObject>("Pref/mon_skin/item_supplybox_skin"), pos, Quaternion.Euler(Vector3.zero)) as GameObject;
-
-		Parabola parabola = new Parabola(eggObj, Random.Range(5f, 7f), Random.Range(-3.14f, 3.14f), Random.Range(1.3f, 1.5f), 3);
-		while(parabola.Update())
-		{
-			yield return null;
-		}	
-
-		SpawnMob(refMob, parabola.Position, false, false);
-		DestroyObject(eggObj);
-	}	
 
 	public void OnKillMob(Mob mob)
 	{
@@ -457,6 +463,36 @@ public class Spawn : MonoBehaviour {
 		creature.gameObject.SetActive(true);
 
 
+	}
+
+	IEnumerator EffectSpawnMob1(Vector3 pos, Creature creature)
+	{	
+
+		pos.y = 10;
+		creature.transform.position = pos;
+
+		creature.gameObject.SetActive(true);
+		creature.EnableNavmesh(false);
+
+
+		BoxCollider box = creature.gameObject.GetComponent<BoxCollider>();
+		box.isTrigger = false;
+		box.size = Vector3.one;
+
+		creature.gameObject.rigidbody.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
+
+		creature.gameObject.rigidbody.sleepVelocity = 10f;
+		creature.gameObject.rigidbody.sleepAngularVelocity = 10f;
+		while(creature.gameObject.rigidbody.IsSleeping() == false)
+		{
+			yield return null;
+		}
+
+		creature.EnableNavmesh(true);
+		creature.EnableNavmeshUpdatePos(false);
+		//box.isTrigger = true;
+		creature.gameObject.rigidbody.useGravity = false;
+		creature.gameObject.rigidbody.velocity = Vector3.zero;
 	}
 
 	IEnumerator EffectSpawnItemBox(ItemBox itemBox, float time)
@@ -613,10 +649,7 @@ public class Spawn : MonoBehaviour {
 						item = new ItemSilverMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
 					case ItemData.Type.MobEgg:
-						break;
-					case ItemData.Type.ItemPandora:
-						StartCoroutine(EffectSpawnItemPandora(RefData.Instance.RefItemPandoraMobs[desc.minValue], pos));
-						break;
+						break;					
 					}
 					
 					if (item != null)

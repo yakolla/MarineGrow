@@ -144,7 +144,14 @@
 						"refMobIds":{
 							"itemPandora":{
 								"ratio":[0,1],
-								"count":[1,1]
+								"count":[1,1],
+								"chance":0.3,
+								"spawnEffectType":"Falling"
+							},
+							"itemDummy":{
+								"ratio":[0,1],
+								"count":[10,20],
+								"spawnEffectType":"Falling"
 							}
 						},
 						"interval":5,
@@ -414,6 +421,19 @@
 									"maxValue":1,
 									"ratio":0.1,
 									"count":10
+								}
+							]
+						},
+						{
+							"refMobId":3001,
+							"refDropItems":
+							[								
+								{
+									"refItemId":1,
+									"minValue":1,
+									"maxValue":20,
+									"ratio":0.5,
+									"count":1
 								}
 							]
 						}

@@ -159,27 +159,34 @@ public class Creature : MonoBehaviour {
 		return a.CreatureType != b.CreatureType;
 	}
 
-	public void EnableNavmesh(bool enable)
+	public void EnableNavmeshUpdatePos(bool enable)
 	{
 		m_navAgent.updatePosition = enable;
 		m_navAgent.updateRotation = enable;
 	}
 
+	public void EnableNavmesh(bool enable)
+	{
+		m_navAgent.enabled = enable;
+	}
 
 	protected void Update()
 	{
 
 		m_navAgent.speed = m_creatureProperty.MoveSpeed;
 
-		if (m_pushbackSpeedOnDamage > 0)
+		if (true == m_creatureProperty.BackwardOnDamage)
 		{
-			m_pushbackSpeedOnDamage -= 1f;
-			EnableNavmesh(false);
-		}
-		else
-		{
-			EnableNavmesh(true);
-			rigidbody.velocity = Vector3.zero;
+			if (m_pushbackSpeedOnDamage > 0)
+			{
+				m_pushbackSpeedOnDamage -= 1f;
+				EnableNavmeshUpdatePos(false);
+			}
+			else
+			{
+				EnableNavmeshUpdatePos(true);
+				rigidbody.velocity = Vector3.zero;
+			}
 		}
 
 
@@ -435,12 +442,13 @@ public class Creature : MonoBehaviour {
 		GameObject dmgEffect = (GameObject)Instantiate(damageDesc.PrefEffect, pos, damageDesc.PrefEffect.transform.rotation);
 
 		float finished = Time.time + time;
+		rigidbody.AddForce(damageDesc.Dir*10f, ForceMode.Impulse);
 		while(Time.time < finished)
 		{
-			rigidbody.AddForce(damageDesc.Dir*10f, ForceMode.Impulse);
 			yield return null;
 		}
 		
+		rigidbody.velocity = Vector3.zero;
 		m_buffEffects[(int)DamageDesc.BuffType.Dash].m_run = false;
 		DestroyObject(dmgEffect);
 	}
@@ -600,7 +608,7 @@ public class Creature : MonoBehaviour {
 			rigidbody.AddTorque(transform.forward*2f, ForceMode.Impulse);
 			rigidbody.maxAngularVelocity = 2f;
 		
-			EnableNavmesh(false);
+			EnableNavmeshUpdatePos(false);
 		}
 
 		ApplyBuff(offender, damageDesc.DamageBuffType, 2f, damageDesc);

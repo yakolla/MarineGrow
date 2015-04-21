@@ -45,9 +45,9 @@ public class ItemData {
 		GoldMedal,
 		SilverMedal,
 		MobEgg,
-		Gem,		
-		ItemPandora,
+		Gem,
 		Accessory,
+		ItemPandora,
 		RandomAbility,
 		Count
 	}

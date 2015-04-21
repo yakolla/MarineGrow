@@ -13,13 +13,16 @@ public class MobAINormal : MobAI {
 		{
 			if (m_target)
 			{
-				m_navAgent.SetDestination(m_target.transform.position);
+				if (m_navAgent.enabled == true)
+					m_navAgent.SetDestination(m_target.transform.position);
+
 				m_mob.RotateToTarget(m_target.transform.position);
 			}
 		}
 		else
 		{
-			m_navAgent.Stop();
+			if (m_navAgent.enabled == true)
+				m_navAgent.Stop();
 		}
 	}
 

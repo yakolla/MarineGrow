@@ -1616,5 +1616,33 @@
 				"backwardOnDamage":false
 			}
 		}
+	],
+	"itemDummy":
+	[		
+		{
+			"id":3001,
+			"prefBody":"item_supplybox_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"109"
+				}
+			],
+			"mobAI":"Dummy",		
+			"baseCreatureProperty":
+			{
+				"maxHP":30,
+				"physicalDamage":0,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.1,
+				"exp":0,
+				"phyDamagePerLevel":0,
+				"phyDefencePerLevel":0,
+				"hpPerLevel":0.5,
+				"moveSpeed":0,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			}
+		}
 	]
 }

@@ -134,6 +134,12 @@ public enum MobAIType
 	Egg
 }
 
+public enum MobSpawnEffectType
+{
+	Normal,
+	Falling,
+}
+
 
 public class RefMob : RefBaseData
 {
@@ -167,6 +173,7 @@ public class RefMobClass
 	public RefMob[]				shuttle;
 	public RefMob[]				egg;
 	public RefMob[]				itemPandora;
+	public RefMob[]				itemDummy;
 	public RefMob[]				follower;
 }
 
@@ -176,12 +183,16 @@ public class RefMobSpawnRatio
 	{
 		public float[]	ratio;
 		public int[]	count;
+		public float	chance = 1f;
+		[JsonConverter(typeof(StringEnumConverter))]
+		public MobSpawnEffectType spawnEffectType = MobSpawnEffectType.Normal;
 	}
 	public Desc	melee;
 	public Desc	range;
 	public Desc	miniBoss;
 	public Desc	boss;
 	public Desc	itemPandora;
+	public Desc	itemDummy;
 }
 
 public class RefMobSpawn
@@ -387,6 +398,11 @@ public class RefData {
 	public RefMob[] RefItemPandoraMobs
 	{
 		get {return m_refMobClass.itemPandora;}
+	}
+
+	public RefMob[] RefItemDummyMobs
+	{
+		get {return m_refMobClass.itemDummy;}
 	}
 
 	public RefMob[] RefFollowerMobs
