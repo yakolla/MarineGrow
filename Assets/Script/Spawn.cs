@@ -195,6 +195,123 @@ public class Spawn : MonoBehaviour {
 		return wave/GetCurrentWave().mobSpawns.Length + 1;
 	}
 
+	IEnumerator spawnMobPerCore(RefMobSpawn mobSpawn, float waveProgress)
+	{
+		int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
+		for(int r = 0; r < mobSpawnRepeatCount; ++r)
+		{
+			yield return new WaitForSeconds (mobSpawn.interval);
+			
+			if (m_champ == null)
+			{
+				break;
+			}
+			
+			SpawnMobDescResult spawnMobDescResult = new SpawnMobDescResult();
+			
+			buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, true, false);
+			buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, true, false);
+			buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, true, true);
+			buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false, false);
+			buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemDummy, RefData.Instance.RefItemDummyMobs, false, false);
+			buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true, false);
+			
+			if (Random.Range(0, 2) == 0)
+			{
+				Transform area = getSpawnArea(true);
+				Vector3 cp = m_champ.transform.position;
+				Vector3 scale = area.localScale*0.5f;
+				
+				for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
+				{
+					for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
+					{
+						
+						RefMob refMob = spawnMobDescResult.spawnMobs[ii];
+						Vector3 enemyPos = cp;
+						float angle = Random.Range(0f, 3.14f*2);
+						enemyPos.x += Mathf.Cos(angle) * 5f;
+						enemyPos.z += Mathf.Sin(angle) * 5f;							
+						
+						yield return new WaitForSeconds (0.02f);
+						
+						Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
+						cre.gameObject.SetActive(false);
+						
+						switch(spawnMobDescResult.spawnEffectType[ii])
+						{
+						case MobSpawnEffectType.Falling:
+							StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
+							break;
+						default:
+							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
+							break;
+						}
+						
+						
+					}
+				}
+			}
+			else
+			{
+				for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
+				{
+					for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
+					{
+						Transform area = getSpawnArea(true);
+						Vector3 cp = area.position;
+						Vector3 scale = area.localScale*0.5f;
+						
+						RefMob refMob = spawnMobDescResult.spawnMobs[ii];
+						if (refMob.nearByChampOnSpawn == true)
+						{
+							if (m_champ)
+							{
+								cp = m_champ.transform.position;
+							}
+							
+						}
+						else
+						{
+							cp = area.position;
+						}
+						
+						Vector3 enemyPos = cp;
+						enemyPos.x += Random.Range(-scale.x,scale.x);
+						enemyPos.z += Random.Range(-scale.z,scale.z);
+						
+						RefItemSpawn[] dropItems = null;
+						if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
+						{
+							dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
+						}
+						else
+						{
+							dropItems = GetCurrentWave().itemSpawn.defaultItem;
+						}
+						
+						yield return new WaitForSeconds (0.02f);
+						
+						Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
+						cre.gameObject.SetActive(false);
+						
+						switch(spawnMobDescResult.spawnEffectType[ii])
+						{
+						case MobSpawnEffectType.Falling:
+							StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
+							break;
+						default:
+							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
+							break;
+						}					
+						
+					}
+				}
+			}
+			
+			
+		}
+	}
 
 	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
 	{
@@ -224,132 +341,12 @@ public class Spawn : MonoBehaviour {
 			float waveProgress = ProgressStage();
 			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
 
+			if (m_wave > 0)
+				yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
 
-			int mobSpawnRepeatCount = (int)(mobSpawn.repeatCount[0] * (1f-waveProgress*0.1f) + mobSpawn.repeatCount[1] * waveProgress * 0.1f);
-			for(int r = 0; r < mobSpawnRepeatCount; ++r)
-			{
-				yield return new WaitForSeconds (mobSpawn.interval);
-
-				if (m_champ == null)
-				{
-					break;
-				}
-
-				SpawnMobDescResult spawnMobDescResult = new SpawnMobDescResult();
-
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, true, false);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, true, false);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, true, true);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false, false);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemDummy, RefData.Instance.RefItemDummyMobs, false, false);
-				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true, false);
-
-				if (r == 0)
-				{
-					RefMobSpawn	randomMobSpawn = GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length];
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, false, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.range, RefData.Instance.RefRangeMobs, false, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.boss, RefData.Instance.RefBossMobs, false, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemPandora, RefData.Instance.RefItemPandoraMobs, false, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.itemDummy, RefData.Instance.RefItemDummyMobs, false, false);
-					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, false, false);
-				}
-
-				if (Random.Range(0, 2) == 0)
-				{
-					Transform area = getSpawnArea(true);
-					Vector3 cp = m_champ.transform.position;
-					Vector3 scale = area.localScale*0.5f;
-					
-					for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
-					{
-						for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
-						{
-							
-							RefMob refMob = spawnMobDescResult.spawnMobs[ii];
-							Vector3 enemyPos = cp;
-							float angle = Random.Range(0f, 3.14f*2);
-							enemyPos.x += Mathf.Cos(angle) * 5f;
-							enemyPos.z += Mathf.Sin(angle) * 5f;							
-
-							yield return new WaitForSeconds (0.02f);
-
-							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
-							cre.gameObject.SetActive(false);
-
-							switch(spawnMobDescResult.spawnEffectType[ii])
-							{
-							case MobSpawnEffectType.Falling:
-								StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
-								break;
-							default:
-								StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
-								break;
-							}
-
-							
-						}
-					}
-				}
-				else
-				{
-					for(int ii = 0;  ii < spawnMobDescResult.spawnMobs.Count; ++ii)
-					{
-						for(int i = 0; i < spawnMobDescResult.spawnMobCount[ii]; ++i)
-						{
-							Transform area = getSpawnArea(true);
-							Vector3 cp = area.position;
-							Vector3 scale = area.localScale*0.5f;
-							
-							RefMob refMob = spawnMobDescResult.spawnMobs[ii];
-							if (refMob.nearByChampOnSpawn == true)
-							{
-								if (m_champ)
-								{
-									cp = m_champ.transform.position;
-								}
-								
-							}
-							else
-							{
-								cp = area.position;
-							}
-							
-							Vector3 enemyPos = cp;
-							enemyPos.x += Random.Range(-scale.x,scale.x);
-							enemyPos.z += Random.Range(-scale.z,scale.z);
-
-							RefItemSpawn[] dropItems = null;
-							if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
-							{
-								dropItems = GetCurrentWave().itemSpawn.mapMobItems[refMob.id].refDropItems;
-							}
-							else
-							{
-								dropItems = GetCurrentWave().itemSpawn.defaultItem;
-							}
-
-							yield return new WaitForSeconds (0.02f);
-							
-							Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
-							cre.gameObject.SetActive(false);
-
-							switch(spawnMobDescResult.spawnEffectType[ii])
-							{
-							case MobSpawnEffectType.Falling:
-								StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
-								break;
-							default:
-								StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
-								break;
-							}					
-							
-						}
-					}
-				}
+			yield return StartCoroutine(spawnMobPerCore(mobSpawn, waveProgress));
 
 
-			}
 			StartCoroutine(checkBossAlive());
 
 
