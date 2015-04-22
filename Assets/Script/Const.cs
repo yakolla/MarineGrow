@@ -55,6 +55,9 @@ public class Const {
 
 	public static bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
 	{
+		if (conds == null)
+			return true;
+
 		foreach(RefPrice price in conds)
 		{
 			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
@@ -73,6 +76,9 @@ public class Const {
 	
 	public static void PayPriceItem(RefPrice[] conds, float itemWorth)
 	{
+		if (conds == null)
+			return;
+
 		foreach(RefPrice price in conds)
 		{
 			Warehouse.Instance.PullItem(Warehouse.Instance.FindItem(price.refItemId, null), (int)(price.count*itemWorth));

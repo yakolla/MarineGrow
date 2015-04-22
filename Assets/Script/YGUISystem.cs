@@ -18,6 +18,11 @@ public class YGUISystem {
 			m_enableChecker = enableChecker;
 
 		}
+
+		public Button Button
+		{
+			get{return m_button;}
+		}
 		
 		public void Update()
 		{
@@ -32,7 +37,7 @@ public class YGUISystem {
 
 	public class GUIImageButton : GUIButton
 	{
-		List<GUIImage>	m_images = new List<GUIImage>();
+		List<GUIImageDynamic>	m_images = new List<GUIImageDynamic>();
 
 		public GUIImageButton(GameObject obj, string name, System.Func<bool> enableChecker)
 			: base(obj, name, enableChecker)
@@ -42,12 +47,12 @@ public class YGUISystem {
 
 		public void AddGUIImage(Texture icon)
 		{
-			m_images.Add(new GUIImage(m_button.gameObject, icon));
+			m_images.Add(new GUIImageDynamic(m_button.gameObject, icon));
 
 			Vector3 pos = Vector3.zero;
 			const int gap = 20;
 			int startX = -gap*(m_images.Count-1);
-			foreach(GUIImage image in m_images)
+			foreach(GUIImageDynamic image in m_images)
 			{
 				pos.Set(startX, -gap, 0);
 				image.Position = pos;
@@ -55,7 +60,7 @@ public class YGUISystem {
 			}
 		}
 
-		public List<GUIImage> GUIImages
+		public List<GUIImageDynamic> GUIImages
 		{
 			get{return m_images;}
 		}
@@ -75,16 +80,22 @@ public class YGUISystem {
 			m_normalPrices = normalPrices;
 			m_specialPrices = specialPrices;
 
-			foreach(RefPrice price in m_normalPrices)
+			if (m_normalPrices != null)
 			{
-				RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
-				
-				m_button.AddGUIImage(Resources.Load<Texture>(condRefItem.icon));				
+				foreach(RefPrice price in m_normalPrices)
+				{
+					RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
+					
+					m_button.AddGUIImage(Resources.Load<Texture>(condRefItem.icon));				
+				}
 			}
 		}
 
 		void displayPrice(GUIImageButton button, RefPrice[] prices, float itemWorth)
 		{
+			if (prices == null)
+				return;
+
 			int priceIndex = 0;
 			foreach(RefPrice price in prices)
 			{
@@ -114,6 +125,11 @@ public class YGUISystem {
 				
 				++priceIndex;
 			}
+		}
+
+		public Button Button
+		{
+			get{return m_button.Button;}
 		}
 
 		public float NormalWorth
@@ -176,20 +192,49 @@ public class YGUISystem {
 		}
 	}
 
-	public class GUIImage
+	public class GUIImageStatic
+	{
+		RawImage	m_image;
+		GUIText		m_text;
+		
+		public GUIImageStatic(GameObject obj, Texture icon)
+		{
+			m_image = obj.GetComponent<RawImage>();
+			m_image.texture = icon;
+			
+			m_text = new GUIText(obj, "Text");
+		}
+		
+		public void Update()
+		{
+			
+		}
+		
+		public GUIText Text
+		{
+			get{return m_text;}
+		}
+		
+		public Vector3 Position
+		{
+			set{m_image.gameObject.transform.localPosition = value;}
+		}
+	}
+
+	public class GUIImageDynamic
 	{
 		RawImage	m_image;
 		GUIText		m_text;
 
-		public GUIImage(GameObject obj, Texture icon)
+		public GUIImageDynamic(GameObject parent, Texture icon)
 		{
 			GameObject guiImageObj = GameObject.Instantiate(Resources.Load<GameObject>("Pref/GUIImage")) as GameObject;
 			m_image = guiImageObj.GetComponent<RawImage>();
 			m_image.texture = icon;
 
-			m_text = new GUIText(guiImageObj, "Text");
+			m_text = new GUIText(m_image.gameObject, "Text");
 
-			guiImageObj.transform.parent = obj.transform;
+			guiImageObj.transform.parent = parent.transform;
 			guiImageObj.transform.localPosition = Vector3.zero;
 		}
 		

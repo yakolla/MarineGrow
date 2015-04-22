@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.UI;
 
 public class ChampSettingGUI : MonoBehaviour {
+
+
+	GameObject	m_inventoryObj;
 
 	const int INVEN_SLOT_COLS = 1;
 	const int INVEN_SLOT_ROWS = 4;
@@ -127,7 +131,34 @@ public class ChampSettingGUI : MonoBehaviour {
 			Warehouse.Instance.Deserialize(data);
 		}
 
+		m_inventoryObj = transform.Find("InvScrollView/Contents").gameObject;
+		RectTransform rectInventoryObj = m_inventoryObj.GetComponent<RectTransform>();
+		Vector2 rectContents = new Vector2(	rectInventoryObj.rect.width, 0);
 
+		GameObject prefGUIInventorySlot = Resources.Load<GameObject>("Pref/GUIInventorySlot");
+		RectTransform	rectGUIInventorySlot = prefGUIInventorySlot.GetComponent<RectTransform>();
+
+		for(int itemIndex = 0; itemIndex < Warehouse.Instance.Items.Count; ++itemIndex)
+		{
+			ItemObject item = Warehouse.Instance.Items[itemIndex];
+
+			GameObject obj = Instantiate(prefGUIInventorySlot) as GameObject;
+			GUIInventorySlot slot = obj.GetComponent<GUIInventorySlot>();
+
+			obj.transform.parent = m_inventoryObj.transform;
+			obj.transform.localPosition = new Vector3(0f, (rectGUIInventorySlot.rect.height+80)/-2-50-rectGUIInventorySlot.rect.height*itemIndex, 0);
+
+			slot.Init(item.ItemIcon, item.Item.Description());
+
+			int capturedItemIndex = itemIndex;
+			slot.PriceButton0.Button.onClick.AddListener(() => OnClickPriceButton0(capturedItemIndex) );
+
+			rectContents.y += rectGUIInventorySlot.rect.height;
+
+		}
+
+		rectInventoryObj.sizeDelta = rectContents;
+		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, rectInventoryObj.sizeDelta.y/-2, rectInventoryObj.position.z);
 	}
 
 	void OnEnable() {
@@ -140,6 +171,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void OnGUI()
 	{
+		return;
 		GUI.skin = m_guiSkin;
 		m_guiSkin.label.fontSize = m_fontSize;
 		m_guiSkin.button.fontSize = m_fontSize;
@@ -152,6 +184,126 @@ public class ChampSettingGUI : MonoBehaviour {
 		{ 
 			Application.LoadLevel("Worldmap");
 		}
+	}
+
+	public void OnClickStart()
+	{
+		if (m_equipedWeapon != null)
+		{
+			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_spawnChamp.position, m_spawnChamp.localRotation);
+			GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/champ_skin");
+			
+			champObj.name = "Champ";
+			
+			GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+			enemyBody.name = "Body";
+			enemyBody.transform.parent = champObj.transform;
+			enemyBody.transform.localPosition = Vector3.zero;
+			enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+			
+			Champ champ = champObj.GetComponent<Champ>();
+			champ.Init();
+			m_equipedWeapon.Item.Equip(champ);
+			for(int x = 0; x < m_equipedAccessories.Length; ++x)
+			{
+				if (m_equipedAccessories[x] != null)
+				{
+					m_equipedAccessories[x].Item.Equip(champ);
+				}
+			}	
+			
+			m_spawn.StartWave(m_stage-1, champ);
+			
+			GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
+			GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.Item.Level, 0);
+			
+			champObj.SetActive(false);
+
+			gameObject.SetActive(false);
+		}
+	}
+
+	public void OnClickPriceButton0(int slot)
+	{
+		ItemObject selectedItem = Warehouse.Instance.Items[slot];
+
+		bool inEquipSlot = m_equipedWeapon == selectedItem;
+		if (inEquipSlot == false)
+		{
+			for(int e = 0; e < m_equipedAccessories.Length; ++e)
+			{
+				if (m_equipedAccessories[e] == selectedItem)
+				{
+					inEquipSlot = true;
+					break;
+				}
+			}	
+		}
+
+		switch(selectedItem.Item.RefItem.type)
+		{
+		case ItemData.Type.Weapon:
+		{
+			if (true == inEquipSlot)
+			{
+				m_equipedWeapon = null;				
+			}
+			else
+			{
+				m_equipedWeapon = selectedItem;				
+			}
+		}break;
+			
+		case ItemData.Type.Accessory:
+		case ItemData.Type.Follower:
+		{
+			if (true == inEquipSlot)
+			{
+
+				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				{
+					if (m_equipedAccessories[x] != null)
+					{
+						if (m_equipedAccessories[x].Item.Compare(selectedItem.Item))
+						{
+							m_equipedAccessories[x] = null;
+							break;
+						}
+						
+					}
+				}					
+			}
+			else
+			{
+				bool aleadyExists = false;
+				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				{
+					if (m_equipedAccessories[x] == selectedItem)
+					{
+						aleadyExists = true;
+						break;
+					}
+				}	
+				
+				if (aleadyExists == false)
+				{
+					for(int x = 0; x < m_equipedAccessories.Length; ++x)
+					{
+						if (m_equipedAccessories[x] == null)
+						{
+							m_equipedAccessories[x] = selectedItem;
+							break;
+						}
+					}	
+				}
+					
+			}
+		}break;
+		}
+	}
+
+	public void OnClickPriceButton1(int slot)
+	{
 	}
 
 	float getItemLevelupWorth(ItemObject itemObj, RefPriceCondition refPriceCondition)

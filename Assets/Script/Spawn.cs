@@ -195,6 +195,7 @@ public class Spawn : MonoBehaviour {
 		return wave/GetCurrentWave().mobSpawns.Length + 1;
 	}
 
+
 	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
 	{
 
@@ -481,18 +482,19 @@ public class Spawn : MonoBehaviour {
 
 		creature.gameObject.rigidbody.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
 
-		creature.gameObject.rigidbody.sleepVelocity = 10f;
-		creature.gameObject.rigidbody.sleepAngularVelocity = 10f;
-		while(creature.gameObject.rigidbody.IsSleeping() == false)
+		while(creature && creature.gameObject.rigidbody.IsSleeping() == false)
 		{
 			yield return null;
 		}
 
-		creature.EnableNavmesh(true);
-		creature.EnableNavmeshUpdatePos(false);
-		//box.isTrigger = true;
-		creature.gameObject.rigidbody.useGravity = false;
-		creature.gameObject.rigidbody.velocity = Vector3.zero;
+		if (creature != null)
+		{
+			creature.EnableNavmesh(true);
+			creature.EnableNavmeshUpdatePos(false);
+			//box.isTrigger = true;
+			creature.gameObject.rigidbody.useGravity = false;
+			creature.gameObject.rigidbody.velocity = Vector3.zero;
+		}
 	}
 
 	IEnumerator EffectSpawnItemBox(ItemBox itemBox, float time)

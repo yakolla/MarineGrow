@@ -18,7 +18,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void Start () {
 
-		m_champSettingGUI = GameObject.Find("ChampSettingGUI").GetComponent<ChampSettingGUI>();
+		m_champSettingGUI = GameObject.Find("HudGUI/SettingGUI/Panel").GetComponent<ChampSettingGUI>();
 
 		m_guageGUI = transform.Find("Guage").gameObject;
 		m_accessoryGUI = transform.Find("Accessory").gameObject;
