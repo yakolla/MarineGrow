@@ -243,7 +243,7 @@ public class Spawn : MonoBehaviour {
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.itemDummy, RefData.Instance.RefItemDummyMobs, false, false);
 				buildSpawnMob(spawnMobDescResult, waveProgress, mobSpawn.refMobIds.miniBoss, RefData.Instance.RefMiniBossMobs, true, false);
 
-				if (Random.Range(0, 100) < 10)
+				if (r == 0)
 				{
 					RefMobSpawn	randomMobSpawn = GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length];
 					buildSpawnMob(spawnMobDescResult, waveProgress, randomMobSpawn.refMobIds.melee, RefData.Instance.RefMeleeMobs, false, false);
