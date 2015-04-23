@@ -342,7 +342,10 @@ public class Spawn : MonoBehaviour {
 			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
 
 			if (m_wave > 0)
+			{
 				yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
+				yield return new WaitForSeconds(5f);
+			}
 
 			yield return StartCoroutine(spawnMobPerCore(mobSpawn, waveProgress));
 
@@ -468,16 +471,22 @@ public class Spawn : MonoBehaviour {
 
 		pos.y = 10;
 		creature.transform.position = pos;
-
+		creature.gameObject.rigidbody.useGravity = true;
 		creature.gameObject.SetActive(true);
 		creature.EnableNavmesh(false);
 
 
 		BoxCollider box = creature.gameObject.GetComponent<BoxCollider>();
 		box.isTrigger = false;
-		box.size = Vector3.one;
 
-		creature.gameObject.rigidbody.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
+		Vector3 oriSize = box.size;
+		Vector3 oriCenter = box.center;
+
+		box.size = Vector3.one;
+		box.center = Vector3.one*0.5f;
+
+		creature.gameObject.rigidbody.maxAngularVelocity = 0f;
+		creature.gameObject.rigidbody.AddForce(new Vector3(0, 0f, 0), ForceMode.Impulse);
 
 		while(creature && creature.gameObject.rigidbody.IsSleeping() == false)
 		{
@@ -488,7 +497,9 @@ public class Spawn : MonoBehaviour {
 		{
 			creature.EnableNavmesh(true);
 			creature.EnableNavmeshUpdatePos(false);
-			//box.isTrigger = true;
+			box.isTrigger = true;
+			box.size = oriSize;
+			box.center = oriCenter;
 			creature.gameObject.rigidbody.useGravity = false;
 			creature.gameObject.rigidbody.velocity = Vector3.zero;
 		}

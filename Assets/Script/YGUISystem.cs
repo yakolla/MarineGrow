@@ -71,6 +71,10 @@ public class YGUISystem {
 
 		public void RemoveAllGUIImage()
 		{
+			for(int i = 0; i < m_images.Count; ++i)
+			{
+				m_images[i].Destory();
+			}
 			m_images.Clear();
 		}
 
@@ -259,9 +263,9 @@ public class YGUISystem {
 			guiImageObj.transform.localPosition = Vector3.zero;
 		}
 		
-		public void Update()
+		public void Destory()
 		{
-
+			GameObject.DestroyObject(m_image.gameObject);
 		}
 		
 		public GUIText Text

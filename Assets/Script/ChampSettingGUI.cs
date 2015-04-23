@@ -429,6 +429,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (button.TryToPay() == true)
 			{
 				selectedItem.Item.Lock = false;
+				SetButtonRole(ButtonRole.Equip, invSlot, button, itemIndex);
+
 				switch(selectedItem.Item.RefItem.id)
 				{
 				case 101:
