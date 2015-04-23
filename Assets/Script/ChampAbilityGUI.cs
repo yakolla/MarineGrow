@@ -124,14 +124,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 	void Start () {
 
 
-		m_statButtons[0] = new YGUISystem.GUIButton(gameObject, "StatButton0", ()=>{return true;});
-		m_statButtons[1] = new YGUISystem.GUIButton(gameObject, "StatButton1", ()=>{return true;});
-		m_statButtons[2] = new YGUISystem.GUIButton(gameObject, "StatButton2", ()=>{return true;});
+		m_statButtons[0] = new YGUISystem.GUIButton(transform.Find("StatButton0").gameObject, ()=>{return true;});
+		m_statButtons[1] = new YGUISystem.GUIButton(transform.Find("StatButton1").gameObject, ()=>{return true;});
+		m_statButtons[2] = new YGUISystem.GUIButton(transform.Find("StatButton2").gameObject, ()=>{return true;});
 
-		m_remainPointText = new YGUISystem.GUIText(gameObject, "RemainPointText");
+		m_remainPointText = new YGUISystem.GUIText(transform.Find("RemainPointText").gameObject);
 
-		m_rollButton = new YGUISystem.GUIPriceButton(gameObject, "RollingButton", ()=>{return true;}, RefData.Instance.RefItems[1002].levelup.conds, RefData.Instance.RefItems[1002].levelup.else_conds);
-
+		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, ()=>{return true;});
+		m_rollButton.Prices = RefData.Instance.RefItems[1002].levelup.conds;
 
 
 		RandomAbility(null);
@@ -213,7 +213,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	public void OnClickRoll()
 	{
-		if (true == m_rollButton.TryToNormalPay())
+		if (true == m_rollButton.TryToPay())
 		{
 			RandomAbility(null);
 			++m_usedCountOfRandomAbilityItem;

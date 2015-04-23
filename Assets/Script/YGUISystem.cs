@@ -6,22 +6,30 @@ public class YGUISystem {
 
 	public class GUIButton
 	{
-		protected Button		m_button;
-
-		protected GUIText		m_text;
+		protected Button			m_button;
+		protected GUIImageStatic 	m_icon;
+		protected GUIText			m_text;
 		protected System.Func<bool>	m_enableChecker;
 		
-		public GUIButton(GameObject obj, string name, System.Func<bool> enableChecker)
+		public GUIButton(GameObject obj, System.Func<bool> enableChecker)
 		{
-			m_button = obj.transform.Find(name).GetComponent<Button>();
-			m_text = new GUIText(obj, name + "/Text");
+			m_button = obj.GetComponent<Button>();
+			m_text = new GUIText(obj.transform.Find("Text").gameObject);
 			m_enableChecker = enableChecker;
 
+			Transform iconTrans = obj.transform.Find("Icon");
+			if (iconTrans != null)
+				m_icon = new GUIImageStatic(iconTrans.gameObject, null);
 		}
 
 		public Button Button
 		{
 			get{return m_button;}
+		}
+
+		public GUIImageStatic	Icon
+		{
+			get{return m_icon;}
 		}
 		
 		public void Update()
@@ -35,12 +43,12 @@ public class YGUISystem {
 		}
 	}
 
-	public class GUIImageButton : GUIButton
+	public class GUIOverlappedImageButton : GUIButton
 	{
 		List<GUIImageDynamic>	m_images = new List<GUIImageDynamic>();
 
-		public GUIImageButton(GameObject obj, string name, System.Func<bool> enableChecker)
-			: base(obj, name, enableChecker)
+		public GUIOverlappedImageButton(GameObject obj, System.Func<bool> enableChecker)
+			: base(obj, enableChecker)
 		{
 
 		}
@@ -50,14 +58,20 @@ public class YGUISystem {
 			m_images.Add(new GUIImageDynamic(m_button.gameObject, icon));
 
 			Vector3 pos = Vector3.zero;
-			const int gap = 20;
-			int startX = -gap*(m_images.Count-1);
+			const int gapX = 40;
+			const int gapY = 10;
+			int startX = -gapX*(m_images.Count-1);
 			foreach(GUIImageDynamic image in m_images)
 			{
-				pos.Set(startX, -gap, 0);
+				pos.Set(startX, -gapY, 0);
 				image.Position = pos;
-				startX+=gap*2;
+				startX+=gapX*2;
 			}
+		}
+
+		public void RemoveAllGUIImage()
+		{
+			m_images.Clear();
 		}
 
 		public List<GUIImageDynamic> GUIImages
@@ -68,30 +82,37 @@ public class YGUISystem {
 
 	public class GUIPriceButton
 	{
-		GUIImageButton	m_button;
-		RefPrice[]		m_normalPrices;
-		RefPrice[]		m_specialPrices;
+		GUIOverlappedImageButton	m_button;
+		RefPrice[]		m_prices;
 		float			m_normalWorth = 1f;
-		float			m_specialWorth = 1f;
 
-		public GUIPriceButton(GameObject obj, string name, System.Func<bool> enableChecker, RefPrice[] normalPrices, RefPrice[] specialPrices)
+		public GUIPriceButton(GameObject obj, System.Func<bool> enableChecker)
 		{
-			m_button = new GUIImageButton(obj, name, enableChecker);
-			m_normalPrices = normalPrices;
-			m_specialPrices = specialPrices;
+			m_button = new GUIOverlappedImageButton(obj, enableChecker);
+		}
 
-			if (m_normalPrices != null)
-			{
-				foreach(RefPrice price in m_normalPrices)
+		public RefPrice[] Prices
+		{
+			set{
+				m_button.RemoveAllGUIImage();
+				m_prices = value;
+
+				if (m_prices == null)
+				{
+					return;
+				}
+
+				foreach(RefPrice price in m_prices)
 				{
 					RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
 					
 					m_button.AddGUIImage(Resources.Load<Texture>(condRefItem.icon));				
 				}
+
 			}
 		}
 
-		void displayPrice(GUIImageButton button, RefPrice[] prices, float itemWorth)
+		void displayPrice(GUIOverlappedImageButton button, RefPrice[] prices, float itemWorth)
 		{
 			if (prices == null)
 				return;
@@ -127,9 +148,9 @@ public class YGUISystem {
 			}
 		}
 
-		public Button Button
+		public GUIOverlappedImageButton GUIImageButton
 		{
-			get{return m_button.Button;}
+			get{return m_button;}
 		}
 
 		public float NormalWorth
@@ -140,14 +161,14 @@ public class YGUISystem {
 		public void Update()
 		{
 			m_button.Update();
-			displayPrice(m_button, m_normalPrices, m_normalWorth);
+			displayPrice(m_button, m_prices, m_normalWorth);
 		}
 
-		public bool TryToNormalPay()
+		public bool TryToPay()
 		{
-			if (Const.CheckAvailableItem(m_normalPrices, m_normalWorth))
+			if (Const.CheckAvailableItem(m_prices, m_normalWorth))
 			{
-				Const.PayPriceItem(m_normalPrices, m_normalWorth);
+				Const.PayPriceItem(m_prices, m_normalWorth);
 				return true;
 			}
 
@@ -162,10 +183,10 @@ public class YGUISystem {
 		System.Func<float>	m_fillAmountGetter;
 		System.Func<string>	m_lableGetter;
 		
-		public GUIGuage(GameObject obj, string name, System.Func<float>	fillAmountGetter, System.Func<string> lableGetter)
+		public GUIGuage(GameObject obj, System.Func<float>	fillAmountGetter, System.Func<string> lableGetter)
 		{
-			m_guage = obj.transform.Find(name).GetComponent<Image>();
-			m_text = new GUIText(obj, name + "/Text");
+			m_guage = obj.GetComponent<Image>();
+			m_text = new GUIText(obj.transform.Find("Text").gameObject);
 			m_fillAmountGetter = fillAmountGetter;
 			m_lableGetter = lableGetter;
 		}
@@ -181,9 +202,9 @@ public class YGUISystem {
 	{
 		Text	m_text;
 
-		public GUIText(GameObject obj, string name)
+		public GUIText(GameObject obj)
 		{
-			m_text = obj.transform.Find(name).GetComponent<Text>();
+			m_text = obj.GetComponent<Text>();
 		}
 
 		public string Lable
@@ -202,17 +223,17 @@ public class YGUISystem {
 			m_image = obj.GetComponent<RawImage>();
 			m_image.texture = icon;
 			
-			m_text = new GUIText(obj, "Text");
-		}
-		
-		public void Update()
-		{
-			
+			m_text = new GUIText(obj.transform.Find("Text").gameObject);
 		}
 		
 		public GUIText Text
 		{
 			get{return m_text;}
+		}
+
+		public Texture Image
+		{
+			set{m_image.texture = value;}
 		}
 		
 		public Vector3 Position
@@ -232,7 +253,7 @@ public class YGUISystem {
 			m_image = guiImageObj.GetComponent<RawImage>();
 			m_image.texture = icon;
 
-			m_text = new GUIText(m_image.gameObject, "Text");
+			m_text = new GUIText(m_image.transform.Find("Text").gameObject);
 
 			guiImageObj.transform.parent = parent.transform;
 			guiImageObj.transform.localPosition = Vector3.zero;

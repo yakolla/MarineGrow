@@ -15,8 +15,8 @@ public class GUIInventorySlot : MonoBehaviour {
 		m_item = new YGUISystem.GUIImageStatic(transform.Find("Icon").gameObject, icon);
 		m_item.Text.Lable = desc;
 
-		m_priceButton0 = new YGUISystem.GUIPriceButton(gameObject, "GUIPriceButton0", ()=>{return true;}, null, null);
-		m_priceButton1 = new YGUISystem.GUIPriceButton(gameObject, "GUIPriceButton1", ()=>{return true;}, null, null);
+		m_priceButton0 = new YGUISystem.GUIPriceButton(transform.Find("GUIPriceButton0").gameObject, ()=>{return true;});
+		m_priceButton1 = new YGUISystem.GUIPriceButton(transform.Find("GUIPriceButton1").gameObject, ()=>{return true;});
 	}
 
 	public YGUISystem.GUIPriceButton PriceButton0
@@ -24,9 +24,23 @@ public class GUIInventorySlot : MonoBehaviour {
 		get{return m_priceButton0;}
 	}
 
+	public string ItemDesc
+	{
+		set{m_item.Text.Lable = value;}
+	}
+
 	public YGUISystem.GUIPriceButton PriceButton1
 	{
 		get{return m_priceButton1;}
+	}
+
+	void Update()
+	{
+		if (m_priceButton0 != null)
+			m_priceButton0.Update();
+
+		if (m_priceButton1 != null)
+			m_priceButton1.Update();
 	}
 }
 

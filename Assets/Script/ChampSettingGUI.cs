@@ -7,12 +7,17 @@ using UnityEngine.UI;
 
 public class ChampSettingGUI : MonoBehaviour {
 
+	const int EQUIP_ACCESSORY_SLOT_MAX = 4;
 
 	GameObject	m_inventoryObj;
+	YGUISystem.GUIImageStatic	m_gold;
+	YGUISystem.GUIImageStatic	m_gem;
+	YGUISystem.GUIButton	m_weapon;
+	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[EQUIP_ACCESSORY_SLOT_MAX];
 
 	const int INVEN_SLOT_COLS = 1;
 	const int INVEN_SLOT_ROWS = 4;
-	const int EQUIP_ACCESSORY_SLOT_MAX = 4;
+
 
 	[SerializeField]
 	GameObject		m_prefChamp = null;
@@ -100,7 +105,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(bootsData);
 
 				Warehouse.Instance.Gold.Item.Count = 100000;
-				Warehouse.Instance.Gem.Item.Count = 100000;
+				Warehouse.Instance.Gem.Item.Count = 10000;
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
@@ -131,6 +136,15 @@ public class ChampSettingGUI : MonoBehaviour {
 			Warehouse.Instance.Deserialize(data);
 		}
 
+		m_weapon = new YGUISystem.GUIButton(transform.Find("WeaponButton").gameObject, ()=>{return true;});
+		for(int i = 0; i < m_accessories.Length; ++i)
+		{
+			m_accessories[i] = new YGUISystem.GUIButton(transform.Find("AccessoryButton" + i).gameObject, ()=>{return true;});
+		}
+
+		m_gold = new YGUISystem.GUIImageStatic(transform.Find("GoldImage").gameObject, Warehouse.Instance.Gold.ItemIcon);
+		m_gem = new YGUISystem.GUIImageStatic(transform.Find("GemImage").gameObject, Warehouse.Instance.Gem.ItemIcon);
+
 		m_inventoryObj = transform.Find("InvScrollView/Contents").gameObject;
 		RectTransform rectInventoryObj = m_inventoryObj.GetComponent<RectTransform>();
 		Vector2 rectContents = new Vector2(	rectInventoryObj.rect.width, 0);
@@ -143,15 +157,39 @@ public class ChampSettingGUI : MonoBehaviour {
 			ItemObject item = Warehouse.Instance.Items[itemIndex];
 
 			GameObject obj = Instantiate(prefGUIInventorySlot) as GameObject;
-			GUIInventorySlot slot = obj.GetComponent<GUIInventorySlot>();
+			GUIInventorySlot invSlot = obj.GetComponent<GUIInventorySlot>();
 
 			obj.transform.parent = m_inventoryObj.transform;
 			obj.transform.localPosition = new Vector3(0f, (rectGUIInventorySlot.rect.height+80)/-2-50-rectGUIInventorySlot.rect.height*itemIndex, 0);
 
-			slot.Init(item.ItemIcon, item.Item.Description());
+			invSlot.Init(item.ItemIcon, item.Item.Description());
 
 			int capturedItemIndex = itemIndex;
-			slot.PriceButton0.Button.onClick.AddListener(() => OnClickPriceButton0(capturedItemIndex) );
+
+			if (item.Item.Lock == true)
+			{
+				if (item.Item.RefItem.unlock != null)
+				{
+					SetButtonRole(ButtonRole.Unlock, invSlot, invSlot.PriceButton0, itemIndex);
+				}
+			}
+			else
+			{
+				switch(item.Item.RefItem.type)
+				{
+				case ItemData.Type.Weapon:
+				case ItemData.Type.Accessory:
+				case ItemData.Type.Follower:
+					SetButtonRole(ButtonRole.Equip, invSlot, invSlot.PriceButton0, itemIndex);
+					break;
+				}
+
+			}
+
+			if (item.Item.RefItem.levelup != null)
+			{
+				SetButtonRole(ButtonRole.Levelup, invSlot, invSlot.PriceButton1, itemIndex);
+			}
 
 			rectContents.y += rectGUIInventorySlot.rect.height;
 
@@ -159,6 +197,58 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		rectInventoryObj.sizeDelta = rectContents;
 		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, rectInventoryObj.sizeDelta.y/-2, rectInventoryObj.position.z);
+	}
+	enum ButtonRole
+	{
+		Nothing,
+		Equip,
+		Unequip,
+		Levelup,
+		Unlock,
+	}
+	void SetButtonRole(ButtonRole role, GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
+	{
+		ItemObject item = Warehouse.Instance.Items[itemIndex];
+		button.GUIImageButton.Button.onClick.RemoveAllListeners();
+
+		switch(role)
+		{
+		case ButtonRole.Equip:
+			{
+				button.Prices = null;
+				button.GUIImageButton.Button.onClick.AddListener(() => OnClickEquip(invSlot, button, itemIndex) );
+				button.GUIImageButton.Text.Lable = "Equip";
+			}
+			break;
+		case ButtonRole.Unequip:
+			{
+				button.Prices = null;
+				button.GUIImageButton.Button.onClick.AddListener(() => OnClickEquip(invSlot, button, itemIndex) );
+				button.GUIImageButton.Text.Lable = "Unequip";
+			}
+			break;
+
+		case ButtonRole.Levelup:
+			{
+				button.Prices = item.Item.RefItem.levelup.conds;
+				button.GUIImageButton.Button.onClick.AddListener(() => OnClickLevelup(invSlot, button, itemIndex) );
+				button.GUIImageButton.Text.Lable = "Levelup";
+			}
+			break;
+
+		case ButtonRole.Unlock:
+			{
+				button.Prices = item.Item.RefItem.unlock.conds;
+				button.GUIImageButton.Button.onClick.AddListener(() => OnClickUnlock(invSlot, button, itemIndex) );
+				button.GUIImageButton.Text.Lable = "Unlock";
+			}
+			break;
+
+		default:
+			{
+			}
+			break;
+		}
 	}
 
 	void OnEnable() {
@@ -171,6 +261,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void OnGUI()
 	{
+		m_gold.Text.Lable = Warehouse.Instance.Gold.Item.Count.ToString();
+		m_gem.Text.Lable = Warehouse.Instance.Gem.Item.Count.ToString();
 		return;
 		GUI.skin = m_guiSkin;
 		m_guiSkin.label.fontSize = m_fontSize;
@@ -223,87 +315,155 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
-	public void OnClickPriceButton0(int slot)
+	public void OnClickEquip(GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
-		ItemObject selectedItem = Warehouse.Instance.Items[slot];
-
-		bool inEquipSlot = m_equipedWeapon == selectedItem;
-		if (inEquipSlot == false)
 		{
-			for(int e = 0; e < m_equipedAccessories.Length; ++e)
-			{
-				if (m_equipedAccessories[e] == selectedItem)
-				{
-					inEquipSlot = true;
-					break;
-				}
-			}	
-		}
-
-		switch(selectedItem.Item.RefItem.type)
-		{
-		case ItemData.Type.Weapon:
-		{
-			if (true == inEquipSlot)
-			{
-				m_equipedWeapon = null;				
-			}
-			else
-			{
-				m_equipedWeapon = selectedItem;				
-			}
-		}break;
+			ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
 			
-		case ItemData.Type.Accessory:
-		case ItemData.Type.Follower:
-		{
-			if (true == inEquipSlot)
+			bool inEquipSlot = m_equipedWeapon == selectedItem;
+			if (inEquipSlot == false)
 			{
-
-				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				for(int e = 0; e < m_equipedAccessories.Length; ++e)
 				{
-					if (m_equipedAccessories[x] != null)
+					if (m_equipedAccessories[e] == selectedItem)
 					{
-						if (m_equipedAccessories[x].Item.Compare(selectedItem.Item))
-						{
-							m_equipedAccessories[x] = null;
-							break;
-						}
-						
-					}
-				}					
-			}
-			else
-			{
-				bool aleadyExists = false;
-				for(int x = 0; x < m_equipedAccessories.Length; ++x)
-				{
-					if (m_equipedAccessories[x] == selectedItem)
-					{
-						aleadyExists = true;
+						inEquipSlot = true;
 						break;
 					}
 				}	
-				
-				if (aleadyExists == false)
+			}
+			
+			switch(selectedItem.Item.RefItem.type)
+			{
+			case ItemData.Type.Weapon:
+			{
+				if (true == inEquipSlot)
 				{
+					m_equipedWeapon = null;		
+					m_weapon.Icon.Image = null;
+					SetButtonRole(ButtonRole.Equip, invSlot, button, itemIndex);
+				}
+				else
+				{
+					m_equipedWeapon = selectedItem;
+					m_weapon.Icon.Image = selectedItem.ItemIcon;
+					SetButtonRole(ButtonRole.Unequip, invSlot, button, itemIndex);
+				}
+			}break;
+				
+			case ItemData.Type.Accessory:
+			case ItemData.Type.Follower:
+			{
+				if (true == inEquipSlot)
+				{
+					
 					for(int x = 0; x < m_equipedAccessories.Length; ++x)
 					{
-						if (m_equipedAccessories[x] == null)
+						if (m_equipedAccessories[x] != null)
 						{
-							m_equipedAccessories[x] = selectedItem;
+							if (m_equipedAccessories[x].Item.Compare(selectedItem.Item))
+							{
+								m_equipedAccessories[x] = null;
+								m_accessories[x].Icon.Image = null;
+								SetButtonRole(ButtonRole.Equip, invSlot, button, itemIndex);
+								break;
+							}
+							
+						}
+					}					
+				}
+				else
+				{
+					bool aleadyExists = false;
+					for(int x = 0; x < m_equipedAccessories.Length; ++x)
+					{
+						if (m_equipedAccessories[x] == selectedItem)
+						{
+							aleadyExists = true;
 							break;
 						}
 					}	
-				}
 					
+					if (aleadyExists == false)
+					{
+						for(int x = 0; x < m_equipedAccessories.Length; ++x)
+						{
+							if (m_equipedAccessories[x] == null)
+							{
+								m_equipedAccessories[x] = selectedItem;
+								m_accessories[x].Icon.Image = selectedItem.ItemIcon;
+								SetButtonRole(ButtonRole.Unequip, invSlot, button, itemIndex);
+								break;
+							}
+						}	
+					}
+					
+				}
+			}break;
 			}
-		}break;
+		}
+
+	}
+
+	public void OnClickLevelup(GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
+	{
+
+		ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
+		if (selectedItem.Item.Level < Const.ItemMaxLevel)
+		{
+			if (button.TryToPay())
+			{
+				++selectedItem.Item.Level;
+				invSlot.ItemDesc = selectedItem.Item.Description();
+				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", selectedItem.Item.RefItem.codeName + "_Lv:" + selectedItem.Item.Level, 0);
+			}
 		}
 	}
 
-	public void OnClickPriceButton1(int slot)
+	public void OnClickUnlock(GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
+		
+		ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
+		if (selectedItem.Item.Lock == true)
+		{
+			if (button.TryToPay() == true)
+			{
+				selectedItem.Item.Lock = false;
+				switch(selectedItem.Item.RefItem.id)
+				{
+				case 101:
+					GPlusPlatform.Instance.ReportProgress(
+						Const.ACH_UNLOCKED_THE_FIREGUN, 100, (bool success) => {
+					});  
+					break;
+				case 102:
+					GPlusPlatform.Instance.ReportProgress(
+						Const.ACH_UNLOCKED_THE_LIGHTNINGLAUNCHER, 100, (bool success) => {
+					});  
+					break;
+				case 111:
+					GPlusPlatform.Instance.ReportProgress(
+						Const.ACH_UNLOCKED_THE_ROCKETLAUNCHER, 100, (bool success) => {
+					});  
+					break;
+				case 106:
+					GPlusPlatform.Instance.ReportProgress(
+						Const.ACH_UNLOCKED_THE_GUIDEDROCKETLAUNCHER, 100, (bool success) => {
+					});  
+					break;
+				case 118:
+					GPlusPlatform.Instance.ReportProgress(
+						Const.ACH_UNLOCKED_THE_LASERBEAM, 100, (bool success) => {
+					});  
+					break;
+				case 120:
+					GPlusPlatform.Instance.ReportProgress(
+						Const.ACH_UNLOCKED_THE_BOOMERANGLAUNCHER, 100, (bool success) => {
+					});  
+					break;
+				}
+			}
+		}
 	}
 
 	float getItemLevelupWorth(ItemObject itemObj, RefPriceCondition refPriceCondition)
@@ -320,8 +480,6 @@ public class ChampSettingGUI : MonoBehaviour {
 		return itemObj.Item.Evolution+1;
 	}
 
-
-	
 	void DisplayItemDesc(ItemObject selectedItem, bool inEquipSlot, int startX, int startY, int width, int height)
 	{
 
@@ -652,3 +810,4 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	}
 }
+
