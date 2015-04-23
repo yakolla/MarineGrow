@@ -68,5 +68,9 @@ public class GameObjectPool {
 
 			m_allocGameObject.Remove(obj);
 		}
+		else
+		{
+			Debug.DebugBreak();
+		}
 	}
 }
