@@ -261,6 +261,7 @@ public class YGUISystem {
 
 			guiImageObj.transform.parent = parent.transform;
 			guiImageObj.transform.localPosition = Vector3.zero;
+			guiImageObj.transform.localScale = Vector3.one;
 		}
 		
 		public void Destory()

@@ -79,44 +79,6 @@
 							"range":{
 								"ratio":[0,1],
 								"count":[1,9]
-							}
-						},
-						"interval":5,
-						"repeatCount":[3,3]
-					},
-					{
-						"refMobIds":{
-							"melee":{
-								"ratio":[0,1],
-								"count":[12,36]
-							}
-						},
-						"interval":5,
-						"repeatCount":[3,3]
-					},
-					{
-						"refMobIds":{
-							"melee":{
-								"ratio":[0,1],
-								"count":[12,36]
-							},
-							"range":{
-								"ratio":[0,1],
-								"count":[1,9]
-							}
-						},
-						"interval":5,
-						"repeatCount":[3,3]
-					},
-					{
-						"refMobIds":{
-							"melee":{
-								"ratio":[0,1],
-								"count":[12,36]
-							},
-							"range":{
-								"ratio":[0,1],
-								"count":[1,9]
 							},
 							"miniBoss":{
 								"ratio":[0,1],
