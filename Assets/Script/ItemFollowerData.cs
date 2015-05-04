@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using Newtonsoft.Json;
 
 public class ItemFollowerData : ItemData{
 
@@ -9,17 +9,18 @@ public class ItemFollowerData : ItemData{
 	public RefCreatureBaseProperty	m_baseProperty;
 	public MobAIType	m_aiType;
 
-	public ItemFollowerData(RefMob refMob) : base(1001, 1)
+	[JsonConstructor]
+	private ItemFollowerData()
 	{
+	}
+
+	public ItemFollowerData(int refMobId) : base(refMobId-30001+1001, 1)
+	{
+		RefMob refMob = RefData.Instance.RefMobs[refMobId];
 		m_followerName = refMob.prefBody;
 		m_weaponID = refMob.refWeaponItems[0].refItemId;
 		m_baseProperty = refMob.baseCreatureProperty;
 		m_aiType = refMob.mobAI;
-	}
-
-	public ItemFollowerData() : base(1001, 1)
-	{
-
 	}
 
 	public string FollowerName
@@ -45,8 +46,9 @@ public class ItemFollowerData : ItemData{
 		GameObject enemyBody = GameObject.Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";
 		enemyBody.transform.parent = followerObj.transform;
-		enemyBody.transform.localPosition = prefEnemyBody.transform.localPosition;
+		enemyBody.transform.localPosition = Vector3.zero;
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+		enemyBody.transform.localScale = prefEnemyBody.transform.localScale;
 
 		Follower follower = (Follower)followerObj.GetComponent<Follower>();
 

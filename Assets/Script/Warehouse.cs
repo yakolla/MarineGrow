@@ -14,6 +14,7 @@ public class Warehouse {
 	{
 		static public MemoryStream Serialize(Warehouse obj)
 		{
+
 			MemoryStream stream = new MemoryStream();
 
 			StreamWriter writer = new StreamWriter(stream);
@@ -22,6 +23,7 @@ public class Warehouse {
 			foreach(ItemObject itemObj in obj.m_items)
 			{
 				writer.WriteLine(JsonConvert.SerializeObject(itemObj.Item.RefItem.type));
+				Debug.Log(JsonConvert.SerializeObject(itemObj.Item));
 				writer.WriteLine(JsonConvert.SerializeObject(itemObj.Item));
 			}
 
@@ -34,6 +36,7 @@ public class Warehouse {
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_stats));
 
 			writer.Close();
+
 			return stream;
 		}
 
@@ -70,12 +73,10 @@ public class Warehouse {
 					ItemWeaponPartsData weaponPartsData = JsonConvert.DeserializeObject<ItemWeaponPartsData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(weaponPartsData));
 					break;
-
 				case ItemData.Type.Follower:
 					ItemFollowerData followerData = JsonConvert.DeserializeObject<ItemFollowerData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(followerData));
 					break;
-
 				case ItemData.Type.Accessory:
 					ItemAccessoryData accessoryData = JsonConvert.DeserializeObject<ItemAccessoryData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(accessoryData));

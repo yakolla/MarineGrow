@@ -75,19 +75,15 @@ public class ItemData {
 
 	RefItem				m_refItem;
 
+	[JsonConstructor]
+	protected ItemData()
+	{
+	}
+
 	public ItemData(int refItemId, int count)
 	{
-		m_refItemId = refItemId;
+		RefItemID = refItemId;
 		m_count = count;
-		m_refItem = RefData.Instance.RefItems[m_refItemId];
-
-		if (m_refItem.options != null)
-		{
-			foreach(RefItemOption itemOption in m_refItem.options)
-			{
-				m_optionDescs.Add(new ItemMagicOption(itemOption.type, itemOption.value));
-			}
-		}
 
 	}
 
@@ -167,6 +163,21 @@ public class ItemData {
 	public int RefItemID
 	{
 		get {return m_refItemId;}
+		set {
+			m_refItemId = value;
+
+			m_refItem = RefData.Instance.RefItems[m_refItemId];
+			m_optionDescs.Clear();
+
+			if (m_refItem.options != null)
+			{
+				foreach(RefItemOption itemOption in m_refItem.options)
+				{
+					m_optionDescs.Add(new ItemMagicOption(itemOption.type, itemOption.value));
+				}
+			}
+
+		}
 	}
 
 	public int Level

@@ -1462,6 +1462,35 @@
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
+		},
+		{
+			"id":30006,
+			"prefBody":"turret_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"108",
+					"weaponStat":
+					{
+						"range":15
+					}
+				}
+			],
+			"mobAI":"Normal",
+			"baseCreatureProperty":
+			{
+				"maxHP":100,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.5,
+				"moveSpeed":0,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			}
 		}
 	],
 	"itemPandora":
