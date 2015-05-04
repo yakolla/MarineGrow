@@ -94,7 +94,9 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
-					Warehouse.Instance.PushItem(new ItemFollowerData(follower));
+					ItemFollowerData followerData = new ItemFollowerData(follower.id);
+					followerData.Lock = true;
+					Warehouse.Instance.PushItem(followerData);
 				}
 
 			}
@@ -114,6 +116,13 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
 				Warehouse.Instance.PushItem(new ItemWeaponData(120, null));
+
+				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
+				{
+					ItemFollowerData followerData = new ItemFollowerData(follower.id);
+					followerData.Lock = true;
+					Warehouse.Instance.PushItem(followerData);
+				}
 
 			}
 			
