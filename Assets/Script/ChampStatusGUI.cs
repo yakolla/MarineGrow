@@ -13,8 +13,9 @@ public class ChampStatusGUI : MonoBehaviour {
 	GameObject	m_specialGUI;
 
 
-	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[3];
-	YGUISystem.GUIGuage[] m_guages = new YGUISystem.GUIGuage[3];
+	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
+	YGUISystem.GUIButton[]	m_accessoryButtons = new YGUISystem.GUIButton[Const.AccessoriesSlots];
+	YGUISystem.GUIGuage[] m_guages = new YGUISystem.GUIGuage[Const.Guages];
 
 	void Start () {
 
@@ -31,6 +32,19 @@ public class ChampStatusGUI : MonoBehaviour {
 			return m_champ.ComboSkillStack > 0;
 		});
 		m_specialButtons[2] = new YGUISystem.GUIButton(transform.Find("Special/Button2").gameObject, ()=>{
+			return true;
+		});
+
+		m_accessoryButtons[0] = new YGUISystem.GUIButton(transform.Find("Accessory/Button0").gameObject, ()=>{
+			return true;
+		});
+		m_accessoryButtons[1] = new YGUISystem.GUIButton(transform.Find("Accessory/Button1").gameObject, ()=>{
+			return true;
+		});
+		m_accessoryButtons[2] = new YGUISystem.GUIButton(transform.Find("Accessory/Button2").gameObject, ()=>{
+			return true;
+		});
+		m_accessoryButtons[3] = new YGUISystem.GUIButton(transform.Find("Accessory/Button3").gameObject, ()=>{
 			return true;
 		});
 
@@ -90,6 +104,18 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_guageGUI.SetActive(active);
 		m_accessoryGUI.SetActive(active);
 		m_specialGUI.SetActive(active);
+
+		if (active == true)
+		{
+			for(int i = 0; i < Const.AccessoriesSlots; ++i)
+			{
+				if (m_champSettingGUI.EquipedAccessories[i] == null)
+					continue;
+				
+				m_accessoryButtons[i].Icon.Image = m_champSettingGUI.EquipedAccessories[i].ItemIcon;
+			}
+		}
+
 	}
 
 	void OnGUI()

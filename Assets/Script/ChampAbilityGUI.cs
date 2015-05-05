@@ -130,7 +130,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_remainPointText = new YGUISystem.GUIText(transform.Find("RemainPointText").gameObject);
 
-		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, ()=>{return true;});
+		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return true;});
 		m_rollButton.Prices = RefData.Instance.RefItems[1101].levelup.conds;
 
 

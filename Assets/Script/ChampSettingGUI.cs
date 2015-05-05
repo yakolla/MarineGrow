@@ -201,41 +201,41 @@ public class ChampSettingGUI : MonoBehaviour {
 		Levelup,
 		Unlock,
 	}
-	void SetButtonRole(ButtonRole role, GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
+	void SetButtonRole(ButtonRole role, GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, int itemIndex)
 	{
 		ItemObject item = Warehouse.Instance.Items[itemIndex];
-		button.GUIImageButton.Button.onClick.RemoveAllListeners();
+		priceGemButton.RemoveAllListeners();
 
 		switch(role)
 		{
 		case ButtonRole.Equip:
 			{
-				button.Prices = null;
-				button.GUIImageButton.Button.onClick.AddListener(() => OnClickEquip(invSlot, button, itemIndex) );
-				button.GUIImageButton.Text.Lable = "Equip";
+				priceGemButton.SetPrices(null, null);
+			priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+				priceGemButton.SetLable("Equip");
 			}
 			break;
 		case ButtonRole.Unequip:
 			{
-				button.Prices = null;
-				button.GUIImageButton.Button.onClick.AddListener(() => OnClickEquip(invSlot, button, itemIndex) );
-				button.GUIImageButton.Text.Lable = "Unequip";
+				priceGemButton.SetPrices(null, null);
+			priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+				priceGemButton.SetLable("Unequip");
 			}
 			break;
 
 		case ButtonRole.Levelup:
 			{
-				button.Prices = item.Item.RefItem.levelup.conds;
-				button.GUIImageButton.Button.onClick.AddListener(() => OnClickLevelup(invSlot, button, itemIndex) );
-				button.GUIImageButton.Text.Lable = "Levelup";
+				priceGemButton.SetPrices(item.Item.RefItem.levelup.conds, item.Item.RefItem.levelup.else_conds);
+			priceGemButton.AddListener(() => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+				priceGemButton.SetLable("Levelup");
 			}
 			break;
 
 		case ButtonRole.Unlock:
 			{
-				button.Prices = item.Item.RefItem.unlock.conds;
-				button.GUIImageButton.Button.onClick.AddListener(() => OnClickUnlock(invSlot, button, itemIndex) );
-				button.GUIImageButton.Text.Lable = "Unlock";
+				priceGemButton.SetPrices(item.Item.RefItem.unlock.conds, item.Item.RefItem.unlock.else_conds);
+			priceGemButton.AddListener(() => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+				priceGemButton.SetLable("Unlock");
 			}
 			break;
 
@@ -302,7 +302,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
-	public void OnClickEquip(GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
+	public void OnClickEquip(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
 		{
 			ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
@@ -328,13 +328,13 @@ public class ChampSettingGUI : MonoBehaviour {
 				{
 					m_equipedWeapon = null;		
 					m_weapon.Icon.Image = null;
-					SetButtonRole(ButtonRole.Equip, invSlot, button, itemIndex);
+					SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 				}
 				else
 				{
 					m_equipedWeapon = selectedItem;
 					m_weapon.Icon.Image = selectedItem.ItemIcon;
-					SetButtonRole(ButtonRole.Unequip, invSlot, button, itemIndex);
+					SetButtonRole(ButtonRole.Unequip, invSlot, priceGemButton, itemIndex);
 				}
 			}break;
 				
@@ -352,7 +352,7 @@ public class ChampSettingGUI : MonoBehaviour {
 							{
 								m_equipedAccessories[x] = null;
 								m_accessories[x].Icon.Image = null;
-								SetButtonRole(ButtonRole.Equip, invSlot, button, itemIndex);
+								SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 								break;
 							}
 							
@@ -379,7 +379,7 @@ public class ChampSettingGUI : MonoBehaviour {
 							{
 								m_equipedAccessories[x] = selectedItem;
 								m_accessories[x].Icon.Image = selectedItem.ItemIcon;
-								SetButtonRole(ButtonRole.Unequip, invSlot, button, itemIndex);
+								SetButtonRole(ButtonRole.Unequip, invSlot, priceGemButton, itemIndex);
 								break;
 							}
 						}	
@@ -392,7 +392,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	}
 
-	public void OnClickLevelup(GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
+	public void OnClickLevelup(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
 
 		ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
@@ -407,7 +407,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
-	public void OnClickUnlock(GUIInventorySlot invSlot, YGUISystem.GUIPriceButton button, int itemIndex)
+	public void OnClickUnlock(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
 		
 		ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
@@ -416,7 +416,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (button.TryToPay() == true)
 			{
 				selectedItem.Item.Lock = false;
-				SetButtonRole(ButtonRole.Equip, invSlot, button, itemIndex);
+				SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 
 				switch(selectedItem.Item.RefItem.id)
 				{

@@ -46,11 +46,12 @@ public class YGUISystem {
 	public class GUIOverlappedImageButton : GUIButton
 	{
 		List<GUIImageDynamic>	m_images = new List<GUIImageDynamic>();
+		int						m_startImagePosY;
 
-		public GUIOverlappedImageButton(GameObject obj, System.Func<bool> enableChecker)
+		public GUIOverlappedImageButton(GameObject obj, int startImagePosY, System.Func<bool> enableChecker)
 			: base(obj, enableChecker)
 		{
-
+			m_startImagePosY = startImagePosY;
 		}
 
 		public void AddGUIImage(Texture icon)
@@ -59,11 +60,10 @@ public class YGUISystem {
 
 			Vector3 pos = Vector3.zero;
 			const int gapX = 40;
-			const int gapY = 10;
 			int startX = -gapX*(m_images.Count-1);
 			foreach(GUIImageDynamic image in m_images)
 			{
-				pos.Set(startX, -gapY, 0);
+				pos.Set(startX, -m_startImagePosY, 0);
 				image.Position = pos;
 				startX+=gapX*2;
 			}
@@ -90,9 +90,9 @@ public class YGUISystem {
 		RefPrice[]		m_prices;
 		float			m_normalWorth = 1f;
 
-		public GUIPriceButton(GameObject obj, System.Func<bool> enableChecker)
+		public GUIPriceButton(GameObject obj, int startImagePosY, System.Func<bool> enableChecker)
 		{
-			m_button = new GUIOverlappedImageButton(obj, enableChecker);
+			m_button = new GUIOverlappedImageButton(obj, startImagePosY, enableChecker);
 		}
 
 		public RefPrice[] Prices

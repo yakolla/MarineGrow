@@ -13,18 +13,16 @@ public class Const {
 		MainMenu,
 	}
 
-
-	public static float 		m_slotWidth = Screen.width * (1/14f);
-	public static float 		m_slotHeight = Screen.height * (1/8f);
-	
-
-	public static int		m_fontSize = (int)(Screen.width*(1/50f));
-
 	public const int ItemMaxLevel = 9;
 	public const int ShowMaxDamageNumber = 3;
 	public const int ComboSkillStackOnCombo = 100;
 	public const int ComboKill_2 = 200;
 	public const int ComboKill_3 = 300;
+	public const int SpecialButtons = 3;
+	public const int Guages = 3;
+	public const int AccessoriesSlots = 4;
+	public const int StartPosYOfPriceButtonImage = 10;
+	public const int StartPosYOfGemPriceButtonImage = -5;
 
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
