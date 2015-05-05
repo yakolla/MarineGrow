@@ -1507,7 +1507,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":30,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
@@ -1532,7 +1532,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":60,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
@@ -1557,7 +1557,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":90,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
@@ -1582,7 +1582,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":120,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
@@ -1607,7 +1607,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":150,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
@@ -1632,7 +1632,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":180,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,
@@ -1660,7 +1660,7 @@
 			"mobAI":"Dummy",		
 			"baseCreatureProperty":
 			{
-				"maxHP":30,
+				"maxHP":10,
 				"physicalDamage":0,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.1,

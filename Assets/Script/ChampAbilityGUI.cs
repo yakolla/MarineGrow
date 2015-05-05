@@ -67,7 +67,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaMaxHP+=10;
-			m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
+			//m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
 			--m_champ.RemainStatPoint;
 		}));
 

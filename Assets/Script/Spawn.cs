@@ -344,7 +344,7 @@ public class Spawn : MonoBehaviour {
 			if (m_wave > 0)
 			{
 				yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
-				yield return new WaitForSeconds(5f);
+				yield return new WaitForSeconds(2f);
 			}
 
 			yield return StartCoroutine(spawnMobPerCore(mobSpawn, waveProgress));
