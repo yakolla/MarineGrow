@@ -270,7 +270,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		if (m_equipedWeapon != null)
 		{
 			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_spawnChamp.position, m_spawnChamp.localRotation);
-			GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/champ_skin");
+			GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/newchamp_skin");
 			
 			champObj.name = "Champ";
 			

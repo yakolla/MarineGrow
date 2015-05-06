@@ -1262,6 +1262,40 @@
 		}
 	},
 	{
+		"id":128,
+		"codeName":"RushLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Rush",
+		
+		"weaponStat":
+		{
+			"coolTime":5,
+			"range":8
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":13, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
+		}
+		
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
