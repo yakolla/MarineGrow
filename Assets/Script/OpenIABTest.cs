@@ -65,17 +65,26 @@ public class OpenIABTest : MonoBehaviour
 		OpenIAB.init(options);
 	}
 
+	public void OnClickPurchase()
+	{
+		if (_isInitialized == false)
+			return;
+
+		OpenIAB.purchaseProduct(SKU, "ok marine");
+	}
+
 
     private void billingSupportedEvent()
     {
         _isInitialized = true;
         Debug.Log("billingSupportedEvent");
 
-		OpenIAB.purchaseProduct(SKU, "ok marine");
+
     }
     private void billingNotSupportedEvent(string error)
     {
         Debug.Log("billingNotSupportedEvent: " + error);
+		gameObject.SetActive(false);
     }
     private void queryInventorySucceededEvent(Inventory inventory)
     {
@@ -92,6 +101,7 @@ public class OpenIABTest : MonoBehaviour
     {
         Debug.Log("queryInventoryFailedEvent: " + error);
         _label = error;
+		gameObject.SetActive(false);
     }
     private void purchaseSucceededEvent(Purchase purchase)
     {
@@ -104,15 +114,18 @@ public class OpenIABTest : MonoBehaviour
     {
         Debug.Log("purchaseFailedEvent: " + errorMessage);
         _label = "Purchase Failed: " + errorMessage;
+		gameObject.SetActive(false);
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
         Debug.Log("consumePurchaseSucceededEvent: " + purchase);
         _label = "CONSUMED: " + purchase.ToString();
+		gameObject.SetActive(false);
     }
     private void consumePurchaseFailedEvent(string error)
     {
         Debug.Log("consumePurchaseFailedEvent: " + error);
         _label = "Consume Failed: " + error;
+		gameObject.SetActive(false);
     }
 }

@@ -452,6 +452,10 @@ public class ChampSettingGUI : MonoBehaviour {
 					break;
 				}
 			}
+			else
+			{
+				GameObject.Find("HudGUI/ShopGUI").transform.Find("Panel").gameObject.SetActive(true);
+			}
 		}
 	}
 
