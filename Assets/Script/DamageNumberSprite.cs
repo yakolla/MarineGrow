@@ -54,7 +54,7 @@ public class DamageNumberSprite : MonoBehaviour {
 		case MovementType.Parabola:
 			if (false == m_parabola.Update())
 			{
-				DestroyObject(gameObject);
+				GameObjectPool.Instance.Free(gameObject);
 			}
 			break;
 		case MovementType.Up:
@@ -69,7 +69,7 @@ public class DamageNumberSprite : MonoBehaviour {
 
 			if (m_startTime+m_duration < Time.time)
 			{
-				DestroyObject(gameObject);
+				GameObjectPool.Instance.Free(gameObject);
 			}
 			break;
 		}

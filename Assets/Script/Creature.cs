@@ -550,7 +550,7 @@ public class Creature : MonoBehaviour {
 
 	public void DamageText(string damage, Color color, DamageNumberSprite.MovementType movementType)
 	{
-		GameObject gui = (GameObject)Instantiate(m_prefDamageSprite, m_aimpoint.transform.position, m_prefDamageSprite.transform.localRotation);
+		GameObject gui = (GameObject)GameObjectPool.Instance.Alloc(m_prefDamageSprite, m_aimpoint.transform.position, m_prefDamageSprite.transform.localRotation);
 		DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
 		sprite.Init(gameObject, damage, color, movementType);
 	}
