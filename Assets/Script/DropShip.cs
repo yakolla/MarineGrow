@@ -6,11 +6,6 @@ public class DropShip : MonoBehaviour {
 
 	Champ	m_champ;
 
-	void Start()
-	{
-
-	}
-
 	public void SetChamp(Champ champ)
 	{
 		m_champ = champ;
