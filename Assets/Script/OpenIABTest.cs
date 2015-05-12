@@ -23,10 +23,25 @@ using System.Collections.Generic;
  */ 
 public class OpenIABTest : MonoBehaviour
 {
-    const string SKU = "GEM 1000";
+	class PaidItem
+	{
+		public string 	m_sku;
+		public int		m_gem;
+
+		public PaidItem(string sku, int gem)
+		{
+			m_sku = sku;
+			m_gem = gem;
+		}
+	}
+
+	YGUISystem.GUIButton[]	m_piadItemButtons = new YGUISystem.GUIButton[3];
+
+	Dictionary<string, PaidItem>	m_paidItems = new Dictionary<string, PaidItem>();
 
     string _label = "";
     bool _isInitialized = false;
+	bool m_progressing = false;
     Inventory _inventory = null;
     
 
@@ -47,7 +62,26 @@ public class OpenIABTest : MonoBehaviour
 
 	void Init()
 	{
-		OpenIAB.mapSku(SKU, OpenIAB_Android.STORE_GOOGLE, "gem.1000");        
+		m_paidItems.Add("gem.1000", new PaidItem("GEM 1000", 1000));
+		m_paidItems.Add("gem.3000", new PaidItem("GEM 3500", 3500));
+		m_paidItems.Add("gem.5000", new PaidItem("GEM 6000", 6000));
+
+		m_piadItemButtons[0] = new YGUISystem.GUIButton(transform.Find("PaidItemButton0").gameObject, ()=>{
+			return _isInitialized && m_progressing == false;
+		});
+
+		m_piadItemButtons[1] = new YGUISystem.GUIButton(transform.Find("PaidItemButton1").gameObject, ()=>{
+			return _isInitialized && m_progressing == false;
+		});
+
+		m_piadItemButtons[2] = new YGUISystem.GUIButton(transform.Find("PaidItemButton2").gameObject, ()=>{
+			return _isInitialized && m_progressing == false;
+		});
+
+		foreach(KeyValuePair<string, PaidItem> pair in m_paidItems)
+		{
+			OpenIAB.mapSku(pair.Value.m_sku, OpenIAB_Android.STORE_GOOGLE, pair.Key);
+		}
 
 		var googlePublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApi71KrlP+P+IWL1HtgDigZ5VUd9KdvSasR/Q2ONnVSmtsGrE0abo11IXodJHeDQWfGn2KCHC1qrjUW0lX8dK/2syDFmjnvF4jHXjyAl7NZqQZzlu68XI/nBF9csCJ7eRtPG5VOdmY4LDe3skx3Re0mjDi1wnHmc5gtz8Tisa6krDNq3V0lqW9rLD1aAA/TWtXcfFQOdZVrdrFsBzizJIbz9vqBAYmh8PedBcufYH/ToRUaokdNKgjh9l+2L2zNbYi1MIQC1rUv52MKzCgJv3BUEF6pfd+2iBXSfMcDzElz8VqXRUtRcdexcTYBX29cpiNTfXznW4y+StTd2TLvbiowIDAQAB";
 
@@ -65,27 +99,36 @@ public class OpenIABTest : MonoBehaviour
 		OpenIAB.init(options);
 	}
 
-	public void OnClickPurchase()
+	public void OnClickClose()
+	{
+		gameObject.SetActive(false);
+	}
+
+	public void OnClickPurchase(string sku)
 	{
 		if (_isInitialized == false)
 			return;
 
-		OpenIAB.purchaseProduct(SKU, "ok marine");
+		m_progressing = true;
+		OpenIAB.purchaseProduct(sku, "ok marine");
 	}
 
 
     private void billingSupportedEvent()
     {
         _isInitialized = true;
+		OpenIAB.queryInventory();
         Debug.Log("billingSupportedEvent");
 
 
     }
-    private void billingNotSupportedEvent(string error)
+    
+	private void billingNotSupportedEvent(string error)
     {
         Debug.Log("billingNotSupportedEvent: " + error);
 		gameObject.SetActive(false);
     }
+
     private void queryInventorySucceededEvent(Inventory inventory)
     {
         Debug.Log("queryInventorySucceededEvent: " + inventory);
@@ -94,16 +137,20 @@ public class OpenIABTest : MonoBehaviour
             _label = inventory.ToString();
             _inventory = inventory;
 
-
+			foreach(Purchase purchase in _inventory.GetAllPurchases())
+			{
+				OpenIAB.consumeProduct(purchase);
+			}
         }
     }
-    private void queryInventoryFailedEvent(string error)
+    
+	private void queryInventoryFailedEvent(string error)
     {
         Debug.Log("queryInventoryFailedEvent: " + error);
         _label = error;
-		gameObject.SetActive(false);
     }
-    private void purchaseSucceededEvent(Purchase purchase)
+    
+	private void purchaseSucceededEvent(Purchase purchase)
     {
         Debug.Log("purchaseSucceededEvent: " + purchase);
         _label = "PURCHASED:" + purchase.ToString();
@@ -114,18 +161,26 @@ public class OpenIABTest : MonoBehaviour
     {
         Debug.Log("purchaseFailedEvent: " + errorMessage);
         _label = "Purchase Failed: " + errorMessage;
-		gameObject.SetActive(false);
+		
+		m_progressing = false;
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
         Debug.Log("consumePurchaseSucceededEvent: " + purchase);
         _label = "CONSUMED: " + purchase.ToString();
-		gameObject.SetActive(false);
+
+		PaidItem paidItem = null;
+		if (true == m_paidItems.TryGetValue(purchase.Sku, out paidItem))
+		{
+			Warehouse.Instance.Gem.Item.Count += paidItem.m_gem;
+		}
+
+		m_progressing = false;
     }
     private void consumePurchaseFailedEvent(string error)
     {
         Debug.Log("consumePurchaseFailedEvent: " + error);
         _label = "Consume Failed: " + error;
-		gameObject.SetActive(false);
+		m_progressing = false;
     }
 }
