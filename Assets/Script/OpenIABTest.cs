@@ -25,18 +25,16 @@ public class OpenIABTest : MonoBehaviour
 {
 	class PaidItem
 	{
-		public string 	m_sku;
 		public int		m_gem;
 
-		public PaidItem(string sku, int gem)
+		public PaidItem(int gem)
 		{
-			m_sku = sku;
 			m_gem = gem;
 		}
 	}
 
 	YGUISystem.GUIButton[]	m_piadItemButtons = new YGUISystem.GUIButton[3];
-
+	YGUISystem.GUIButton	m_closeButton;
 	Dictionary<string, PaidItem>	m_paidItems = new Dictionary<string, PaidItem>();
 
     string _label = "";
@@ -62,9 +60,11 @@ public class OpenIABTest : MonoBehaviour
 
 	void Init()
 	{
-		m_paidItems.Add("gem.1000", new PaidItem("GEM 1000", 1000));
-		m_paidItems.Add("gem.3000", new PaidItem("GEM 3500", 3500));
-		m_paidItems.Add("gem.5000", new PaidItem("GEM 6000", 6000));
+		m_paidItems.Add("gem.1000", new PaidItem(1000));
+		m_paidItems.Add("gem.3000", new PaidItem(3500));
+		m_paidItems.Add("gem.5000", new PaidItem(6000));
+
+		m_closeButton = new YGUISystem.GUIButton(transform.Find("CloseButton").gameObject, ()=>{return true;});
 
 		m_piadItemButtons[0] = new YGUISystem.GUIButton(transform.Find("PaidItemButton0").gameObject, ()=>{
 			return _isInitialized && m_progressing == false;
@@ -80,7 +80,7 @@ public class OpenIABTest : MonoBehaviour
 
 		foreach(KeyValuePair<string, PaidItem> pair in m_paidItems)
 		{
-			OpenIAB.mapSku(pair.Value.m_sku, OpenIAB_Android.STORE_GOOGLE, pair.Key);
+			OpenIAB.mapSku(pair.Key, OpenIAB_Android.STORE_GOOGLE, pair.Key);
 		}
 
 		var googlePublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApi71KrlP+P+IWL1HtgDigZ5VUd9KdvSasR/Q2ONnVSmtsGrE0abo11IXodJHeDQWfGn2KCHC1qrjUW0lX8dK/2syDFmjnvF4jHXjyAl7NZqQZzlu68XI/nBF9csCJ7eRtPG5VOdmY4LDe3skx3Re0mjDi1wnHmc5gtz8Tisa6krDNq3V0lqW9rLD1aAA/TWtXcfFQOdZVrdrFsBzizJIbz9vqBAYmh8PedBcufYH/ToRUaokdNKgjh9l+2L2zNbYi1MIQC1rUv52MKzCgJv3BUEF6pfd+2iBXSfMcDzElz8VqXRUtRcdexcTYBX29cpiNTfXznW4y+StTd2TLvbiowIDAQAB";
@@ -118,20 +118,20 @@ public class OpenIABTest : MonoBehaviour
     {
         _isInitialized = true;
 		OpenIAB.queryInventory();
-        Debug.Log("billingSupportedEvent");
+		m_closeButton.Text.Lable = "billingSupportedEvent";
 
 
     }
     
 	private void billingNotSupportedEvent(string error)
     {
-        Debug.Log("billingNotSupportedEvent: " + error);
+		m_closeButton.Text.Lable = "billingNotSupportedEvent: " + error;
 		gameObject.SetActive(false);
     }
 
     private void queryInventorySucceededEvent(Inventory inventory)
     {
-        Debug.Log("queryInventorySucceededEvent: " + inventory);
+		m_closeButton.Text.Lable = "queryInventorySucceededEvent: " + inventory;
         if (inventory != null)
         {
             _label = inventory.ToString();
@@ -146,27 +146,27 @@ public class OpenIABTest : MonoBehaviour
     
 	private void queryInventoryFailedEvent(string error)
     {
-        Debug.Log("queryInventoryFailedEvent: " + error);
+		m_closeButton.Text.Lable = "queryInventoryFailedEvent: " + error;
         _label = error;
     }
     
 	private void purchaseSucceededEvent(Purchase purchase)
     {
-        Debug.Log("purchaseSucceededEvent: " + purchase);
+		m_closeButton.Text.Lable = "purchaseSucceededEvent: " + purchase;
         _label = "PURCHASED:" + purchase.ToString();
 
 		OpenIAB.consumeProduct(purchase);
     }
     private void purchaseFailedEvent(int errorCode, string errorMessage)
     {
-        Debug.Log("purchaseFailedEvent: " + errorMessage);
+		m_closeButton.Text.Lable = "purchaseFailedEvent: " + errorMessage;
         _label = "Purchase Failed: " + errorMessage;
 		
 		m_progressing = false;
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
-        Debug.Log("consumePurchaseSucceededEvent: " + purchase);
+		m_closeButton.Text.Lable = "consumePurchaseSucceededEvent: " + purchase.Sku;
         _label = "CONSUMED: " + purchase.ToString();
 
 		PaidItem paidItem = null;
@@ -179,7 +179,7 @@ public class OpenIABTest : MonoBehaviour
     }
     private void consumePurchaseFailedEvent(string error)
     {
-        Debug.Log("consumePurchaseFailedEvent: " + error);
+		m_closeButton.Text.Lable = "consumePurchaseFailedEvent: " + error;
         _label = "Consume Failed: " + error;
 		m_progressing = false;
     }
