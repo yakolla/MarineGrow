@@ -101,43 +101,12 @@ public class Spawn : MonoBehaviour {
 
 		m_dropShip.SetChamp(champ);
 		m_dropShip.GetComponent<Animator>().SetTrigger("Move");
-
-		StartCoroutine(checkBossAlive());
+		StartCoroutine(spawnMobPer());
 	}
 
-	IEnumerator checkBossAlive()
+	bool checkBossAlive()
 	{
-		yield return new WaitForSeconds (3f);
-	
-		if (m_mobsOfCheckOnDeath > 0)
-		{
-			StartCoroutine(checkBossAlive());
-		}
-		else
-		{
-			if (Application.platform == RuntimePlatform.Android)
-			{
-				GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, (SavedGameRequestStatus status, ISavedGameMetadata game)=>{
-					if (status == SavedGameRequestStatus.Success) 
-					{
-						System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-						totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-CreationTime));					
-						
-						GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), (SavedGameRequestStatus a, ISavedGameMetadata b)=>{
-							m_creationTime = Time.time;
-						});
-					} 
-					else {
-						// handle error
-					}
-				});
-			}
-
-
-			StartCoroutine(spawnMobPer(GetCurrentWave().mobSpawns[m_wave%GetCurrentWave().mobSpawns.Length]));
-
-
-		}
+		return m_mobsOfCheckOnDeath > 0;
 	}
 
 	public float CreationTime
@@ -313,47 +282,69 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
-	IEnumerator spawnMobPer(RefMobSpawn mobSpawn)
+	IEnumerator spawnMobPer()
 	{
-
-		if (m_champ == null)
+		while(true)
 		{
-			yield return null;
-		}
-		else
-		{
-			if (mobSpawn.boss == true)
+			if (m_champ == null)
 			{
-				StartCoroutine(EffectWaveText("Boss", 3));
-				m_champ.ShakeCamera(3f);
+				yield return null;
 			}
 			else
 			{
-				if (m_wave % GetCurrentWave().mobSpawns.Length == 0)
+				
+				RefMobSpawn mobSpawn = GetCurrentWave().mobSpawns[m_wave%GetCurrentWave().mobSpawns.Length];
+
+				if (mobSpawn.boss == true)
 				{
-					StartCoroutine(EffectWaveText("Stage " + GetStage(m_wave), 3));
+					StartCoroutine(EffectWaveText("Boss", 3));
+					m_champ.ShakeCamera(3f);
 				}
-			}
+				else
+				{
+					if (m_wave % GetCurrentWave().mobSpawns.Length == 0)
+					{
+						StartCoroutine(EffectWaveText("Stage " + GetStage(m_wave), 3));
+					}
+				}
 
-			
-			Warehouse.Instance.WaveIndex = m_wave;
+				
+				Warehouse.Instance.WaveIndex = m_wave;
 
-			float waveProgress = ProgressStage();
-			Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
+				float waveProgress = ProgressStage();
+				Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
 
-			if (m_wave > 0)
-			{
+				yield return new WaitForSeconds(mobSpawn.interval);
+				yield return StartCoroutine(spawnMobPerCore(mobSpawn, waveProgress));
+
+
+				while(checkBossAlive())
+				{
+					yield return new WaitForSeconds(0.5f);
+				}
+
+				if (Application.platform == RuntimePlatform.Android)
+				{
+					GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, (SavedGameRequestStatus status, ISavedGameMetadata game)=>{
+						if (status == SavedGameRequestStatus.Success) 
+						{
+							System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
+							totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-CreationTime));					
+							
+							GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), (SavedGameRequestStatus a, ISavedGameMetadata b)=>{
+								m_creationTime = Time.time;
+							});
+						} 
+						else {
+							// handle error
+						}
+					});
+				}
+
 				yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
-				yield return new WaitForSeconds(2f);
+
+				m_wave++;
 			}
-
-			yield return StartCoroutine(spawnMobPerCore(mobSpawn, waveProgress));
-
-
-			StartCoroutine(checkBossAlive());
-
-
-			m_wave++;
 		}
 	}
 
