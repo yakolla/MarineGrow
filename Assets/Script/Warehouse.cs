@@ -23,7 +23,7 @@ public class Warehouse {
 			foreach(ItemObject itemObj in obj.m_items)
 			{
 				writer.WriteLine(JsonConvert.SerializeObject(itemObj.Item.RefItem.type));
-				Debug.Log(JsonConvert.SerializeObject(itemObj.Item));
+				//Debug.Log(JsonConvert.SerializeObject(itemObj.Item));
 				writer.WriteLine(JsonConvert.SerializeObject(itemObj.Item));
 			}
 
