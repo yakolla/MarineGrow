@@ -39,13 +39,15 @@ public class Spawn : MonoBehaviour {
 
 	DropShip		m_dropShip;
 
+	BoxCollider		m_edgeRect;
+
 	[SerializeField]
 	int				m_wave = 0;
 	// Use this for initialization
 	void Start () {
 
 		m_dropShip = transform.parent.Find("dropship").GetComponent<DropShip>();
-
+		m_edgeRect = transform.Find("EdgeRect").GetComponent<BoxCollider>();
 
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
 
@@ -525,6 +527,9 @@ public class Spawn : MonoBehaviour {
 		}
 		Vector3 enemyPos = pos;
 
+		enemyPos.x = Mathf.Clamp(enemyPos.x, m_edgeRect.transform.position.x-m_edgeRect.size.x/2, m_edgeRect.transform.position.x+m_edgeRect.size.x/2);
+		enemyPos.z = Mathf.Clamp(enemyPos.z, m_edgeRect.transform.position.z-m_edgeRect.size.z/2, m_edgeRect.transform.position.z+m_edgeRect.size.z/2);
+
 		GameObject enemyObj = Instantiate(prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 		GameObject enemyBody = GameObjectPool.Instance.Alloc(prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
 		enemyBody.name = "Body";
@@ -541,7 +546,8 @@ public class Spawn : MonoBehaviour {
 		if (m_champ != null)
 			enemy.SetTarget(m_champ.gameObject);
 
-		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + refMob.scale);
+		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + refMob.scale + " pos:" + enemyPos);
+
 	
 		if (monitoredDeath == true)
 		{
