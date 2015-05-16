@@ -141,7 +141,7 @@ public class Mob : Creature {
 			}
 		}
 
-		GameObject effect = (GameObject)GameObjectPool.Instance.Alloc(m_prefDeathEffect, transform.position, transform.rotation);
+		GameObject effect = (GameObject)GameObject.Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
 		effect.transform.localScale = transform.localScale;
 
 		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");

@@ -34,10 +34,10 @@ public class RushLauncher : Weapon {
 		if (m_rush == false)
 			return;
 
-		m_elapsed = Mathf.Min(m_elapsed+Time.deltaTime*0.05f, 1);
-		m_creature.transform.transform.position = Vector3.Lerp(m_creature.transform.transform.position, m_goal, m_elapsed);
+		m_elapsed = m_elapsed+Time.deltaTime;
+		m_creature.transform.transform.position = Vector3.Lerp(m_creature.transform.transform.position, m_goal, m_elapsed*0.05f);
 
-		if (m_elapsed == 1f)
+		if (m_elapsed >= 1f)
 		{
 			m_rush = false;
 		}

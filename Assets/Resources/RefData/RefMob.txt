@@ -147,7 +147,8 @@
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
 				"moveSpeed":1,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			},
 			"eggMob":
 			{
@@ -534,7 +535,8 @@
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.1,
 				"moveSpeed":2,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			},
 			"eggMob":
 			{
@@ -574,7 +576,8 @@
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.1,
 				"moveSpeed":0,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			},			
 			"dropEggMob":
 			{
@@ -603,7 +606,8 @@
 				"phyDefencePerLevel":1,
 				"hpPerLevel":0.1,
 				"moveSpeed":0,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			},
 			"eggMob":
 			{
@@ -729,7 +733,8 @@
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
 				"moveSpeed":3,
-				"navMeshBaseOffset":0
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
 			},
 			"mass":3,
 			"eggMob":

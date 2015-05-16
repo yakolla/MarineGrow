@@ -57,21 +57,6 @@
 					},
 					{
 						"refMobIds":{
-						
-							"melee":{
-								"ratio":[0,1],
-								"count":[12,36]
-							},
-							"miniBoss":{
-								"ratio":[0,1],
-								"count":[1,1]
-							}
-						},
-						"interval":5,
-						"repeatCount":[3,3]
-					},
-					{
-						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
 								"count":[12,36]

@@ -21,7 +21,7 @@ public class CreatureDeathEffect : MonoBehaviour {
 	{
 		if (m_ps.IsAlive() == false)
 		{
-			GameObjectPool.Instance.Free(this.gameObject);
+			GameObject.DestroyObject(gameObject);
 		}
 	}
 }

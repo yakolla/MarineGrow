@@ -295,6 +295,13 @@ public class Spawn : MonoBehaviour {
 				
 				RefMobSpawn mobSpawn = GetCurrentWave().mobSpawns[m_wave%GetCurrentWave().mobSpawns.Length];
 
+				yield return new WaitForSeconds(mobSpawn.interval);
+
+				Warehouse.Instance.WaveIndex = m_wave;
+				
+				float waveProgress = ProgressStage();
+				Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
+
 				if (mobSpawn.boss == true)
 				{
 					StartCoroutine(EffectWaveText("Boss", 3));
@@ -308,13 +315,6 @@ public class Spawn : MonoBehaviour {
 					}
 				}
 
-				
-				Warehouse.Instance.WaveIndex = m_wave;
-
-				float waveProgress = ProgressStage();
-				Debug.Log("waveProgress:" + waveProgress + "," + m_wave);
-
-				yield return new WaitForSeconds(mobSpawn.interval);
 				yield return StartCoroutine(spawnMobPerCore(mobSpawn, waveProgress));
 
 
