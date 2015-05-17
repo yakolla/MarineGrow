@@ -226,6 +226,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		case ButtonRole.Levelup:
 			{
 				priceGemButton.SetPrices(item.Item.RefItem.levelup.conds, item.Item.RefItem.levelup.else_conds);
+
 			priceGemButton.AddListener(() => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Levelup");
 			}
@@ -263,6 +264,11 @@ public class ChampSettingGUI : MonoBehaviour {
 		{ 
 			Application.LoadLevel("Worldmap");
 		}
+	}
+
+	void PopupShop()
+	{
+		GameObject.Find("HudGUI/ShopGUI").transform.Find("Panel").gameObject.SetActive(true);
 	}
 
 	public void OnClickStart()
@@ -401,8 +407,16 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (button.TryToPay())
 			{
 				++selectedItem.Item.Level;
+
+				priceGemButton.m_priceButton.NormalWorth = getItemLevelupWorth(selectedItem);
+				priceGemButton.m_gemButton.NormalWorth = getItemLevelupWorth(selectedItem);
+
 				invSlot.ItemDesc = selectedItem.Item.Description();
 				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", selectedItem.Item.RefItem.codeName + "_Lv:" + selectedItem.Item.Level, 0);
+			}
+			else
+			{
+				PopupShop();
 			}
 		}
 	}
@@ -454,18 +468,14 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 			else
 			{
-				GameObject.Find("HudGUI/ShopGUI").transform.Find("Panel").gameObject.SetActive(true);
+				PopupShop();
 			}
 		}
 	}
 
-	float getItemLevelupWorth(ItemObject itemObj, RefPriceCondition refPriceCondition)
+	float getItemLevelupWorth(ItemObject itemObj)
 	{
-		float pricePerLevel = 1f;
-		if (refPriceCondition != null)
-			pricePerLevel = refPriceCondition.pricePerLevel;
-
-		return 1f + (itemObj.Item.Level-1) * pricePerLevel;
+		return 1f + (itemObj.Item.Level-1);
 	}
 
 	float getItemEvolutionWorth(ItemObject itemObj)
