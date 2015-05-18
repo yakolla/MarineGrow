@@ -3,7 +3,7 @@
 	[	
 		{
 			"id":10001,
-			"prefBody":"roach_skin",
+			"prefBody":"small bug_skin",
 			"refWeaponItems":
 			[				
 				{
