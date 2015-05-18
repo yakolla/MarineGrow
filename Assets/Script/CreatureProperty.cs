@@ -40,6 +40,8 @@ public class CreatureProperty {
 	[SerializeField]
 	float	m_alphaAttackCoolTime = 0f;
 
+	[SerializeField]
+	float 	m_bulletLength = 1f;
 
 	[SerializeField]
 	int		m_level = 1;
@@ -227,6 +229,12 @@ public class CreatureProperty {
 		set { m_alphaAttackCoolTime = value; }
 	}
 
+	public float BulletLength
+	{
+		get {return m_bulletLength;}
+		set { m_bulletLength = value; }
+	}
+
 	public bool		BackwardOnDamage
 	{
 		get {return m_baseProperty.backwardOnDamage;}
@@ -250,5 +258,6 @@ public class CreatureProperty {
 		other.m_alphaAttackCoolTime = m_alphaAttackCoolTime;
 		other.m_level = m_level;
 		other.m_exp = m_exp;
+		other.m_bulletLength = m_bulletLength;
 	}
 }

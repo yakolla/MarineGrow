@@ -14,22 +14,30 @@ public class FireGunBullet : Bullet {
 
 	Vector3			m_oriColliderCenter;
 	Vector3			m_oriColliderSize;
+	Vector3			m_oriScale;
 
 	void Awake()
 	{
 		m_collider = GetComponent<BoxCollider>();
 		m_particleSystem = transform.Find("Body/Particle System").particleSystem;
-		m_particleSystem.startSpeed *= m_collider.size.x;
-		m_particleSystem.startSize *= m_collider.size.x;
+
 		m_damageType = DamageDesc.Type.Fire;
 
 		m_oriColliderCenter = m_collider.center;
 		m_oriColliderSize = m_collider.size;
+		m_oriScale = transform.localScale;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		Vector3 scale = m_oriScale;
+		scale.x *= m_ownerCreature.m_creatureProperty.BulletLength;
+		transform.localScale = scale;
+
+		m_particleSystem.startSpeed = scale.x*2;
+		m_particleSystem.startSize = scale.x;
+
 		if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
 		{
 			m_collider.enabled = true;
@@ -45,6 +53,20 @@ public class FireGunBullet : Bullet {
 		m_collider.center = new Vector3(m_oriColliderCenter.x*t, m_collider.center.y, m_collider.center.z);
 		m_collider.size = new Vector3(m_oriColliderSize.x*t, m_collider.size.y, m_collider.size.z);
 
+	}
+
+	public float BulletLength
+	{
+		set {
+			Vector3 scale = transform.localScale;
+			scale.x = value;
+
+			transform.localScale = scale;
+		}
+
+		get {
+			return transform.localScale.x;
+		}
 	}
 
 	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)

@@ -28,7 +28,9 @@ public class Champ : Creature {
 	[SerializeField]
 	int			m_remainStatPoint = 0;
 
+	[SerializeField]
 	int			m_comboKills;
+
 
 	int			m_comboSkillStacks = 0;
 

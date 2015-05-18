@@ -467,12 +467,14 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectCombo100(float time)
 	{
+		m_creatureProperty.BulletLength += 1f;
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
+		m_creatureProperty.BulletLength -= 1f;
 	}
 
 	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
