@@ -461,40 +461,14 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator EffectSpawnMob1(Vector3 pos, Creature creature)
 	{	
-
-		pos.y = 10;
+		pos.y = Random.Range(10,15);
 		creature.transform.position = pos;
-		creature.gameObject.rigidbody.useGravity = true;
+
+		Parabola parabola = new Parabola(creature.gameObject, 15f, 0f, 90*Mathf.Deg2Rad, 3);
 		creature.gameObject.SetActive(true);
-		creature.EnableNavmesh(false);
-
-
-		BoxCollider box = creature.gameObject.GetComponent<BoxCollider>();
-		box.isTrigger = false;
-
-		Vector3 oriSize = box.size;
-		Vector3 oriCenter = box.center;
-
-		box.size = Vector3.one;
-		box.center = Vector3.one*0.5f;
-
-		creature.gameObject.rigidbody.maxAngularVelocity = 0f;
-		creature.gameObject.rigidbody.AddForce(new Vector3(0, 0f, 0), ForceMode.Impulse);
-
-		while(creature && creature.gameObject.rigidbody.IsSleeping() == false)
+		while(parabola.Update())
 		{
 			yield return null;
-		}
-
-		if (creature != null)
-		{
-			creature.EnableNavmesh(true);
-			creature.EnableNavmeshUpdatePos(false);
-			box.isTrigger = true;
-			box.size = oriSize;
-			box.center = oriCenter;
-			creature.gameObject.rigidbody.useGravity = false;
-			creature.gameObject.rigidbody.velocity = Vector3.zero;
 		}
 	}
 
