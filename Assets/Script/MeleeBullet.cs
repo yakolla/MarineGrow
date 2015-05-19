@@ -6,45 +6,33 @@ public class MeleeBullet : Bullet {
 	public float	m_damageOnTime = 0.3f;
 	
 	float			m_lastDamageTime = 0f;
-	BoxCollider		m_collider;
+
 	// Use this for initialization
 	void Start () 
 	{
-		m_collider = GetComponent<BoxCollider>();
 		m_damageType = DamageDesc.Type.Normal;
 		m_lastDamageTime = Time.time;
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+	public void SetCollider(bool enable)
 	{
-		if (m_lastDamageTime+m_damageOnTime<Time.time)
+		if (enable == false)
+			return;
+
+		RaycastHit hit;
+		Vector3 fwd = transform.TransformDirection(Vector3.right);
+		if (Physics.Raycast(transform.position, fwd, out hit, 10f))
 		{
-			m_collider.enabled = true;
-			m_lastDamageTime = Time.time;
-			/*
-			RaycastHit hit;
-			Vector3 fwd = transform.TransformDirection(Vector3.right);
-			if (Physics.Raycast(transform.position, fwd, out hit, 10f))
-			{
-				Creature creature = hit.transform.gameObject.GetComponent<Creature>();
-				if (creature && Creature.IsEnemy(creature, m_ownerCreature))
-				{				
-					float dist = Vector3.Distance(m_ownerCreature.transform.position, creature.transform.position);
-
-					if (dist < 2f)
-					{
-						creature.TakeDamage(m_ownerCreature, new DamageDesc(m_ownerCreature.m_creatureProperty.PhysicalAttackDamage, DamageDesc.Type.Fire, m_damageBuffType, PrefDamageEffect));	
-						
-						DestroyObject(gameObject);
-					}
-
+			Creature creature = hit.transform.gameObject.GetComponent<Creature>();
+			if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+			{				
+				float dist = Vector3.Distance(m_ownerCreature.transform.position, creature.transform.position);
+				if (dist < 2f)
+				{
+					GiveDamage(creature);
 				}
-			}*/
-		}
-		else
-		{
-			m_collider.enabled = false;
+				
+			}
 		}
 	}
 	
@@ -54,14 +42,7 @@ public class MeleeBullet : Bullet {
 		
 		transform.parent = m_gunPoint.transform;
 		transform.localPosition = Vector3.zero;
+
 	}
 
-	void OnTriggerEnter(Collider other) 
-	{
-		Creature creature = other.gameObject.GetComponent<Creature>();
-		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
-		{
-			GiveDamage(creature);
-		}
-	}
 }

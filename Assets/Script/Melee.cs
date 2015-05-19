@@ -26,18 +26,27 @@ public class Melee : Weapon {
 	
 	override public void StartFiring(Vector2 targetAngle)
 	{		
-		if (m_firing == false && isCoolTime() == true )
+		if (isCoolTime() == true )
 		{
 			if (null == m_bullet)
 			{
 				m_bullet = CreateBullet(targetAngle, m_gunPoint.transform.position) as MeleeBullet;
 			}
+			else
+			{
+				playGunPointEffect();
+				this.audio.Play();
+				m_callbackCreateBullet();
+			}
 			m_bullet.Damage = Damage;
-			m_bullet.gameObject.SetActive(true);
-			
-			this.audio.Play();
-			
+			m_bullet.SetCollider(true);
+			m_lastCreated = Time.time;
 		}
+		else
+		{			
+			m_bullet.SetCollider(false);
+		}
+
 		if (null != m_bullet)
 		{
 			Vector3 euler = m_bullet.transform.rotation.eulerAngles;
@@ -45,7 +54,7 @@ public class Melee : Weapon {
 			m_bullet.transform.eulerAngles = euler;			
 		}
 		
-		playGunPointEffect();
+
 		m_firing = true;
 	}
 	

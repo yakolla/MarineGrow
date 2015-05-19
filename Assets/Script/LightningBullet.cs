@@ -17,7 +17,7 @@ public class LightningBullet : Bullet
 	float scale = 1f;
 
 	[SerializeField]
-	float length = 10f;
+	float m_length = 10f;
 
 	[SerializeField]
 	float	m_damageOnTime = 1f;
@@ -65,6 +65,11 @@ public class LightningBullet : Bullet
 		}
 		particleEmitter.particles = particles;
 	}
+
+	float BulletLength()
+	{
+		return m_length*m_ownerCreature.m_creatureProperty.BulletLength;
+	}
 	
 	void Update ()
 	{
@@ -78,7 +83,7 @@ public class LightningBullet : Bullet
 			targets = new Creature[m_maxChaining];
 			RaycastHit hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
-			if (Physics.Raycast(transform.position, fwd, out hit, length))
+			if (Physics.Raycast(transform.position, fwd, out hit, BulletLength()))
 			{
 				Creature creature = hit.transform.gameObject.GetComponent<Creature>();
 				if (creature && Creature.IsEnemy(creature, m_ownerCreature))
@@ -112,7 +117,7 @@ public class LightningBullet : Bullet
 		{
 			RaycastHit[] hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
-			hit = Physics.RaycastAll(transform.position, fwd, length);
+			hit = Physics.RaycastAll(transform.position, fwd, BulletLength());
 			if (hit.Length > 0)
 			{
 				targets = new Creature[hit.Length];
@@ -145,8 +150,8 @@ public class LightningBullet : Bullet
 		if (mobHitted == false)
 		{
 			Vector3 targetPos = new Vector3();
-			targetPos.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*length;
-			targetPos.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-length;
+			targetPos.x = Mathf.Cos(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*BulletLength();
+			targetPos.z = Mathf.Sin(transform.rotation.eulerAngles.y*Mathf.Deg2Rad)*-BulletLength();
 			targetPos.x += transform.position.x;
 			targetPos.z += transform.position.z;
 

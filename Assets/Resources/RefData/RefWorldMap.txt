@@ -6,7 +6,7 @@
 		[
 			{
 				"mobSpawns":
-				[						
+				[										
 					{
 						"refMobIds":{
 							"melee":{
