@@ -7,6 +7,7 @@ public class FireGunBullet : Bullet {
 	float	m_damageOnTime = 0.3f;
 
 	float			m_lastDamageTime = 0f;
+	int				m_lastFrame = 0;
 	BoxCollider		m_collider;
 
 	ParticleSystem	m_particleSystem;
@@ -37,17 +38,6 @@ public class FireGunBullet : Bullet {
 
 		m_particleSystem.startSpeed = scale.x*2;
 		m_particleSystem.startSize = scale.x;
-
-		if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
-		{
-			m_collider.enabled = true;
-
-			m_lastDamageTime = Time.time;
-		}
-		else
-		{
-			m_collider.enabled = false;
-		}
 
 		float t = Mathf.Min(1f, (Time.time - m_firingStartTime)*1.2f);
 		m_collider.center = new Vector3(m_oriColliderCenter.x*t, m_collider.center.y, m_collider.center.z);
@@ -93,13 +83,21 @@ public class FireGunBullet : Bullet {
 		m_particleSystem.Clear();
 	}
 
-	void OnTriggerEnter(Collider other) 
+	void OnTriggerStay(Collider other) 
 	{
-
-		Creature creature = other.gameObject.GetComponent<Creature>();
-		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+		if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
 		{
-			GiveDamage(creature);
+			m_lastFrame = Time.frameCount;
+			m_lastDamageTime = Time.time;
+		}
+
+		if (m_lastFrame == Time.frameCount)
+		{
+			Creature creature = other.gameObject.GetComponent<Creature>();
+			if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+			{
+				GiveDamage(creature);
+			}
 		}
 	}
 

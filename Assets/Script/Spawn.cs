@@ -461,15 +461,21 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator EffectSpawnMob1(Vector3 pos, Creature creature)
 	{	
+		Creature.Type oriType = creature.CreatureType;
+		creature.CreatureType = Creature.Type.Npc;
+
 		pos.y = Random.Range(10,15);
 		creature.transform.position = pos;
 
 		Parabola parabola = new Parabola(creature.gameObject, 15f, 0f, 90*Mathf.Deg2Rad, 3);
 		creature.gameObject.SetActive(true);
+
 		while(parabola.Update())
 		{
 			yield return null;
 		}
+
+		creature.CreatureType = oriType;
 	}
 
 	IEnumerator EffectSpawnItemBox(ItemBox itemBox, float time)
