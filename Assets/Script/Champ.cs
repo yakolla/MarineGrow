@@ -6,7 +6,6 @@ using GooglePlayGames.BasicApi.SavedGame;
 
 public class Champ : Creature {
 
-	float	m_startChargeTime;
 
 	Joystick	m_leftJoystick;
 	Joystick	m_rightJoystick;
@@ -40,8 +39,6 @@ public class Champ : Creature {
 
 	Vector3		m_moveDir;
 
-	[SerializeField]
-	GUISkin		m_guiSkin = null;
 
 	new void Start () {
 
@@ -65,7 +62,6 @@ public class Champ : Creature {
 		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
 		m_comboKills = 0;
 		m_comboSkillStacks = 0;
-		m_startChargeTime = 0f;
 
 	}
 
@@ -243,7 +239,19 @@ public class Champ : Creature {
 		if (Application.platform == RuntimePlatform.Android)
 		{
 
-			GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, OnSavedGameOpenedForSaving);
+			Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
+				if (status == SavedGameRequestStatus.Success) {
+					// handle reading or writing of saved game.
+				} else {
+					// handle error
+				}
+				
+				GPlusPlatform.Instance.ReportScore(Const.LEAD_COMBO_MAX_KILLS, Warehouse.Instance.Stats.m_comboKills, (bool success) => {
+					// handle success or failure
+				});
+				
+				LoadTitleScene(0);
+			});
 		}
 		else
 		{
@@ -279,34 +287,6 @@ public class Champ : Creature {
 			break;		
 		}
 		return true;
-	}
-
-
-
-
-	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
-		if (status == SavedGameRequestStatus.Success) {
-			System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-
-			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), OnSavedGameWritten);
-
-			GPlusPlatform.Instance.ReportScore(Const.LEAD_COMBO_MAX_KILLS, Warehouse.Instance.Stats.m_comboKills, (bool success) => {
-				// handle success or failure
-			});
-		} else {
-			// handle error
-		}
-
-	}
-
-	void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
-		if (status == SavedGameRequestStatus.Success) {
-			// handle reading or writing of saved game.
-		} else {
-			// handle error
-		}
-
-		LoadTitleScene(0);
 	}
 
 	void OnTriggerEnter(Collider other) {

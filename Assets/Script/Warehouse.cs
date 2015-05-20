@@ -128,6 +128,13 @@ public class Warehouse {
 	Statistics			m_stats = new Statistics();
 	ChampAbility			m_champStat = new ChampAbility();
 
+	float	m_playTime = 0;
+	public float PlayTime
+	{
+		get { return m_playTime-Time.time; }
+		set { m_playTime = value; }
+	}
+
 	static Warehouse m_ins = null;
 	static public Warehouse Instance
 	{

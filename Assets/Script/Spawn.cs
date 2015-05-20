@@ -2,9 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Enum = System.Enum;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-using GooglePlayGames.BasicApi.SavedGame;
 
 public class Spawn : MonoBehaviour {
 
@@ -21,8 +18,6 @@ public class Spawn : MonoBehaviour {
 	
 	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
 	GameObject		m_prefItemBox;
-
-	float		m_creationTime = 0;
 
 	float			m_effectBulletTime = 0f;
 
@@ -99,7 +94,7 @@ public class Spawn : MonoBehaviour {
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
 
 		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
-		m_creationTime = Time.time;
+		Warehouse.Instance.PlayTime = Time.time;
 
 		m_dropShip.SetChamp(champ);
 		m_dropShip.GetComponent<Animator>().SetTrigger("Move");
@@ -109,11 +104,6 @@ public class Spawn : MonoBehaviour {
 	bool checkBossAlive()
 	{
 		return m_mobsOfCheckOnDeath > 0;
-	}
-
-	public float CreationTime
-	{
-		get {return m_creationTime;}
 	}
 
 	Transform	getSpawnArea(bool champAreaExcept)
@@ -325,23 +315,7 @@ public class Spawn : MonoBehaviour {
 					yield return new WaitForSeconds(0.5f);
 				}
 
-				if (Application.platform == RuntimePlatform.Android)
-				{
-					GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, (SavedGameRequestStatus status, ISavedGameMetadata game)=>{
-						if (status == SavedGameRequestStatus.Success) 
-						{
-							System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-							totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Time.time-CreationTime));					
-							
-							GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), (SavedGameRequestStatus a, ISavedGameMetadata b)=>{
-								m_creationTime = Time.time;
-							});
-						} 
-						else {
-							// handle error
-						}
-					});
-				}
+				Const.SaveGame((SavedGameRequestStatus, ISavedGameMetadata)=>{});
 
 				yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
 

@@ -1,4 +1,7 @@
 using UnityEngine;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
 
 public class Const {
 
@@ -223,4 +226,24 @@ public class Const {
 			GameObject.DestroyObject(children[i].gameObject);
 		}
 	}
+	public static void SaveGame(System.Action<SavedGameRequestStatus, ISavedGameMetadata> callback)
+	{
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			GPlusPlatform.Instance.OpenGame(Warehouse.Instance.FileName, (SavedGameRequestStatus status, ISavedGameMetadata game)=>{
+				if (status == SavedGameRequestStatus.Success) 
+				{
+					System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
+					totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Warehouse.Instance.PlayTime));					
+					
+					GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), callback);
+				} 
+				else {
+					callback(status, game);
+				}
+			});
+		}
+
+	}
+
 }
