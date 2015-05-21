@@ -82,11 +82,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_abilities.Add(new Ability(0.3f, "Inc Critical Chance %", 
 		()=>{
-			m_backup.AlphaCriticalRatio += 0.3f;
+			m_backup.AlphaCriticalRatio += 0.15f;
 			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=green>" + (m_backup.CriticalRatio*100) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.3f;
+			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.15f;
 			--m_champ.RemainStatPoint;
 		}));
 

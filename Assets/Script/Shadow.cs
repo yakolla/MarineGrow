@@ -18,6 +18,15 @@ public class Shadow : MonoBehaviour {
 		}
 	}
 
+	void OnEnable()
+	{
+		m_parent = transform;
+		while(m_parent.transform.parent != null)
+		{
+			m_parent = m_parent.transform.parent;
+		}
+	}
+
 	// Update is called once per frame
 	void LateUpdate () {
 		if (m_parent == null)

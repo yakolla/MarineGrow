@@ -186,6 +186,11 @@ public class YGUISystem {
 		GUIText	m_text;
 		System.Func<float>	m_fillAmountGetter;
 		System.Func<string>	m_lableGetter;
+
+		public RectTransform RectTransform
+		{
+			get {return m_guage.rectTransform;}
+		}
 		
 		public GUIGuage(GameObject obj, System.Func<float>	fillAmountGetter, System.Func<string> lableGetter)
 		{

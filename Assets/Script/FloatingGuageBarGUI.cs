@@ -15,6 +15,10 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 		                                   ()=>{return guageRemainRatio();}, 
 		()=>{return ""; }
 		);
+
+		Vector3 pos = m_creature.AimpointLocalPos;
+		pos.y += 1;
+		m_guage.RectTransform.transform.localPosition = pos;
 	}
 
 	// Update is called once per frame

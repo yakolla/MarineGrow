@@ -121,6 +121,11 @@ public class Creature : MonoBehaviour {
 		get {return m_spawn;}
 	}
 
+	public Vector3	AimpointLocalPos
+	{
+		get {return m_aimpoint.transform.localPosition;}
+	}
+
 	public bool CheckOnDeath
 	{
 		set {m_checkOnDeath = value;}
