@@ -5,28 +5,61 @@ public class MobBossDeathEffect : MonoBehaviour {
 
 	Animator m_ani;
 	float	m_time = 0;
+	enum Type
+	{
+		DownToGround,
+		StopAtGround,
+		Rotting,
+	}
+
+	Type	m_type;
 
 	void Start () {
 		m_ani = GetComponent<Animator>();
-		m_time = Time.time + 5f;
+
+		m_type = Type.DownToGround;
 	}
 
 	void Update()
 	{
-		if (transform.position.y > 0f)
+		switch(m_type)
+		{
+		case Type.DownToGround:
 		{
 			Vector3	pos = transform.position;
-			pos.y -= Time.deltaTime*6f;
-			pos.y = Mathf.Max(pos.y, 0);
+			pos.y -= Time.deltaTime;
+			pos.y = Mathf.Max(pos.y, 0f);
 			transform.position = pos;
 
-			return;
+			if (pos.y == 0f)
+			{
+				m_type = Type.StopAtGround;
+				m_time = Time.time + 2f;
+			}
+
+		}break;
+		case Type.StopAtGround:
+		{
+			if (m_time < Time.time)
+			{
+				m_type = Type.Rotting;
+				m_time = Time.time + 8f;
+			}
+		}break;
+		case Type.Rotting:
+		{
+			Vector3	pos = transform.position;
+			pos.y -= Time.deltaTime*0.05f;
+			transform.position = pos;
+
+			if (m_time < Time.time)
+			{
+				GameObject.DestroyObject(gameObject);
+			}
+		}break;
+
 		}
 
-		if (m_time < Time.time || m_ani.GetCurrentAnimatorStateInfo(0).IsName("Death Done") == true)
-		{
-			GameObject.DestroyObject(gameObject);
-		}
 	}
 
 }
