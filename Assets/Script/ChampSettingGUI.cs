@@ -62,7 +62,10 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				ItemWeaponData gunWeaponData = new ItemWeaponData(108, null);
+				WeaponStat gunStat = new WeaponStat();
+				gunStat.firingCount = 2; 
+				ItemWeaponData gunWeaponData = new ItemWeaponData(108, gunStat);
+
 				gunWeaponData.Lock = false;				
 				Warehouse.Instance.PushItem(gunWeaponData);
 
@@ -83,7 +86,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(15, 500));
 				Warehouse.Instance.PushItem(new ItemWeaponDNAData(500));
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
-				Warehouse.Instance.PushItem(new ItemSilverMedalData(200));
+				Warehouse.Instance.PushItem(new ItemXPPotionData(200));
 
 				ItemAccessoryData bootsData = new ItemAccessoryData(10);
 				bootsData.OptionDescs.Add(new ItemMagicOption(ItemData.Option.Weapon, 125));

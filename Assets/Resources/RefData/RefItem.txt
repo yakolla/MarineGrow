@@ -31,9 +31,9 @@
 	},
 	{
 		"id":6,
-		"codeName":"SilverMedal",
-		"type":"SilverMedal",
-		"icon":"Sprites/SilverMedal"
+		"codeName":"XPPotion",
+		"type":"XPPotion",
+		"icon":"Sprites/XPPotion"
 	},
 	{
 		"id":7,

@@ -317,7 +317,10 @@ public class Spawn : MonoBehaviour {
 
 				Const.SaveGame((SavedGameRequestStatus, ISavedGameMetadata)=>{});
 
-				yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
+				if (mobSpawn.boss == false)
+				{
+					yield return StartCoroutine(spawnMobPerCore(GetCurrentWave().randomMobSpawns[m_wave%GetCurrentWave().randomMobSpawns.Length], waveProgress));
+				}
 
 				m_wave++;
 			}
@@ -603,8 +606,9 @@ public class Spawn : MonoBehaviour {
 					case ItemData.Type.GoldMedal:
 						item = new ItemGoldMedalData(Random.Range(desc.minValue, desc.maxValue));					
 						break;
-					case ItemData.Type.SilverMedal:
-						item = new ItemSilverMedalData(Random.Range(desc.minValue, desc.maxValue));					
+					case ItemData.Type.XPPotion:
+						item = new ItemXPPotionData(Random.Range(desc.minValue, desc.maxValue));		
+						item.Count += (int)(item.Count*goldAlpha);
 						break;
 					case ItemData.Type.MobEgg:
 						break;					

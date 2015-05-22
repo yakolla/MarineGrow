@@ -43,7 +43,7 @@ public class ItemData {
 		WeaponDNA,
 		Follower,
 		GoldMedal,
-		SilverMedal,
+		XPPotion,
 		MobEgg,
 		Gem,
 		Accessory,

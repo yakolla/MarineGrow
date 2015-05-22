@@ -552,6 +552,11 @@ public class Creature : MonoBehaviour {
 				DamageText(strDamage, Color.green, DamageNumberSprite.MovementType.Up);
 			}
 			break;
+		case ItemData.Type.XPPotion:
+		{
+			DamageText(strDamage, Color.blue, DamageNumberSprite.MovementType.Up);
+		}
+			break;
 		}
 	}
 

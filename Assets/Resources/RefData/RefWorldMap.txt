@@ -159,6 +159,13 @@
 									"maxValue":1,
 									"ratio":0.3,
 									"count":10
+								},
+								{
+									"refItemId":6,
+									"minValue":100,
+									"maxValue":300,
+									"ratio":0.3,
+									"count":4
 								}
 							]
 						},
@@ -186,6 +193,13 @@
 									"maxValue":1,
 									"ratio":0.3,
 									"count":10
+								},
+								{
+									"refItemId":6,
+									"minValue":100,
+									"maxValue":300,
+									"ratio":0.3,
+									"count":4
 								}
 							]
 						},
@@ -213,6 +227,13 @@
 									"maxValue":1,
 									"ratio":0.3,
 									"count":10
+								},
+								{
+									"refItemId":6,
+									"minValue":100,
+									"maxValue":300,
+									"ratio":0.3,
+									"count":4
 								}
 							]
 						},
@@ -240,6 +261,13 @@
 									"maxValue":1,
 									"ratio":0.3,
 									"count":10
+								},
+								{
+									"refItemId":6,
+									"minValue":100,
+									"maxValue":300,
+									"ratio":0.3,
+									"count":4
 								}
 							]
 						},
@@ -267,6 +295,13 @@
 									"maxValue":1,
 									"ratio":0.3,
 									"count":10
+								},
+								{
+									"refItemId":6,
+									"minValue":100,
+									"maxValue":300,
+									"ratio":0.3,
+									"count":4
 								}
 							]
 						},
@@ -294,6 +329,13 @@
 									"maxValue":1,
 									"ratio":0.3,
 									"count":10
+								},
+								{
+									"refItemId":6,
+									"minValue":100,
+									"maxValue":300,
+									"ratio":0.3,
+									"count":4
 								}
 							]
 						},
@@ -324,6 +366,13 @@
 							"minValue":10,
 							"maxValue":30,
 							"ratio":0.01,
+							"count":1
+						},
+						{
+							"refItemId":6,
+							"minValue":10,
+							"maxValue":30,
+							"ratio":0.03,
 							"count":1
 						}
 					],
