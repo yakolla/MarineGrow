@@ -500,7 +500,7 @@
 		},
 		"weaponStat":
 		{
-			"coolTime":0.2,
+			"coolTime":1,
 			"range":7
 		},
 		"levelup":

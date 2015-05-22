@@ -10,8 +10,6 @@ public class Champ : Creature {
 	Joystick	m_leftJoystick;
 	Joystick	m_rightJoystick;
 
-
-
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
 

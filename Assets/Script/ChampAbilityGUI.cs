@@ -43,7 +43,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Strength", 
 		()=>{
 			m_backup.AlphaPhysicalAttackDamage+=3;
-			return m_champ.m_creatureProperty.PhysicalAttackDamage + " -> " + "<color=green>" + (m_backup.PhysicalAttackDamage) + "</color>";
+			return m_champ.m_creatureProperty.PhysicalAttackDamage + " -> " + "<color=yellow>" + (m_backup.PhysicalAttackDamage) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=3;
@@ -53,7 +53,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Defence", 
 		()=>{
 			m_backup.AlphaPhysicalDefencePoint+=3;
-			return m_champ.m_creatureProperty.PhysicalDefencePoint + " -> " + "<color=green>" + (m_backup.PhysicalDefencePoint) + "</color>";
+			return m_champ.m_creatureProperty.PhysicalDefencePoint + " -> " + "<color=yellow>" + (m_backup.PhysicalDefencePoint) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaPhysicalDefencePoint+=3;
@@ -63,7 +63,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
 			m_backup.AlphaMaxHP+=10;
-			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=green>" + (m_backup.MaxHP) + "</color>";
+			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaMaxHP+=10;
@@ -83,7 +83,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Critical Chance %", 
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.15f;
-			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=green>" + (m_backup.CriticalRatio*100) + "</color>";
+			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.15f;
@@ -93,7 +93,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Critical Damage %", 
 		                            ()=>{
 			m_backup.AlphaCriticalDamage += 0.3f;
-			return (m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=green>" + (m_backup.CriticalDamage*100) + "</color>";
+			return (m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=yellow>" + (m_backup.CriticalDamage*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.3f;
@@ -103,7 +103,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.1f, "Life Per Kill", 
 		()=>{
 			m_backup.AlphaLifeSteal += 1f;
-			return (m_champ.m_creatureProperty.LifeSteal) + " -> " + "<color=green>" + (m_backup.LifeSteal) + "</color>";
+			return (m_champ.m_creatureProperty.LifeSteal) + " -> " + "<color=yellow>" + (m_backup.LifeSteal) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaLifeSteal += 1f;
@@ -113,7 +113,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra XP %", 
 		                            ()=>{
 			m_backup.AlphaGainExtraExp += 0.3f;
-			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=green>" + (m_backup.GainExtraExp*100) + "</color>";
+			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
