@@ -20,15 +20,15 @@ public class ChampAbilityGUI : MonoBehaviour {
 	delegate string OnCompareAbility();
 	class Ability
 	{
-		public float		m_ratio;
+		public float		m_chance;
 		public string		m_name;
 		public OnCompareAbility m_compare;
 		public OnAbility	m_functor;
 
 
-		public Ability(float ratio, string name, OnCompareAbility compare, OnAbility functor)
+		public Ability(float chance, string name, OnCompareAbility compare, OnAbility functor)
 		{
-			m_ratio = ratio;
+			m_chance = chance;
 			m_name = name;
 			m_functor = functor;
 			m_compare = compare;
@@ -119,6 +119,49 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
 			--m_champ.RemainStatPoint;
 		}));
+
+		foreach (DamageDesc.BuffType buffType in System.Enum.GetValues(typeof(DamageDesc.BuffType)))
+		{
+			bool skipBuff = false;
+			switch (buffType)
+			{
+			case DamageDesc.BuffType.Nothing:
+			case DamageDesc.BuffType.Count:
+			case DamageDesc.BuffType.Combo100:
+			case DamageDesc.BuffType.Dash:
+			case DamageDesc.BuffType.LevelUp:			
+				skipBuff = true;
+				break;
+			}
+
+			if (skipBuff == true)
+				continue;
+
+			string name = "Weapon " + buffType.ToString() + " Effect %";
+			DamageDesc.BuffType capturedBuffType = buffType;
+
+			m_abilities.Add(new Ability(0.02f, name, 
+			                            ()=>{
+				float oriChance = m_champ.m_creatureProperty.WeaponBuffDescs.chance;
+				if (capturedBuffType != m_backup.WeaponBuffDescs.m_buff)
+				{
+					m_backup.WeaponBuffDescs.chance = 0f;
+					oriChance = 0f;
+				}
+				m_backup.WeaponBuffDescs.chance += 0.25f;
+				return (oriChance*100) + " -> " + "<color=yellow>" + (m_backup.WeaponBuffDescs.chance*100) + "</color>";
+			},
+			()=>{
+				if (capturedBuffType != m_champ.m_creatureProperty.WeaponBuffDescs.m_buff)
+				{
+					m_champ.m_creatureProperty.WeaponBuffDescs.chance = 0f;
+				}
+				m_champ.m_creatureProperty.WeaponBuffDescs.m_buff = capturedBuffType;
+				m_champ.m_creatureProperty.WeaponBuffDescs.chance += 0.25f;
+				--m_champ.RemainStatPoint;
+			}));
+		}
+
 	}
 
 	void Start () {
@@ -173,12 +216,13 @@ public class ChampAbilityGUI : MonoBehaviour {
 		{
 			int rid = Random.Range(0, indexs.Count);
 			float ratio = Random.Range(0f, 1f);
-			if (ratio > m_abilities[indexs[rid]].m_ratio)
-				continue;
+			if (ratio < m_abilities[indexs[rid]].m_chance)
+			{
+				m_abilitySlots[slots[selectCount]] = indexs[rid];
+				indexs.RemoveAt(rid);
+				++selectCount;
+			}
 
-			m_abilitySlots[slots[selectCount]] = indexs[rid];
-			indexs.RemoveAt(rid);
-			++selectCount;
 		}
 
 	}
