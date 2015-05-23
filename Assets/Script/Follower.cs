@@ -60,9 +60,6 @@ public class Follower : Creature {
 			case MobAIType.Rotation:
 				m_ai = new MobAIRotation();
 				break;
-			case MobAIType.Dash:
-				m_ai = new MobAIDash();
-				break;
 			case MobAIType.Revolution:
 				m_ai = new MobAIRevolution();
 				break;

@@ -126,7 +126,6 @@ public enum MobAIType
 {
 	Normal,
 	Rotation,
-	Dash,
 	Revolution,
 	ItemShuttle,
 	Dummy,

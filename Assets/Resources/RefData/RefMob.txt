@@ -218,7 +218,7 @@
 					"weaponStat":
 					{
 						"coolTime":6,
-						"range":7,
+						"range":12,
 						"firingCount":1
 					}
 				},
@@ -325,7 +325,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"110"
+					"refItemId":"128"
 				},
 				{
 					"reqLevel":2,
@@ -336,7 +336,7 @@
 					"refItemId":"125"
 				}
 			],
-			"mobAI":"Dash",
+			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
 				"maxHP":60,
@@ -358,6 +358,9 @@
 			"refWeaponItems":
 			[
 				{
+					"refItemId":"128"
+				},
+				{
 					"refItemId":"103"
 				},
 				{
@@ -365,7 +368,7 @@
 					"refItemId":"125"
 				}
 			],
-			"mobAI":"Dash",
+			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
 				"maxHP":70,
@@ -682,6 +685,9 @@
 			"refWeaponItems":
 			[
 				{
+					"refItemId":"128"
+				},
+				{
 					"refItemId":"110"					
 				},
 				{
@@ -689,7 +695,7 @@
 					"refItemId":"125"
 				}
 			],
-			"mobAI":"Dash",		
+			"mobAI":"Normal",		
 			"scale":1.7,	
 			"baseCreatureProperty":
 			{
