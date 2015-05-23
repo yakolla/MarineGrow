@@ -62,7 +62,7 @@ public class Creature : MonoBehaviour {
 	}
 	DamageEffect[]	m_damageEffects = new DamageEffect[(int)DamageDesc.Type.Count];
 
-	protected DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count];
+	protected DamageEffect[]	m_buffEffects = new DamageEffect[(int)DamageDesc.BuffType.Count+1];
 	float		m_pushbackSpeedOnDamage = 0f;
 
 	Texture damagedTexture;
@@ -590,7 +590,7 @@ public class Creature : MonoBehaviour {
 		if (m_ingTakenDamageEffect < Const.ShowMaxDamageNumber)
 		{
 			++m_ingTakenDamageEffect;
-
+			Color color = Color.white;
 			string strDamage = dmg.ToString();
 			if (dmg == 0)
 			{
@@ -600,7 +600,8 @@ public class Creature : MonoBehaviour {
 			{
 				if (criticalDamage > 0f)
 				{
-					strDamage = "Critical " + dmg.ToString();
+					strDamage = dmg.ToString();
+					color = Color.red;
 				}
 
 			}

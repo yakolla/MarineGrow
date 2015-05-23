@@ -12,10 +12,10 @@ public class CreatureProperty {
 	int 	m_hp;
 
 	[SerializeField]
-	int	m_alphaMaxHP = 0;
+	int		m_alphaMaxHP = 0;
 
 	[SerializeField]
-	int	m_alphaPhysicalDamage = 0;
+	int		m_alphaPhysicalDamage = 0;
 
 	[SerializeField]
 	float	m_alphaCriticalRatio = 0f;
@@ -24,7 +24,7 @@ public class CreatureProperty {
 	float	m_alphaCriticalDamage = 0f;
 
 	[SerializeField]
-	int	m_alphaPhysicalDefencePoint = 0;
+	int		m_alphaPhysicalDefencePoint = 0;
 
 	[SerializeField]
 	float	m_alphaMoveSpeed = 0f;
@@ -48,6 +48,15 @@ public class CreatureProperty {
 
 	[SerializeField]
 	int		m_exp = 0;
+
+	public class WeaponBuffDesc
+	{
+		public DamageDesc.BuffType	m_buff;
+		public float chance;
+	}
+
+	[SerializeField]
+	WeaponBuffDesc	m_weaponBuffDescs = new WeaponBuffDesc();
 
 	public void 	init(Creature owner, RefCreatureBaseProperty baseProperty, int level)
 	{
@@ -240,6 +249,24 @@ public class CreatureProperty {
 		get {return m_baseProperty.backwardOnDamage;}
 	}
 
+	public WeaponBuffDesc WeaponBuffDescs
+	{
+		get {return m_weaponBuffDescs;}
+	}
+
+	public DamageDesc.BuffType RandomWeaponBuff
+	{
+		get {
+
+			if (Random.Range(0f, 1f) < m_weaponBuffDescs.chance)
+			{
+				return m_weaponBuffDescs.m_buff;
+			}
+
+			return DamageDesc.BuffType.Nothing;
+		}
+	}
+
 	public void CopyTo(CreatureProperty other)
 	{
 		other.m_owner = m_owner;
@@ -259,5 +286,8 @@ public class CreatureProperty {
 		other.m_level = m_level;
 		other.m_exp = m_exp;
 		other.m_bulletLength = m_bulletLength;
+
+		other.m_weaponBuffDescs.chance = m_weaponBuffDescs.chance;
+		other.m_weaponBuffDescs.m_buff = m_weaponBuffDescs.m_buff;
 	}
 }
