@@ -44,6 +44,9 @@ public class CreatureProperty {
 	float 	m_bulletLength = 1f;
 
 	[SerializeField]
+	int		m_shield = 0;
+
+	[SerializeField]
 	int		m_level = 1;
 
 	[SerializeField]
@@ -129,7 +132,14 @@ public class CreatureProperty {
 
 	public int	givePAttackDamage(int damage)
 	{
-		m_hp -= damage;
+		int realDmg = 0;
+		if (m_shield < damage)
+			realDmg = damage-m_shield;
+
+		m_shield -= damage;
+		m_shield = Mathf.Max(0, m_shield);
+
+		m_hp -= realDmg;
 		m_hp = Mathf.Max(0, m_hp);
 
 		return m_hp;
@@ -244,6 +254,13 @@ public class CreatureProperty {
 		set { m_bulletLength = value; }
 	}
 
+	public int Shield
+	{
+		get {return m_shield;}
+		set { m_shield = value; }
+	}
+
+
 	public bool		BackwardOnDamage
 	{
 		get {return m_baseProperty.backwardOnDamage;}
@@ -289,5 +306,6 @@ public class CreatureProperty {
 
 		other.m_weaponBuffDescs.chance = m_weaponBuffDescs.chance;
 		other.m_weaponBuffDescs.m_buff = m_weaponBuffDescs.m_buff;
+		other.m_shield = m_shield;
 	}
 }

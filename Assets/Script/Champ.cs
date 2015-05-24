@@ -266,14 +266,14 @@ public class Champ : Creature {
 		switch(type)
 		{
 		case DamageDesc.BuffType.Airborne:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.RisingUp);
 			break;
 		case DamageDesc.BuffType.LevelUp:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.RisingUp);
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "ChampLevelUp", "ChampLV:" + m_creatureProperty.Level, 0);
 			break;
 		case DamageDesc.BuffType.Combo100:
-			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.Up);
+			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.RisingUp);
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo100", 0);
 			break;		
 		}
