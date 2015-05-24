@@ -131,7 +131,7 @@ public class Warehouse {
 	float	m_playTime = 0;
 	public float PlayTime
 	{
-		get { return m_playTime-Time.time; }
+		get { return Time.time-m_playTime; }
 		set { m_playTime = value; }
 	}
 
