@@ -74,6 +74,7 @@ public class Creature : MonoBehaviour {
 
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 
+		StartCoroutine(EffectShield());
 	}
 
 	virtual public void Init()
@@ -502,6 +503,22 @@ public class Creature : MonoBehaviour {
 		DestroyObject(effect);
 	}
 
+	IEnumerator EffectShield()
+	{
+		GameObject pref = Resources.Load<GameObject>("Pref/ef shield skill");
+		GameObject effect = (GameObject)Instantiate(pref);
+		effect.transform.parent = transform;
+		effect.transform.localPosition = pref.transform.position;
+		effect.transform.localRotation = pref.transform.rotation;		
+
+		while(true)
+		{
+			effect.gameObject.SetActive(m_creatureProperty.Shield > 0);
+
+			yield return null;
+		}
+	}
+
 	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
 	{
 		if (prefEffect == null)
@@ -525,12 +542,14 @@ public class Creature : MonoBehaviour {
 		{
 		case DamageDesc.BuffType.Airborne:
 			StartCoroutine(EffectAirborne());
+			DamageText(type.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 			break;
 		case DamageDesc.BuffType.Stun:
 			StartCoroutine(EffectStun());
 			break;
 		case DamageDesc.BuffType.Slow:
 			StartCoroutine(EffectSlow(time));
+			DamageText(type.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 			break;
 		case DamageDesc.BuffType.LevelUp:
 			StartCoroutine(EffectSteamPack(time));
@@ -564,17 +583,17 @@ public class Creature : MonoBehaviour {
 		case ItemData.Type.Gold:
 			{
 
-				DamageText(strDamage, Color.yellow, DamageNumberSprite.MovementType.Up);
+				DamageText(strDamage, Color.yellow, DamageNumberSprite.MovementType.RisingUp);
 			}
 			break;
 		case ItemData.Type.HealPosion:
 			{
-				DamageText(strDamage, Color.green, DamageNumberSprite.MovementType.Up);
+				DamageText(strDamage, Color.green, DamageNumberSprite.MovementType.RisingUp);
 			}
 			break;
 		case ItemData.Type.XPPotion:
 		{
-			DamageText(strDamage, Color.blue, DamageNumberSprite.MovementType.Up);
+			DamageText(strDamage, Color.blue, DamageNumberSprite.MovementType.RisingUp);
 		}
 			break;
 		}
@@ -584,7 +603,7 @@ public class Creature : MonoBehaviour {
 	{
 		GameObject gui = (GameObject)GameObjectPool.Instance.Alloc(m_prefDamageSprite, m_aimpoint.transform.position, m_prefDamageSprite.transform.localRotation);
 		DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
-		sprite.Init(gameObject, damage, color, movementType);
+		sprite.Init(this, damage, color, movementType);
 	}
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
@@ -605,6 +624,11 @@ public class Creature : MonoBehaviour {
 		if (dmg == 0)
 		{
 			dmg = Random.Range(0, 2);
+		}
+
+		if (m_buffEffects[(int)DamageDesc.BuffType.Dash].m_run == true)
+		{
+			dmg = 0;
 		}
 		
 		if (m_ingTakenDamageEffect < Const.ShowMaxDamageNumber)
@@ -646,8 +670,6 @@ public class Creature : MonoBehaviour {
 
 		ApplyBuff(offender, damageDesc.DamageBuffType, 2f, damageDesc);
 
-
-
 		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
 		{
 			if (offender != null)
@@ -655,7 +677,7 @@ public class Creature : MonoBehaviour {
 				int lifeSteal = (int)(offender.m_creatureProperty.LifeSteal);
 				if (lifeSteal > 0)
 				{
-					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.Up);
+					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.RisingUp);
 					offender.m_creatureProperty.Heal(lifeSteal);
 				}
 				offender.GiveExp(m_creatureProperty.Exp);

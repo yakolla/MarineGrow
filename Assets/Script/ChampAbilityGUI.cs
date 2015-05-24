@@ -198,6 +198,16 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		skillAbili.Add(new Ability(0.3f, "Shield Skill", 
+		                           ()=>{
+			m_backup.Shield += 30;
+			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.Shield += 30;
+			--m_champ.RemainStatPoint;
+		}));
+
 		m_abilities.Add(AbilityCategory.ChampStat, champStatsAbili);
 		m_abilities.Add(AbilityCategory.Skill, skillAbili);
 		m_abilities.Add(AbilityCategory.Weapon, weaponAbili);

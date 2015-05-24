@@ -6,7 +6,8 @@ public class DamageNumberSprite : MonoBehaviour {
 	public enum MovementType
 	{
 		Parabola,
-		Up,
+		RisingUp,
+		FloatingUp,
 	}
 
 	[SerializeField]
@@ -16,7 +17,7 @@ public class DamageNumberSprite : MonoBehaviour {
 
 	Parabola	m_parabola;
 
-	GameObject	m_target;
+	Creature	m_target;
 	Vector3		m_targetPos;
 
 	[SerializeField]
@@ -31,7 +32,7 @@ public class DamageNumberSprite : MonoBehaviour {
 
 	}
 	
-	public void Init(GameObject obj, string damage, Color color, MovementType movementType)
+	public void Init(Creature obj, string damage, Color color, MovementType movementType)
 	{
 		m_movementType = movementType;
 		m_target = obj;
@@ -47,7 +48,7 @@ public class DamageNumberSprite : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {		
+	void LateUpdate () {		
 
 		switch(m_movementType)
 		{
@@ -57,16 +58,31 @@ public class DamageNumberSprite : MonoBehaviour {
 				GameObjectPool.Instance.Free(gameObject);
 			}
 			break;
-		case MovementType.Up:
+		case MovementType.RisingUp:
 			if (m_target)
 			{
-				m_targetPos = m_target.transform.position+m_offset;
+				m_targetPos = m_target.transform.position+m_target.AimpointLocalPos;
 			}
 			m_posY += 1.5f*Time.deltaTime;
 
 			m_targetPos.y += m_posY;
 			transform.position = m_targetPos;
 
+			if (m_startTime+m_duration < Time.time)
+			{
+				GameObjectPool.Instance.Free(gameObject);
+			}
+			break;
+		case MovementType.FloatingUp:
+			if (m_target)
+			{
+				m_targetPos = m_target.transform.position+m_target.AimpointLocalPos;
+				m_targetPos.y += 1f;
+			}
+
+			Debug.Log(m_targetPos);
+			transform.position = m_targetPos;
+			
 			if (m_startTime+m_duration < Time.time)
 			{
 				GameObjectPool.Instance.Free(gameObject);
