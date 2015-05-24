@@ -89,6 +89,11 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_champSettingGUI.EquipedAccessories[slot] == null)
 			return;
 
+		if (m_accessoryButtons[slot].IsCoolDownDone() == false)
+			return;
+
+		m_accessoryButtons[slot].StartCoolDownTime(60f);
+
 		m_champSettingGUI.EquipedAccessories[slot].Item.Use(m_champ);
 	}
 
@@ -97,6 +102,10 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_champ.MoveDir == Vector3.zero)
 			return;
 
+		if (m_champ.DashSkillStack == 0)
+			return;
+
+		--m_champ.DashSkillStack;
 		DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Dash, Resources.Load<GameObject>("Pref/ef_dash"));
 		desc.Dir = m_champ.MoveDir;
 		m_champ.ApplyBuff(null, DamageDesc.BuffType.Dash, 0.5f, desc);
@@ -138,8 +147,12 @@ public class ChampStatusGUI : MonoBehaviour {
 		}
 
 
-
 		foreach(YGUISystem.GUIButton button in m_specialButtons)
+		{
+			button.Update();
+		}
+
+		foreach(YGUISystem.GUIButton button in m_accessoryButtons)
 		{
 			button.Update();
 		}

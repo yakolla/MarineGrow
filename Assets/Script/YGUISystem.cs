@@ -10,6 +10,8 @@ public class YGUISystem {
 		protected GUIImageStatic 	m_icon;
 		protected GUIText			m_text;
 		protected System.Func<bool>	m_enableChecker;
+		protected float				m_startCoolDownTime;
+		protected float				m_coolDownTime;
 		
 		public GUIButton(GameObject obj, System.Func<bool> enableChecker)
 		{
@@ -20,6 +22,26 @@ public class YGUISystem {
 			Transform iconTrans = obj.transform.Find("Icon");
 			if (iconTrans != null)
 				m_icon = new GUIImageStatic(iconTrans.gameObject, null);
+		}
+
+		public void StartCoolDownTime(float coolDownTime)
+		{
+			m_startCoolDownTime = Time.time;
+			m_coolDownTime = coolDownTime;
+			m_button.image.fillAmount = 0f;
+			Text.Lable = coolDownTime.ToString();
+
+			if (m_icon != null)
+			{
+				Color color = m_icon.RawImage.color;
+				color.a = 0.2f;
+				m_icon.RawImage.color = color;
+			}
+		}
+
+		public bool IsCoolDownDone()
+		{
+			return m_button.image.fillAmount == 1f;
 		}
 
 		public Button Button
@@ -34,6 +56,24 @@ public class YGUISystem {
 		
 		public void Update()
 		{
+			if (m_startCoolDownTime > 0f)
+			{
+				float elapsedRatio = (Time.time-m_startCoolDownTime)/m_coolDownTime;
+				m_button.image.fillAmount = elapsedRatio;
+				int remainTime = (int)(m_coolDownTime - (Time.time-m_startCoolDownTime));
+				Text.Lable = remainTime.ToString();
+				if (elapsedRatio >= 1f)
+				{
+					m_startCoolDownTime = 0;
+					Text.Lable = "";
+					if (m_icon != null)
+					{
+						Color color = m_icon.RawImage.color;
+						color.a = 1f;
+						m_icon.RawImage.color = color;
+					}
+				}
+			}
 			m_button.gameObject.SetActive( m_enableChecker() );
 		}
 
@@ -243,6 +283,11 @@ public class YGUISystem {
 		public Texture Image
 		{
 			set{m_image.texture = value;}
+		}
+
+		public RawImage RawImage
+		{
+			get{return m_image;}
 		}
 		
 		public Vector3 Position
