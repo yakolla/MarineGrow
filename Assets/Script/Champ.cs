@@ -17,9 +17,6 @@ public class Champ : Creature {
 	Vector3	m_cameraOffset;
 
 	[SerializeField]
-	GameObject	m_prefLevelUpEffect = null;
-
-	[SerializeField]
 	RefCreatureBaseProperty	m_creatureBaseProperty;
 
 	[SerializeField]
@@ -30,6 +27,7 @@ public class Champ : Creature {
 
 
 	int			m_comboSkillStacks = 0;
+	int			m_dashSkillStacks = 0;
 
 	int			m_level = 1;
 
@@ -74,21 +72,10 @@ public class Champ : Creature {
 		m_remainStatPoint+=1;
 		++m_level;
 
-		GameObject effect = (GameObject)Instantiate(m_prefLevelUpEffect);
-		effect.transform.parent = transform;
-		effect.transform.localPosition = m_prefLevelUpEffect.transform.position;
-		effect.transform.localRotation = m_prefLevelUpEffect.transform.rotation;
-		StartCoroutine(UpdateLevelUpEffect(effect));
-
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 
 	}
 
-	IEnumerator UpdateLevelUpEffect(GameObject effect)
-	{
-		yield return new WaitForSeconds(effect.particleSystem.duration);
-		DestroyObject(effect);
-	} 
 
 	void UpdateChampMovement()
 	{
@@ -151,6 +138,12 @@ public class Champ : Creature {
 	{
 		get {return m_comboSkillStacks;}
 		set {m_comboSkillStacks = value;}
+	}
+
+	public int DashSkillStack
+	{
+		get {return m_dashSkillStacks;}
+		set {m_dashSkillStacks = value;}
 	}
 
 	void OnGUI()

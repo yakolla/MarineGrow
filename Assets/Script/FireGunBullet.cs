@@ -32,6 +32,7 @@ public class FireGunBullet : Bullet {
 	// Update is called once per frame
 	void Update () 
 	{
+
 		Vector3 scale = m_oriScale;
 		scale.x *= m_ownerCreature.m_creatureProperty.BulletLength;
 		transform.localScale = scale;
@@ -89,6 +90,9 @@ public class FireGunBullet : Bullet {
 		{
 			m_lastFrame = Time.frameCount;
 			m_lastDamageTime = Time.time;
+
+			m_damageBuffType = m_ownerCreature.m_creatureProperty.RandomWeaponBuff;
+
 		}
 
 		if (m_lastFrame == Time.frameCount)

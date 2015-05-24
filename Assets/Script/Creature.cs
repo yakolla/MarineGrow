@@ -430,14 +430,24 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectSteamPack(float time)
 	{
+		GameObject pref = Resources.Load<GameObject>("Pref/ef level up");
+		GameObject effect = (GameObject)Instantiate(pref);
+		effect.transform.parent = transform;
+		effect.transform.localPosition = pref.transform.position;
+		effect.transform.localRotation = pref.transform.rotation;
+
+		m_creatureProperty.BulletLength += 1f;
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
 
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.LevelUp].m_run = false;
+		m_creatureProperty.BulletLength -= 1f;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+
+		DestroyObject(effect);
 	}
 
 	IEnumerator EffectDash(DamageDesc damageDesc, float time)
@@ -472,14 +482,24 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectCombo100(float time)
 	{
+		GameObject pref = Resources.Load<GameObject>("Pref/ef combo skill");
+		GameObject effect = (GameObject)Instantiate(pref);
+		effect.transform.parent = transform;
+		effect.transform.localPosition = pref.transform.position;
+		effect.transform.localRotation = pref.transform.rotation;
+
 		m_creatureProperty.BulletLength += 1f;
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
+		m_creatureProperty.BetaMoveSpeed *= 2f;
 		
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BulletLength -= 1f;
+		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+
+		DestroyObject(effect);
 	}
 
 	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
@@ -607,7 +627,7 @@ public class Creature : MonoBehaviour {
 			}
 
 
-			DamageText(strDamage, Color.white, DamageNumberSprite.MovementType.Parabola);
+			DamageText(strDamage, color, DamageNumberSprite.MovementType.Parabola);
 
 			StartCoroutine(BodyRedColoredOnTakenDamage());
 

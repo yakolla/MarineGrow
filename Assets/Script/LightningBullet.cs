@@ -136,6 +136,8 @@ public class LightningBullet : Bullet
 
 		if (targets != null)
 		{
+			m_damageBuffType = m_ownerCreature.m_creatureProperty.RandomWeaponBuff;
+
 			if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
 			{
 				for(int i = 0; i < hittedTargetCount; ++i)

@@ -74,7 +74,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":3,
+				"moveSpeed":5,
 				"navMeshBaseOffset":0
 			}
 		},		
@@ -98,7 +98,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.5,
-				"moveSpeed":2.2,
+				"moveSpeed":5,
 				"navMeshBaseOffset":0
 			}
 		},
@@ -256,7 +256,7 @@
 		},		
 		{
 			"id":20002,
-			"prefBody":"turret_skin",
+			"prefBody":"bat_skin",
 			"refWeaponItems":
 			[
 				{

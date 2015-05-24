@@ -35,12 +35,23 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 	}
 
-	List<Ability>	m_abilities = new List<Ability>();
-	int[]	m_abilitySlots = new int[3];
+	enum AbilityCategory
+	{
+		ChampStat,
+		Skill,
+		Weapon
+	}
+
+	Dictionary<AbilityCategory, List<Ability>>	m_abilities = new Dictionary<AbilityCategory, List<Ability>>();
+	Ability[]	m_abilitySlots = new Ability[3];
 
 	void Awake()
 	{
-		m_abilities.Add(new Ability(0.3f, "Inc Strength", 
+		List<Ability> champStatsAbili = new List<Ability>();
+		List<Ability> skillAbili = new List<Ability>();
+		List<Ability> weaponAbili = new List<Ability>();
+
+		champStatsAbili.Add(new Ability(0.3f, "Inc Strength", 
 		()=>{
 			m_backup.AlphaPhysicalAttackDamage+=3;
 			return m_champ.m_creatureProperty.PhysicalAttackDamage + " -> " + "<color=yellow>" + (m_backup.PhysicalAttackDamage) + "</color>";
@@ -60,7 +71,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 		*/
-		m_abilities.Add(new Ability(0.3f, "Inc Health", 
+		champStatsAbili.Add(new Ability(0.3f, "Inc Health", 
 		()=>{
 			m_backup.AlphaMaxHP+=10;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
@@ -71,16 +82,9 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.01f, "Weapon Levelup", 
-		                            ()=>{
-			return "";
-		},
-		()=>{
-			m_champ.WeaponHolder.LevelUp();
-			--m_champ.RemainStatPoint;
-		}));
 
-		m_abilities.Add(new Ability(0.3f, "Inc Critical Chance %", 
+
+		champStatsAbili.Add(new Ability(0.3f, "Inc Critical Chance %", 
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.15f;
 			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
@@ -90,7 +94,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		m_abilities.Add(new Ability(0.3f, "Inc Critical Damage %", 
+		champStatsAbili.Add(new Ability(0.3f, "Inc Critical Damage %", 
 		                            ()=>{
 			m_backup.AlphaCriticalDamage += 0.3f;
 			return (m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=yellow>" + (m_backup.CriticalDamage*100) + "</color>";
@@ -110,13 +114,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 */
-		m_abilities.Add(new Ability(0.3f, "Inc Gain Extra XP %", 
+
+
+		weaponAbili.Add(new Ability(0.01f, "Weapon Levelup", 
 		                            ()=>{
-			m_backup.AlphaGainExtraExp += 0.3f;
-			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";
+			return "";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
+			m_champ.WeaponHolder.LevelUp();
 			--m_champ.RemainStatPoint;
 		}));
 
@@ -140,7 +145,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			string name = "Weapon " + buffType.ToString() + " Effect %";
 			DamageDesc.BuffType capturedBuffType = buffType;
 
-			m_abilities.Add(new Ability(0.02f, name, 
+			weaponAbili.Add(new Ability(0.3f, name, 
 			                            ()=>{
 				float oriChance = m_champ.m_creatureProperty.WeaponBuffDescs.chance;
 				if (capturedBuffType != m_backup.WeaponBuffDescs.m_buff)
@@ -148,7 +153,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 					m_backup.WeaponBuffDescs.chance = 0f;
 					oriChance = 0f;
 				}
-				m_backup.WeaponBuffDescs.chance += 0.25f;
+				m_backup.WeaponBuffDescs.chance += 0.1f;
 				return (oriChance*100) + " -> " + "<color=yellow>" + (m_backup.WeaponBuffDescs.chance*100) + "</color>";
 			},
 			()=>{
@@ -157,11 +162,44 @@ public class ChampAbilityGUI : MonoBehaviour {
 					m_champ.m_creatureProperty.WeaponBuffDescs.chance = 0f;
 				}
 				m_champ.m_creatureProperty.WeaponBuffDescs.m_buff = capturedBuffType;
-				m_champ.m_creatureProperty.WeaponBuffDescs.chance += 0.25f;
+				m_champ.m_creatureProperty.WeaponBuffDescs.chance += 0.1f;
 				--m_champ.RemainStatPoint;
 			}));
 		}
 
+		skillAbili.Add(new Ability(0.3f, "Inc Gain Extra XP %", 
+		                                ()=>{
+			m_backup.AlphaGainExtraExp += 0.3f;
+			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
+			--m_champ.RemainStatPoint;
+		}));
+
+		skillAbili.Add(new Ability(0.3f, "Charge Dash Skill", 
+		                           ()=>{
+			int backup = m_champ.DashSkillStack+10;
+			return (m_champ.DashSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
+		},
+		()=>{
+			m_champ.DashSkillStack += 10;
+			--m_champ.RemainStatPoint;
+		}));
+
+		skillAbili.Add(new Ability(0.3f, "Charge Combo Skill", 
+		                           ()=>{
+			int backup = m_champ.ComboKills+1;
+			return (m_champ.ComboKills) + " -> " + "<color=yellow>" + (backup) + "</color>";
+		},
+		()=>{
+			m_champ.ComboKills += 1;
+			--m_champ.RemainStatPoint;
+		}));
+
+		m_abilities.Add(AbilityCategory.ChampStat, champStatsAbili);
+		m_abilities.Add(AbilityCategory.Skill, skillAbili);
+		m_abilities.Add(AbilityCategory.Weapon, weaponAbili);
 	}
 
 	void Start () {
@@ -187,39 +225,15 @@ public class ChampAbilityGUI : MonoBehaviour {
 			slots = new int[]{0,1,2};
 		}
 
-		foreach(int slot in slots)
-		{
-			m_abilitySlots[slot] = -1;
-		}
-
-		List<int> indexs = new List<int>();
-		for(int i = 0; i < m_abilities.Count; ++i)
-		{
-			bool skip = false;
-			foreach(int slot in m_abilitySlots)
-			{
-				if (slot == i)
-				{
-					skip = true;
-					break;
-				}
-			}
-
-			if (skip == true)
-				continue;
-
-			indexs.Add(i);
-		}
-
 		int selectCount = 0;
 		while(selectCount < slots.Length)
 		{
-			int rid = Random.Range(0, indexs.Count);
+			List<Ability> abilis = m_abilities[(AbilityCategory)slots[selectCount]];
+			Ability ability = abilis[Random.Range(0, abilis.Count)];
 			float ratio = Random.Range(0f, 1f);
-			if (ratio < m_abilities[indexs[rid]].m_chance)
+			if (ratio < ability.m_chance)
 			{
-				m_abilitySlots[slots[selectCount]] = indexs[rid];
-				indexs.RemoveAt(rid);
+				m_abilitySlots[slots[selectCount]] = ability;
 				++selectCount;
 			}
 
@@ -241,7 +255,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		if (m_champ.RemainStatPoint == 0)
 			return;
 
-		Ability ability = m_abilities[m_abilitySlots[slot]];
+		Ability ability = m_abilitySlots[slot];
 
 		ability.m_functor();
 		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Ability", ability.m_name, 0);
@@ -285,7 +299,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		int statSlot = 0;
 		foreach(YGUISystem.GUIButton button in m_statButtons)
 		{
-			button.Text.Lable = m_abilities[m_abilitySlots[statSlot]].m_name + "\n" + m_abilities[m_abilitySlots[statSlot]].m_compare();
+			button.Text.Lable = m_abilitySlots[statSlot].m_name + "\n" + m_abilitySlots[statSlot].m_compare();
 			++statSlot;
 		}
 
