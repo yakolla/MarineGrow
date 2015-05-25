@@ -132,14 +132,7 @@ public class CreatureProperty {
 
 	public int	givePAttackDamage(int damage)
 	{
-		int realDmg = 0;
-		if (m_shield < damage)
-			realDmg = damage-m_shield;
-
-		m_shield -= damage;
-		m_shield = Mathf.Max(0, m_shield);
-
-		m_hp -= realDmg;
+		m_hp -= damage;
 		m_hp = Mathf.Max(0, m_hp);
 
 		return m_hp;

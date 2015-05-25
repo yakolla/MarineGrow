@@ -12,9 +12,9 @@ public class BlazeBullet : FireSparkBullet {
 	[SerializeField]
 	int				m_bouncing = 1;
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
 	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
 
 		m_status = Status.Dropping;
 		m_parabola = new Parabola(gameObject, m_speed, -targetAngle.x * Mathf.Deg2Rad, Random.Range(45f, 85f) * Mathf.Deg2Rad, m_bouncing);

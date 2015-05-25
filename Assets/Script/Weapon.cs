@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 	[SerializeField]
-	public List<FiringDesc>			m_firingDescs = new List<FiringDesc>();
+	public List<FiringDesc>		m_firingDescs = new List<FiringDesc>();
 
 	protected GameObject		m_gunPoint;
 
@@ -34,12 +34,17 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	float						m_damageRatio = 1f;
 
+	[SerializeField]
+	GameObject					m_prefSubWeapon;
+
+	Weapon m_subWeapon;
 
 	public delegate void CallbackOnCreateBullet();
 	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
 
 	[SerializeField]
 	protected float		m_attackRange;
+
 
 	int					m_evolution;
 	protected int		m_level;
@@ -49,14 +54,11 @@ public class Weapon : MonoBehaviour {
 
 	protected void Start()
 	{
-		m_gunPoint = this.transform.parent.transform.gameObject;
-
 		if (m_prefGunPointEffect != null)
 		{
-
 			GameObject obj = Instantiate (m_prefGunPointEffect, Vector3.zero, transform.rotation) as GameObject;
 			
-			obj.transform.parent = m_gunPoint.transform;
+			obj.transform.parent = transform;
 			obj.transform.localPosition = Vector3.zero;
 			obj.transform.localScale = m_prefGunPointEffect.transform.localScale;
 			obj.transform.localRotation = m_prefGunPointEffect.transform.localRotation;
@@ -66,10 +68,10 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	public void Init(ItemWeaponData weaponData)
+	public void Init(Creature creature, ItemWeaponData weaponData)
 	{
-		m_creature = this.transform.parent.transform.parent.gameObject.GetComponent<Creature>();
-
+		m_creature = creature;
+		m_gunPoint = creature.WeaponHolder.gameObject;
 		m_refItem = weaponData.RefItem;
 
 		Weapon.FiringDesc desc = DefaultFiringDesc();
@@ -149,7 +151,12 @@ public class Weapon : MonoBehaviour {
 
 	public int Damage
 	{
-		get {return (int)(m_creature.m_creatureProperty.PhysicalAttackDamage*m_damageRatio);}
+		get {return GetDamage(m_creature.m_creatureProperty);}
+	}
+
+	public int GetDamage(CreatureProperty pro)
+	{
+		return (int)(pro.PhysicalAttackDamage*m_damageRatio);
 	}
 
 	protected void playGunPointEffect()
@@ -178,7 +185,7 @@ public class Weapon : MonoBehaviour {
 	{
 		GameObject obj = GameObjectPool.Instance.Alloc(m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.y, 0));
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_gunPoint, Damage, targetAngle);
+		bullet.Init(m_creature, m_gunPoint.transform.position, Damage, targetAngle, m_subWeapon);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 		playGunPointEffect();
@@ -199,7 +206,7 @@ public class Weapon : MonoBehaviour {
 
 	protected bool isCoolTime()
 	{
-		return m_lastCreated + (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) < Time.time;
+		return m_lastCreated + (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) <= Time.time;
 	}
 
 	virtual public void StartFiring(Vector2 targetAngle)
@@ -247,6 +254,27 @@ public class Weapon : MonoBehaviour {
 		set { m_attackRange = value; }
 	}
 
+	public void SetSubWeapon(string prefWeapon, int refId)
+	{
+		if (m_subWeapon != null)
+		{
+			GameObject.DestroyObject(m_subWeapon.gameObject);
+			m_subWeapon = null;
+		}
 
+		GameObject subWeaponObj = (GameObject)Instantiate(Resources.Load(prefWeapon));
+		m_subWeapon = subWeaponObj.GetComponent<Weapon>();
+		m_subWeapon.Init(m_creature, new ItemWeaponData(refId, null));
+	}
+
+	public Weapon GetSubWeapon()
+	{
+		return m_subWeapon;
+	}
+
+	public int Level
+	{
+		get {return m_level;}
+	}
 }
 

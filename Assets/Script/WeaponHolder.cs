@@ -97,4 +97,9 @@ public class WeaponHolder : MonoBehaviour {
 		return m_weapons[m_curWeaponIndex].AttackRange;
 	}
 
+	public Weapon MainWeapon
+	{
+		get {return m_weapons[0];}
+	}
+
 }

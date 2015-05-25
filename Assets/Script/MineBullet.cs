@@ -1,15 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class MineBullet : Bullet {
+public class MineBullet : GrenadeBullet {
 
-
-
-	[SerializeField]
-	GameObject		m_prefBombEffect = null;
-
-	[SerializeField]
-	float			m_bombRange = 5f;
 
 	float			m_elapsed = 0f;
 
@@ -21,23 +14,26 @@ public class MineBullet : Bullet {
 
 	}
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
 	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
 	
 		m_elapsed = Time.time+m_bombTime;
 
 	}
 
 	// Update is called once per frame
-	void Update () {
+	new void Update () {
 		if (m_isDestroying == true)
 			return;
-
-		if (m_elapsed < Time.time)
+		if (m_parabola.Update() == false)
 		{
-			bomb(m_bombRange, m_prefBombEffect);
+			if (m_elapsed < Time.time)
+			{
+				bomb(m_bombRange, m_prefBombEffect);
+			}
 		}
+
 	}
 
 }

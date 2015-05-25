@@ -4,10 +4,10 @@ using System.Collections;
 public class GrenadeBullet : Bullet {
 
 	[SerializeField]
-	GameObject		m_prefBombEffect = null;
+	protected GameObject		m_prefBombEffect = null;
 
 	[SerializeField]
-	float			m_bombRange = 5f;
+	protected float			m_bombRange = 5f;
 
 	[SerializeField]
 	protected float			m_speed = 7f;
@@ -27,9 +27,9 @@ public class GrenadeBullet : Bullet {
 		m_isDestroying = false;
 	}
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
 	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
 		createParabola(targetAngle);
 	}
 

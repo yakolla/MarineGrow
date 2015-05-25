@@ -51,10 +51,12 @@ public class ChampAbilityGUI : MonoBehaviour {
 		List<Ability> skillAbili = new List<Ability>();
 		List<Ability> weaponAbili = new List<Ability>();
 
-		champStatsAbili.Add(new Ability(0.3f, "Inc Strength", 
+		champStatsAbili.Add(new Ability(0.3f, "Weapon Damage", 
 		()=>{
 			m_backup.AlphaPhysicalAttackDamage+=3;
-			return m_champ.m_creatureProperty.PhysicalAttackDamage + " -> " + "<color=yellow>" + (m_backup.PhysicalAttackDamage) + "</color>";
+			int backup = m_champ.WeaponHolder.MainWeapon.GetDamage(m_backup);
+			
+			return m_champ.WeaponHolder.MainWeapon.GetDamage(m_champ.m_creatureProperty) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaPhysicalAttackDamage+=3;
@@ -71,7 +73,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 		*/
-		champStatsAbili.Add(new Ability(0.3f, "Inc Health", 
+		champStatsAbili.Add(new Ability(0.3f, "Health", 
 		()=>{
 			m_backup.AlphaMaxHP+=10;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
@@ -84,7 +86,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 
 
-		champStatsAbili.Add(new Ability(0.3f, "Inc Critical Chance %", 
+		champStatsAbili.Add(new Ability(0.3f, "Critical Chance %", 
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.15f;
 			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
@@ -94,7 +96,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		champStatsAbili.Add(new Ability(0.3f, "Inc Critical Damage %", 
+		champStatsAbili.Add(new Ability(0.3f, "Critical Damage %", 
 		                            ()=>{
 			m_backup.AlphaCriticalDamage += 0.3f;
 			return (m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=yellow>" + (m_backup.CriticalDamage*100) + "</color>";
@@ -122,6 +124,33 @@ public class ChampAbilityGUI : MonoBehaviour {
 		},
 		()=>{
 			m_champ.WeaponHolder.LevelUp();
+			--m_champ.RemainStatPoint;
+		}));
+
+		weaponAbili.Add(new Ability(0.3f, "Embers On Hit", 
+		                            ()=>{
+			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
+			int backup = 1;
+			int ori = 0;
+			if (weapon != null)
+			{
+				backup = weapon.Level+1;
+				ori = weapon.Level;
+			}
+
+			return (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+		},
+		()=>{
+			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
+			if (weapon != null)
+			{
+				weapon.LevelUp();
+			}
+			else
+			{
+				m_champ.WeaponHolder.MainWeapon.SetSubWeapon("Pref/Weapon/MineLauncher", 112);
+			}
+
 			--m_champ.RemainStatPoint;
 		}));
 

@@ -104,7 +104,7 @@ public class Creature : MonoBehaviour {
 		obj.transform.localRotation = weaponData.PrefWeapon.transform.localRotation;
 		obj.transform.localScale = weaponData.PrefWeapon.transform.localScale;
 
-		weapon.Init(weaponData);
+		weapon.Init(this, weaponData);
 		weapon.m_callbackCreateBullet = delegate() {
 			if (m_animator != null)
 			{
@@ -629,6 +629,12 @@ public class Creature : MonoBehaviour {
 		if (m_buffEffects[(int)DamageDesc.BuffType.Dash].m_run == true)
 		{
 			dmg = 0;
+		}
+
+		if (m_creatureProperty.Shield > 0)
+		{
+			dmg = 0;
+			--m_creatureProperty.Shield;
 		}
 		
 		if (m_ingTakenDamageEffect < Const.ShowMaxDamageNumber)

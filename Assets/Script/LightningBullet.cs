@@ -35,12 +35,12 @@ public class LightningBullet : Bullet
 	
 	private Particle[] particles;
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
 	{
 		Vector3 scale = transform.localScale;
 
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
-		transform.parent = m_gunPoint.transform;
+		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
+		transform.parent = ownerCreature.WeaponHolder.transform;
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.x, 0));
 		transform.localScale = scale;

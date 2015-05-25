@@ -754,7 +754,7 @@
 	[			
 		{
 			"id":50001,
-			"prefBody":"slime_king_skin",
+			"prefBody":"gidra_skin",
 			"refWeaponItems":
 			[				
 				{

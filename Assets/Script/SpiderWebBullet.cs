@@ -22,9 +22,9 @@ public class SpiderWebBullet : Bullet {
 		
 		
 	}
-	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
 	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
 		
 
 		Vector3 scale = Vector3.one;

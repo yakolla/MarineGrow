@@ -7,10 +7,10 @@ public class SummonMobBullet : GrenadeBullet {
 	Creature		m_spawnedMob = null;
 	// Use this for initialization
 
-	override public void Init(Creature ownerCreature, GameObject gunPoint, int damage, Vector2 targetAngle)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
 	{
 		m_effectTargetingPoint = new EffectTargetingPoint();
-		base.Init(ownerCreature, gunPoint, damage, targetAngle);
+		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
 
 		Mob ownerMob = m_ownerCreature as Mob;
 		if (ownerMob != null)
