@@ -631,10 +631,12 @@ public class Creature : MonoBehaviour {
 			dmg = 0;
 		}
 
+		bool shielded = false;
 		if (m_creatureProperty.Shield > 0)
 		{
 			dmg = 0;
 			--m_creatureProperty.Shield;
+			shielded = true;
 		}
 		
 		if (m_ingTakenDamageEffect < Const.ShowMaxDamageNumber)
@@ -644,7 +646,15 @@ public class Creature : MonoBehaviour {
 			string strDamage = dmg.ToString();
 			if (dmg == 0)
 			{
-				strDamage = "Block";
+				if (shielded == true)
+				{
+					strDamage = "Shield " + (m_creatureProperty.Shield+1);
+				}
+				else
+				{
+					strDamage = "Block";
+				}
+
 			}
 			else
 			{
