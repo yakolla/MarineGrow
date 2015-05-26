@@ -42,46 +42,11 @@ public class RocketLauncherBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			bomb();
+			bomb(m_bombRange, m_prefBombEffect);
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{
 			GameObjectPool.Instance.Free(this.gameObject);
 		}
-	}
-
-	IEnumerator destoryObject(GameObject bombEffect)
-	{
-		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
-		GameObjectPool.Instance.Free(this.gameObject);
-		DestroyObject(bombEffect);
-	}
-
-	void bomb()
-	{
-		m_isDestroying = true;
-		
-		string[] tags = m_ownerCreature.GetAutoTargetTags();
-		foreach(string tag in tags)
-		{
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-			Vector3 pos = transform.position;
-			//pos.y = 0;
-			foreach(GameObject target in targets)
-			{
-				float dist = Vector3.Distance(pos, target.transform.position);
-				if (dist < m_bombRange/2)
-				{
-					Creature creature = target.GetComponent<Creature>();
-					GiveDamage(creature);
-				}
-			}
-		}
-		
-		GameObject bombEffect = (GameObject)Instantiate(m_prefBombEffect, transform.position, m_prefBombEffect.transform.rotation);
-		this.audio.Play();
-		StartCoroutine(destoryObject(bombEffect));
-
-		//gameObject.SetActive(false);
 	}
 }

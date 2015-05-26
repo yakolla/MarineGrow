@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour {
 
 	public GameObject SearchTarget(string[] targetTags, float range)
 	{
+		/*
 		foreach(string tag in targetTags)
 		{
 			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
@@ -47,6 +48,20 @@ public class Bullet : MonoBehaviour {
 					return target;
 				}
 			}
+		}
+		*/
+
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+		int i = 0;
+		while (i < hitColliders.Length) {
+			foreach(string tag in targetTags)
+			{
+				if (true == hitColliders[i].CompareTag(tag))
+				{
+					return hitColliders[i].gameObject;
+				}
+			}
+			i++;
 		}
 		
 		return null;
@@ -62,7 +77,7 @@ public class Bullet : MonoBehaviour {
 	virtual protected void bomb(float bombRange, GameObject prefBombEffect)
 	{
 		m_isDestroying = true;
-		
+		/*
 		string[] tags = m_ownerCreature.GetAutoTargetTags();
 		foreach(string tag in tags)
 		{
@@ -79,7 +94,23 @@ public class Bullet : MonoBehaviour {
 				}
 			}
 		}
-		
+		*/
+
+		string[] tags = m_ownerCreature.GetAutoTargetTags();
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, bombRange/2);
+		int i = 0;
+		while (i < hitColliders.Length) {
+			foreach(string tag in tags)
+			{
+				if (true == hitColliders[i].CompareTag(tag))
+				{
+					Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
+					GiveDamage(creature);
+				}
+			}
+			i++;
+		}
+
 		Vector3 bombPos = transform.position;
 		bombPos.y = prefBombEffect.transform.position.y;
 		

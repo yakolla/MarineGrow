@@ -260,6 +260,12 @@ public class YGUISystem {
 		{
 			set{m_text.text = value;}
 		}
+
+		public Color Color
+		{
+			get {return m_text.color;}
+			set {m_text.color = value;}
+		}
 	}
 
 	public class GUIImageStatic
