@@ -17,7 +17,7 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 		);
 
 		Vector3 pos = m_creature.AimpointLocalPos;
-		pos.y += 1;
+		pos.y += 1.5f;
 		m_guage.RectTransform.transform.localPosition = pos;
 	}
 

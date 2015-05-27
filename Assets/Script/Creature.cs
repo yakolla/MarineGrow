@@ -396,7 +396,9 @@ public class Creature : MonoBehaviour {
 	}
 
 	IEnumerator EffectAirborne()
-	{		
+	{	
+		
+		DamageNumberSprite sprite = DamageText(DamageDesc.BuffType.Airborne.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 		CrowdControl(CrowdControlType.Airborne, true);
 		Parabola parabola = new Parabola(gameObject, 8, 0f, 90*Mathf.Deg2Rad, 1);
 		while(parabola.Update())
@@ -407,6 +409,7 @@ public class Creature : MonoBehaviour {
 
 		m_buffEffects[(int)DamageDesc.BuffType.Airborne].m_run = false;
 		CrowdControl(CrowdControlType.Airborne, false);
+		sprite.DestroyObject();
 	}
 
 	IEnumerator EffectStun()
@@ -420,12 +423,16 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectSlow(float time)
 	{		
+		
+		DamageNumberSprite sprite = DamageText(DamageDesc.BuffType.Slow.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 		m_creatureProperty.BetaMoveSpeed /= 2f;
 
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Slow].m_run = false;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
+
+		sprite.DestroyObject();
 
 	}
 
@@ -510,10 +517,18 @@ public class Creature : MonoBehaviour {
 		effect.transform.parent = transform;
 		effect.transform.localPosition = pref.transform.position;
 		effect.transform.localRotation = pref.transform.rotation;		
+		DamageNumberSprite sprite = DamageText("", Color.white, DamageNumberSprite.MovementType.FloatingUp);
 
 		while(true)
 		{
-			effect.gameObject.SetActive(m_creatureProperty.Shield > 0);
+			bool shield = m_creatureProperty.Shield > 0;
+			sprite.gameObject.SetActive(shield);
+			effect.gameObject.SetActive(shield);
+
+			if (shield == true)
+			{
+				sprite.Text = "Shield " + m_creatureProperty.Shield;
+			}
 
 			yield return null;
 		}
@@ -542,14 +557,12 @@ public class Creature : MonoBehaviour {
 		{
 		case DamageDesc.BuffType.Airborne:
 			StartCoroutine(EffectAirborne());
-			DamageText(type.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 			break;
 		case DamageDesc.BuffType.Stun:
 			StartCoroutine(EffectStun());
 			break;
 		case DamageDesc.BuffType.Slow:
 			StartCoroutine(EffectSlow(time));
-			DamageText(type.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 			break;
 		case DamageDesc.BuffType.LevelUp:
 			StartCoroutine(EffectSteamPack(time));
@@ -592,18 +605,20 @@ public class Creature : MonoBehaviour {
 			}
 			break;
 		case ItemData.Type.XPPotion:
-		{
-			DamageText(strDamage, Color.blue, DamageNumberSprite.MovementType.RisingUp);
-		}
+			{
+				DamageText(strDamage, Color.blue, DamageNumberSprite.MovementType.RisingUp);
+			}
 			break;
 		}
 	}
 
-	public void DamageText(string damage, Color color, DamageNumberSprite.MovementType movementType)
+	public DamageNumberSprite DamageText(string damage, Color color, DamageNumberSprite.MovementType movementType)
 	{
 		GameObject gui = (GameObject)GameObjectPool.Instance.Alloc(m_prefDamageSprite, m_aimpoint.transform.position, m_prefDamageSprite.transform.localRotation);
 		DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
 		sprite.Init(this, damage, color, movementType);
+
+		return sprite;
 	}
 	
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
@@ -648,7 +663,7 @@ public class Creature : MonoBehaviour {
 			{
 				if (shielded == true)
 				{
-					strDamage = "Shield " + (m_creatureProperty.Shield+1);
+					strDamage = "Shielded";
 				}
 				else
 				{

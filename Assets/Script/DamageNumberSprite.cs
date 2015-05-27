@@ -27,6 +27,8 @@ public class DamageNumberSprite : MonoBehaviour {
 	[SerializeField]
 	Vector3		m_offset;
 	float		m_posY = 0f;
+
+	TypogenicText	m_text;
 	// Use this for initialization
 	void Start () {
 
@@ -36,15 +38,17 @@ public class DamageNumberSprite : MonoBehaviour {
 	{
 		m_movementType = movementType;
 		m_target = obj;
-		m_targetPos = obj.transform.position;
+		m_targetPos = obj.transform.position+m_target.AimpointLocalPos;
+		m_targetPos.y += 1;
+		transform.position = m_targetPos;
 		m_startTime = Time.time;
 
-		TypogenicText	text = GetComponent<TypogenicText>();
-		text.Text = damage;
-		text.ColorTopLeft = color;
+		m_text = GetComponent<TypogenicText>();
+		m_text.Text = damage;
+		m_text.ColorTopLeft = color;
 
 		if (movementType == MovementType.Parabola)
-			m_parabola = new Parabola(gameObject, 5f, 0f, 1.3f, 1);
+			m_parabola = new Parabola(gameObject, 5f, 0f, 90*Mathf.Deg2Rad, 1);
 	}
 	
 	// Update is called once per frame
@@ -53,9 +57,10 @@ public class DamageNumberSprite : MonoBehaviour {
 		switch(m_movementType)
 		{
 		case MovementType.Parabola:
+
 			if (false == m_parabola.Update())
 			{
-				GameObjectPool.Instance.Free(gameObject);
+				DestroyObject();
 			}
 			break;
 		case MovementType.RisingUp:
@@ -70,26 +75,30 @@ public class DamageNumberSprite : MonoBehaviour {
 
 			if (m_startTime+m_duration < Time.time)
 			{
-				GameObjectPool.Instance.Free(gameObject);
+				DestroyObject();
 			}
 			break;
 		case MovementType.FloatingUp:
 			if (m_target)
 			{
 				m_targetPos = m_target.transform.position+m_target.AimpointLocalPos;
-				m_targetPos.y += 1f;
+				m_targetPos.y += 3f;
 			}
 
-			Debug.Log(m_targetPos);
 			transform.position = m_targetPos;
-			
-			if (m_startTime+m_duration < Time.time)
-			{
-				GameObjectPool.Instance.Free(gameObject);
-			}
+
 			break;
 		}
+	}
 
+	public string Text
+	{
+		set {m_text.Text = value;}
+	}
+
+	public void DestroyObject()
+	{
+		GameObjectPool.Instance.Free(gameObject);
 	}
 }
 

@@ -7,8 +7,8 @@ using GooglePlayGames.BasicApi.SavedGame;
 public class Champ : Creature {
 
 
-	Joystick	m_leftJoystick;
-	Joystick	m_rightJoystick;
+	Joypad		m_leftJoypad;
+	Joypad		m_rightJoypad;
 
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
@@ -44,8 +44,8 @@ public class Champ : Creature {
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
 
-		m_leftJoystick = GameObject.Find("HudGUI/LeftJoystick").GetComponent<Joystick>();
-		m_rightJoystick = GameObject.Find("HudGUI/RightJoystick").GetComponent<Joystick>();
+		m_leftJoypad = GameObject.Find("HudGUI/Joypad/LeftJoypad").GetComponent<Joypad>();
+		m_rightJoypad = GameObject.Find("HudGUI/Joypad/RightJoypad").GetComponent<Joypad>();
 
 		m_bloodWarningAnimator = GameObject.Find("HudGUI/Blood Warning").GetComponent<Animator>();
 	}
@@ -88,10 +88,13 @@ public class Champ : Creature {
 
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			pos.x = m_leftJoystick.position.x*step;
-			pos.z = m_leftJoystick.position.y*step;
-
-			m_navAgent.SetDestination(transform.position+pos);
+			if (m_leftJoypad.Dragging)
+			{
+				pos.x = m_leftJoypad.Position.x*step;
+				pos.z = m_leftJoypad.Position.y*step;
+				
+				m_navAgent.SetDestination(transform.position+pos);
+			}
 
 		}
 		else
@@ -117,6 +120,14 @@ public class Champ : Creature {
 				
 				m_navAgent.SetDestination(transform.position+pos);
 
+			}
+
+			if (m_leftJoypad.Dragging)
+			{
+				pos.x = m_leftJoypad.Position.x*step;
+				pos.z = m_leftJoypad.Position.y*step;
+				
+				m_navAgent.SetDestination(transform.position+pos);
 			}
 		}
 
@@ -168,14 +179,11 @@ public class Champ : Creature {
 		{
 			if (Application.platform == RuntimePlatform.Android)
 			{
-
-
-				if (m_rightJoystick.IsFingerDown() == true)
+				if (m_rightJoypad.Dragging)
 				{
 					Vector3 pos = Vector3.zero;
-					pos.x = m_rightJoystick.position.x*10;
-					pos.z = m_rightJoystick.position.y*10;
-
+					pos.x = m_rightJoypad.Position.x*10;
+					pos.z = m_rightJoypad.Position.y*10;
 					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
 				}
 				else
@@ -185,6 +193,18 @@ public class Champ : Creature {
 			}
 			else
 			{
+				if (m_rightJoypad.Dragging)
+				{
+					Vector3 pos = Vector3.zero;
+					pos.x = m_rightJoypad.Position.x*10;
+					pos.z = m_rightJoypad.Position.y*10;
+					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
+				}
+				else
+				{
+					m_weaponHolder.StopFiring();
+				}
+
 				if (Input.GetMouseButton(1) == true)
 				{
 					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
