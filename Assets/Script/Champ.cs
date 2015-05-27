@@ -204,18 +204,6 @@ public class Champ : Creature {
 				{
 					m_weaponHolder.StopFiring();
 				}
-
-				if (Input.GetMouseButton(1) == true)
-				{
-					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-					Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-					pos = ray.origin + (ray.direction* 10f);
-					m_weaponHolder.StartFiring(RotateToTarget(pos));
-				}
-				else
-				{
-					m_weaponHolder.StopFiring();
-				}
 			}
 
 		}

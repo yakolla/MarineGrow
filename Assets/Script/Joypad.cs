@@ -29,8 +29,6 @@ public class Joypad : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointer
 		m_position = (eventData.position-center).normalized;
 
 		m_dragging = true;
-
-		Debug.Log(m_position);
 	}
 
 	public bool Dragging

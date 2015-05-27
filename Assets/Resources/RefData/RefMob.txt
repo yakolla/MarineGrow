@@ -32,7 +32,7 @@
 		},
 		{
 			"id":10002,
-			"prefBody":"ghost_slime_b_skin",
+			"prefBody":"roach_skin",
 			"refWeaponItems":
 			[				
 				{
