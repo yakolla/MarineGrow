@@ -36,7 +36,7 @@ public class Spawn : MonoBehaviour {
 
 	BoxCollider		m_edgeRect;
 
-	YGUISystem.GUIText	m_stageText;
+	YGUISystem.GUILable	m_stageText;
 
 	[SerializeField]
 	int				m_wave = 0;
@@ -65,14 +65,14 @@ public class Spawn : MonoBehaviour {
 				Debug.Log("Pref/ItemBox/item_" + itemTypeNames[i] + "_skin");
 		}
 
-		m_stageText = new YGUISystem.GUIText(GameObject.Find("HudGUI/StatusGUI/Stage").gameObject);
+		m_stageText = new YGUISystem.GUILable(GameObject.Find("HudGUI/StatusGUI/Stage").gameObject);
 		m_areas = transform.GetComponentsInChildren<Transform>();
 
 	}
 
 	IEnumerator EffectWaveText(string msg, float alpha)
 	{
-		m_stageText.Lable = msg;
+		m_stageText.Text.text = msg;
 		Color color = guiText.color;
 		color.a = alpha;
 		m_stageText.Color = color;

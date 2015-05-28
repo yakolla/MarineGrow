@@ -262,8 +262,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void OnGUI()
 	{
-		m_gold.Text.Lable = Warehouse.Instance.Gold.Item.Count.ToString();
-		m_gem.Text.Lable = Warehouse.Instance.Gem.Item.Count.ToString();
+		m_gold.Lable.Text.text = Warehouse.Instance.Gold.Item.Count.ToString();
+		m_gem.Lable.Text.text = Warehouse.Instance.Gem.Item.Count.ToString();
 
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 

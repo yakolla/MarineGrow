@@ -44,7 +44,7 @@ public class GUIInventorySlot : MonoBehaviour {
 
 		public void SetLable(string text)
 		{
-			m_priceButton.GUIImageButton.Text.Lable = text;
+			m_priceButton.GUIImageButton.Lable.Text.text = text;
 		}
 	}
 
@@ -54,7 +54,7 @@ public class GUIInventorySlot : MonoBehaviour {
 	public void Init(Texture icon, string desc)
 	{
 		m_item = new YGUISystem.GUIImageStatic(transform.Find("Icon").gameObject, icon);
-		m_item.Text.Lable = desc;
+		m_item.Lable.Text.text = desc;
 
 		m_priceButton0 = new GUIPriceGemButton(transform, "GUIPriceButton0");
 		m_priceButton1 = new GUIPriceGemButton(transform, "GUIPriceButton1");
@@ -67,7 +67,7 @@ public class GUIInventorySlot : MonoBehaviour {
 
 	public string ItemDesc
 	{
-		set{m_item.Text.Lable = value;}
+		set{m_item.Lable.Text.text = value;}
 	}
 
 	public GUIPriceGemButton PriceButton1

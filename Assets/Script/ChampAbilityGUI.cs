@@ -7,7 +7,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	Champ		m_champ;
 
 	YGUISystem.GUIButton[]	m_statButtons = new YGUISystem.GUIButton[3];
-	YGUISystem.GUIText		m_remainPointText;
+	YGUISystem.GUILable		m_remainPointText;
 	YGUISystem.GUIPriceButton	m_rollButton;
 
 	int			m_usedCountOfRandomAbilityItem = 0;
@@ -249,13 +249,28 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_statButtons[1] = new YGUISystem.GUIButton(transform.Find("StatButton1").gameObject, ()=>{return true;});
 		m_statButtons[2] = new YGUISystem.GUIButton(transform.Find("StatButton2").gameObject, ()=>{return true;});
 
-		m_remainPointText = new YGUISystem.GUIText(transform.Find("RemainPointText").gameObject);
+
+
+		m_remainPointText = new YGUISystem.GUILable(transform.Find("RemainPointText").gameObject);
 
 		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return true;});
 		m_rollButton.Prices = RefData.Instance.RefItems[1101].levelup.conds;
 
 
 		RandomAbility(null);
+	}
+
+	public void StartSpinButton(YGUISystem.GUIButton button)
+	{
+		button.Button.enabled = false;
+		button.Lable.Text.enabled = false;
+		button.Button.animator.SetBool("Spin", true);
+	}
+
+	public void StopSpinButton(int slot)
+	{
+		m_statButtons[slot].Button.enabled = true;
+		m_statButtons[slot].Lable.Text.enabled = true;
 	}
 
 	void RandomAbility(int[] slots)
@@ -268,6 +283,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 		int selectCount = 0;
 		while(selectCount < slots.Length)
 		{
+			StartSpinButton(m_statButtons[slots[selectCount]]);
+
 			List<Ability> abilis = m_abilities[(AbilityCategory)slots[selectCount]];
 			Ability ability = abilis[Random.Range(0, abilis.Count)];
 			float ratio = Random.Range(0f, 1f);
@@ -335,23 +352,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 
 		m_champ.m_creatureProperty.CopyTo(m_backup);
-		
+
 		int statSlot = 0;
 		foreach(YGUISystem.GUIButton button in m_statButtons)
 		{
-			button.Text.Lable = m_abilitySlots[statSlot].m_name + "\n" + m_abilitySlots[statSlot].m_compare();
+			button.Lable.Text.text = m_abilitySlots[statSlot].m_name + "\n" + m_abilitySlots[statSlot].m_compare();
 			++statSlot;
 		}
 
-		m_remainPointText.Lable = m_champ.RemainStatPoint.ToString();
+		m_remainPointText.Text.text = m_champ.RemainStatPoint.ToString();
 
 
 		m_rollButton.Update();
 
 	}
 
-	void Update()
-	{
-		TimeEffector.Instance.StopTime();
-	}
 }

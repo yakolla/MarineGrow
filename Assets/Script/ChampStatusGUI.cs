@@ -26,15 +26,15 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_specialGUI = transform.Find("Special").gameObject;
 
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
-			m_specialButtons[0].Text.Lable = m_champ.RemainStatPoint.ToString();
+			m_specialButtons[0].Lable.Text.text = m_champ.RemainStatPoint.ToString();
 			return m_champ.RemainStatPoint > 0;
 		});
 		m_specialButtons[1] = new YGUISystem.GUIButton(transform.Find("Special/Button1").gameObject, ()=>{
-			m_specialButtons[1].Text.Lable = m_champ.ComboSkillStack.ToString();
+			m_specialButtons[1].Lable.Text.text = m_champ.ComboSkillStack.ToString();
 			return m_champ.ComboSkillStack > 0;
 		});
 		m_specialButtons[2] = new YGUISystem.GUIButton(transform.Find("Special/Button2").gameObject, ()=>{
-			m_specialButtons[2].Text.Lable = m_champ.DashSkillStack.ToString();
+			m_specialButtons[2].Lable.Text.text = m_champ.DashSkillStack.ToString();
 			return m_champ.DashSkillStack > 0;
 		});
 

@@ -8,7 +8,7 @@ public class YGUISystem {
 	{
 		protected Button			m_button;
 		protected GUIImageStatic 	m_icon;
-		protected GUIText			m_text;
+		protected GUILable			m_lable;
 		protected System.Func<bool>	m_enableChecker;
 		protected float				m_startCoolDownTime;
 		protected float				m_coolDownTime;
@@ -16,7 +16,7 @@ public class YGUISystem {
 		public GUIButton(GameObject obj, System.Func<bool> enableChecker)
 		{
 			m_button = obj.GetComponent<Button>();
-			m_text = new GUIText(obj.transform.Find("Text").gameObject);
+			m_lable = new GUILable(obj.transform.Find("Text").gameObject);
 			m_enableChecker = enableChecker;
 
 			Transform iconTrans = obj.transform.Find("Icon");
@@ -29,7 +29,7 @@ public class YGUISystem {
 			m_startCoolDownTime = Time.time;
 			m_coolDownTime = coolDownTime;
 			m_button.image.fillAmount = 0f;
-			Text.Lable = coolDownTime.ToString();
+			Lable.Text.text = coolDownTime.ToString();
 
 			if (m_icon != null)
 			{
@@ -61,11 +61,11 @@ public class YGUISystem {
 				float elapsedRatio = (Time.time-m_startCoolDownTime)/m_coolDownTime;
 				m_button.image.fillAmount = elapsedRatio;
 				int remainTime = (int)(m_coolDownTime - (Time.time-m_startCoolDownTime));
-				Text.Lable = remainTime.ToString();
+				Lable.Text.text = remainTime.ToString();
 				if (elapsedRatio >= 1f)
 				{
 					m_startCoolDownTime = 0;
-					Text.Lable = "";
+					Lable.Text.text = "";
 					if (m_icon != null)
 					{
 						Color color = m_icon.RawImage.color;
@@ -77,9 +77,9 @@ public class YGUISystem {
 			m_button.gameObject.SetActive( m_enableChecker() );
 		}
 
-		public GUIText Text
+		public GUILable Lable
 		{
-			get{return m_text;}
+			get{return m_lable;}
 		}
 	}
 
@@ -186,7 +186,7 @@ public class YGUISystem {
 				str += hasCount;
 				str += "/" + cost;
 				str += "</color>";
-				button.GUIImages[priceIndex].Text.Lable = str;
+				button.GUIImages[priceIndex].Lable.Text.text = str;
 				
 				++priceIndex;
 			}
@@ -223,7 +223,7 @@ public class YGUISystem {
 	public class GUIGuage
 	{
 		Image	m_guage;
-		GUIText	m_text;
+		GUILable	m_text;
 		System.Func<float>	m_fillAmountGetter;
 		System.Func<string>	m_lableGetter;
 
@@ -235,7 +235,7 @@ public class YGUISystem {
 		public GUIGuage(GameObject obj, System.Func<float>	fillAmountGetter, System.Func<string> lableGetter)
 		{
 			m_guage = obj.GetComponent<Image>();
-			m_text = new GUIText(obj.transform.Find("Text").gameObject);
+			m_text = new GUILable(obj.transform.Find("Text").gameObject);
 			m_fillAmountGetter = fillAmountGetter;
 			m_lableGetter = lableGetter;
 		}
@@ -243,22 +243,22 @@ public class YGUISystem {
 		public void Update()
 		{
 			m_guage.fillAmount = m_fillAmountGetter();
-			m_text.Lable = m_lableGetter();
+			m_text.Text.text = m_lableGetter();
 		}
 	}
 
-	public class GUIText
+	public class GUILable
 	{
 		Text	m_text;
 
-		public GUIText(GameObject obj)
+		public GUILable(GameObject obj)
 		{
 			m_text = obj.GetComponent<Text>();
 		}
 
-		public string Lable
+		public Text Text
 		{
-			set{m_text.text = value;}
+			get{return m_text;}
 		}
 
 		public Color Color
@@ -271,19 +271,19 @@ public class YGUISystem {
 	public class GUIImageStatic
 	{
 		RawImage	m_image;
-		GUIText		m_text;
+		GUILable		m_lable;
 		
 		public GUIImageStatic(GameObject obj, Texture icon)
 		{
 			m_image = obj.GetComponent<RawImage>();
 			m_image.texture = icon;
 			
-			m_text = new GUIText(obj.transform.Find("Text").gameObject);
+			m_lable = new GUILable(obj.transform.Find("Text").gameObject);
 		}
 		
-		public GUIText Text
+		public GUILable Lable
 		{
-			get{return m_text;}
+			get{return m_lable;}
 		}
 
 		public Texture Image
@@ -305,7 +305,7 @@ public class YGUISystem {
 	public class GUIImageDynamic
 	{
 		RawImage	m_image;
-		GUIText		m_text;
+		GUILable		m_lable;
 
 		public GUIImageDynamic(GameObject parent, Texture icon)
 		{
@@ -313,7 +313,7 @@ public class YGUISystem {
 			m_image = guiImageObj.GetComponent<RawImage>();
 			m_image.texture = icon;
 
-			m_text = new GUIText(m_image.transform.Find("Text").gameObject);
+			m_lable = new GUILable(m_image.transform.Find("Text").gameObject);
 
 			guiImageObj.transform.parent = parent.transform;
 			guiImageObj.transform.localPosition = Vector3.zero;
@@ -325,9 +325,9 @@ public class YGUISystem {
 			GameObject.DestroyObject(m_image.gameObject);
 		}
 		
-		public GUIText Text
+		public GUILable Lable
 		{
-			get{return m_text;}
+			get{return m_lable;}
 		}
 
 		public Vector3 Position
