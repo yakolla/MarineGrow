@@ -12,6 +12,7 @@ public class WeaponHolder : MonoBehaviour {
 	[SerializeField]
 	bool					m_multipleWeapon = false;
 
+	Creature				m_creature;
 
 	bool					m_firing = false;
 
@@ -30,11 +31,21 @@ public class WeaponHolder : MonoBehaviour {
 		m_weaponChangedTime = 0;
 		m_weapons.Clear();
 		m_firing = false;
+
+		m_creature = transform.parent.GetComponent<Creature>();
 	}
 
 	public void EquipWeapon(Weapon weapon)
 	{
 		m_weapons.Add(weapon);
+	}
+
+	public Weapon GetWeapon(int slot)
+	{
+		if (m_weapons.Count <= slot)
+			return null;
+
+		return m_weapons[slot];
 	}
 
 	public void StartFiring(Vector2 targetAngle)
