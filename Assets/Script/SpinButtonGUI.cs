@@ -17,5 +17,8 @@ public class SpinButtonGUI : MonoBehaviour {
 		this.gameObject.GetComponent<Animator>().SetBool("Spin", false);
 	}
 
-
+	public bool IsSpining()
+	{
+		return gameObject.GetComponent<Animator>().GetBool("Spin");
+	}
 }

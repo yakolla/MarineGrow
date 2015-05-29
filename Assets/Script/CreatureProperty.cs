@@ -61,6 +61,8 @@ public class CreatureProperty {
 	[SerializeField]
 	WeaponBuffDesc	m_weaponBuffDescs = new WeaponBuffDesc();
 
+	int			m_bombRange = 0;
+
 	public void 	init(Creature owner, RefCreatureBaseProperty baseProperty, int level)
 	{
 		m_owner = owner;
@@ -277,6 +279,12 @@ public class CreatureProperty {
 		}
 	}
 
+	public int SplashRange
+	{
+		set {m_bombRange = value;}
+		get {return m_bombRange;}
+	}
+
 	public void CopyTo(CreatureProperty other)
 	{
 		other.m_owner = m_owner;
@@ -300,5 +308,6 @@ public class CreatureProperty {
 		other.m_weaponBuffDescs.chance = m_weaponBuffDescs.chance;
 		other.m_weaponBuffDescs.m_buff = m_weaponBuffDescs.m_buff;
 		other.m_shield = m_shield;
+		other.m_bombRange = m_bombRange;
 	}
 }
