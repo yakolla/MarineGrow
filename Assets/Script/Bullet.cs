@@ -77,24 +77,7 @@ public class Bullet : MonoBehaviour {
 	virtual protected void bomb(float bombRange, GameObject prefBombEffect)
 	{
 		m_isDestroying = true;
-		/*
-		string[] tags = m_ownerCreature.GetAutoTargetTags();
-		foreach(string tag in tags)
-		{
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-			Vector3 pos = transform.position;
-			//pos.y = 0;
-			foreach(GameObject target in targets)
-			{
-				float dist = Vector3.Distance(pos, target.transform.position);
-				if (dist < bombRange/2)
-				{
-					Creature creature = target.GetComponent<Creature>();
-					GiveDamage(creature);
-				}
-			}
-		}
-		*/
+		bombRange += m_ownerCreature.m_creatureProperty.SplashRange;
 
 		string[] tags = m_ownerCreature.GetAutoTargetTags();
 		Collider[] hitColliders = Physics.OverlapSphere(transform.position, bombRange/2);

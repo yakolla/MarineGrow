@@ -61,7 +61,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		}
 
 		transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
-		m_accel += Time.deltaTime*0.1f*m_speed;
+		m_accel += Time.deltaTime*0.01f*m_speed;
 		m_angleElpased += Time.deltaTime;
 	}
 

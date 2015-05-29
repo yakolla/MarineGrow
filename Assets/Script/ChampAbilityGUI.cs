@@ -154,6 +154,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		weaponAbili.Add(new Ability(0.3f, "Splash Range", 
+		                            ()=>{
+
+			m_backup.SplashRange+=1;
+			
+			return (m_champ.m_creatureProperty.SplashRange) + " -> " + "<color=yellow>" + (m_backup.SplashRange) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.SplashRange+=1;
+			
+			--m_champ.RemainStatPoint;
+		}));
+
 		foreach (DamageDesc.BuffType buffType in System.Enum.GetValues(typeof(DamageDesc.BuffType)))
 		{
 			bool skipBuff = false;
@@ -349,8 +362,17 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	public void OnClickOK()
 	{
+
+		for(int i = 0; i < m_statButtons.Length; ++i)
+		{
+			if (m_statButtons[i].Button.GetComponent<SpinButtonGUI>().IsSpining())
+				return;
+		}
+
 		gameObject.SetActive(false);
 		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowBanner(false);
+
+
 	}
 
 	public void OnClickRoll()
