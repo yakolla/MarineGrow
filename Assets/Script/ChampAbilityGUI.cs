@@ -237,7 +237,9 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		skillAbili.Add(new Ability(1f, "Auto Explosion Skill", 
 		                            ()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
 			int backup = 1;
 			int ori = 0;
 			if (weapon != null)
@@ -249,12 +251,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 			return (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
 			}
 			else
 			{
+				m_champ.EquipPassiveWeapon(new ItemWeaponData(105, null));
 			}
 			
 			--m_champ.RemainStatPoint;
