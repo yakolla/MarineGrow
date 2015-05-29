@@ -122,28 +122,7 @@
 				}
 			],
 			"pricePerLevel":2
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		},		
 		"unlock":
 		{
 			"conds":
@@ -207,27 +186,6 @@
 				}
 			],
 			"pricePerLevel":3
-		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
 		},
 		"unlock":
 		{
@@ -407,27 +365,7 @@
 			],
 			"pricePerLevel":2
 		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		
 		"unlock":
 		{
 			"conds":
@@ -525,27 +463,7 @@
 			],
 			"pricePerLevel":1
 		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		}
+		
 	},
 	{
 		"id":109,
@@ -592,7 +510,7 @@
 		},
 		"weaponStat":
 		{
-			"coolTime":0.5,
+			"coolTime":1.5,
 			"range":8
 		},		
 		"levelup":
@@ -617,27 +535,7 @@
 			],
 			"pricePerLevel":3
 		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		
 		"unlock":
 		{
 			"conds":
@@ -751,27 +649,7 @@
 				}
 			]
 		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		
 		"unlock":
 		{
 			"conds":
@@ -939,27 +817,7 @@
 				}
 			]
 		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		
 		"unlock":
 		{
 			"conds":
@@ -1041,27 +899,7 @@
 			],
 			"pricePerLevel":3
 		},
-		"evolution":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":30
-				},
-				{
-					"refItemId":5, 
-					"count":10
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":1
-				}
-			]
-		},
+		
 		"unlock":
 		{
 			"conds":

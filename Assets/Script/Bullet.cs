@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour {
 	protected Vector3	m_gunPoint;
 	bool					m_firing = false;
 	int						m_damage;
-	protected 	Vector2		m_targetAngle;
+	protected 	Weapon.FiringDesc		m_targetAngle;
 	protected	Creature	m_ownerCreature;
 
 	Weapon		m_onHitWeapon;
@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour {
 	[SerializeField]
 	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
 
-	virtual public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
+	virtual public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
 	{
 		m_gunPoint = gunPoint;
 		m_ownerCreature = ownerCreature;
@@ -142,7 +142,7 @@ public class Bullet : MonoBehaviour {
 
 		if (m_onHitWeapon != null)
 		{
-			m_onHitWeapon.StartFiring(m_targetAngle);
+			m_onHitWeapon.StartFiring(m_targetAngle.angle);
 		}
 	}
 

@@ -93,9 +93,8 @@ public class Creature : MonoBehaviour {
 		ChangeNormalColor();
 	}
 
-	public void EquipWeapon(ItemWeaponData weaponData)
-	{		
-
+	Weapon instanceWeapon(ItemWeaponData weaponData)
+	{
 		GameObject obj = Instantiate (weaponData.PrefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
 		Weapon weapon = obj.GetComponent<Weapon>();
 		
@@ -103,18 +102,32 @@ public class Creature : MonoBehaviour {
 		obj.transform.localPosition = weaponData.PrefWeapon.transform.localPosition;
 		obj.transform.localRotation = weaponData.PrefWeapon.transform.localRotation;
 		obj.transform.localScale = weaponData.PrefWeapon.transform.localScale;
-
+		
 		weapon.Init(this, weaponData);
+
+		return weapon;
+	}
+
+	public void EquipWeapon(ItemWeaponData weaponData)
+	{		
+		Weapon weapon = instanceWeapon(weaponData);
+
 		weapon.m_callbackCreateBullet = delegate() {
 			if (m_animator != null)
 			{
 				m_animator.SetTrigger("Attack");
 			}
-
 		};
 
 		m_weaponHolder.EquipWeapon(weapon);
 
+	}
+
+	public void EquipPassiveWeapon(ItemWeaponData weaponData)
+	{
+		Weapon weapon = instanceWeapon(weaponData);
+		
+		m_weaponHolder.EquipPassiveWeapon(weapon);
 	}
 
 	public Spawn Spawn	{
@@ -133,7 +146,7 @@ public class Creature : MonoBehaviour {
 		get {return m_checkOnDeath;}
 	}
 
-	public Vector2 RotateToTarget(Vector3 pos)
+	public float RotateToTarget(Vector3 pos)
 	{
 		Vector3 gunPoint = m_weaponHolder.transform.position;
 		gunPoint.x = transform.position.x;
@@ -143,16 +156,16 @@ public class Creature : MonoBehaviour {
 		euler.y = -targetHorAngle;
 		transform.eulerAngles = euler;
 
-		return new Vector2(targetHorAngle, 0f);
+		return targetHorAngle;
 	}
 
-	public Vector2 RotateToTarget(float angle)
+	public float RotateToTarget(float angle)
 	{	
 		Vector3 euler = transform.eulerAngles;
 		euler.y = -angle;
 		transform.eulerAngles = euler;
 		
-		return new Vector2(angle, 0f);
+		return angle;
 	}
 
 	static public bool IsEnemy(Creature a, Creature b)

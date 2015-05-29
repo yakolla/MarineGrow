@@ -14,7 +14,7 @@ public class MineBullet : GrenadeBullet {
 
 	}
 
-	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
 	

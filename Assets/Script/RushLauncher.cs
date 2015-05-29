@@ -11,11 +11,11 @@ public class RushLauncher : Weapon {
 	new void Start()
 	{
 		base.Start();
-		CreateBullet(Vector2.zero, transform.position);
+		CreateBullet(m_firingDescs[0], transform.position);
 	}
 
 
-	override public void StartFiring(Vector2 targetAngle)
+	override public void StartFiring(float targetAngle)
 	{
 		if ( isCoolTime() == true )
 		{

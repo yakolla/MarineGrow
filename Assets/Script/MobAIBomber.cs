@@ -58,7 +58,7 @@ public class MobAIBomber : MobAI {
 			return;
 		}
 
-		m_mob.WeaponHolder.StartFiring(new Vector2(Random.Range(0, 360), 0f));
+		m_mob.WeaponHolder.StartFiring(Random.Range(0, 360));
 
 	}
 

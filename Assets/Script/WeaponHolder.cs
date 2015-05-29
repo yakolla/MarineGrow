@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class WeaponHolder : MonoBehaviour {
 
-	List<Weapon>			m_weapons = new List<Weapon>();
+	List<Weapon>					m_weapons = new List<Weapon>();
+	Dictionary<string, Weapon>		m_passiveWeapons = new Dictionary<string, Weapon>();
+
 	float					m_weaponChangeCoolTime = 15f;
 	float					m_weaponChangedTime = 0f;
 	int						m_curWeaponIndex = 0;
@@ -23,6 +25,11 @@ public class WeaponHolder : MonoBehaviour {
 			m_weaponChangedTime = Time.time;
 			m_curWeaponIndex = (m_curWeaponIndex + 1) % m_weapons.Count;
 		}
+
+		foreach(KeyValuePair<string, Weapon> pair in m_passiveWeapons)
+		{
+			pair.Value.StartFiring(-transform.rotation.eulerAngles.y);
+		}
 	}
 
 	public void Init()
@@ -40,15 +47,20 @@ public class WeaponHolder : MonoBehaviour {
 		m_weapons.Add(weapon);
 	}
 
-	public Weapon GetWeapon(int slot)
+	public void EquipPassiveWeapon(Weapon weapon)
 	{
-		if (m_weapons.Count <= slot)
-			return null;
-
-		return m_weapons[slot];
+		m_passiveWeapons.Add(weapon.WeaponName, weapon);
 	}
 
-	public void StartFiring(Vector2 targetAngle)
+	public Weapon GetPassiveWeapon(string weaponName)
+	{
+		Weapon weapon = null;
+		m_passiveWeapons.TryGetValue(weaponName, out weapon);
+
+		return weapon;
+	}
+
+	public void StartFiring(float targetAngle)
 	{
 
 		if (m_multipleWeapon == false)

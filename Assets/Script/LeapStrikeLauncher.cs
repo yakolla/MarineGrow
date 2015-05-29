@@ -5,13 +5,13 @@ public class LeapStrikeLauncher : Weapon {
 
 	Parabola	m_parabola;
 
-	override public void StartFiring(Vector2 targetAngle)
+	override public void StartFiring(float targetAngle)
 	{
 		if ( isCoolTime() == true )
 		{
 			float d = Vector3.Distance(m_creature.transform.position, m_creature.m_targeting.transform.position);
 
-			m_parabola = new Parabola(m_creature.gameObject, d*1.7f, targetAngle.x*Mathf.Deg2Rad, 70*Mathf.Deg2Rad, 1);
+			m_parabola = new Parabola(m_creature.gameObject, d*1.7f, targetAngle*Mathf.Deg2Rad, 70*Mathf.Deg2Rad, 1);
 			m_parabola.TimeScale = 0.80f;
 
 			m_creature.CrowdControl(Creature.CrowdControlType.LeapStrike, true);
@@ -25,7 +25,7 @@ public class LeapStrikeLauncher : Weapon {
 		if (m_parabola != null && false == m_parabola.Update())
 		{
 			m_creature.CrowdControl(Creature.CrowdControlType.LeapStrike, false);
-			CreateBullet(Vector2.zero, transform.position);
+			CreateBullet(m_firingDescs[0], transform.position);
 			m_parabola = null;
 		}
 	}

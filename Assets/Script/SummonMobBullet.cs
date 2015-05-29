@@ -7,7 +7,7 @@ public class SummonMobBullet : GrenadeBullet {
 	Creature		m_spawnedMob = null;
 	// Use this for initialization
 
-	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
 	{
 		m_effectTargetingPoint = new EffectTargetingPoint();
 		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
@@ -20,10 +20,10 @@ public class SummonMobBullet : GrenadeBullet {
 
 	}
 
-	protected override void createParabola(Vector2 targetAngle)
+	protected override void createParabola(float targetAngle)
 	{
 		//m_parabola = new Parabola(gameObject, Random.Range(1f, m_speed), -targetAngle.x * Mathf.Deg2Rad, 1.3f, m_bouncing);
-		m_parabola = new Parabola(gameObject, m_speed, -targetAngle.x * Mathf.Deg2Rad, Random.Range(1f, 1.4f), m_bouncing);
+		m_parabola = new Parabola(gameObject, m_speed, -targetAngle * Mathf.Deg2Rad, Random.Range(1f, 1.4f), m_bouncing);
 		m_effectTargetingPoint.Init(m_parabola.DestPosition);
 	}
 

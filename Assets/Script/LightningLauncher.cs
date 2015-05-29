@@ -8,13 +8,13 @@ public class LightningLauncher : Weapon {
 	int		m_maxChaining = 1;
 	 
 
-	override public void StartFiring(Vector2 targetAngle)
+	override public void StartFiring(float targetAngle)
 	{		
 		if (m_firing == false && isCoolTime() == true )
 		{
 			if (null == m_bullet)
 			{
-				m_bullet = CreateBullet(targetAngle, m_gunPoint.transform.position) as LightningBullet;
+				m_bullet = CreateBullet(m_firingDescs[0], m_gunPoint.transform.position) as LightningBullet;
 			}
 			m_bullet.Damage = Damage;
 			m_bullet.gameObject.SetActive(true);

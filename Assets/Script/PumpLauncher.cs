@@ -3,12 +3,12 @@ using System.Collections;
 
 public class PumpLauncher : Weapon {
 
-	override public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
+	override public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
 		return base.CreateBullet(targetAngle, m_creature.transform.position);
 	}
 
-	override public void StartFiring(Vector2 targetAngle)
+	override public void StartFiring(float targetAngle)
 	{
 	}
 
@@ -20,7 +20,7 @@ public class PumpLauncher : Weapon {
 	{
 		if (isCoolTime())
 		{
-			base.StartFiring(new Vector2(0, 0));
+			base.StartFiring(0f);
 		}
 	}
 }

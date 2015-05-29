@@ -27,15 +27,15 @@ public class GrenadeBullet : Bullet {
 		m_isDestroying = false;
 	}
 
-	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Vector2 targetAngle, Weapon onHitWeapon)
+	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
 	{
 		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
-		createParabola(targetAngle);
+		createParabola(targetAngle.angle);
 	}
 
-	protected virtual void createParabola(Vector2 targetAngle)
+	protected virtual void createParabola(float targetAngle)
 	{
-		m_parabola = new Parabola(gameObject, m_speed, -targetAngle.x * Mathf.Deg2Rad, Random.Range(55f,85f) * Mathf.Deg2Rad, m_bouncing);
+		m_parabola = new Parabola(gameObject, m_speed, -targetAngle * Mathf.Deg2Rad, Random.Range(55f,85f) * Mathf.Deg2Rad, m_bouncing);
 	}
 
 	// Update is called once per frame

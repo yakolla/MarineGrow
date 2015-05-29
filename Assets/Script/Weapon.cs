@@ -37,6 +37,7 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	GameObject					m_prefSubWeapon;
 
+
 	Weapon m_subWeapon;
 
 	public delegate void CallbackOnCreateBullet();
@@ -149,6 +150,11 @@ public class Weapon : MonoBehaviour {
 
 	}
 
+	public string WeaponName
+	{
+		get {return m_refItem.codeName;}
+	}
+
 	public int Damage
 	{
 		get {return GetDamage(m_creature.m_creatureProperty);}
@@ -181,9 +187,9 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
-	virtual public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
+	virtual public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
-		GameObject obj = GameObjectPool.Instance.Alloc(m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.y, 0));
+		GameObject obj = GameObjectPool.Instance.Alloc(m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.angle, 0));
 		Bullet bullet = obj.GetComponent<Bullet>();
 		bullet.Init(m_creature, m_gunPoint.transform.position, Damage, targetAngle, m_subWeapon);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
@@ -196,7 +202,7 @@ public class Weapon : MonoBehaviour {
 		return bullet;
 	}
 
-	protected IEnumerator DelayToStartFiring(Vector2 targetAngle, float delay)
+	protected IEnumerator DelayToStartFiring(Weapon.FiringDesc targetAngle, float delay)
 	{
 		yield return new WaitForSeconds(delay);
 
@@ -209,18 +215,18 @@ public class Weapon : MonoBehaviour {
 		return m_lastCreated + (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) <= Time.time;
 	}
 
-	virtual public void StartFiring(Vector2 targetAngle)
+	virtual public void StartFiring(float targetAngle)
 	{		
 		if ( isCoolTime() == true )
 		{
-			float oriAng = targetAngle.x;
+			float oriAng = targetAngle;
 			float delay = 0f;
 			for(int i = 0; i < m_firingDescs.Count; ++i)
 			{
 				float ang = m_firingDescs[i].angle-oriAng;
-				targetAngle.x = ang;
-				targetAngle.y = m_firingDescs[i].angle;
-				StartCoroutine(DelayToStartFiring(targetAngle, m_firingDescs[i].delayTime));
+				targetAngle = ang;
+				//targetAngle.y = m_firingDescs[i].angle;
+				StartCoroutine(DelayToStartFiring(m_firingDescs[i], m_firingDescs[i].delayTime));
 				delay = m_firingDescs[i].delayTime;
 			}
 

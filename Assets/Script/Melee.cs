@@ -14,7 +14,7 @@ public class Melee : Weapon {
 		return desc;
 	}
 
-	override public Bullet CreateBullet(Vector2 targetAngle, Vector3 startPos)
+	override public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
 		Bullet bullet = base.CreateBullet(targetAngle, startPos);
 		Vector3 scale = bullet.transform.localScale;
@@ -24,13 +24,13 @@ public class Melee : Weapon {
 		return bullet;
 	}
 	
-	override public void StartFiring(Vector2 targetAngle)
+	override public void StartFiring(float targetAngle)
 	{		
 		if (isCoolTime() == true )
 		{
 			if (null == m_bullet)
 			{
-				m_bullet = CreateBullet(targetAngle, m_gunPoint.transform.position) as MeleeBullet;
+				m_bullet = CreateBullet(m_firingDescs[0], m_gunPoint.transform.position) as MeleeBullet;
 			}
 			else
 			{

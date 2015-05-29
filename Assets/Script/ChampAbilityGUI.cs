@@ -154,33 +154,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		weaponAbili.Add(new Ability(1f, "Bomb On Time", 
-		                           ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetWeapon(1);
-			int backup = 1;
-			int ori = 0;
-			if (weapon != null)
-			{
-				backup = weapon.Level+1;
-				ori = weapon.Level;
-			}
-			
-			return (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
-		},
-		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetWeapon(1);
-			if (weapon != null)
-			{
-				weapon.LevelUp();
-			}
-			else
-			{
-				m_champ.EquipWeapon(new ItemWeaponData(105, null));
-			}
-			
-			--m_champ.RemainStatPoint;
-		}));
-
 		foreach (DamageDesc.BuffType buffType in System.Enum.GetValues(typeof(DamageDesc.BuffType)))
 		{
 			bool skipBuff = false;
@@ -264,7 +237,28 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-
+		                            ()=>{
+			int backup = 1;
+			int ori = 0;
+			if (weapon != null)
+			{
+				backup = weapon.Level+1;
+				ori = weapon.Level;
+			}
+			
+			return (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+		},
+		()=>{
+			if (weapon != null)
+			{
+				weapon.LevelUp();
+			}
+			else
+			{
+			}
+			
+			--m_champ.RemainStatPoint;
+		}));
 
 		m_abilities.Add(AbilityCategory.ChampStat, champStatsAbili);
 		m_abilities.Add(AbilityCategory.Skill, skillAbili);

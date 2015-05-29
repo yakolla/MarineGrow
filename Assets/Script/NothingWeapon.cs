@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class NothingWeapon : Weapon {
-	override public void StartFiring(Vector2 targetAngle)
+	override public void StartFiring(float targetAngle)
 	{
 
 	}
