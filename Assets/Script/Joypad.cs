@@ -40,4 +40,15 @@ public class Joypad : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointer
 	{
 		get {return m_position;}
 	}
+
+	void Update()
+	{
+		if (m_dragging)
+		{
+			Vector3 angle = Vector3.zero;
+			angle.z = Mathf.Atan2(m_position.y, m_position.x) * Mathf.Rad2Deg;
+			transform.eulerAngles = angle;
+		}
+
+	}
 }

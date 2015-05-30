@@ -125,7 +125,7 @@ public class Bullet : MonoBehaviour {
 
 		if (m_onHitWeapon != null)
 		{
-			m_onHitWeapon.StartFiring(m_targetAngle.angle);
+			m_onHitWeapon.CreateBullet(m_targetAngle, target.transform.position);
 		}
 	}
 

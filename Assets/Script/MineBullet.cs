@@ -22,6 +22,11 @@ public class MineBullet : GrenadeBullet {
 
 	}
 
+	protected override void createParabola(float targetAngle)
+	{
+		base.createParabola(Random.Range(0f, 360f)+targetAngle);
+	}
+
 	// Update is called once per frame
 	new void Update () {
 		if (m_isDestroying == true)
