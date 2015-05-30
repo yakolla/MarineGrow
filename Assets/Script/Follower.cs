@@ -3,19 +3,9 @@ using System.Collections;
 
 public class Follower : Creature {
 
-	ItemObject	m_weapon;
 
 	Creature	m_owner;
-	MobAI				m_ai;
-	new void Start()
-	{
-
-		base.Start();
-
-
-		m_weapon.Item.Equip(this);
-
-	}
+	MobAI		m_ai;
 
 	// Update is called once per frame
 	new void Update () {
@@ -35,11 +25,6 @@ public class Follower : Creature {
 			m_ai.Update();
 		}
 		base.Update();
-	}
-
-	public ItemObject WeaponItem
-	{
-		set {m_weapon = value;}
 	}
 
 	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty, int level)
@@ -72,9 +57,29 @@ public class Follower : Creature {
 		}
 	}
 
+	void LevelUp()
+	{
+		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
+
+		WeaponHolder.LevelUp();
+	}
+
 	override public void GiveExp(int exp)
 	{
+		m_creatureProperty.giveExp((int)(exp+exp*m_owner.m_creatureProperty.GainExtraExp));
 		m_owner.GiveExp(exp);
+	}
+
+	void OnTriggerEnter(Collider other) {
+		if (other.tag.CompareTo("ItemBox") == 0)
+		{
+			if (3f > Vector3.Distance(transform.position, other.transform.position))
+			{
+				ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
+				itemBox.StartPickupEffect(m_owner);
+			}
+		};
+		
 	}
 
 	override public string[] GetAutoTargetTags()

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 public class ItemFollowerData : ItemData{
 
 	public string 	m_followerName;
-	public int		m_weaponID;
+	public int		m_refMobId;
 	public RefCreatureBaseProperty	m_baseProperty;
 	public MobAIType	m_aiType;
 
@@ -18,7 +18,7 @@ public class ItemFollowerData : ItemData{
 	{
 		RefMob refMob = RefData.Instance.RefMobs[refMobId];
 		m_followerName = refMob.prefBody;
-		m_weaponID = refMob.refWeaponItems[0].refItemId;
+		m_refMobId = refMobId;
 		m_baseProperty = refMob.baseCreatureProperty;
 		m_aiType = refMob.mobAI;
 	}
@@ -52,12 +52,14 @@ public class ItemFollowerData : ItemData{
 
 		Follower follower = (Follower)followerObj.GetComponent<Follower>();
 
-
-		ItemObject weapon = new ItemObject(new ItemWeaponData(m_weaponID, null));
-		weapon.Item.Level = Level;
-		weapon.Item.Evolution = Evolution;
-		follower.WeaponItem = weapon;
 		follower.Init(obj, m_aiType, m_baseProperty, Level);
+
+		RefMob refMob = RefData.Instance.RefMobs[m_refMobId];
+		foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
+		{
+			follower.EquipWeapon(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
+		}
+
 	
 	}
 
@@ -76,7 +78,7 @@ public class ItemFollowerData : ItemData{
 			return false;
 
 		ItemFollowerData itemFollowerData = item as ItemFollowerData;
-		return m_weaponID == itemFollowerData.m_weaponID;
+		return m_refMobId == itemFollowerData.m_refMobId;
 	}
 
 }

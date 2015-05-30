@@ -525,22 +525,37 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectShield()
 	{
-		GameObject pref = Resources.Load<GameObject>("Pref/ef shield skill");
-		GameObject effect = (GameObject)Instantiate(pref);
-		effect.transform.parent = transform;
-		effect.transform.localPosition = pref.transform.position;
-		effect.transform.localRotation = pref.transform.rotation;		
-		DamageNumberSprite sprite = DamageText("", Color.white, DamageNumberSprite.MovementType.FloatingUp);
+		GameObject pref = null;
+		GameObject effect = null;
+		DamageNumberSprite sprite = null;
 
 		while(true)
 		{
 			bool shield = m_creatureProperty.Shield > 0;
-			sprite.gameObject.SetActive(shield);
-			effect.gameObject.SetActive(shield);
-
 			if (shield == true)
 			{
+				if (pref == null)
+				{
+					pref = Resources.Load<GameObject>("Pref/ef shield skill");
+					effect = (GameObject)Instantiate(pref);
+					effect.transform.parent = transform;
+					effect.transform.localPosition = pref.transform.position;
+					effect.transform.localRotation = pref.transform.rotation;		
+					sprite = DamageText("", Color.white, DamageNumberSprite.MovementType.FloatingUp);
+
+					Vector3 scale = sprite.gameObject.transform.localScale;
+					scale *= 0.5f;
+					sprite.gameObject.transform.localScale = scale;
+				}
+
+
 				sprite.Text = "Shield " + m_creatureProperty.Shield;
+			}
+
+			if (pref != null)
+			{
+				sprite.gameObject.SetActive(shield);
+				effect.gameObject.SetActive(shield);
 			}
 
 			yield return null;
