@@ -1325,7 +1325,8 @@
 					"refItemId":"124",
 					"weaponStat":
 					{
-						"range":15
+						"range":10,
+						"coolTime":3
 					}
 				}
 			],
@@ -1354,7 +1355,8 @@
 					"refItemId":"108",
 					"weaponStat":
 					{
-						"range":15
+						"range":10,
+						"coolTime":1.5
 					}
 				}
 			],
@@ -1383,7 +1385,7 @@
 					"refItemId":"101",
 					"weaponStat":
 					{
-						"range":15
+						"range":10
 					}
 				}
 			],
@@ -1412,7 +1414,8 @@
 					"refItemId":"120",
 					"weaponStat":
 					{
-						"range":15
+						"range":10,
+						"coolTime":3
 					}
 				}
 			],
@@ -1441,7 +1444,8 @@
 					"refItemId":"111",
 					"weaponStat":
 					{
-						"range":15
+						"range":10,
+						"coolTime":3
 					}
 				}
 			],

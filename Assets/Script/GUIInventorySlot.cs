@@ -11,11 +11,12 @@ public class GUIInventorySlot : MonoBehaviour {
 	{
 		public YGUISystem.GUIPriceButton	m_priceButton;
 		public YGUISystem.GUIPriceButton	m_gemButton;
+		public bool							m_enable;
 
 		public GUIPriceGemButton(Transform transform, string buttonPath)
 		{
-			m_priceButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath).gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return true;});
-			m_gemButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath + "/GemButton").gameObject, Const.StartPosYOfGemPriceButtonImage, ()=>{return true;});
+			m_priceButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath).gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return m_enable;});
+			m_gemButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath + "/GemButton").gameObject, Const.StartPosYOfGemPriceButtonImage, ()=>{return m_enable;});
 		}
 
 		public void Update()
@@ -81,5 +82,6 @@ public class GUIInventorySlot : MonoBehaviour {
 		m_priceButton1.Update();
 	}
 }
+
 
 

@@ -167,7 +167,7 @@ public class OpenIABTest : MonoBehaviour
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
-		m_closeButton.Lable.Text.text = "Thank you for your purchase: " + m_paidItems[purchase.Sku].m_gem;
+		m_closeButton.Lable.Text.text = "Thanks for your purchase: " + m_paidItems[purchase.Sku].m_gem;
         _label = "CONSUMED: " + purchase.ToString();
 
 		PaidItem paidItem = null;

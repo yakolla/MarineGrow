@@ -163,6 +163,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			obj.transform.localPosition = new Vector3(0f, rectGUIInventorySlot.rect.height-rectGUIInventorySlot.rect.height*itemIndex, 0);
 
 			invSlot.Init(item.ItemIcon, item.Item.Description());
+			invSlot.PriceButton0.m_enable = false;
+			invSlot.PriceButton1.m_enable = false;
 
 			int capturedItemIndex = itemIndex;
 
@@ -215,6 +217,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 		case ButtonRole.Equip:
 			{
+				priceGemButton.m_enable = true;
+
 				priceGemButton.SetPrices(null, null);
 			priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Equip");
@@ -222,6 +226,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			break;
 		case ButtonRole.Unequip:
 			{
+				priceGemButton.m_enable = true;
+
 				priceGemButton.SetPrices(null, null);
 			priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Unequip");
@@ -230,6 +236,9 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		case ButtonRole.Levelup:
 			{
+
+				priceGemButton.m_enable = item.Item.RefItem.levelup.conds != null;
+				
 				priceGemButton.SetPrices(item.Item.RefItem.levelup.conds, item.Item.RefItem.levelup.else_conds);
 
 			priceGemButton.AddListener(() => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
@@ -239,6 +248,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		case ButtonRole.Unlock:
 			{
+				priceGemButton.m_enable = item.Item.RefItem.unlock.conds != null;
+
 				priceGemButton.SetPrices(item.Item.RefItem.unlock.conds, item.Item.RefItem.unlock.else_conds);
 			priceGemButton.AddListener(() => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Unlock");
