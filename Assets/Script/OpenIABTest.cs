@@ -41,13 +41,9 @@ public class OpenIABTest : MonoBehaviour
     bool _isInitialized = false;
 	bool m_progressing = false;
     Inventory _inventory = null;
-    
-	GameObject	m_loadingGUI;
 
     private void Start()
     {
-		m_loadingGUI = Const.ShowLoadingGUI("Loading...");
-		m_loadingGUI.SetActive(false);
 		// Listen to all events for illustration purposes
 		OpenIABEventManager.billingSupportedEvent += billingSupportedEvent;
 		OpenIABEventManager.billingNotSupportedEvent += billingNotSupportedEvent;
@@ -118,7 +114,10 @@ public class OpenIABTest : MonoBehaviour
 
 	void Update()
 	{
-		m_loadingGUI.SetActive(m_progressing);
+		if (m_progressing == true)
+			Const.ShowLoadingGUI("Loading...");
+		else
+			Const.HideLoadingGUI();
 	}
 
     private void billingSupportedEvent()

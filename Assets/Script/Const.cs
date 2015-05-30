@@ -247,12 +247,25 @@ public class Const {
 
 	}
 
-	public static GameObject ShowLoadingGUI(string name)
-	{
-		GameObject obj = GameObject.Instantiate(Resources.Load("Pref/LoadingGUI")) as GameObject;
-		obj.transform.Find("Panel/Image/Text").GetComponent<Text>().text = name;
 
-		return obj;
+	static GameObject loadingGUI = null;
+	public static void ShowLoadingGUI(string name)
+	{
+		if (loadingGUI == null)
+			loadingGUI = GameObject.Instantiate(Resources.Load("Pref/LoadingGUI")) as GameObject;
+
+		loadingGUI.transform.Find("Panel/Image/Text").GetComponent<Text>().text = name;
+		ShowLoadingGUI();
+	}
+
+	public static void ShowLoadingGUI()
+	{
+		loadingGUI.SetActive(true);
+	}
+
+	public static void HideLoadingGUI()
+	{
+		loadingGUI.SetActive(false);
 	}
 
 }

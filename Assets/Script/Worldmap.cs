@@ -22,11 +22,11 @@ public class Worldmap : MonoBehaviour {
 		m_btnAchievement = transform.Find("ButtonAchievement").GetComponent<Button>();
 
 		bool logined = GPlusPlatform.Instance.IsAuthenticated();
-		m_btnStart.interactable = logined;
+		/*m_btnStart.interactable = logined;
 		m_btnLeaderBoard.interactable = logined;
 		m_btnAchievement.interactable = logined;
-
-		Login(Const.ShowLoadingGUI("Try to login"));
+		*/
+		Login();
 	}
 	
 	void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
@@ -34,8 +34,9 @@ public class Worldmap : MonoBehaviour {
 			Warehouse.Instance.FileName = game.Filename;
 			Application.LoadLevel("Basic Dungeon");
 		} else {
-			// handle error
+			Const.HideLoadingGUI();
 		}
+
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
@@ -45,8 +46,10 @@ public class Worldmap : MonoBehaviour {
 			Warehouse.Instance.FileName = game.Filename;
 
 		} else {
-			// handle error
+			Const.HideLoadingGUI();
 		}
+
+
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
@@ -67,7 +70,7 @@ public class Worldmap : MonoBehaviour {
 		if (status == SavedGameRequestStatus.Success) {
 			Application.LoadLevel("Basic Dungeon");
 		} else {
-			// handle error
+			Const.HideLoadingGUI();
 		}
 		log = "OnSavedGameWritten:" + status + game;
 	}
@@ -78,14 +81,17 @@ public class Worldmap : MonoBehaviour {
 			Warehouse.Instance.Deserialize(data);
 			Application.LoadLevel("Basic Dungeon");
 		} else {
-			// handle error
+			Const.HideLoadingGUI();
 		}
 	}
 
-	void Login(GameObject loadingGUI)
+	void Login()
 	{
+
 		if (Application.platform == RuntimePlatform.Android)
 		{
+			Const.ShowLoadingGUI("Try to login");
+
 			GPlusPlatform.Instance.Login((bool success) => {
 				// handle success or failure
 				m_btnLeaderBoard.interactable = success;
@@ -94,25 +100,33 @@ public class Worldmap : MonoBehaviour {
 				
 				if (success == true)
 				{
-					DestroyObject(loadingGUI);
+					log = "Login success";
+					Const.HideLoadingGUI();
 				}
 				else
 				{
-					Login (loadingGUI);
+					log = "Login failed";
+					Login ();
 				}
 			});
 		}
 		else
 		{
 			m_btnStart.interactable = true;
-			DestroyObject(loadingGUI);
 		}
 	}
-
+/*
+	public void OnGUI()
+	{
+		GUI.Button(new Rect(0, 0, 300, 100), log);
+	}
+*/
 	public void OnClickStart()
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
+			Const.ShowLoadingGUI("Loading...");
+			log = "OnClickStart";
 			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
 				if (status == SelectUIStatus.SavedGameSelected) {
 					
@@ -131,7 +145,9 @@ public class Worldmap : MonoBehaviour {
 					
 				} else {
 					// handle cancel or error
+					Const.HideLoadingGUI();
 				}
+				log = status.ToString();
 			});
 				
 		}
