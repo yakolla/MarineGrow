@@ -260,12 +260,14 @@ public class Const {
 
 	public static void ShowLoadingGUI()
 	{
-		loadingGUI.SetActive(true);
+		if (loadingGUI != null)
+			loadingGUI.SetActive(true);
 	}
 
 	public static void HideLoadingGUI()
 	{
-		loadingGUI.SetActive(false);
+		if (loadingGUI != null)
+			loadingGUI.SetActive(false);
 	}
 
 }
