@@ -42,9 +42,12 @@ public class OpenIABTest : MonoBehaviour
 	bool m_progressing = false;
     Inventory _inventory = null;
     
+	GameObject	m_loadingGUI;
 
     private void Start()
     {
+		m_loadingGUI = Const.ShowLoadingGUI("Loading...");
+		m_loadingGUI.SetActive(false);
 		// Listen to all events for illustration purposes
 		OpenIABEventManager.billingSupportedEvent += billingSupportedEvent;
 		OpenIABEventManager.billingNotSupportedEvent += billingNotSupportedEvent;
@@ -113,26 +116,27 @@ public class OpenIABTest : MonoBehaviour
 		OpenIAB.purchaseProduct(sku, "ok marine");
 	}
 
+	void Update()
+	{
+		m_loadingGUI.SetActive(m_progressing);
+	}
 
     private void billingSupportedEvent()
     {
         _isInitialized = true;
 		OpenIAB.queryInventory();
-		m_closeButton.Lable.Text.text = "billingSupportedEvent";
 
 
     }
     
 	private void billingNotSupportedEvent(string error)
     {
-		m_closeButton.Lable.Text.text = "billingNotSupportedEvent: " + error;
 		gameObject.SetActive(false);
     }
 
     private void queryInventorySucceededEvent(Inventory inventory)
     {
-		m_closeButton.Lable.Text.text = "queryInventorySucceededEvent: " + inventory;
-        if (inventory != null)
+		if (inventory != null)
         {
             _label = inventory.ToString();
             _inventory = inventory;
@@ -146,27 +150,24 @@ public class OpenIABTest : MonoBehaviour
     
 	private void queryInventoryFailedEvent(string error)
     {
-		m_closeButton.Lable.Text.text = "queryInventoryFailedEvent: " + error;
-        _label = error;
+		_label = error;
     }
     
 	private void purchaseSucceededEvent(Purchase purchase)
     {
-		m_closeButton.Lable.Text.text = "purchaseSucceededEvent: " + purchase;
-        _label = "PURCHASED:" + purchase.ToString();
+		_label = "PURCHASED:" + purchase.ToString();
 
 		OpenIAB.consumeProduct(purchase);
     }
     private void purchaseFailedEvent(int errorCode, string errorMessage)
     {
-		m_closeButton.Lable.Text.text = "purchaseFailedEvent: " + errorMessage;
-        _label = "Purchase Failed: " + errorMessage;
+		_label = "Purchase Failed: " + errorMessage;
 		
 		m_progressing = false;
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
-		m_closeButton.Lable.Text.text = "consumePurchaseSucceededEvent: " + purchase.Sku;
+		m_closeButton.Lable.Text.text = "Thank you for your purchase: " + m_paidItems[purchase.Sku].m_gem;
         _label = "CONSUMED: " + purchase.ToString();
 
 		PaidItem paidItem = null;
@@ -179,8 +180,7 @@ public class OpenIABTest : MonoBehaviour
     }
     private void consumePurchaseFailedEvent(string error)
     {
-		m_closeButton.Lable.Text.text = "consumePurchaseFailedEvent: " + error;
-        _label = "Consume Failed: " + error;
+		_label = "Consume Failed: " + error;
 		m_progressing = false;
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
+using UnityEngine.UI;
 
 public class Const {
 
@@ -244,6 +245,14 @@ public class Const {
 			});
 		}
 
+	}
+
+	public static GameObject ShowLoadingGUI(string name)
+	{
+		GameObject obj = GameObject.Instantiate(Resources.Load("Pref/LoadingGUI")) as GameObject;
+		obj.transform.Find("Panel/Image/Text").GetComponent<Text>().text = name;
+
+		return obj;
 	}
 
 }

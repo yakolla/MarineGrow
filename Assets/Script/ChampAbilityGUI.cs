@@ -305,6 +305,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		button.Button.enabled = false;
 		button.Lable.Text.enabled = false;
 		button.Button.animator.SetBool("Spin", true);
+		button.Button.audio.Play();
 	}
 
 	public void StopSpinButton(int slot)

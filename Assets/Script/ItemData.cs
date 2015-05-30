@@ -91,8 +91,9 @@ public class ItemData {
 	{
 		return "<color=white>" + 
 				"Level:" + Level + "\n" + 
-				"Evolution:" + Evolution + "\n" + 
-				m_refItem.type.ToString() + OptionsDescription() + 
+				//"Evolution:" + Evolution + "\n" + 
+				//m_refItem.type.ToString() + OptionsDescription() + 
+				OptionsDescription() + 
 				"</color>";
 	}
 

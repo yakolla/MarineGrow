@@ -21,8 +21,12 @@ public class Worldmap : MonoBehaviour {
 		m_btnLeaderBoard = transform.Find("ButtonLeaderBoard").GetComponent<Button>();
 		m_btnAchievement = transform.Find("ButtonAchievement").GetComponent<Button>();
 
-		m_btnLeaderBoard.interactable = GPlusPlatform.Instance.IsAuthenticated();
-		m_btnAchievement.interactable = GPlusPlatform.Instance.IsAuthenticated();
+		bool logined = GPlusPlatform.Instance.IsAuthenticated();
+		m_btnStart.interactable = logined;
+		m_btnLeaderBoard.interactable = logined;
+		m_btnAchievement.interactable = logined;
+
+		Login(Const.ShowLoadingGUI("Try to login"));
 	}
 	
 	void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
@@ -78,7 +82,7 @@ public class Worldmap : MonoBehaviour {
 		}
 	}
 
-	public void OnClickStart()
+	void Login(GameObject loadingGUI)
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
@@ -86,32 +90,50 @@ public class Worldmap : MonoBehaviour {
 				// handle success or failure
 				m_btnLeaderBoard.interactable = success;
 				m_btnAchievement.interactable = success;
-
+				m_btnStart.interactable = success;
+				
 				if (success == true)
 				{
-					log = "login";
-					GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
-						if (status == SelectUIStatus.SavedGameSelected) {
-							
-							string fileName = game.Filename;
-							if (fileName.Equals(""))
-							{
-								fileName = System.DateTime.Now.Ticks.ToString();
-								GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForSaving);
-								
-							}
-							else
-							{
-								GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);
-							}
-							
-							
-						} else {
-							// handle cancel or error
-						}
-					});
+					DestroyObject(loadingGUI);
+				}
+				else
+				{
+					Login (loadingGUI);
 				}
 			});
+		}
+		else
+		{
+			m_btnStart.interactable = true;
+			DestroyObject(loadingGUI);
+		}
+	}
+
+	public void OnClickStart()
+	{
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
+				if (status == SelectUIStatus.SavedGameSelected) {
+					
+					string fileName = game.Filename;
+					if (fileName.Equals(""))
+					{
+						fileName = System.DateTime.Now.Ticks.ToString();
+						GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForSaving);
+						
+					}
+					else
+					{
+						GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);
+					}
+					
+					
+				} else {
+					// handle cancel or error
+				}
+			});
+				
 		}
 		else
 		{
