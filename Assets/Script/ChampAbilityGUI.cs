@@ -250,7 +250,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(1f, "Auto Explosion Skill", 
+		skillAbili.Add(new Ability(1f, "Auto Grenade Skill", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
 			int backup = 1;
@@ -277,6 +277,33 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		skillAbili.Add(new Ability(1f, "Auto Explosion Skill", 
+		                           ()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[129].codeName);
+			int backup = 1;
+			int ori = 0;
+			if (weapon != null)
+			{
+				backup = weapon.Level+1;
+				ori = weapon.Level;
+			}
+			
+			return (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+		},
+		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[129].codeName);
+			if (weapon != null)
+			{
+				weapon.LevelUp();
+			}
+			else
+			{
+				m_champ.EquipPassiveWeapon(new ItemWeaponData(129, null));
+			}
+			
+			--m_champ.RemainStatPoint;
+		}));
+		
 		m_abilities.Add(AbilityCategory.ChampStat, champStatsAbili);
 		m_abilities.Add(AbilityCategory.Skill, skillAbili);
 		m_abilities.Add(AbilityCategory.Weapon, weaponAbili);

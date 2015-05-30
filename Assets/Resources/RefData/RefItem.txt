@@ -1134,6 +1134,38 @@
 		
 	},
 	{
+		"id":129,
+		"codeName":"ExplosionPassiveLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Explosion",		
+		"weaponStat":
+		{
+			"coolTime":30,
+			"range":5
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":5, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",

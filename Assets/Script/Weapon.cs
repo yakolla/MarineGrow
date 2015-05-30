@@ -215,6 +215,12 @@ public class Weapon : MonoBehaviour {
 		return m_lastCreated + (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) <= Time.time;
 	}
 
+	protected float remainCoolTimeRatio()
+	{
+		float cool = (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime);
+		return Mathf.Min(1f, 1f-((m_lastCreated + cool)-Time.time)/cool);
+	}
+
 	virtual public void StartFiring(float targetAngle)
 	{		
 		if ( isCoolTime() == true )
