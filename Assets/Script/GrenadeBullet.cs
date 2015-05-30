@@ -35,7 +35,7 @@ public class GrenadeBullet : Bullet {
 
 	protected virtual void createParabola(float targetAngle)
 	{
-		m_parabola = new Parabola(gameObject, m_speed, -targetAngle * Mathf.Deg2Rad, Random.Range(55f,85f) * Mathf.Deg2Rad, m_bouncing);
+		m_parabola = new Parabola(gameObject, m_speed, -(transform.rotation.eulerAngles.y + targetAngle) * Mathf.Deg2Rad, Random.Range(55f,85f) * Mathf.Deg2Rad, m_bouncing);
 	}
 
 	// Update is called once per frame
