@@ -406,18 +406,17 @@ public class Creature : MonoBehaviour {
 	IEnumerator EffectAirborne()
 	{	
 		
-		DamageNumberSprite sprite = DamageText(DamageDesc.BuffType.Airborne.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
+		DamageText(DamageDesc.BuffType.Airborne.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 		CrowdControl(CrowdControlType.Airborne, true);
 		Parabola parabola = new Parabola(gameObject, 8, 0f, 90*Mathf.Deg2Rad, 1);
 		while(parabola.Update())
 		{
-
 			yield return null;
 		}
 
 		m_buffEffects[(int)DamageDesc.BuffType.Airborne].m_run = false;
 		CrowdControl(CrowdControlType.Airborne, false);
-		sprite.DestroyObject();
+
 	}
 
 	IEnumerator EffectStun()
@@ -432,7 +431,7 @@ public class Creature : MonoBehaviour {
 	IEnumerator EffectSlow(float time)
 	{		
 		
-		DamageNumberSprite sprite = DamageText(DamageDesc.BuffType.Slow.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
+		DamageText(DamageDesc.BuffType.Slow.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 		m_creatureProperty.BetaMoveSpeed /= 2f;
 
 		yield return new WaitForSeconds(time);
@@ -440,7 +439,6 @@ public class Creature : MonoBehaviour {
 		m_buffEffects[(int)DamageDesc.BuffType.Slow].m_run = false;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
 
-		sprite.DestroyObject();
 
 	}
 

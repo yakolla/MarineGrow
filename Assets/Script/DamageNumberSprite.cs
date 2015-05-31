@@ -86,6 +86,11 @@ public class DamageNumberSprite : MonoBehaviour {
 
 			transform.position = m_targetPos;
 
+			if (m_startTime+m_duration < Time.time)
+			{
+				DestroyObject();
+			}
+
 			break;
 		}
 	}
