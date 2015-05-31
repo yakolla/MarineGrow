@@ -10,9 +10,7 @@ public class YGUISystem {
 		protected GUIImageStatic 	m_icon;
 		protected GUILable			m_lable;
 		protected System.Func<bool>	m_enableChecker;
-		protected float				m_startCoolDownTime;
-		protected float				m_coolDownTime;
-		
+
 		public GUIButton(GameObject obj, System.Func<bool> enableChecker)
 		{
 			m_button = obj.GetComponent<Button>();
@@ -24,25 +22,7 @@ public class YGUISystem {
 				m_icon = new GUIImageStatic(iconTrans.gameObject, null);
 		}
 
-		public void StartCoolDownTime(float coolDownTime)
-		{
-			m_startCoolDownTime = Time.time;
-			m_coolDownTime = coolDownTime;
-			m_button.image.fillAmount = 0f;
-			Lable.Text.text = coolDownTime.ToString();
 
-			if (m_icon != null)
-			{
-				Color color = m_icon.RawImage.color;
-				color.a = 0.2f;
-				m_icon.RawImage.color = color;
-			}
-		}
-
-		public bool IsCoolDownDone()
-		{
-			return m_button.image.fillAmount == 1f;
-		}
 
 		public Button Button
 		{
@@ -54,7 +34,55 @@ public class YGUISystem {
 			get{return m_icon;}
 		}
 		
-		public void Update()
+		virtual public void Update()
+		{
+			m_button.interactable = m_enableChecker();
+			Color color = m_button.image.color;
+			if (m_button.interactable == true)
+				color.a = 1f;
+			else
+				color.a = 0.5f;
+
+			m_button.image.color = color;
+		}
+
+		public GUILable Lable
+		{
+			get{return m_lable;}
+		}
+	}
+
+	public class GUICoolDownButton : GUIButton
+	{
+		protected float				m_startCoolDownTime;
+		protected float				m_coolDownTime;
+
+		public GUICoolDownButton(GameObject obj, System.Func<bool> enableChecker)
+			: base(obj, enableChecker)
+		{
+		}
+
+		public void StartCoolDownTime(float coolDownTime)
+		{
+			m_startCoolDownTime = Time.time;
+			m_coolDownTime = coolDownTime;
+			m_button.image.fillAmount = 0f;
+			Lable.Text.text = coolDownTime.ToString();
+			
+			if (m_icon != null)
+			{
+				Color color = m_icon.RawImage.color;
+				color.a = 0.2f;
+				m_icon.RawImage.color = color;
+			}
+		}
+		
+		public bool IsCoolDownDone()
+		{
+			return m_button.image.fillAmount == 1f;
+		}
+
+		override public void Update()
 		{
 			if (m_startCoolDownTime > 0f)
 			{
@@ -75,11 +103,6 @@ public class YGUISystem {
 				}
 			}
 			m_button.gameObject.SetActive( m_enableChecker() );
-		}
-
-		public GUILable Lable
-		{
-			get{return m_lable;}
 		}
 	}
 

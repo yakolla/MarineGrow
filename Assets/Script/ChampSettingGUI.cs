@@ -14,6 +14,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	YGUISystem.GUIImageStatic	m_gem;
 	YGUISystem.GUIButton	m_weapon;
 	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[EQUIP_ACCESSORY_SLOT_MAX];
+	YGUISystem.GUIButton	m_start;
 
 	const int INVEN_SLOT_COLS = 1;
 	const int INVEN_SLOT_ROWS = 4;
@@ -143,7 +144,9 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		m_gold = new YGUISystem.GUIImageStatic(transform.Find("GoldImage").gameObject, Warehouse.Instance.Gold.ItemIcon);
 		m_gem = new YGUISystem.GUIImageStatic(transform.Find("GemImage").gameObject, Warehouse.Instance.Gem.ItemIcon);
+		m_start = new YGUISystem.GUIButton(transform.Find("StartButton").gameObject, ()=>{return m_equipedWeapon != null;});
 
+		RectTransform rectScrollView = transform.Find("InvScrollView").gameObject.GetComponent<RectTransform>();
 		m_inventoryObj = transform.Find("InvScrollView/Contents").gameObject;
 		RectTransform rectInventoryObj = m_inventoryObj.GetComponent<RectTransform>();
 		Vector2 rectContents = new Vector2(	rectInventoryObj.rect.width, 0);
@@ -151,7 +154,9 @@ public class ChampSettingGUI : MonoBehaviour {
 		GameObject prefGUIInventorySlot = Resources.Load<GameObject>("Pref/GUIInventorySlot");
 		RectTransform	rectGUIInventorySlot = prefGUIInventorySlot.GetComponent<RectTransform>();
 
-		for(int itemIndex = 0; itemIndex < Warehouse.Instance.Items.Count; ++itemIndex)
+		int itemIndex = 0;
+		int maxCount = Warehouse.Instance.Items.Count;
+		for(itemIndex = 0; itemIndex < maxCount; ++itemIndex)
 		{
 			ItemObject item = Warehouse.Instance.Items[itemIndex];
 
@@ -160,7 +165,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			obj.transform.parent = m_inventoryObj.transform;
 			obj.transform.localScale = prefGUIInventorySlot.transform.localScale;
-			obj.transform.localPosition = new Vector3(0f, rectGUIInventorySlot.rect.height-rectGUIInventorySlot.rect.height*itemIndex, 0);
+			obj.transform.localPosition = new Vector3(0f, rectGUIInventorySlot.rect.height/2*(maxCount-1)-rectGUIInventorySlot.rect.height*itemIndex, 0);
 
 			invSlot.Init(item.ItemIcon, item.Item.Description());
 			invSlot.PriceButton0.m_enable = false;
@@ -192,13 +197,11 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				SetButtonRole(ButtonRole.Levelup, invSlot, invSlot.PriceButton1, itemIndex);
 			}
-
-
-
 		}
-		rectContents.y = rectGUIInventorySlot.rect.height*2*Warehouse.Instance.Items.Count;
+		//rectContents.y = rectGUIInventorySlot.rect.height*2*itemIndex;
+		rectContents.y = rectGUIInventorySlot.rect.height*itemIndex;
 		rectInventoryObj.sizeDelta = rectContents;
-		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, 0, rectInventoryObj.position.z);
+		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, -(rectContents.y/2-rectScrollView.rect.height/2), rectInventoryObj.position.z);
 	}
 	enum ButtonRole
 	{
@@ -275,6 +278,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		m_gold.Lable.Text.text = Warehouse.Instance.Gold.Item.Count.ToString();
 		m_gem.Lable.Text.text = Warehouse.Instance.Gem.Item.Count.ToString();
+		m_start.Update();
 
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 
@@ -289,39 +293,41 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	public void OnClickStart()
 	{
-		if (m_equipedWeapon != null)
-		{
-			GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_spawnChamp.position, m_spawnChamp.localRotation);
-			GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/newchamp_skin");
-			
-			champObj.name = "Champ";
-			
-			GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
-			enemyBody.name = "Body";
-			enemyBody.transform.parent = champObj.transform;
-			enemyBody.transform.localPosition = Vector3.zero;
-			enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-			
-			Champ champ = champObj.GetComponent<Champ>();
-			champ.Init();
-			m_equipedWeapon.Item.Equip(champ);
-			for(int x = 0; x < m_equipedAccessories.Length; ++x)
-			{
-				if (m_equipedAccessories[x] != null)
-				{
-					m_equipedAccessories[x].Item.Equip(champ);
-				}
-			}	
-			
-			m_spawn.StartWave(m_stage-1, champ);
-			
-			GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
-			GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.Item.Level, 0);
-			
-			//champObj.SetActive(false);
+		if (m_equipedWeapon == null)
+			return;
 
-			gameObject.SetActive(false);
-		}
+
+		GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_spawnChamp.position, m_spawnChamp.localRotation);
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/newchamp_skin");
+		
+		champObj.name = "Champ";
+		
+		GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+		enemyBody.name = "Body";
+		enemyBody.transform.parent = champObj.transform;
+		enemyBody.transform.localPosition = Vector3.zero;
+		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+		
+		Champ champ = champObj.GetComponent<Champ>();
+		champ.Init();
+		m_equipedWeapon.Item.Equip(champ);
+		for(int x = 0; x < m_equipedAccessories.Length; ++x)
+		{
+			if (m_equipedAccessories[x] != null)
+			{
+				m_equipedAccessories[x].Item.Equip(champ);
+			}
+		}	
+		
+		m_spawn.StartWave(m_stage-1, champ);
+		
+		GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
+		GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.Item.Level, 0);
+		
+		//champObj.SetActive(false);
+
+		gameObject.SetActive(false);
+
 	}
 
 	public void OnClickEquip(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)

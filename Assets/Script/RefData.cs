@@ -151,6 +151,7 @@ public class RefMob : RefBaseData
 		public WeaponStat weaponStat;
 	}
 	public string				prefBody;
+	public string				name;
 	public WeaponDesc[]			refWeaponItems;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;

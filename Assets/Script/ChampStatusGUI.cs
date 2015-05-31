@@ -14,7 +14,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 
 	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
-	YGUISystem.GUIButton[]	m_accessoryButtons = new YGUISystem.GUIButton[Const.AccessoriesSlots];
+	YGUISystem.GUICoolDownButton[]	m_accessoryButtons = new YGUISystem.GUICoolDownButton[Const.AccessoriesSlots];
 	YGUISystem.GUIGuage[] m_guages = new YGUISystem.GUIGuage[Const.Guages];
 
 	void Start () {
@@ -38,27 +38,29 @@ public class ChampStatusGUI : MonoBehaviour {
 			return m_champ.DashSkillStack > 0;
 		});
 
-		m_accessoryButtons[0] = new YGUISystem.GUIButton(transform.Find("Accessory/Button0").gameObject, ()=>{
+		m_accessoryButtons[0] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button0").gameObject, ()=>{
 			return true;
 		});
-		m_accessoryButtons[1] = new YGUISystem.GUIButton(transform.Find("Accessory/Button1").gameObject, ()=>{
+		m_accessoryButtons[1] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button1").gameObject, ()=>{
 			return true;
 		});
-		m_accessoryButtons[2] = new YGUISystem.GUIButton(transform.Find("Accessory/Button2").gameObject, ()=>{
+		m_accessoryButtons[2] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button2").gameObject, ()=>{
 			return true;
 		});
-		m_accessoryButtons[3] = new YGUISystem.GUIButton(transform.Find("Accessory/Button3").gameObject, ()=>{
+		m_accessoryButtons[3] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button3").gameObject, ()=>{
 			return true;
 		});
 
 		m_guages[0] = new YGUISystem.GUIGuage(transform.Find("Guage/HP").gameObject, 
 			()=>{return m_champ.m_creatureProperty.getHPRemainRatio();}, 
-			()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxHP).ToString(); }
+			()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.HP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxHP).ToString(); 
+			}
 		);
 
 		m_guages[1] = new YGUISystem.GUIGuage(transform.Find("Guage/XP").gameObject, 
 			()=>{return m_champ.m_creatureProperty.getExpRemainRatio();}, 
-			()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();}
+			()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.Exp).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxExp).ToString();
+			}
 		);
 
 		m_guages[2] = new YGUISystem.GUIGuage(transform.Find("Guage/SP").gameObject, 

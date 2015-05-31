@@ -612,24 +612,23 @@ public class Creature : MonoBehaviour {
 		dmgEffect.transform.particleSystem.startSize = gameObject.transform.localScale.x+prefEffect.transform.localScale.x;
 		StartCoroutine(UpdatePickupItemEffect(dmgEffect));
 	
-		string strDamage = value.ToString();			
+		string strDamage = value.ToString();
 
 		switch(type)
 		{
 		case ItemData.Type.Gold:
 			{
-
-				DamageText(strDamage, Color.yellow, DamageNumberSprite.MovementType.RisingUp);
+				DamageText("Gold " + strDamage, Color.yellow, DamageNumberSprite.MovementType.RisingUp);
 			}
 			break;
 		case ItemData.Type.HealPosion:
 			{
-				DamageText(strDamage, Color.green, DamageNumberSprite.MovementType.RisingUp);
+				DamageText("Heal " + strDamage, Color.green, DamageNumberSprite.MovementType.RisingUp);
 			}
 			break;
 		case ItemData.Type.XPPotion:
 			{
-				DamageText(strDamage, Color.blue, DamageNumberSprite.MovementType.RisingUp);
+				DamageText("XP " + strDamage, Color.blue, DamageNumberSprite.MovementType.RisingUp);
 			}
 			break;
 		}

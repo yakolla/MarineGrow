@@ -24,8 +24,6 @@ public class DamageNumberSprite : MonoBehaviour {
 	float		m_duration = 1.5f;
 	float		m_startTime = 0f;
 
-	[SerializeField]
-	Vector3		m_offset;
 	float		m_posY = 0f;
 
 	TypogenicText	m_text;
@@ -42,6 +40,7 @@ public class DamageNumberSprite : MonoBehaviour {
 		m_targetPos.y += 1;
 		transform.position = m_targetPos;
 		m_startTime = Time.time;
+		m_posY = 0f;
 
 		m_text = GetComponent<TypogenicText>();
 		m_text.Text = damage;
@@ -68,7 +67,7 @@ public class DamageNumberSprite : MonoBehaviour {
 			{
 				m_targetPos = m_target.transform.position+m_target.AimpointLocalPos;
 			}
-			m_posY += 1.5f*Time.deltaTime;
+			m_posY += 2f*Time.deltaTime;
 
 			m_targetPos.y += m_posY;
 			transform.position = m_targetPos;
