@@ -66,7 +66,7 @@ public class MobAIItemShuttle : MobAI {
 			{
 				Vector3 pos = m_mob.transform.position;
 				pos.y = m_dropPosY;
-				m_mob.Spawn.SpawnItemBox(m_mob.RefDropItems, pos);
+				Const.GetSpawn().SpawnItemBox(m_mob.RefDropItems, pos);
 				m_droppedItemTime = 0f;
 			}
 

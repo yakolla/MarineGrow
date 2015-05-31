@@ -15,7 +15,7 @@ public class SummonMobBullet : GrenadeBullet {
 		Mob ownerMob = m_ownerCreature as Mob;
 		if (ownerMob != null)
 		{
-			m_spawnedMob = m_ownerCreature.Spawn.SpawnMob(ownerMob.RefMob.dropEggMob.refMob, gameObject.transform.position, false, false);
+			m_spawnedMob = Const.GetSpawn().SpawnMob(ownerMob.RefMob.dropEggMob.refMob, gameObject.transform.position, false, false);
 		}
 
 	}

@@ -1166,6 +1166,105 @@
 		}
 	},
 	{
+		"id":201,
+		"codeName":"FollowerGuidedRocketLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/RocketLauncher",		
+		"evolutionFiring":
+		{
+			"angle":3,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":3,
+			"range":10
+		}
+		
+	},
+	{
+		"id":202,
+		"codeName":"FollowerGun",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",	
+		"evolutionFiring":
+		{
+			"angle":15,
+			"delay":0
+		},
+		"weaponStat":
+		{
+			"coolTime":1.5,
+			"range":10
+		}
+	},
+	{
+		"id":203,
+		"codeName":"FollowerFiregun",
+		"type":"Weapon",
+		"icon":"Sprites/Firegun",		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":3,
+			"range":10
+		}
+	},
+	{
+		"id":204,
+		"codeName":"FollowerBoomerangLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Boomerang",
+		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":4,
+			"range":10
+		}
+	},
+	{
+		"id":205,
+		"codeName":"FollowerRocketLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/RocketLauncher",
+		
+		"evolutionFiring":
+		{
+			"angle":15,
+			"delay":0.03
+		},
+		"weaponStat":
+		{
+			"coolTime":3,
+			"range":10
+		}
+	},
+	{
+		"id":206,
+		"codeName":"FollowerGun",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",	
+		"evolutionFiring":
+		{
+			"angle":0,
+			"delay":0.1
+		},
+		"weaponStat":
+		{
+			"coolTime":1.5,
+			"range":10
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",

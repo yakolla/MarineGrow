@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
@@ -34,6 +35,7 @@ public class Champ : Creature {
 	Animator	m_bloodWarningAnimator;
 
 	Vector3		m_moveDir;
+
 
 
 	new void Start () {

@@ -44,7 +44,8 @@ public class Melee : Weapon {
 		}
 		else
 		{			
-			m_bullet.SetCollider(false);
+			if (m_bullet != null)
+				m_bullet.SetCollider(false);
 		}
 
 		if (null != m_bullet)

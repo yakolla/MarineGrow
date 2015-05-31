@@ -38,6 +38,9 @@ public class Spawn : MonoBehaviour {
 
 	YGUISystem.GUILable	m_stageText;
 
+	
+	List<Follower>	m_followers = new List<Follower>();
+
 	[SerializeField]
 	int				m_wave = 0;
 	// Use this for initialization
@@ -498,7 +501,7 @@ public class Spawn : MonoBehaviour {
 		enemyObj.transform.localScale = new Vector3(refMob.scale, refMob.scale, refMob.scale);
 
 		Mob enemy = enemyObj.GetComponent<Mob>();
-		enemy.Init(refMob, mobLevel, this, refDropItems, boss);
+		enemy.Init(refMob, mobLevel, refDropItems, boss);
 		enemy.m_creatureProperty.AlphaMaxHP=(int)(enemy.m_creatureProperty.MaxHP*ProgressStage()*0.1f);
 		enemy.m_creatureProperty.Heal(enemy.m_creatureProperty.MaxHP);
 
@@ -642,6 +645,29 @@ public class Spawn : MonoBehaviour {
 
 		}
 		
+	}
+
+	public void AddFollower(Follower cre)
+	{
+		m_followers.Add (cre);
+	}
+
+	public void RemoveFollower(Follower cre)
+	{
+		m_followers.Remove(cre);
+	}
+
+	public void GiveXPChamps(Creature cre, int xp)
+	{
+		if (cre.CreatureType != Creature.Type.Champ)
+			return;
+
+		m_champ.GiveExp(xp);
+
+		foreach(Follower f in m_followers)
+		{
+			f.GiveExp(xp);
+		}
 	}
 
 	// Update is called once per frame

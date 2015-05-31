@@ -57,10 +57,12 @@ public class ItemFollowerData : ItemData{
 		RefMob refMob = RefData.Instance.RefMobs[m_refMobId];
 		foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
 		{
-			follower.EquipWeapon(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
+			ItemWeaponData itemWeaponData = new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat);
+			itemWeaponData.Level = Level;
+			follower.EquipWeapon(itemWeaponData);
 		}
 
-	
+		Const.GetSpawn().AddFollower(follower);
 	}
 
 	override public void NoUse(Creature obj)

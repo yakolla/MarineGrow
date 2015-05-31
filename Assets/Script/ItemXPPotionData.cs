@@ -14,6 +14,6 @@ public class ItemXPPotionData : ItemData{
 	}
 	
 	override public void Equip(Creature obj){
-		obj.m_creatureProperty.giveExp(Count);
+		obj.GiveExp(Count);
 	}
 }

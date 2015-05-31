@@ -130,11 +130,6 @@ public class Creature : MonoBehaviour {
 		m_weaponHolder.EquipPassiveWeapon(weapon);
 	}
 
-	public Spawn Spawn	{
-		set {m_spawn = value;}
-		get {return m_spawn;}
-	}
-
 	public Vector3	AimpointLocalPos
 	{
 		get {return m_aimpoint.transform.localPosition;}
@@ -739,7 +734,7 @@ public class Creature : MonoBehaviour {
 					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.RisingUp);
 					offender.m_creatureProperty.Heal(lifeSteal);
 				}
-				offender.GiveExp(m_creatureProperty.Exp);
+				Const.GetSpawn().GiveXPChamps(offender, m_creatureProperty.Exp);
 			}
 
 			Death();

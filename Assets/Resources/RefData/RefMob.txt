@@ -1322,12 +1322,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"124",
-					"weaponStat":
-					{
-						"range":10,
-						"coolTime":3
-					}
+					"refItemId":"201"
 				}
 			],
 			"mobAI":"Normal",
@@ -1352,12 +1347,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"108",
-					"weaponStat":
-					{
-						"range":10,
-						"coolTime":1.5
-					}
+					"refItemId":"202"
 				}
 			],
 			"mobAI":"Normal",
@@ -1382,11 +1372,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"101",
-					"weaponStat":
-					{
-						"range":10
-					}
+					"refItemId":"203"
 				}
 			],
 			"mobAI":"Normal",
@@ -1411,12 +1397,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"120",
-					"weaponStat":
-					{
-						"range":10,
-						"coolTime":3
-					}
+					"refItemId":"204"
 				}
 			],
 			"mobAI":"Normal",
@@ -1441,12 +1422,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"111",
-					"weaponStat":
-					{
-						"range":10,
-						"coolTime":3
-					}
+					"refItemId":"205"
 				}
 			],
 			"mobAI":"Normal",
@@ -1471,11 +1447,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"108",
-					"weaponStat":
-					{
-						"range":15
-					}
+					"refItemId":"206"
 				}
 			],
 			"mobAI":"Normal",

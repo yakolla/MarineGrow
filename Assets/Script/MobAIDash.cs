@@ -36,7 +36,7 @@ public class MobAIDash : MobAI {
 		m_navAgent.SetDestination(m_goal);
 		m_speed = 0;
 		m_breakMode = false;
-		m_mob.Spawn.StartCoroutine(EffectAttackGudiedLine(m_mob.transform.position, m_goal, 0));
+		Const.GetSpawn().StartCoroutine(EffectAttackGudiedLine(m_mob.transform.position, m_goal, 0));
 
 	}
 

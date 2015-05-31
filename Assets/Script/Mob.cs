@@ -10,14 +10,13 @@ public class Mob : Creature {
 	[SerializeField]
 	GameObject			m_prefEffectBlood;
 
-	public void Init(RefMob refMob, int mobLevel, Spawn spawn, RefItemSpawn[] refDropItems, bool boss)
+	public void Init(RefMob refMob, int mobLevel, RefItemSpawn[] refDropItems, bool boss)
 	{
 		base.Init();
 
 		RefMob = refMob;
 		RefDropItems = refDropItems;
 		Boss = boss;
-		Spawn = spawn;
 		rigidbody.mass = refMob.mass;
 
 		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);	
@@ -126,7 +125,7 @@ public class Mob : Creature {
 
 		m_behaviourType = BehaviourType.Death;
 
-		Spawn.OnKillMob(this);
+		Const.GetSpawn().OnKillMob(this);
 
 		if (RefMob.eggMob != null)
 		{
@@ -134,7 +133,7 @@ public class Mob : Creature {
 			pos.y = 0f;
 			for(int i = 0; i < RefMob.eggMob.maxCount; ++i)
 			{
-				Spawn.SpawnMob(RefMob.eggMob.refMob, pos, false, false);
+				Const.GetSpawn().SpawnMob(RefMob.eggMob.refMob, pos, false, false);
 			}
 		}
 

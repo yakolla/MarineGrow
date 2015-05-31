@@ -30,31 +30,29 @@ public class Follower : Creature {
 	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty, int level)
 	{
 		base.Init();
-		m_owner = owner;
-		if (m_owner)
-		{
-			CreatureType = m_owner.CreatureType;
-			m_creatureProperty.init(this, baseProperty, level);
-			Spawn = owner.Spawn;
 
-			switch(aiType)
-			{
-			case MobAIType.Normal:
-				m_ai = new MobAINormal();
-				break;
-			case MobAIType.Rotation:
-				m_ai = new MobAIRotation();
-				break;
-			case MobAIType.Revolution:
-				m_ai = new MobAIRevolution();
-				break;
-			case MobAIType.ItemShuttle:
-				m_ai = new MobAIItemShuttle();
-				break;
-			}
-			
-			m_ai.Init(this);
+		m_owner = owner;
+		CreatureType = m_owner.CreatureType;
+		m_creatureProperty.init(this, baseProperty, level);
+
+		switch(aiType)
+		{
+		case MobAIType.Normal:
+			m_ai = new MobAINormal();
+			break;
+		case MobAIType.Rotation:
+			m_ai = new MobAIRotation();
+			break;
+		case MobAIType.Revolution:
+			m_ai = new MobAIRevolution();
+			break;
+		case MobAIType.ItemShuttle:
+			m_ai = new MobAIItemShuttle();
+			break;
 		}
+		
+		m_ai.Init(this);
+	
 	}
 
 	void LevelUp()
@@ -67,7 +65,6 @@ public class Follower : Creature {
 	override public void GiveExp(int exp)
 	{
 		m_creatureProperty.giveExp((int)(exp+exp*m_owner.m_creatureProperty.GainExtraExp));
-		m_owner.GiveExp(exp);
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -90,4 +87,10 @@ public class Follower : Creature {
 		return new string[]{""};
 	}
 
+	override public void Death()
+	{
+		base.Death();
+
+		Const.GetSpawn().RemoveFollower(this);
+	}
 }

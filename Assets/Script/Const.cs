@@ -270,4 +270,15 @@ public class Const {
 			loadingGUI.SetActive(false);
 	}
 
+
+	static Spawn spawn  = null;
+	public static Spawn GetSpawn()
+	{
+		if (spawn == null)
+		{
+			spawn = GameObject.Find("Dungeon/Spawn").GetComponent<Spawn>();
+		}
+
+		return spawn;
+	}
 }

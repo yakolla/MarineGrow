@@ -111,6 +111,9 @@ public class Weapon : MonoBehaviour {
 		if (m_refItem.evolutionFiring == null)
 			return;
 
+		if (m_level > Const.ItemMaxLevel+3)
+			return;
+
 		int count = m_firingDescs.Count;
 
 		float angle = m_refItem.evolutionFiring.angle*((count+1)/2);
@@ -144,8 +147,7 @@ public class Weapon : MonoBehaviour {
 		}
 		else
 		{
-			//m_damageRatio += m_level / 2;
-			m_creature.m_creatureProperty.AlphaAttackCoolTime -= 0.1f;
+
 		}
 
 	}
@@ -210,14 +212,22 @@ public class Weapon : MonoBehaviour {
 
 	}
 
+	float coolDownTime()
+	{
+		const float maxCool = 0.5f;
+		float levelRatio = (m_level-1)/(float)Const.ItemMaxLevel;
+		float coolPerLevel = (1-levelRatio)*1 + levelRatio*maxCool;
+		return m_coolTime*m_creature.m_creatureProperty.AttackCoolTime*coolPerLevel;
+	}
+
 	protected bool isCoolTime()
 	{
-		return m_lastCreated + (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime) <= Time.time;
+		return m_lastCreated +  coolDownTime() <= Time.time;
 	}
 
 	protected float remainCoolTimeRatio()
 	{
-		float cool = (m_coolTime*m_creature.m_creatureProperty.AttackCoolTime);
+		float cool = coolDownTime();
 		return Mathf.Min(1f, 1f-((m_lastCreated + cool)-Time.time)/cool);
 	}
 
