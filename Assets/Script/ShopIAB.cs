@@ -21,7 +21,7 @@ using System.Collections.Generic;
 /**
  * Example of OpenIAB usage
  */ 
-public class OpenIABTest : MonoBehaviour
+public class ShopIAB : MonoBehaviour
 {
 	class PaidItem
 	{
@@ -100,6 +100,7 @@ public class OpenIABTest : MonoBehaviour
 
 	public void OnClickClose()
 	{
+		m_closeButton.Lable.Text.text = "Close";
 		gameObject.SetActive(false);
 	}
 

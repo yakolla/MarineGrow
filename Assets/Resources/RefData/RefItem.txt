@@ -107,18 +107,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1000
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":10
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":10
 				}
 			],
 			"pricePerLevel":2
@@ -171,18 +171,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":1000
+					"count":2000
 				},
 				{
 					"refItemId":5, 
-					"count":10
+					"count":20
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":11
+					"count":20
 				}
 			],
 			"pricePerLevel":3
@@ -349,18 +349,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":2000
+					"count":4000
 				},
 				{
 					"refItemId":5, 
-					"count":20
+					"count":40
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":22
+					"count":40
 				}
 			],
 			"pricePerLevel":2
@@ -519,18 +519,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":3000
+					"count":6000
 				},
 				{
 					"refItemId":5, 
-					"count":30
+					"count":60
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":33
+					"count":60
 				}
 			],
 			"pricePerLevel":3
@@ -883,18 +883,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":4000
+					"count":8000
 				},
 				{
 					"refItemId":5, 
-					"count":40
+					"count":80
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":44
+					"count":80
 				}
 			],
 			"pricePerLevel":3
@@ -1296,18 +1296,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		}
@@ -1344,18 +1344,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		}
@@ -1392,18 +1392,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		}
@@ -1440,18 +1440,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		}
@@ -1488,18 +1488,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		}
@@ -1536,18 +1536,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		}
