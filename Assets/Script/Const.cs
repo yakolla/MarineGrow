@@ -281,4 +281,15 @@ public class Const {
 
 		return spawn;
 	}
+
+	public static GameObject GetPrefItemEatEffect(RefItem refItem)
+	{
+		GameObject pref = Resources.Load<GameObject>("Pref/ItemBox/ef " + refItem.codeName + " eat");
+		if (pref == null)
+		{
+			pref = Resources.Load<GameObject>("Pref/ItemBox/ef item eat");
+		}
+
+		return pref;
+	}
 }

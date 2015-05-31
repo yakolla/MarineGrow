@@ -734,7 +734,7 @@ public class Creature : MonoBehaviour {
 					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.RisingUp);
 					offender.m_creatureProperty.Heal(lifeSteal);
 				}
-				Const.GetSpawn().GiveXPChamps(offender, m_creatureProperty.Exp);
+				Const.GetSpawn().SharePotinsChamps(offender, ItemData.Type.XPPotion, m_creatureProperty.Exp, false);
 			}
 
 			Death();
@@ -745,6 +745,11 @@ public class Creature : MonoBehaviour {
 	virtual public void GiveExp(int exp)
 	{
 
+	}
+
+	public void Heal(int heal)
+	{
+		m_creatureProperty.Heal(heal);
 	}
 
 	public Type CreatureType

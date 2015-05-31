@@ -91,11 +91,8 @@ public class ItemBox : MonoBehaviour {
 		get { return m_item; }
 		set {
 			m_item = value;
-			GameObject pref = Resources.Load<GameObject>("Pref/ItemBox/ef " + m_item.RefItem.codeName + " eat");
-			if (pref != null)
-			{
-				m_prefPickupItemEffect = pref;
-			}
+
+			m_prefPickupItemEffect = Const.GetPrefItemEatEffect(m_item.RefItem);
 		}
 	}
 

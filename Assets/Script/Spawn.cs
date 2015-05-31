@@ -657,18 +657,42 @@ public class Spawn : MonoBehaviour {
 		m_followers.Remove(cre);
 	}
 
-	public void GiveXPChamps(Creature cre, int xp)
+	public void SharePotinsChamps(Creature cre, ItemData.Type type, int xp, bool enableEffect)
 	{
+
 		if (cre.CreatureType != Creature.Type.Champ)
 			return;
 
-		m_champ.GiveExp(xp);
-
-		foreach(Follower f in m_followers)
+		switch(type)
 		{
-			f.GiveExp(xp);
+		case ItemData.Type.XPPotion:
+			m_champ.GiveExp(xp);
+			if (enableEffect == true)
+				m_champ.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[6]), xp);
+			foreach(Follower f in m_followers)
+			{
+				f.GiveExp(xp);
+				if (enableEffect == true)
+					f.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[6]), xp);
+			}
+			break;
+		case ItemData.Type.HealPosion:
+			m_champ.Heal(xp);
+			if (enableEffect == true)
+				m_champ.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[2]), xp);
+			foreach(Follower f in m_followers)
+			{
+				f.Heal(xp);
+				if (enableEffect == true)
+					f.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[2]), xp);
+			}
+			break;
 		}
+
+
 	}
+
+
 
 	// Update is called once per frame
 	void Update () {

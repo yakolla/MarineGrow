@@ -365,7 +365,8 @@
 							"refItemId":2,
 							"minValue":10,
 							"maxValue":30,
-							"ratio":0.01,
+							//"ratio":0.01,
+							"ratio":1,
 							"count":1
 						},
 						{
