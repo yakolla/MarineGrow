@@ -28,10 +28,16 @@ public class ExplosionPassiveLauncher : Weapon {
 		}
 	}
 
+	override public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
+	{
+		ExplosionBullet bullet = base.CreateBullet(targetAngle, startPos) as ExplosionBullet;
+		bullet.BombRange += (m_level-1);
+		return bullet;
+	}
+
 	override public void LevelUp()
 	{
-		base.LevelUp();
-		
+		++m_level;		
 	}
 
 	void Update()

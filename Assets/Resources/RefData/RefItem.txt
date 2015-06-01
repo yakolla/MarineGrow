@@ -1103,33 +1103,11 @@
 		"id":128,
 		"codeName":"RushLauncher",
 		"type":"Weapon",
-		"icon":"Sprites/Rush",
-		
+		"icon":"Sprites/Rush",		
 		"weaponStat":
 		{
 			"coolTime":5,
 			"range":8
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":50
-				},
-				{
-					"refItemId":5, 
-					"count":5
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":5
-				}
-			]
 		}
 		
 	},
@@ -1140,33 +1118,44 @@
 		"icon":"Sprites/Explosion",		
 		"weaponStat":
 		{
-			"coolTime":30,
+			"coolTime":10,
 			"range":5
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":50
-				},
-				{
-					"refItemId":5, 
-					"count":5
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":5
-				}
-			]
 		}
 	},
 	{
 		"id":201,
+		"codeName":"FollowerGun",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",	
+		"evolutionFiring":
+		{
+			"angle":15,
+			"delay":0
+		},
+		"weaponStat":
+		{
+			"coolTime":1.5,
+			"range":10
+		}
+	},
+	{
+		"id":202,
+		"codeName":"FollowerFiregun",
+		"type":"Weapon",
+		"icon":"Sprites/Firegun",		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":3,
+			"range":10
+		}
+	},
+	{
+		"id":203,
 		"codeName":"FollowerGuidedRocketLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",		
@@ -1183,56 +1172,7 @@
 		
 	},
 	{
-		"id":202,
-		"codeName":"FollowerGun",
-		"type":"Weapon",
-		"icon":"Sprites/Gun",	
-		"evolutionFiring":
-		{
-			"angle":15,
-			"delay":0
-		},
-		"weaponStat":
-		{
-			"coolTime":1.5,
-			"range":10
-		}
-	},
-	{
-		"id":203,
-		"codeName":"FollowerFiregun",
-		"type":"Weapon",
-		"icon":"Sprites/Firegun",		
-		"evolutionFiring":
-		{
-			"angle":30,
-			"delay":0.3
-		},
-		"weaponStat":
-		{
-			"coolTime":3,
-			"range":10
-		}
-	},
-	{
 		"id":204,
-		"codeName":"FollowerBoomerangLauncher",
-		"type":"Weapon",
-		"icon":"Sprites/Boomerang",
-		
-		"evolutionFiring":
-		{
-			"angle":30,
-			"delay":0.3
-		},
-		"weaponStat":
-		{
-			"coolTime":4,
-			"range":10
-		}
-	},
-	{
-		"id":205,
 		"codeName":"FollowerRocketLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
@@ -1245,6 +1185,23 @@
 		"weaponStat":
 		{
 			"coolTime":3,
+			"range":10
+		}
+	},
+	{
+		"id":205,
+		"codeName":"FollowerBoomerangLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Boomerang",
+		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
+		},
+		"weaponStat":
+		{
+			"coolTime":4,
 			"range":10
 		}
 	},
@@ -1268,25 +1225,25 @@
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/Follower",
+		"icon":"Sprites/FollowerGunMarines",
 		"unlock":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		},
@@ -1316,25 +1273,25 @@
 		"id":1002,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/Follower",
+		"icon":"Sprites/FollowerFireMarines",
 		"unlock":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		},
@@ -1364,25 +1321,25 @@
 		"id":1003,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/Follower",
+		"icon":"Sprites/FollowerGuidedRocketMarines",
 		"unlock":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		},
@@ -1412,25 +1369,25 @@
 		"id":1004,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/Follower",
+		"icon":"Sprites/FollowerRocketMarines",
 		"unlock":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		},
@@ -1460,25 +1417,25 @@
 		"id":1005,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/Follower",
+		"icon":"Sprites/FollowerBoomerangMarines",
 		"unlock":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		},
@@ -1508,25 +1465,25 @@
 		"id":1006,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/Follower",
+		"icon":"Sprites/FollowerTurret",
 		"unlock":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":1500
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":15
 				}
 			]
 		},

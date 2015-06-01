@@ -6,6 +6,7 @@ public class Follower : Creature {
 
 	Creature	m_owner;
 	MobAI		m_ai;
+	int			m_refMobId;
 
 	// Update is called once per frame
 	new void Update () {
@@ -27,15 +28,17 @@ public class Follower : Creature {
 		base.Update();
 	}
 
-	public void Init(Creature owner, MobAIType aiType, RefCreatureBaseProperty baseProperty, int level)
+	public void Init(Creature owner, RefMob refMob, int level)
 	{
 		base.Init();
 
 		m_owner = owner;
 		CreatureType = m_owner.CreatureType;
-		m_creatureProperty.init(this, baseProperty, level);
+		m_refMobId = refMob.id;
 
-		switch(aiType)
+		m_creatureProperty.init(this, refMob.baseCreatureProperty, level);
+
+		switch(refMob.mobAI)
 		{
 		case MobAIType.Normal:
 			m_ai = new MobAINormal();
@@ -53,6 +56,11 @@ public class Follower : Creature {
 		
 		m_ai.Init(this);
 	
+	}
+
+	public int FollowerID
+	{
+		get{return m_refMobId;}
 	}
 
 	void LevelUp()

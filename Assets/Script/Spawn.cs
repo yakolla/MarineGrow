@@ -657,6 +657,17 @@ public class Spawn : MonoBehaviour {
 		m_followers.Remove(cre);
 	}
 
+	public bool IsFollowed(int id)
+	{
+		foreach(Follower f in m_followers)
+		{
+			if (f.FollowerID == id)
+				return true;
+		}
+
+		return false;
+	}
+
 	public void SharePotinsChamps(Creature cre, ItemData.Type type, int xp, bool enableEffect)
 	{
 

@@ -75,11 +75,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 		*/
 		champStatsAbili.Add(new Ability(0.3f, "Health", 
 		()=>{
-			m_backup.AlphaMaxHP+=10;
+			m_backup.AlphaMaxHP+=50;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaMaxHP+=10;
+			m_champ.m_creatureProperty.AlphaMaxHP+=50;
 			//m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
 			--m_champ.RemainStatPoint;
 		}));
@@ -220,7 +220,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(0.3f, "Charge Dash Skill", 
+		skillAbili.Add(new Ability(0.3f, "Charge to Dash Skill", 
 		                           ()=>{
 			int backup = m_champ.DashSkillStack+10;
 			return (m_champ.DashSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
@@ -230,7 +230,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(0.3f, "Charge Combo Skill", 
+		skillAbili.Add(new Ability(0.3f, "Charge to Combo Skill", 
 		                           ()=>{
 			int backup = m_champ.ComboSkillStack+1;
 			return (m_champ.ComboSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
@@ -240,7 +240,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(0.3f, "Shield Skill", 
+		skillAbili.Add(new Ability(0.3f, "Charge to Shield Skill", 
 		                           ()=>{
 			m_backup.Shield += 30;
 			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
@@ -250,7 +250,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(1f, "Auto Grenade Skill", 
+		skillAbili.Add(new Ability(1f, "Grenade Skill Lv", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
 			int backup = 1;
@@ -277,7 +277,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(1f, "Auto Explosion Skill", 
+		skillAbili.Add(new Ability(1f, "Explosion Skill Lv", 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[129].codeName);
 			int backup = 1;

@@ -623,7 +623,7 @@
 	[	
 		{
 			"id":40001,
-			"prefBody":"ghost_slime_skin",
+			"prefBody":"small bug_skin",
 			"refWeaponItems":
 			[
 				{
@@ -656,7 +656,7 @@
 		},
 		{
 			"id":40002,
-			"prefBody":"ghost_slime_b_skin",
+			"prefBody":"roach_skin",
 			"refWeaponItems":
 			[				
 				{
@@ -1319,7 +1319,7 @@
 		{
 			"id":30001,
 			"prefBody":"marine_skin",
-			"name":"GuidedRocket Marine",
+			"name":"Gun Marines",
 			"refWeaponItems":
 			[
 				{
@@ -1336,7 +1336,7 @@
 				"exp":0,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
-				"hpPerLevel":0.5,
+				"hpPerLevel":3,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -1345,7 +1345,7 @@
 		{
 			"id":30002,
 			"prefBody":"marine_skin",
-			"name":"Gun Marine",
+			"name":"Fire Marines",
 			"refWeaponItems":
 			[
 				{
@@ -1362,7 +1362,7 @@
 				"exp":0,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
-				"hpPerLevel":0.5,
+				"hpPerLevel":2,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -1371,7 +1371,7 @@
 		{
 			"id":30003,
 			"prefBody":"marine_skin",
-			"name":"Fire Marine",
+			"name":"GuidedRocket Marines",
 			"refWeaponItems":
 			[
 				{
@@ -1388,7 +1388,7 @@
 				"exp":0,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
-				"hpPerLevel":0.5,
+				"hpPerLevel":1.5,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -1397,7 +1397,7 @@
 		{
 			"id":30004,
 			"prefBody":"marine_skin",
-			"name":"Boomerang Marine",
+			"name":"Rocket Marines",
 			"refWeaponItems":
 			[
 				{
@@ -1414,7 +1414,7 @@
 				"exp":0,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
-				"hpPerLevel":0.5,
+				"hpPerLevel":1.5,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -1423,7 +1423,7 @@
 		{
 			"id":30005,
 			"prefBody":"marine_skin",
-			"name":"Rocket Marine",
+			"name":"Boomerang Marines",
 			"refWeaponItems":
 			[
 				{
@@ -1440,7 +1440,7 @@
 				"exp":0,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
-				"hpPerLevel":0.5,
+				"hpPerLevel":1,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -1460,7 +1460,7 @@
 			"baseCreatureProperty":
 			{
 				"maxHP":100,
-				"physicalDamage":5,
+				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":0,

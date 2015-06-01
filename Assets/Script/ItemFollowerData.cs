@@ -41,12 +41,8 @@ public class ItemFollowerData : ItemData{
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 		enemyBody.transform.localScale = prefEnemyBody.transform.localScale;
 
-
-
 		Follower follower = (Follower)followerObj.GetComponent<Follower>();
-		follower.Init(obj, refMob.mobAI, refMob.baseCreatureProperty, Level);
-
-
+		follower.Init(obj, refMob, Level);
 
 		foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
 		{
@@ -56,6 +52,11 @@ public class ItemFollowerData : ItemData{
 		}
 
 		Const.GetSpawn().AddFollower(follower);
+	}
+
+	override public bool Usable(Creature obj)
+	{
+		return Const.GetSpawn().IsFollowed(m_refMobId) == false;
 	}
 
 	override public void NoUse(Creature obj)
