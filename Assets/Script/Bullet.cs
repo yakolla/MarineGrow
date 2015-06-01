@@ -29,7 +29,8 @@ public class Bullet : MonoBehaviour {
 		m_isDestroying = false;
 		m_onHitWeapon = onHitWeapon;
 
-		m_damageBuffType = ownerCreature.m_creatureProperty.RandomWeaponBuff;
+		if (m_damageBuffType == DamageDesc.BuffType.Nothing)
+			m_damageBuffType = ownerCreature.m_creatureProperty.RandomWeaponBuff;
 
 		StartFiring();
 	}

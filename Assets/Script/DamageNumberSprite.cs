@@ -8,6 +8,7 @@ public class DamageNumberSprite : MonoBehaviour {
 		Parabola,
 		RisingUp,
 		FloatingUp,
+		FloatingUpAlways,
 	}
 
 	[SerializeField]
@@ -91,6 +92,21 @@ public class DamageNumberSprite : MonoBehaviour {
 				DestroyObject();
 			}
 
+			break;
+		case MovementType.FloatingUpAlways:
+			if (m_target)
+			{
+				m_targetPos = m_target.transform.position+m_target.AimpointLocalPos;
+				m_targetPos.y += 3f;
+			}
+			
+			transform.position = m_targetPos;
+			
+			if (m_target == null)
+			{
+				DestroyObject();
+			}
+			
 			break;
 		}
 	}
