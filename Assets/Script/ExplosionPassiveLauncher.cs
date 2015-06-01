@@ -30,7 +30,7 @@ public class ExplosionPassiveLauncher : Weapon {
 
 	override public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
-		ExplosionBullet bullet = base.CreateBullet(targetAngle, startPos) as ExplosionBullet;
+		ExplosionBullet bullet = base.CreateBullet(targetAngle, m_creature.transform.position) as ExplosionBullet;
 		bullet.BombRange += (m_level-1);
 		return bullet;
 	}
@@ -48,8 +48,9 @@ public class ExplosionPassiveLauncher : Weapon {
 		}
 		else
 		{
+			float ratio = (remainCoolTimeRatio()+0.8f);
 			for(int i = 0; i < m_chargingEffect.Length; ++i)
-				m_chargingEffect[i].startSize = (remainCoolTimeRatio()+0.3f)*m_maxSize[i];
+				m_chargingEffect[i].startSize = ratio*m_maxSize[i];
 		}
 	}
 }

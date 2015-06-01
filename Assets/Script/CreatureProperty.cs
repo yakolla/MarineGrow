@@ -172,7 +172,7 @@ public class CreatureProperty {
 
 	public float	MoveSpeed
 	{
-		get {return Mathf.Min(100, m_baseProperty.moveSpeed + AlphaMoveSpeed) * BetaMoveSpeed;}
+		get {return Mathf.Min(6, (m_baseProperty.moveSpeed + AlphaMoveSpeed) * BetaMoveSpeed + (m_baseProperty.moveSpeed*((Level-1)/(float)Const.ItemMaxLevel)));}
 	}
 	
 	public float	AlphaMoveSpeed
