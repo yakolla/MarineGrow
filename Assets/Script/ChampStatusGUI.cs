@@ -94,6 +94,9 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_accessoryButtons[slot].IsCoolDownDone() == false)
 			return;
 
+		if (m_champSettingGUI.EquipedAccessories[slot].Item.Usable(m_champ) == false)
+			return;
+
 		m_accessoryButtons[slot].StartCoolDownTime(60f);
 
 		m_champSettingGUI.EquipedAccessories[slot].Item.Use(m_champ);

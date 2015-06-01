@@ -27,4 +27,10 @@ public class ExplosionBullet : Bullet {
 		bomb(m_bombRange, m_prefBombEffect);
 	}
 
+	public float BombRange
+	{
+		set{m_bombRange = value;}
+		get{return m_bombRange;}
+	}
+
 }

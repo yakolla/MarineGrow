@@ -534,7 +534,7 @@ public class Creature : MonoBehaviour {
 					effect.transform.parent = transform;
 					effect.transform.localPosition = pref.transform.position;
 					effect.transform.localRotation = pref.transform.rotation;		
-					sprite = DamageText("", Color.white, DamageNumberSprite.MovementType.FloatingUp);
+					sprite = DamageText("", Color.white, DamageNumberSprite.MovementType.FloatingUpAlways);
 
 					Vector3 scale = sprite.gameObject.transform.localScale;
 					scale *= 0.5f;
