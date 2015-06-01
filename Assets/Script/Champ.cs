@@ -247,7 +247,7 @@ public class Champ : Creature {
 					// handle error
 				}
 				
-				GPlusPlatform.Instance.ReportScore(Const.LEAD_COMBO_MAX_KILLS, Warehouse.Instance.Stats.m_comboKills, (bool success) => {
+				GPlusPlatform.Instance.ReportScore(Const.TOTAL_SCORE, m_creatureProperty.Exp, (bool success) => {
 					// handle success or failure
 				});
 				

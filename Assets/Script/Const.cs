@@ -51,7 +51,7 @@ public class Const {
 	public const string ACH_COMBO_KILLS_100 = "CgkIrKGfsOUeEAIQFQ";
 	public const string ACH_COMBO_KILLS_200 = "CgkIrKGfsOUeEAIQFg";
 	public const string ACH_COMBO_KILLS_300 = "CgkIrKGfsOUeEAIQFw";
-	public const string LEAD_COMBO_MAX_KILLS = "CgkIrKGfsOUeEAIQAQ";
+	public const string TOTAL_SCORE = "CgkIrKGfsOUeEAIQAQ";
 
 
 

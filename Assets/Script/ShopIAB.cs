@@ -59,6 +59,8 @@ public class ShopIAB : MonoBehaviour
 
 	void Init()
 	{
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Shop", "OpenShop", 0);
+
 		m_paidItems.Add("gem.1000", new PaidItem(1000));
 		m_paidItems.Add("gem.3000", new PaidItem(3500));
 		m_paidItems.Add("gem.5000", new PaidItem(6000));
@@ -167,6 +169,7 @@ public class ShopIAB : MonoBehaviour
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
+
 		m_closeButton.Lable.Text.text = "Thanks for your purchase: " + m_paidItems[purchase.Sku].m_gem;
         _label = "CONSUMED: " + purchase.ToString();
 
@@ -177,6 +180,8 @@ public class ShopIAB : MonoBehaviour
 		}
 
 		m_progressing = false;
+
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Shop", "Purchase:" + purchase.Sku, 0);
     }
     private void consumePurchaseFailedEvent(string error)
     {
