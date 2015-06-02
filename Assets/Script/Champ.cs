@@ -251,21 +251,20 @@ public class Champ : Creature {
 					// handle success or failure
 				});
 				
-				LoadTitleScene(0);
+				ShowGameOverGUI(0);
 			});
 		}
 		else
 		{
-			LoadTitleScene(2);
+			ShowGameOverGUI(2);
 
 		}
 
 	}
 
-	void LoadTitleScene(float delay)
+	void ShowGameOverGUI(float delay)
 	{
-		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowInterstitial();
-		GameObject.Find("Dungeon").GetComponent<Dungeon>().DelayLoadLevel(delay);
+		GameObject.Find("HudGUI/GameOverGUI").transform.Find("Panel").gameObject.SetActive(true);
 	}
 
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)

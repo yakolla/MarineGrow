@@ -18,23 +18,10 @@ public class Dungeon : MonoBehaviour {
 
 	}
 
-	// Update is called once per frame
-	void Update () {
-
-	}
-
-	IEnumerator delayLoadLevel(float delay)
+	public void LoadLevelWorldmap()
 	{
-		yield return new WaitForSeconds(delay);
 		Application.LoadLevel("Worldmap");
 	}
-	
-	public void DelayLoadLevel(float delay)
-	{
-		StartCoroutine(delayLoadLevel(delay));
-	}
-
-
 
 	public int DungeonId
 	{
