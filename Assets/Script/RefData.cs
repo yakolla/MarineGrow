@@ -22,10 +22,15 @@ public class RefCreatureBaseProperty
 	public int	physicalDefence;
 	public float	evolutionPerLevel;
 	public int		exp;
+	[Range (0, 1)]
 	public float 	phyDamagePerLevel;
+	[Range (0, 1)]
 	public float 	phyDefencePerLevel;
+	[Range (0, 1)]
 	public float 	hpPerLevel;
-	[Range (0, 100)]
+	[Range (0, 1)]
+	public float 	moveSpeedPerLevel = 0;
+	[Range (0, 10)]
 	public float	moveSpeed;
 	public float	navMeshBaseOffset;
 	public float	lifeSteal;

@@ -94,7 +94,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(bootsData);
 
 				Warehouse.Instance.Gold.Item.Count = 100000;
-				Warehouse.Instance.Gem.Item.Count = 10000;
+				Warehouse.Instance.Gem.Item.Count = 12000;
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
@@ -286,6 +286,12 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 	}
 
+	public void StartSpinButton(YGUISystem.GUIButton button)
+	{
+		button.Button.animator.SetBool("Spin", true);
+		button.Button.audio.Play();
+	}
+
 	void PopupShop()
 	{
 		GameObject.Find("HudGUI/ShopGUI").transform.Find("Panel").gameObject.SetActive(true);
@@ -428,6 +434,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 			if (button.TryToPay())
 			{
+				StartSpinButton(priceGemButton.m_priceButton.GUIImageButton);
 				++selectedItem.Item.Level;
 
 				priceGemButton.m_priceButton.NormalWorth = getItemLevelupWorth(selectedItem);

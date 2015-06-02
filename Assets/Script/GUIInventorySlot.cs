@@ -81,6 +81,17 @@ public class GUIInventorySlot : MonoBehaviour {
 		m_priceButton0.Update();
 		m_priceButton1.Update();
 	}
+
+
+	
+	public void StopSpinButton(int slot)
+	{
+		m_priceButton0.m_priceButton.GUIImageButton.Button.enabled = true;
+		m_priceButton0.m_priceButton.GUIImageButton.Lable.Text.enabled = true;
+
+		m_priceButton1.m_priceButton.GUIImageButton.Button.enabled = true;
+		m_priceButton1.m_priceButton.GUIImageButton.Lable.Text.enabled = true;
+	}
 }
 
 

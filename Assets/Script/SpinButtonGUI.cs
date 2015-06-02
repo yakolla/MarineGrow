@@ -12,9 +12,9 @@ public class SpinButtonGUI : MonoBehaviour {
 
 	public void StopSpin()
 	{
-		m_onStop.Invoke();
-		
 		this.gameObject.GetComponent<Animator>().SetBool("Spin", false);
+
+		m_onStop.Invoke();
 	}
 
 	public bool IsSpining()
