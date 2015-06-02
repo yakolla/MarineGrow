@@ -45,12 +45,14 @@ public class ExplosionPassiveLauncher : Weapon {
 		if (isCoolTime())
 		{
 			base.StartFiring(0f);
+
+			for(int i = 0; i < m_chargingEffect.Length; ++i)
+				m_chargingEffect[i].Clear();
 		}
 		else
 		{
-			float ratio = (remainCoolTimeRatio()+0.8f);
-			for(int i = 0; i < m_chargingEffect.Length; ++i)
-				m_chargingEffect[i].startSize = ratio*m_maxSize[i];
+			float ratio = (remainCoolTimeRatio());
+			m_chargingEffect[1].startSize = ratio*m_maxSize[0];
 		}
 	}
 }

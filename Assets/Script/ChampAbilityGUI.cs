@@ -118,7 +118,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 */
 
 
-		weaponAbili.Add(new Ability(0.01f, "Weapon Levelup", 
+		weaponAbili.Add(new Ability(0.01f, "Weapon Lv", 
 		                            ()=>{
 			return "";
 		},
@@ -127,7 +127,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		weaponAbili.Add(new Ability(0.3f, "Embers On Hit", 
+		weaponAbili.Add(new Ability(0.3f, "Embers On Hit Lv", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
 			int backup = 1;
@@ -185,7 +185,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			if (skipBuff == true)
 				continue;
 
-			string name = "Weapon " + buffType.ToString() + " Effect %";
+			string name = buffType.ToString() + " Chance %";
 			DamageDesc.BuffType capturedBuffType = buffType;
 
 			weaponAbili.Add(new Ability(0.3f, name, 
@@ -320,7 +320,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_remainPointText = new YGUISystem.GUILable(transform.Find("RemainPointText").gameObject);
 
-		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return true;});
+		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return m_champ.RemainStatPoint > 0;});
 		m_rollButton.Prices = RefData.Instance.RefItems[1101].levelup.conds;
 
 
