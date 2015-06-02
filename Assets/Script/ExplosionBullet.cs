@@ -6,8 +6,7 @@ public class ExplosionBullet : Bullet {
 	[SerializeField]
 	protected GameObject		m_prefBombEffect = null;
 
-	[SerializeField]
-	protected float				m_bombRange = 5f;
+	protected float				m_bombRange;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +14,7 @@ public class ExplosionBullet : Bullet {
 
 	void OnEnable()
 	{
+		m_bombRange = 3f;
 		m_isDestroying = false;
 	}
 

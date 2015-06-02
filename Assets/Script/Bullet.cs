@@ -4,16 +4,16 @@ using System.Collections;
 public class Bullet : MonoBehaviour {
 
 	protected bool 			m_isDestroying = false;
-	protected Vector3	m_gunPoint;
+	protected Vector3		m_gunPoint;
 	bool					m_firing = false;
 	int						m_damage;
-	protected 	Weapon.FiringDesc		m_targetAngle;
-	protected	Creature	m_ownerCreature;
+	protected 				Weapon.FiringDesc		m_targetAngle;
+	protected				Creature	m_ownerCreature;
 
-	Weapon		m_onHitWeapon;
+	Weapon					m_onHitWeapon;
 
 	[SerializeField]
-	GameObject 		m_prefDamageEffect = null;
+	GameObject 				m_prefDamageEffect = null;
 
 	protected DamageDesc.Type	m_damageType = DamageDesc.Type.Normal;
 
@@ -37,22 +37,7 @@ public class Bullet : MonoBehaviour {
 
 	public GameObject SearchTarget(string[] targetTags, float range)
 	{
-		/*
-		foreach(string tag in targetTags)
-		{
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-			foreach(GameObject target in targets)
-			{				
-				float dist = Vector3.Distance(transform.position, target.transform.position);
-				if (dist <= range)
-				{
-					return target;
-				}
-			}
-		}
-		*/
-
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, 1<<9);
 		int i = 0;
 		while (i < hitColliders.Length) {
 			foreach(string tag in targetTags)
@@ -81,7 +66,7 @@ public class Bullet : MonoBehaviour {
 		bombRange += m_ownerCreature.m_creatureProperty.SplashRange;
 
 		string[] tags = m_ownerCreature.GetAutoTargetTags();
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, bombRange/2);
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, bombRange/2, 1 << 9);
 		int i = 0;
 		while (i < hitColliders.Length) {
 			foreach(string tag in tags)
