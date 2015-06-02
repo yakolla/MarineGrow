@@ -92,17 +92,17 @@
 							"itemPandora":{
 								"ratio":[0,1],
 								"count":[1,1],
-								"chance":0.3,
+								"chance":0.1,
 								"spawnEffectType":"Falling"
 							},
 							"itemDummy":{
 								"ratio":[0,1],
-								"count":[10,15],
+								"count":[3,5],
 								"spawnEffectType":"Falling"
 							}
 						},
-						"interval":2,
-						"repeatCount":[1,1]
+						"interval":0.5,
+						"repeatCount":[3,3]
 					}
 				],
 				"itemSpawn":
