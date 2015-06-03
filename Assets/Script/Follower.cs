@@ -14,17 +14,12 @@ public class Follower : Creature {
 		if (AutoAttack() == false)
 		{
 			m_weaponHolder.GetComponent<WeaponHolder>().StopFiring();
-			if (m_owner != null)
-				m_navAgent.SetDestination(m_owner.transform.position);
+
 		}
-		else
-		{
-			m_ai.SetTarget(m_targeting);
-			//m_navAgent.SetDestination(m_targeting.transform.position);
-			if (m_owner != null)
-				m_navAgent.SetDestination(m_owner.transform.position);
-			m_ai.Update();
-		}
+
+		if (m_owner != null)
+			m_navAgent.SetDestination(m_owner.transform.position);
+
 		base.Update();
 	}
 

@@ -31,9 +31,7 @@ public class Warehouse {
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gold.Item));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gem.Item));
 
-			writer.WriteLine(JsonConvert.SerializeObject(obj.m_champStat));
-
-			writer.WriteLine(JsonConvert.SerializeObject(obj.m_stats));
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gameBestStats));
 
 			writer.Close();
 
@@ -98,14 +96,13 @@ public class Warehouse {
 			ItemGemData gemData = JsonConvert.DeserializeObject<ItemGemData>(reader.ReadLine());
 			obj.m_gem = new ItemObject(gemData);
 
-			obj.m_champStat = JsonConvert.DeserializeObject<ChampAbility>(reader.ReadLine());
-
-			obj.m_stats = JsonConvert.DeserializeObject<Statistics>(reader.ReadLine());
+			obj.m_gameBestStats = JsonConvert.DeserializeObject<GameStatistics>(reader.ReadLine());
 			
 			reader.Close();
 		}
 
 	}
+
 	int					m_version = 1;
 	string				m_fileName;
 	List<ItemObject>	m_items = new List<ItemObject>();
@@ -114,25 +111,36 @@ public class Warehouse {
 	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
 	int					m_waveIndex = 0;
 
-	public class 	Statistics
+	public class 	GameStatistics
 	{
-		public	long		m_comboKills = 0;
+		public	int		m_comboKills = 0;
+		public	float	m_playTime = 0;
+		public	int		m_gainedGold = 0;
+		public	int		m_gainedXP = 0;
+		public	int		m_killedMobs = 0;
+		public  long	m_score = 0;
+
+		public void SetBestStats(GameStatistics newStats)
+		{
+			m_comboKills = Mathf.Max(m_comboKills, newStats.m_comboKills);
+			m_playTime = Mathf.Max(m_playTime, newStats.m_playTime);
+			m_gainedGold = Mathf.Max(m_gainedGold, newStats.m_gainedGold);
+			m_gainedXP = Mathf.Max(m_gainedXP, newStats.m_gainedXP);
+			m_killedMobs = Mathf.Max(m_killedMobs, newStats.m_killedMobs);
+
+			if (m_score < newStats.m_score)
+				m_score = newStats.m_score;
+		}
 	}
 
-	public class ChampAbility
-	{
-		public int m_level = 1;
-		public int m_abilityPoint = 0;
-	}
+	GameStatistics			m_gameBestStats = new GameStatistics();
+	GameStatistics			m_newGameStats = new GameStatistics();
 
-	Statistics			m_stats = new Statistics();
-	ChampAbility			m_champStat = new ChampAbility();
 
-	float	m_playTime = 0;
 	public float PlayTime
 	{
-		get { return Time.time-m_playTime; }
-		set { m_playTime = value; }
+		get { return Time.time-m_newGameStats.m_playTime; }
+		set { m_newGameStats.m_playTime = value; }
 	}
 
 	static Warehouse m_ins = null;
@@ -156,8 +164,14 @@ public class Warehouse {
 		m_gem	= new ItemObject(new ItemGemData(0));
 		m_waveIndex = 0;
 
-		m_stats = new Statistics();
-		m_champStat = new ChampAbility();
+		m_gameBestStats = new GameStatistics();
+		ResetNewGameStats();
+	}
+
+	public void ResetNewGameStats()
+	{	
+		m_gameBestStats.SetBestStats(m_newGameStats);
+		m_newGameStats = new GameStatistics();
 	}
 
 	public void PushItem(ItemData item)
@@ -280,13 +294,14 @@ public class Warehouse {
 		set {m_fileName = value;}
 	}
 
-	public Statistics Stats
+	public GameStatistics GameBestStats
 	{
-		get {return m_stats;}
+		get {return m_gameBestStats;}
 	}
 
-	public ChampAbility	champAbility
+	public GameStatistics NewGameStats
 	{
-		get {return m_champStat;}
+		get {return m_newGameStats;}
 	}
+
 }

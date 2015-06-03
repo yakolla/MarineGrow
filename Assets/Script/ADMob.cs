@@ -47,11 +47,6 @@ public class ADMob : MonoBehaviour
 		bannerView.LoadAd(request);
 	}
 
-	void Start ()
-	{
-
-	}
-
 	public void ShowInterstitial()
 	{		
 		interstitial.Show();
@@ -103,10 +98,5 @@ public class ADMob : MonoBehaviour
 		Debug.Log("HandleInterstitialLeftApplication event received");
 	}
 
-	// Update is called once per frame
-	void Update ()
-	{
-
-	}
 }
 
