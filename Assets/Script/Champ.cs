@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-using GooglePlayGames.BasicApi.SavedGame;
+
 
 public class Champ : Creature {
 
@@ -56,7 +54,6 @@ public class Champ : Creature {
 	{
 		base.Init();
 
-		m_level = Warehouse.Instance.champAbility.m_level;
 		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
 		m_comboKills = 0;
 		m_comboSkillStacks = 0;
@@ -220,7 +217,9 @@ public class Champ : Creature {
 
 	override public void GiveExp(int exp)
 	{
-		m_creatureProperty.giveExp((int)(exp+exp*m_creatureProperty.GainExtraExp));
+		exp = (int)(exp+exp*m_creatureProperty.GainExtraExp);
+		Warehouse.Instance.NewGameStats.m_gainedXP += exp;
+		m_creatureProperty.giveExp(exp);
 	}
 
 	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
@@ -234,35 +233,11 @@ public class Champ : Creature {
 	{
 		base.Death();
 
-		Warehouse.Instance.champAbility.m_level = 1;
-		Warehouse.Instance.champAbility.m_abilityPoint = (int)(m_level*0.5f);
-
-		if (Application.platform == RuntimePlatform.Android)
-		{
-
-			Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
-				if (status == SavedGameRequestStatus.Success) {
-					// handle reading or writing of saved game.
-				} else {
-					// handle error
-				}
-				
-				GPlusPlatform.Instance.ReportScore(Const.TOTAL_SCORE, m_creatureProperty.Exp, (bool success) => {
-					// handle success or failure
-				});
-				
-				ShowGameOverGUI(0);
-			});
-		}
-		else
-		{
-			ShowGameOverGUI(2);
-
-		}
+		ShowGameOverGUI();
 
 	}
 
-	void ShowGameOverGUI(float delay)
+	void ShowGameOverGUI()
 	{
 		GameObject.Find("HudGUI/GameOverGUI").transform.Find("Panel").gameObject.SetActive(true);
 	}

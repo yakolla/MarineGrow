@@ -11,17 +11,17 @@
 						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
-								"count":[6,30]
+								"count":[6,10]
 							}
 						},
 						"interval":5,
-						"repeatCount":[6,12]
+						"repeatCount":[6,10]
 					},
 					{
 						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
-								"count":[6,30]
+								"count":[6,10]
 							},
 							"range":{
 								"ratio":[0,1],
@@ -29,23 +29,23 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[3,12]
+						"repeatCount":[3,6]
 					},
 					{
 						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
-								"count":[8,40]
+								"count":[8,12]
 							}
 						},
 						"interval":5,
-						"repeatCount":[6,12]
+						"repeatCount":[6,10]
 					},
 					{
 						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
-								"count":[8,40]
+								"count":[8,12]
 							},
 							"range":{
 								"ratio":[0,1],
@@ -53,17 +53,17 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[3,12]
+						"repeatCount":[3,6]
 					},
 					{
 						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
-								"count":[12,60]
+								"count":[12,15]
 							},
 							"range":{
 								"ratio":[0,1],
-								"count":[5,25]
+								"count":[5,8]
 							},
 							"miniBoss":{
 								"ratio":[0,1],
@@ -71,7 +71,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[3,12]
+						"repeatCount":[3,6]
 					},
 					{
 						"refMobIds":{

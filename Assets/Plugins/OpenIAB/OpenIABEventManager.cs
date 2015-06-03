@@ -86,7 +86,7 @@ public class OpenIABEventManager : MonoBehaviour
     {
         // Set the GameObject name to the class name for easy access from native plugin
         gameObject.name = GetType().ToString();
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
 #if UNITY_ANDROID

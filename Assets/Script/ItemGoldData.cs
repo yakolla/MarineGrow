@@ -10,6 +10,7 @@ public class ItemGoldData : ItemData{
 
 	override public void Pickup(Creature obj){
 		Warehouse.Instance.Gold.Item.Count += Count;
+		Warehouse.Instance.NewGameStats.m_gainedGold += Count;
 	}
 
 	override public void Equip(Creature obj){

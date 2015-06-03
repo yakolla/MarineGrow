@@ -207,10 +207,10 @@ public class Spawn : MonoBehaviour {
 						switch(spawnMobDescResult.spawnEffectType[ii])
 						{
 						case MobSpawnEffectType.Falling:
-							StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
+							StartCoroutine(  EffectSpawnMob1(cre.transform.position, cre) );
 							break;
 						default:
-							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
+							StartCoroutine(  EffectSpawnMob(cre.transform.position, cre) );
 							break;
 						}
 						
@@ -264,10 +264,10 @@ public class Spawn : MonoBehaviour {
 						switch(spawnMobDescResult.spawnEffectType[ii])
 						{
 						case MobSpawnEffectType.Falling:
-							StartCoroutine(  EffectSpawnMob1(enemyPos, cre) );
+							StartCoroutine(  EffectSpawnMob1(cre.transform.position, cre) );
 							break;
 						default:
-							StartCoroutine(  EffectSpawnMob(enemyPos, cre) );
+							StartCoroutine(  EffectSpawnMob(cre.transform.position, cre) );
 							break;
 						}					
 						
@@ -369,6 +369,8 @@ public class Spawn : MonoBehaviour {
 			m_mobsOfCheckOnDeath--;
 		}
 
+		++Warehouse.Instance.NewGameStats.m_killedMobs;
+
 		if (m_champ)
 		{
 			++m_champ.ComboKills;
@@ -379,9 +381,9 @@ public class Spawn : MonoBehaviour {
 				});
 			}
 
-			if (Warehouse.Instance.Stats.m_comboKills < m_champ.ComboKills)
+			if (Warehouse.Instance.NewGameStats.m_comboKills < m_champ.ComboKills)
 			{
-				Warehouse.Instance.Stats.m_comboKills = m_champ.ComboKills;
+				Warehouse.Instance.NewGameStats.m_comboKills = m_champ.ComboKills;
 			}
 
 			m_comboGUIShake.enabled = true;

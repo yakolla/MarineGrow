@@ -42,6 +42,9 @@ public class ItemBox : MonoBehaviour {
 
 	public void StartPickupEffect(Creature obj)
 	{
+		if (obj == null)
+			return;
+
 		m_collider.enabled = false;
 
 		SetTarget(obj);
