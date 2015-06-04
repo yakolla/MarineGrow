@@ -32,6 +32,7 @@ public class Warehouse {
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gem.Item));
 
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gameBestStats));
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_options));
 
 			writer.Close();
 
@@ -97,6 +98,7 @@ public class Warehouse {
 			obj.m_gem = new ItemObject(gemData);
 
 			obj.m_gameBestStats = JsonConvert.DeserializeObject<GameStatistics>(reader.ReadLine());
+			obj.m_options = JsonConvert.DeserializeObject<Options>(reader.ReadLine());
 			
 			reader.Close();
 		}
@@ -133,9 +135,16 @@ public class Warehouse {
 		}
 	}
 
+	public class Options
+	{
+		public float	m_sfxVolume = 1f;	
+		public float	m_bgmVolume = 0.5f;
+		public bool		m_autoTarget = false;
+	}
+
 	GameStatistics			m_gameBestStats = new GameStatistics();
 	GameStatistics			m_newGameStats = new GameStatistics();
-
+	Options					m_options = new Options();
 
 	public float PlayTime
 	{
@@ -305,4 +314,8 @@ public class Warehouse {
 		get {return m_newGameStats;}
 	}
 
+	public Options GameOptions
+	{
+		get {return m_options;}
+	}
 }

@@ -56,6 +56,8 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void Start()
 	{
+		System.GC.Collect();
+
 		m_spawn = GameObject.Find("Dungeon/Spawn").GetComponent<Spawn>();
 		GPlusPlatform.Instance.InitAnalytics(GameObject.Find("GAv3").GetComponent<GoogleAnalyticsV3>());
 		

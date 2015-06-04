@@ -97,14 +97,12 @@ public class GameOverGUI : MonoBehaviour {
 	{
 		m_admob.ShowBanner(false);
 		Application.LoadLevel("Basic Dungeon");
-		System.GC.Collect();
 	}
 
 	public void OnClickTitle()
 	{
 		m_admob.ShowBanner(false);
 		Application.LoadLevel("Worldmap");
-		System.GC.Collect();
 	}
 
 }

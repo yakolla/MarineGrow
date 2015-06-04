@@ -40,6 +40,8 @@ public class Champ : Creature {
 
 		base.Start();
 
+		ApplyGameOptions();
+
 		SetFollowingCamera(null);
 		FollowingCamera followingCamera = Camera.main.GetComponentInChildren<FollowingCamera>();
 		followingCamera.SetMainTarget(gameObject);
@@ -154,6 +156,16 @@ public class Champ : Creature {
 	{
 		get {return m_dashSkillStacks;}
 		set {m_dashSkillStacks = value;}
+	}
+
+	public void ApplyGameOptions()
+	{
+		audio.ignoreListenerVolume = false;
+		audio.volume = Warehouse.Instance.GameOptions.m_bgmVolume;
+		audio.ignoreListenerVolume = true;
+
+		AudioListener.volume = Warehouse.Instance.GameOptions.m_sfxVolume;
+		m_enableAutoTarget = Warehouse.Instance.GameOptions.m_autoTarget;
 	}
 
 	void OnGUI()
