@@ -125,7 +125,10 @@ public class Warehouse {
 		public void SetBestStats(GameStatistics newStats)
 		{
 			m_comboKills = Mathf.Max(m_comboKills, newStats.m_comboKills);
-			m_playTime = Mathf.Max(m_playTime, newStats.m_playTime);
+
+			if (m_playTime < newStats.m_playTime)
+				m_playTime = newStats.m_playTime;
+
 			m_gainedGold = Mathf.Max(m_gainedGold, newStats.m_gainedGold);
 			m_gainedXP = Mathf.Max(m_gainedXP, newStats.m_gainedXP);
 			m_killedMobs = Mathf.Max(m_killedMobs, newStats.m_killedMobs);
@@ -146,10 +149,16 @@ public class Warehouse {
 	GameStatistics			m_newGameStats = new GameStatistics();
 	Options					m_options = new Options();
 
+	float					m_playTime = 0f;
 	public float PlayTime
 	{
-		get { return Time.time-m_newGameStats.m_playTime; }
-		set { m_newGameStats.m_playTime = value; }
+		get { 
+			if (m_playTime == 0f)
+				return 0f;
+
+			return Time.time-m_playTime; 
+		}
+		set { m_playTime = value; }
 	}
 
 	static Warehouse m_ins = null;
@@ -179,8 +188,7 @@ public class Warehouse {
 	public void ResetNewGameStats()
 	{	
 		m_gameBestStats.SetBestStats(m_newGameStats);
-		m_newGameStats = new GameStatistics();
-		
+		m_newGameStats = new GameStatistics();	
 		Warehouse.Instance.PlayTime = Time.time;
 	}
 

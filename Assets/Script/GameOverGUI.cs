@@ -21,6 +21,12 @@ public class GameOverGUI : MonoBehaviour {
 	YGUISystem.GUILable		m_deltaKilledMobs;
 	YGUISystem.GUILable		m_deltaScore;
 
+	YGUISystem.GUILable		m_bestGainedGold;
+	YGUISystem.GUILable		m_bestGainedXP;
+	YGUISystem.GUILable		m_bestSurvivalTime;
+	YGUISystem.GUILable		m_bestKilledMobs;
+	YGUISystem.GUILable		m_bestScore;
+
 	void Start () {
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
@@ -37,25 +43,37 @@ public class GameOverGUI : MonoBehaviour {
 		m_deltaKilledMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/DeltaText").gameObject);
 		m_deltaScore = new YGUISystem.GUILable(transform.Find("Score/DeltaText").gameObject);
 
+		m_bestGainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/BestText").gameObject);
+		m_bestGainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/BestText").gameObject);
+		m_bestSurvivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/BestText").gameObject);
+		m_bestKilledMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/BestText").gameObject);
+		m_bestScore = new YGUISystem.GUILable(transform.Find("Score/BestText").gameObject);
+
 		m_admob.ShowInterstitial();
 		m_admob.ShowBanner(true);
 
 		Warehouse.Instance.NewGameStats.m_score = Warehouse.Instance.NewGameStats.m_gainedXP;
+		Warehouse.Instance.NewGameStats.m_playTime = Warehouse.Instance.PlayTime;
 		
 		m_gainedGold.Text.text = Warehouse.Instance.NewGameStats.m_gainedGold.ToString();
 		m_deltaGainedGold.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_gainedGold, Warehouse.Instance.NewGameStats.m_gainedGold);
+		m_bestGainedGold.Text.text = Warehouse.Instance.GameBestStats.m_gainedGold.ToString();
 
 		m_gainedXP.Text.text = Warehouse.Instance.NewGameStats.m_gainedXP.ToString();
 		m_deltaGainedXP.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_gainedXP, Warehouse.Instance.NewGameStats.m_gainedXP);
+		m_bestGainedXP.Text.text = Warehouse.Instance.GameBestStats.m_gainedXP.ToString();
 
-		m_survivalTime.Text.text = ((int)Warehouse.Instance.PlayTime).ToString();
-		m_deltaSurvivalTime.Text.text = DeltaValue((int)Warehouse.Instance.GameBestStats.m_playTime, (int)Warehouse.Instance.PlayTime);
+		m_survivalTime.Text.text = Warehouse.Instance.NewGameStats.m_playTime.ToString();
+		m_deltaSurvivalTime.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_playTime, Warehouse.Instance.NewGameStats.m_playTime);
+		m_bestSurvivalTime.Text.text = Warehouse.Instance.GameBestStats.m_playTime.ToString();
 
 		m_killedMobs.Text.text = Warehouse.Instance.NewGameStats.m_killedMobs.ToString();
 		m_deltaKilledMobs.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_killedMobs, Warehouse.Instance.NewGameStats.m_killedMobs);
+		m_bestKilledMobs.Text.text = Warehouse.Instance.GameBestStats.m_killedMobs.ToString();
 
 		m_score.Text.text = Warehouse.Instance.NewGameStats.m_score.ToString();
 		m_deltaScore.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_score, Warehouse.Instance.NewGameStats.m_score);
+		m_bestScore.Text.text = Warehouse.Instance.GameBestStats.m_score.ToString();
 
 		GPlusPlatform.Instance.ReportScore(Const.TOTAL_SCORE, Warehouse.Instance.NewGameStats.m_score, (bool success) => {
 			// handle success or failure
@@ -80,8 +98,19 @@ public class GameOverGUI : MonoBehaviour {
 			return "<color=red>" + (dest-src).ToString() + "</color>";
 
 		if (src == dest)
-			return "= 0";
+			return " 0";
 
+		return "<color=yellow>" + "+" + (dest-src).ToString() + "</color>";
+	}
+
+	string DeltaValue(float src, float dest)
+	{
+		if (src > dest)
+			return "<color=red>" + (dest-src).ToString() + "</color>";
+		
+		if (src == dest)
+			return "= 0";
+		
 		return "<color=yellow>" + "+" + (dest-src).ToString() + "</color>";
 	}
 
