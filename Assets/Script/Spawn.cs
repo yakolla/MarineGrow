@@ -99,7 +99,9 @@ public class Spawn : MonoBehaviour {
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
 
 		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
-		Warehouse.Instance.PlayTime = Time.time;
+
+		
+		Warehouse.Instance.ResetNewGameStats();
 
 		m_dropShip.SetChamp(champ);
 		m_dropShip.GetComponent<Animator>().SetTrigger("Move");

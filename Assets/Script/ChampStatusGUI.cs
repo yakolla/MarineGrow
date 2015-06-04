@@ -77,6 +77,11 @@ public class ChampStatusGUI : MonoBehaviour {
 		GameObject.Find("HudGUI/AbilityGUI").transform.Find("Panel").gameObject.SetActive(true);
 	}
 
+	public void OnClickOption()
+	{
+		GameObject.Find("HudGUI/OptionGUI").transform.Find("Panel").gameObject.SetActive(true);
+	}
+
 	public void OnClickComboSkill()
 	{
 		if (m_champ.ComboSkillStack == 0)

@@ -7,10 +7,6 @@ using GooglePlayGames.BasicApi.SavedGame;
 
 public class GameOverGUI : MonoBehaviour {
 
-	Champ		m_champ;
-
-	YGUISystem.GUIButton	m_reStartButton;
-	YGUISystem.GUIButton	m_titleButton;
 	ADMob					m_admob;
 
 	YGUISystem.GUILable		m_gainedGold;
@@ -28,8 +24,6 @@ public class GameOverGUI : MonoBehaviour {
 	void Start () {
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
-		m_reStartButton = new YGUISystem.GUIButton(transform.Find("RestartButton").gameObject, ()=>{return true;});
-		m_titleButton = new YGUISystem.GUIButton(transform.Find("TitleButton").gameObject, ()=>{return true;});
 
 		m_gainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/Text").gameObject);
 		m_gainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/Text").gameObject);
@@ -102,15 +96,15 @@ public class GameOverGUI : MonoBehaviour {
 	public void OnClickRestart()
 	{
 		m_admob.ShowBanner(false);
-		Warehouse.Instance.ResetNewGameStats();
 		Application.LoadLevel("Basic Dungeon");
+		System.GC.Collect();
 	}
 
 	public void OnClickTitle()
 	{
 		m_admob.ShowBanner(false);
-		Warehouse.Instance.ResetNewGameStats();
 		Application.LoadLevel("Worldmap");
+		System.GC.Collect();
 	}
 
 }

@@ -165,13 +165,14 @@ public class Warehouse {
 		m_waveIndex = 0;
 
 		m_gameBestStats = new GameStatistics();
-		ResetNewGameStats();
 	}
 
 	public void ResetNewGameStats()
 	{	
 		m_gameBestStats.SetBestStats(m_newGameStats);
 		m_newGameStats = new GameStatistics();
+		
+		Warehouse.Instance.PlayTime = Time.time;
 	}
 
 	public void PushItem(ItemData item)
