@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
 
 public class OptionGUI : MonoBehaviour {
@@ -77,7 +76,7 @@ public class OptionGUI : MonoBehaviour {
 
 	public void OnClickRate()
 	{
-		Application.OpenURL ("market://details?id="+PlayerSettings.bundleIdentifier);
+		Application.OpenURL ("market://details?id=com.banegole.marinegrowing");
 	}
 
 }
