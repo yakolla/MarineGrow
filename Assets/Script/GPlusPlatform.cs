@@ -93,6 +93,11 @@ public class GPlusPlatform {
 		Social.ShowLeaderboardUI();
 	}
 
+	public void ShowLeaderboardUI(string id)
+	{
+		PlayGamesPlatform.Instance.ShowLeaderboardUI(id);
+	}
+
 	public void ShowAchievementsUI()
 	{
 		Social.ShowAchievementsUI();

@@ -51,7 +51,11 @@ public class Const {
 	public const string ACH_COMBO_KILLS_100 = "CgkIrKGfsOUeEAIQFQ";
 	public const string ACH_COMBO_KILLS_200 = "CgkIrKGfsOUeEAIQFg";
 	public const string ACH_COMBO_KILLS_300 = "CgkIrKGfsOUeEAIQFw";
-	public const string TOTAL_SCORE = "CgkIrKGfsOUeEAIQAQ";
+
+	public const string LEADERBOARD_GAINED_GOLD = "CgkIrKGfsOUeEAIQAQ";
+	public const string LEADERBOARD_GAINED_XP = "CgkIrKGfsOUeEAIQGA";
+	public const string LEADERBOARD_SURVIVAL_TIME = "CgkIrKGfsOUeEAIQGw";
+	public const string LEADERBOARD_KILLED_MOBS = "CgkIrKGfsOUeEAIQGg";
 
 
 

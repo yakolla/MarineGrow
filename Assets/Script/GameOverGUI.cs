@@ -13,41 +13,42 @@ public class GameOverGUI : MonoBehaviour {
 	YGUISystem.GUILable		m_gainedXP;
 	YGUISystem.GUILable		m_survivalTime;
 	YGUISystem.GUILable		m_killedMobs;
-	YGUISystem.GUILable		m_score;
 
 	YGUISystem.GUILable		m_deltaGainedGold;
 	YGUISystem.GUILable		m_deltaGainedXP;
 	YGUISystem.GUILable		m_deltaSurvivalTime;
 	YGUISystem.GUILable		m_deltaKilledMobs;
-	YGUISystem.GUILable		m_deltaScore;
 
 	YGUISystem.GUILable		m_bestGainedGold;
 	YGUISystem.GUILable		m_bestGainedXP;
 	YGUISystem.GUILable		m_bestSurvivalTime;
 	YGUISystem.GUILable		m_bestKilledMobs;
-	YGUISystem.GUILable		m_bestScore;
+
+	string[]				m_leaderBoards = {Const.LEADERBOARD_GAINED_GOLD, Const.LEADERBOARD_GAINED_XP, Const.LEADERBOARD_SURVIVAL_TIME, Const.LEADERBOARD_KILLED_MOBS};
 
 	void Start () {
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
 
+
+
 		m_gainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/Text").gameObject);
 		m_gainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/Text").gameObject);
 		m_survivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/Text").gameObject);
 		m_killedMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/Text").gameObject);
-		m_score = new YGUISystem.GUILable(transform.Find("Score/Text").gameObject);
+
 
 		m_deltaGainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/DeltaText").gameObject);
 		m_deltaGainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/DeltaText").gameObject);
 		m_deltaSurvivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/DeltaText").gameObject);
 		m_deltaKilledMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/DeltaText").gameObject);
-		m_deltaScore = new YGUISystem.GUILable(transform.Find("Score/DeltaText").gameObject);
+
 
 		m_bestGainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/BestText").gameObject);
 		m_bestGainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/BestText").gameObject);
 		m_bestSurvivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/BestText").gameObject);
 		m_bestKilledMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/BestText").gameObject);
-		m_bestScore = new YGUISystem.GUILable(transform.Find("Score/BestText").gameObject);
+
 
 		m_admob.ShowInterstitial();
 		m_admob.ShowBanner(true);
@@ -71,11 +72,20 @@ public class GameOverGUI : MonoBehaviour {
 		m_deltaKilledMobs.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_killedMobs, Warehouse.Instance.NewGameStats.m_killedMobs);
 		m_bestKilledMobs.Text.text = Warehouse.Instance.GameBestStats.m_killedMobs.ToString();
 
-		m_score.Text.text = Warehouse.Instance.NewGameStats.m_score.ToString();
-		m_deltaScore.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_score, Warehouse.Instance.NewGameStats.m_score);
-		m_bestScore.Text.text = Warehouse.Instance.GameBestStats.m_score.ToString();
+		GPlusPlatform.Instance.ReportScore(m_leaderBoards[0], Warehouse.Instance.NewGameStats.m_gainedGold, (bool success) => {
+			// handle success or failure
+		});
 
-		GPlusPlatform.Instance.ReportScore(Const.TOTAL_SCORE, Warehouse.Instance.NewGameStats.m_score, (bool success) => {
+		GPlusPlatform.Instance.ReportScore(m_leaderBoards[1], Warehouse.Instance.NewGameStats.m_gainedXP, (bool success) => {
+			// handle success or failure
+		});
+
+		System.TimeSpan totalPlayingTime = new System.TimeSpan((long)(System.TimeSpan.TicksPerSecond*Warehouse.Instance.NewGameStats.m_playTime));
+		GPlusPlatform.Instance.ReportScore(m_leaderBoards[2],  (long)(totalPlayingTime.TotalSeconds), (bool success) => {
+			// handle success or failure
+		});
+
+		GPlusPlatform.Instance.ReportScore(m_leaderBoards[3], Warehouse.Instance.NewGameStats.m_killedMobs, (bool success) => {
 			// handle success or failure
 		});
 
@@ -132,6 +142,11 @@ public class GameOverGUI : MonoBehaviour {
 	{
 		m_admob.ShowBanner(false);
 		Application.LoadLevel("Worldmap");
+	}
+
+	public void OnClickLeaderBoard(int slot)
+	{
+		GPlusPlatform.Instance.ShowLeaderboardUI(m_leaderBoards[slot]);
 	}
 
 }
