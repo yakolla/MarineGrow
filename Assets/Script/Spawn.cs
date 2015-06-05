@@ -449,7 +449,7 @@ public class Spawn : MonoBehaviour {
 		pos.y = Random.Range(10,15);
 		creature.transform.position = pos;
 
-		Parabola parabola = new Parabola(creature.gameObject, 15f, 0f, 90*Mathf.Deg2Rad, 3);
+		Parabola parabola = new Parabola(creature.gameObject, 10f, 0f, 90*Mathf.Deg2Rad, 20f, 2);
 		creature.gameObject.SetActive(true);
 
 		while(parabola.Update())

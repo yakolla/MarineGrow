@@ -19,7 +19,11 @@ public class Mob : Creature {
 		Boss = boss;
 		rigidbody.mass = refMob.mass;
 
-		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);	
+		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);
+
+		if (Random.Range(0f, 1f) < 0.3f)
+			m_creatureProperty.BetaMoveSpeed = 1.7f;
+
 
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 		

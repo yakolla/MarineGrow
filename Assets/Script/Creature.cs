@@ -187,7 +187,12 @@ public class Creature : MonoBehaviour {
 	protected void Update()
 	{
 
-		m_navAgent.speed = m_creatureProperty.MoveSpeed;
+		//if (m_navAgent.speed != m_creatureProperty.MoveSpeed)
+		{
+			m_navAgent.speed = m_creatureProperty.MoveSpeed;
+			m_animator.speed = m_creatureProperty.MoveSpeed;
+		}
+
 
 		if (true == m_creatureProperty.BackwardOnDamage)
 		{

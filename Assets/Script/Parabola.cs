@@ -5,7 +5,6 @@ public class Parabola {
 	float 			m_startTime;
 	float			m_finishTime;
 	Vector3			m_vel;
-	float			m_height;
 	float			m_gravity = 10f;
 	Vector3			m_oriPos;
 	int				m_maxBouncing = 1;
@@ -19,33 +18,32 @@ public class Parabola {
 	GameObject		m_obj;
 
 	public Parabola(GameObject obj, float speed, float hRadian, float vRadian, int bouncing)
+		: this(obj, speed, hRadian, vRadian, 10f, bouncing)
+	{
+
+	}
+
+	public Parabola(GameObject obj, float speed, float hRadian, float vRadian, float gravity, int bouncing)
 	{
 		m_obj = obj;
 		m_oriPos = obj.transform.position;
 		m_maxBouncing = bouncing;
 		m_vRadian = vRadian;
-
+		
 		m_vel.x = speed * Mathf.Cos(hRadian);
 		m_vel.y = speed * Mathf.Sin(vRadian);
 		m_vel.z = speed * Mathf.Sin(hRadian);
-		m_height = (m_vel.y*m_vel.y)/(2*m_gravity);
-
+		
 		m_startTime = Time.time;
-		m_finishTime = (m_vel.y/m_gravity)*2;// - (((m_vel.y/m_gravity)* m_oriPos.y)/m_height);
-
+		m_finishTime = (m_vel.y/m_gravity)*2;
+		
 		m_destPos.Set(m_oriPos.x+((m_vel.x*m_vel.x*Mathf.Sin(2*m_vRadian))/m_gravity*(m_vel.x >= 0 ? 1 : -1)), 0.1f, m_oriPos.z+((m_vel.z*m_vel.z*Mathf.Sin(2*m_vRadian))/m_gravity*(m_vel.z >= 0 ? 1 : -1)));
-
+		
 	}
 
 	public float GroundY
 	{
 		set {m_groundY = value;}
-		get {return m_groundY;}
-	}
-
-	public float MaxHeight
-	{
-		get { return m_height;}
 	}
 
 	public Vector3 Position
