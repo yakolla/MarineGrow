@@ -115,26 +115,44 @@ public class Warehouse {
 
 	public class 	GameStatistics
 	{
-		public	int		m_comboKills = 0;
-		public	float	m_playTime = 0;
-		public	int		m_gainedGold = 0;
-		public	int		m_gainedXP = 0;
-		public	int		m_killedMobs = 0;
-		public  long	m_score = 0;
+		SecuredType.XFloat		m_survivalTime = 0f;
+		SecuredType.XInt		m_gainedGold = 0;
+		SecuredType.XInt		m_gainedXP = 0;
+		SecuredType.XInt		m_killedMobs = 0;
 
 		public void SetBestStats(GameStatistics newStats)
 		{
-			m_comboKills = Mathf.Max(m_comboKills, newStats.m_comboKills);
+			if (SurvivalTime < newStats.SurvivalTime)
+				SurvivalTime = newStats.SurvivalTime;
 
-			if (m_playTime < newStats.m_playTime)
-				m_playTime = newStats.m_playTime;
+			GainedGold = Mathf.Max(GainedGold, newStats.GainedGold);
+			GainedXP = Mathf.Max(GainedXP, newStats.GainedXP);
+			KilledMobs = Mathf.Max(KilledMobs, newStats.KilledMobs);
 
-			m_gainedGold = Mathf.Max(m_gainedGold, newStats.m_gainedGold);
-			m_gainedXP = Mathf.Max(m_gainedXP, newStats.m_gainedXP);
-			m_killedMobs = Mathf.Max(m_killedMobs, newStats.m_killedMobs);
+		}
 
-			if (m_score < newStats.m_score)
-				m_score = newStats.m_score;
+		public float SurvivalTime
+		{
+			set{m_survivalTime.Value = value;}
+			get{return m_survivalTime.Value;}
+		}
+
+		public int GainedGold
+		{
+			set{m_gainedGold.Value = value;}
+			get{return m_gainedGold.Value;}
+		}
+
+		public int GainedXP
+		{
+			set{m_gainedXP.Value = value;}
+			get{return m_gainedXP.Value;}
+		}
+
+		public int KilledMobs
+		{
+			set{m_killedMobs.Value = value;}
+			get{return m_killedMobs.Value;}
 		}
 	}
 

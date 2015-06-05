@@ -65,8 +65,8 @@ public class ItemData {
 
 
 	int				m_refItemId;
-	int				m_count = 0;
-	int				m_level = 1;
+	SecuredType.XInt	m_count = 0;
+	SecuredType.XInt	m_level = 1;
 	int				m_evoultion = 0;
 	bool			m_lock = false;
 
@@ -184,8 +184,8 @@ public class ItemData {
 
 	public int Level
 	{
-		get {return m_level;}
-		set {m_level = value;}
+		get {return m_level.Value;}
+		set {m_level.Value = value;}
 	}
 
 	public int Evolution
@@ -196,8 +196,8 @@ public class ItemData {
 
 	public int Count
 	{
-		get {return m_count;}
-		set {m_count = value;}
+		get {return m_count.Value;}
+		set {m_count.Value = value;}
 	}
 
 	[JsonIgnore]

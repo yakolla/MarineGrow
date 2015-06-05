@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
 
 public class Champ : Creature {
 
@@ -230,7 +232,7 @@ public class Champ : Creature {
 	override public void GiveExp(int exp)
 	{
 		exp = (int)(exp+exp*m_creatureProperty.GainExtraExp);
-		Warehouse.Instance.NewGameStats.m_gainedXP += exp;
+		Warehouse.Instance.NewGameStats.GainedXP += exp;
 		m_creatureProperty.giveExp(exp);
 	}
 
@@ -241,18 +243,49 @@ public class Champ : Creature {
 		m_bloodWarningAnimator.SetTrigger("Warning");
 	}
 
+
+
 	override public void Death()
 	{
 		base.Death();
 
-		ShowGameOverGUI();
+		Warehouse.Instance.NewGameStats.SurvivalTime = Warehouse.Instance.PlayTime;
+		
+		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_GAINED_GOLD, Warehouse.Instance.NewGameStats.GainedGold, (bool success) => {
+			// handle success or failure
+		});
+		
+		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_GAINED_XP, Warehouse.Instance.NewGameStats.GainedXP, (bool success) => {
+			// handle success or failure
+		});
+		
+		System.TimeSpan totalPlayingTime = new System.TimeSpan((long)(System.TimeSpan.TicksPerSecond*Warehouse.Instance.NewGameStats.SurvivalTime));
+		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_SURVIVAL_TIME,  (long)(totalPlayingTime.TotalMilliseconds), (bool success) => {
+			// handle success or failure
+		});
+		
+		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_KILLED_MOBS, Warehouse.Instance.NewGameStats.KilledMobs, (bool success) => {
+			// handle success or failure
+		});
+		
+		Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
+			if (status == SavedGameRequestStatus.Success) {
+				// handle reading or writing of saved game.
+			} else {
+				// handle error
+			}
+		});
 
+		Const.GetSpawn().StartCoroutine(ShowGameOverGUI());
 	}
 
-	void ShowGameOverGUI()
+	IEnumerator	ShowGameOverGUI()
 	{
+		yield return new WaitForSeconds(2f);
+		
 		GameObject.Find("HudGUI/GameOverGUI").transform.Find("Panel").gameObject.SetActive(true);
 	}
+
 
 	override public bool ApplyBuff(Creature offender, DamageDesc.BuffType type, float time, DamageDesc damageDesc)
 	{

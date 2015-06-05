@@ -25,11 +25,16 @@ public class ShopIAB : MonoBehaviour
 {
 	class PaidItem
 	{
-		public int		m_gem;
+		SecuredType.XInt		m_gem;
 
 		public PaidItem(int gem)
 		{
 			m_gem = gem;
+		}
+
+		public int Gem
+		{
+			get{return m_gem.Value;}
 		}
 	}
 
@@ -170,13 +175,13 @@ public class ShopIAB : MonoBehaviour
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
 
-		m_closeButton.Lable.Text.text = "Thanks for your purchase: " + m_paidItems[purchase.Sku].m_gem;
+		m_closeButton.Lable.Text.text = "Thanks for your purchase: " + m_paidItems[purchase.Sku].Gem;
         _label = "CONSUMED: " + purchase.ToString();
 
 		PaidItem paidItem = null;
 		if (true == m_paidItems.TryGetValue(purchase.Sku, out paidItem))
 		{
-			Warehouse.Instance.Gem.Item.Count += paidItem.m_gem;
+			Warehouse.Instance.Gem.Item.Count += paidItem.Gem;
 		}
 
 		m_progressing = false;

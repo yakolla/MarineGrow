@@ -371,7 +371,7 @@ public class Spawn : MonoBehaviour {
 			m_mobsOfCheckOnDeath--;
 		}
 
-		++Warehouse.Instance.NewGameStats.m_killedMobs;
+		++Warehouse.Instance.NewGameStats.KilledMobs;
 
 		if (m_champ)
 		{
@@ -383,10 +383,6 @@ public class Spawn : MonoBehaviour {
 				});
 			}
 
-			if (Warehouse.Instance.NewGameStats.m_comboKills < m_champ.ComboKills)
-			{
-				Warehouse.Instance.NewGameStats.m_comboKills = m_champ.ComboKills;
-			}
 
 			m_comboGUIShake.enabled = true;
 			m_comboGUIShake.shake = 2f;

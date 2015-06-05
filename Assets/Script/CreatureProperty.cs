@@ -9,13 +9,13 @@ public class CreatureProperty {
 
 	[SerializeField]
 	RefCreatureBaseProperty	m_baseProperty;
-	int 	m_hp;
+	SecuredType.XInt	m_hp = 0;
 
 	[SerializeField]
-	int		m_alphaMaxHP = 0;
+	SecuredType.XInt		m_alphaMaxHP = 0;
 
 	[SerializeField]
-	int		m_alphaPhysicalDamage = 0;
+	SecuredType.XInt		m_alphaPhysicalDamage = 0;
 
 	[SerializeField]
 	float	m_alphaCriticalRatio = 0f;
@@ -24,7 +24,7 @@ public class CreatureProperty {
 	float	m_alphaCriticalDamage = 0f;
 
 	[SerializeField]
-	int		m_alphaPhysicalDefencePoint = 0;
+	SecuredType.XInt		m_alphaPhysicalDefencePoint = 0;
 
 	[SerializeField]
 	float	m_alphaMoveSpeed = 0f;
@@ -44,13 +44,13 @@ public class CreatureProperty {
 	float 	m_bulletLength = 1f;
 
 	[SerializeField]
-	int		m_shield = 0;
+	SecuredType.XInt		m_shield = 0;
 
 	[SerializeField]
-	int		m_level = 1;
+	SecuredType.XInt		m_level = 1;
 
 	[SerializeField]
-	int		m_exp = 0;
+	SecuredType.XInt		m_exp = 0;
 
 	public class WeaponBuffDesc
 	{
@@ -83,18 +83,18 @@ public class CreatureProperty {
 
 	public int AlphaMaxHP
 	{
-		get { return m_alphaMaxHP; }
-		set { m_alphaMaxHP = value; }
+		get { return m_alphaMaxHP.Value; }
+		set { m_alphaMaxHP.Value = value; }
 	}
 
 	public int HP
 	{
-		get { return m_hp; }
+		get { return m_hp.Value; }
 	}
 
 	public int Level
 	{
-		get { return m_level; }
+		get { return m_level.Value; }
 		private set {
 			m_level = value;
 			m_hp = MaxHP;
@@ -108,20 +108,20 @@ public class CreatureProperty {
 
 	public int MaxExp
 	{
-		get { return Mathf.FloorToInt(m_level*350*1.1f); }
+		get { return Mathf.FloorToInt(m_level.Value*350*1.1f); }
 	}
 
 	public int Exp	
 	{
-		get { return m_exp; }
+		get { return m_exp.Value; }
 	}
 
 	public void		giveExp(int exp)
 	{
-		m_exp += exp;
-		while (MaxExp <= m_exp)
+		m_exp.Value += exp;
+		while (MaxExp <= m_exp.Value)
 		{
-			m_exp -= MaxExp;
+			m_exp.Value -= MaxExp;
 			++Level;
 
 			if (m_owner != null)
@@ -134,18 +134,18 @@ public class CreatureProperty {
 
 	public int	givePAttackDamage(int damage)
 	{
-		m_hp -= damage;
-		m_hp = Mathf.Max(0, m_hp);
+		m_hp.Value -= damage;
+		m_hp.Value = Mathf.Max(0, m_hp.Value);
 
-		return m_hp;
+		return m_hp.Value;
 	}
 
 	public int	Heal(int hp)
 	{
-		m_hp += hp;
-		m_hp = Mathf.Min(MaxHP, m_hp);
+		m_hp.Value += hp;
+		m_hp.Value = Mathf.Min(MaxHP, m_hp.Value);
 		
-		return m_hp;
+		return m_hp.Value;
 	}
 
 	public int	PhysicalAttackDamage
@@ -155,8 +155,8 @@ public class CreatureProperty {
 
 	public int	AlphaPhysicalAttackDamage
 	{
-		get {return m_alphaPhysicalDamage;}
-		set { m_alphaPhysicalDamage = value; }
+		get {return m_alphaPhysicalDamage.Value;}
+		set { m_alphaPhysicalDamage.Value = value; }
 	}
 
 	public int	PhysicalDefencePoint
@@ -166,8 +166,8 @@ public class CreatureProperty {
 
 	public int	AlphaPhysicalDefencePoint
 	{
-		get {return m_alphaPhysicalDefencePoint;}
-		set { m_alphaPhysicalDefencePoint = value; }
+		get {return m_alphaPhysicalDefencePoint.Value;}
+		set { m_alphaPhysicalDefencePoint.Value = value; }
 	}
 
 	public float	MoveSpeed
@@ -251,8 +251,8 @@ public class CreatureProperty {
 
 	public int Shield
 	{
-		get {return m_shield;}
-		set { m_shield = value; }
+		get {return m_shield.Value;}
+		set { m_shield.Value = value; }
 	}
 
 

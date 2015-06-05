@@ -11,6 +11,7 @@ public class ChampStatusGUI : MonoBehaviour {
 	GameObject	m_guageGUI;
 	GameObject	m_accessoryGUI;
 	GameObject	m_specialGUI;
+	GameObject	m_optionGUI;
 
 
 	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
@@ -24,6 +25,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_guageGUI = transform.Find("Guage").gameObject;
 		m_accessoryGUI = transform.Find("Accessory").gameObject;
 		m_specialGUI = transform.Find("Special").gameObject;
+		m_optionGUI = transform.Find("Option").gameObject;
 
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
 			m_specialButtons[0].Lable.Text.text = m_champ.RemainStatPoint.ToString();
@@ -126,6 +128,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_guageGUI.SetActive(active);
 		m_accessoryGUI.SetActive(active);
 		m_specialGUI.SetActive(active);
+		m_optionGUI.SetActive(active);
 
 		if (active == true)
 		{

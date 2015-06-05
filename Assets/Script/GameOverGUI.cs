@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-using GooglePlayGames.BasicApi.SavedGame;
+
 
 public class GameOverGUI : MonoBehaviour {
 
@@ -53,53 +51,25 @@ public class GameOverGUI : MonoBehaviour {
 		m_admob.ShowInterstitial();
 		m_admob.ShowBanner(true);
 
-		Warehouse.Instance.NewGameStats.m_score = Warehouse.Instance.NewGameStats.m_gainedXP;
-		Warehouse.Instance.NewGameStats.m_playTime = Warehouse.Instance.PlayTime;
+
 		
-		m_gainedGold.Text.text = Warehouse.Instance.NewGameStats.m_gainedGold.ToString();
-		m_deltaGainedGold.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_gainedGold, Warehouse.Instance.NewGameStats.m_gainedGold);
-		m_bestGainedGold.Text.text = Warehouse.Instance.GameBestStats.m_gainedGold.ToString();
+		m_gainedGold.Text.text = Warehouse.Instance.NewGameStats.GainedGold.ToString();
+		m_deltaGainedGold.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.GainedGold, Warehouse.Instance.NewGameStats.GainedGold);
+		m_bestGainedGold.Text.text = Warehouse.Instance.GameBestStats.GainedGold.ToString();
 
-		m_gainedXP.Text.text = Warehouse.Instance.NewGameStats.m_gainedXP.ToString();
-		m_deltaGainedXP.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_gainedXP, Warehouse.Instance.NewGameStats.m_gainedXP);
-		m_bestGainedXP.Text.text = Warehouse.Instance.GameBestStats.m_gainedXP.ToString();
+		m_gainedXP.Text.text = Warehouse.Instance.NewGameStats.GainedXP.ToString();
+		m_deltaGainedXP.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.GainedXP, Warehouse.Instance.NewGameStats.GainedXP);
+		m_bestGainedXP.Text.text = Warehouse.Instance.GameBestStats.GainedXP.ToString();
 
-		m_survivalTime.Text.text = Warehouse.Instance.NewGameStats.m_playTime.ToString();
-		m_deltaSurvivalTime.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_playTime, Warehouse.Instance.NewGameStats.m_playTime);
-		m_bestSurvivalTime.Text.text = Warehouse.Instance.GameBestStats.m_playTime.ToString();
+		m_survivalTime.Text.text = Warehouse.Instance.NewGameStats.SurvivalTime.ToString();
+		m_deltaSurvivalTime.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.SurvivalTime, Warehouse.Instance.NewGameStats.SurvivalTime);
+		m_bestSurvivalTime.Text.text = Warehouse.Instance.GameBestStats.SurvivalTime.ToString();
 
-		m_killedMobs.Text.text = Warehouse.Instance.NewGameStats.m_killedMobs.ToString();
-		m_deltaKilledMobs.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.m_killedMobs, Warehouse.Instance.NewGameStats.m_killedMobs);
-		m_bestKilledMobs.Text.text = Warehouse.Instance.GameBestStats.m_killedMobs.ToString();
+		m_killedMobs.Text.text = Warehouse.Instance.NewGameStats.KilledMobs.ToString();
+		m_deltaKilledMobs.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.KilledMobs, Warehouse.Instance.NewGameStats.KilledMobs);
+		m_bestKilledMobs.Text.text = Warehouse.Instance.GameBestStats.KilledMobs.ToString();
 
-		GPlusPlatform.Instance.ReportScore(m_leaderBoards[0], Warehouse.Instance.NewGameStats.m_gainedGold, (bool success) => {
-			// handle success or failure
-		});
 
-		GPlusPlatform.Instance.ReportScore(m_leaderBoards[1], Warehouse.Instance.NewGameStats.m_gainedXP, (bool success) => {
-			// handle success or failure
-		});
-
-		System.TimeSpan totalPlayingTime = new System.TimeSpan((long)(System.TimeSpan.TicksPerSecond*Warehouse.Instance.NewGameStats.m_playTime));
-		GPlusPlatform.Instance.ReportScore(m_leaderBoards[2],  (long)(totalPlayingTime.TotalSeconds), (bool success) => {
-			// handle success or failure
-		});
-
-		GPlusPlatform.Instance.ReportScore(m_leaderBoards[3], Warehouse.Instance.NewGameStats.m_killedMobs, (bool success) => {
-			// handle success or failure
-		});
-
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			
-			Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
-				if (status == SavedGameRequestStatus.Success) {
-					// handle reading or writing of saved game.
-				} else {
-					// handle error
-				}
-			});
-		}
 	}
 
 	string DeltaValue(long src, long dest)

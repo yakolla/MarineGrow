@@ -16,9 +16,6 @@ public class ChampSettingGUI : MonoBehaviour {
 	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[EQUIP_ACCESSORY_SLOT_MAX];
 	YGUISystem.GUIButton	m_start;
 
-	const int INVEN_SLOT_COLS = 1;
-	const int INVEN_SLOT_ROWS = 4;
-
 
 	[SerializeField]
 	GameObject		m_prefChamp = null;
@@ -29,19 +26,15 @@ public class ChampSettingGUI : MonoBehaviour {
 	[SerializeField]
 	bool		m_cheat = true;
 
-	[SerializeField]
-	RefItemSpawn[]		m_itemSpawnDesc = null;
 
 	ItemObject		m_equipedWeapon = null;
 	ItemObject[]	m_equipedAccessories = new ItemObject[EQUIP_ACCESSORY_SLOT_MAX];
 
-	ItemObject		m_latestSelected = null;
 
 	int			m_stage = 1;
 
 	Spawn		m_spawn;
 
-	float		touchedDelta = 0f;
 	string		log;
 
 	public ItemObject	EquipedWeapon
@@ -57,6 +50,16 @@ public class ChampSettingGUI : MonoBehaviour {
 	void Start()
 	{
 		System.GC.Collect();
+
+		SecuredType.XInt xintA = 11;
+		SecuredType.XInt xintB = 21;
+		SecuredType.XInt xintC = xintA.Value + xintB.Value + 12;
+		Debug.Log("xint :" + xintA.Value + " " + xintB.Value + " " + xintC.Value);
+
+		SecuredType.XFloat xfloatA = 11.1f;
+		SecuredType.XFloat xfloatB = 21.2f;
+		SecuredType.XFloat xfloatC = xfloatA.Value + xfloatB.Value + 12.3f;
+		Debug.Log("xfloat :" + xfloatA.Value + " " + xfloatB.Value + " " + xfloatC.Value);
 
 		m_spawn = GameObject.Find("Dungeon/Spawn").GetComponent<Spawn>();
 		GPlusPlatform.Instance.InitAnalytics(GameObject.Find("GAv3").GetComponent<GoogleAnalyticsV3>());
