@@ -48,6 +48,11 @@ public class CreatureProperty {
 	SecuredType.XInt		m_alphaMaxSP = 0;
 	SecuredType.XInt		m_sp = 0;
 
+	[SerializeField]
+	float	m_alphaSPRecoveryPerSec = 0f;
+
+	float	m_accSPRecoveryPerSec = 0f;
+
 	public class WeaponBuffDesc
 	{
 		public DamageDesc.BuffType	m_buff;
@@ -116,6 +121,17 @@ public class CreatureProperty {
 			m_sp.Value = Mathf.Clamp(m_sp.Value, 0, MaxSP);
 		}
 
+	}
+
+	public float AlphaSPRecoveryPerSec
+	{
+		get { return m_alphaSPRecoveryPerSec; }
+		set { m_alphaSPRecoveryPerSec = value; }
+	}
+
+	public float SPRecoveryPerSec
+	{
+		get{ return (m_baseProperty.spRecoveryPerSec + m_alphaSPRecoveryPerSec);}
 	}
 
 	public int Level
@@ -297,6 +313,16 @@ public class CreatureProperty {
 		get {return m_bombRange;}
 	}
 
+	public void Update()
+	{
+		m_accSPRecoveryPerSec += (SPRecoveryPerSec * Time.deltaTime);
+		if (m_accSPRecoveryPerSec >= 1f)
+		{
+			SP += (int)m_accSPRecoveryPerSec;
+			m_accSPRecoveryPerSec -= (int)m_accSPRecoveryPerSec;
+		}
+	}
+
 	public void CopyTo(CreatureProperty other)
 	{
 		other.m_owner = m_owner;
@@ -323,5 +349,6 @@ public class CreatureProperty {
 		other.m_bombRange = m_bombRange;
 		other.m_alphaMaxSP = m_alphaMaxSP;
 		other.m_sp = m_sp;
+		other.m_alphaSPRecoveryPerSec = m_alphaSPRecoveryPerSec;
 	}
 }

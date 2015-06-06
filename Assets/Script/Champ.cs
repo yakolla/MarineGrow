@@ -179,8 +179,6 @@ public class Champ : Creature {
 	new void Update () {
 		base.Update();
 
-
-
 		if (m_enableAutoTarget)
 		{
 			if (AutoAttack() == false)

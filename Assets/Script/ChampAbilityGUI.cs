@@ -73,7 +73,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 		*/
-		champStatsAbili.Add(new Ability(0.3f, "Health", 
+		champStatsAbili.Add(new Ability(0.3f, "Health UP", 
 		()=>{
 			m_backup.AlphaMaxHP+=50;
 			return m_champ.m_creatureProperty.MaxHP + " -> " + "<color=yellow>" + (m_backup.MaxHP) + "</color>";
@@ -84,7 +84,25 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		champStatsAbili.Add(new Ability(0.3f, "SP UP", 
+		                                ()=>{
+			m_backup.AlphaMaxSP+=30;
+			return m_champ.m_creatureProperty.MaxSP + " -> " + "<color=yellow>" + (m_backup.MaxSP) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaMaxSP+=30;
+			--m_champ.RemainStatPoint;
+		}));
 
+		champStatsAbili.Add(new Ability(0.3f, "SP Recovery Per Sec", 
+		                                ()=>{
+			m_backup.AlphaSPRecoveryPerSec+=1;
+			return m_champ.m_creatureProperty.SPRecoveryPerSec + " -> " + "<color=yellow>" + (m_backup.SPRecoveryPerSec) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaSPRecoveryPerSec+=1;
+			--m_champ.RemainStatPoint;
+		}));
 
 		champStatsAbili.Add(new Ability(0.3f, "Critical Chance %", 
 		()=>{
@@ -127,7 +145,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		weaponAbili.Add(new Ability(0.3f, "Embers On Hit Lv", 
+		weaponAbili.Add(new Ability(0.3f, "Embers Skill Lv", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
 			int backup = 1;
@@ -212,11 +230,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Inc Gain Extra XP %", 
 		                                ()=>{
-			m_backup.AlphaGainExtraExp += 0.3f;
+			m_backup.AlphaGainExtraExp += 0.5f;
 			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.3f;
+			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.5f;
 			--m_champ.RemainStatPoint;
 		}));
 
@@ -242,15 +260,15 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Charge to Shield Skill", 
 		                           ()=>{
-			m_backup.Shield += 30;
+			m_backup.Shield += 10;
 			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.Shield += 30;
+			m_champ.m_creatureProperty.Shield += 10;
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(1f, "Grenade Skill Lv", 
+		skillAbili.Add(new Ability(0.3f, "Grenade Skill Lv", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
 			int backup = 1;
@@ -277,7 +295,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(1f, "Explosion Skill Lv", 
+		skillAbili.Add(new Ability(0.3f, "Explosion Skill Lv", 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[129].codeName);
 			int backup = 1;

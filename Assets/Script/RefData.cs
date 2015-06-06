@@ -18,6 +18,7 @@ public class RefCreatureBaseProperty
 	public int	maxHP;
 	public int	physicalDamage;
 	public int	maxSP;
+	public float spRecoveryPerSec;
 
 	[Range (0, 100)]
 	public int	physicalDefence;

@@ -208,7 +208,7 @@ public class Creature : MonoBehaviour {
 			}
 		}
 
-
+		m_creatureProperty.Update();
 	}
 
 	virtual public string[] GetAutoTargetTags()
