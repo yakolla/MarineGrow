@@ -22,7 +22,11 @@ public class YGUISystem {
 				m_icon = new GUIImageStatic(iconTrans.gameObject, null);
 		}
 
-
+		public System.Func<bool> EnableChecker
+		{
+			get{return m_enableChecker;}
+			set{m_enableChecker = value;}
+		}
 
 		public Button Button
 		{
@@ -43,7 +47,7 @@ public class YGUISystem {
 			else
 				color.a = 0.5f;
 
-			m_button.image.color = color;
+			//m_button.image.color = color;
 		}
 
 		public GUILable Lable
