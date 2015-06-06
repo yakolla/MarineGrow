@@ -66,8 +66,9 @@ public class ChampStatusGUI : MonoBehaviour {
 		);
 
 		m_guages[2] = new YGUISystem.GUIGuage(transform.Find("Guage/SP").gameObject, 
-			()=>{return 1f;}, 
-			()=>{return "Weapon Enegy"; }
+		    ()=>{return m_champ.m_creatureProperty.getSPRemainRatio();}, 
+			()=>{return Mathf.FloorToInt(m_champ.m_creatureProperty.SP).ToString() + " / " + Mathf.FloorToInt(m_champ.m_creatureProperty.MaxSP).ToString();
+			}
 		);
 	}
 

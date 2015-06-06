@@ -21,15 +21,13 @@ public class LightningLauncher : Weapon {
 			m_bullet.MaxChaining = m_maxChaining;
 
 			this.audio.Play();
-
+			StartedFiring(0f);
 		}
 		if (null != m_bullet)
 		{
 			Vector3 euler = m_bullet.transform.rotation.eulerAngles;
 			euler.y = transform.eulerAngles.y;
 			m_bullet.transform.eulerAngles = euler;
-
-
 		}
 
 		playGunPointEffect();

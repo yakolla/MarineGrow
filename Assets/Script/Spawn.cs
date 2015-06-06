@@ -503,7 +503,8 @@ public class Spawn : MonoBehaviour {
 		Mob enemy = enemyObj.GetComponent<Mob>();
 		enemy.Init(refMob, mobLevel, refDropItems, boss);
 		enemy.m_creatureProperty.AlphaMaxHP=(int)(enemy.m_creatureProperty.MaxHP*ProgressStage()*0.1f);
-		enemy.m_creatureProperty.Heal(enemy.m_creatureProperty.MaxHP);
+		enemy.m_creatureProperty.HP = enemy.m_creatureProperty.MaxHP;
+		enemy.m_creatureProperty.SP = enemy.m_creatureProperty.MaxSP;
 
 		if (m_champ != null)
 			enemy.SetTarget(m_champ.gameObject);

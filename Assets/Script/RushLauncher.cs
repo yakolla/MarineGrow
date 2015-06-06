@@ -23,7 +23,7 @@ public class RushLauncher : Weapon {
 			m_goal.y = m_creature.transform.position.y;
 			m_rush = true;
 			m_elapsed = 0f;
-			m_lastCreated = Time.time;
+			StartedFiring(0f);
 
 		}
 		m_firing = true;

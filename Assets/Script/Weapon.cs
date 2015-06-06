@@ -46,6 +46,9 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	protected float		m_attackRange;
 
+	[SerializeField]
+	protected int		m_spPerLevel = 0;
+
 
 	int					m_evolution;
 	protected int		m_level;
@@ -157,6 +160,12 @@ public class Weapon : MonoBehaviour {
 		get {return m_refItem.codeName;}
 	}
 
+	public int SpPerLevel
+	{
+		set{m_spPerLevel = value;}
+		get{return m_spPerLevel;}
+	}
+
 	public int Damage
 	{
 		get {return GetDamage(m_creature.m_creatureProperty);}
@@ -222,13 +231,21 @@ public class Weapon : MonoBehaviour {
 
 	protected bool isCoolTime()
 	{
-		return m_lastCreated +  coolDownTime() <= Time.time;
+		bool coolTime = m_lastCreated +  coolDownTime() <= Time.time;
+		bool sp = (m_spPerLevel*Level) <= m_creature.m_creatureProperty.SP;
+		return coolTime && sp;
 	}
 
 	protected float remainCoolTimeRatio()
 	{
 		float cool = coolDownTime();
 		return Mathf.Min(1f, 1f-((m_lastCreated + cool)-Time.time)/cool);
+	}
+
+	protected void StartedFiring(float delay)
+	{
+		m_lastCreated = Time.time+delay;
+		m_creature.m_creatureProperty.SP -= (m_spPerLevel*Level);
 	}
 
 	virtual public void StartFiring(float targetAngle)
@@ -246,7 +263,7 @@ public class Weapon : MonoBehaviour {
 				delay = m_firingDescs[i].delayTime;
 			}
 
-			m_lastCreated = Time.time+delay;
+			StartedFiring(delay);
 		}
 
 		m_firing = true;

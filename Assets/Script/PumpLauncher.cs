@@ -10,6 +10,7 @@ public class PumpLauncher : Weapon {
 
 	override public void StartFiring(float targetAngle)
 	{
+		StartedFiring(0f);
 	}
 
 	override public void StopFiring()

@@ -726,7 +726,8 @@ public class Creature : MonoBehaviour {
 
 		ApplyBuff(offender, damageDesc.DamageBuffType, 2f, damageDesc);
 
-		if (m_creatureProperty.givePAttackDamage(dmg) == 0f)
+		m_creatureProperty.HP-=dmg;
+		if (m_creatureProperty.HP == 0)
 		{
 			if (offender != null)
 			{
@@ -734,7 +735,7 @@ public class Creature : MonoBehaviour {
 				if (lifeSteal > 0)
 				{
 					offender.DamageText(lifeSteal.ToString(), Color.green, DamageNumberSprite.MovementType.RisingUp);
-					offender.m_creatureProperty.Heal(lifeSteal);
+					offender.Heal(lifeSteal);
 				}
 				Const.GetSpawn().SharePotinsChamps(offender, ItemData.Type.XPPotion, m_creatureProperty.Exp, false);
 			}
@@ -751,7 +752,7 @@ public class Creature : MonoBehaviour {
 
 	public void Heal(int heal)
 	{
-		m_creatureProperty.Heal(heal);
+		m_creatureProperty.HP += heal;
 	}
 
 	public Type CreatureType

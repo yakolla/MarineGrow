@@ -27,6 +27,8 @@ public class Firegun : Weapon {
 
 				this.audio.Play();
 			}
+
+			StartedFiring(0f);
 		}
 
 		m_firing = true;

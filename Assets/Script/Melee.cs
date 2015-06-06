@@ -40,7 +40,7 @@ public class Melee : Weapon {
 			}
 			m_bullet.Damage = Damage;
 			m_bullet.SetCollider(true);
-			m_lastCreated = Time.time;
+			StartedFiring(0f);
 		}
 		else
 		{			

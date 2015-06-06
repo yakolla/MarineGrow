@@ -11,10 +11,8 @@ public class CreatureProperty {
 	RefCreatureBaseProperty	m_baseProperty;
 	SecuredType.XInt	m_hp = 0;
 
-	[SerializeField]
 	SecuredType.XInt		m_alphaMaxHP = 0;
 
-	[SerializeField]
 	SecuredType.XInt		m_alphaPhysicalDamage = 0;
 
 	[SerializeField]
@@ -23,10 +21,8 @@ public class CreatureProperty {
 	[SerializeField]
 	float	m_alphaCriticalDamage = 0f;
 
-	[SerializeField]
 	SecuredType.XInt		m_alphaPhysicalDefencePoint = 0;
 
-	[SerializeField]
 	float	m_alphaMoveSpeed = 0f;
 
 	float	m_betaMoveSpeed = 1f;
@@ -43,14 +39,14 @@ public class CreatureProperty {
 	[SerializeField]
 	float 	m_bulletLength = 1f;
 
-	[SerializeField]
 	SecuredType.XInt		m_shield = 0;
 
-	[SerializeField]
 	SecuredType.XInt		m_level = 1;
 
-	[SerializeField]
 	SecuredType.XInt		m_exp = 0;
+
+	SecuredType.XInt		m_alphaMaxSP = 0;
+	SecuredType.XInt		m_sp = 0;
 
 	public class WeaponBuffDesc
 	{
@@ -90,6 +86,36 @@ public class CreatureProperty {
 	public int HP
 	{
 		get { return m_hp.Value; }
+		set {
+			m_hp.Value = value;
+			m_hp.Value = Mathf.Clamp(m_hp.Value, 0, MaxHP);
+		}
+	}
+
+	public float getSPRemainRatio()
+	{
+		return (float)SP/MaxSP;
+	}
+	
+	public int MaxSP
+	{
+		get { return (int)((m_baseProperty.maxSP+AlphaMaxSP)+(m_baseProperty.maxSP+AlphaMaxSP)*(Level-1)*m_baseProperty.spPerLevel); }
+	}
+	
+	public int AlphaMaxSP
+	{
+		get { return m_alphaMaxSP.Value; }
+		set { m_alphaMaxSP.Value = value; }
+	}
+	
+	public int SP
+	{
+		get { return m_sp.Value; }
+		set {
+			m_sp.Value = value;
+			m_sp.Value = Mathf.Clamp(m_sp.Value, 0, MaxSP);
+		}
+
 	}
 
 	public int Level
@@ -98,6 +124,7 @@ public class CreatureProperty {
 		private set {
 			m_level = value;
 			m_hp = MaxHP;
+			m_sp = MaxSP;
 		}
 	}
 
@@ -130,22 +157,6 @@ public class CreatureProperty {
 			}
 
 		}
-	}
-
-	public int	givePAttackDamage(int damage)
-	{
-		m_hp.Value -= damage;
-		m_hp.Value = Mathf.Max(0, m_hp.Value);
-
-		return m_hp.Value;
-	}
-
-	public int	Heal(int hp)
-	{
-		m_hp.Value += hp;
-		m_hp.Value = Mathf.Min(MaxHP, m_hp.Value);
-		
-		return m_hp.Value;
 	}
 
 	public int	PhysicalAttackDamage
@@ -310,5 +321,7 @@ public class CreatureProperty {
 		other.m_weaponBuffDescs.m_buff = m_weaponBuffDescs.m_buff;
 		other.m_shield = m_shield;
 		other.m_bombRange = m_bombRange;
+		other.m_alphaMaxSP = m_alphaMaxSP;
+		other.m_sp = m_sp;
 	}
 }

@@ -10,6 +10,7 @@ public class SuicideBombing : Weapon {
 
 	override public void StartFiring(float targetAngle)
 	{
+		StartedFiring(0f);
 		m_firing = true;
 	}
 

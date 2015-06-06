@@ -17,6 +17,7 @@ public class RefCreatureBaseProperty
 {
 	public int	maxHP;
 	public int	physicalDamage;
+	public int	maxSP;
 
 	[Range (0, 100)]
 	public int	physicalDefence;
@@ -32,6 +33,8 @@ public class RefCreatureBaseProperty
 	public float 	moveSpeedPerLevel = 0;
 	[Range (0, 10)]
 	public float	moveSpeed;
+	[Range (0, 1)]
+	public float 	spPerLevel;
 	public float	navMeshBaseOffset;
 	public float	lifeSteal;
 	public float	criticalRatio;

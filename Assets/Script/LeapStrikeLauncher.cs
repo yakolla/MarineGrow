@@ -15,7 +15,8 @@ public class LeapStrikeLauncher : Weapon {
 			m_parabola.TimeScale = 0.80f;
 
 			m_creature.CrowdControl(Creature.CrowdControlType.LeapStrike, true);
-			m_lastCreated = Time.time+m_coolTime;
+
+			StartedFiring(0f);
 		}
 		m_firing = true;
 	}
