@@ -173,8 +173,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			obj.transform.localPosition = new Vector3(0f, rectGUIInventorySlot.rect.height/2*(maxCount-1)-rectGUIInventorySlot.rect.height*itemIndex, 0);
 
 			invSlot.Init(item.ItemIcon, item.Item.Description());
-			invSlot.PriceButton0.m_enable = false;
-			invSlot.PriceButton1.m_enable = false;
+			invSlot.PriceButton0.EnableChecker = ()=>{return false;};
+			invSlot.PriceButton1.EnableChecker = ()=>{return false;};
 
 			int capturedItemIndex = itemIndex;
 
@@ -202,11 +202,19 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				SetButtonRole(ButtonRole.Levelup, invSlot, invSlot.PriceButton1, itemIndex);
 			}
+
+			invSlot.Update();
+
+			if (itemIndex == 0)
+			{
+				OnClickEquip(invSlot, invSlot.PriceButton0, invSlot.PriceButton0.m_priceButton, itemIndex);
+			}
 		}
-		//rectContents.y = rectGUIInventorySlot.rect.height*2*itemIndex;
 		rectContents.y = rectGUIInventorySlot.rect.height*itemIndex;
 		rectInventoryObj.sizeDelta = rectContents;
 		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, -(rectContents.y/2-rectScrollView.rect.height/2), rectInventoryObj.position.z);
+
+
 	}
 	enum ButtonRole
 	{
@@ -225,27 +233,31 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 		case ButtonRole.Equip:
 			{
-				priceGemButton.m_enable = true;
+			priceGemButton.EnableChecker = ()=>{return true;};
 
 				priceGemButton.SetPrices(null, null);
-			priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+				priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Equip");
+
+				invSlot.SetListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex));
 			}
 			break;
 		case ButtonRole.Unequip:
 			{
-				priceGemButton.m_enable = true;
+			priceGemButton.EnableChecker = ()=>{return true;};
 
 				priceGemButton.SetPrices(null, null);
-			priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+				priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Unequip");
+				
+				invSlot.SetListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex));
 			}
 			break;
 
 		case ButtonRole.Levelup:
 			{
 
-				priceGemButton.m_enable = item.Item.RefItem.levelup.conds != null;
+			priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.levelup.conds != null && item.Item.Lock == false;};
 				
 				priceGemButton.SetPrices(item.Item.RefItem.levelup.conds, item.Item.RefItem.levelup.else_conds);
 
@@ -256,11 +268,12 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		case ButtonRole.Unlock:
 			{
-				priceGemButton.m_enable = item.Item.RefItem.unlock.conds != null;
+			priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.unlock.conds != null;};
 
 				priceGemButton.SetPrices(item.Item.RefItem.unlock.conds, item.Item.RefItem.unlock.else_conds);
 			priceGemButton.AddListener(() => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Unlock");
+
 			}
 			break;
 
@@ -269,6 +282,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 			break;
 		}
+
 	}
 
 	void OnEnable() {
@@ -343,91 +357,91 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	public void OnClickEquip(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
+
+		ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
+		
+		bool inEquipSlot = m_equipedWeapon == selectedItem;
+		if (inEquipSlot == false)
 		{
-			ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
-			
-			bool inEquipSlot = m_equipedWeapon == selectedItem;
-			if (inEquipSlot == false)
+			for(int e = 0; e < m_equipedAccessories.Length; ++e)
 			{
-				for(int e = 0; e < m_equipedAccessories.Length; ++e)
+				if (m_equipedAccessories[e] == selectedItem)
 				{
-					if (m_equipedAccessories[e] == selectedItem)
+					inEquipSlot = true;
+					break;
+				}
+			}	
+		}
+		
+		switch(selectedItem.Item.RefItem.type)
+		{
+		case ItemData.Type.Weapon:
+		{
+			if (true == inEquipSlot)
+			{
+				m_equipedWeapon = null;		
+				m_weapon.Icon.Image = null;
+				SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
+			}
+			else
+			{
+				m_equipedWeapon = selectedItem;
+				m_weapon.Icon.Image = selectedItem.ItemIcon;
+				SetButtonRole(ButtonRole.Unequip, invSlot, priceGemButton, itemIndex);
+			}
+		}break;
+			
+		case ItemData.Type.Accessory:
+		case ItemData.Type.Follower:
+		{
+			if (true == inEquipSlot)
+			{
+				
+				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				{
+					if (m_equipedAccessories[x] != null)
 					{
-						inEquipSlot = true;
+						if (m_equipedAccessories[x].Item.Compare(selectedItem.Item))
+						{
+							m_equipedAccessories[x] = null;
+							m_accessories[x].Icon.Image = null;
+							SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
+							break;
+						}
+						
+					}
+				}					
+			}
+			else
+			{
+				bool aleadyExists = false;
+				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				{
+					if (m_equipedAccessories[x] == selectedItem)
+					{
+						aleadyExists = true;
 						break;
 					}
 				}	
-			}
-			
-			switch(selectedItem.Item.RefItem.type)
-			{
-			case ItemData.Type.Weapon:
-			{
-				if (true == inEquipSlot)
-				{
-					m_equipedWeapon = null;		
-					m_weapon.Icon.Image = null;
-					SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
-				}
-				else
-				{
-					m_equipedWeapon = selectedItem;
-					m_weapon.Icon.Image = selectedItem.ItemIcon;
-					SetButtonRole(ButtonRole.Unequip, invSlot, priceGemButton, itemIndex);
-				}
-			}break;
 				
-			case ItemData.Type.Accessory:
-			case ItemData.Type.Follower:
-			{
-				if (true == inEquipSlot)
+				if (aleadyExists == false)
 				{
-					
 					for(int x = 0; x < m_equipedAccessories.Length; ++x)
 					{
-						if (m_equipedAccessories[x] != null)
+						if (m_equipedAccessories[x] == null)
 						{
-							if (m_equipedAccessories[x].Item.Compare(selectedItem.Item))
-							{
-								m_equipedAccessories[x] = null;
-								m_accessories[x].Icon.Image = null;
-								SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
-								break;
-							}
-							
-						}
-					}					
-				}
-				else
-				{
-					bool aleadyExists = false;
-					for(int x = 0; x < m_equipedAccessories.Length; ++x)
-					{
-						if (m_equipedAccessories[x] == selectedItem)
-						{
-							aleadyExists = true;
+							m_equipedAccessories[x] = selectedItem;
+							m_accessories[x].Icon.Image = selectedItem.ItemIcon;
+							SetButtonRole(ButtonRole.Unequip, invSlot, priceGemButton, itemIndex);
 							break;
 						}
 					}	
-					
-					if (aleadyExists == false)
-					{
-						for(int x = 0; x < m_equipedAccessories.Length; ++x)
-						{
-							if (m_equipedAccessories[x] == null)
-							{
-								m_equipedAccessories[x] = selectedItem;
-								m_accessories[x].Icon.Image = selectedItem.ItemIcon;
-								SetButtonRole(ButtonRole.Unequip, invSlot, priceGemButton, itemIndex);
-								break;
-							}
-						}	
-					}
-					
 				}
-			}break;
+				
 			}
+		}break;
 		}
+
 
 	}
 

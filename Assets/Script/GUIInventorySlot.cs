@@ -5,18 +5,17 @@ using UnityEngine.UI;
 
 public class GUIInventorySlot : MonoBehaviour {
 
-	YGUISystem.GUIImageStatic	m_item;
+	YGUISystem.GUIButton	m_item;
 
 	public class GUIPriceGemButton
 	{
 		public YGUISystem.GUIPriceButton	m_priceButton;
 		public YGUISystem.GUIPriceButton	m_gemButton;
-		public bool							m_enable;
 
-		public GUIPriceGemButton(Transform transform, string buttonPath)
+		public GUIPriceGemButton(Transform transform, string buttonPath, System.Func<bool>			enableChecker)
 		{
-			m_priceButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath).gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return m_enable;});
-			m_gemButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath + "/GemButton").gameObject, Const.StartPosYOfGemPriceButtonImage, ()=>{return m_enable;});
+			m_priceButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath).gameObject, Const.StartPosYOfPriceButtonImage, enableChecker);
+			m_gemButton = new YGUISystem.GUIPriceButton(transform.Find(buttonPath + "/GemButton").gameObject, Const.StartPosYOfGemPriceButtonImage, enableChecker);
 		}
 
 		public void Update()
@@ -47,6 +46,17 @@ public class GUIInventorySlot : MonoBehaviour {
 		{
 			m_priceButton.GUIImageButton.Lable.Text.text = text;
 		}
+
+		public System.Func<bool> EnableChecker
+		{
+			get{
+				return m_priceButton.GUIImageButton.EnableChecker;
+			}
+			set{
+				m_priceButton.GUIImageButton.EnableChecker = value;
+				m_gemButton.GUIImageButton.EnableChecker = value;
+			}
+		} 
 	}
 
 	GUIPriceGemButton	m_priceButton0;
@@ -54,11 +64,13 @@ public class GUIInventorySlot : MonoBehaviour {
 
 	public void Init(Texture icon, string desc)
 	{
-		m_item = new YGUISystem.GUIImageStatic(transform.Find("Icon").gameObject, icon);
-		m_item.Lable.Text.text = desc;
 
-		m_priceButton0 = new GUIPriceGemButton(transform, "GUIPriceButton0");
-		m_priceButton1 = new GUIPriceGemButton(transform, "GUIPriceButton1");
+		m_priceButton0 = new GUIPriceGemButton(transform, "GUIPriceButton0", ()=>{return true;});
+		m_priceButton1 = new GUIPriceGemButton(transform, "GUIPriceButton1", ()=>{return true;});
+
+		m_item = new YGUISystem.GUIButton(transform.Find("PictureButton").gameObject, m_priceButton0.EnableChecker);
+		m_item.Icon.Lable.Text.text = desc;
+		m_item.Icon.Image = icon;
 	}
 
 	public GUIPriceGemButton PriceButton0
@@ -68,7 +80,7 @@ public class GUIInventorySlot : MonoBehaviour {
 
 	public string ItemDesc
 	{
-		set{m_item.Lable.Text.text = value;}
+		set{m_item.Icon.Lable.Text.text = value;}
 	}
 
 	public GUIPriceGemButton PriceButton1
@@ -76,8 +88,16 @@ public class GUIInventorySlot : MonoBehaviour {
 		get{return m_priceButton1;}
 	}
 
-	void Update()
+
+	public void SetListener(UnityEngine.Events.UnityAction callback)
 	{
+		m_item.Button.onClick.RemoveAllListeners();
+		m_item.Button.onClick.AddListener(callback);
+	}
+
+	public void Update()
+	{
+		m_item.Update();
 		m_priceButton0.Update();
 		m_priceButton1.Update();
 	}
