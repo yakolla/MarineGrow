@@ -65,7 +65,6 @@ public class ShopIAB : MonoBehaviour
 	void Init()
 	{
 		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Shop", "OpenShop", 0);
-
 		m_paidItems.Add("gem.1000", new PaidItem(1000));
 		m_paidItems.Add("gem.3000", new PaidItem(3500));
 		m_paidItems.Add("gem.5000", new PaidItem(6000));

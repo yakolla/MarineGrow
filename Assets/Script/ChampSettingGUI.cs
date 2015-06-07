@@ -349,7 +349,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
 		GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.Item.Level, 0);
 		
-		//champObj.SetActive(false);
+		champObj.SetActive(false);
 
 		gameObject.SetActive(false);
 
