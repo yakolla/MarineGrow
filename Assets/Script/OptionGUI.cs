@@ -53,6 +53,7 @@ public class OptionGUI : MonoBehaviour {
 	public void OnToggleAutoTarget()
 	{
 		Warehouse.Instance.GameOptions.m_autoTarget = m_autoTarget.isOn;
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Options", "Autotarget"+m_autoTarget.isOn, 0);
 	}
 
 	public void OnClickOk()
@@ -76,6 +77,7 @@ public class OptionGUI : MonoBehaviour {
 
 	public void OnClickRate()
 	{
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Options", "Rate", 0);
 		Application.OpenURL ("market://details?id=com.banegole.marinegrowing");
 	}
 

@@ -166,7 +166,7 @@
 		{
 			"coolTime":4,
 			"range":5,
-			"spPerLevel":1
+			"spPerLevel":2
 		},
 		"levelup":
 		{
@@ -1080,7 +1080,7 @@
 		"icon":"Sprites/Shield",		
 		"weaponStat":
 		{
-			"coolTime":0.1,
+			"coolTime":3,
 			"range":5,
 			"spPerLevel":5
 		}

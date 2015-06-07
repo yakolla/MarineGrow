@@ -105,17 +105,20 @@ public class GameOverGUI : MonoBehaviour {
 	public void OnClickRestart()
 	{
 		m_admob.ShowBanner(false);
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "GameOver", "Restart", 0);
 		Application.LoadLevel("Basic Dungeon");
 	}
 
 	public void OnClickTitle()
 	{
 		m_admob.ShowBanner(false);
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "GameOver", "Title", 0);
 		Application.LoadLevel("Worldmap");
 	}
 
 	public void OnClickLeaderBoard(int slot)
 	{
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "GameOver", "Leaderboard"+slot, 0);
 		GPlusPlatform.Instance.ShowLeaderboardUI(m_leaderBoards[slot]);
 	}
 

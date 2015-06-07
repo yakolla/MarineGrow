@@ -441,6 +441,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 			++m_usedCountOfRandomAbilityItem;
 
 			m_rollButton.NormalWorth = 1f+m_usedCountOfRandomAbilityItem;
+
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Ability", "Roll"+m_usedCountOfRandomAbilityItem, 0);
 		}
 	}
 

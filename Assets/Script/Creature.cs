@@ -513,6 +513,7 @@ public class Creature : MonoBehaviour {
 		effect.transform.localPosition = pref.transform.position;
 		effect.transform.localRotation = pref.transform.rotation;
 
+		m_creatureProperty.SP = m_creatureProperty.MaxSP;
 		m_creatureProperty.BulletLength += 1f;
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
 		m_creatureProperty.BetaMoveSpeed *= 2f;
