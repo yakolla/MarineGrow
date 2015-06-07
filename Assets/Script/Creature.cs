@@ -74,7 +74,6 @@ public class Creature : MonoBehaviour {
 
 		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 
-		StartCoroutine(EffectShield());
 	}
 
 	virtual public void Init()
@@ -128,6 +127,13 @@ public class Creature : MonoBehaviour {
 		Weapon weapon = instanceWeapon(weaponData);
 		
 		m_weaponHolder.EquipPassiveWeapon(weapon);
+	}
+
+	public void SetSubWeapon(Weapon weapon, ItemWeaponData weaponData)
+	{
+		Weapon subWeapon = instanceWeapon(weaponData);
+		
+		weapon.SetSubWeapon(subWeapon);
 	}
 
 	public Vector3	AimpointLocalPos
@@ -521,45 +527,6 @@ public class Creature : MonoBehaviour {
 		DestroyObject(effect);
 	}
 
-	IEnumerator EffectShield()
-	{
-		GameObject pref = null;
-		GameObject effect = null;
-		DamageNumberSprite sprite = null;
-
-		while(true)
-		{
-			bool shield = m_creatureProperty.Shield > 0;
-			if (shield == true)
-			{
-				if (pref == null)
-				{
-					pref = Resources.Load<GameObject>("Pref/ef shield skill");
-					effect = (GameObject)Instantiate(pref);
-					effect.transform.parent = transform;
-					effect.transform.localPosition = pref.transform.position;
-					effect.transform.localRotation = pref.transform.rotation;		
-					sprite = DamageText("", Color.white, DamageNumberSprite.MovementType.FloatingUpAlways);
-
-					Vector3 scale = sprite.gameObject.transform.localScale;
-					scale *= 0.5f;
-					sprite.gameObject.transform.localScale = scale;
-				}
-
-
-				sprite.Text = "Shield " + m_creatureProperty.Shield;
-			}
-
-			if (pref != null)
-			{
-				sprite.gameObject.SetActive(shield);
-				effect.gameObject.SetActive(shield);
-			}
-
-			yield return null;
-		}
-	}
-
 	void ApplyDamageEffect(DamageDesc.Type type, GameObject prefEffect)
 	{
 		if (prefEffect == null)
@@ -649,18 +616,19 @@ public class Creature : MonoBehaviour {
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 
-
-		float criticalDamage = 0f;
+		bool critical = false;
+		float criticalDamage = 1f;
 		if (offender != null)
 		{
-			if (Random.Range(0, 1f) < offender.m_creatureProperty.CriticalRatio)
+			if (Random.Range(0, 1f) < offender.m_creatureProperty.CriticalChance)
 			{
+				critical = true;
 				criticalDamage = offender.m_creatureProperty.CriticalDamage;
 			}
 		}
 
-		int dmg = (int)((damageDesc.Damage+damageDesc.Damage*criticalDamage)-m_creatureProperty.PhysicalDefencePoint);
-		dmg = Mathf.Max(0, Mathf.FloorToInt(dmg));
+		int dmg = (int)((damageDesc.Damage*criticalDamage)-m_creatureProperty.PhysicalDefencePoint);
+		dmg = Mathf.Max(0, dmg);
 		if (dmg == 0)
 		{
 			dmg = Random.Range(0, 2);
@@ -698,7 +666,7 @@ public class Creature : MonoBehaviour {
 			}
 			else
 			{
-				if (criticalDamage > 0f)
+				if (critical == true)
 				{
 					strDamage = dmg.ToString();
 					color = Color.red;

@@ -6,7 +6,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	[SerializeField]
 	float m_searchCoolTime = 0.3f;
 	float m_lastSearchTime = 0f;
-	GameObject	m_target = null;
+	Creature	m_target = null;
 
 	float	m_destAngle = 0f;
 	float	m_angleElpased = 1f;
@@ -15,6 +15,8 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	[SerializeField]
 	float	m_searchRange = 3f;
 
+	const int maxSearch = 3;
+	int		m_searchCount = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -28,6 +30,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		m_target = null;
 		m_destAngle = transform.rotation.eulerAngles.y;
 		m_angleElpased = 0f;
+		m_searchCount = 0;
 		m_srcAngle = transform.rotation.eulerAngles.y;
 	}
 
@@ -37,10 +40,13 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		if (m_isDestroying == true)
 			return;
 
-		if (m_target == null && m_lastSearchTime <= Time.time)
+		if (m_target == null && m_lastSearchTime <= Time.time && m_searchCount < maxSearch)
 		{
-			m_target = SearchTarget(m_ownerCreature.GetAutoTargetTags(), m_searchRange);
 			m_lastSearchTime = Time.time + m_searchCoolTime;
+
+			Creature[] searchedTargets = Bullet.SearchTarget(transform.position, m_ownerCreature.GetAutoTargetTags(), m_searchRange);
+			if (searchedTargets != null)
+				m_target = searchedTargets[Random.Range(0, searchedTargets.Length)];
 
 			if (m_target != null)
 			{
@@ -53,6 +59,8 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 				m_angleElpased = 0f;
 			}
+
+			++m_searchCount;
 		}
 
 		if (m_angleElpased < 1f)

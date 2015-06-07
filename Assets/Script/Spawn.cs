@@ -97,9 +97,6 @@ public class Spawn : MonoBehaviour {
 	{
 		if (m_wave == 0)
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
-
-		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
-
 		
 		Warehouse.Instance.ResetNewGameStats();
 
@@ -635,7 +632,7 @@ public class Spawn : MonoBehaviour {
 						ItemBox itemBox = itemBoxObj.GetComponent<ItemBox>();
 						itemBox.Item = item;
 						itemBox.PickupCallback = (Creature obj)=>{
-							m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
+
 						};
 
 						StartCoroutine(EffectSpawnItemBox(itemBox, 0.15f*spawnedItemCount));
@@ -721,7 +718,7 @@ public class Spawn : MonoBehaviour {
 		{
 			m_comboGUIShake.Text = "x" + m_champ.ComboKills;
 		}
-
+		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 	}
 
 }

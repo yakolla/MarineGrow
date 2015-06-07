@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Bullet : MonoBehaviour {
 
@@ -35,23 +36,35 @@ public class Bullet : MonoBehaviour {
 		StartFiring();
 	}
 
-	public GameObject SearchTarget(string[] targetTags, float range)
+	static public Creature[] SearchTarget(Vector3 pos, string[] targetTags, float range)
 	{
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, 1<<9);
+
+		Collider[] hitColliders = Physics.OverlapSphere(pos, range, 1<<9);
+		if (hitColliders.Length == 0)
+			return null;
+
+		Creature[] searchedTargets = new Creature[hitColliders.Length];
 		int i = 0;
+
 		while (i < hitColliders.Length) {
 			foreach(string tag in targetTags)
 			{
 				if (true == hitColliders[i].CompareTag(tag))
 				{
-					return hitColliders[i].gameObject;
+					Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
+					if (creature != null)
+					{
+						searchedTargets[i] = creature;
+						break;
+					}
 				}
 			}
 			i++;
 		}
 		
-		return null;
+		return searchedTargets;
 	}
+
 
 	IEnumerator destoryBombObject(GameObject bombEffect)
 	{
@@ -65,26 +78,25 @@ public class Bullet : MonoBehaviour {
 		m_isDestroying = true;
 		bombRange += m_ownerCreature.m_creatureProperty.SplashRange;
 
-		string[] tags = m_ownerCreature.GetAutoTargetTags();
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, bombRange/2, 1 << 9);
-		int i = 0;
-		while (i < hitColliders.Length) {
-			foreach(string tag in tags)
+		Creature[] searchedTargets = SearchTarget(transform.position, m_ownerCreature.GetAutoTargetTags(), bombRange*0.5f);
+		if (searchedTargets != null)
+		{
+			foreach(Creature creature in searchedTargets)
 			{
-				if (true == hitColliders[i].CompareTag(tag))
-				{
-					Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
+				if (creature != null)
 					GiveDamage(creature);
-				}
 			}
-			i++;
 		}
 
 		Vector3 bombPos = transform.position;
 		bombPos.y = prefBombEffect.transform.position.y;
 		
 		GameObject bombEffect = (GameObject)Instantiate(prefBombEffect, bombPos, prefBombEffect.transform.rotation);
-		bombEffect.particleSystem.startSize *= bombRange*2;
+		ParticleSystem[] particleSystems = bombEffect.GetComponents<ParticleSystem>();
+		foreach(ParticleSystem ps in particleSystems)
+		{
+			ps.startSize *= bombRange*2;
+		}
 		this.audio.Play();
 		StartCoroutine(destoryBombObject(bombEffect));
 	}
@@ -111,7 +123,11 @@ public class Bullet : MonoBehaviour {
 
 		if (m_onHitWeapon != null)
 		{
-			m_onHitWeapon.CreateBullet(m_targetAngle, target.transform.position);
+			if(m_onHitWeapon.canConsumeSP())
+			{
+				m_onHitWeapon.CreateBullet(m_targetAngle, target.transform.position);
+				m_onHitWeapon.ConsumeSP();
+			}
 		}
 	}
 

@@ -29,8 +29,12 @@ public class GoldGUISmooth : MonoBehaviour
 
 	public int Gold
 	{
-		set{m_targetGold = value;
-			m_time = 0;
+		set{
+			if (m_targetGold != value)
+			{
+				m_targetGold = value;
+				m_time = 0;
+			}
 		}
 	}
 }

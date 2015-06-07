@@ -62,7 +62,8 @@ public class Follower : Creature {
 	{
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 
-		WeaponHolder.LevelUp();
+		if (m_creatureProperty.Level % 2 == 0)
+			WeaponHolder.LevelUp();
 	}
 
 	override public void GiveExp(int exp)

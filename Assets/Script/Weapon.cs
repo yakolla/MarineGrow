@@ -46,7 +46,6 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	protected float		m_attackRange;
 
-	[SerializeField]
 	protected int		m_spPerLevel = 0;
 
 
@@ -86,9 +85,10 @@ public class Weapon : MonoBehaviour {
 		m_firing = false;
 		m_level = 0;
 		m_evolution = 0;
+		m_coolTime = weaponData.WeaponStat.coolTime;
+		m_spPerLevel = weaponData.WeaponStat.spPerLevel;
 
 		AttackRange = weaponData.WeaponStat.range;
-		CoolTime = weaponData.WeaponStat.coolTime;
 	
 		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
 			MoreFire();
@@ -166,6 +166,11 @@ public class Weapon : MonoBehaviour {
 		get{return m_spPerLevel;}
 	}
 
+	public int SP
+	{
+		get{return (m_spPerLevel*Level);}
+	}
+
 	public int Damage
 	{
 		get {return GetDamage(m_creature.m_creatureProperty);}
@@ -198,6 +203,11 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
+	public void ConsumeSP()
+	{
+		m_creature.m_creatureProperty.SP -= SP;
+	}
+
 	virtual public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
 		GameObject obj = GameObjectPool.Instance.Alloc(m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.angle, 0));
@@ -210,6 +220,7 @@ public class Weapon : MonoBehaviour {
 		this.audio.Play();
 
 		m_callbackCreateBullet();
+
 		return bullet;
 	}
 
@@ -221,7 +232,7 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	float coolDownTime()
+	protected float coolDownTime()
 	{
 		const float maxCool = 0.5f;
 		float levelRatio = (m_level-1)/(float)Const.ItemMaxLevel;
@@ -229,10 +240,15 @@ public class Weapon : MonoBehaviour {
 		return m_coolTime*m_creature.m_creatureProperty.AttackCoolTime*coolPerLevel;
 	}
 
+	public bool canConsumeSP()
+	{
+		return SP <= m_creature.m_creatureProperty.SP;
+	}
+
 	protected bool isCoolTime()
 	{
 		bool coolTime = m_lastCreated +  coolDownTime() <= Time.time;
-		bool sp = (m_spPerLevel*Level) <= m_creature.m_creatureProperty.SP;
+		bool sp = canConsumeSP();
 		return coolTime && sp;
 	}
 
@@ -245,7 +261,6 @@ public class Weapon : MonoBehaviour {
 	protected void StartedFiring(float delay)
 	{
 		m_lastCreated = Time.time+delay;
-		m_creature.m_creatureProperty.SP -= (m_spPerLevel*Level);
 	}
 
 	virtual public void StartFiring(float targetAngle)
@@ -262,7 +277,8 @@ public class Weapon : MonoBehaviour {
 				StartCoroutine(DelayToStartFiring(m_firingDescs[i], m_firingDescs[i].delayTime));
 				delay = m_firingDescs[i].delayTime;
 			}
-
+			
+			ConsumeSP();
 			StartedFiring(delay);
 		}
 
@@ -281,11 +297,6 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	public float CoolTime
-	{
-		get { return m_coolTime; }
-		set { m_coolTime = value; }
-	}
 
 	public float AttackRange
 	{
@@ -293,17 +304,14 @@ public class Weapon : MonoBehaviour {
 		set { m_attackRange = value; }
 	}
 
-	public void SetSubWeapon(string prefWeapon, int refId)
+	public void SetSubWeapon(Weapon weapon)
 	{
 		if (m_subWeapon != null)
 		{
 			GameObject.DestroyObject(m_subWeapon.gameObject);
-			m_subWeapon = null;
 		}
 
-		GameObject subWeaponObj = (GameObject)Instantiate(Resources.Load(prefWeapon));
-		m_subWeapon = subWeaponObj.GetComponent<Weapon>();
-		m_subWeapon.Init(m_creature, new ItemWeaponData(refId, null));
+		m_subWeapon = weapon;
 	}
 
 	public Weapon GetSubWeapon()

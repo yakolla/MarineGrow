@@ -104,25 +104,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		champStatsAbili.Add(new Ability(0.3f, "Critical Chance %", 
+		champStatsAbili.Add(new Ability(0.3f, "Critical Suites",
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.15f;
-			return (m_champ.m_creatureProperty.CriticalRatio*100) + " -> " + "<color=yellow>" + (m_backup.CriticalRatio*100) + "</color>";
+			m_backup.AlphaCriticalDamage += 0.3f;
+			return "Chance(%):"+(m_champ.m_creatureProperty.CriticalChance*100) + " -> " + "<color=yellow>" + (m_backup.CriticalChance*100) + "</color>" + "\n" +
+				"Damage(%):"+(m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=yellow>" + (m_backup.CriticalDamage*100) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.15f;
-			--m_champ.RemainStatPoint;
-		}));
-
-		champStatsAbili.Add(new Ability(0.3f, "Critical Damage %", 
-		                            ()=>{
-			m_backup.AlphaCriticalDamage += 0.3f;
-			return (m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=yellow>" + (m_backup.CriticalDamage*100) + "</color>";
-		},
-		()=>{
 			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.3f;
 			--m_champ.RemainStatPoint;
 		}));
+
 /*
 		m_abilities.Add(new Ability(0.1f, "Life Per Kill", 
 		()=>{
@@ -166,7 +160,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.WeaponHolder.MainWeapon.SetSubWeapon("Pref/Weapon/MineLauncher", 112);
+				m_champ.SetSubWeapon(m_champ.WeaponHolder.MainWeapon, new ItemWeaponData(132, null));
 			}
 
 			--m_champ.RemainStatPoint;
@@ -250,27 +244,17 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Charge to Combo Skill", 
 		                           ()=>{
-			int backup = m_champ.ComboSkillStack+1;
+			int backup = m_champ.ComboSkillStack+3;
 			return (m_champ.ComboSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
-			m_champ.ComboSkillStack += 1;
-			--m_champ.RemainStatPoint;
-		}));
-
-		skillAbili.Add(new Ability(0.3f, "Charge to Shield Skill", 
-		                           ()=>{
-			m_backup.Shield += 10;
-			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
-		},
-		()=>{
-			m_champ.m_creatureProperty.Shield += 10;
+			m_champ.ComboSkillStack += 3;
 			--m_champ.RemainStatPoint;
 		}));
 
 		skillAbili.Add(new Ability(0.3f, "Grenade Skill Lv", 
 		                            ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[131].codeName);
 			int backup = 1;
 			int ori = 0;
 			if (weapon != null)
@@ -282,14 +266,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 			return (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[105].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[131].codeName);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
 			}
 			else
 			{
-				m_champ.EquipPassiveWeapon(new ItemWeaponData(105, null));
+				m_champ.EquipPassiveWeapon(new ItemWeaponData(131, null));
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -321,6 +305,26 @@ public class ChampAbilityGUI : MonoBehaviour {
 			
 			--m_champ.RemainStatPoint;
 		}));
+
+		skillAbili.Add(new Ability(0.3f, "Charge to Shield", 
+		                           ()=>{
+			m_backup.Shield += 10;
+			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
+		},
+		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[130].codeName);
+			if (weapon != null)
+			{
+				weapon.LevelUp();
+			}
+			else
+			{
+				m_champ.EquipPassiveWeapon(new ItemWeaponData(130, null));
+			}
+			
+			--m_champ.RemainStatPoint;
+		}));
+
 		
 		m_abilities.Add(AbilityCategory.ChampStat, champStatsAbili);
 		m_abilities.Add(AbilityCategory.Skill, skillAbili);

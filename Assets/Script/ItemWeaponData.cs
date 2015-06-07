@@ -28,6 +28,11 @@ public class ItemWeaponData : ItemData{
 			{
 				m_weaponStat.range = RefItem.weaponStat.range;
 			}
+
+			if (m_weaponStat.spPerLevel == 0)
+			{
+				m_weaponStat.spPerLevel = RefItem.weaponStat.spPerLevel;
+			}
 		}
 
 		Lock = true;

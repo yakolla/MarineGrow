@@ -227,9 +227,9 @@ public class CreatureProperty {
 		set { m_alphaLifeSteal = value; }
 	}
 
-	public float	CriticalRatio
+	public float	CriticalChance
 	{
-		get {return Mathf.Min(100, m_baseProperty.criticalRatio + AlphaCriticalRatio);}
+		get {return Mathf.Min(1, m_baseProperty.criticalChance + AlphaCriticalRatio);}
 	}
 
 	public float	AlphaCriticalRatio

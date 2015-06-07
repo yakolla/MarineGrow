@@ -38,7 +38,7 @@ public class RefCreatureBaseProperty
 	public float 	spPerLevel;
 	public float	navMeshBaseOffset;
 	public float	lifeSteal;
-	public float	criticalRatio;
+	public float	criticalChance;
 	public float	criticalDamage = 1f;
 	public float	attackCoolTime = 1f;
 	public bool		backwardOnDamage = true;
@@ -55,6 +55,7 @@ public class WeaponStat
 	public float			coolTime;
 	public float			range;
 	public int				firingCount;
+	public int				spPerLevel;
 }
 
 public class RefPrice

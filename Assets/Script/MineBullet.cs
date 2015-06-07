@@ -9,8 +9,10 @@ public class MineBullet : GrenadeBullet {
 	[SerializeField]
 	float			m_bombTime = 3f;
 
+	BoxCollider		m_boxCollider;
 	// Use this for initialization
 	void Start () {
+
 
 	}
 
@@ -20,6 +22,8 @@ public class MineBullet : GrenadeBullet {
 	
 		m_elapsed = Time.time+m_bombTime;
 
+		m_boxCollider = GetComponent<BoxCollider>();
+		m_boxCollider.enabled = false;
 	}
 
 	protected override void createParabola(float targetAngle)
@@ -31,14 +35,27 @@ public class MineBullet : GrenadeBullet {
 	new void Update () {
 		if (m_isDestroying == true)
 			return;
+
 		if (m_parabola.Update() == false)
 		{
+			m_boxCollider.enabled = true;
 			if (m_elapsed < Time.time)
 			{
-				bomb(m_bombRange, m_prefBombEffect);
+				GameObjectPool.Instance.Free(this.gameObject);
 			}
 		}
 
 	}
 
+	void OnTriggerEnter(Collider other) {
+		if (m_isDestroying == true)
+			return;
+		
+		Creature creature = other.gameObject.GetComponent<Creature>();
+		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
+		{
+			m_isDestroying = true;
+			bomb(m_bombRange, m_prefBombEffect);
+		}
+	}
 }

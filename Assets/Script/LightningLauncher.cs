@@ -6,11 +6,11 @@ public class LightningLauncher : Weapon {
 
 	LightningBullet	m_bullet;
 	int		m_maxChaining = 1;
-	 
+	float		m_accSp;
 
 	override public void StartFiring(float targetAngle)
 	{		
-		if (m_firing == false && isCoolTime() == true )
+		if (canConsumeSP() == true )
 		{
 			if (null == m_bullet)
 			{
@@ -20,8 +20,15 @@ public class LightningLauncher : Weapon {
 			m_bullet.gameObject.SetActive(true);
 			m_bullet.MaxChaining = m_maxChaining;
 
-			this.audio.Play();
-			StartedFiring(0f);
+			if (this.audio.isPlaying == false)
+				this.audio.Play();
+
+			m_accSp += SP * Time.deltaTime * coolDownTime();
+			if (m_accSp >= 1)
+			{
+				m_creature.m_creatureProperty.SP -= (int)m_accSp;
+				m_accSp -= (int)m_accSp;
+			}
 		}
 		if (null != m_bullet)
 		{

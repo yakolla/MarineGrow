@@ -147,12 +147,14 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0.3
+			"delay":0.3,
+			"spPerLevel":1
 		},
 		"weaponStat":
 		{
-			"coolTime":0.5,
-			"range":3
+			"coolTime":4,
+			"range":3,
+			"spPerLevel":1
 		}
 	},
 	{
@@ -162,8 +164,9 @@
 		"icon":"Sprites/LightningBolt",
 		"weaponStat":
 		{
-			"coolTime":0.3,
-			"range":5
+			"coolTime":4,
+			"range":5,
+			"spPerLevel":1
 		},
 		"levelup":
 		{
@@ -293,38 +296,11 @@
 		"id":105,
 		"codeName":"GrenadeLauncher",
 		"type":"Weapon",
-		"icon":"Sprites/Grenade",
-		
-		"evolutionFiring":
-		{
-			"angle":30,
-			"delay":1
-		},
+		"icon":"Sprites/Grenade",		
 		"weaponStat":
 		{
 			"coolTime":5,
 			"range":5
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":50
-				},
-				{
-					"refItemId":5, 
-					"count":5
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":5
-				}
-			]
 		}
 	},
 	{
@@ -563,36 +539,10 @@
 		"codeName":"MineLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
-		"evolutionFiring":
-		{
-			"angle":30,
-			"delay":0.3
-		},
 		"weaponStat":
 		{
 			"coolTime":1,
 			"range":8
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":50
-				},
-				{
-					"refItemId":5, 
-					"count":5
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":5
-				}
-			]
 		}
 	},
 	{
@@ -1119,7 +1069,44 @@
 		"weaponStat":
 		{
 			"coolTime":10,
-			"range":5
+			"range":5,
+			"spPerLevel":10
+		}
+	},
+	{
+		"id":130,
+		"codeName":"ShieldPassiveLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Shield",		
+		"weaponStat":
+		{
+			"coolTime":0.1,
+			"range":5,
+			"spPerLevel":5
+		}
+	},
+	{
+		"id":131,
+		"codeName":"GrenadeLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Grenade",		
+		"weaponStat":
+		{
+			"coolTime":5,
+			"range":5,
+			"spPerLevel":10
+		}
+	},
+	{
+		"id":132,
+		"codeName":"MineLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/swordoftruth",
+		"weaponStat":
+		{
+			"coolTime":1,
+			"range":8,
+			"spPerLevel":10
 		}
 	},
 	{

@@ -49,7 +49,6 @@ public class WeaponHolder : MonoBehaviour {
 
 	public void EquipPassiveWeapon(Weapon weapon)
 	{
-		weapon.SpPerLevel = 10;
 		m_passiveWeapons.Add(weapon.WeaponName, weapon);
 	}
 

@@ -30,7 +30,6 @@ public class Champ : Creature {
 	int			m_comboSkillStacks = 0;
 	int			m_dashSkillStacks = 0;
 
-	int			m_level = 1;
 
 	Animator	m_bloodWarningAnimator;
 
@@ -58,7 +57,7 @@ public class Champ : Creature {
 	{
 		base.Init();
 
-		m_creatureProperty.init(this, m_creatureBaseProperty, m_level);
+		m_creatureProperty.init(this, m_creatureBaseProperty, 1);
 		m_comboKills = 0;
 		m_comboSkillStacks = 0;
 
@@ -73,7 +72,6 @@ public class Champ : Creature {
 	void LevelUp()
 	{
 		m_remainStatPoint+=1;
-		++m_level;
 
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 

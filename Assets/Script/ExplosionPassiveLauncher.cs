@@ -44,8 +44,6 @@ public class ExplosionPassiveLauncher : Weapon {
 	{
 		if (isCoolTime())
 		{
-			base.StartFiring(0f);
-
 			for(int i = 0; i < m_chargingEffect.Length; ++i)
 				m_chargingEffect[i].Clear();
 		}
