@@ -168,6 +168,7 @@ public class Warehouse {
 	Options					m_options = new Options();
 
 	float					m_playTime = 0f;
+	float					m_saveTime = 0f;
 	public float PlayTime
 	{
 		get { 
@@ -177,6 +178,17 @@ public class Warehouse {
 			return Time.time-m_playTime; 
 		}
 		set { m_playTime = value; }
+	}
+
+	public float SaveTime
+	{
+		get { 
+			if (m_saveTime == 0f)
+				return 0f;
+			
+			return Time.time-m_saveTime; 
+		}
+		set { m_saveTime = value; }
 	}
 
 	static Warehouse m_ins = null;
@@ -208,6 +220,7 @@ public class Warehouse {
 		m_gameBestStats.SetBestStats(m_newGameStats);
 		m_newGameStats = new GameStatistics();	
 		Warehouse.Instance.PlayTime = Time.time;
+		Warehouse.Instance.SaveTime = Time.time;
 	}
 
 	public void PushItem(ItemData item)

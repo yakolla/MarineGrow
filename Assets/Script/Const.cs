@@ -239,8 +239,8 @@ public class Const {
 				if (status == SavedGameRequestStatus.Success) 
 				{
 					System.TimeSpan totalPlayingTime = game.TotalTimePlayed;
-					totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Warehouse.Instance.PlayTime));					
-					
+					totalPlayingTime += new System.TimeSpan(System.TimeSpan.TicksPerSecond*(long)(Warehouse.Instance.SaveTime));					
+					Warehouse.Instance.SaveTime = Time.time;
 					GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, Const.getScreenshot(), callback);
 				} 
 				else {
