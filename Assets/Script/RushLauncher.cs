@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class RushLauncher : Weapon {
@@ -23,7 +23,7 @@ public class RushLauncher : Weapon {
 			m_goal.y = m_creature.transform.position.y;
 			m_rush = true;
 			m_elapsed = 0f;
-			StartedFiring(0f);
+			DidStartFiring(0f);
 
 		}
 		m_firing = true;

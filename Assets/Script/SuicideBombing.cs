@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class SuicideBombing : Weapon {
@@ -10,7 +10,7 @@ public class SuicideBombing : Weapon {
 
 	override public void StartFiring(float targetAngle)
 	{
-		StartedFiring(0f);
+		DidStartFiring(0f);
 		m_firing = true;
 	}
 

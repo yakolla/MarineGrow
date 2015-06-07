@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PumpLauncher : Weapon {
@@ -10,7 +10,7 @@ public class PumpLauncher : Weapon {
 
 	override public void StartFiring(float targetAngle)
 	{
-		StartedFiring(0f);
+		DidStartFiring(0f);
 	}
 
 	override public void StopFiring()

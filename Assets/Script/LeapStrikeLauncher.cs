@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class LeapStrikeLauncher : Weapon {
@@ -16,7 +16,7 @@ public class LeapStrikeLauncher : Weapon {
 
 			m_creature.CrowdControl(Creature.CrowdControlType.LeapStrike, true);
 
-			StartedFiring(0f);
+			DidStartFiring(0f);
 		}
 		m_firing = true;
 	}

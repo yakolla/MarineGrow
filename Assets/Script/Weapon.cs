@@ -46,8 +46,7 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	protected float		m_attackRange;
 
-	protected int		m_spPerLevel = 0;
-
+	int					m_spPerLevel;
 
 	int					m_evolution;
 	protected int		m_level;
@@ -87,7 +86,6 @@ public class Weapon : MonoBehaviour {
 		m_evolution = 0;
 		m_coolTime = weaponData.WeaponStat.coolTime;
 		m_spPerLevel = weaponData.WeaponStat.spPerLevel;
-
 		AttackRange = weaponData.WeaponStat.range;
 	
 		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
@@ -168,7 +166,12 @@ public class Weapon : MonoBehaviour {
 
 	public int SP
 	{
-		get{return (m_spPerLevel*Level);}
+		get{return GetSP(m_refItem, Level);}
+	}
+
+	static public int GetSP(RefItem refItem, int level)
+	{
+		return refItem.weaponStat.spPerLevel*level;
 	}
 
 	public int Damage
@@ -258,7 +261,7 @@ public class Weapon : MonoBehaviour {
 		return Mathf.Min(1f, 1f-((m_lastCreated + cool)-Time.time)/cool);
 	}
 
-	protected void StartedFiring(float delay)
+	protected void DidStartFiring(float delay)
 	{
 		m_lastCreated = Time.time+delay;
 	}
@@ -279,7 +282,7 @@ public class Weapon : MonoBehaviour {
 			}
 			
 			ConsumeSP();
-			StartedFiring(delay);
+			DidStartFiring(delay);
 		}
 
 		m_firing = true;
