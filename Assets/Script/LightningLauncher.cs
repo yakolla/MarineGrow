@@ -30,6 +30,12 @@ public class LightningLauncher : Weapon {
 				m_accSp -= (int)m_accSp;
 			}
 		}
+		else
+		{
+			StopFiring();
+			return;
+		}
+
 		if (null != m_bullet)
 		{
 			Vector3 euler = m_bullet.transform.rotation.eulerAngles;

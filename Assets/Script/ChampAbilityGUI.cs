@@ -97,7 +97,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		champStatsAbili.Add(new Ability(0.3f, "Move Speed Up", 
 		                                ()=>{
 			m_backup.AlphaMoveSpeed+=1;
-			return m_champ.m_creatureProperty.MoveSpeed + " -> " + "<color=yellow>" + (m_backup.MoveSpeed) + "</color>";
+			return m_champ.m_creatureProperty.AlphaMoveSpeed + " -> " + "<color=yellow>" + (m_backup.AlphaMoveSpeed) + "</color>";
 		},
 		()=>{
 			m_champ.m_creatureProperty.AlphaMoveSpeed+=1;

@@ -41,11 +41,8 @@ public class Firegun : Weapon {
 		}
 		else
 		{
-			if (canConsumeSP() == false)
-			{
-				StopFiring();
-				return;
-			}
+			StopFiring();
+			return;
 		}
 
 
