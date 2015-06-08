@@ -36,8 +36,8 @@ public class ChampStatusGUI : MonoBehaviour {
 			return m_champ.ComboSkillStack > 0;
 		});
 		m_specialButtons[2] = new YGUISystem.GUIButton(transform.Find("Special/Button2").gameObject, ()=>{
-			m_specialButtons[2].Lable.Text.text = m_champ.DashSkillStack.ToString();
-			return m_champ.DashSkillStack > 0;
+			m_specialButtons[2].Lable.Text.text = m_champ.NuclearSkillStack.ToString();
+			return m_champ.NuclearSkillStack > 0;
 		});
 
 		m_accessoryButtons[0] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button0").gameObject, ()=>{
@@ -105,23 +105,19 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_champSettingGUI.EquipedAccessories[slot].Item.Usable(m_champ) == false)
 			return;
 
-		m_accessoryButtons[slot].StartCoolDownTime(60f);
+		m_accessoryButtons[slot].StartCoolDownTime(60*3f);
 
-		m_champSettingGUI.EquipedAccessories[slot].Item.Use(m_champ);
+		for(int i = 0; i < m_champ.m_creatureProperty.CallableFollowers; ++i)
+			m_champSettingGUI.EquipedAccessories[slot].Item.Use(m_champ);
 	}
 
 	public void OnClickDashSkill()
 	{
-		if (m_champ.MoveDir == Vector3.zero)
+		if (m_champ.NuclearSkillStack == 0)
 			return;
 
-		if (m_champ.DashSkillStack == 0)
-			return;
-
-		--m_champ.DashSkillStack;
-		DamageDesc desc  = new DamageDesc(0, DamageDesc.Type.Normal, DamageDesc.BuffType.Dash, Resources.Load<GameObject>("Pref/ef_dash"));
-		desc.Dir = m_champ.MoveDir;
-		m_champ.ApplyBuff(null, DamageDesc.BuffType.Dash, 0.5f, desc);
+		--m_champ.NuclearSkillStack;
+		m_champ.WeaponHolder.ActiveWeaponFire(133, transform.eulerAngles.y);
 	}
 
 	void SetActiveGUI(bool active)

@@ -30,8 +30,6 @@ public class RefCreatureBaseProperty
 	public float 	phyDefencePerLevel;
 	[Range (0, 1)]
 	public float 	hpPerLevel;
-	[Range (0, 1)]
-	public float 	moveSpeedPerLevel = 0;
 	[Range (0, 10)]
 	public float	moveSpeed;
 	[Range (0, 1)]

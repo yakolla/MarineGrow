@@ -1110,6 +1110,18 @@
 		}
 	},
 	{
+		"id":133,
+		"codeName":"NuclearLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Grenade",		
+		"weaponStat":
+		{
+			"coolTime":0,
+			"range":0,
+			"spPerLevel":10
+		}
+	},
+	{
 		"id":201,
 		"codeName":"FollowerGun",
 		"type":"Weapon",
@@ -1121,7 +1133,7 @@
 		},
 		"weaponStat":
 		{
-			"coolTime":1.5,
+			"coolTime":0.5,
 			"range":8
 		}
 	},

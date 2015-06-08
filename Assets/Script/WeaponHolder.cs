@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class WeaponHolder : MonoBehaviour {
 
 	List<Weapon>					m_weapons = new List<Weapon>();
-	Dictionary<string, Weapon>		m_passiveWeapons = new Dictionary<string, Weapon>();
+	Dictionary<int, Weapon>		m_passiveWeapons = new Dictionary<int, Weapon>();
+	Dictionary<int, Weapon>		m_activeWeapons = new Dictionary<int, Weapon>();
 
 	float					m_weaponChangeCoolTime = 15f;
 	float					m_weaponChangedTime = 0f;
@@ -26,7 +27,7 @@ public class WeaponHolder : MonoBehaviour {
 			m_curWeaponIndex = (m_curWeaponIndex + 1) % m_weapons.Count;
 		}
 
-		foreach(KeyValuePair<string, Weapon> pair in m_passiveWeapons)
+		foreach(KeyValuePair<int, Weapon> pair in m_passiveWeapons)
 		{
 			pair.Value.StartFiring(-transform.rotation.eulerAngles.y);
 		}
@@ -47,16 +48,30 @@ public class WeaponHolder : MonoBehaviour {
 		m_weapons.Add(weapon);
 	}
 
-	public void EquipPassiveWeapon(Weapon weapon)
+	public void EquipActiveWeapon(Weapon weapon)
 	{
-		m_passiveWeapons.Add(weapon.WeaponName, weapon);
+		m_activeWeapons.Add(weapon.RefItem.id, weapon);
 	}
 
-	public Weapon GetPassiveWeapon(string weaponName)
+
+	public void EquipPassiveWeapon(Weapon weapon)
+	{
+		m_passiveWeapons.Add(weapon.RefItem.id, weapon);
+	}
+
+	public Weapon GetPassiveWeapon(int refId)
 	{
 		Weapon weapon = null;
-		m_passiveWeapons.TryGetValue(weaponName, out weapon);
+		m_passiveWeapons.TryGetValue(refId, out weapon);
 
+		return weapon;
+	}
+
+	public Weapon GetActiveWeapon(int refId)
+	{
+		Weapon weapon = null;
+		m_activeWeapons.TryGetValue(refId, out weapon);
+		
 		return weapon;
 	}
 
@@ -86,6 +101,13 @@ public class WeaponHolder : MonoBehaviour {
 		}
 
 		m_firing = false;
+	}
+
+	public void ActiveWeaponFire(int refId, float targetAngle)
+	{
+		Weapon weapon = GetActiveWeapon(refId);
+		if (weapon != null)
+			weapon.StartFiring(targetAngle);
 	}
 
 	public void Evolution()

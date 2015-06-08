@@ -129,6 +129,13 @@ public class Creature : MonoBehaviour {
 		m_weaponHolder.EquipPassiveWeapon(weapon);
 	}
 
+	public void EquipActiveWeapon(ItemWeaponData weaponData)
+	{
+		Weapon weapon = instanceWeapon(weaponData);
+		
+		m_weaponHolder.EquipActiveWeapon(weapon);
+	}
+
 	public void SetSubWeapon(Weapon weapon, ItemWeaponData weaponData)
 	{
 		Weapon subWeapon = instanceWeapon(weaponData);

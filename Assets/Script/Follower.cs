@@ -11,16 +11,27 @@ public class Follower : Creature {
 	// Update is called once per frame
 	new void Update () {
 
+		base.Update();
+
 		if (AutoAttack() == false)
 		{
 			m_weaponHolder.GetComponent<WeaponHolder>().StopFiring();
-
 		}
 
 		if (m_owner != null)
 			m_navAgent.SetDestination(m_owner.transform.position);
+		
+	}
 
-		base.Update();
+	IEnumerator DecHpEffect()
+	{
+		while(m_creatureProperty.HP > 0)
+		{
+			yield return new WaitForSeconds(1f);
+			m_creatureProperty.HP -= 1;
+		}
+
+		Death();
 	}
 
 	public void Init(Creature owner, RefMob refMob, int level)
@@ -50,6 +61,8 @@ public class Follower : Creature {
 		}
 		
 		m_ai.Init(this);
+
+		StartCoroutine(DecHpEffect());
 	
 	}
 
@@ -61,9 +74,7 @@ public class Follower : Creature {
 	void LevelUp()
 	{
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
-
-		if (m_creatureProperty.Level % 2 == 0)
-			WeaponHolder.LevelUp();
+		WeaponHolder.LevelUp();
 	}
 
 	override public void GiveExp(int exp)
@@ -91,10 +102,4 @@ public class Follower : Creature {
 		return new string[]{""};
 	}
 
-	override public void Death()
-	{
-		base.Death();
-
-		Const.GetSpawn().RemoveFollower(this);
-	}
 }

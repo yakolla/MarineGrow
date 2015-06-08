@@ -50,13 +50,6 @@ public class ItemFollowerData : ItemData{
 			itemWeaponData.Level = Level;
 			follower.EquipWeapon(itemWeaponData);
 		}
-
-		Const.GetSpawn().AddFollower(follower);
-	}
-
-	override public bool Usable(Creature obj)
-	{
-		return Const.GetSpawn().IsFollowed(m_refMobId) == false;
 	}
 
 	override public void NoUse(Creature obj)

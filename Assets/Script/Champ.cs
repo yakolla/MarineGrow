@@ -28,7 +28,7 @@ public class Champ : Creature {
 
 
 	int			m_comboSkillStacks = 0;
-	int			m_dashSkillStacks = 0;
+	int			m_nuclearSkillStacks = 0;
 
 
 	Animator	m_bloodWarningAnimator;
@@ -152,10 +152,10 @@ public class Champ : Creature {
 		set {m_comboSkillStacks = value;}
 	}
 
-	public int DashSkillStack
+	public int NuclearSkillStack
 	{
-		get {return m_dashSkillStacks;}
-		set {m_dashSkillStacks = value;}
+		get {return m_nuclearSkillStacks;}
+		set {m_nuclearSkillStacks = value;}
 	}
 
 	public void ApplyGameOptions()
@@ -235,7 +235,6 @@ public class Champ : Creature {
 	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 		base.TakeDamage(offender, damageDesc);
-		ComboKills = 0;
 		m_bloodWarningAnimator.SetTrigger("Warning");
 	}
 

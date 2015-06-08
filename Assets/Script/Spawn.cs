@@ -19,7 +19,6 @@ public class Spawn : MonoBehaviour {
 	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
 	GameObject		m_prefItemBox;
 
-	float			m_effectBulletTime = 0f;
 
 	FollowingCamera	m_followingCamera = null;
 
@@ -38,8 +37,6 @@ public class Spawn : MonoBehaviour {
 
 	YGUISystem.GUILable	m_stageText;
 
-	
-	List<Follower>	m_followers = new List<Follower>();
 
 	[SerializeField]
 	int				m_wave = 0;
@@ -373,12 +370,6 @@ public class Spawn : MonoBehaviour {
 		if (m_champ)
 		{
 			++m_champ.ComboKills;
-			if (m_champ.ComboKills % Const.ComboSkillStackOnCombo == 0)
-			{
-				++m_champ.ComboSkillStack;
-				GPlusPlatform.Instance.ReportProgress(Const.ACH_COMBO_KILLS_100, 100, (bool success)=>{
-				});
-			}
 
 
 			m_comboGUIShake.enabled = true;
@@ -645,26 +636,6 @@ public class Spawn : MonoBehaviour {
 		
 	}
 
-	public void AddFollower(Follower cre)
-	{
-		m_followers.Add (cre);
-	}
-
-	public void RemoveFollower(Follower cre)
-	{
-		m_followers.Remove(cre);
-	}
-
-	public bool IsFollowed(int id)
-	{
-		foreach(Follower f in m_followers)
-		{
-			if (f.FollowerID == id)
-				return true;
-		}
-
-		return false;
-	}
 
 	public void SharePotinsChamps(Creature cre, ItemData.Type type, int xp, bool enableEffect)
 	{
@@ -678,23 +649,26 @@ public class Spawn : MonoBehaviour {
 			m_champ.GiveExp(xp);
 			if (enableEffect == true)
 				m_champ.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[6]), xp);
+			/*
 			foreach(Follower f in m_followers)
 			{
 				f.GiveExp(xp);
 				if (enableEffect == true)
 					f.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[6]), xp);
-			}
+			}*/
 			break;
 		case ItemData.Type.HealPosion:
 			m_champ.Heal(xp);
 			if (enableEffect == true)
 				m_champ.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[2]), xp);
+			/*
 			foreach(Follower f in m_followers)
 			{
 				f.Heal(xp);
 				if (enableEffect == true)
 					f.ApplyPickUpItemEffect(type, Const.GetPrefItemEatEffect(RefData.Instance.RefItems[2]), xp);
 			}
+			*/
 			break;
 		}
 

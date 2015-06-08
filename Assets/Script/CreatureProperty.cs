@@ -48,6 +48,8 @@ public class CreatureProperty {
 	SecuredType.XInt		m_alphaMaxSP = 0;
 	SecuredType.XInt		m_sp = 0;
 
+	SecuredType.XInt		m_callableFollowers = 1;
+
 	[SerializeField]
 	float	m_alphaSPRecoveryPerSec = 0f;
 
@@ -199,14 +201,14 @@ public class CreatureProperty {
 
 	public float	MoveSpeed
 	{
-		get {return (m_baseProperty.moveSpeed + AlphaMoveSpeed + Mathf.Min(2, (m_baseProperty.moveSpeed*((Level-1)*m_baseProperty.moveSpeedPerLevel)))) * BetaMoveSpeed;}
+		get {return (m_baseProperty.moveSpeed + AlphaMoveSpeed) * BetaMoveSpeed;}
 
 	}
 	
 	public float	AlphaMoveSpeed
 	{
 		get {return m_alphaMoveSpeed;}
-		set { m_alphaMoveSpeed = value; }
+		set { m_alphaMoveSpeed = Mathf.Min(value, 2f); }
 	}
 
 	public float	BetaMoveSpeed
@@ -313,6 +315,12 @@ public class CreatureProperty {
 		get {return m_bombRange;}
 	}
 
+	public int CallableFollowers
+	{
+		set {m_callableFollowers.Value = value;}
+		get {return m_callableFollowers.Value;}
+	}
+
 	public void Update()
 	{
 		m_accSPRecoveryPerSec += (SPRecoveryPerSec * Time.deltaTime);
@@ -350,5 +358,6 @@ public class CreatureProperty {
 		other.m_alphaMaxSP = m_alphaMaxSP;
 		other.m_sp = m_sp;
 		other.m_alphaSPRecoveryPerSec = m_alphaSPRecoveryPerSec;
+		other.m_callableFollowers = m_callableFollowers;
 	}
 }

@@ -94,6 +94,16 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		champStatsAbili.Add(new Ability(0.3f, "Move Speed Up", 
+		                                ()=>{
+			m_backup.AlphaMoveSpeed+=1;
+			return m_champ.m_creatureProperty.MoveSpeed + " -> " + "<color=yellow>" + (m_backup.MoveSpeed) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaMoveSpeed+=1;
+			--m_champ.RemainStatPoint;
+		}));
+
 		champStatsAbili.Add(new Ability(0.3f, "SP Recovery Up", 
 		                                ()=>{
 			m_backup.AlphaSPRecoveryPerSec+=1;
@@ -170,7 +180,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		weaponAbili.Add(new Ability(0.3f, "Inc Splash Range", 
+		weaponAbili.Add(new Ability(0.3f, "Splash Range", 
 		                            ()=>{
 
 			m_backup.SplashRange+=1;
@@ -179,6 +189,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 		},
 		()=>{
 			m_champ.m_creatureProperty.SplashRange+=1;
+			
+			--m_champ.RemainStatPoint;
+		}));
+
+		weaponAbili.Add(new Ability(0.3f, "Callable Followers", 
+		                            ()=>{
+			
+			m_backup.CallableFollowers+=1;
+			
+			return (m_champ.m_creatureProperty.CallableFollowers) + " -> " + "<color=yellow>" + (m_backup.CallableFollowers) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.CallableFollowers+=1;
 			
 			--m_champ.RemainStatPoint;
 		}));
@@ -226,7 +249,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}));
 		}
 
-		skillAbili.Add(new Ability(0.3f, "Inc Gain Extra XP", 
+		skillAbili.Add(new Ability(0.3f, "Gain Extra XP", 
 		                                ()=>{
 			m_backup.AlphaGainExtraExp += 0.5f;
 			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "%</color>";
@@ -235,17 +258,17 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.5f;
 			--m_champ.RemainStatPoint;
 		}));
-
+		/*
 		skillAbili.Add(new Ability(0.3f, "Charge to Dash Skill", 
 		                           ()=>{
-			int backup = m_champ.DashSkillStack+10;
-			return (m_champ.DashSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
+			int backup = m_champ.NuclearSkillStack+10;
+			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
-			m_champ.DashSkillStack += 10;
+			m_champ.NuclearSkillStack += 10;
 			--m_champ.RemainStatPoint;
 		}));
-
+*/
 		skillAbili.Add(new Ability(0.3f, "Charge to Combo Skill", 
 		                           ()=>{
 			int backup = m_champ.ComboSkillStack+3;
@@ -258,7 +281,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Grenade Skill", 
 		                            ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[131].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(131);
 			int backup = 1;
 			int ori = 0;
 			if (weapon != null)
@@ -271,7 +294,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[131], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[131], backup)+ "</color>";
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[131].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(131);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
@@ -286,7 +309,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Explosion Skill", 
 		                           ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[129].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(129);
 			int backup = 1;
 			int ori = 0;
 			if (weapon != null)
@@ -299,7 +322,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[129], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[129], backup)+ "</color>";
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[129].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(129);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
@@ -312,15 +335,34 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
+		skillAbili.Add(new Ability(0.3f, "Charge to Nuclear Skill", 
+		                           ()=>{
+			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (m_champ.NuclearSkillStack+1) + "</color>" + "\n" +
+					"SP:" + Weapon.GetSP(RefData.Instance.RefItems[133], 1);
+		},
+		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetActiveWeapon(133);
+			if (weapon != null)
+			{
+				//weapon.LevelUp();
+			}
+			else
+			{
+				m_champ.EquipActiveWeapon(new ItemWeaponData(133, null));
+			}
+			++m_champ.NuclearSkillStack;
+			--m_champ.RemainStatPoint;
+		}));
+
 		skillAbili.Add(new Ability(0.3f, "Charge to Shield", 
 		                           ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[130].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);
 			m_backup.Shield += 10;
 			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>" + "\n" +
 				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[130], 1);
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(RefData.Instance.RefItems[130].codeName);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);
 			if (weapon != null)
 			{
 				weapon.LevelUp();

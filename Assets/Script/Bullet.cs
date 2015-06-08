@@ -65,9 +65,9 @@ public class Bullet : MonoBehaviour {
 	}
 
 
-	IEnumerator destoryBombObject(GameObject bombEffect)
+	IEnumerator destoryBombObject(GameObject bombEffect, float duration)
 	{
-		yield return new WaitForSeconds (bombEffect.particleSystem.duration);
+		yield return new WaitForSeconds (duration);
 		GameObjectPool.Instance.Free(this.gameObject);
 		DestroyObject(bombEffect);
 	}
@@ -91,13 +91,17 @@ public class Bullet : MonoBehaviour {
 		bombPos.y = prefBombEffect.transform.position.y;
 		
 		GameObject bombEffect = (GameObject)Instantiate(prefBombEffect, bombPos, prefBombEffect.transform.rotation);
-		ParticleSystem[] particleSystems = bombEffect.GetComponents<ParticleSystem>();
+		ParticleSystem[] particleSystems = bombEffect.GetComponentsInChildren<ParticleSystem>();
+		bombEffect.particleSystem.maxParticles = (int)bombRange;
+		float duration = 0;
 		foreach(ParticleSystem ps in particleSystems)
 		{
-			ps.startSize *= bombRange*2;
+			ps.startSize *= bombRange;
+			if (duration < ps.duration)
+				duration = ps.duration;
 		}
 		this.audio.Play();
-		StartCoroutine(destoryBombObject(bombEffect));
+		StartCoroutine(destoryBombObject(bombEffect, duration));
 	}
 
 	virtual public void StartFiring()

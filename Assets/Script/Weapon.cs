@@ -153,9 +153,9 @@ public class Weapon : MonoBehaviour {
 
 	}
 
-	public string WeaponName
+	public RefItem RefItem
 	{
-		get {return m_refItem.codeName;}
+		get {return m_refItem;}
 	}
 
 	public int SpPerLevel

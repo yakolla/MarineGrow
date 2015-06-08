@@ -46,20 +46,6 @@ public class FireGunBullet : Bullet {
 
 	}
 
-	public float BulletLength
-	{
-		set {
-			Vector3 scale = transform.localScale;
-			scale.x = value;
-
-			transform.localScale = scale;
-		}
-
-		get {
-			return transform.localScale.x;
-		}
-	}
-
 	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
 	{
 		Vector3 scale = transform.localScale;
