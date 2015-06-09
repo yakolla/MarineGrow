@@ -27,6 +27,7 @@ public class Const {
 	public const int AccessoriesSlots = 4;
 	public const int StartPosYOfPriceButtonImage = 10;
 	public const int StartPosYOfGemPriceButtonImage = -5;
+	public const int CheatRefItemId = 51;
 
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";

@@ -383,7 +383,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	void Start () {
 
-
 		m_statButtons[0] = new YGUISystem.GUIButton(transform.Find("StatButton0").gameObject, ()=>{return true;});
 		m_statButtons[1] = new YGUISystem.GUIButton(transform.Find("StatButton1").gameObject, ()=>{return true;});
 		m_statButtons[2] = new YGUISystem.GUIButton(transform.Find("StatButton2").gameObject, ()=>{return true;});
@@ -394,7 +393,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return m_champ.RemainStatPoint > 0;});
 		m_rollButton.Prices = RefData.Instance.RefItems[1101].levelup.conds;
-
+		m_rollButton.GUIImageButton.Button.gameObject.SetActive(Warehouse.Instance.CheatLevel == 1);
 
 		RandomAbility(null);
 	}

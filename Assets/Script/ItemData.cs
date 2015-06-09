@@ -50,6 +50,7 @@ public class ItemData {
 		ItemPandora,
 		RandomAbility,
 		Skill,
+		Cheat,
 		Count
 	}
 
@@ -72,7 +73,6 @@ public class ItemData {
 	bool			m_lock = false;
 
 	List<ItemMagicOption>		m_optionDescs = new List<ItemMagicOption>();
-
 
 	RefItem				m_refItem;
 
@@ -185,7 +185,7 @@ public class ItemData {
 
 	public int Level
 	{
-		get {return m_level.Value;}
+		get {	return m_level.Value;	}
 		set {m_level.Value = value;}
 	}
 

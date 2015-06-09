@@ -79,6 +79,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(3, 500));
 				Warehouse.Instance.PushItem(new ItemSkillData(21));
+				Warehouse.Instance.PushItem(new ItemCheatData());
 				Warehouse.Instance.PushItem(new ItemWeaponDNAData(500));
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 				Warehouse.Instance.PushItem(new ItemXPPotionData(200));
@@ -127,10 +128,12 @@ public class ChampSettingGUI : MonoBehaviour {
 				}
 
 				Warehouse.Instance.PushItem(new ItemSkillData(21));
+				Warehouse.Instance.PushItem(new ItemCheatData());
 			}
 			
 			byte[] data = Warehouse.Instance.Serialize();
 			Warehouse.Instance.Deserialize(data);
+
 		}
 
 		for(int i = 0; i < m_equipedAccessories.Length; ++i)
@@ -489,6 +492,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (button.TryToPay() == true)
 			{
 				selectedItem.Item.Lock = false;
+				invSlot.ItemDesc = selectedItem.Item.Description();
 				SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 
 				switch(selectedItem.Item.RefItem.id)

@@ -84,6 +84,10 @@ public class Warehouse {
 					ItemSkillData skillData = JsonConvert.DeserializeObject<ItemSkillData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(skillData));
 					break;
+				case ItemData.Type.Cheat:
+					ItemCheatData cheatData = JsonConvert.DeserializeObject<ItemCheatData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(cheatData));
+					break;
 
 				default:
 					Debug.Log(type);
@@ -333,6 +337,17 @@ public class Warehouse {
 	public ItemObject Gem
 	{
 		get { return m_gem; }
+	}
+
+	public int CheatLevel
+	{
+		get {
+			ItemObject cheatItem = FindItem(Const.CheatRefItemId, null);
+			if (cheatItem.Item.Lock == true)
+				return 0;
+
+			return cheatItem.Item.Level;
+		}
 	}
 
 	public int WaveIndex
