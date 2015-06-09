@@ -78,11 +78,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 
 				Warehouse.Instance.PushItem(new ItemWeaponPartsData(3, 500));
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(11, 500));
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(12, 500));
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(13, 500));
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(14, 500));
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(15, 500));
+				Warehouse.Instance.PushItem(new ItemSkillData(21));
 				Warehouse.Instance.PushItem(new ItemWeaponDNAData(500));
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 				Warehouse.Instance.PushItem(new ItemXPPotionData(200));
@@ -109,6 +105,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 			if (Warehouse.Instance.Items.Count == 0)
 			{
+
+
 				WeaponStat gunStat = new WeaponStat();
 				gunStat.firingCount = 2; 
 				ItemWeaponData gunWeaponData = new ItemWeaponData(108, gunStat);
@@ -128,6 +126,7 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(followerData);
 				}
 
+				Warehouse.Instance.PushItem(new ItemSkillData(21));
 			}
 			
 			byte[] data = Warehouse.Instance.Serialize();
@@ -190,6 +189,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				case ItemData.Type.Weapon:
 				case ItemData.Type.Accessory:
 				case ItemData.Type.Follower:
+				case ItemData.Type.Skill:
 					SetButtonRole(ButtonRole.Equip, invSlot, invSlot.PriceButton0, itemIndex);
 					break;
 				}
@@ -399,6 +399,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			
 		case ItemData.Type.Accessory:
 		case ItemData.Type.Follower:
+		case ItemData.Type.Skill:
 		{
 			if (true == inEquipSlot)
 			{

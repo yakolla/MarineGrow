@@ -89,7 +89,8 @@ public class RefItem : RefBaseData
 	public 	RefPriceCondition	unlock;
 	public 	RefEvolutionFiring	evolutionFiring;
 	public  WeaponStat			weaponStat;
-	public 	RefItemOption[]		options; 
+	public 	RefItemOption[]		options;
+	public 	int					weaponId;
 
 }
 

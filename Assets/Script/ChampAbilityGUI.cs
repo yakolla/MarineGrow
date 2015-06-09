@@ -334,7 +334,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			
 			--m_champ.RemainStatPoint;
 		}));
-
+		/*
 		skillAbili.Add(new Ability(0.3f, "Charge to Nuclear Skill", 
 		                           ()=>{
 			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (m_champ.NuclearSkillStack+1) + "</color>" + "\n" +
@@ -353,7 +353,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			++m_champ.NuclearSkillStack;
 			--m_champ.RemainStatPoint;
 		}));
-
+*/
 		skillAbili.Add(new Ability(0.3f, "Charge to Shield", 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);

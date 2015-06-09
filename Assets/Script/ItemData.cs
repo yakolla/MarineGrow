@@ -49,6 +49,7 @@ public class ItemData {
 		Accessory,
 		ItemPandora,
 		RandomAbility,
+		Skill,
 		Count
 	}
 

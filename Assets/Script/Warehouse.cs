@@ -80,6 +80,10 @@ public class Warehouse {
 					ItemAccessoryData accessoryData = JsonConvert.DeserializeObject<ItemAccessoryData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(accessoryData));
 					break;
+				case ItemData.Type.Skill:
+					ItemSkillData skillData = JsonConvert.DeserializeObject<ItemSkillData>(reader.ReadLine());
+					obj.m_items.Add(new ItemObject(skillData));
+					break;
 
 				default:
 					Debug.Log(type);

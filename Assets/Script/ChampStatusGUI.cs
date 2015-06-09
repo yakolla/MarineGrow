@@ -40,18 +40,12 @@ public class ChampStatusGUI : MonoBehaviour {
 			return m_champ.NuclearSkillStack > 0;
 		});
 
-		m_accessoryButtons[0] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button0").gameObject, ()=>{
-			return true;
-		});
-		m_accessoryButtons[1] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button1").gameObject, ()=>{
-			return true;
-		});
-		m_accessoryButtons[2] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button2").gameObject, ()=>{
-			return true;
-		});
-		m_accessoryButtons[3] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button3").gameObject, ()=>{
-			return true;
-		});
+		for(int i = 0; i < m_accessoryButtons.Length; ++i)
+		{
+			m_accessoryButtons[i] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button"+i).gameObject, ()=>{
+				return true;
+			});
+		}
 
 		m_guages[0] = new YGUISystem.GUIGuage(transform.Find("Guage/HP").gameObject, 
 			()=>{return m_champ.m_creatureProperty.getHPRemainRatio();}, 
@@ -105,7 +99,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.Usable(m_champ) == false)
 			return;
 
-		m_accessoryButtons[slot].StartCoolDownTime(60*3f);
+		m_accessoryButtons[slot].StartCoolDownTime(m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.RefItem.weaponStat.coolTime);
 
 		for(int i = 0; i < m_champ.m_creatureProperty.CallableFollowers; ++i)
 			m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.Use(m_champ);

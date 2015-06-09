@@ -50,48 +50,83 @@ public class GameOverGUI : MonoBehaviour {
 
 		m_admob.ShowInterstitial();
 		m_admob.ShowBanner(true);
-
-
 		
 		m_gainedGold.Text.text = Warehouse.Instance.NewGameStats.GainedGold.ToString();
-		m_deltaGainedGold.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.GainedGold, Warehouse.Instance.NewGameStats.GainedGold);
+		DeltaValue(Warehouse.Instance.GameBestStats.GainedGold, Warehouse.Instance.NewGameStats.GainedGold, (int type, string desc)=>{
+			SetDeltaDesc(m_deltaGainedGold, type, desc);
+		});
 		m_bestGainedGold.Text.text = Warehouse.Instance.GameBestStats.GainedGold.ToString();
 
 		m_gainedXP.Text.text = Warehouse.Instance.NewGameStats.GainedXP.ToString();
-		m_deltaGainedXP.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.GainedXP, Warehouse.Instance.NewGameStats.GainedXP);
+		DeltaValue(Warehouse.Instance.GameBestStats.GainedXP, Warehouse.Instance.NewGameStats.GainedXP, (int type, string desc)=>{
+			SetDeltaDesc(m_deltaGainedXP, type, desc);
+		});
 		m_bestGainedXP.Text.text = Warehouse.Instance.GameBestStats.GainedXP.ToString();
 
 		m_survivalTime.Text.text = Warehouse.Instance.NewGameStats.SurvivalTime.ToString();
-		m_deltaSurvivalTime.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.SurvivalTime, Warehouse.Instance.NewGameStats.SurvivalTime);
+		DeltaValue(Warehouse.Instance.GameBestStats.SurvivalTime, Warehouse.Instance.NewGameStats.SurvivalTime, (int type, string desc)=>{
+			SetDeltaDesc(m_deltaSurvivalTime, type, desc);
+		});
 		m_bestSurvivalTime.Text.text = Warehouse.Instance.GameBestStats.SurvivalTime.ToString();
 
 		m_killedMobs.Text.text = Warehouse.Instance.NewGameStats.KilledMobs.ToString();
-		m_deltaKilledMobs.Text.text = DeltaValue(Warehouse.Instance.GameBestStats.KilledMobs, Warehouse.Instance.NewGameStats.KilledMobs);
+		DeltaValue(Warehouse.Instance.GameBestStats.KilledMobs, Warehouse.Instance.NewGameStats.KilledMobs, (int type, string desc)=>{
+			SetDeltaDesc(m_deltaKilledMobs, type, desc);
+		});
 		m_bestKilledMobs.Text.text = Warehouse.Instance.GameBestStats.KilledMobs.ToString();
 
-
 	}
 
-	string DeltaValue(long src, long dest)
+	void SetDeltaDesc(YGUISystem.GUILable lable, int type, string desc)
 	{
-		if (src > dest)
-			return "<color=red>" + (dest-src).ToString() + "</color>";
-
-		if (src == dest)
-			return " 0";
-
-		return "<color=yellow>" + "+" + (dest-src).ToString() + "</color>";
+		lable.Text.text = desc;
+		switch(type)
+		{
+		case 0:
+			lable.Text.color = Color.white;
+			break;
+		case -1:
+			lable.Text.color = Color.red;
+			break;
+		case 1:
+			lable.Text.color = Color.yellow;
+			break;
+		}
 	}
 
-	string DeltaValue(float src, float dest)
+	void DeltaValue(long src, long dest, System.Action<int, string> callback)
 	{
 		if (src > dest)
-			return "<color=red>" + (dest-src).ToString() + "</color>";
+		{
+			callback(-1, (dest-src).ToString());
+			return;
+		}
+
+		if (src == dest)
+		{
+			callback(0, " 0");
+			return;
+		}
+
+		callback(1, "+" + (dest-src).ToString());
+	}
+
+	void DeltaValue(float src, float dest, System.Action<int, string> callback)
+	{
+		if (src > dest)
+		{
+			callback(-1, (dest-src).ToString());
+			return;
+		}
+
 		
 		if (src == dest)
-			return "= 0";
+		{
+			callback(0, " 0");
+			return;
+		}
 		
-		return "<color=yellow>" + "+" + (dest-src).ToString() + "</color>";
+		callback(1, "+" + (dest-src).ToString());
 	}
 
 	void OnEnable() {
