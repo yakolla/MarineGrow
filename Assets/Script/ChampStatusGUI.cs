@@ -131,7 +131,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		{
 			for(int i = 0; i < Const.AccessoriesSlots; ++i)
 			{
-				if (m_champSettingGUI.EquipedAccessories[i] == null)
+				if (m_champSettingGUI.EquipedAccessories[i].m_itemObject == null)
 					continue;
 				
 				m_accessoryButtons[i].Icon.Image = m_champSettingGUI.EquipedAccessories[i].m_itemObject.ItemIcon;

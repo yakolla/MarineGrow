@@ -7,13 +7,12 @@ using UnityEngine.UI;
 
 public class ChampSettingGUI : MonoBehaviour {
 
-	const int EQUIP_ACCESSORY_SLOT_MAX = 4;
 
 	GameObject	m_inventoryObj;
 	YGUISystem.GUIImageStatic	m_gold;
 	YGUISystem.GUIImageStatic	m_gem;
 	YGUISystem.GUIButton	m_weapon;
-	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[EQUIP_ACCESSORY_SLOT_MAX];
+	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[Const.AccessoriesSlots];
 	YGUISystem.GUIButton	m_start;
 
 
@@ -32,7 +31,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		public GUIInventorySlot m_inventorySlot;
 	}
 	EquippedContext		m_equipedWeapon = new EquippedContext();
-	EquippedContext[]	m_equipedAccessories = new EquippedContext[EQUIP_ACCESSORY_SLOT_MAX];
+	EquippedContext[]	m_equipedAccessories = new EquippedContext[Const.AccessoriesSlots];
 
 
 	int			m_stage = 1;
@@ -337,7 +336,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		m_equipedWeapon.m_itemObject.Item.Equip(champ);
 		for(int x = 0; x < m_equipedAccessories.Length; ++x)
 		{
-			if (m_equipedAccessories[x] != null)
+			if (m_equipedAccessories[x].m_itemObject != null)
 			{
 				m_equipedAccessories[x].m_itemObject.Item.Equip(champ);
 			}
