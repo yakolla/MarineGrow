@@ -15,7 +15,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[6,10]
+						"repeatCount":[2,10]
 					},
 					{
 						"refMobIds":{
@@ -39,7 +39,7 @@
 							}
 						},
 						"interval":5,
-						"repeatCount":[6,10]
+						"repeatCount":[4,10]
 					},
 					{
 						"refMobIds":{
@@ -59,11 +59,11 @@
 						"refMobIds":{
 							"melee":{
 								"ratio":[0,1],
-								"count":[12,15]
+								"count":[10,15]
 							},
 							"range":{
 								"ratio":[0,1],
-								"count":[5,8]
+								"count":[3,8]
 							},
 							"miniBoss":{
 								"ratio":[0,1],

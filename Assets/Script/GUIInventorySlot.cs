@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GUIInventorySlot : MonoBehaviour {
 
-	YGUISystem.GUIButton	m_item;
+
 
 	public class GUIPriceGemButton
 	{
@@ -59,6 +59,8 @@ public class GUIInventorySlot : MonoBehaviour {
 		} 
 	}
 
+	YGUISystem.GUIButton	m_item;
+	GameObject	m_checkImage;
 	GUIPriceGemButton	m_priceButton0;
 	GUIPriceGemButton	m_priceButton1;
 
@@ -71,6 +73,8 @@ public class GUIInventorySlot : MonoBehaviour {
 		m_item = new YGUISystem.GUIButton(transform.Find("PictureButton").gameObject, m_priceButton0.EnableChecker);
 		m_item.Icon.Lable.Text.text = desc;
 		m_item.Icon.Image = icon;
+
+		m_checkImage = transform.Find("PictureButton/Check").gameObject;
 	}
 
 	public GUIPriceGemButton PriceButton0
@@ -102,7 +106,10 @@ public class GUIInventorySlot : MonoBehaviour {
 		m_priceButton1.Update();
 	}
 
-
+	public void Check(bool check)
+	{
+		m_checkImage.SetActive(check);
+	}
 	
 	public void StopSpinButton(int slot)
 	{
