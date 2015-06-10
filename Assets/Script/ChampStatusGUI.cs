@@ -90,7 +90,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	public void OnClickAccessory(int slot)
 	{
-		if (m_champSettingGUI.EquipedAccessories[slot] == null)
+		if (m_champSettingGUI.EquipedAccessories[slot].m_itemObject == null)
 			return;
 
 		if (m_accessoryButtons[slot].IsCoolDownDone() == false)
@@ -101,8 +101,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 		m_accessoryButtons[slot].StartCoolDownTime(m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.RefItem.weaponStat.coolTime);
 
-		for(int i = 0; i < m_champ.m_creatureProperty.CallableFollowers; ++i)
-			m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.Use(m_champ);
+
 	}
 
 	public void OnClickDashSkill()

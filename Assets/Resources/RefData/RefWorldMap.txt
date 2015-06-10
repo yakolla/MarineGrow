@@ -97,11 +97,11 @@
 							},
 							"itemDummy":{
 								"ratio":[0,1],
-								"count":[3,5],
+								"count":[2,5],
 								"spawnEffectType":"Falling"
 							}
 						},
-						"interval":0.5,
+						"interval":1,
 						"repeatCount":[3,3]
 					}
 				],

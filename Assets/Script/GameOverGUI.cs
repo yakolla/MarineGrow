@@ -13,13 +13,15 @@ public class GameOverGUI : MonoBehaviour {
 
 	void Start () {
 
+
+
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
 
 		m_guages[0] = new YGUISystem.GUIGuage(transform.Find("Gained Gold/Guage/Guage").gameObject, 
 		                                      ()=>{
 			if (Warehouse.Instance.GameBestStats.GainedGold == 0)
 				return 1f;
-			return Warehouse.Instance.NewGameStats.GainedGold/Warehouse.Instance.GameBestStats.GainedGold;
+			return (float)Warehouse.Instance.NewGameStats.GainedGold/Warehouse.Instance.GameBestStats.GainedGold;
 		}, 
 		()=>{
 			if (Warehouse.Instance.GameBestStats.GainedGold == 0)
@@ -33,7 +35,7 @@ public class GameOverGUI : MonoBehaviour {
 		                                      ()=>{
 			if (Warehouse.Instance.GameBestStats.GainedXP == 0)
 				return 1f;
-			return Warehouse.Instance.NewGameStats.GainedXP/Warehouse.Instance.GameBestStats.GainedXP;
+			return (float)Warehouse.Instance.NewGameStats.GainedXP/Warehouse.Instance.GameBestStats.GainedXP;
 		}, 
 		()=>{
 			if (Warehouse.Instance.GameBestStats.GainedXP == 0)
@@ -60,7 +62,7 @@ public class GameOverGUI : MonoBehaviour {
 		                                      ()=>{
 			if (Warehouse.Instance.GameBestStats.KilledMobs == 0)
 			    return 1f;
-			return Warehouse.Instance.NewGameStats.KilledMobs/Warehouse.Instance.GameBestStats.KilledMobs;
+			return (float)Warehouse.Instance.NewGameStats.KilledMobs/Warehouse.Instance.GameBestStats.KilledMobs;
 		}, 
 		()=>{
 			if (Warehouse.Instance.GameBestStats.KilledMobs == 0)
@@ -83,6 +85,7 @@ public class GameOverGUI : MonoBehaviour {
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
+		GPlusPlatform.Instance.AnalyticsTrackScreen("GameOverGUI");
 	}
 
 	void OnDisable() {

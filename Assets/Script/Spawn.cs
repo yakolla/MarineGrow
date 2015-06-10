@@ -92,6 +92,8 @@ public class Spawn : MonoBehaviour {
 
 	public void StartWave(int wave, Champ champ)
 	{
+		GPlusPlatform.Instance.AnalyticsTrackScreen("StartWave");
+
 		if (m_wave == 0)
 			m_wave = wave*GetCurrentWave().mobSpawns.Length;
 		
@@ -462,7 +464,9 @@ public class Spawn : MonoBehaviour {
 			BoxCollider boxCollider = creature.GetComponent<BoxCollider>();
 			Vector3 size = boxCollider.size;
 			size.y = 5;
+			creature.rigidbody.useGravity = false;
 			boxCollider.size = size;
+			boxCollider.isTrigger = true;
 		}
 
 	}

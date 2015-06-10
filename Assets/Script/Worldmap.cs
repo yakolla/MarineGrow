@@ -78,7 +78,9 @@ public class Worldmap : MonoBehaviour {
 	void OnSavedGameDataRead (SavedGameRequestStatus status, byte[] data) {
 		log = "OnSavedGameDataRead:" + status;
 		if (status == SavedGameRequestStatus.Success) {
-			Warehouse.Instance.Deserialize(data);
+			if (data.Length > 0)
+				Warehouse.Instance.Deserialize(data);
+
 			Application.LoadLevel("Basic Dungeon");
 		} else {
 			Const.HideLoadingGUI();
@@ -127,6 +129,8 @@ public class Worldmap : MonoBehaviour {
 		{
 			Const.ShowLoadingGUI("Loading...");
 			log = "OnClickStart";
+
+
 			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
 				if (status == SelectUIStatus.SavedGameSelected) {
 					
@@ -150,6 +154,9 @@ public class Worldmap : MonoBehaviour {
 				log = status.ToString();
 			});
 				
+/*
+			string fileName = "growingmarine.sav";
+			GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);*/
 		}
 		else
 		{
