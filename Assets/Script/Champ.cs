@@ -245,6 +245,7 @@ public class Champ : Creature {
 		base.Death();
 
 		Warehouse.Instance.NewGameStats.SurvivalTime = Warehouse.Instance.PlayTime;
+		Warehouse.Instance.GameBestStats.SetBestStats(Warehouse.Instance.NewGameStats);
 		
 		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_GAINED_GOLD, Warehouse.Instance.NewGameStats.GainedGold, (bool success) => {
 			// handle success or failure

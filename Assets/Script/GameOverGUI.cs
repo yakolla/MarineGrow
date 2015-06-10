@@ -7,20 +7,7 @@ public class GameOverGUI : MonoBehaviour {
 
 	ADMob					m_admob;
 
-	YGUISystem.GUILable		m_gainedGold;
-	YGUISystem.GUILable		m_gainedXP;
-	YGUISystem.GUILable		m_survivalTime;
-	YGUISystem.GUILable		m_killedMobs;
-
-	YGUISystem.GUILable		m_deltaGainedGold;
-	YGUISystem.GUILable		m_deltaGainedXP;
-	YGUISystem.GUILable		m_deltaSurvivalTime;
-	YGUISystem.GUILable		m_deltaKilledMobs;
-
-	YGUISystem.GUILable		m_bestGainedGold;
-	YGUISystem.GUILable		m_bestGainedXP;
-	YGUISystem.GUILable		m_bestSurvivalTime;
-	YGUISystem.GUILable		m_bestKilledMobs;
+	YGUISystem.GUIGuage[] 	m_guages = new YGUISystem.GUIGuage[4];
 
 	string[]				m_leaderBoards = {Const.LEADERBOARD_GAINED_GOLD, Const.LEADERBOARD_GAINED_XP, Const.LEADERBOARD_SURVIVAL_TIME, Const.LEADERBOARD_KILLED_MOBS};
 
@@ -28,106 +15,71 @@ public class GameOverGUI : MonoBehaviour {
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
 
+		m_guages[0] = new YGUISystem.GUIGuage(transform.Find("Gained Gold/Guage/Guage").gameObject, 
+		                                      ()=>{
+			if (Warehouse.Instance.GameBestStats.GainedGold == 0)
+				return 1f;
+			return Warehouse.Instance.NewGameStats.GainedGold/Warehouse.Instance.GameBestStats.GainedGold;
+		}, 
+		()=>{
+			if (Warehouse.Instance.GameBestStats.GainedGold == 0)
+				return Warehouse.Instance.NewGameStats.GainedGold.ToString() + " / " + Warehouse.Instance.NewGameStats.GainedGold.ToString();
+
+			return Warehouse.Instance.NewGameStats.GainedGold.ToString() + " / " + Warehouse.Instance.GameBestStats.GainedGold.ToString(); 
+		}
+		);
+
+		m_guages[1] = new YGUISystem.GUIGuage(transform.Find("Gained XP/Guage/Guage").gameObject, 
+		                                      ()=>{
+			if (Warehouse.Instance.GameBestStats.GainedXP == 0)
+				return 1f;
+			return Warehouse.Instance.NewGameStats.GainedXP/Warehouse.Instance.GameBestStats.GainedXP;
+		}, 
+		()=>{
+			if (Warehouse.Instance.GameBestStats.GainedXP == 0)
+				return Warehouse.Instance.NewGameStats.GainedXP.ToString() + " / " + Warehouse.Instance.NewGameStats.GainedXP.ToString();
+
+			return Warehouse.Instance.NewGameStats.GainedXP.ToString() + " / " + Warehouse.Instance.GameBestStats.GainedXP.ToString(); 
+		}
+		);
+
+		m_guages[2] = new YGUISystem.GUIGuage(transform.Find("Survival Time/Guage/Guage").gameObject, 
+		                                      ()=>{
+			if (Warehouse.Instance.GameBestStats.SurvivalTime == 0)
+				return 1f;
+			return Warehouse.Instance.NewGameStats.SurvivalTime/Warehouse.Instance.GameBestStats.SurvivalTime;
+		}, 
+		()=>{
+			if (Warehouse.Instance.GameBestStats.SurvivalTime == 0)
+				return Warehouse.Instance.NewGameStats.SurvivalTime.ToString() + " / " + Warehouse.Instance.NewGameStats.SurvivalTime.ToString();
+			return Warehouse.Instance.NewGameStats.SurvivalTime.ToString() + " / " + Warehouse.Instance.GameBestStats.SurvivalTime.ToString(); 
+		}
+		);
+
+		m_guages[3] = new YGUISystem.GUIGuage(transform.Find("Killed Mobs/Guage/Guage").gameObject, 
+		                                      ()=>{
+			if (Warehouse.Instance.GameBestStats.KilledMobs == 0)
+			    return 1f;
+			return Warehouse.Instance.NewGameStats.KilledMobs/Warehouse.Instance.GameBestStats.KilledMobs;
+		}, 
+		()=>{
+			if (Warehouse.Instance.GameBestStats.KilledMobs == 0)
+				return Warehouse.Instance.NewGameStats.KilledMobs.ToString() + " / " + Warehouse.Instance.NewGameStats.KilledMobs.ToString();
+			return Warehouse.Instance.NewGameStats.KilledMobs.ToString() + " / " + Warehouse.Instance.GameBestStats.KilledMobs.ToString(); 
+		}
+		);
 
 
-		m_gainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/Text").gameObject);
-		m_gainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/Text").gameObject);
-		m_survivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/Text").gameObject);
-		m_killedMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/Text").gameObject);
-
-
-		m_deltaGainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/DeltaText").gameObject);
-		m_deltaGainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/DeltaText").gameObject);
-		m_deltaSurvivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/DeltaText").gameObject);
-		m_deltaKilledMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/DeltaText").gameObject);
-
-
-		m_bestGainedGold = new YGUISystem.GUILable(transform.Find("Gained Gold/BestText").gameObject);
-		m_bestGainedXP = new YGUISystem.GUILable(transform.Find("Gained XP/BestText").gameObject);
-		m_bestSurvivalTime = new YGUISystem.GUILable(transform.Find("Survival Time/BestText").gameObject);
-		m_bestKilledMobs = new YGUISystem.GUILable(transform.Find("Killed Mobs/BestText").gameObject);
-
+		for(int i = 0; i < m_guages.Length; ++i)
+		{
+			m_guages[i].Update();
+		}
 
 		m_admob.ShowInterstitial();
 		m_admob.ShowBanner(true);
-		
-		m_gainedGold.Text.text = Warehouse.Instance.NewGameStats.GainedGold.ToString();
-		DeltaValue(Warehouse.Instance.GameBestStats.GainedGold, Warehouse.Instance.NewGameStats.GainedGold, (int type, string desc)=>{
-			SetDeltaDesc(m_deltaGainedGold, type, desc);
-		});
-		m_bestGainedGold.Text.text = Warehouse.Instance.GameBestStats.GainedGold.ToString();
-
-		m_gainedXP.Text.text = Warehouse.Instance.NewGameStats.GainedXP.ToString();
-		DeltaValue(Warehouse.Instance.GameBestStats.GainedXP, Warehouse.Instance.NewGameStats.GainedXP, (int type, string desc)=>{
-			SetDeltaDesc(m_deltaGainedXP, type, desc);
-		});
-		m_bestGainedXP.Text.text = Warehouse.Instance.GameBestStats.GainedXP.ToString();
-
-		m_survivalTime.Text.text = Warehouse.Instance.NewGameStats.SurvivalTime.ToString();
-		DeltaValue(Warehouse.Instance.GameBestStats.SurvivalTime, Warehouse.Instance.NewGameStats.SurvivalTime, (int type, string desc)=>{
-			SetDeltaDesc(m_deltaSurvivalTime, type, desc);
-		});
-		m_bestSurvivalTime.Text.text = Warehouse.Instance.GameBestStats.SurvivalTime.ToString();
-
-		m_killedMobs.Text.text = Warehouse.Instance.NewGameStats.KilledMobs.ToString();
-		DeltaValue(Warehouse.Instance.GameBestStats.KilledMobs, Warehouse.Instance.NewGameStats.KilledMobs, (int type, string desc)=>{
-			SetDeltaDesc(m_deltaKilledMobs, type, desc);
-		});
-		m_bestKilledMobs.Text.text = Warehouse.Instance.GameBestStats.KilledMobs.ToString();
 
 	}
 
-	void SetDeltaDesc(YGUISystem.GUILable lable, int type, string desc)
-	{
-		lable.Text.text = desc;
-		switch(type)
-		{
-		case 0:
-			lable.Text.color = Color.white;
-			break;
-		case -1:
-			lable.Text.color = Color.red;
-			break;
-		case 1:
-			lable.Text.color = Color.yellow;
-			break;
-		}
-	}
-
-	void DeltaValue(long src, long dest, System.Action<int, string> callback)
-	{
-		if (src > dest)
-		{
-			callback(-1, (dest-src).ToString());
-			return;
-		}
-
-		if (src == dest)
-		{
-			callback(0, " 0");
-			return;
-		}
-
-		callback(1, "+" + (dest-src).ToString());
-	}
-
-	void DeltaValue(float src, float dest, System.Action<int, string> callback)
-	{
-		if (src > dest)
-		{
-			callback(-1, (dest-src).ToString());
-			return;
-		}
-
-		
-		if (src == dest)
-		{
-			callback(0, " 0");
-			return;
-		}
-		
-		callback(1, "+" + (dest-src).ToString());
-	}
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
