@@ -13,7 +13,7 @@ public class GameOverGUI : MonoBehaviour {
 
 	void Start () {
 
-		GPlusPlatform.Instance.AnalyticsTrackScreen("GameOverGUI");
+
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
 
@@ -85,6 +85,7 @@ public class GameOverGUI : MonoBehaviour {
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
+		GPlusPlatform.Instance.AnalyticsTrackScreen("GameOverGUI");
 	}
 
 	void OnDisable() {
