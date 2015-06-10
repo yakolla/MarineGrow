@@ -30,6 +30,14 @@ public class Const {
 	public const int CheatRefItemId = 51;
 	public const int RandomAbilityRefItemId = 1101;
 	public const int AbilitySlots = 3;
+	public const int ChampGunRefItemId = 108;
+	public const int ChampFiregunRefItemId = 101;
+	public const int ChampLightningLauncherRefItemId = 102;
+	public const int ChampGuidedRocketLauncherRefItemId = 106;
+	public const int ChampRocketLauncherRefItemId = 111;
+	public const int ChampBoomerangLauncherRefItemId = 120;
+	public const int BootsRefItemId = 10;
+	public const int NuclearSkillRefItemId = 21;
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";

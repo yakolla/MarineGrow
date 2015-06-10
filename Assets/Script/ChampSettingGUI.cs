@@ -54,37 +54,37 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		System.GC.Collect();
 
+
+
 		m_spawn = GameObject.Find("Dungeon/Spawn").GetComponent<Spawn>();
 		GPlusPlatform.Instance.InitAnalytics(GameObject.Find("GAv3").GetComponent<GoogleAnalyticsV3>());
-		
+		GPlusPlatform.Instance.AnalyticsTrackScreen("SettingGUI");
+
 		if (m_cheat == true)
 		{
 			if (Warehouse.Instance.Items.Count == 0)
 			{
 				WeaponStat gunStat = new WeaponStat();
 				gunStat.firingCount = 2; 
-				ItemWeaponData gunWeaponData = new ItemWeaponData(108, gunStat);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, gunStat);
 
 				gunWeaponData.Lock = false;				
 				Warehouse.Instance.PushItem(gunWeaponData);
 
-				for(int w = 101; w < 128; ++w)
+				for(int w = Const.ChampFiregunRefItemId; w < 128; ++w)
 				{
-					if (w == 108)
+					if (w == Const.ChampGunRefItemId)
 						continue;
 
 					Warehouse.Instance.PushItem(new ItemWeaponData(w, null));
 				}
 
 
-				Warehouse.Instance.PushItem(new ItemWeaponPartsData(3, 500));
-				Warehouse.Instance.PushItem(new ItemSkillData(21));
+				Warehouse.Instance.PushItem(new ItemSkillData(Const.NuclearSkillRefItemId));
 				Warehouse.Instance.PushItem(new ItemCheatData());
-				Warehouse.Instance.PushItem(new ItemWeaponDNAData(500));
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
-				Warehouse.Instance.PushItem(new ItemXPPotionData(200));
 
-				ItemAccessoryData bootsData = new ItemAccessoryData(10);
+				ItemAccessoryData bootsData = new ItemAccessoryData(Const.BootsRefItemId);
 				bootsData.OptionDescs.Add(new ItemMagicOption(ItemData.Option.Weapon, 125));
 				Warehouse.Instance.PushItem(bootsData);
 
@@ -110,15 +110,15 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				WeaponStat gunStat = new WeaponStat();
 				gunStat.firingCount = 2; 
-				ItemWeaponData gunWeaponData = new ItemWeaponData(108, gunStat);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, gunStat);
 				gunWeaponData.Lock = false;	
 				Warehouse.Instance.PushItem(gunWeaponData);
 				
-				Warehouse.Instance.PushItem(new ItemWeaponData(101, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(102, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(106, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(111, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(120, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId, null));
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
@@ -127,7 +127,7 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(followerData);
 				}
 
-				Warehouse.Instance.PushItem(new ItemSkillData(21));
+				Warehouse.Instance.PushItem(new ItemSkillData(Const.NuclearSkillRefItemId));
 				Warehouse.Instance.PushItem(new ItemCheatData());
 			}
 			
@@ -497,22 +497,22 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				switch(selectedItem.Item.RefItem.id)
 				{
-				case 101:
+				case Const.ChampFiregunRefItemId:
 					GPlusPlatform.Instance.ReportProgress(
 						Const.ACH_UNLOCKED_THE_FIREGUN, 100, (bool success) => {
 					});  
 					break;
-				case 102:
+				case Const.ChampLightningLauncherRefItemId:
 					GPlusPlatform.Instance.ReportProgress(
 						Const.ACH_UNLOCKED_THE_LIGHTNINGLAUNCHER, 100, (bool success) => {
 					});  
 					break;
-				case 111:
+				case Const.ChampRocketLauncherRefItemId:
 					GPlusPlatform.Instance.ReportProgress(
 						Const.ACH_UNLOCKED_THE_ROCKETLAUNCHER, 100, (bool success) => {
 					});  
 					break;
-				case 106:
+				case Const.ChampGuidedRocketLauncherRefItemId:
 					GPlusPlatform.Instance.ReportProgress(
 						Const.ACH_UNLOCKED_THE_GUIDEDROCKETLAUNCHER, 100, (bool success) => {
 					});  
@@ -522,7 +522,7 @@ public class ChampSettingGUI : MonoBehaviour {
 						Const.ACH_UNLOCKED_THE_LASERBEAM, 100, (bool success) => {
 					});  
 					break;
-				case 120:
+				case Const.ChampBoomerangLauncherRefItemId:
 					GPlusPlatform.Instance.ReportProgress(
 						Const.ACH_UNLOCKED_THE_BOOMERANGLAUNCHER, 100, (bool success) => {
 					});  

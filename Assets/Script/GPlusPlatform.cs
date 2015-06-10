@@ -128,6 +128,10 @@ public class GPlusPlatform {
 		m_ga.LogEvent(eventCategory,eventAction, eventLabel,eventValue);
 	}
 
+	public void AnalyticsTrackScreen(string title)
+	{
+		m_ga.LogScreen(title);
+	}
 
 
 
