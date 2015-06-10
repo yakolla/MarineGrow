@@ -466,6 +466,7 @@ public class Spawn : MonoBehaviour {
 			size.y = 5;
 			creature.rigidbody.useGravity = false;
 			boxCollider.size = size;
+			boxCollider.isTrigger = true;
 		}
 
 	}
