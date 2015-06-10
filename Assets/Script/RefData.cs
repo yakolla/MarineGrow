@@ -159,6 +159,7 @@ public class RefMob : RefBaseData
 		public int evolution = 0;
 		public WeaponStat weaponStat;
 	}
+	public string				prefHead = "mob";
 	public string				prefBody;
 	public string				name;
 	public WeaponDesc[]			refWeaponItems;

@@ -431,6 +431,7 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator EffectSpawnMob1(Vector3 pos, Creature creature)
 	{	
+		/*
 		Creature.Type oriType = creature.CreatureType;
 		creature.CreatureType = Creature.Type.Npc;
 
@@ -446,6 +447,24 @@ public class Spawn : MonoBehaviour {
 		}
 
 		creature.CreatureType = oriType;
+		*/
+
+		pos.y = Random.Range(10,15);
+		creature.transform.position = pos;
+		creature.gameObject.SetActive(true);
+		while(creature != null && creature.rigidbody.IsSleeping() == false)
+		{
+			yield return null;
+		}
+
+		if (creature != null)
+		{
+			BoxCollider boxCollider = creature.GetComponent<BoxCollider>();
+			Vector3 size = boxCollider.size;
+			size.y = 5;
+			boxCollider.size = size;
+		}
+
 	}
 
 	IEnumerator EffectSpawnItemBox(ItemBox itemBox, float time)
@@ -468,7 +487,7 @@ public class Spawn : MonoBehaviour {
 		}
 
 		int mobLevel = SpawnMobLevel();
-		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/mob");
+		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/"+refMob.prefHead);
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
 		if (prefEnemyBody == null)
 		{

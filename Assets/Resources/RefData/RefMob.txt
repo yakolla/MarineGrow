@@ -1477,132 +1477,8 @@
 	[		
 		{
 			"id":2001,
-			"prefBody":"item_supplybox_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				}
-			],
-			"mobAI":"Dummy",		
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":0,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.1,
-				"exp":0,
-				"phyDamagePerLevel":0,
-				"phyDefencePerLevel":0,
-				"hpPerLevel":0.5,
-				"moveSpeed":0,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			}
-		},
-		{
-			"id":2002,
+			"prefHead":"box",
 			"prefBody":"drumtong_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				}
-			],
-			"mobAI":"Dummy",		
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":0,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.1,
-				"exp":0,
-				"phyDamagePerLevel":0,
-				"phyDefencePerLevel":0,
-				"hpPerLevel":0.5,
-				"moveSpeed":0,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			}
-		},
-		{
-			"id":2003,
-			"prefBody":"item_supplybox_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				}
-			],
-			"mobAI":"Dummy",		
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":0,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.1,
-				"exp":0,
-				"phyDamagePerLevel":0,
-				"phyDefencePerLevel":0,
-				"hpPerLevel":0.5,
-				"moveSpeed":0,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			}
-		},
-		{
-			"id":2004,
-			"prefBody":"item_supplybox_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				}
-			],
-			"mobAI":"Dummy",		
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":0,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.1,
-				"exp":0,
-				"phyDamagePerLevel":0,
-				"phyDefencePerLevel":0,
-				"hpPerLevel":0.5,
-				"moveSpeed":0,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			}
-		},
-		{
-			"id":2005,
-			"prefBody":"item_supplybox_skin",
-			"refWeaponItems":
-			[
-				{
-					"refItemId":"109"
-				}
-			],
-			"mobAI":"Dummy",		
-			"baseCreatureProperty":
-			{
-				"maxHP":1,
-				"physicalDamage":0,
-				"physicalDefence":0,
-				"evolutionPerLevel":0.1,
-				"exp":0,
-				"phyDamagePerLevel":0,
-				"phyDefencePerLevel":0,
-				"hpPerLevel":0.5,
-				"moveSpeed":0,
-				"navMeshBaseOffset":0,
-				"backwardOnDamage":false
-			}
-		},
-		{
-			"id":2006,
-			"prefBody":"item_supplybox_skin",
 			"refWeaponItems":
 			[
 				{
@@ -1630,6 +1506,7 @@
 	[		
 		{
 			"id":3001,
+			"prefHead":"box",
 			"prefBody":"item_supplybox_skin",
 			"refWeaponItems":
 			[

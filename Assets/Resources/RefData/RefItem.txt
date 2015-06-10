@@ -1573,7 +1573,7 @@
 			[
 				{
 					"refItemId":1, 
-					"count":35
+					"count":350
 				}
 			]
 		}

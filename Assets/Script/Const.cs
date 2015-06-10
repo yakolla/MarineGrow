@@ -28,7 +28,8 @@ public class Const {
 	public const int StartPosYOfPriceButtonImage = 10;
 	public const int StartPosYOfGemPriceButtonImage = -5;
 	public const int CheatRefItemId = 51;
-
+	public const int RandomAbilityRefItemId = 1101;
+	public const int AbilitySlots = 3;
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";
