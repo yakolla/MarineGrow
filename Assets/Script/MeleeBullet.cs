@@ -21,7 +21,7 @@ public class MeleeBullet : Bullet {
 
 		RaycastHit hit;
 		Vector3 fwd = transform.TransformDirection(Vector3.right);
-		if (Physics.Raycast(transform.position, fwd, out hit, 10f))
+		if (Physics.Raycast(transform.position, fwd, out hit, 5f, 1<<9))
 		{
 			Creature creature = hit.transform.gameObject.GetComponent<Creature>();
 			if (creature && Creature.IsEnemy(creature, m_ownerCreature))

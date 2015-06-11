@@ -107,13 +107,13 @@ public class Weapon : MonoBehaviour {
 		return desc;
 	}
 
-	virtual public void MoreFire()
+	virtual public bool MoreFire()
 	{
 		if (m_refItem.evolutionFiring == null)
-			return;
+			return false;
 
 		if (m_level > Const.ItemMaxLevel+3)
-			return;
+			return false;
 
 		int count = m_firingDescs.Count;
 
@@ -131,6 +131,8 @@ public class Weapon : MonoBehaviour {
 		desc.delayTime = delay;
 		
 		m_firingDescs.Add(desc);
+
+		return true;
 	}
 
 	public void Evolution()

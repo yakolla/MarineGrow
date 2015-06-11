@@ -119,7 +119,6 @@ public class Creature : MonoBehaviour {
 		};
 
 		m_weaponHolder.EquipWeapon(weapon);
-
 	}
 
 	public void EquipPassiveWeapon(ItemWeaponData weaponData)
@@ -424,7 +423,7 @@ public class Creature : MonoBehaviour {
 	IEnumerator EffectAirborne()
 	{	
 		
-		DamageText(DamageDesc.BuffType.Airborne.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
+		DamageText(CrowdControlType.Airborne.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 		CrowdControl(CrowdControlType.Airborne, true);
 		Parabola parabola = new Parabola(gameObject, 8, 0f, 90*Mathf.Deg2Rad, 1);
 		while(parabola.Update())
@@ -439,9 +438,13 @@ public class Creature : MonoBehaviour {
 
 	IEnumerator EffectStun()
 	{		
+		DamageText(CrowdControlType.Stun.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
 		CrowdControl(CrowdControlType.Stun, true);
+		float ori = m_creatureProperty.BetaMoveSpeed;
+		m_creatureProperty.BetaMoveSpeed = 0f;
 		yield return new WaitForSeconds(2f);
-		
+
+		m_creatureProperty.BetaMoveSpeed = ori;
 		m_buffEffects[(int)DamageDesc.BuffType.Stun].m_run = false;
 		CrowdControl(CrowdControlType.Stun, false);
 	}

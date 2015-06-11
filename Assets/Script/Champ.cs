@@ -26,10 +26,10 @@ public class Champ : Creature {
 	[SerializeField]
 	int			m_comboKills;
 
-
 	int			m_comboSkillStacks = 0;
 	int			m_nuclearSkillStacks = 0;
 
+	ItemObject[]	m_accessoryItems = new ItemObject[Const.AccessoriesSlots];
 
 	Animator	m_bloodWarningAnimator;
 
@@ -158,6 +158,11 @@ public class Champ : Creature {
 		set {m_nuclearSkillStacks = value;}
 	}
 
+	public ItemObject[]	AccessoryItems
+	{
+		get {return m_accessoryItems;}
+	}
+
 	public void ApplyGameOptions()
 	{
 		audio.ignoreListenerVolume = false;
@@ -237,8 +242,6 @@ public class Champ : Creature {
 		base.TakeDamage(offender, damageDesc);
 		m_bloodWarningAnimator.SetTrigger("Warning");
 	}
-
-
 
 	override public void Death()
 	{

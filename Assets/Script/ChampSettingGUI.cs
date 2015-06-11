@@ -40,15 +40,6 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	string		log;
 
-	public EquippedContext	EquipedWeapon
-	{
-		get {return m_equipedWeapon;}
-	}
-
-	public EquippedContext[]	EquipedAccessories
-	{
-		get {return m_equipedAccessories;}
-	}
 
 	void Start()
 	{
@@ -336,12 +327,14 @@ public class ChampSettingGUI : MonoBehaviour {
 		
 		Champ champ = champObj.GetComponent<Champ>();
 		champ.Init();
+
 		m_equipedWeapon.m_itemObject.Item.Equip(champ);
 		for(int x = 0; x < m_equipedAccessories.Length; ++x)
 		{
 			if (m_equipedAccessories[x].m_itemObject != null)
 			{
 				m_equipedAccessories[x].m_itemObject.Item.Equip(champ);
+				champ.AccessoryItems[x] = m_equipedAccessories[x].m_itemObject;
 			}
 		}	
 		

@@ -24,6 +24,8 @@ public class Const {
 	public const int ComboKill_3 = 300;
 	public const int SpecialButtons = 3;
 	public const int Guages = 3;
+	public const int MaxCallableFollowers = 3;
+	public const float MaxAlphaMoveSpeed = 2f;
 	public const int AccessoriesSlots = 4;
 	public const int StartPosYOfPriceButtonImage = 10;
 	public const int StartPosYOfGemPriceButtonImage = -5;

@@ -208,7 +208,7 @@ public class CreatureProperty {
 	public float	AlphaMoveSpeed
 	{
 		get {return m_alphaMoveSpeed;}
-		set { m_alphaMoveSpeed = Mathf.Min(value, 2f); }
+		set { m_alphaMoveSpeed = Mathf.Min(value, Const.MaxAlphaMoveSpeed); }
 	}
 
 	public float	BetaMoveSpeed

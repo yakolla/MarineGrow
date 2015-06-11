@@ -30,6 +30,9 @@ public class LightningBullet : Bullet
 	[SerializeField]
 	int	m_maxChaining = 5;
 
+	[SerializeField]
+	bool m_beamMode = false;
+
 	Perlin noise;
 	float oneOverZigs;
 	
@@ -78,12 +81,12 @@ public class LightningBullet : Bullet
 
 		Creature[] targets = null;
 		int hittedTargetCount = 0;
-		if (m_maxChaining > 0)
+		if (m_beamMode == false)
 		{
 			targets = new Creature[m_maxChaining];
 			RaycastHit hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.right);
-			if (Physics.Raycast(transform.position, fwd, out hit, BulletLength()))
+			if (Physics.Raycast(transform.position, fwd, out hit, BulletLength(), 1<<9))
 			{
 				Creature creature = hit.transform.gameObject.GetComponent<Creature>();
 				if (creature && Creature.IsEnemy(creature, m_ownerCreature))
@@ -92,7 +95,7 @@ public class LightningBullet : Bullet
 					mobHitted = true;
 					hittedTargetCount = 1;
 					
-					for(int i = 1; i < targets.Length; ++i)
+					for(int i = 1; i < m_maxChaining; ++i)
 					{
 						GameObject chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetAutoTargetTags(), targets, 3f);
 						if (chaningTargetObj == null)
@@ -190,5 +193,10 @@ public class LightningBullet : Bullet
 	{
 		get { return m_maxChaining; }
 		set { m_maxChaining = value;}
+	}
+
+	public bool BeamMode
+	{
+		set {m_beamMode = value;}
 	}
 }

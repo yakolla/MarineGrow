@@ -16,22 +16,28 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	ADMob		m_adMob;
 
-	delegate void OnAbility();
-	delegate string OnCompareAbility();
 	class Ability
 	{
 		public float		m_chance;
 		public string		m_name;
-		public OnCompareAbility m_compare;
-		public OnAbility	m_functor;
+		public System.Func<string> m_compare;
+		public System.Action	m_functor;
+		public System.Func<bool> m_availableFunctor;
 
 
-		public Ability(float chance, string name, OnCompareAbility compare, OnAbility functor)
+		public Ability(float chance, string name, System.Func<string> compare, System.Action functor)
+			:this(chance, name, compare, functor, ()=>{return true;})
+		{
+			
+		}
+
+		public Ability(float chance, string name, System.Func<string> compare, System.Action functor, System.Func<bool> availableFunctor)
 		{
 			m_chance = chance;
 			m_name = name;
 			m_functor = functor;
 			m_compare = compare;
+			m_availableFunctor = availableFunctor;
 		}
 	}
 
@@ -83,7 +89,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			//m_champ.m_creatureProperty.Heal((int)m_champ.m_creatureProperty.MaxHP);
 			--m_champ.RemainStatPoint;
 		}));
-
+		/*
 		basicAbili.Add(new Ability(0.3f, "SP Max Up", 
 		                                ()=>{
 			m_backup.AlphaMaxSP+=30;
@@ -94,15 +100,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		basicAbili.Add(new Ability(0.3f, "Move Speed Up", 
-		                                ()=>{
-			m_backup.AlphaMoveSpeed+=1;
-			return m_champ.m_creatureProperty.AlphaMoveSpeed + " -> " + "<color=yellow>" + (m_backup.AlphaMoveSpeed) + "</color>";
-		},
-		()=>{
-			m_champ.m_creatureProperty.AlphaMoveSpeed+=1;
-			--m_champ.RemainStatPoint;
-		}));
 
 		basicAbili.Add(new Ability(0.3f, "SP Recovery Up", 
 		                                ()=>{
@@ -113,6 +110,21 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaSPRecoveryPerSec+=1;
 			--m_champ.RemainStatPoint;
 		}));
+*/
+		basicAbili.Add(new Ability(0.3f, "Move Speed Up", 
+		                                ()=>{
+			m_backup.AlphaMoveSpeed+=1;
+			return m_champ.m_creatureProperty.AlphaMoveSpeed + " -> " + "<color=yellow>" + (m_backup.AlphaMoveSpeed) + "</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.AlphaMoveSpeed+=1;
+			--m_champ.RemainStatPoint;
+		},
+		()=>{
+			return m_champ.m_creatureProperty.AlphaMoveSpeed < Const.MaxAlphaMoveSpeed;
+		}
+		));
+
 
 		basicAbili.Add(new Ability(0.3f, "Critical Suites",
 		()=>{
@@ -125,7 +137,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.15f;
 			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.3f;
 			--m_champ.RemainStatPoint;
-		}));
+		}
+		));
 
 /*
 		m_abilities.Add(new Ability(0.1f, "Life Per Kill", 
@@ -148,9 +161,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
-			m_champ.WeaponHolder.LevelUp();
+			m_champ.WeaponHolder.MainWeapon.LevelUp();
 			--m_champ.RemainStatPoint;
-		}));
+		}
+		));
 
 		skillAbili.Add(new Ability(0.3f, "Embers Skill", 
 		                            ()=>{
@@ -163,8 +177,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 				ori = weapon.Level;
 			}
 
-			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>" + "\n" +
-				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[132], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[132], backup)+ "</color>";
+			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[132], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[132], backup)+ "</color>";
 		},
 		()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
@@ -178,9 +192,20 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 
 			--m_champ.RemainStatPoint;
-		}));
+		},
+		()=>{
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
+			case Const.ChampGunRefItemId:
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampFiregunRefItemId:
+			case Const.ChampBoomerangLauncherRefItemId:
+				return false;
+			}
 
-
+			return true;
+		}
+		));
 
 		foreach (DamageDesc.BuffType buffType in System.Enum.GetValues(typeof(DamageDesc.BuffType)))
 		{
@@ -192,7 +217,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 			case DamageDesc.BuffType.Combo100:
 			case DamageDesc.BuffType.Dash:
 			case DamageDesc.BuffType.LevelUp:
-			case DamageDesc.BuffType.Stun:
 				skipBuff = true;
 				break;
 			}
@@ -222,7 +246,26 @@ public class ChampAbilityGUI : MonoBehaviour {
 				m_champ.m_creatureProperty.WeaponBuffDescs.m_buff = capturedBuffType;
 				m_champ.m_creatureProperty.WeaponBuffDescs.chance += 0.1f;
 				--m_champ.RemainStatPoint;
-			}));
+			},
+			()=>{
+				switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+				{
+				case Const.ChampGunRefItemId:
+					return capturedBuffType == DamageDesc.BuffType.Burning;
+				case Const.ChampLightningLauncherRefItemId:
+					return capturedBuffType == DamageDesc.BuffType.Stun;
+				case Const.ChampFiregunRefItemId:
+					return capturedBuffType == DamageDesc.BuffType.Slow;
+				case Const.ChampBoomerangLauncherRefItemId:
+					return capturedBuffType == DamageDesc.BuffType.Slow;
+				case Const.ChampGuidedRocketLauncherRefItemId:
+				case Const.ChampRocketLauncherRefItemId:
+					return false;
+				}
+				
+				return false;
+			}
+			));
 		}
 
 		/*
@@ -257,8 +300,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 				ori = weapon.Level;
 			}
 			
-			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>" + "\n" +
-				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[131], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[131], backup)+ "</color>";
+			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[131], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[131], backup)+ "</color>";
 		},
 		()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(131);
@@ -272,7 +315,23 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			
 			--m_champ.RemainStatPoint;
-		}));
+		},
+		()=>{
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
+			case Const.ChampGunRefItemId:
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampFiregunRefItemId:
+			case Const.ChampBoomerangLauncherRefItemId:
+				return true;
+			case Const.ChampGuidedRocketLauncherRefItemId:
+			case Const.ChampRocketLauncherRefItemId:
+				return false;
+			}
+			
+			return false;
+		}
+		));
 
 		skillAbili.Add(new Ability(0.3f, "Explosion Skill", 
 		                           ()=>{
@@ -285,8 +344,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 				ori = weapon.Level;
 			}
 			
-			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>" + "\n" +
-				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[129], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[129], backup)+ "</color>";
+			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[129], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[129], backup)+ "</color>";
 		},
 		()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(129);
@@ -300,7 +359,23 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			
 			--m_champ.RemainStatPoint;
-		}));
+		},
+		()=>{
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampFiregunRefItemId:
+				return true;
+			case Const.ChampGunRefItemId:			
+			case Const.ChampBoomerangLauncherRefItemId:
+			case Const.ChampGuidedRocketLauncherRefItemId:
+			case Const.ChampRocketLauncherRefItemId:
+				return false;
+			}
+			
+			return false;
+		}
+		));
 		/*
 		skillAbili.Add(new Ability(0.3f, "Charge to Nuclear Skill", 
 		                           ()=>{
@@ -325,8 +400,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);
 			m_backup.Shield += 10;
-			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>" + "\n" +
-				"SP:" + Weapon.GetSP(RefData.Instance.RefItems[130], 1);
+			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
+				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[130], 1);
 		},
 		()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);
@@ -354,7 +429,23 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.SplashRange+=1;
 			
 			--m_champ.RemainStatPoint;
-		}));
+		},
+		()=>{
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampFiregunRefItemId:
+			case Const.ChampGunRefItemId:			
+			case Const.ChampBoomerangLauncherRefItemId:
+				return false;
+			case Const.ChampGuidedRocketLauncherRefItemId:
+			case Const.ChampRocketLauncherRefItemId:
+				return true;
+			}
+			
+			return false;
+		}
+		));
 		
 		utilAbili.Add(new Ability(0.3f, "Callable Followers", 
 		                          ()=>{
@@ -367,7 +458,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.CallableFollowers+=1;
 			
 			--m_champ.RemainStatPoint;
-		}));
+		},
+		()=>{
+			for(int i = 0; i < m_champ.AccessoryItems.Length; ++i)
+			{
+				if (m_champ.AccessoryItems[i] != null && 
+				    m_champ.AccessoryItems[i].Item.RefItem.type == ItemData.Type.Follower &&
+				    m_champ.m_creatureProperty.CallableFollowers < Const.MaxCallableFollowers
+				    )
+					return true;
+			}
+			return false;
+		}
+		));
 		
 		utilAbili.Add(new Ability(0.3f, "Gain Extra XP", 
 		                          ()=>{
@@ -385,6 +488,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 	}
 
 	void Start () {
+
+		m_champ = GameObject.Find("Champ").GetComponent<Champ>();
 
 		for(int i = 0; i < m_statButtons.Length; ++i)
 			m_statButtons[i] = new YGUISystem.GUIButton(transform.Find("StatButton"+i).gameObject, ()=>{return true;});
@@ -418,18 +523,33 @@ public class ChampAbilityGUI : MonoBehaviour {
 		int selectCount = 0;
 		while(selectCount < Const.AbilitySlots)
 		{
-			StartSpinButton(m_statButtons[selectCount]);
-
-			List<Ability> abilis = m_abilities[(AbilityCategory)selectCount];
+			List<Ability> abilis = m_abilities[(AbilityCategory)Random.Range(0, Const.AbilitySlots)];
 			Ability ability = abilis[Random.Range(0, abilis.Count)];
+
+			bool alreadyExist = false;
+			for(int i = 0; i < selectCount; ++i)
+			{
+				if (m_abilitySlots[i] == ability)
+				{
+					alreadyExist = true;
+					break;
+				}
+			}
+
+			if (alreadyExist == true)
+				continue;
+
 			float ratio = Random.Range(0f, 1f);
-			if (ratio < ability.m_chance)
+			if (ability.m_availableFunctor() == true && ratio < ability.m_chance)
 			{
 				m_abilitySlots[selectCount] = ability;
 				++selectCount;
 			}
 
 		}
+
+		for(selectCount = 0; selectCount < Const.AbilitySlots; ++selectCount)
+			StartSpinButton(m_statButtons[selectCount]);
 
 	}
 
@@ -483,19 +603,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 	}
 
-	void OnGUI()
+	void Update()
 	{
-		if (m_champ == null)
-		{
-			GameObject obj = GameObject.Find("Champ");
-			if (obj == null)
-			{
-				return;
-			}
-			
-			m_champ = obj.GetComponent<Champ>();
-			return;
-		}
 
 		m_champ.m_creatureProperty.CopyTo(m_backup);
 

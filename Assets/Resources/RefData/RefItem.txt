@@ -177,14 +177,12 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":0.3,
-			"spPerLevel":1
+			"delay":0.3
 		},
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":3,
-			"spPerLevel":1
+			"range":3
 		}
 	},
 	{
@@ -195,8 +193,7 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":5,
-			"spPerLevel":2
+			"range":5
 		},
 		"levelup":
 		{
@@ -1099,8 +1096,7 @@
 		"weaponStat":
 		{
 			"coolTime":10,
-			"range":5,
-			"spPerLevel":10
+			"range":5
 		}
 	},
 	{
@@ -1111,8 +1107,7 @@
 		"weaponStat":
 		{
 			"coolTime":3,
-			"range":5,
-			"spPerLevel":5
+			"range":5
 		}
 	},
 	{
@@ -1123,8 +1118,7 @@
 		"weaponStat":
 		{
 			"coolTime":5,
-			"range":5,
-			"spPerLevel":10
+			"range":5
 		}
 	},
 	{
@@ -1135,8 +1129,7 @@
 		"weaponStat":
 		{
 			"coolTime":1,
-			"range":8,
-			"spPerLevel":10
+			"range":8
 		}
 	},
 	{
@@ -1147,8 +1140,7 @@
 		"weaponStat":
 		{
 			"coolTime":0,
-			"range":0,
-			"spPerLevel":10
+			"range":0
 		}
 	},
 	{

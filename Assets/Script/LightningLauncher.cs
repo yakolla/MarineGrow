@@ -6,6 +6,7 @@ public class LightningLauncher : Weapon {
 
 	LightningBullet	m_bullet;
 	int		m_maxChaining = 1;
+	float		m_fadeOutEffect = 0f;
 	float		m_accSp;
 
 	override public void StartFiring(float targetAngle)
@@ -15,6 +16,8 @@ public class LightningLauncher : Weapon {
 			if (null == m_bullet)
 			{
 				m_bullet = CreateBullet(m_firingDescs[0], m_gunPoint.transform.position) as LightningBullet;
+				
+				StartCoroutine(delayStopFiring());
 			}
 			m_bullet.Damage = Damage;
 			m_bullet.gameObject.SetActive(true);
@@ -46,26 +49,51 @@ public class LightningLauncher : Weapon {
 		playGunPointEffect();
 		m_firing = true;
 	}
+
+	IEnumerator delayStopFiring()
+	{
+		bool finished = false;
+		while(true)
+		{
+			if (m_firing == true)
+				finished = false;
+
+			if(m_firing == false && finished == false && m_fadeOutEffect <= 0f)
+			{
+				this.audio.Stop();
+				if (m_bullet != null)
+				{
+					m_bullet.StopFiring();
+					m_bullet.gameObject.SetActive(false);
+				}
+				
+				stopGunPointEffect();
+				finished = true;
+			}
+
+			m_fadeOutEffect -= Time.deltaTime;
+
+			yield return null;
+		}
+	}
 	
 	override public void StopFiring()
 	{
-		base.StopFiring();
-		this.audio.Stop();
-		if (m_bullet != null)
-		{
-			m_bullet.StopFiring();
-			m_bullet.gameObject.SetActive(false);
-		}
+		if (m_firing == true)
+			m_fadeOutEffect = 1f;
 
-		stopGunPointEffect();
+		base.StopFiring();
+
 
 	}
 
-	override public void MoreFire()
+	override public bool MoreFire()
 	{
-		base.MoreFire();
+		if (false == base.MoreFire())
+			return false;
 		
 		m_maxChaining += 1;
+		return true;
 	}
 
 	override public void LevelUp()
@@ -78,7 +106,7 @@ public class LightningLauncher : Weapon {
 		}
 		else
 		{
-			m_maxChaining += 1;
+
 		}
 
 	}

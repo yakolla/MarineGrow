@@ -73,9 +73,9 @@ public class Melee : Weapon {
 		
 	}
 	
-	override public void MoreFire()
+	override public bool MoreFire()
 	{
-
+		return false;
 	}
 	
 	override public void LevelUp()

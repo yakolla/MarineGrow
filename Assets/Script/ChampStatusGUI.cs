@@ -90,16 +90,16 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	public void OnClickAccessory(int slot)
 	{
-		if (m_champSettingGUI.EquipedAccessories[slot].m_itemObject == null)
+		if (m_champ.AccessoryItems[slot] == null)
 			return;
 
 		if (m_accessoryButtons[slot].IsCoolDownDone() == false)
 			return;
 
-		if (m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.Usable(m_champ) == false)
+		if (m_champ.AccessoryItems[slot].Item.Usable(m_champ) == false)
 			return;
 
-		m_accessoryButtons[slot].StartCoolDownTime(m_champSettingGUI.EquipedAccessories[slot].m_itemObject.Item.RefItem.weaponStat.coolTime);
+		m_accessoryButtons[slot].StartCoolDownTime(m_champ.AccessoryItems[slot].Item.RefItem.weaponStat.coolTime);
 
 
 	}
@@ -124,10 +124,10 @@ public class ChampStatusGUI : MonoBehaviour {
 		{
 			for(int i = 0; i < Const.AccessoriesSlots; ++i)
 			{
-				if (m_champSettingGUI.EquipedAccessories[i].m_itemObject == null)
+				if (m_champ.AccessoryItems[i] == null)
 					continue;
 				
-				m_accessoryButtons[i].Icon.Image = m_champSettingGUI.EquipedAccessories[i].m_itemObject.ItemIcon;
+				m_accessoryButtons[i].Icon.Image = m_champ.AccessoryItems[i].ItemIcon;
 			}
 		}
 
