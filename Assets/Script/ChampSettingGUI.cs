@@ -59,7 +59,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				gunStat.firingCount = 2; 
 				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, gunStat);
 
-				gunWeaponData.Lock = false;				
+				gunWeaponData.Lock = false;			
 				Warehouse.Instance.PushItem(gunWeaponData);
 
 				for(int w = Const.ChampFiregunRefItemId; w < 128; ++w)
@@ -71,7 +71,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				}
 
 
-				Warehouse.Instance.PushItem(new ItemSkillData(Const.NuclearSkillRefItemId));
 				Warehouse.Instance.PushItem(new ItemCheatData());
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 
@@ -118,7 +117,6 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(followerData);
 				}
 
-				Warehouse.Instance.PushItem(new ItemSkillData(Const.NuclearSkillRefItemId));
 				Warehouse.Instance.PushItem(new ItemCheatData());
 			}
 			

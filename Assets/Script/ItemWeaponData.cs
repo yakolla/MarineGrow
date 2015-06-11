@@ -33,6 +33,11 @@ public class ItemWeaponData : ItemData{
 			{
 				m_weaponStat.spPerLevel = RefItem.weaponStat.spPerLevel;
 			}
+
+			if (m_weaponStat.skillId == 0)
+			{
+				m_weaponStat.skillId = RefItem.weaponStat.skillId;
+			}
 		}
 
 		Lock = true;

@@ -47,6 +47,7 @@ public class Weapon : MonoBehaviour {
 	protected float		m_attackRange;
 
 	int					m_spPerLevel;
+	int					m_skillId;
 
 	int					m_evolution;
 	protected int		m_level;
@@ -86,6 +87,7 @@ public class Weapon : MonoBehaviour {
 		m_evolution = 0;
 		m_coolTime = weaponData.WeaponStat.coolTime;
 		m_spPerLevel = weaponData.WeaponStat.spPerLevel;
+		m_skillId = weaponData.WeaponStat.skillId;
 		AttackRange = weaponData.WeaponStat.range;
 	
 		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
@@ -158,6 +160,11 @@ public class Weapon : MonoBehaviour {
 	public RefItem RefItem
 	{
 		get {return m_refItem;}
+	}
+
+	public int SkillId
+	{
+		get{return m_skillId;}
 	}
 
 	public int SpPerLevel

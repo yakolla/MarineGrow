@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -48,18 +48,18 @@ public class WeaponHolder : MonoBehaviour {
 		m_weapons.Add(weapon);
 	}
 
-	public void EquipActiveWeapon(Weapon weapon)
+	public void EquipActiveSkillWeapon(Weapon weapon)
 	{
 		m_activeWeapons.Add(weapon.RefItem.id, weapon);
 	}
 
 
-	public void EquipPassiveWeapon(Weapon weapon)
+	public void EquipPassiveSkillWeapon(Weapon weapon)
 	{
 		m_passiveWeapons.Add(weapon.RefItem.id, weapon);
 	}
 
-	public Weapon GetPassiveWeapon(int refId)
+	public Weapon GetPassiveSkillWeapon(int refId)
 	{
 		Weapon weapon = null;
 		m_passiveWeapons.TryGetValue(refId, out weapon);
@@ -67,7 +67,7 @@ public class WeaponHolder : MonoBehaviour {
 		return weapon;
 	}
 
-	public Weapon GetActiveWeapon(int refId)
+	public Weapon GetActiveSkillWeapon(int refId)
 	{
 		Weapon weapon = null;
 		m_activeWeapons.TryGetValue(refId, out weapon);
@@ -103,9 +103,9 @@ public class WeaponHolder : MonoBehaviour {
 		m_firing = false;
 	}
 
-	public void ActiveWeaponFire(int refId, float targetAngle)
+	public void ActiveWeaponSkillFire(int refId, float targetAngle)
 	{
-		Weapon weapon = GetActiveWeapon(refId);
+		Weapon weapon = GetActiveSkillWeapon(refId);
 		if (weapon != null)
 			weapon.StartFiring(targetAngle);
 	}

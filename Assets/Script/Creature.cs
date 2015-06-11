@@ -119,20 +119,25 @@ public class Creature : MonoBehaviour {
 		};
 
 		m_weaponHolder.EquipWeapon(weapon);
+
+		if (weaponData.WeaponStat.skillId > 0)
+		{
+			EquipActiveSkillWeapon(new ItemWeaponData(weaponData.WeaponStat.skillId, null));
+		}
 	}
 
-	public void EquipPassiveWeapon(ItemWeaponData weaponData)
+	public void EquipPassiveSkillWeapon(ItemWeaponData weaponData)
 	{
 		Weapon weapon = instanceWeapon(weaponData);
 		
-		m_weaponHolder.EquipPassiveWeapon(weapon);
+		m_weaponHolder.EquipPassiveSkillWeapon(weapon);
 	}
 
-	public void EquipActiveWeapon(ItemWeaponData weaponData)
+	public void EquipActiveSkillWeapon(ItemWeaponData weaponData)
 	{
 		Weapon weapon = instanceWeapon(weaponData);
 		
-		m_weaponHolder.EquipActiveWeapon(weapon);
+		m_weaponHolder.EquipActiveSkillWeapon(weapon);
 	}
 
 	public void SetSubWeapon(Weapon weapon, ItemWeaponData weaponData)

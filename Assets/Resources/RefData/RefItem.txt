@@ -182,7 +182,8 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":6
+			"range":6,
+			"skillId":133
 		}
 	},
 	{
@@ -193,7 +194,8 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":5
+			"range":5,
+			"skillId":133
 		},
 		"levelup":
 		{
@@ -344,7 +346,8 @@
 		"weaponStat":
 		{
 			"coolTime":1.5,
-			"range":5
+			"range":5,
+			"skillId":133
 		},		
 		"levelup":
 		{
@@ -442,7 +445,8 @@
 		"weaponStat":
 		{
 			"coolTime":0.7,
-			"range":7
+			"range":7,
+			"skillId":133
 		},
 		"levelup":
 		{
@@ -514,7 +518,8 @@
 		"weaponStat":
 		{
 			"coolTime":1.5,
-			"range":8
+			"range":8,
+			"skillId":133
 		},		
 		"levelup":
 		{
@@ -603,7 +608,8 @@
 		"weaponStat":
 		{
 			"coolTime":1,
-			"range":7
+			"range":7,
+			"skillId":133
 		},		
 		"levelup":
 		{
@@ -852,7 +858,8 @@
 		"weaponStat":
 		{
 			"coolTime":2,
-			"range":5
+			"range":5,
+			"skillId":133
 		},
 		"levelup":
 		{

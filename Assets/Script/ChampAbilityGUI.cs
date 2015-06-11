@@ -51,8 +51,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 	Dictionary<AbilityCategory, List<Ability>>	m_abilities = new Dictionary<AbilityCategory, List<Ability>>();
 	Ability[]	m_abilitySlots = new Ability[3];
 
-	void Awake()
+	void Start ()
 	{
+		m_champ = GameObject.Find("Champ").GetComponent<Champ>();
+
 		List<Ability> basicAbili = new List<Ability>();
 		List<Ability> skillAbili = new List<Ability>();
 		List<Ability> utilAbili = new List<Ability>();
@@ -272,17 +274,21 @@ public class ChampAbilityGUI : MonoBehaviour {
 			));
 		}
 
-		/*
-		skillAbili.Add(new Ability(0.3f, "Charge to Dash Skill", 
+
+		skillAbili.Add(new Ability(0.3f, "Charge to " + (m_champ.WeaponHolder.MainWeapon.SkillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.SkillId].codeName : ""), 
 		                           ()=>{
-			int backup = m_champ.NuclearSkillStack+10;
+			int backup = m_champ.NuclearSkillStack+3;
 			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
-			m_champ.NuclearSkillStack += 10;
+			m_champ.NuclearSkillStack += 3;
 			--m_champ.RemainStatPoint;
-		}));
-*/
+		},
+		()=>{
+			return m_champ.WeaponHolder.MainWeapon.SkillId > 0;
+		}
+		));
+
 		skillAbili.Add(new Ability(0.3f, "Charge to Combo Skill", 
 		                           ()=>{
 			int backup = m_champ.ComboSkillStack+3;
@@ -295,7 +301,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Grenade Skill", 
 		                            ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(131);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(131);
 			int backup = 1;
 			int ori = 0;
 			if (weapon != null)
@@ -308,14 +314,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[131], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[131], backup)+ "</color>";
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(131);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(131);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
 			}
 			else
 			{
-				m_champ.EquipPassiveWeapon(new ItemWeaponData(131, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(131, null));
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -339,7 +345,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		skillAbili.Add(new Ability(0.3f, "Explosion Skill", 
 		                           ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(129);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(129);
 			int backup = 1;
 			int ori = 0;
 			if (weapon != null)
@@ -352,14 +358,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[129], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[129], backup)+ "</color>";
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(129);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(129);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
 			}
 			else
 			{
-				m_champ.EquipPassiveWeapon(new ItemWeaponData(129, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(129, null));
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -402,20 +408,20 @@ public class ChampAbilityGUI : MonoBehaviour {
 */
 		skillAbili.Add(new Ability(0.3f, "Charge to Shield", 
 		                           ()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(130);
 			m_backup.Shield += 10;
 			return (m_champ.m_creatureProperty.Shield) + " -> " + "<color=yellow>" + (m_backup.Shield) + "</color>";
 				//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[130], 1);
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveWeapon(130);
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(130);
 			if (weapon != null)
 			{
 				weapon.LevelUp();
 			}
 			else
 			{
-				m_champ.EquipPassiveWeapon(new ItemWeaponData(130, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(130, null));
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -521,11 +527,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(AbilityCategory.ChampStat, basicAbili);
 		m_abilities.Add(AbilityCategory.Skill, skillAbili);
 		m_abilities.Add(AbilityCategory.Weapon, utilAbili);
-	}
 
-	void Start () {
 
-		m_champ = GameObject.Find("Champ").GetComponent<Champ>();
 
 		for(int i = 0; i < m_statButtons.Length; ++i)
 			m_statButtons[i] = new YGUISystem.GUIButton(transform.Find("StatButton"+i).gameObject, ()=>{return true;});

@@ -54,6 +54,7 @@ public class WeaponStat
 	public float			range;
 	public int				firingCount;
 	public int				spPerLevel;
+	public int				skillId;
 }
 
 public class RefPrice

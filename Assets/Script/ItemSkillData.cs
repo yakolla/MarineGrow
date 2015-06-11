@@ -24,11 +24,11 @@ public class ItemSkillData : ItemData{
 
 	override public void Use(Creature obj)
 	{
-		if (obj.WeaponHolder.GetActiveWeapon(m_refWeaponItemId) == false)
+		if (obj.WeaponHolder.GetActiveSkillWeapon(m_refWeaponItemId) == false)
 		{
-			obj.EquipActiveWeapon(new ItemWeaponData(m_refWeaponItemId, null));
+			obj.EquipActiveSkillWeapon(new ItemWeaponData(m_refWeaponItemId, null));
 		}
-		obj.WeaponHolder.ActiveWeaponFire(m_refWeaponItemId, obj.transform.eulerAngles.y);
+		obj.WeaponHolder.ActiveWeaponSkillFire(m_refWeaponItemId, obj.transform.eulerAngles.y);
 	}
 
 	override public void NoUse(Creature obj)
