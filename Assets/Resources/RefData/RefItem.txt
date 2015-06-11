@@ -182,7 +182,7 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":3
+			"range":6
 		}
 	},
 	{

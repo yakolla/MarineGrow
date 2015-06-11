@@ -75,7 +75,7 @@ public class Bullet : MonoBehaviour {
 	virtual protected void bomb(float bombRange, GameObject prefBombEffect)
 	{
 		m_isDestroying = true;
-		bombRange += m_ownerCreature.m_creatureProperty.SplashRange;
+		bombRange += m_ownerCreature.m_creatureProperty.SplashRadius;
 
 		Creature[] searchedTargets = SearchTarget(transform.position, m_ownerCreature.GetAutoTargetTags(), bombRange*0.5f);
 		if (searchedTargets != null)

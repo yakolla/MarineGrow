@@ -57,7 +57,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		List<Ability> skillAbili = new List<Ability>();
 		List<Ability> utilAbili = new List<Ability>();
 
-		basicAbili.Add(new Ability(0.3f, "Weapon Damage", 
+		basicAbili.Add(new Ability(0.3f, "Damage", 
 		()=>{
 			m_backup.AlphaPhysicalAttackDamage+=3;
 			int backup = m_champ.WeaponHolder.MainWeapon.GetDamage(m_backup);
@@ -128,14 +128,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		basicAbili.Add(new Ability(0.3f, "Critical Suites",
 		()=>{
-			m_backup.AlphaCriticalRatio += 0.15f;
-			m_backup.AlphaCriticalDamage += 0.3f;
+			m_backup.AlphaCriticalRatio += 0.1f;
+			m_backup.AlphaCriticalDamage += 0.5f;
 			return "Chance:"+(m_champ.m_creatureProperty.CriticalChance*100) + " -> " + "<color=yellow>" + (m_backup.CriticalChance*100) + "%</color>" + "\n" +
 				"Damage:"+(m_champ.m_creatureProperty.CriticalDamage*100) + " -> " + "<color=yellow>" + (m_backup.CriticalDamage*100) + "%</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.15f;
-			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.3f;
+			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.1f;
+			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.5f;
 			--m_champ.RemainStatPoint;
 		}
 		));
@@ -248,6 +248,10 @@ public class ChampAbilityGUI : MonoBehaviour {
 				--m_champ.RemainStatPoint;
 			},
 			()=>{
+
+				if (m_champ.m_creatureProperty.WeaponBuffDescs.chance >= 1f)
+					return false;
+
 				switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
 				{
 				case Const.ChampGunRefItemId:
@@ -418,15 +422,15 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}));
 
 
-		utilAbili.Add(new Ability(0.3f, "Splash Range", 
+		utilAbili.Add(new Ability(0.3f, "Splash Radius", 
 		                          ()=>{
 			
-			m_backup.SplashRange+=1;
+			m_backup.SplashRadius+=1;
 			
-			return (m_champ.m_creatureProperty.SplashRange) + " -> " + "<color=yellow>" + (m_backup.SplashRange) + "m</color>";
+			return (m_champ.m_creatureProperty.SplashRadius) + " -> " + "<color=yellow>" + (m_backup.SplashRadius) + "m</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.SplashRange+=1;
+			m_champ.m_creatureProperty.SplashRadius+=1;
 			
 			--m_champ.RemainStatPoint;
 		},
@@ -441,6 +445,38 @@ public class ChampAbilityGUI : MonoBehaviour {
 			case Const.ChampGuidedRocketLauncherRefItemId:
 			case Const.ChampRocketLauncherRefItemId:
 				return true;
+			}
+			
+			return false;
+		}
+		));
+
+		utilAbili.Add(new Ability(0.3f, "FireGun Length", 
+		                          ()=>{
+			
+			m_backup.BulletLength+=0.25f;
+			
+			return (m_champ.m_creatureProperty.BulletLength) + " -> " + "<color=yellow>" + (m_backup.BulletLength) + "m</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.BulletLength+=0.25f;
+			
+			--m_champ.RemainStatPoint;
+		},
+		()=>{
+			if (m_champ.m_creatureProperty.BulletLength >= 1f)
+				return false;
+
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
+			case Const.ChampFiregunRefItemId:
+				return true;
+			case Const.ChampLightningLauncherRefItemId:			
+			case Const.ChampGunRefItemId:			
+			case Const.ChampBoomerangLauncherRefItemId:
+			case Const.ChampGuidedRocketLauncherRefItemId:
+			case Const.ChampRocketLauncherRefItemId:
+				return false;
 			}
 			
 			return false;

@@ -36,8 +36,7 @@ public class CreatureProperty {
 	[SerializeField]
 	float	m_alphaAttackCoolTime = 0f;
 
-	[SerializeField]
-	float 	m_bulletLength = 1f;
+	float 	m_bulletLength = 0f;
 
 	SecuredType.XInt		m_shield = 0;
 
@@ -309,7 +308,7 @@ public class CreatureProperty {
 		}
 	}
 
-	public int SplashRange
+	public int SplashRadius
 	{
 		set {m_bombRange = value;}
 		get {return m_bombRange;}

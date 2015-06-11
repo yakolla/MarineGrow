@@ -34,7 +34,7 @@ public class FireGunBullet : Bullet {
 	{
 
 		Vector3 scale = m_oriScale;
-		scale.x *= m_ownerCreature.m_creatureProperty.BulletLength;
+		scale.x *= 1f+m_ownerCreature.m_creatureProperty.BulletLength;
 		transform.localScale = scale;
 
 		m_particleSystem.startSpeed = scale.x*2;

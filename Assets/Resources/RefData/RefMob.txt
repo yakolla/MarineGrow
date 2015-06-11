@@ -522,7 +522,7 @@
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"109"
+					"refItemId":"110"
 				}
 			],
 			"mobAI":"Egg",
@@ -630,7 +630,12 @@
 					"refItemId":"107"
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"coolTime":4,
+						"range":8
+					}	
 				}
 			],
 			"mobAI":"Normal",
@@ -691,7 +696,6 @@
 					"refItemId":"110"					
 				},
 				{
-					"reqLevel":2,
 					"refItemId":"125"
 				}
 			],
