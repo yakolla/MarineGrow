@@ -535,7 +535,7 @@ public class Creature : MonoBehaviour {
 		
 		yield return new WaitForSeconds(time);
 		
-		m_buffEffects[(int)DamageDesc.BuffType.Combo100].m_run = false;
+		m_buffEffects[(int)DamageDesc.BuffType.Macho].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BulletLength -= 1f;
 		m_creatureProperty.BetaMoveSpeed *= 0.5f;
@@ -579,7 +579,7 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.Burning:
 			StartCoroutine(EffectBurning(time, offender, damageDesc));
 			break;
-		case DamageDesc.BuffType.Combo100:
+		case DamageDesc.BuffType.Macho:
 			StartCoroutine(EffectCombo100(time));
 			break;
 		case DamageDesc.BuffType.Dash:

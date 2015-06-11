@@ -23,7 +23,7 @@ public class DamageDesc {
 		Slow,
 		LevelUp,
 		Burning,
-		Combo100,
+		Macho,
 		Dash,
 		Count,
 	}

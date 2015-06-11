@@ -32,8 +32,8 @@ public class ChampStatusGUI : MonoBehaviour {
 			return m_champ.RemainStatPoint > 0;
 		});
 		m_specialButtons[1] = new YGUISystem.GUIButton(transform.Find("Special/Button1").gameObject, ()=>{
-			m_specialButtons[1].Lable.Text.text = m_champ.ComboSkillStack.ToString();
-			return m_champ.ComboSkillStack > 0;
+			m_specialButtons[1].Lable.Text.text = m_champ.MachoSkillStack.ToString();
+			return m_champ.MachoSkillStack > 0;
 		});
 		m_specialButtons[2] = new YGUISystem.GUIButton(transform.Find("Special/Button2").gameObject, ()=>{
 			m_specialButtons[2].Lable.Text.text = m_champ.NuclearSkillStack.ToString();
@@ -81,11 +81,11 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	public void OnClickComboSkill()
 	{
-		if (m_champ.ComboSkillStack == 0)
+		if (m_champ.MachoSkillStack == 0)
 			return;
 
-		--m_champ.ComboSkillStack;
-		m_champ.ApplyBuff(null, DamageDesc.BuffType.Combo100, 10f, null);
+		--m_champ.MachoSkillStack;
+		m_champ.ApplyBuff(null, DamageDesc.BuffType.Macho, 10f, null);
 	}
 
 	public void OnClickAccessory(int slot)

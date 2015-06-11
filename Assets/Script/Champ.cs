@@ -146,7 +146,7 @@ public class Champ : Creature {
 		get {return m_moveDir;}
 	}
 
-	public int ComboSkillStack
+	public int MachoSkillStack
 	{
 		get {return m_comboSkillStacks;}
 		set {m_comboSkillStacks = value;}
@@ -297,7 +297,7 @@ public class Champ : Creature {
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.RisingUp);
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "ChampLevelUp", "ChampLV:" + m_creatureProperty.Level, 0);
 			break;
-		case DamageDesc.BuffType.Combo100:
+		case DamageDesc.BuffType.Macho:
 			DamageText(type.ToString(), Color.cyan, DamageNumberSprite.MovementType.RisingUp);
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Combo", "Combo100", 0);
 			break;		

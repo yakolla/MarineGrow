@@ -216,7 +216,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			{
 			case DamageDesc.BuffType.Nothing:
 			case DamageDesc.BuffType.Count:
-			case DamageDesc.BuffType.Combo100:
+			case DamageDesc.BuffType.Macho:
 			case DamageDesc.BuffType.Dash:
 			case DamageDesc.BuffType.LevelUp:
 				skipBuff = true;
@@ -289,13 +289,13 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, "Charge to Combo Skill", 
+		skillAbili.Add(new Ability(0.3f, "Charge to Macho Skill", 
 		                           ()=>{
-			int backup = m_champ.ComboSkillStack+3;
-			return (m_champ.ComboSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
+			int backup = m_champ.MachoSkillStack+3;
+			return (m_champ.MachoSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
 		},
 		()=>{
-			m_champ.ComboSkillStack += 3;
+			m_champ.MachoSkillStack += 3;
 			--m_champ.RemainStatPoint;
 		}));
 
