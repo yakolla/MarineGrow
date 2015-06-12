@@ -18,9 +18,6 @@ public class Champ : Creature {
 	Vector3	m_cameraOffset;
 
 	[SerializeField]
-	RefCreatureBaseProperty	m_creatureBaseProperty;
-
-	[SerializeField]
 	int			m_remainStatPoint = 0;
 
 	[SerializeField]
@@ -53,11 +50,10 @@ public class Champ : Creature {
 		m_bloodWarningAnimator = GameObject.Find("HudGUI/Blood Warning").GetComponent<Animator>();
 	}
 
-	override public void Init()
+	override public void Init(RefMob refMob, int level)
 	{
-		base.Init();
+		base.Init(refMob, level);
 
-		m_creatureProperty.init(this, m_creatureBaseProperty, 1);
 		m_comboKills = 0;
 		m_comboSkillStacks = 0;
 
@@ -223,11 +219,6 @@ public class Champ : Creature {
 		}
 
 		TimeEffector.Instance.Update();
-	}
-
-	override public string[] GetAutoTargetTags()
-	{
-		return new string[]{Creature.Type.Mob.ToString()};
 	}
 
 	override public void GiveExp(int exp)

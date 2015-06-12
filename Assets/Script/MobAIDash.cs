@@ -14,12 +14,12 @@ public class MobAIDash : MobAI {
 	{
 		base.Init(mob);
 
-		m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;		
-		m_navAgent.autoBraking = false;
+		m_mob.EnableNavMeshObstacleAvoidance(false);
+
 		m_prefAttackGuidedLine = Resources.Load<GameObject>("Pref/ef laser point _enemy");
 	}
 
-	override public void SetTarget(GameObject obj )
+	override public void SetTarget(Creature obj )
 	{
 		base.SetTarget(obj);
 

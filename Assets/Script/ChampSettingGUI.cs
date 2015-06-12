@@ -15,10 +15,6 @@ public class ChampSettingGUI : MonoBehaviour {
 	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[Const.AccessoriesSlots];
 	YGUISystem.GUIButton	m_start;
 
-
-	[SerializeField]
-	GameObject		m_prefChamp = null;
-
 	[SerializeField]
 	Transform		m_spawnChamp;
 
@@ -312,8 +308,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			return;
 
 
-		GameObject champObj = (GameObject)Instantiate(m_prefChamp, m_spawnChamp.position, m_spawnChamp.localRotation);
-		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/newchamp_skin");
+		GameObject champObj = (GameObject)Instantiate(Resources.Load<GameObject>("Pref/Champ"), m_spawnChamp.position, m_spawnChamp.localRotation);
+		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + RefData.Instance.RefChamp.prefBody);
 		
 		champObj.name = "Champ";
 		
@@ -324,7 +320,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
 		
 		Champ champ = champObj.GetComponent<Champ>();
-		champ.Init();
+		champ.Init(RefData.Instance.RefChamp, 1);
 
 		m_equipedWeapon.m_itemObject.Item.Equip(champ);
 		for(int x = 0; x < m_equipedAccessories.Length; ++x)

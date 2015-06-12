@@ -504,8 +504,7 @@ public class Spawn : MonoBehaviour {
 		enemy.m_creatureProperty.HP = enemy.m_creatureProperty.MaxHP;
 		enemy.m_creatureProperty.SP = enemy.m_creatureProperty.MaxSP;
 
-		if (m_champ != null)
-			enemy.SetTarget(m_champ.gameObject);
+		enemy.SetTarget(m_champ);
 
 		Debug.Log(refMob.prefBody + ", Lv : " + mobLevel + ", HP: " + enemy.m_creatureProperty.HP + ", PA:" + enemy.m_creatureProperty.PhysicalAttackDamage + ", PD:" + enemy.m_creatureProperty.PhysicalDefencePoint + ", scale:" + refMob.scale + " pos:" + enemyPos);
 

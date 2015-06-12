@@ -617,6 +617,31 @@
 				"refMobId":31001,
 				"maxCount":1
 			}
+		},
+		{
+			"id":31008,
+			"prefBody":"crazy_dog_skin",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"110"
+				}
+			],
+			"mobAI":"Normal",
+			"scale":0.5,
+			"baseCreatureProperty":
+			{
+				"maxHP":100,
+				"physicalDamage":30,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.1,
+				"moveSpeed":8,
+				"navMeshBaseOffset":0
+			}
 		}
 	],
 	"miniBoss":
@@ -1474,6 +1499,32 @@
 				"moveSpeed":0,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
+			}
+		}
+	],
+	"champ":
+	[
+		{
+			"id":1,
+			"prefBody":"newchamp_skin",
+			"baseCreatureProperty":
+			{
+				"maxHP":100,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":0,
+				"phyDefencePerLevel":0,
+				"hpPerLevel":0,
+				"moveSpeed":2.2,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			},
+			"dropEggMob":
+			{
+				"refMobId":31008,
+				"maxCount":1
 			}
 		}
 	],

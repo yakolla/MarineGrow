@@ -332,8 +332,52 @@ public class ChampAbilityGUI : MonoBehaviour {
 			case Const.ChampGunRefItemId:
 			case Const.ChampLightningLauncherRefItemId:
 			case Const.ChampFiregunRefItemId:
+				return true;
+			case Const.ChampGuidedRocketLauncherRefItemId:
+			case Const.ChampRocketLauncherRefItemId:
+			case Const.ChampBoomerangLauncherRefItemId:
+				return false;
+			}
+			
+			return false;
+		}
+		));
+
+		skillAbili.Add(new Ability(0.3f, "Movable Mine Skill", 
+		                           ()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(134);
+			int backup = 1;
+			int ori = 0;
+			if (weapon != null)
+			{
+				backup = weapon.Level+1;
+				ori = weapon.Level;
+			}
+			
+			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+			//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[131], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[131], backup)+ "</color>";
+		},
+		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(134);
+			if (weapon != null)
+			{
+				weapon.LevelUp();
+			}
+			else
+			{
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(134, null));
+			}
+			
+			--m_champ.RemainStatPoint;
+		},
+		()=>{
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
 			case Const.ChampBoomerangLauncherRefItemId:
 				return true;
+			case Const.ChampGunRefItemId:
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampFiregunRefItemId:
 			case Const.ChampGuidedRocketLauncherRefItemId:
 			case Const.ChampRocketLauncherRefItemId:
 				return false;

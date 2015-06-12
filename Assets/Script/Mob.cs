@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Mob : Creature {
 
-	RefMob				m_refMob;
 	bool				m_boss = false;
 	MobAI				m_ai;
 
@@ -12,20 +11,14 @@ public class Mob : Creature {
 
 	public void Init(RefMob refMob, int mobLevel, RefItemSpawn[] refDropItems, bool boss)
 	{
-		base.Init();
+		base.Init(refMob, mobLevel);
 
 		RefMob = refMob;
 		RefDropItems = refDropItems;
 		Boss = boss;
-		rigidbody.mass = refMob.mass;
-
-		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, mobLevel);
 
 		if (Random.Range(0f, 1f) < 0.3f)
 			m_creatureProperty.BetaMoveSpeed = 1.7f;
-
-
-		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 		
 		if (true == Boss)
 		{
@@ -93,20 +86,10 @@ public class Mob : Creature {
 		set {m_boss = value;}
 	}
 
-	public RefMob RefMob
+	public override void SetTarget(Creature target)
 	{
-		get {return m_refMob;}
-		set {m_refMob = value;}
-	}
-
-	override public string[] GetAutoTargetTags()
-	{
-		return new string[]{Creature.Type.Champ.ToString()};
-	}
-
-	public void SetTarget(GameObject obj )
-	{
-		m_ai.SetTarget(obj);
+		base.SetTarget(target);
+		m_ai.SetTarget(target);
 
 	}
 
