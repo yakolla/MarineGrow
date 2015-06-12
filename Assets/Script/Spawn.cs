@@ -28,9 +28,6 @@ public class Spawn : MonoBehaviour {
 	Dungeon			m_dungeon;
 	int				m_hive = 0;
 
-	ComboGUIShake	m_comboGUIShake;
-	GoldGUISmooth	m_goldGUIShake;
-
 	DropShip		m_dropShip;
 
 	BoxCollider		m_edgeRect;
@@ -47,10 +44,6 @@ public class Spawn : MonoBehaviour {
 		m_edgeRect = transform.Find("EdgeRect").GetComponent<BoxCollider>();
 
 		m_followingCamera = Camera.main.GetComponent<FollowingCamera>();
-
-		m_comboGUIShake = Camera.main.gameObject.transform.Find("KillCombo").gameObject.GetComponent<ComboGUIShake>();
-		m_goldGUIShake = Camera.main.gameObject.transform.Find("Gold").gameObject.GetComponent<GoldGUISmooth>();
-
 
 		m_dungeon = transform.parent.GetComponent<Dungeon>();
 		int dungeonId = m_dungeon.DungeonId;
@@ -367,15 +360,9 @@ public class Spawn : MonoBehaviour {
 			m_mobsOfCheckOnDeath--;
 		}
 
-		++Warehouse.Instance.NewGameStats.KilledMobs;
-
 		if (m_champ)
 		{
-			++m_champ.ComboKills;
-
-
-			m_comboGUIShake.enabled = true;
-			m_comboGUIShake.shake = 2f;
+			++m_champ.MobKills;
 
 			switch(mob.RefMob.id)
 			{
@@ -710,12 +697,6 @@ public class Spawn : MonoBehaviour {
 				m_champ = obj.GetComponent<Champ>();
 			}
 		}
-
-		if (m_champ != null)
-		{
-			m_comboGUIShake.Text = "x" + m_champ.ComboKills;
-		}
-		m_goldGUIShake.Gold = Warehouse.Instance.Gold.Item.Count;
 	}
 
 }

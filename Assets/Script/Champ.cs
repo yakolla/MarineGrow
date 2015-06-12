@@ -135,7 +135,7 @@ public class Champ : Creature {
 		m_moveDir = pos.normalized;
 	}
 
-	public int ComboKills
+	public int MobKills
 	{
 		get {return m_comboKills;}
 		set {m_comboKills = value;}
@@ -247,6 +247,7 @@ public class Champ : Creature {
 	{
 		base.Death();
 
+		Warehouse.Instance.NewGameStats.KilledMobs = MobKills;
 		Warehouse.Instance.NewGameStats.SurvivalTime = Warehouse.Instance.PlayTime;
 		Warehouse.Instance.GameBestStats.SetBestStats(Warehouse.Instance.NewGameStats);
 		

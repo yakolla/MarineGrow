@@ -8,24 +8,24 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	ChampSettingGUI	m_champSettingGUI = null;
 
-	GameObject	m_guageGUI;
-	GameObject	m_accessoryGUI;
-	GameObject	m_specialGUI;
-	GameObject	m_optionGUI;
 
+	int			m_oldMobKills;
+	int			m_oldGold;
 
 	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
 	YGUISystem.GUICoolDownButton[]	m_accessoryButtons = new YGUISystem.GUICoolDownButton[Const.AccessoriesSlots];
 	YGUISystem.GUIGuage[] m_guages = new YGUISystem.GUIGuage[Const.Guages];
+	ComboGUIShake	m_gold;
+	ComboGUIShake	m_mobKills;
 
 	void Start () {
 
 		m_champSettingGUI = GameObject.Find("HudGUI/SettingGUI/Panel").GetComponent<ChampSettingGUI>();
 
-		m_guageGUI = transform.Find("Guage").gameObject;
-		m_accessoryGUI = transform.Find("Accessory").gameObject;
-		m_specialGUI = transform.Find("Special").gameObject;
-		m_optionGUI = transform.Find("Option").gameObject;
+
+
+		m_gold = transform.Find("Gold/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
+		m_mobKills = transform.Find("Kills/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
 
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
 			m_specialButtons[0].Lable.Text.text = m_champ.RemainStatPoint.ToString();
@@ -116,10 +116,12 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	void SetActiveGUI(bool active)
 	{
-		m_guageGUI.SetActive(active);
-		m_accessoryGUI.SetActive(active);
-		m_specialGUI.SetActive(active);
-		m_optionGUI.SetActive(active);
+		transform.Find("Guage").gameObject.SetActive(active);
+		transform.Find("Accessory").gameObject.SetActive(active);
+		transform.Find("Special").gameObject.SetActive(active);
+		transform.Find("Option").gameObject.SetActive(active);
+		transform.Find("Gold").gameObject.SetActive(active);
+		transform.Find("Kills").gameObject.SetActive(active);
 
 		if (active == true)
 		{
@@ -146,8 +148,26 @@ public class ChampStatusGUI : MonoBehaviour {
 			}
 
 			m_champ = obj.GetComponent<Champ>();
+			m_oldMobKills = m_champ.MobKills;
+			m_oldGold = Warehouse.Instance.Gold.Item.Count;
 			SetActiveGUI(true);
 			return;
+		}
+
+		if (m_oldMobKills != m_champ.MobKills)
+		{
+			m_oldMobKills = m_champ.MobKills;
+			m_mobKills.enabled = true;
+			m_mobKills.shake = 2f;
+			m_mobKills.Text = m_champ.MobKills.ToString();
+		}
+
+		if (m_oldGold != Warehouse.Instance.Gold.Item.Count)
+		{
+			m_oldGold = Warehouse.Instance.Gold.Item.Count;
+			m_gold.enabled = true;
+			m_gold.shake = 2f;
+			m_gold.Text = Warehouse.Instance.Gold.Item.Count.ToString();
 		}
 
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ComboGUIShake : MonoBehaviour
 {
@@ -11,11 +12,11 @@ public class ComboGUIShake : MonoBehaviour
 	
 	Vector3 originalPos;
 
-	TypogenicText	m_killComboGUI;
+	Text	m_killComboGUI;
 
 	void Start()
 	{
-		m_killComboGUI = GetComponent<TypogenicText>();
+		m_killComboGUI = GetComponent<Text>();
 	}
 	
 	void OnEnable()
@@ -27,8 +28,10 @@ public class ComboGUIShake : MonoBehaviour
 	{
 		if (shake > 1)
 		{
-			transform.localScale = Vector3.one*shake;
-			
+			Vector3 scale = transform.localScale;
+			scale.y = shake;
+			transform.localScale = scale;
+
 			shake -= Time.deltaTime * decreaseFactor;
 		}
 		else
@@ -41,7 +44,7 @@ public class ComboGUIShake : MonoBehaviour
 
 	public string Text
 	{
-		get{return m_killComboGUI.Text;}
-		set{m_killComboGUI.Text = value;}
+		get{return m_killComboGUI.text;}
+		set{m_killComboGUI.text = value;}
 	}
 }
