@@ -620,7 +620,7 @@
 		},
 		{
 			"id":31008,
-			"prefBody":"crazy_dog_skin",
+			"prefBody":"marine_skin",
 			"refWeaponItems":
 			[
 				{
