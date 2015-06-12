@@ -69,7 +69,6 @@ public class ItemData {
 	int				m_refItemId;
 	SecuredType.XInt	m_count = 0;
 	SecuredType.XInt	m_level = 1;
-	int				m_evoultion = 0;
 	bool			m_lock = false;
 
 	List<ItemMagicOption>		m_optionDescs = new List<ItemMagicOption>();
@@ -187,12 +186,6 @@ public class ItemData {
 	{
 		get {	return m_level.Value;	}
 		set {m_level.Value = value;}
-	}
-
-	public int Evolution
-	{
-		get {return m_evoultion;}
-		set {m_evoultion = value;}
 	}
 
 	public int Count

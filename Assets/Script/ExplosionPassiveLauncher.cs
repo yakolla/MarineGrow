@@ -35,11 +35,6 @@ public class ExplosionPassiveLauncher : Weapon {
 		return bullet;
 	}
 
-	override public void LevelUp()
-	{
-		++m_level;		
-	}
-
 	void Update()
 	{
 		if (isCoolTime())

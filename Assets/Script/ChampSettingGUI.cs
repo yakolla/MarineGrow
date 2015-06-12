@@ -528,9 +528,5 @@ public class ChampSettingGUI : MonoBehaviour {
 		return 1f + (itemObj.Item.Level-1);
 	}
 
-	float getItemEvolutionWorth(ItemObject itemObj)
-	{
-		return itemObj.Item.Evolution+1;
-	}
 }
 

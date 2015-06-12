@@ -110,13 +110,6 @@ public class WeaponHolder : MonoBehaviour {
 			weapon.StartFiring(targetAngle);
 	}
 
-	public void Evolution()
-	{
-		foreach(Weapon weapon in m_weapons)
-		{
-			weapon.Evolution();
-		}
-	}
 
 	public void MoreFire()
 	{

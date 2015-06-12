@@ -22,9 +22,9 @@ public class SpiderWebBullet : Bullet {
 		
 		
 	}
-	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
+	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
 	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);		
+		base.Init(ownerCreature, weapon, targetAngle);		
 
 		m_parabola = new Parabola(gameObject, m_speed, -ownerCreature.transform.rotation.eulerAngles.y * Mathf.Deg2Rad, Random.Range(55f,85f) * Mathf.Deg2Rad, m_bouncing);
 

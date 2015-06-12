@@ -192,7 +192,7 @@ public class Spawn : MonoBehaviour {
 						
 						yield return new WaitForSeconds (0.02f);
 						
-						Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
+						Creature cre = SpawnMob(refMob, SpawnMobLevel(), enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
 						cre.gameObject.SetActive(false);
 						
 						switch(spawnMobDescResult.spawnEffectType[ii])
@@ -249,7 +249,7 @@ public class Spawn : MonoBehaviour {
 						
 						yield return new WaitForSeconds (0.02f);
 						
-						Creature cre = SpawnMob(refMob, enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
+						Creature cre = SpawnMob(refMob, SpawnMobLevel(), enemyPos, spawnMobDescResult.spawnMobBoss[ii], spawnMobDescResult.spawnMobMonitored[ii]);
 						cre.gameObject.SetActive(false);
 						
 						switch(spawnMobDescResult.spawnEffectType[ii])
@@ -465,7 +465,7 @@ public class Spawn : MonoBehaviour {
 		
 	}
 	
-	public Mob SpawnMob(RefMob refMob, Vector3 pos, bool boss, bool monitoredDeath)
+	public Mob SpawnMob(RefMob refMob, int mobLevel, Vector3 pos, bool boss, bool monitoredDeath)
 	{
 		RefItemSpawn[] refDropItems = null;
 		if (GetCurrentWave().itemSpawn.mapMobItems.ContainsKey(refMob.id))
@@ -477,7 +477,6 @@ public class Spawn : MonoBehaviour {
 			refDropItems = GetCurrentWave().itemSpawn.defaultItem;
 		}
 
-		int mobLevel = SpawnMobLevel();
 		GameObject prefEnemy = Resources.Load<GameObject>("Pref/mon/"+refMob.prefHead);
 		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody);
 		if (prefEnemyBody == null)
@@ -503,6 +502,9 @@ public class Spawn : MonoBehaviour {
 		enemy.m_creatureProperty.AlphaMaxHP=(int)(enemy.m_creatureProperty.MaxHP*ProgressStage()*0.1f);
 		enemy.m_creatureProperty.HP = enemy.m_creatureProperty.MaxHP;
 		enemy.m_creatureProperty.SP = enemy.m_creatureProperty.MaxSP;
+
+		for(int i = 1; i < mobLevel; ++i)
+			enemy.WeaponHolder.LevelUp();
 
 		enemy.SetTarget(m_champ);
 

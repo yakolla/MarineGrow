@@ -27,9 +27,9 @@ public class GrenadeBullet : Bullet {
 		m_isDestroying = false;
 	}
 
-	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
+	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
 	{
-		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
+		base.Init(ownerCreature, weapon, targetAngle);
 		createParabola(targetAngle.angle);
 	}
 

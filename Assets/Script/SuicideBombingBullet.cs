@@ -10,7 +10,6 @@ public class SuicideBombingBullet : Bullet {
 	[SerializeField]
 	float			m_bombRange = 5f;
 
-	// Use this for initialization
 
 	void Update()
 	{
@@ -18,5 +17,11 @@ public class SuicideBombingBullet : Bullet {
 			return;
 
 		bomb(m_bombRange, m_prefBombEffect);
+	}
+
+	public float	BombRange
+	{
+		get{return m_bombRange;}
+		set{m_bombRange = value;}
 	}
 }

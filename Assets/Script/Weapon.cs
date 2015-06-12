@@ -49,7 +49,6 @@ public class Weapon : MonoBehaviour {
 	int					m_spPerLevel;
 	int					m_skillId;
 
-	int					m_evolution;
 	protected int		m_level;
 
 	RefItem				m_refItem;
@@ -84,7 +83,6 @@ public class Weapon : MonoBehaviour {
 		m_lastCreated = Time.time;
 		m_firing = false;
 		m_level = 0;
-		m_evolution = 0;
 		m_coolTime = weaponData.WeaponStat.coolTime;
 		m_spPerLevel = weaponData.WeaponStat.spPerLevel;
 		m_skillId = weaponData.WeaponStat.skillId;
@@ -92,9 +90,6 @@ public class Weapon : MonoBehaviour {
 	
 		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
 			MoreFire();
-
-		for(int i = 0; i < weaponData.Evolution; ++i)
-			Evolution();
 
 		for(int i = 0; i < weaponData.Level; ++i)
 			LevelUp();
@@ -137,11 +132,6 @@ public class Weapon : MonoBehaviour {
 		return true;
 	}
 
-	public void Evolution()
-	{
-		++m_evolution;
-
-	}
 
 	virtual public void LevelUp()
 	{
@@ -220,11 +210,16 @@ public class Weapon : MonoBehaviour {
 		m_creature.m_creatureProperty.SP -= SP;
 	}
 
+	public Vector3 GunPointPos
+	{
+		get{return m_gunPoint.transform.position;}
+	}
+
 	virtual public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
 		GameObject obj = GameObjectPool.Instance.Alloc(m_prefBullet, startPos, Quaternion.Euler(0, transform.rotation.eulerAngles.y+targetAngle.angle, 0));
 		Bullet bullet = obj.GetComponent<Bullet>();
-		bullet.Init(m_creature, m_gunPoint.transform.position, Damage, targetAngle, m_subWeapon);
+		bullet.Init(m_creature, this, targetAngle);
 		obj.transform.localScale = m_prefBullet.transform.localScale;
 
 		playGunPointEffect();

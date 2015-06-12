@@ -19,29 +19,7 @@ public class SuicideBombing : Weapon {
 		DidStartFiring(0f);
 		m_firing = true;
 	}
-	/*
-	void Update()
-	{
-		if (m_destroy == true)
-		{
 
-			return;
-		}
-
-		Creature[] targets = Bullet.SearchTarget(transform.position, m_creature.GetMyEnemyType(), AttackRange);
-		foreach(Creature target in targets)
-		{
-			if (target != null)
-			{
-				CreateBullet(m_firingDescs[0], transform.position);
-				m_creature.Death();
-				
-				m_destroy = true;
-				break;
-			}
-		}
-	}
-*/
 	void OnTriggerEnter(Collider other) {
 
 		if (m_destroy == true)
@@ -52,7 +30,8 @@ public class SuicideBombing : Weapon {
 		Creature target = other.gameObject.GetComponent<Creature>();
 		if (target && Creature.IsEnemy(target, m_creature))
 		{
-			CreateBullet(m_firingDescs[0], transform.position);
+			SuicideBombingBullet bullet = CreateBullet(m_firingDescs[0], transform.position) as SuicideBombingBullet;
+			bullet.BombRange += Level-1;
 			m_creature.Death();
 			
 			m_destroy = true;

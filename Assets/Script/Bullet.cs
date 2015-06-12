@@ -21,14 +21,14 @@ public class Bullet : MonoBehaviour {
 	[SerializeField]
 	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
 
-	virtual public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
+	virtual public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
 	{
-		m_gunPoint = gunPoint;
+		m_gunPoint = weapon.GunPointPos;
 		m_ownerCreature = ownerCreature;
-		m_damage = damage;
+		m_damage = weapon.Damage;
 		m_targetAngle = targetAngle;
 		m_isDestroying = false;
-		m_onHitWeapon = onHitWeapon;
+		m_onHitWeapon = weapon.GetSubWeapon();
 
 		m_damageBuffType = ownerCreature.m_creatureProperty.RandomWeaponBuff;
 

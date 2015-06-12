@@ -37,7 +37,6 @@ public class Mob : Creature {
 				continue;
 
 			ItemObject weapon = new ItemObject(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
-			weapon.Item.Evolution = weaponDesc.evolution+(int)(mobLevel * refMob.baseCreatureProperty.evolutionPerLevel);
 			weapon.Item.Equip(this);
 		}
 
@@ -120,7 +119,7 @@ public class Mob : Creature {
 			pos.y = 0f;
 			for(int i = 0; i < RefMob.eggMob.maxCount; ++i)
 			{
-				Const.GetSpawn().SpawnMob(RefMob.eggMob.refMob, pos, false, false);
+				Const.GetSpawn().SpawnMob(RefMob.eggMob.refMob, Const.GetSpawn().SpawnMobLevel(), pos, false, false);
 			}
 		}
 

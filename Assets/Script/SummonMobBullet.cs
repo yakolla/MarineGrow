@@ -7,12 +7,12 @@ public class SummonMobBullet : GrenadeBullet {
 	Creature		m_spawnedMob = null;
 	// Use this for initialization
 
-	override public void Init(Creature ownerCreature, Vector3 gunPoint, int damage, Weapon.FiringDesc targetAngle, Weapon onHitWeapon)
+	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
 	{
 		m_effectTargetingPoint = new EffectTargetingPoint();
-		base.Init(ownerCreature, gunPoint, damage, targetAngle, onHitWeapon);
+		base.Init(ownerCreature, weapon, targetAngle);
 
-		m_spawnedMob = Const.GetSpawn().SpawnMob(m_ownerCreature.RefMob.dropEggMob.refMob, gameObject.transform.position, false, false);
+		m_spawnedMob = Const.GetSpawn().SpawnMob(m_ownerCreature.RefMob.dropEggMob.refMob, weapon.Level, gameObject.transform.position, false, false);
 		m_spawnedMob.CreatureType = ownerCreature.CreatureType;
 		m_spawnedMob.SetTarget(null);
 	}
@@ -29,7 +29,8 @@ public class SummonMobBullet : GrenadeBullet {
 
 		if (m_spawnedMob != null)
 			m_spawnedMob.transform.position = m_parabola.Position;
-	}	
+	}
+
 
 	protected override void bomb(float bombRange, GameObject prefBombEffect)
 	{
