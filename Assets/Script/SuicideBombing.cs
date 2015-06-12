@@ -4,9 +4,6 @@ using System.Collections;
 public class SuicideBombing : Weapon {
 
 	bool m_destroy = false;
-	void OnDestroy() {
-
-	}
 
 	override public void StartFiring(float targetAngle)
 	{
@@ -14,26 +11,22 @@ public class SuicideBombing : Weapon {
 		m_firing = true;
 	}
 
-	void Update()
-	{
+	void OnTriggerEnter(Collider other) {
+
 		if (m_destroy == true)
 		{
-
 			return;
 		}
 
-		if (m_creature.m_targeting != null)
+		Creature target = other.gameObject.GetComponent<Creature>();
+		if (target && Creature.IsEnemy(target, m_creature))
 		{
-			float d = Vector3.Distance(m_creature.transform.position, m_creature.m_targeting.transform.position);
-			if (d < AttackRange)
-			{
-				CreateBullet(m_firingDescs[0], transform.position);
-				m_creature.Death();
-
-				m_destroy = true;
-			}
-
+			CreateBullet(m_firingDescs[0], transform.position);
+			m_creature.Death();
+			
+			m_destroy = true;
 		}
+
 	}
 
 }
