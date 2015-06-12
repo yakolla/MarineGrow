@@ -44,7 +44,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		{
 			m_lastSearchTime = Time.time + m_searchCoolTime;
 
-			Creature[] searchedTargets = Bullet.SearchTarget(transform.position, m_ownerCreature.GetAutoTargetTags(), m_searchRange);
+			Creature[] searchedTargets = Bullet.SearchTarget(transform.position, m_ownerCreature.GetMyEnemyType(), m_searchRange);
 			if (searchedTargets != null)
 				m_target = searchedTargets[Random.Range(0, searchedTargets.Length)];
 

@@ -36,13 +36,10 @@ public class Follower : Creature {
 
 	public void Init(Creature owner, RefMob refMob, int level)
 	{
-		base.Init();
+		base.Init(refMob, level);
 
 		m_owner = owner;
 		CreatureType = m_owner.CreatureType;
-		m_refMobId = refMob.id;
-
-		m_creatureProperty.init(this, refMob.baseCreatureProperty, level);
 
 		switch(refMob.mobAI)
 		{
@@ -94,12 +91,5 @@ public class Follower : Creature {
 		
 	}
 
-	override public string[] GetAutoTargetTags()
-	{
-		if (m_owner)
-			return m_owner.GetAutoTargetTags();
-
-		return new string[]{""};
-	}
 
 }

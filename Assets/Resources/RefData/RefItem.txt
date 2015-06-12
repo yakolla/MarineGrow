@@ -495,13 +495,13 @@
 		"icon":"Sprites/SuicideBombing",		
 		"evolutionFiring":
 		{
-			"angle":10,
+			"angle":0,
 			"delay":0
 		},
 		"weaponStat":
 		{
 			"coolTime":1,
-			"range":2
+			"range":1.1
 		}
 	},
 	{
@@ -1148,6 +1148,17 @@
 		{
 			"coolTime":0,
 			"range":0
+		}
+	},
+	{
+		"id":134,
+		"codeName":"SummonMobLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/SummonMob",		
+		"weaponStat":
+		{
+			"coolTime":6,
+			"range":8
 		}
 	},
 	{

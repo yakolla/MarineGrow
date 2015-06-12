@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour {
 		StartFiring();
 	}
 
-	static public Creature[] SearchTarget(Vector3 pos, string[] targetTags, float range)
+	static public Creature[] SearchTarget(Vector3 pos, Creature.Type targetTags, float range)
 	{
 
 		Collider[] hitColliders = Physics.OverlapSphere(pos, range, 1<<9);
@@ -46,18 +46,17 @@ public class Bullet : MonoBehaviour {
 		int i = 0;
 
 		while (i < hitColliders.Length) {
-			foreach(string tag in targetTags)
+				
+			Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
+			if (creature != null)
 			{
-				if (true == hitColliders[i].CompareTag(tag))
+				if (targetTags == creature.CreatureType)
 				{
-					Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
-					if (creature != null)
-					{
-						searchedTargets[i] = creature;
-						break;
-					}
+					searchedTargets[i] = creature;
 				}
+
 			}
+				
 			i++;
 		}
 		
@@ -77,7 +76,7 @@ public class Bullet : MonoBehaviour {
 		m_isDestroying = true;
 		bombRange += m_ownerCreature.m_creatureProperty.SplashRadius;
 
-		Creature[] searchedTargets = SearchTarget(transform.position, m_ownerCreature.GetAutoTargetTags(), bombRange*0.5f);
+		Creature[] searchedTargets = SearchTarget(transform.position, m_ownerCreature.GetMyEnemyType(), bombRange*0.5f);
 		if (searchedTargets != null)
 		{
 			foreach(Creature creature in searchedTargets)

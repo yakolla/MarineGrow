@@ -186,6 +186,7 @@ public class RefMobClass
 	public RefMob[]				itemPandora;
 	public RefMob[]				itemDummy;
 	public RefMob[]				follower;
+	public RefMob[]				champ;
 }
 
 public class RefMobSpawnRatio
@@ -255,6 +256,7 @@ public class RefData {
 	Dictionary<int, RefItemSpawn>	m_refItemSpawns = new Dictionary<int, RefItemSpawn>();
 	Dictionary<int, RefItem>		m_refItems = new Dictionary<int, RefItem>();
 	Dictionary<int, RefMob>			m_refMobs = new Dictionary<int, RefMob>();
+	Dictionary<int, RefMob>			m_refChamps = new Dictionary<int, RefMob>();
 
 	static RefData m_ins = null;
 	static public RefData Instance
@@ -321,9 +323,39 @@ public class RefData {
 			}
 		}
 
-		foreach(KeyValuePair<int, RefMob> pair  in m_refMobs)
+		foreach(RefMob[] refMobs in mobs)
 		{
-			RefMob refMob = pair.Value;
+			foreach(RefMob refMob in refMobs)
+			{		
+				if (refMob.eggMob != null)
+				{
+					refMob.eggMob.refMob = m_refMobs[refMob.eggMob.refMobId];
+					if (refMob.eggMob.refMob == null)
+					{
+						Debug.Log("null refMob.eggMob.refMobId:" + refMob.eggMob.refMobId);
+					}				
+				}			
+				
+				if (refMob.dropEggMob != null)
+				{
+					refMob.dropEggMob.refMob = m_refMobs[refMob.dropEggMob.refMobId];
+					if (refMob.dropEggMob.refMob == null)
+					{
+						Debug.Log("null refMob.dropEggMob.refMobId:" + refMob.dropEggMob.refMobId);
+					}
+				}
+			}
+		}
+
+
+		foreach(RefMob refMob in m_refMobClass.champ)
+		{
+			if (true == m_refChamps.ContainsKey(refMob.id))
+			{
+				Debug.Log("duplicated champ key:" + refMob.id);
+			}
+			m_refChamps.Add(refMob.id, refMob);
+
 			if (refMob.eggMob != null)
 			{
 				refMob.eggMob.refMob = m_refMobs[refMob.eggMob.refMobId];
@@ -419,6 +451,11 @@ public class RefData {
 	public RefMob[] RefFollowerMobs
 	{
 		get {return m_refMobClass.follower;}
+	}
+
+	public RefMob RefChamp
+	{
+		get {return m_refChamps[1];}
 	}
 
 }

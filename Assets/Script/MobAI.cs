@@ -4,8 +4,8 @@ using System.Collections;
 public class MobAI {
 
 	protected Creature				m_mob;
-	protected GameObject 		m_target;
-	protected NavMeshAgent		m_navAgent;
+	protected Creature 				m_target;
+	protected NavMeshAgent			m_navAgent;
 
 	virtual public void	Init(Creature mob)
 	{
@@ -13,7 +13,7 @@ public class MobAI {
 		m_navAgent = mob.GetComponent<NavMeshAgent>();
 	}
 
-	virtual public void SetTarget(GameObject obj )
+	virtual public void SetTarget(Creature obj )
 	{
 		m_target = obj;
 	}

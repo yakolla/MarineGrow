@@ -34,7 +34,7 @@ public class Creature : MonoBehaviour {
 	protected WeaponHolder	m_weaponHolder;
 	protected Material		m_material;
 
-	public GameObject		m_targeting;
+	Creature				m_targeting;
 
 	[SerializeField]
 	protected GameObject	m_prefDeathEffect;
@@ -48,6 +48,8 @@ public class Creature : MonoBehaviour {
 	int						m_ingTakenDamageEffect = 0;
 
 	protected GameObject	m_aimpoint;
+	RefMob					m_refMob;
+
 
 	bool					m_checkOnDeath = false;
 
@@ -76,8 +78,9 @@ public class Creature : MonoBehaviour {
 
 	}
 
-	virtual public void Init()
+	virtual public void Init(RefMob refMob, int level)
 	{
+
 		m_navAgent = GetComponent<NavMeshAgent>();
 		m_targeting = null;
 		m_ingTakenDamageEffect = 0;
@@ -90,6 +93,11 @@ public class Creature : MonoBehaviour {
 		damagedTexture = Resources.Load<Texture>("ani/damage monster");
 		normalTexture = Resources.Load<Texture>("ani/monster");
 		ChangeNormalColor();
+
+		m_refMob = refMob;
+		m_creatureProperty.init(this, m_refMob.baseCreatureProperty, level);		
+		rigidbody.mass = refMob.mass;
+		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 	}
 
 	Weapon instanceWeapon(ItemWeaponData weaponData)
@@ -152,6 +160,16 @@ public class Creature : MonoBehaviour {
 		get {return m_aimpoint.transform.localPosition;}
 	}
 
+	public Creature	Targetting
+	{
+		get {return m_targeting;}
+	}
+
+	public virtual void SetTarget(Creature target)
+	{
+		m_targeting = target;
+	}
+
 	public bool CheckOnDeath
 	{
 		set {m_checkOnDeath = value;}
@@ -201,6 +219,26 @@ public class Creature : MonoBehaviour {
 		m_navAgent.enabled = enable;
 	}
 
+	public void EnableNavMeshObstacleAvoidance(bool enable)
+	{
+		if (enable == false)
+		{
+			m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+			m_navAgent.autoBraking = false;
+		}
+		else
+		{
+			m_navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+			m_navAgent.autoBraking = true;
+		}
+	}
+
+	public RefMob RefMob
+	{
+		get {return m_refMob;}
+		set {m_refMob = value;}
+	}
+
 	protected void Update()
 	{
 
@@ -228,9 +266,17 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.Update();
 	}
 
-	virtual public string[] GetAutoTargetTags()
+	public Creature.Type GetMyEnemyType()
 	{
-		return null;
+		switch(m_creatureType)
+		{
+		case Type.Champ:
+			return Type.Mob;
+		case Type.Mob:
+			return Type.Champ;
+		}
+
+		return Type.Npc;
 	}
 
 	public RefItemSpawn[] RefDropItems
@@ -244,7 +290,7 @@ public class Creature : MonoBehaviour {
 		get {return m_weaponHolder;}
 	}
 
-	protected bool inAttackRange(GameObject targeting, float overrideRange)
+	protected bool inAttackRange(Creature targeting, float overrideRange)
 	{
 		float dist = Vector3.Distance(transform.position, targeting.transform.position);
 
@@ -273,41 +319,39 @@ public class Creature : MonoBehaviour {
 		followingCamera.SetTarget(gameObject, next);
 	}
 
-	public GameObject SearchTarget(string[] targetTags, Creature[] skipTargets, float range)
+	public Creature SearchTarget(Creature.Type targetTags, Creature[] skipTargets, float range)
 	{
-		foreach(string tag in targetTags)
-		{
-			GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-			foreach(GameObject target in targets)
-			{
-				bool isSkip = false;
-				if (skipTargets != null)
-				{
-					foreach(Creature skip in skipTargets)
-					{
-						if (skip == null)
-							break;
 
-						if (skip.gameObject == target)
-						{
-							isSkip = true;
-							break;
-						}
+		Creature[] targets = Bullet.SearchTarget(transform.position, targetTags, range);
+		foreach(Creature target in targets)
+		{
+			if (target == null)
+				continue;
+
+			bool isSkip = false;
+			if (skipTargets != null)
+			{
+				foreach(Creature skip in skipTargets)
+				{
+					if (skip == null)
+						break;
+					
+					if (skip.gameObject == target)
+					{
+						isSkip = true;
+						break;
 					}
 				}
-
-				if (isSkip == true)
-				{
-					continue;
-				}
-
-				if (true == inAttackRange(target, range))
-				{
-					return target;
-				}
 			}
-		}
+			
+			if (isSkip == true)
+			{
+				continue;
+			}
 
+			return target;
+		}
+		
 		return null;
 	}
 
@@ -321,26 +365,25 @@ public class Creature : MonoBehaviour {
 
 		if (HasCrowdControl() == false)
 		{
-			if (m_targeting != null)
+			if (Targetting == null)
 			{
-				if (false == inAttackRange(m_targeting, 0f))
+				SetTarget(SearchTarget(GetMyEnemyType(), null, 50f));
+			}
+
+			if (Targetting != null)
+			{
+				if (true == inAttackRange(Targetting, 0f))
 				{
-					m_targeting = null;
+					m_weaponHolder.StartFiring(RotateToTarget(Targetting.transform.position));
+					return true;
 				}
-			}
 
-			if (m_targeting == null)
-			{
-				m_targeting = SearchTarget(GetAutoTargetTags(), null, 0f);
-			}
-
-			if (m_targeting != null)
-			{
-				m_weaponHolder.StartFiring(RotateToTarget(m_targeting.transform.position));
-				return true;
+				m_weaponHolder.StopFiring();
+				return false;
 			}
 		}
-		m_targeting = null;
+
+		SetTarget(null);
 		m_weaponHolder.StopFiring();
 		return false;
 	}

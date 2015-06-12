@@ -7,9 +7,9 @@ public class LeapStrikeLauncher : Weapon {
 
 	override public void StartFiring(float targetAngle)
 	{
-		if ( isCoolTime() == true )
+		if ( isCoolTime() == true && m_creature.Targetting != null)
 		{
-			float d = Vector3.Distance(m_creature.transform.position, m_creature.m_targeting.transform.position);
+			float d = Vector3.Distance(m_creature.transform.position, m_creature.Targetting.transform.position);
 
 			m_parabola = new Parabola(m_creature.gameObject, d*1.7f, targetAngle*Mathf.Deg2Rad, 70*Mathf.Deg2Rad, 1);
 			m_parabola.TimeScale = 0.80f;

@@ -11,9 +11,12 @@ public class SuicideBombingBullet : Bullet {
 	float			m_bombRange = 5f;
 
 	// Use this for initialization
-	void Start () 
-	{		
+
+	void Update()
+	{
+		if (m_isDestroying == true)
+			return;
+
 		bomb(m_bombRange, m_prefBombEffect);
 	}
-
 }
