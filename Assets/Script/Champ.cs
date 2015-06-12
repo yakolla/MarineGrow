@@ -73,6 +73,30 @@ public class Champ : Creature {
 
 	}
 
+	override public bool AutoAttack() {
+		
+		
+		if (HasCrowdControl() == false)
+		{
+			if (Targetting == null)
+			{
+				SetTarget(SearchTarget(GetMyEnemyType(), null, 50f));
+			}
+			
+			if (Targetting != null)
+			{
+				if (true == inAttackRange(Targetting, 0f))
+				{
+					m_weaponHolder.StartFiring(RotateToTarget(Targetting.transform.position));
+					return true;
+				}
+			}
+		}
+		
+		SetTarget(null);
+		m_weaponHolder.StopFiring();
+		return false;
+	}
 
 	void UpdateChampMovement()
 	{

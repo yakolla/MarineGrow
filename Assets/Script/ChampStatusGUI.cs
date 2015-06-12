@@ -100,7 +100,7 @@ public class ChampStatusGUI : MonoBehaviour {
 			return;
 
 		m_accessoryButtons[slot].StartCoolDownTime(m_champ.AccessoryItems[slot].Item.RefItem.weaponStat.coolTime);
-
+		m_champ.AccessoryItems[slot].Item.Use(m_champ);
 
 	}
 

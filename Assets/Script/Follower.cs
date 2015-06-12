@@ -15,12 +15,36 @@ public class Follower : Creature {
 
 		if (AutoAttack() == false)
 		{
-			m_weaponHolder.GetComponent<WeaponHolder>().StopFiring();
 		}
 
 		if (m_owner != null)
 			m_navAgent.SetDestination(m_owner.transform.position);
 		
+	}
+
+	override public bool AutoAttack() {
+		
+		
+		if (HasCrowdControl() == false)
+		{
+			if (Targetting == null)
+			{
+				SetTarget(SearchTarget(GetMyEnemyType(), null, 50f));
+			}
+			
+			if (Targetting != null)
+			{
+				if (true == inAttackRange(Targetting, 0f))
+				{
+					m_weaponHolder.StartFiring(RotateToTarget(Targetting.transform.position));
+					return true;
+				}
+			}
+		}
+		
+		SetTarget(null);
+		m_weaponHolder.StopFiring();
+		return false;
 	}
 
 	IEnumerator DecHpEffect()
@@ -72,23 +96,6 @@ public class Follower : Creature {
 	{
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 		WeaponHolder.LevelUp();
-	}
-
-	override public void GiveExp(int exp)
-	{
-		m_creatureProperty.giveExp((int)(exp+exp*m_owner.m_creatureProperty.GainExtraExp));
-	}
-
-	void OnTriggerEnter(Collider other) {
-		if (other.tag.CompareTo("ItemBox") == 0)
-		{
-			if (3f > Vector3.Distance(transform.position, other.transform.position))
-			{
-				ItemBox itemBox = other.gameObject.GetComponent<ItemBox>();
-				itemBox.StartPickupEffect(m_owner);
-			}
-		};
-		
 	}
 
 

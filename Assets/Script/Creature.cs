@@ -321,7 +321,7 @@ public class Creature : MonoBehaviour {
 
 	public Creature SearchTarget(Creature.Type targetTags, Creature[] skipTargets, float range)
 	{
-
+		Creature lastTarget = null;
 		Creature[] targets = Bullet.SearchTarget(transform.position, targetTags, range);
 		foreach(Creature target in targets)
 		{
@@ -349,7 +349,11 @@ public class Creature : MonoBehaviour {
 				continue;
 			}
 
-			return target;
+			lastTarget = target;
+			if (inAttackRange(target, 0f))
+			{
+				return target;
+			}
 		}
 		
 		return null;
