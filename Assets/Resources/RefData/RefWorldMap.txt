@@ -93,12 +93,12 @@
 								"ratio":[0,1],
 								"count":[1,1],
 								"chance":0.1,
-								//"spawnEffectType":"Falling"
+								"spawnEffectType":"Falling"
 							},
 							"itemDummy":{
 								"ratio":[0,1],
 								"count":[2,5],
-								//"spawnEffectType":"Falling"
+								"spawnEffectType":"Falling"
 							}
 						},
 						"interval":1,

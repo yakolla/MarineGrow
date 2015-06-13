@@ -30,13 +30,14 @@ public class Worldmap : MonoBehaviour {
 	}
 	
 	void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
+
 		if (status == SavedGameRequestStatus.Success) {
 			Warehouse.Instance.FileName = game.Filename;
 			Application.LoadLevel("Basic Dungeon");
 		} else {
-			Const.HideLoadingGUI();
-		}
 
+		}
+		Const.HideLoadingGUI();
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
@@ -67,24 +68,29 @@ public class Worldmap : MonoBehaviour {
 	}
 
 	void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
+
 		if (status == SavedGameRequestStatus.Success) {
 			Application.LoadLevel("Basic Dungeon");
 		} else {
-			Const.HideLoadingGUI();
+
 		}
+		Const.HideLoadingGUI();
 		log = "OnSavedGameWritten:" + status + game;
 	}
 
 	void OnSavedGameDataRead (SavedGameRequestStatus status, byte[] data) {
 		log = "OnSavedGameDataRead:" + status;
+
 		if (status == SavedGameRequestStatus.Success) {
 			if (data.Length > 0)
 				Warehouse.Instance.Deserialize(data);
 
 			Application.LoadLevel("Basic Dungeon");
 		} else {
-			Const.HideLoadingGUI();
+
 		}
+
+		Const.HideLoadingGUI();
 	}
 
 	void Login()

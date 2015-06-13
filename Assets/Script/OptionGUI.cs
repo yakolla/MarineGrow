@@ -76,14 +76,19 @@ public class OptionGUI : MonoBehaviour {
 	{
 		TimeEffector.Instance.StartTime();
 
+		Const.ShowLoadingGUI("Loading...");
+
 		Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
 			if (status == SavedGameRequestStatus.Success) {
 				// handle reading or writing of saved game.
 			} else {
 				// handle error
 			}
+
 			m_admob.ShowBanner(false);
 			Application.LoadLevel("Worldmap");
+
+			Const.HideLoadingGUI();
 		});
 
 	}

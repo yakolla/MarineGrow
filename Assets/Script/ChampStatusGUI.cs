@@ -84,8 +84,9 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_champ.MachoSkillStack == 0)
 			return;
 
-		--m_champ.MachoSkillStack;
-		m_champ.ApplyBuff(null, DamageDesc.BuffType.Macho, 10f, null);
+		if (true == m_champ.ApplyBuff(null, DamageDesc.BuffType.Macho, 10f, null))
+			--m_champ.MachoSkillStack;
+
 	}
 
 	public void OnClickAccessory(int slot)
