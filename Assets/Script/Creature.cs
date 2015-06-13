@@ -245,7 +245,7 @@ public class Creature : MonoBehaviour {
 		//if (m_navAgent.speed != m_creatureProperty.MoveSpeed)
 		{
 			m_navAgent.speed = m_creatureProperty.MoveSpeed;
-			m_animator.speed = m_creatureProperty.MoveSpeed;
+			m_animator.speed = m_creatureProperty.AniSpeed;
 		}
 
 

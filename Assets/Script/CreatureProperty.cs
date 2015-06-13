@@ -192,7 +192,11 @@ public class CreatureProperty {
 	public float	MoveSpeed
 	{
 		get {return (m_baseProperty.moveSpeed + AlphaMoveSpeed) * BetaMoveSpeed;}
+	}
 
+	public float	AniSpeed
+	{
+		get {return m_baseProperty.aniSpeedRatio * MoveSpeed;}
 	}
 	
 	public float	AlphaMoveSpeed

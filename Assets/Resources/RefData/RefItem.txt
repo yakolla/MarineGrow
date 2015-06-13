@@ -754,7 +754,12 @@
 		"weaponStat":
 		{
 			"coolTime":2,
-			"range":5
+			"range":5,
+			"buffOnHitDesc":
+			{
+				"chance":1,
+				"buffType":"Slow"
+			}
 		},
 		"unlock":
 		{
