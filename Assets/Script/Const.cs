@@ -261,7 +261,10 @@ public class Const {
 				}
 			});
 		}
-
+		else
+		{
+			callback(SavedGameRequestStatus.TimeoutError, null);
+		}
 	}
 
 
