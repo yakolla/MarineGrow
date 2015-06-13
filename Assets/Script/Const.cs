@@ -25,6 +25,7 @@ public class Const {
 	public const int SpecialButtons = 3;
 	public const int Guages = 3;
 	public const int MaxCallableFollowers = 3;
+	public const int MaxFiringCount = ItemMaxLevel+3;
 	public const float MaxAlphaMoveSpeed = 2f;
 	public const int AccessoriesSlots = 4;
 	public const int StartPosYOfPriceButtonImage = 10;

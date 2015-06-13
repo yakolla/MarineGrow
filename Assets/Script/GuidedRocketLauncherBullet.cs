@@ -8,14 +8,14 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	float m_lastSearchTime = 0f;
 	Creature	m_target = null;
 
-	float	m_destAngle = 0f;
-	float	m_angleElpased = 1f;
-	float	m_srcAngle = 0f;
 
 	[SerializeField]
 	float	m_searchRange = 3f;
 
-	const int maxSearch = 3;
+	[SerializeField]
+	int maxSearch = 3;
+
+	float	m_refreshAngleCoolTime = 0f;
 	int		m_searchCount = 0;
 	// Use this for initialization
 	void Start () {
@@ -28,10 +28,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 		m_lastSearchTime = 0f;
 		m_target = null;
-		m_destAngle = transform.rotation.eulerAngles.y;
-		m_angleElpased = 0f;
 		m_searchCount = 0;
-		m_srcAngle = transform.rotation.eulerAngles.y;
 	}
 
 	// Update is called once per frame
@@ -48,29 +45,22 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 			if (searchedTargets != null)
 				m_target = searchedTargets[Random.Range(0, searchedTargets.Length)];
 
-			if (m_target != null)
-			{
-				m_srcAngle = transform.eulerAngles.y;
-				m_destAngle = -Mathf.Atan2(m_target.transform.position.z-transform.position.z, m_target.transform.position.x-transform.position.x) * Mathf.Rad2Deg;
-				if (Random.Range(0, 2) == 0)
-				{
-					m_srcAngle -= 360;
-				}
-
-				m_angleElpased = 0f;
-			}
-
 			++m_searchCount;
 		}
 
-		if (m_angleElpased < 1f)
+
+		float destAngle = transform.eulerAngles.y;
+		if (m_target != null)
 		{
-			transform.eulerAngles = Vector3.Lerp(new Vector3(0, m_srcAngle, 0), new Vector3(0, m_destAngle, 0), m_angleElpased);
+			destAngle = -Mathf.Atan2(m_target.transform.position.z-transform.position.z, m_target.transform.position.x-transform.position.x) * Mathf.Rad2Deg;
+			if (destAngle < 0)
+				destAngle += 360;
 		}
+
+		transform.eulerAngles = Vector3.Lerp(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, destAngle, 0), 0.1f);
 
 		transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
 		m_accel += Time.deltaTime*0.01f*m_speed;
-		m_angleElpased += Time.deltaTime;
 	}
 
 }

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class GunBullet : Bullet {
 
-	[SerializeField]
 	float	m_speed = 3f;
 
 	// Use this for initialization

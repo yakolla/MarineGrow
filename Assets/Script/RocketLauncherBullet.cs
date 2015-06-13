@@ -29,7 +29,7 @@ public class RocketLauncherBullet : Bullet {
 		if (m_isDestroying == true)
 			return;
 
-		transform.Translate(m_accel, 0, 0, transform);
+		transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
 		m_accel += Time.deltaTime*0.1f*m_speed;
 
 

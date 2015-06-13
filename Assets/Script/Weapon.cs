@@ -100,10 +100,10 @@ public class Weapon : MonoBehaviour {
 		if (m_refItem.evolutionFiring == null)
 			return false;
 
-		if (m_level > Const.ItemMaxLevel+3)
-			return false;
-
 		int count = m_firingDescs.Count;
+
+		if (count > Const.MaxFiringCount)
+			return false;
 
 		float angle = m_refItem.evolutionFiring.angle*((count+1)/2);
 		if (count % 2 == 1)

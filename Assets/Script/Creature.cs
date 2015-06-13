@@ -323,11 +323,11 @@ public class Creature : MonoBehaviour {
 	{
 		Creature lastTarget = null;
 		Creature[] targets = Bullet.SearchTarget(transform.position, targetTags, range);
+		if (targets == null)
+			return null;
+
 		foreach(Creature target in targets)
 		{
-			if (target == null)
-				continue;
-
 			bool isSkip = false;
 			if (skipTargets != null)
 			{

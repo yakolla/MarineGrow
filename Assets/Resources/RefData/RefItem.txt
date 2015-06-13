@@ -362,12 +362,12 @@
 		"evolutionFiring":
 		{
 			"angle":3,
-			"delay":0.2
+			"delay":0
 		},
 		"weaponStat":
 		{
 			"coolTime":1.5,
-			"range":5,
+			"range":10,
 			"skillId":133
 		},		
 		"levelup":
@@ -460,7 +460,7 @@
 		"icon":"Sprites/Gun",	
 		"evolutionFiring":
 		{
-			"angle":3,
+			"angle":1,
 			"delay":0.1
 		},
 		"weaponStat":
@@ -1060,7 +1060,7 @@
 		"evolutionFiring":
 		{
 			"angle":30,
-			"delay":1
+			"delay":0
 		},
 		"weaponStat":
 		{
@@ -1177,6 +1177,11 @@
 		"codeName":"SummonMobLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":1
+		},
 		"weaponStat":
 		{
 			"coolTime":6,

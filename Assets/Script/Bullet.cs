@@ -42,9 +42,9 @@ public class Bullet : MonoBehaviour {
 		if (hitColliders.Length == 0)
 			return null;
 
-		Creature[] searchedTargets = new Creature[hitColliders.Length];
+		Creature[] testSearchedTargets = new Creature[hitColliders.Length];
 		int i = 0;
-
+		int searchedCount = 0;
 		while (i < hitColliders.Length) {
 				
 			Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
@@ -52,15 +52,22 @@ public class Bullet : MonoBehaviour {
 			{
 				if (targetTags == creature.CreatureType)
 				{
-					searchedTargets[i] = creature;
+					testSearchedTargets[searchedCount] = creature;
+					++searchedCount;
 				}
-
 			}
 				
 			i++;
 		}
-		
-		return searchedTargets;
+
+		if (searchedCount == 0)
+			return null;
+
+		Creature[] searchead = new Creature[searchedCount];
+		for(i = 0; i < searchedCount; ++i)
+			searchead[i] = testSearchedTargets[i];
+
+		return searchead;
 	}
 
 
@@ -81,8 +88,7 @@ public class Bullet : MonoBehaviour {
 		{
 			foreach(Creature creature in searchedTargets)
 			{
-				if (creature != null)
-					GiveDamage(creature);
+				GiveDamage(creature);
 			}
 		}
 
