@@ -35,6 +35,8 @@ public class LightningBullet : Bullet
 
 	Perlin noise;
 	float oneOverZigs;
+
+	Weapon		m_weapon;
 	
 	private Particle[] particles;
 
@@ -43,6 +45,8 @@ public class LightningBullet : Bullet
 		Vector3 scale = transform.localScale;
 
 		base.Init(ownerCreature, weapon, targetAngle);
+
+		m_weapon = weapon;
 		transform.parent = ownerCreature.WeaponHolder.transform;
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.angle, 0));
@@ -139,7 +143,7 @@ public class LightningBullet : Bullet
 
 		if (targets != null)
 		{
-			m_damageBuffType = m_ownerCreature.m_creatureProperty.RandomWeaponBuff;
+			TryToSetDamageBuffType(m_weapon);
 
 			if (m_lastDamageTime+(m_damageOnTime*m_ownerCreature.m_creatureProperty.AttackCoolTime)<Time.time)
 			{

@@ -79,7 +79,7 @@ public class Const {
 
 		foreach(RefPrice price in conds)
 		{
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
+			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
 			if (inventoryItemObj == null)
 				return false;
 			
@@ -100,7 +100,7 @@ public class Const {
 
 		foreach(RefPrice price in conds)
 		{
-			Warehouse.Instance.PullItem(Warehouse.Instance.FindItem(price.refItemId, null), (int)(price.count*itemWorth));
+			Warehouse.Instance.PullItem(Warehouse.Instance.FindItem(price.refItemId), (int)(price.count*itemWorth));
 		}
 	}
 	
@@ -160,7 +160,7 @@ public class Const {
 			string str = "<color=white>";
 			int cost = (int)(price.count*itemWorth);
 			
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId, null);
+			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
 			int hasCount = 0;
 			if (inventoryItemObj == null)
 			{

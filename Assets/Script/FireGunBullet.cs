@@ -17,6 +17,8 @@ public class FireGunBullet : Bullet {
 	Vector3			m_oriColliderSize;
 	Vector3			m_oriScale;
 
+	Weapon			m_weapon;
+
 	void Awake()
 	{
 		m_collider = GetComponent<BoxCollider>();
@@ -51,6 +53,7 @@ public class FireGunBullet : Bullet {
 		Vector3 scale = transform.localScale;
 		base.Init(ownerCreature, weapon, targetAngle);
 
+		m_weapon = weapon;
 		transform.parent = ownerCreature.WeaponHolder.transform;
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.angle, 0));
@@ -77,7 +80,7 @@ public class FireGunBullet : Bullet {
 			m_lastFrame = Time.frameCount;
 			m_lastDamageTime = Time.time;
 
-			m_damageBuffType = m_ownerCreature.m_creatureProperty.RandomWeaponBuff;
+			TryToSetDamageBuffType(m_weapon);
 
 		}
 

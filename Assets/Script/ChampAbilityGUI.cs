@@ -211,19 +211,18 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		foreach (DamageDesc.BuffType buffType in System.Enum.GetValues(typeof(DamageDesc.BuffType)))
 		{
-			bool skipBuff = false;
-			switch (buffType)
+			bool skip = false;
+			switch(buffType)
 			{
-			case DamageDesc.BuffType.Nothing:
 			case DamageDesc.BuffType.Count:
-			case DamageDesc.BuffType.Macho:
-			case DamageDesc.BuffType.Dash:
 			case DamageDesc.BuffType.LevelUp:
-				skipBuff = true;
+			case DamageDesc.BuffType.Nothing:
+			case DamageDesc.BuffType.Macho:
+				skip = true;
 				break;
 			}
 
-			if (skipBuff == true)
+			if (skip == true)
 				continue;
 
 			string name = buffType.ToString() + " Chance";
@@ -231,45 +230,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 			utilAbili.Add(new Ability(0.3f, name, 
 			                            ()=>{
-				float oriChance = m_champ.m_creatureProperty.WeaponBuffDescs.chance;
-				if (capturedBuffType != m_backup.WeaponBuffDescs.m_buff)
-				{
-					m_backup.WeaponBuffDescs.chance = 0f;
-					oriChance = 0f;
-				}
-				m_backup.WeaponBuffDescs.chance += 0.1f;
-				return (oriChance*100) + " -> " + "<color=yellow>" + (m_backup.WeaponBuffDescs.chance*100) + "%</color>";
+				float oriChance = m_champ.WeaponHolder.MainWeapon.WeaponStat.buffOnHitDesc.chance;
+				float toChance = oriChance + 0.1f;
+				return (oriChance*100) + " -> " + "<color=yellow>" + (toChance*100) + "%</color>";
 			},
 			()=>{
-				if (capturedBuffType != m_champ.m_creatureProperty.WeaponBuffDescs.m_buff)
-				{
-					m_champ.m_creatureProperty.WeaponBuffDescs.chance = 0f;
-				}
-				m_champ.m_creatureProperty.WeaponBuffDescs.m_buff = capturedBuffType;
-				m_champ.m_creatureProperty.WeaponBuffDescs.chance += 0.1f;
+				m_champ.WeaponHolder.MainWeapon.WeaponStat.buffOnHitDesc.chance += 0.1f;
 				--m_champ.RemainStatPoint;
 			},
 			()=>{
 
-				if (m_champ.m_creatureProperty.WeaponBuffDescs.chance >= 1f)
-					return false;
-
-				switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
-				{
-				case Const.ChampGunRefItemId:
-					return capturedBuffType == DamageDesc.BuffType.Burning;
-				case Const.ChampLightningLauncherRefItemId:
-					return capturedBuffType == DamageDesc.BuffType.Stun;
-				case Const.ChampFiregunRefItemId:
-					return capturedBuffType == DamageDesc.BuffType.Slow;
-				case Const.ChampBoomerangLauncherRefItemId:
-					return capturedBuffType == DamageDesc.BuffType.Slow;
-				case Const.ChampGuidedRocketLauncherRefItemId:
-				case Const.ChampRocketLauncherRefItemId:
-					return false;
-				}
-				
-				return false;
+				return (m_champ.WeaponHolder.MainWeapon.WeaponStat.buffOnHitDesc.buffType == capturedBuffType &&
+				        m_champ.WeaponHolder.MainWeapon.WeaponStat.buffOnHitDesc.chance < 100
+				        );
 			}
 			));
 		}

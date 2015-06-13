@@ -50,44 +50,43 @@ public class RefEvolutionFiring
 
 public class WeaponStat
 {
+	public struct BuffOnHitDesc
+	{
+		public float chance;
+		[JsonConverter(typeof(StringEnumConverter))]
+		public DamageDesc.BuffType buffType;
+	}
 	public float			coolTime;
 	public float			range;
 	public int				firingCount;
 	public int				spPerLevel;
 	public int				skillId;
 	public int				summonRefMobId;
+	public BuffOnHitDesc	buffOnHitDesc;
 
 	public void OverrideStat(WeaponStat weaponStat)
 	{
 		if (coolTime == 0)
-		{
 			coolTime = weaponStat.coolTime;
-		}
-		
+
 		if (range == 0)
-		{
 			range = weaponStat.range;
-		}
 
 		if (firingCount == 0)
-		{
 			firingCount = weaponStat.firingCount;
-		}
-		
+
 		if (spPerLevel == 0)
-		{
 			spPerLevel = weaponStat.spPerLevel;
-		}
-		
+
 		if (skillId == 0)
-		{
 			skillId = weaponStat.skillId;
-		}
 
 		if (summonRefMobId == 0)
-		{
 			summonRefMobId = weaponStat.summonRefMobId;
-		}
+
+		if (buffOnHitDesc.chance == 0 && buffOnHitDesc.buffType == DamageDesc.BuffType.Nothing)
+			buffOnHitDesc = weaponStat.buffOnHitDesc;
+
 	}
 }
 

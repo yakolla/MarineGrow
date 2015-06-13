@@ -233,7 +233,7 @@ public class Warehouse {
 
 	public void PushItem(ItemData item)
 	{
-		ItemObject itemObj = FindItem(item.RefItem.id, item);
+		ItemObject itemObj = FindItem(item.RefItem.id);
 		if (itemObj == null)
 		{
 			m_items.Add(new ItemObject(item));
@@ -282,7 +282,7 @@ public class Warehouse {
 		m_items.Remove(obj);
 	}
 
-	public ItemObject FindItem(int refItemId, ItemData item)
+	public ItemObject FindItem(int refItemId)
 	{
 		switch(refItemId)
 		{
@@ -294,17 +294,9 @@ public class Warehouse {
 
 		foreach(ItemObject obj in m_items)
 		{
-			if (refItemId == 1001 && item != null)
+			if (obj.Item.RefItem.id == refItemId)
 			{
-				if (obj.Item.Compare(item))
-					return obj;
-			}
-			else
-			{
-				if (obj.Item.RefItem.id == refItemId)
-				{
-					return obj;
-				}
+				return obj;
 			}
 		}
 
@@ -342,7 +334,7 @@ public class Warehouse {
 	public int CheatLevel
 	{
 		get {
-			ItemObject cheatItem = FindItem(Const.CheatRefItemId, null);
+			ItemObject cheatItem = FindItem(Const.CheatRefItemId);
 			if (cheatItem.Item.Lock == true)
 				return 0;
 

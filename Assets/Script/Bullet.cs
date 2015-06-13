@@ -17,8 +17,6 @@ public class Bullet : MonoBehaviour {
 	GameObject 				m_prefDamageEffect = null;
 
 	protected DamageDesc.Type	m_damageType = DamageDesc.Type.Normal;
-
-	[SerializeField]
 	protected DamageDesc.BuffType m_damageBuffType = DamageDesc.BuffType.Nothing;
 
 	virtual public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
@@ -30,9 +28,20 @@ public class Bullet : MonoBehaviour {
 		m_isDestroying = false;
 		m_onHitWeapon = weapon.GetSubWeapon();
 
-		m_damageBuffType = ownerCreature.m_creatureProperty.RandomWeaponBuff;
+		TryToSetDamageBuffType(weapon);
+
 
 		StartFiring();
+	}
+
+	public void TryToSetDamageBuffType(Weapon weapon)
+	{
+		m_damageBuffType = DamageDesc.BuffType.Nothing;
+
+		if (Random.Range(0, 1f) < weapon.WeaponStat.buffOnHitDesc.chance)
+		{
+			m_damageBuffType = weapon.WeaponStat.buffOnHitDesc.buffType;
+		}	
 	}
 
 	static public Creature[] SearchTarget(Vector3 pos, Creature.Type targetTags, float range)

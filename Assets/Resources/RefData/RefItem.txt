@@ -183,7 +183,12 @@
 		{
 			"coolTime":4,
 			"range":6,
-			"skillId":133
+			"skillId":133,
+			"buffOnHitDesc":
+			{
+				"chance":0,
+				"buffType":"Slow"
+			}
 		}
 	},
 	{
@@ -195,7 +200,12 @@
 		{
 			"coolTime":4,
 			"range":5,
-			"skillId":133
+			"skillId":133,
+			"buffOnHitDesc":
+			{
+				"chance":0,
+				"buffType":"Stun"
+			}
 		},
 		"levelup":
 		{
@@ -325,11 +335,16 @@
 		"id":105,
 		"codeName":"GrenadeLauncher",
 		"type":"Weapon",
-		"icon":"Sprites/Grenade",		
+		"icon":"Sprites/Grenade",
 		"weaponStat":
 		{
 			"coolTime":5,
 			"range":5
+		},
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0.3
 		},
 		"unlock":
 		{
@@ -468,7 +483,12 @@
 			"coolTime":0.7,
 			"range":7,
 			"skillId":133,
-			"firingCount":2
+			"firingCount":2,
+			"buffOnHitDesc":
+			{
+				"chance":0,
+				"buffType":"Burning"
+			}
 		},
 		"levelup":
 		{
@@ -631,7 +651,12 @@
 		{
 			"coolTime":1,
 			"range":7,
-			"skillId":133
+			"skillId":133,
+			"buffOnHitDesc":
+			{
+				"chance":0,
+				"buffType":"Airborne"
+			}
 		},		
 		"levelup":
 		{
@@ -881,7 +906,12 @@
 		{
 			"coolTime":2,
 			"range":5,
-			"skillId":133
+			"skillId":133,
+			"buffOnHitDesc":
+			{
+				"chance":0,
+				"buffType":"Slow"
+			}
 		},
 		"levelup":
 		{
@@ -937,7 +967,12 @@
 		"weaponStat":
 		{
 			"coolTime":5,
-			"range":5
+			"range":5,
+			"buffOnHitDesc":
+			{
+				"chance":1,
+				"buffType":"Airborne"
+			}
 		},
 		"unlock":
 		{
@@ -967,15 +1002,15 @@
 		"codeName":"Firegun",
 		"type":"Weapon",
 		"icon":"Sprites/Firegun",		
-		"evolutionFiring":
-		{
-			"angle":30,
-			"delay":0.3
-		},
 		"weaponStat":
 		{
 			"coolTime":0.5,
-			"range":3
+			"range":4,
+			"buffOnHitDesc":
+			{
+				"chance":0.5,
+				"buffType":"Slow"
+			}
 		}
 	},
 	{
@@ -986,7 +1021,12 @@
 		"weaponStat":
 		{
 			"coolTime":0.5,
-			"range":5
+			"range":5,
+			"buffOnHitDesc":
+			{
+				"chance":0.3,
+				"buffType":"Stun"
+			}
 		},		
 		"evolutionFiring":
 		{
@@ -1113,7 +1153,12 @@
 		"weaponStat":
 		{
 			"coolTime":5,
-			"range":8
+			"range":8,
+			"buffOnHitDesc":
+			{
+				"chance":0,
+				"buffType":"Airborne"
+			}
 		}
 		
 	},

@@ -65,7 +65,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				foreach(KeyValuePair<int, RefItem> keyPair in RefData.Instance.RefItems)
 				{
-					if (Warehouse.Instance.FindItem(keyPair.Key,null) != null)
+					if (Warehouse.Instance.FindItem(keyPair.Key) != null)
 						continue;
 					
 					switch(keyPair.Value.type)
