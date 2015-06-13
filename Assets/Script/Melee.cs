@@ -18,7 +18,7 @@ public class Melee : Weapon {
 	{
 		Bullet bullet = base.CreateBullet(targetAngle, startPos);
 		Vector3 scale = bullet.transform.localScale;
-		scale.x = m_attackRange;
+		scale.x = WeaponStat.range;
 		bullet.transform.localScale = scale;
 
 		return bullet;

@@ -55,6 +55,35 @@ public class WeaponStat
 	public int				firingCount;
 	public int				spPerLevel;
 	public int				skillId;
+	public int				summonRefMobId;
+
+	public void OverrideStat(WeaponStat weaponStat)
+	{
+		if (coolTime == 0)
+		{
+			coolTime = weaponStat.coolTime;
+		}
+		
+		if (range == 0)
+		{
+			range = weaponStat.range;
+		}
+		
+		if (spPerLevel == 0)
+		{
+			spPerLevel = weaponStat.spPerLevel;
+		}
+		
+		if (skillId == 0)
+		{
+			skillId = weaponStat.skillId;
+		}
+
+		if (summonRefMobId == 0)
+		{
+			summonRefMobId = weaponStat.summonRefMobId;
+		}
+	}
 }
 
 public class RefPrice
@@ -166,7 +195,6 @@ public class RefMob : RefBaseData
 	public WeaponDesc[]			refWeaponItems;
 	public bool					nearByChampOnSpawn;
 	public RefEggMob			eggMob;
-	public RefEggMob			dropEggMob;
 	public RefCreatureBaseProperty		baseCreatureProperty;
 
 	[JsonConverter(typeof(StringEnumConverter))]
@@ -309,7 +337,8 @@ public class RefData {
 				}
 			}
 		}
-		RefMob[][] mobs= {m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle, m_refMobClass.follower, m_refMobClass.miniBoss};
+
+		List<RefMob[]> mobs= new List<RefMob[]>(){m_refMobClass.melee, m_refMobClass.range, m_refMobClass.boss, m_refMobClass.egg, m_refMobClass.shuttle, m_refMobClass.follower, m_refMobClass.miniBoss};
 
 		foreach(RefMob[] refMobs in mobs)
 		{
@@ -323,6 +352,17 @@ public class RefData {
 			}
 		}
 
+		foreach(RefMob refMob in m_refMobClass.champ)
+		{
+			if (true == m_refChamps.ContainsKey(refMob.id))
+			{
+				Debug.Log("duplicated champ key:" + refMob.id);
+			}
+			m_refChamps.Add(refMob.id, refMob);
+		}
+
+		mobs.Add(m_refMobClass.champ);
+
 		foreach(RefMob[] refMobs in mobs)
 		{
 			foreach(RefMob refMob in refMobs)
@@ -334,47 +374,9 @@ public class RefData {
 					{
 						Debug.Log("null refMob.eggMob.refMobId:" + refMob.eggMob.refMobId);
 					}				
-				}			
-				
-				if (refMob.dropEggMob != null)
-				{
-					refMob.dropEggMob.refMob = m_refMobs[refMob.dropEggMob.refMobId];
-					if (refMob.dropEggMob.refMob == null)
-					{
-						Debug.Log("null refMob.dropEggMob.refMobId:" + refMob.dropEggMob.refMobId);
-					}
 				}
 			}
 		}
-
-
-		foreach(RefMob refMob in m_refMobClass.champ)
-		{
-			if (true == m_refChamps.ContainsKey(refMob.id))
-			{
-				Debug.Log("duplicated champ key:" + refMob.id);
-			}
-			m_refChamps.Add(refMob.id, refMob);
-
-			if (refMob.eggMob != null)
-			{
-				refMob.eggMob.refMob = m_refMobs[refMob.eggMob.refMobId];
-				if (refMob.eggMob.refMob == null)
-				{
-					Debug.Log("null refMob.eggMob.refMobId:" + refMob.eggMob.refMobId);
-				}				
-			}			
-			
-			if (refMob.dropEggMob != null)
-			{
-				refMob.dropEggMob.refMob = m_refMobs[refMob.dropEggMob.refMobId];
-				if (refMob.dropEggMob.refMob == null)
-				{
-					Debug.Log("null refMob.dropEggMob.refMobId:" + refMob.dropEggMob.refMobId);
-				}
-			}
-		}
-		
 	}
 	
 	void DeserializeArray<T>(Dictionary<int, T> records, string fileName) where T : RefBaseData

@@ -12,9 +12,13 @@ public class SummonMobBullet : GrenadeBullet {
 		m_effectTargetingPoint = new EffectTargetingPoint();
 		base.Init(ownerCreature, weapon, targetAngle);
 
-		m_spawnedMob = Const.GetSpawn().SpawnMob(m_ownerCreature.RefMob.dropEggMob.refMob, weapon.Level, gameObject.transform.position, false, false);
-		m_spawnedMob.CreatureType = ownerCreature.CreatureType;
-		m_spawnedMob.SetTarget(null);
+		if (weapon.WeaponStat.summonRefMobId > 0)
+		{
+			m_spawnedMob = Const.GetSpawn().SpawnMob(RefData.Instance.RefMobs[weapon.WeaponStat.summonRefMobId], weapon.Level, gameObject.transform.position, false, false);
+			
+			m_spawnedMob.CreatureType = ownerCreature.CreatureType;
+			m_spawnedMob.SetTarget(null);
+		}
 	}
 
 	protected override void createParabola(float targetAngle)

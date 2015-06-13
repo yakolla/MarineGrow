@@ -356,7 +356,7 @@ public class Creature : MonoBehaviour {
 			}
 		}
 		
-		return null;
+		return lastTarget;
 	}
 
 	protected bool HasCrowdControl()

@@ -41,7 +41,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 		System.GC.Collect();
 
-
+		Const.CHEAT_MODE = m_cheat;
 
 		m_spawn = GameObject.Find("Dungeon/Spawn").GetComponent<Spawn>();
 		GPlusPlatform.Instance.InitAnalytics(GameObject.Find("GAv3").GetComponent<GoogleAnalyticsV3>());
@@ -49,6 +49,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		if (m_cheat == true)
 		{
+#if UNITY_EDITOR
 			if (Warehouse.Instance.Items.Count == 0)
 			{
 				WeaponStat gunStat = new WeaponStat();
@@ -85,6 +86,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				}
 
 			}
+#endif
 		}
 		else
 		{

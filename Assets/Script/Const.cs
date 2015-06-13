@@ -69,7 +69,7 @@ public class Const {
 	public const string LEADERBOARD_SURVIVAL_TIME = "CgkIrKGfsOUeEAIQGw";
 	public const string LEADERBOARD_KILLED_MOBS = "CgkIrKGfsOUeEAIQGg";
 
-
+	public static bool			CHEAT_MODE = false;
 
 	public static bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
 	{

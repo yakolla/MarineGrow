@@ -23,11 +23,6 @@
 				"hpPerLevel":0.5,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0
-			},
-			"dropEggMob":
-			{
-				"refMobId":31001,
-				"maxCount":1
 			}
 		},
 		{
@@ -562,7 +557,8 @@
 					"weaponStat":
 					{
 						"coolTime":4,
-						"range":7
+						"range":7,
+						"summonRefMobId":31001
 					}	
 				}
 			],
@@ -581,10 +577,6 @@
 				"moveSpeed":0,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},			
-			"dropEggMob":
-			{
-				"refMobId":31001
 			}
 		},
 		{
@@ -659,7 +651,8 @@
 					"weaponStat":
 					{
 						"coolTime":4,
-						"range":8
+						"range":8,
+						"summonRefMobId":31006
 					}	
 				}
 			],
@@ -678,11 +671,7 @@
 				"moveSpeed":1.5,
 				"navMeshBaseOffset":0
 			},
-			"mass":3,			
-			"dropEggMob":
-			{
-				"refMobId":31006
-			}
+			"mass":3
 		},
 		{
 			"id":40002,
@@ -854,10 +843,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":31007
 			}
 		},
 		{
@@ -893,7 +878,11 @@
 					}	
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{					
+						"summonRefMobId":31001
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -911,14 +900,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31006,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
 			}
 		},
 		{
@@ -939,7 +920,11 @@
 					}	
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"summonRefMobId":31004
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -957,11 +942,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":31004,
-				"maxCount":12
 			}
 		},
 		{
@@ -987,7 +967,11 @@
 					}
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"summonRefMobId":31007
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -1005,14 +989,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
 			}
 		},
 		{
@@ -1031,7 +1007,11 @@
 					"refItemId":"123"
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"summonRefMobId":31004
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -1049,11 +1029,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":2,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":31004,
-				"maxCount":12
 			}
 		},
 		{
@@ -1079,7 +1054,11 @@
 					}
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"summonRefMobId":31007
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -1097,14 +1076,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
 			}
 		},
 		{
@@ -1130,7 +1101,11 @@
 					}
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"summonRefMobId":31007
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -1148,14 +1123,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
 			}
 		},
 		{
@@ -1179,9 +1146,6 @@
 						"coolTime":1,
 						"range":10
 					}
-				},
-				{
-					
 				}
 			],
 			"mobAI":"Normal",		
@@ -1199,14 +1163,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
 			}
 		},
 		{
@@ -1232,7 +1188,11 @@
 					}
 				},
 				{
-					"refItemId":"126"
+					"refItemId":"126",
+					"weaponStat":
+					{
+						"summonRefMobId":31007
+					}
 				}
 			],
 			"mobAI":"Normal",		
@@ -1250,14 +1210,6 @@
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"reqLevel":1,
-				"refMobId":31007,
-				"maxCount":36,
-				"perCount":5,
-				"perTime":0.3
 			}
 		}
 	],
@@ -1520,11 +1472,6 @@
 				"moveSpeed":2.2,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
-			},
-			"dropEggMob":
-			{
-				"refMobId":31008,
-				"maxCount":1
 			}
 		}
 	],

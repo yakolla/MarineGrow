@@ -111,7 +111,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 		--m_champ.NuclearSkillStack;
 
-		m_champ.WeaponHolder.ActiveWeaponSkillFire(m_champ.WeaponHolder.MainWeapon.SkillId, transform.eulerAngles.y);
+		m_champ.WeaponHolder.ActiveWeaponSkillFire(m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId, transform.eulerAngles.y);
 	}
 
 	void SetActiveGUI(bool active)

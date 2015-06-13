@@ -95,6 +95,13 @@ public class Spawn : MonoBehaviour {
 		m_dropShip.SetChamp(champ);
 		m_dropShip.GetComponent<Animator>().SetTrigger("Move");
 		StartCoroutine(spawnMobPer());
+
+#if UNITY_EDITOR
+		if (Const.CHEAT_MODE)
+		{
+			champ.RemainStatPoint = 10;
+		}
+#endif
 	}
 
 	bool checkBossAlive()

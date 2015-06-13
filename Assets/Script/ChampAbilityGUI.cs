@@ -275,7 +275,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 
 
-		skillAbili.Add(new Ability(0.3f, "Charge to " + (m_champ.WeaponHolder.MainWeapon.SkillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.SkillId].codeName : ""), 
+		skillAbili.Add(new Ability(0.3f, "Charge to " + (m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId].codeName : ""), 
 		                           ()=>{
 			int backup = m_champ.NuclearSkillStack+3;
 			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
@@ -285,7 +285,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		},
 		()=>{
-			return m_champ.WeaponHolder.MainWeapon.SkillId > 0;
+			return m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId > 0;
 		}
 		));
 
@@ -572,8 +572,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_abilities.Add(AbilityCategory.Skill, skillAbili);
 		m_abilities.Add(AbilityCategory.Weapon, utilAbili);
 
-
-
 		for(int i = 0; i < m_statButtons.Length; ++i)
 			m_statButtons[i] = new YGUISystem.GUIButton(transform.Find("StatButton"+i).gameObject, ()=>{return true;});
 
@@ -583,6 +581,13 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return m_champ.RemainStatPoint > 0;});
 		m_rollButton.Prices = RefData.Instance.RefItems[Const.RandomAbilityRefItemId].levelup.conds;
 		m_rollButton.GUIImageButton.Button.gameObject.SetActive(Warehouse.Instance.CheatLevel == 1);
+
+#if UNITY_EDITOR
+		if (Const.CHEAT_MODE)
+		{
+			transform.Find("RollingButton").gameObject.SetActive(true);
+		}
+#endif
 
 		RandomAbility();
 	}

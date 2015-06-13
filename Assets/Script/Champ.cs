@@ -17,13 +17,11 @@ public class Champ : Creature {
 	[SerializeField]
 	Vector3	m_cameraOffset;
 
-	[SerializeField]
 	int			m_remainStatPoint = 0;
 
-	[SerializeField]
-	int			m_comboKills;
+	int			m_mobKills;
 
-	int			m_comboSkillStacks = 0;
+	int			m_machoSkillStacks = 0;
 	int			m_nuclearSkillStacks = 0;
 
 	ItemObject[]	m_accessoryItems = new ItemObject[Const.AccessoriesSlots];
@@ -54,8 +52,8 @@ public class Champ : Creature {
 	{
 		base.Init(refMob, level);
 
-		m_comboKills = 0;
-		m_comboSkillStacks = 0;
+		m_mobKills = 0;
+		m_machoSkillStacks = 0;
 
 	}
 
@@ -157,8 +155,8 @@ public class Champ : Creature {
 
 	public int MobKills
 	{
-		get {return m_comboKills;}
-		set {m_comboKills = value;}
+		get {return m_mobKills;}
+		set {m_mobKills = value;}
 	}
 
 	public Vector3 MoveDir
@@ -168,8 +166,8 @@ public class Champ : Creature {
 
 	public int MachoSkillStack
 	{
-		get {return m_comboSkillStacks;}
-		set {m_comboSkillStacks = value;}
+		get {return m_machoSkillStacks;}
+		set {m_machoSkillStacks = value;}
 	}
 
 	public int NuclearSkillStack

@@ -25,9 +25,6 @@ public class Weapon : MonoBehaviour {
 
 	protected	bool			m_firing = false;
 
-	[SerializeField]
-	protected float				m_coolTime = 0.5f;
-
 	protected float				m_lastCreated = 0;
 	protected Creature 			m_creature;
 
@@ -37,17 +34,14 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	GameObject					m_prefSubWeapon;
 
+	WeaponStat					m_weaponStat;
 
 	Weapon m_subWeapon;
 
 	public delegate void CallbackOnCreateBullet();
 	public CallbackOnCreateBullet	m_callbackCreateBullet = delegate(){};
 
-	[SerializeField]
-	protected float		m_attackRange;
 
-	int					m_spPerLevel;
-	int					m_skillId;
 
 	protected int		m_level;
 
@@ -83,10 +77,7 @@ public class Weapon : MonoBehaviour {
 		m_lastCreated = Time.time;
 		m_firing = false;
 		m_level = 0;
-		m_coolTime = weaponData.WeaponStat.coolTime;
-		m_spPerLevel = weaponData.WeaponStat.spPerLevel;
-		m_skillId = weaponData.WeaponStat.skillId;
-		AttackRange = weaponData.WeaponStat.range;
+		m_weaponStat = weaponData.WeaponStat;
 	
 		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
 			MoreFire();
@@ -150,17 +141,6 @@ public class Weapon : MonoBehaviour {
 	public RefItem RefItem
 	{
 		get {return m_refItem;}
-	}
-
-	public int SkillId
-	{
-		get{return m_skillId;}
-	}
-
-	public int SpPerLevel
-	{
-		set{m_spPerLevel = value;}
-		get{return m_spPerLevel;}
 	}
 
 	public int SP
@@ -244,7 +224,7 @@ public class Weapon : MonoBehaviour {
 		const float maxCool = 0.5f;
 		float levelRatio = (m_level-1)/(float)Const.ItemMaxLevel;
 		float coolPerLevel = (1-levelRatio)*1 + levelRatio*maxCool;
-		return m_coolTime*m_creature.m_creatureProperty.AttackCoolTime*coolPerLevel;
+		return m_weaponStat.coolTime*m_creature.m_creatureProperty.AttackCoolTime*coolPerLevel;
 	}
 
 	public bool canConsumeSP()
@@ -305,10 +285,9 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	public float AttackRange
+	public WeaponStat WeaponStat
 	{
-		get { return m_attackRange; }
-		set { m_attackRange = value; }
+		get { return m_weaponStat; }
 	}
 
 	public void SetSubWeapon(Weapon weapon)

@@ -6,7 +6,7 @@ public class ItemWeaponData : ItemData{
 
 	string 	m_prefWeapon;
 	string 	m_weaponName;
-	WeaponStat	m_weaponStat;
+	WeaponStat	m_weaponStat = new WeaponStat();
 
 	public ItemWeaponData(int refItemId, WeaponStat	weaponStat) : base(refItemId, 1)
 	{
@@ -14,30 +14,11 @@ public class ItemWeaponData : ItemData{
 		m_weaponName = RefItem.codeName;
 		if (weaponStat == null)
 		{
-			m_weaponStat = RefItem.weaponStat;
+			m_weaponStat.OverrideStat(RefItem.weaponStat);
 		}
 		else
 		{
-			m_weaponStat = weaponStat;
-			if (m_weaponStat.coolTime == 0)
-			{
-				m_weaponStat.coolTime = RefItem.weaponStat.coolTime;
-			}
-
-			if (m_weaponStat.range == 0)
-			{
-				m_weaponStat.range = RefItem.weaponStat.range;
-			}
-
-			if (m_weaponStat.spPerLevel == 0)
-			{
-				m_weaponStat.spPerLevel = RefItem.weaponStat.spPerLevel;
-			}
-
-			if (m_weaponStat.skillId == 0)
-			{
-				m_weaponStat.skillId = RefItem.weaponStat.skillId;
-			}
+			m_weaponStat.OverrideStat(weaponStat);
 		}
 
 		Lock = true;

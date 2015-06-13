@@ -132,7 +132,7 @@ public class WeaponHolder : MonoBehaviour {
 		if (m_weapons.Count == 0)
 			return 0f;
 
-		return m_weapons[m_curWeaponIndex].AttackRange;
+		return m_weapons[m_curWeaponIndex].WeaponStat.range;
 	}
 
 	public Weapon MainWeapon
