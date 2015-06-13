@@ -294,7 +294,7 @@ public class Warehouse {
 
 		foreach(ItemObject obj in m_items)
 		{
-			if (refItemId == 1001)
+			if (refItemId == 1001 && item != null)
 			{
 				if (obj.Item.Compare(item))
 					return obj;

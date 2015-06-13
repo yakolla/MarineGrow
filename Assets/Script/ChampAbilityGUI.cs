@@ -355,7 +355,6 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			
 			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
-			//"SP:" + Weapon.GetSP(RefData.Instance.RefItems[131], ori) + " -> " + "<color=yellow>" +Weapon.GetSP(RefData.Instance.RefItems[131], backup)+ "</color>";
 		},
 		()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(134);

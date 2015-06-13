@@ -59,14 +59,25 @@ public class ChampSettingGUI : MonoBehaviour {
 				gunWeaponData.Lock = false;			
 				Warehouse.Instance.PushItem(gunWeaponData);
 
-				for(int w = Const.ChampFiregunRefItemId; w < 128; ++w)
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId, null));
+
+				foreach(KeyValuePair<int, RefItem> keyPair in RefData.Instance.RefItems)
 				{
-					if (w == Const.ChampGunRefItemId)
+					if (Warehouse.Instance.FindItem(keyPair.Key,null) != null)
 						continue;
-
-					Warehouse.Instance.PushItem(new ItemWeaponData(w, null));
+					
+					switch(keyPair.Value.type)
+					{
+					case ItemData.Type.Weapon:
+						ItemWeaponData weaponData = new ItemWeaponData(keyPair.Key, null);
+						Warehouse.Instance.PushItem(weaponData);
+						break;
+					}
 				}
-
 
 				Warehouse.Instance.PushItem(new ItemCheatData());
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
@@ -84,7 +95,6 @@ public class ChampSettingGUI : MonoBehaviour {
 					followerData.Lock = true;
 					Warehouse.Instance.PushItem(followerData);
 				}
-
 			}
 #endif
 		}
