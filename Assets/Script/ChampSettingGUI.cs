@@ -52,9 +52,7 @@ public class ChampSettingGUI : MonoBehaviour {
 #if UNITY_EDITOR
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				WeaponStat gunStat = new WeaponStat();
-				gunStat.firingCount = 2; 
-				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, gunStat);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, null);
 
 				gunWeaponData.Lock = false;			
 				Warehouse.Instance.PushItem(gunWeaponData);
@@ -106,9 +104,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 
 
-				WeaponStat gunStat = new WeaponStat();
-				gunStat.firingCount = 2; 
-				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, gunStat);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, null);
 				gunWeaponData.Lock = false;	
 				Warehouse.Instance.PushItem(gunWeaponData);
 				

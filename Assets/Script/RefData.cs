@@ -68,6 +68,11 @@ public class WeaponStat
 		{
 			range = weaponStat.range;
 		}
+
+		if (firingCount == 0)
+		{
+			firingCount = weaponStat.firingCount;
+		}
 		
 		if (spPerLevel == 0)
 		{

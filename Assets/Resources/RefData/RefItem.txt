@@ -467,7 +467,8 @@
 		{
 			"coolTime":0.7,
 			"range":7,
-			"skillId":133
+			"skillId":133,
+			"firingCount":2
 		},
 		"levelup":
 		{
@@ -1167,29 +1168,8 @@
 		"icon":"Sprites/Grenade",		
 		"weaponStat":
 		{
-			"coolTime":1,
+			"coolTime":0,
 			"range":0
-		},
-		"unlock":
-		{
-			"conds":
-			[
-				{
-					"refItemId":1, 
-					"count":50
-				},
-				{
-					"refItemId":5, 
-					"count":5
-				}
-			],
-			"else_conds":
-			[
-				{
-					"refItemId":8,
-					"count":5
-				}
-			]
 		}
 	},
 	{
