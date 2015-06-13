@@ -567,7 +567,7 @@ public class Creature : MonoBehaviour {
 		m_buffEffects[(int)DamageDesc.BuffType.Burning].m_run = false;
 	}
 
-	IEnumerator EffectCombo100(float time)
+	IEnumerator EffectMacho(float time)
 	{
 		GameObject pref = Resources.Load<GameObject>("Pref/ef combo skill");
 		GameObject effect = (GameObject)Instantiate(pref);
@@ -627,7 +627,7 @@ public class Creature : MonoBehaviour {
 			StartCoroutine(EffectBurning(time, offender, damageDesc));
 			break;
 		case DamageDesc.BuffType.Macho:
-			StartCoroutine(EffectCombo100(time));
+			StartCoroutine(EffectMacho(time));
 			break;
 		case DamageDesc.BuffType.Dash:
 			StartCoroutine(EffectDash(damageDesc, time));
@@ -679,6 +679,12 @@ public class Creature : MonoBehaviour {
 	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 
+		if (m_buffEffects[(int)DamageDesc.BuffType.Macho].m_run == true)
+		{
+			DamageText("Blocked", Color.white, DamageNumberSprite.MovementType.Parabola);
+			return;
+		}
+
 		bool critical = false;
 		float criticalDamage = 1f;
 		if (offender != null)
@@ -723,7 +729,7 @@ public class Creature : MonoBehaviour {
 				}
 				else
 				{
-					strDamage = "Block";
+					strDamage = "Blocked";
 				}
 
 			}
