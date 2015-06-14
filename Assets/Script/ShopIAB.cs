@@ -17,6 +17,9 @@
 using UnityEngine;
 using OnePF;
 using System.Collections.Generic;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
 
 /**
  * Example of OpenIAB usage
@@ -46,11 +49,12 @@ public class ShopIAB : MonoBehaviour
     string _label = "";
     bool _isInitialized = false;
 	bool m_progressing = false;
-    Inventory _inventory = null;
 	int	m_needTotalGems = 0;
+	int	m_tryToSaveCount = 0;
 
-    private void Start()
-    {
+	private void Awake()
+	{
+
 		// Listen to all events for illustration purposes
 		OpenIABEventManager.billingSupportedEvent += billingSupportedEvent;
 		OpenIABEventManager.billingNotSupportedEvent += billingNotSupportedEvent;
@@ -60,6 +64,25 @@ public class ShopIAB : MonoBehaviour
 		OpenIABEventManager.purchaseFailedEvent += purchaseFailedEvent;
 		OpenIABEventManager.consumePurchaseSucceededEvent += consumePurchaseSucceededEvent;
 		OpenIABEventManager.consumePurchaseFailedEvent += consumePurchaseFailedEvent;
+
+	}
+
+	private void OnDestroy()
+	{
+		// Listen to all events for illustration purposes
+		OpenIABEventManager.billingSupportedEvent -= billingSupportedEvent;
+		OpenIABEventManager.billingNotSupportedEvent -= billingNotSupportedEvent;
+		OpenIABEventManager.queryInventorySucceededEvent -= queryInventorySucceededEvent;
+		OpenIABEventManager.queryInventoryFailedEvent -= queryInventoryFailedEvent;
+		OpenIABEventManager.purchaseSucceededEvent -= purchaseSucceededEvent;
+		OpenIABEventManager.purchaseFailedEvent -= purchaseFailedEvent;
+		OpenIABEventManager.consumePurchaseSucceededEvent -= consumePurchaseSucceededEvent;
+		OpenIABEventManager.consumePurchaseFailedEvent -= consumePurchaseFailedEvent;
+	}
+
+    private void Start()
+    {
+
 
 		m_needGems = new YGUISystem.GUILable(transform.Find("NeedGems/Text").gameObject);
 
@@ -97,13 +120,15 @@ public class ShopIAB : MonoBehaviour
 		var options = new Options();
 		options.checkInventoryTimeoutMs = Options.INVENTORY_CHECK_TIMEOUT_MS * 2;
 		options.discoveryTimeoutMs = Options.DISCOVER_TIMEOUT_MS * 2;
-		options.checkInventory = false;
+		options.checkInventory = true;
 		options.verifyMode = OptionsVerifyMode.VERIFY_ONLY_KNOWN;
 		options.prefferedStoreNames = new string[] { OpenIAB_Android.STORE_GOOGLE };
 		options.availableStoreNames = new string[] { OpenIAB_Android.STORE_GOOGLE };
 		options.storeKeys = new Dictionary<string, string> { {OpenIAB_Android.STORE_GOOGLE, googlePublicKey} };
 		options.storeSearchStrategy = SearchStrategy.INSTALLER_THEN_BEST_FIT;
+
 		
+		m_progressing = true;
 		// Transmit options and start the service
 		OpenIAB.init(options);
 	}
@@ -125,6 +150,7 @@ public class ShopIAB : MonoBehaviour
 			return;
 		}
 
+		m_tryToSaveCount = 0;
 		m_progressing = true;
 		m_closeButton.Lable.Text.text = "It's purchasing";
 		OpenIAB.purchaseProduct(sku, "ok marine");
@@ -146,32 +172,46 @@ public class ShopIAB : MonoBehaviour
 
     private void billingSupportedEvent()
     {
-        _isInitialized = true;
+		m_closeButton.Lable.Text.text = "Check Inventory";
+#if UNITY_EDITOR
+		queryInventorySucceededEvent(null);
+#else
+
 		OpenIAB.queryInventory();
+#endif
+        
     }
     
 	private void billingNotSupportedEvent(string error)
     {
-		gameObject.SetActive(false);
+		m_closeButton.Lable.Text.text = "Sorry, " + error;
+		m_progressing = false;
     }
 
     private void queryInventorySucceededEvent(Inventory inventory)
     {
-		if (inventory != null)
-        {
-            _label = inventory.ToString();
-            _inventory = inventory;
+		_isInitialized = true;
 
-			foreach(Purchase purchase in _inventory.GetAllPurchases())
+		if (inventory != null)
+        {           
+			m_closeButton.Lable.Text.text = "Check Purchased Items";
+			foreach(Purchase purchase in inventory.GetAllPurchases())
 			{
 				OpenIAB.consumeProduct(purchase);
 			}
+
+			if (inventory.GetAllPurchases().Count > 0)
+				return;
         }
+
+		m_closeButton.Lable.Text.text = "Close";
+		m_progressing = false;
     }
     
 	private void queryInventoryFailedEvent(string error)
     {
-		_label = error;
+		m_closeButton.Lable.Text.text = "Sorry, " + error;
+		m_progressing = false;
     }
     
 	private void purchaseSucceededEvent(Purchase purchase)
@@ -180,31 +220,52 @@ public class ShopIAB : MonoBehaviour
 
 		OpenIAB.consumeProduct(purchase);
     }
-    private void purchaseFailedEvent(int errorCode, string errorMessage)
+	private void purchaseFailedEvent(int errorCode, string error)
     {
-		_label = "Purchase Failed: " + errorMessage;
+		m_closeButton.Lable.Text.text = "Sorry, " + error;
 		
 		m_progressing = false;
     }
     private void consumePurchaseSucceededEvent(Purchase purchase)
     {
+		_label = "CONSUMED: " + purchase.ToString();
 
-		m_closeButton.Lable.Text.text = "Thanks for your purchase: " + m_paidItems[purchase.Sku].Gem;
-        _label = "CONSUMED: " + purchase.ToString();
+		Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game)=>{
 
-		PaidItem paidItem = null;
-		if (true == m_paidItems.TryGetValue(purchase.Sku, out paidItem))
-		{
-			Warehouse.Instance.Gem.Item.Count += paidItem.Gem;
-		}
+			OnSaveGame(status,  purchase);
 
-		m_progressing = false;
-
-		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Shop", "Purchase:" + purchase.Sku, 0);
+		});
     }
+
     private void consumePurchaseFailedEvent(string error)
     {
-		_label = "Consume Failed: " + error;
+		m_closeButton.Lable.Text.text = "Sorry, " + error;
 		m_progressing = false;
     }
+
+	void OnSaveGame(SavedGameRequestStatus status, Purchase purchase)
+	{
+		if (status == SavedGameRequestStatus.Success)
+		{
+			m_closeButton.Lable.Text.text = "Thanks for your purchase: " + m_paidItems[purchase.Sku].Gem;
+			
+			PaidItem paidItem = null;
+			if (true == m_paidItems.TryGetValue(purchase.Sku, out paidItem))
+			{
+				Warehouse.Instance.Gem.Item.Count += paidItem.Gem;
+			}
+			
+			m_progressing = false;
+			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Shop", "Purchase:" + purchase.Sku, 0);
+		}
+		else
+		{
+			if (m_tryToSaveCount < 5)
+			{
+				++m_tryToSaveCount;
+				m_closeButton.Lable.Text.text = "Sorry, " + "Try to save " + m_tryToSaveCount;
+				consumePurchaseSucceededEvent(purchase);
+			}
+		}
+	}
 }

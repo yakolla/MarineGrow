@@ -34,10 +34,11 @@ public class Worldmap : MonoBehaviour {
 		if (status == SavedGameRequestStatus.Success) {
 			Warehouse.Instance.FileName = game.Filename;
 			Application.LoadLevel("Basic Dungeon");
+			Const.HideLoadingGUI();
 		} else {
 
 		}
-		Const.HideLoadingGUI();
+
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
@@ -71,10 +72,11 @@ public class Worldmap : MonoBehaviour {
 
 		if (status == SavedGameRequestStatus.Success) {
 			Application.LoadLevel("Basic Dungeon");
+			Const.HideLoadingGUI();
 		} else {
 
 		}
-		Const.HideLoadingGUI();
+
 		log = "OnSavedGameWritten:" + status + game;
 	}
 
@@ -86,11 +88,12 @@ public class Worldmap : MonoBehaviour {
 				Warehouse.Instance.Deserialize(data);
 
 			Application.LoadLevel("Basic Dungeon");
+			Const.HideLoadingGUI();
 		} else {
 
 		}
 
-		Const.HideLoadingGUI();
+
 	}
 
 	void Login()

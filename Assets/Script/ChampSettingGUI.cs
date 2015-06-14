@@ -296,10 +296,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		m_gem.Lable.Text.text = Warehouse.Instance.Gem.Item.Count.ToString();
 		m_start.Update();
 
-		if (Input.GetKeyDown(KeyCode.Escape)) 
-		{ 
-			Application.LoadLevel("Worldmap");
-		}
+
 	}
 
 	public void StartSpinButton(YGUISystem.GUIButton button)
@@ -537,6 +534,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}
 	}
+
 
 }
 
