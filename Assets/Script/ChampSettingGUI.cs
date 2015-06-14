@@ -394,7 +394,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (true == inEquipSlot)
 			{
 				
-				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				for(int x = 0; x < Cheat.HowManyAccessorySlot; ++x)
 				{
 					if (m_equipedAccessories[x].m_itemObject != null)
 					{
@@ -414,7 +414,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			else
 			{
 				bool aleadyExists = false;
-				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				for(int x = 0; x < Cheat.HowManyAccessorySlot; ++x)
 				{
 					if (m_equipedAccessories[x].m_itemObject == selectedItem)
 					{
@@ -425,7 +425,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				
 				if (aleadyExists == false)
 				{
-					for(int x = 0; x < m_equipedAccessories.Length; ++x)
+					for(int x = 0; x < Cheat.HowManyAccessorySlot; ++x)
 					{
 						if (m_equipedAccessories[x].m_itemObject == null)
 						{

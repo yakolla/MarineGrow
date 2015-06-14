@@ -552,7 +552,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{return m_champ.RemainStatPoint > 0;});
 		m_rollButton.Prices = RefData.Instance.RefItems[Const.RandomAbilityRefItemId].levelup.conds;
-		m_rollButton.GUIImageButton.Button.gameObject.SetActive(Warehouse.Instance.CheatLevel == 1);
+		m_rollButton.GUIImageButton.Button.gameObject.SetActive(Cheat.EnableAbilityRollButton);
 
 #if UNITY_EDITOR
 		if (Const.CHEAT_MODE)

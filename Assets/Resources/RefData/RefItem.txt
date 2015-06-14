@@ -79,27 +79,27 @@
 	},
 	{
 		"id":51,
-		"codeName":"Cheat",
+		"codeName":"Pandora",
 		"type":"Cheat",
-		"icon":"Sprites/LevelUp",
+		"icon":"Sprites/Pandora",
 		"levelup":
 		{
 			"conds":
 			[
 				{
 					"refItemId":1, 
-					"count":1000
+					"count":5000
 				},
 				{
 					"refItemId":5, 
-					"count":10
+					"count":50
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":10
+					"count":50
 				}
 			],
 			"pricePerLevel":2
@@ -110,18 +110,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":500
+					"count":5000
 				},
 				{
 					"refItemId":5, 
-					"count":5
+					"count":50
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":5
+					"count":50
 				}
 			]
 		}	

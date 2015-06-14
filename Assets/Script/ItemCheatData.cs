@@ -33,15 +33,12 @@ public class ItemCheatData : ItemData{
 
 		int level = Lock == true ? 0 : Level;
 
-		desc +=  "\n" + (level >= 1 ? enableColor : disableColor) + "Enable Roll Button In AbilityGUI</color>";
-		desc +=  "\n" + (level >= 2 ? enableColor : disableColor) + "On starting, Give 1 Ability point</color>";
-		desc +=  "\n" + (level >= 3 ? enableColor : disableColor) + "On starting, Give 3 Ability points</color>";
-		desc +=  "\n" + (level >= 4 ? enableColor : disableColor) + "On starting, Give 6 Ability points</color>";
-		desc +=  "\n" + (level >= 5 ? enableColor : disableColor) + "Enable Acessory slot 3</color>";
-		desc +=  "\n" + (level >= 6 ? enableColor : disableColor) + "Enable Acessory slot 4</color>";
-		desc +=  "\n" + (level >= 7 ? enableColor : disableColor) + "Enable Acessory slot 4</color>";
-		desc +=  "\n" + (level >= 8 ? enableColor : disableColor) + "Enable Acessory slot 4</color>";
-		desc +=  "\n" + (level >= 9 ? enableColor : disableColor) + "On level up, Give Ability Points twice</color>";
+		desc +=  "\n" + (level >= 1 ? enableColor : disableColor) + "Lv1:Enable Roll Button of AbilityGUI</color>";
+		desc +=  "\n" + (level >= 3 ? enableColor : disableColor) + "Lv3:Extend Acessory slot to 4</color>";
+		desc +=  "\n" + (level >= 5 ? enableColor : disableColor) + "Lv5:On starting, Give 1 Ability point</color>";
+		desc +=  "\n" + (level >= 6 ? enableColor : disableColor) + "Lv6:On starting, Give 3 Ability points</color>";
+		desc +=  "\n" + (level >= 7 ? enableColor : disableColor) + "Lv7:On starting, Give 6 Ability points</color>";
+		desc +=  "\n" + (level >= 9 ? enableColor : disableColor) + "Lv9:On level up, Give Ability Points twice</color>";
 			
 		return desc;
 	}

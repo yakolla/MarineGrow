@@ -342,6 +342,8 @@ public class Warehouse {
 		}
 	}
 
+
+
 	public int WaveIndex
 	{
 		get {return m_waveIndex;}

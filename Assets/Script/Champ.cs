@@ -54,6 +54,7 @@ public class Champ : Creature {
 
 		m_mobKills = 0;
 		m_machoSkillStacks = 0;
+		m_remainStatPoint = Cheat.HowManyAbilityPointOnStart;
 
 	}
 
@@ -65,7 +66,7 @@ public class Champ : Creature {
 
 	void LevelUp()
 	{
-		m_remainStatPoint+=1;
+		m_remainStatPoint+=1*Cheat.HowManyAbilityPointRatioOnLevelUp;
 
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 
