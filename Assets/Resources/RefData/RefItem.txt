@@ -1345,7 +1345,7 @@
 		"icon":"Sprites/FollowerGunMarines",
 		"weaponStat":
 		{
-			"coolTime":90
+			"coolTime":55
 		},
 		"unlock":
 		{
@@ -1397,7 +1397,7 @@
 		"icon":"Sprites/FollowerFireMarines",
 		"weaponStat":
 		{
-			"coolTime":90
+			"coolTime":55
 		},
 		"unlock":
 		{
@@ -1449,7 +1449,7 @@
 		"icon":"Sprites/FollowerGuidedRocketMarines",
 		"weaponStat":
 		{
-			"coolTime":90
+			"coolTime":55
 		},
 		"unlock":
 		{
@@ -1501,7 +1501,7 @@
 		"icon":"Sprites/FollowerRocketMarines",
 		"weaponStat":
 		{
-			"coolTime":90
+			"coolTime":55
 		},
 		"unlock":
 		{
@@ -1553,7 +1553,7 @@
 		"icon":"Sprites/FollowerBoomerangMarines",
 		"weaponStat":
 		{
-			"coolTime":90
+			"coolTime":55
 		},
 		"unlock":
 		{
@@ -1605,7 +1605,7 @@
 		"icon":"Sprites/FollowerTurret",
 		"weaponStat":
 		{
-			"coolTime":90
+			"coolTime":55
 		},
 		"unlock":
 		{

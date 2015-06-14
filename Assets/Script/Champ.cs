@@ -258,8 +258,6 @@ public class Champ : Creature {
 
 	override public void Death()
 	{
-		base.Death();
-
 		Warehouse.Instance.NewGameStats.KilledMobs = MobKills;
 		Warehouse.Instance.NewGameStats.SurvivalTime = Warehouse.Instance.PlayTime;
 		Warehouse.Instance.GameBestStats.SetBestStats(Warehouse.Instance.NewGameStats);
@@ -290,6 +288,8 @@ public class Champ : Creature {
 		});
 
 		Const.GetSpawn().StartCoroutine(ShowGameOverGUI());
+
+		base.Death();
 	}
 
 	IEnumerator	ShowGameOverGUI()

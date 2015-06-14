@@ -6,22 +6,18 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	Champ	m_champ;
 
-	ChampSettingGUI	m_champSettingGUI = null;
 
 
 	int			m_oldMobKills;
 	int			m_oldGold;
 
 	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
-	YGUISystem.GUICoolDownButton[]	m_accessoryButtons = new YGUISystem.GUICoolDownButton[Const.AccessoriesSlots];
+	YGUISystem.GUIChargeButton[]	m_accessoryButtons = new YGUISystem.GUIChargeButton[Const.AccessoriesSlots];
 	YGUISystem.GUIGuage[] m_guages = new YGUISystem.GUIGuage[Const.Guages];
 	ComboGUIShake	m_gold;
 	ComboGUIShake	m_mobKills;
 
 	void Start () {
-
-		m_champSettingGUI = GameObject.Find("HudGUI/SettingGUI/Panel").GetComponent<ChampSettingGUI>();
-
 
 
 		m_gold = transform.Find("Gold/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
@@ -42,7 +38,7 @@ public class ChampStatusGUI : MonoBehaviour {
 
 		for(int i = 0; i < m_accessoryButtons.Length; ++i)
 		{
-			m_accessoryButtons[i] = new YGUISystem.GUICoolDownButton(transform.Find("Accessory/Button"+i).gameObject, ()=>{
+			m_accessoryButtons[i] = new YGUISystem.GUIChargeButton(transform.Find("Accessory/Button"+i).gameObject, ()=>{
 				return true;
 			});
 		}
@@ -94,13 +90,13 @@ public class ChampStatusGUI : MonoBehaviour {
 		if (m_champ.AccessoryItems[slot] == null)
 			return;
 
-		if (m_accessoryButtons[slot].IsCoolDownDone() == false)
+		if (m_accessoryButtons[slot].ChargingPoint == 0)
 			return;
 
 		if (m_champ.AccessoryItems[slot].Item.Usable(m_champ) == false)
 			return;
 
-		m_accessoryButtons[slot].StartCoolDownTime(m_champ.AccessoryItems[slot].Item.RefItem.weaponStat.coolTime);
+		--m_accessoryButtons[slot].ChargingPoint;
 		m_champ.AccessoryItems[slot].Item.Use(m_champ);
 
 	}
@@ -132,12 +128,15 @@ public class ChampStatusGUI : MonoBehaviour {
 					continue;
 				
 				m_accessoryButtons[i].Icon.Image = m_champ.AccessoryItems[i].ItemIcon;
+				m_accessoryButtons[i].MaxChargingPoint = 3;
+				m_accessoryButtons[i].ChargingPoint = 3;
+				m_accessoryButtons[i].CoolDownTime = m_champ.AccessoryItems[i].Item.RefItem.weaponStat.coolTime;
 			}
 		}
 
 	}
 
-	void OnGUI()
+	void Update()
 	{		
 		if (m_champ == null)
 		{

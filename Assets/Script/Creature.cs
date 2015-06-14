@@ -810,12 +810,45 @@ public class Creature : MonoBehaviour {
 	
 	virtual public void Death()
 	{
-		GameObject effect = (GameObject)Instantiate(m_prefDeathEffect, transform.position, Quaternion.Euler(0, Random.Range(0, 360), 0));	
-		effect.transform.localScale = transform.localScale;
+		if (m_behaviourType == BehaviourType.Death)
+			return;
+		
 		m_behaviourType = BehaviourType.Death;
-		DestroyObject(this.gameObject);
 
+		GameObject effect = (GameObject)GameObject.Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
+		effect.transform.localScale = transform.localScale;
+		
+		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
+		if (sfx != null)
+		{
+			effect.audio.clip = sfx;
+			effect.audio.Play();
+		}
+		
+		Const.DestroyChildrenObjects(m_weaponHolder.gameObject);
+		
+		Const.DestroyChildrenObjects(m_aimpoint);
+		
+		GameObject body = gameObject.transform.Find("Body").gameObject;
+		body.transform.parent = null;
+		GameObjectPool.Instance.Free(body);
+		DestroyObject(gameObject);
+		
 		ShakeCamera(0.1f);
 	}
 
+
+	static public GameObject InstanceCreature(GameObject prefHead, GameObject prefBody, Vector3 pos, Quaternion rotation)
+	{
+		GameObject obj = (GameObject)GameObject.Instantiate(prefHead, pos, rotation);
+
+		GameObject enemyBody = GameObjectPool.Instance.Alloc (prefBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
+		enemyBody.name = "Body";
+		enemyBody.transform.parent = obj.transform;
+		enemyBody.transform.localPosition = Vector3.zero;
+		enemyBody.transform.localRotation = prefBody.transform.rotation;
+		enemyBody.transform.localScale = prefBody.transform.localScale;
+
+		return obj;
+	}
 }

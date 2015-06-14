@@ -56,57 +56,107 @@ public class YGUISystem {
 		}
 	}
 
-	public class GUICoolDownButton : GUIButton
+	public class GUICoolDown
 	{
-		protected float				m_startCoolDownTime;
-		protected float				m_coolDownTime;
+		float				m_startCoolDownTime;
+		float				m_coolDownTime;
+		Image				m_image;
+		Text				m_text;
+		bool				m_doing;
+		System.Action		m_callback;
 
-		public GUICoolDownButton(GameObject obj, System.Func<bool> enableChecker)
-			: base(obj, enableChecker)
+		public GUICoolDown(GameObject obj, System.Action		callback)
 		{
+			m_image = obj.GetComponent<Image>();
+			m_text = obj.transform.Find("Text").GetComponent<Text>();
+			m_callback = callback;
+
 		}
 
 		public void StartCoolDownTime(float coolDownTime)
 		{
+			if (m_doing == true)
+				return;
+
+			m_doing = true;
 			m_startCoolDownTime = Time.time;
 			m_coolDownTime = coolDownTime;
-			m_button.image.fillAmount = 0f;
-			Lable.Text.text = coolDownTime.ToString();
-			
-			if (m_icon != null)
+			m_image.fillAmount = 0f;
+			m_text.text = coolDownTime.ToString();
+		}
+
+		void Done()
+		{
+			m_startCoolDownTime = 0;
+			m_text.text = "";
+			m_image.fillAmount = 0f;
+			m_doing = false;
+
+			m_callback();
+		}
+
+		public void Update()
+		{
+			if (m_startCoolDownTime == 0f)
+				return;
+
+			float elapsedRatio = (Time.time-m_startCoolDownTime)/m_coolDownTime;
+			m_image.fillAmount = elapsedRatio;
+			int remainTime = (int)(m_coolDownTime - (Time.time-m_startCoolDownTime));
+			m_text.text = remainTime.ToString();
+			if (elapsedRatio >= 1f)
 			{
-				Color color = m_icon.RawImage.color;
-				color.a = 0.2f;
-				m_icon.RawImage.color = color;
+				Done();
 			}
 		}
-		
-		public bool IsCoolDownDone()
+	}
+
+	public class GUIChargeButton : GUIButton
+	{
+		int m_charge;
+		int m_maxCharge;
+		float m_coolDownTime;
+
+		GUICoolDown m_guiCoolDown;
+		Text	m_chargingText;
+		public GUIChargeButton(GameObject obj, System.Func<bool> enableChecker)
+			: base(obj, enableChecker)
 		{
-			return m_button.image.fillAmount == 1f;
+			m_guiCoolDown = new GUICoolDown(obj.transform.Find("Cooldown").gameObject, ()=>{
+				++ChargingPoint;
+			});
+
+			m_chargingText = obj.transform.Find("Cooldown/ChargingPoint").gameObject.GetComponent<Text>();
+
 		}
 
 		override public void Update()
 		{
-			if (m_startCoolDownTime > 0f)
-			{
-				float elapsedRatio = (Time.time-m_startCoolDownTime)/m_coolDownTime;
-				m_button.image.fillAmount = elapsedRatio;
-				int remainTime = (int)(m_coolDownTime - (Time.time-m_startCoolDownTime));
-				Lable.Text.text = remainTime.ToString();
-				if (elapsedRatio >= 1f)
-				{
-					m_startCoolDownTime = 0;
-					Lable.Text.text = "";
-					if (m_icon != null)
-					{
-						Color color = m_icon.RawImage.color;
-						color.a = 1f;
-						m_icon.RawImage.color = color;
-					}
-				}
+			m_guiCoolDown.Update();
+			base.Update();
+		}
+
+		public int ChargingPoint
+		{
+			get {return m_charge;}
+			set {
+
+				m_charge = Mathf.Min(value, m_maxCharge);
+				m_chargingText.text = m_charge.ToString();
+
+				if (m_charge < m_maxCharge)
+					m_guiCoolDown.StartCoolDownTime(m_coolDownTime);
 			}
-			m_button.gameObject.SetActive( m_enableChecker() );
+		}
+
+		public int MaxChargingPoint
+		{
+			set {m_maxCharge = value;}
+		}
+
+		public float CoolDownTime
+		{
+			set {m_coolDownTime = value;}
 		}
 	}
 

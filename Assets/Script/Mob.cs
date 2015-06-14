@@ -109,8 +109,6 @@ public class Mob : Creature {
 		if (m_behaviourType == BehaviourType.Death)
 			return;
 
-		m_behaviourType = BehaviourType.Death;
-
 		Const.GetSpawn().OnKillMob(this);
 
 		if (RefMob.eggMob != null)
@@ -123,26 +121,7 @@ public class Mob : Creature {
 			}
 		}
 
-		GameObject effect = (GameObject)GameObject.Instantiate(m_prefDeathEffect, transform.position, transform.rotation);
-		effect.transform.localScale = transform.localScale;
-
-		AudioClip sfx = Resources.Load<AudioClip>("SFX/"+RefMob.prefBody+"_death");
-		if (sfx != null)
-		{
-			effect.audio.clip = sfx;
-			effect.audio.Play();
-		}
-
-		Const.DestroyChildrenObjects(m_weaponHolder.gameObject);
-
-		Const.DestroyChildrenObjects(m_aimpoint);
-
-		GameObject body = gameObject.transform.Find("Body").gameObject;
-		body.transform.parent = null;
-		GameObjectPool.Instance.Free(body);
-		DestroyObject(gameObject);
-		
-		ShakeCamera(0.1f);
+		base.Death();
 
 	}
 

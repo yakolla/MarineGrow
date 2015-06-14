@@ -496,12 +496,8 @@ public class Spawn : MonoBehaviour {
 		enemyPos.x = Mathf.Clamp(enemyPos.x, m_edgeRect.transform.position.x-m_edgeRect.size.x/2, m_edgeRect.transform.position.x+m_edgeRect.size.x/2);
 		enemyPos.z = Mathf.Clamp(enemyPos.z, m_edgeRect.transform.position.z-m_edgeRect.size.z/2, m_edgeRect.transform.position.z+m_edgeRect.size.z/2);
 
-		GameObject enemyObj = Instantiate(prefEnemy, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-		GameObject enemyBody = GameObjectPool.Instance.Alloc(prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
-		enemyBody.name = "Body";
-		enemyBody.transform.parent = enemyObj.transform;
-		enemyBody.transform.localPosition = Vector3.zero;
-		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
+		GameObject enemyObj = Creature.InstanceCreature(prefEnemy, prefEnemyBody, enemyPos, Quaternion.Euler (0, 0, 0)) as GameObject;
+
 		enemyObj.transform.localScale = new Vector3(refMob.scale, refMob.scale, refMob.scale);
 
 		Mob enemy = enemyObj.GetComponent<Mob>();

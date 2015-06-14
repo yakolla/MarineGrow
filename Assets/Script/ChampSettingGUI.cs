@@ -316,17 +316,9 @@ public class ChampSettingGUI : MonoBehaviour {
 			return;
 
 
-		GameObject champObj = (GameObject)Instantiate(Resources.Load<GameObject>("Pref/Champ"), m_spawnChamp.position, m_spawnChamp.localRotation);
-		GameObject prefEnemyBody = Resources.Load<GameObject>("Pref/mon_skin/" + RefData.Instance.RefChamp.prefBody);
-		
-		champObj.name = "Champ";
-		
-		GameObject enemyBody = Instantiate (prefEnemyBody, Vector3.zero, Quaternion.Euler (0, 0, 0)) as GameObject;
-		enemyBody.name = "Body";
-		enemyBody.transform.parent = champObj.transform;
-		enemyBody.transform.localPosition = Vector3.zero;
-		enemyBody.transform.localRotation = prefEnemyBody.transform.rotation;
-		
+		GameObject champObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/Champ"), Resources.Load<GameObject>("Pref/mon_skin/" + RefData.Instance.RefChamp.prefBody), m_spawnChamp.position, m_spawnChamp.localRotation);	
+		champObj.name = "Champ";		
+
 		Champ champ = champObj.GetComponent<Champ>();
 		champ.Init(RefData.Instance.RefChamp, 1);
 
