@@ -17,15 +17,15 @@ public class Const {
 		MainMenu,
 	}
 
-	public const int ItemMaxLevel = 9;
-	public const int ShowMaxDamageNumber = 3;
+	public const int MaxItemLevel = 9;
+	public const int MaxShowDamageNumber = 3;
 	public const int ComboSkillStackOnCombo = 100;
 	public const int ComboKill_2 = 200;
 	public const int ComboKill_3 = 300;
 	public const int SpecialButtons = 3;
 	public const int Guages = 3;
 	public const int MaxCallableFollowers = 3;
-	public const int MaxFiringCount = ItemMaxLevel+3;
+	public const int MaxFiringCount = MaxItemLevel+3;
 	public const float MaxAlphaMoveSpeed = 2f;
 	public const int AccessoriesSlots = 4;
 	public const int HalfAccessoriesSlots = AccessoriesSlots/2;
@@ -42,6 +42,7 @@ public class Const {
 	public const int ChampBoomerangLauncherRefItemId = 120;
 	public const int BootsRefItemId = 10;
 	public const int NuclearSkillRefItemId = 21;
+	public const int GemRefItemId = 8;
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";
@@ -73,6 +74,11 @@ public class Const {
 
 	public static bool			CHEAT_MODE = false;
 
+	public static float GetItemLevelupWorth(int level)
+	{
+		return 1f + (level-1);
+	}
+
 	public static bool CheckAvailableItem(RefPrice[] conds, float itemWorth)
 	{
 		if (conds == null)
@@ -103,128 +109,6 @@ public class Const {
 		{
 			Warehouse.Instance.PullItem(Warehouse.Instance.FindItem(price.refItemId), (int)(price.count*itemWorth));
 		}
-	}
-	
-	public delegate void OnPay();
-	public static int makeItemButton(GUISkin guiSkin, int fontSize, int startX, int startY, int width, int height, RefPriceCondition condition, float itemWorth, string btnName, OnPay functor)
-	{
-		int prevWidth = 0;
-		if (condition != null)
-		{			
-			prevWidth = width*3;
-			int btnHeight = height;
-			if (btnName.Equals("") == false)
-			{
-				btnHeight += height;
-			}
-
-			if (false == makeItemButtonCore(guiSkin, fontSize, startX, startY, prevWidth, height, btnHeight, condition.conds, itemWorth, btnName, functor))
-			{
-				if (condition.else_conds != null)
-					makeItemButtonCore(guiSkin, fontSize, startX, startY+width*2, prevWidth, height, height, condition.else_conds, itemWorth, "", functor);
-			}
-			
-		}
-		
-		return prevWidth;
-	}
-	public static bool makeItemButtonCore(GUISkin guiSkin, int fontSize, int startX, int startY, int width, int height, int btnHeight, RefPrice[] conds, float itemWorth, string btnName, OnPay functor)
-	{
-		GUIStyle itemCountStyle = guiSkin.GetStyle("ItemReqCount");
-		itemCountStyle.fontSize = fontSize;
-		
-		GUI.BeginGroup(new Rect(startX, startY, width, btnHeight));
-		
-		if (GUI.Button(new Rect(0, 0, width, btnHeight), ""))
-		{
-			if (CheckAvailableItem(conds, itemWorth))
-			{
-				PayPriceItem(conds, itemWorth);
-				functor();
-			}
-		}
-		
-		
-		GUI.Label(new Rect(0, 0, width, height), "<color=white>"+btnName+"</color>");
-		
-		bool able = true;
-		int priceIndex = 0;
-		startY = height/4;
-		float imgSize = height*0.7f;
-		height = btnHeight-height;
-		foreach(RefPrice price in conds)
-		{
-			RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
-			
-			GUI.Label(new Rect((width/(1+conds.Length)-imgSize/2)+(width/(1+conds.Length)-imgSize/2)*2*priceIndex, height, imgSize, imgSize), Resources.Load<Texture>(condRefItem.icon));
-			
-			string str = "<color=white>";
-			int cost = (int)(price.count*itemWorth);
-			
-			ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);
-			int hasCount = 0;
-			if (inventoryItemObj == null)
-			{
-				str = "<color=red>";
-				able = false;
-			}
-			else if (inventoryItemObj != null)
-			{
-				if (inventoryItemObj.Item.Count < cost)
-				{
-					str = "<color=red>";
-					able = false;
-				}
-				hasCount = inventoryItemObj.Item.Count;
-			}
-			str += hasCount;
-			str += "/" + cost;
-			str += "</color>";
-			GUI.Label(new Rect(width/(conds.Length)*priceIndex, startY+height, width/(conds.Length), imgSize), str, itemCountStyle);
-			
-			++priceIndex;
-			
-		}
-		
-		GUI.EndGroup();
-		
-		return able;
-		
-	}
-
-	public static void GuiButtonMultitouchable(Rect rect, string name, GUIStyle style, System.Action callback)
-	{
-		switch (Application.platform)
-		{
-		case RuntimePlatform.WindowsEditor:
-		case RuntimePlatform.WindowsPlayer:
-			{
-				if (GUI.Button(rect, name, style))
-				{
-					callback();
-				}
-			}
-			break;
-		default:
-			{
-				foreach(Touch t in Input.touches)
-				{
-					if (t.phase == TouchPhase.Ended)
-					{
-						Vector2 vec = t.position;
-						vec.y = Screen.height - vec.y; // You need to invert since GUI and screen have differnet coordinate system
-						if(rect.Contains(vec))// Do something
-						{
-							callback();
-						}
-					}
-				}
-				
-				GUI.Label(rect, name, style);
-			}
-			break;
-		}
-
 	}
 
 	public static Texture2D getScreenshot() {

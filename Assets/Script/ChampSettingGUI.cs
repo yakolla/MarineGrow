@@ -107,7 +107,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId);
 				gunWeaponData.Lock = false;	
 				Warehouse.Instance.PushItem(gunWeaponData);
-				
+
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId));
@@ -462,15 +462,15 @@ public class ChampSettingGUI : MonoBehaviour {
 	{
 
 		ItemObject selectedItem = Warehouse.Instance.Items[itemIndex];
-		if (selectedItem.Item.Level < Const.ItemMaxLevel)
+		if (selectedItem.Item.Level < Const.MaxItemLevel)
 		{
 			if (button.TryToPay())
 			{
 				StartSpinButton(priceGemButton.m_priceButton.GUIImageButton);
 				++selectedItem.Item.Level;
 
-				priceGemButton.m_priceButton.NormalWorth = getItemLevelupWorth(selectedItem);
-				priceGemButton.m_gemButton.NormalWorth = getItemLevelupWorth(selectedItem);
+				priceGemButton.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level);
+				priceGemButton.m_gemButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level);
 
 				invSlot.ItemDesc = selectedItem.Item.Description();
 
@@ -536,11 +536,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				PopupShop();
 			}
 		}
-	}
-
-	float getItemLevelupWorth(ItemObject itemObj)
-	{
-		return 1f + (itemObj.Item.Level-1);
 	}
 
 }

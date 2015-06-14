@@ -370,4 +370,43 @@ public class Warehouse {
 	{
 		get {return m_options;}
 	}
+
+	public int NeedTotalGem
+	{
+		get{
+			int totalGem = 0;
+			foreach(ItemObject obj in m_items)
+			{
+				RefPriceCondition condUnlock = obj.Item.RefItem.unlock;
+				if (condUnlock != null)
+				{
+					foreach(RefPrice refPrice in condUnlock.else_conds)
+					{
+						if (refPrice.refItemId == Const.GemRefItemId)
+						{
+							totalGem += refPrice.count;
+							break;
+						}
+					}
+				}
+
+				RefPriceCondition condLevel = obj.Item.RefItem.levelup;
+				if (condLevel != null)
+				{
+					foreach(RefPrice refPrice in condLevel.else_conds)
+					{
+						if (refPrice.refItemId == Const.GemRefItemId)
+						{
+							for(int lv = obj.Item.Level; lv < Const.MaxItemLevel; ++lv)
+							{
+								totalGem += (int)(refPrice.count*Const.GetItemLevelupWorth(lv));
+							}
+							break;
+						}
+					}
+				}
+			}
+			return totalGem-Gem.Item.Count;
+		}
+	}
 }

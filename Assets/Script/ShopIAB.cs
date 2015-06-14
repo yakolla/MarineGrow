@@ -41,11 +41,13 @@ public class ShopIAB : MonoBehaviour
 	YGUISystem.GUIButton[]	m_piadItemButtons = new YGUISystem.GUIButton[3];
 	YGUISystem.GUIButton	m_closeButton;
 	Dictionary<string, PaidItem>	m_paidItems = new Dictionary<string, PaidItem>();
+	YGUISystem.GUILable	m_needGems;
 
     string _label = "";
     bool _isInitialized = false;
 	bool m_progressing = false;
     Inventory _inventory = null;
+	int	m_needTotalGems = 0;
 
     private void Start()
     {
@@ -58,6 +60,8 @@ public class ShopIAB : MonoBehaviour
 		OpenIABEventManager.purchaseFailedEvent += purchaseFailedEvent;
 		OpenIABEventManager.consumePurchaseSucceededEvent += consumePurchaseSucceededEvent;
 		OpenIABEventManager.consumePurchaseFailedEvent += consumePurchaseFailedEvent;
+
+		m_needGems = new YGUISystem.GUILable(transform.Find("NeedGems/Text").gameObject);
 
         Init();
     }
@@ -115,7 +119,14 @@ public class ShopIAB : MonoBehaviour
 		if (_isInitialized == false)
 			return;
 
+		if (m_needTotalGems - m_paidItems[sku].Gem <= -m_paidItems["gem.1000"].Gem)
+		{
+			m_closeButton.Lable.Text.text = "Sorry, You cannot purchase Gems";
+			return;
+		}
+
 		m_progressing = true;
+		m_closeButton.Lable.Text.text = "It's purchasing";
 		OpenIAB.purchaseProduct(sku, "ok marine");
 	}
 
@@ -125,14 +136,18 @@ public class ShopIAB : MonoBehaviour
 			Const.ShowLoadingGUI("Loading...");
 		else
 			Const.HideLoadingGUI();
+
+		for(int i = 0; i < m_piadItemButtons.Length; ++i)
+			m_piadItemButtons[i].Update();
+
+		m_needTotalGems = Warehouse.Instance.NeedTotalGem;
+		m_needGems.Text.text = m_needTotalGems.ToString();
 	}
 
     private void billingSupportedEvent()
     {
         _isInitialized = true;
 		OpenIAB.queryInventory();
-
-
     }
     
 	private void billingNotSupportedEvent(string error)

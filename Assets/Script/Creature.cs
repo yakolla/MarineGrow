@@ -716,7 +716,7 @@ public class Creature : MonoBehaviour {
 			shielded = true;
 		}
 		
-		if (m_ingTakenDamageEffect < Const.ShowMaxDamageNumber)
+		if (m_ingTakenDamageEffect < Const.MaxShowDamageNumber)
 		{
 			++m_ingTakenDamageEffect;
 			Color color = Color.white;
