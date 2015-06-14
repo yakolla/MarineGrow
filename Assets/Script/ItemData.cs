@@ -137,7 +137,7 @@ public class ItemData {
 				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)desc.Value;
 				break;
 			case Option.Weapon:
-				obj.EquipWeapon(new ItemWeaponData((int)desc.Value, null));
+				obj.EquipWeapon(new ItemWeaponData((int)desc.Value), null);
 				break;
 			}
 		}

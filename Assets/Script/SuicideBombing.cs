@@ -5,9 +5,9 @@ public class SuicideBombing : Weapon {
 
 	bool m_destroy = false;
 
-	public void Init(Creature creature, ItemWeaponData weaponData)
+	override public void Init(Creature creature, ItemWeaponData weaponData, WeaponStat weaponStat)
 	{
-		base.Init(creature, weaponData);
+		base.Init(creature, weaponData, weaponStat);
 
 		m_destroy = false;
 

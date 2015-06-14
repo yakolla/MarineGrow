@@ -40,9 +40,9 @@ public class ItemFollowerData : ItemData{
 			
 			foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
 			{
-				ItemWeaponData itemWeaponData = new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat);
+				ItemWeaponData itemWeaponData = new ItemWeaponData(weaponDesc.refItemId);
 				itemWeaponData.Level = Level;
-				follower.EquipWeapon(itemWeaponData);
+				follower.EquipWeapon(itemWeaponData, weaponDesc.weaponStat);
 			}
 		}
 

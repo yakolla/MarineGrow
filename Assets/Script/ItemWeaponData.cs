@@ -6,20 +6,11 @@ public class ItemWeaponData : ItemData{
 
 	string 	m_prefWeapon;
 	string 	m_weaponName;
-	WeaponStat	m_weaponStat = new WeaponStat();
 
-	public ItemWeaponData(int refItemId, WeaponStat	weaponStat) : base(refItemId, 1)
+	public ItemWeaponData(int refItemId) : base(refItemId, 1)
 	{
 		m_prefWeapon = "Pref/Weapon/" + RefItem.codeName;
 		m_weaponName = RefItem.codeName;
-		if (weaponStat == null)
-		{
-			m_weaponStat.OverrideStat(RefItem.weaponStat);
-		}
-		else
-		{
-			m_weaponStat.OverrideStat(weaponStat);
-		}
 
 		Lock = true;
 	}
@@ -35,14 +26,10 @@ public class ItemWeaponData : ItemData{
 		get{return m_weaponName;}
 	}
 
-	public WeaponStat WeaponStat
-	{
-		get{return m_weaponStat;}
-	}
 
 	override public void Equip(Creature obj)
 	{
-		obj.EquipWeapon(this);
+		obj.EquipWeapon(this, null);
 
 		ApplyOptions(obj);
 	}

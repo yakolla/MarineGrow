@@ -190,7 +190,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.SetSubWeapon(m_champ.WeaponHolder.MainWeapon, new ItemWeaponData(132, null));
+				m_champ.SetSubWeapon(m_champ.WeaponHolder.MainWeapon, new ItemWeaponData(132), null);
 			}
 
 			--m_champ.RemainStatPoint;
@@ -294,7 +294,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(131, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(131), null);
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -337,7 +337,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(134, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(134), null);
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -381,7 +381,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(129, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(129), null);
 			}
 			
 			--m_champ.RemainStatPoint;
@@ -437,7 +437,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(130, null));
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(130), null);
 			}
 			
 			--m_champ.RemainStatPoint;

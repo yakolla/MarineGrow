@@ -56,6 +56,26 @@ public class YGUISystem {
 		}
 	}
 
+	public class GUILockButton : GUIButton
+	{
+		RawImage m_lockIcon;
+		bool m_lock;
+		public GUILockButton(GameObject obj, System.Func<bool> enableChecker)
+			: base(obj, enableChecker)
+		{
+			m_lockIcon = obj.transform.Find("LockIcon").GetComponent<RawImage>();
+		}
+
+		public bool Lock
+		{
+			set{
+				m_lock = value;
+				m_lockIcon.gameObject.SetActive(m_lock);
+			}
+			get{return m_lock;}
+		}
+	}
+
 	public class GUICoolDown
 	{
 		float				m_startCoolDownTime;
@@ -120,7 +140,7 @@ public class YGUISystem {
 		GUICoolDown m_guiCoolDown;
 		Text	m_chargingText;
 		public GUIChargeButton(GameObject obj, System.Func<bool> enableChecker)
-			: base(obj, enableChecker)
+			: base(obj, ()=>{return m_charge > 0 && enableChecker();})
 		{
 			m_guiCoolDown = new GUICoolDown(obj.transform.Find("Cooldown").gameObject, ()=>{
 				++ChargingPoint;

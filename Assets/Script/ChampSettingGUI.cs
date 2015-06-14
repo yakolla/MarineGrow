@@ -12,7 +12,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	YGUISystem.GUIImageStatic	m_gold;
 	YGUISystem.GUIImageStatic	m_gem;
 	YGUISystem.GUIButton	m_weapon;
-	YGUISystem.GUIButton[]	m_accessories = new YGUISystem.GUIButton[Const.AccessoriesSlots];
+	YGUISystem.GUILockButton[]	m_accessories = new YGUISystem.GUILockButton[Const.AccessoriesSlots];
 	YGUISystem.GUIButton	m_start;
 
 	[SerializeField]
@@ -52,16 +52,16 @@ public class ChampSettingGUI : MonoBehaviour {
 #if UNITY_EDITOR
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, null);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId);
 
 				gunWeaponData.Lock = false;			
 				Warehouse.Instance.PushItem(gunWeaponData);
 
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId));
 
 				foreach(KeyValuePair<int, RefItem> keyPair in RefData.Instance.RefItems)
 				{
@@ -71,7 +71,7 @@ public class ChampSettingGUI : MonoBehaviour {
 					switch(keyPair.Value.type)
 					{
 					case ItemData.Type.Weapon:
-						ItemWeaponData weaponData = new ItemWeaponData(keyPair.Key, null);
+						ItemWeaponData weaponData = new ItemWeaponData(keyPair.Key);
 						Warehouse.Instance.PushItem(weaponData);
 						break;
 					}
@@ -104,15 +104,15 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 
 
-				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId, null);
+				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId);
 				gunWeaponData.Lock = false;	
 				Warehouse.Instance.PushItem(gunWeaponData);
 				
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId, null));
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId, null));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId));
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
@@ -137,7 +137,10 @@ public class ChampSettingGUI : MonoBehaviour {
 		m_weapon = new YGUISystem.GUIButton(transform.Find("WeaponButton").gameObject, ()=>{return true;});
 		for(int i = 0; i < m_accessories.Length; ++i)
 		{
-			m_accessories[i] = new YGUISystem.GUIButton(transform.Find("AccessoryButton" + i).gameObject, ()=>{return true;});
+			m_accessories[i] = new YGUISystem.GUILockButton(transform.Find("AccessoryButton" + i).gameObject, ()=>{return true;});
+
+			if (i < Const.HalfAccessoriesSlots)
+				m_accessories[i].Lock = false;
 		}
 
 		m_gold = new YGUISystem.GUIImageStatic(transform.Find("GoldImage").gameObject, Warehouse.Instance.Gold.ItemIcon);
@@ -227,7 +230,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 		case ButtonRole.Equip:
 			{
-			priceGemButton.EnableChecker = ()=>{return true;};
+				priceGemButton.EnableChecker = ()=>{return true;};
 
 				priceGemButton.SetPrices(null, null);
 				priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
@@ -287,7 +290,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		TimeEffector.Instance.StartTime();
 	}
 
-	void OnGUI()
+	void Update()
 	{
 		m_gold.Lable.Text.text = Warehouse.Instance.Gold.Item.Count.ToString();
 		m_gem.Lable.Text.text = Warehouse.Instance.Gem.Item.Count.ToString();
@@ -442,8 +445,17 @@ public class ChampSettingGUI : MonoBehaviour {
 			}
 		}break;
 		}
+	}
 
+	void UpdateAccessorySlots()
+	{
+		if (Cheat.HowManyAccessorySlot == Const.HalfAccessoriesSlots)
+			return;
 
+		for(int i = Const.HalfAccessoriesSlots; i < m_accessories.Length; ++i)
+		{
+			m_accessories[i].Lock = false;
+		}
 	}
 
 	public void OnClickLevelup(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)
@@ -461,6 +473,9 @@ public class ChampSettingGUI : MonoBehaviour {
 				priceGemButton.m_gemButton.NormalWorth = getItemLevelupWorth(selectedItem);
 
 				invSlot.ItemDesc = selectedItem.Item.Description();
+
+				UpdateAccessorySlots();
+
 				GPlusPlatform.Instance.AnalyticsTrackEvent("Weapon", "Levelup", selectedItem.Item.RefItem.codeName + "_Lv:" + selectedItem.Item.Level, 0);
 			}
 			else

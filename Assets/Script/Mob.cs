@@ -36,8 +36,7 @@ public class Mob : Creature {
 			if (weaponDesc.reqLevel > mobLevel)
 				continue;
 
-			ItemObject weapon = new ItemObject(new ItemWeaponData(weaponDesc.refItemId, weaponDesc.weaponStat));
-			weapon.Item.Equip(this);
+			EquipWeapon(new ItemWeaponData(weaponDesc.refItemId), weaponDesc.weaponStat);
 		}
 
 		switch(refMob.mobAI)

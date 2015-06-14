@@ -26,7 +26,7 @@ public class ItemSkillData : ItemData{
 	{
 		if (obj.WeaponHolder.GetActiveSkillWeapon(m_refWeaponItemId) == false)
 		{
-			obj.EquipActiveSkillWeapon(new ItemWeaponData(m_refWeaponItemId, null));
+			obj.EquipActiveSkillWeapon(new ItemWeaponData(m_refWeaponItemId), null);
 		}
 		obj.WeaponHolder.ActiveWeaponSkillFire(m_refWeaponItemId, obj.transform.eulerAngles.y);
 	}

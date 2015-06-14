@@ -27,7 +27,7 @@ public class Cheat {
 			if (Warehouse.Instance.CheatLevel >= 3)
 				return Const.AccessoriesSlots;
 
-			return Const.AccessoriesSlots/2;
+			return Const.HalfAccessoriesSlots;
 		}
 	}
 

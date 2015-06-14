@@ -28,6 +28,7 @@ public class Const {
 	public const int MaxFiringCount = ItemMaxLevel+3;
 	public const float MaxAlphaMoveSpeed = 2f;
 	public const int AccessoriesSlots = 4;
+	public const int HalfAccessoriesSlots = AccessoriesSlots/2;
 	public const int StartPosYOfPriceButtonImage = 10;
 	public const int StartPosYOfGemPriceButtonImage = -5;
 	public const int CheatRefItemId = 51;

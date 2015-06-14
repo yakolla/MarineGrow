@@ -600,7 +600,7 @@ public class Spawn : MonoBehaviour {
 						}
 						break;
 					case ItemData.Type.Weapon:
-						item = new ItemWeaponData(desc.refItem.id, null);
+						item = new ItemWeaponData(desc.refItem.id);
 						break;
 					case ItemData.Type.WeaponParts:
 						item = new ItemWeaponPartsData(desc.refItemId, Random.Range(desc.minValue, desc.maxValue));					

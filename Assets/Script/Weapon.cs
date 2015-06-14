@@ -64,7 +64,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	public void Init(Creature creature, ItemWeaponData weaponData)
+	public virtual void Init(Creature creature, ItemWeaponData weaponData, WeaponStat weaponStat)
 	{
 		m_creature = creature;
 		m_gunPoint = creature.WeaponHolder.gameObject;
@@ -77,9 +77,18 @@ public class Weapon : MonoBehaviour {
 		m_lastCreated = Time.time;
 		m_firing = false;
 		m_level = 0;
-		m_weaponStat = weaponData.WeaponStat;
+		m_weaponStat = new WeaponStat();
+		if (weaponStat == null)
+		{
+			m_weaponStat.OverrideStat(m_refItem.weaponStat);
+		}
+		else
+		{
+			m_weaponStat.OverrideStat(weaponStat);
+			m_weaponStat.OverrideStat(m_refItem.weaponStat);
+		}
 	
-		for(int i = 0; i < weaponData.WeaponStat.firingCount; ++i)
+		for(int i = 0; i < m_weaponStat.firingCount; ++i)
 			MoreFire();
 
 		for(int i = 0; i < weaponData.Level; ++i)

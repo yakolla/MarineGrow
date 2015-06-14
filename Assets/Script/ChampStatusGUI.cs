@@ -128,8 +128,8 @@ public class ChampStatusGUI : MonoBehaviour {
 					continue;
 				
 				m_accessoryButtons[i].Icon.Image = m_champ.AccessoryItems[i].ItemIcon;
-				m_accessoryButtons[i].MaxChargingPoint = 3;
-				m_accessoryButtons[i].ChargingPoint = 3;
+				m_accessoryButtons[i].MaxChargingPoint = 2;
+				m_accessoryButtons[i].ChargingPoint = 2;
 				m_accessoryButtons[i].CoolDownTime = m_champ.AccessoryItems[i].Item.RefItem.weaponStat.coolTime;
 			}
 		}

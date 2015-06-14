@@ -100,7 +100,7 @@ public class Creature : MonoBehaviour {
 		m_navAgent.baseOffset = m_refMob.baseCreatureProperty.navMeshBaseOffset;
 	}
 
-	Weapon instanceWeapon(ItemWeaponData weaponData)
+	Weapon instanceWeapon(ItemWeaponData weaponData, WeaponStat weaponStat)
 	{
 		GameObject obj = Instantiate (weaponData.PrefWeapon, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
 		Weapon weapon = obj.GetComponent<Weapon>();
@@ -110,14 +110,14 @@ public class Creature : MonoBehaviour {
 		obj.transform.localRotation = weaponData.PrefWeapon.transform.localRotation;
 		obj.transform.localScale = weaponData.PrefWeapon.transform.localScale;
 		
-		weapon.Init(this, weaponData);
+		weapon.Init(this, weaponData, weaponStat);
 
 		return weapon;
 	}
 
-	public void EquipWeapon(ItemWeaponData weaponData)
+	public void EquipWeapon(ItemWeaponData weaponData, WeaponStat weaponStat)
 	{		
-		Weapon weapon = instanceWeapon(weaponData);
+		Weapon weapon = instanceWeapon(weaponData, weaponStat);
 
 		weapon.m_callbackCreateBullet = delegate() {
 			if (m_animator != null)
@@ -128,29 +128,29 @@ public class Creature : MonoBehaviour {
 
 		m_weaponHolder.EquipWeapon(weapon);
 
-		if (weaponData.WeaponStat.skillId > 0)
+		if (weapon.WeaponStat.skillId > 0)
 		{
-			EquipActiveSkillWeapon(new ItemWeaponData(weaponData.WeaponStat.skillId, null));
+			EquipActiveSkillWeapon(new ItemWeaponData(weapon.WeaponStat.skillId), null);
 		}
 	}
 
-	public void EquipPassiveSkillWeapon(ItemWeaponData weaponData)
+	public void EquipPassiveSkillWeapon(ItemWeaponData weaponData, WeaponStat weaponStat)
 	{
-		Weapon weapon = instanceWeapon(weaponData);
+		Weapon weapon = instanceWeapon(weaponData, weaponStat);
 		
 		m_weaponHolder.EquipPassiveSkillWeapon(weapon);
 	}
 
-	public void EquipActiveSkillWeapon(ItemWeaponData weaponData)
+	public void EquipActiveSkillWeapon(ItemWeaponData weaponData, WeaponStat weaponStat)
 	{
-		Weapon weapon = instanceWeapon(weaponData);
+		Weapon weapon = instanceWeapon(weaponData, weaponStat);
 		
 		m_weaponHolder.EquipActiveSkillWeapon(weapon);
 	}
 
-	public void SetSubWeapon(Weapon weapon, ItemWeaponData weaponData)
+	public void SetSubWeapon(Weapon weapon, ItemWeaponData weaponData, WeaponStat weaponStat)
 	{
-		Weapon subWeapon = instanceWeapon(weaponData);
+		Weapon subWeapon = instanceWeapon(weaponData, weaponStat);
 		
 		weapon.SetSubWeapon(subWeapon);
 	}
