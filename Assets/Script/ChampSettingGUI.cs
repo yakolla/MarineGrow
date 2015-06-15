@@ -202,16 +202,25 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			invSlot.Update();
 
-			if (itemIndex == 0)
+			if (Warehouse.Instance.ChampEquipItems.m_weaponRefItemId == item.Item.RefItemID)
 			{
 				OnClickEquip(invSlot, invSlot.PriceButton0, invSlot.PriceButton0.m_priceButton, itemIndex);
+			}
+			else
+			{
+				for(int x = 0; x < m_equipedAccessories.Length; ++x)
+				{
+					if (Warehouse.Instance.ChampEquipItems.m_accessoryRefItemId[x] == item.Item.RefItemID)
+					{
+						OnClickEquip(invSlot, invSlot.PriceButton0, invSlot.PriceButton0.m_priceButton, itemIndex);
+						break;
+					}
+				}
 			}
 		}
 		rectContents.y = rectGUIInventorySlot.rect.height*itemIndex;
 		rectInventoryObj.sizeDelta = rectContents;
 		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, -(rectContents.y/2-rectScrollView.rect.height/2), rectInventoryObj.position.z);
-
-
 	}
 	enum ButtonRole
 	{
@@ -322,6 +331,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		Champ champ = champObj.GetComponent<Champ>();
 		champ.Init(RefData.Instance.RefChamp, 1);
 
+		Warehouse.Instance.ChampEquipItems.m_weaponRefItemId = m_equipedWeapon.m_itemObject.Item.RefItemID;
+
 		m_equipedWeapon.m_itemObject.Item.Equip(champ);
 		for(int x = 0; x < m_equipedAccessories.Length; ++x)
 		{
@@ -329,6 +340,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				m_equipedAccessories[x].m_itemObject.Item.Equip(champ);
 				champ.AccessoryItems[x] = m_equipedAccessories[x].m_itemObject;
+				Warehouse.Instance.ChampEquipItems.m_accessoryRefItemId[x] = m_equipedAccessories[x].m_itemObject.Item.RefItemID;
 			}
 		}	
 		

@@ -75,7 +75,7 @@ public class LightningBullet : Bullet
 
 	float BulletLength()
 	{
-		return m_length*m_ownerCreature.m_creatureProperty.BulletLength;
+		return m_length+m_ownerCreature.m_creatureProperty.BulletLength;
 	}
 	
 	void Update ()
