@@ -33,6 +33,7 @@ public class Warehouse {
 
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gameBestStats));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_options));
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_equipItems));
 
 			writer.Close();
 
@@ -107,6 +108,7 @@ public class Warehouse {
 
 			obj.m_gameBestStats = JsonConvert.DeserializeObject<GameStatistics>(reader.ReadLine());
 			obj.m_options = JsonConvert.DeserializeObject<Options>(reader.ReadLine());
+			obj.m_equipItems = JsonConvert.DeserializeObject<EquipItems>(reader.ReadLine());
 			
 			reader.Close();
 		}
@@ -171,9 +173,16 @@ public class Warehouse {
 		public bool		m_autoTarget = false;
 	}
 
+	public class EquipItems
+	{
+		public int		m_weaponRefItemId = Const.ChampGunRefItemId;
+		public int[]	m_accessoryRefItemId = new int[Const.AccessoriesSlots];
+	}
+
 	GameStatistics			m_gameBestStats = new GameStatistics();
 	GameStatistics			m_newGameStats = new GameStatistics();
 	Options					m_options = new Options();
+	EquipItems				m_equipItems = new EquipItems();
 
 	float					m_playTime = 0f;
 	float					m_saveTime = 0f;
@@ -369,6 +378,11 @@ public class Warehouse {
 	public Options GameOptions
 	{
 		get {return m_options;}
+	}
+
+	public EquipItems ChampEquipItems
+	{
+		get {return m_equipItems;}
 	}
 
 	public int NeedTotalGem
