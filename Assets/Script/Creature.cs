@@ -624,7 +624,7 @@ public class Creature : MonoBehaviour {
 			StartCoroutine(EffectSteamPack(time));
 			break;
 		case DamageDesc.BuffType.Burning:
-			StartCoroutine(EffectBurning(time, offender, damageDesc));
+			StartCoroutine(EffectBurning(time, null, damageDesc));
 			break;
 		case DamageDesc.BuffType.Macho:
 			StartCoroutine(EffectMacho(time));
@@ -739,6 +739,10 @@ public class Creature : MonoBehaviour {
 				{
 					strDamage = dmg.ToString();
 					color = Color.red;
+				}
+				else if (damageDesc.DamageBuffType == DamageDesc.BuffType.Burning)
+				{
+					color = Color.magenta;
 				}
 
 			}
