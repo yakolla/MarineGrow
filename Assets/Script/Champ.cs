@@ -204,40 +204,30 @@ public class Champ : Creature {
 
 		if (m_enableAutoTarget)
 		{
-			if (AutoAttack() == false)
+			if (m_rightJoypad.Dragging)
+			{
+				Vector3 pos = Vector3.zero;
+				pos.x = m_rightJoypad.Position.x*10;
+				pos.z = m_rightJoypad.Position.y*10;
+				m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
+			}
+			else if (AutoAttack() == false)
 			{
 				m_weaponHolder.StopFiring();
 			}
 		}
 		else
 		{
-			if (Application.platform == RuntimePlatform.Android)
+			if (m_rightJoypad.Dragging)
 			{
-				if (m_rightJoypad.Dragging)
-				{
-					Vector3 pos = Vector3.zero;
-					pos.x = m_rightJoypad.Position.x*10;
-					pos.z = m_rightJoypad.Position.y*10;
-					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
-				}
-				else
-				{
-					m_weaponHolder.StopFiring();
-				}
+				Vector3 pos = Vector3.zero;
+				pos.x = m_rightJoypad.Position.x*10;
+				pos.z = m_rightJoypad.Position.y*10;
+				m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
 			}
 			else
 			{
-				if (m_rightJoypad.Dragging)
-				{
-					Vector3 pos = Vector3.zero;
-					pos.x = m_rightJoypad.Position.x*10;
-					pos.z = m_rightJoypad.Position.y*10;
-					m_weaponHolder.StartFiring(RotateToTarget(transform.position+pos));
-				}
-				else
-				{
-					m_weaponHolder.StopFiring();
-				}
+				m_weaponHolder.StopFiring();
 			}
 
 		}

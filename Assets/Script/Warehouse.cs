@@ -170,7 +170,7 @@ public class Warehouse {
 	{
 		public float	m_sfxVolume = 1f;	
 		public float	m_bgmVolume = 1f;
-		public bool		m_autoTarget = false;
+		public bool		m_autoTarget = true;
 	}
 
 	public class EquipItems
