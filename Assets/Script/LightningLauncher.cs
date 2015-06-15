@@ -67,7 +67,7 @@ public class LightningLauncher : Weapon {
 					m_bullet.gameObject.SetActive(false);
 				}
 				
-				stopGunPointEffect();
+				//stopGunPointEffect();
 				finished = true;
 			}
 
