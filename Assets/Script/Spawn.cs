@@ -19,6 +19,12 @@ public class Spawn : MonoBehaviour {
 	GameObject[]	m_prefItemBoxSkins = new GameObject[(int)ItemData.Type.Count];
 	GameObject		m_prefItemBox;
 
+	[SerializeField]
+	AudioClip	m_normalBg;
+	
+	[SerializeField]
+	AudioClip	m_bossBg;
+
 
 	FollowingCamera	m_followingCamera = null;
 
@@ -301,11 +307,15 @@ public class Spawn : MonoBehaviour {
 				{
 					StartCoroutine(EffectWaveText("Boss", 3));
 					m_champ.ShakeCamera(3f);
+					audio.clip = m_bossBg;
+					audio.Play();
 				}
 				else
 				{
 					if (m_wave % GetCurrentWave().mobSpawns.Length == 0)
 					{
+						audio.clip = m_normalBg;
+						audio.Play();
 						StartCoroutine(EffectWaveText("Stage " + GetStage(m_wave), 3));
 					}
 				}
@@ -318,7 +328,7 @@ public class Spawn : MonoBehaviour {
 					yield return new WaitForSeconds(0.5f);
 				}
 
-				Const.SaveGame((SavedGameRequestStatus, ISavedGameMetadata)=>{});
+
 
 				if (mobSpawn.boss == false)
 				{
@@ -360,6 +370,7 @@ public class Spawn : MonoBehaviour {
 		{
 			SpawnItemBox(GetCurrentWave().itemSpawn.bossDefaultItem, mob.transform.position);
 			TimeEffector.Instance.BulletTime(0.005f);
+			Const.SaveGame((SavedGameRequestStatus, ISavedGameMetadata)=>{});
 		}
 
 		if (true == mob.CheckOnDeath)

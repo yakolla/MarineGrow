@@ -38,11 +38,7 @@ public class OptionGUI : MonoBehaviour {
 
 	public void OnSliderBGM()
 	{
-		GameObject champObj = GameObject.Find("Champ");
-		if (champObj != null)
-		{
-			champObj.audio.volume = m_bgmVolume.value;
-		}
+		Const.GetSpawn().audio.volume = m_bgmVolume.value;
 		Warehouse.Instance.GameOptions.m_bgmVolume = m_bgmVolume.value;
 	}
 

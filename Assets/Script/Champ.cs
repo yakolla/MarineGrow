@@ -17,6 +17,7 @@ public class Champ : Creature {
 	[SerializeField]
 	Vector3	m_cameraOffset;
 
+
 	int			m_remainStatPoint = 0;
 
 	int			m_mobKills;
@@ -29,8 +30,6 @@ public class Champ : Creature {
 	Animator	m_bloodWarningAnimator;
 
 	Vector3		m_moveDir;
-
-
 
 	new void Start () {
 
@@ -46,6 +45,7 @@ public class Champ : Creature {
 		m_rightJoypad = GameObject.Find("HudGUI/Joypad/RightJoypad").GetComponent<Joypad>();
 
 		m_bloodWarningAnimator = GameObject.Find("HudGUI/Blood Warning").GetComponent<Animator>();
+
 	}
 
 	override public void Init(RefMob refMob, int level)
@@ -184,9 +184,10 @@ public class Champ : Creature {
 
 	public void ApplyGameOptions()
 	{
-		audio.ignoreListenerVolume = false;
-		audio.volume = Warehouse.Instance.GameOptions.m_bgmVolume;
-		audio.ignoreListenerVolume = true;
+
+		Const.GetSpawn().audio.ignoreListenerVolume = false;
+		Const.GetSpawn().audio.volume = Warehouse.Instance.GameOptions.m_bgmVolume;
+		Const.GetSpawn().audio.ignoreListenerVolume = true;
 
 		AudioListener.volume = Warehouse.Instance.GameOptions.m_sfxVolume;
 		m_enableAutoTarget = Warehouse.Instance.GameOptions.m_autoTarget;

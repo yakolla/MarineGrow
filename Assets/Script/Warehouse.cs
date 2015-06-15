@@ -167,7 +167,7 @@ public class Warehouse {
 	public class Options
 	{
 		public float	m_sfxVolume = 1f;	
-		public float	m_bgmVolume = 0.5f;
+		public float	m_bgmVolume = 1f;
 		public bool		m_autoTarget = false;
 	}
 
