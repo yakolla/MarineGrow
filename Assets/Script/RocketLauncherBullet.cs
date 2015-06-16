@@ -8,10 +8,10 @@ public class RocketLauncherBullet : Bullet {
 	protected float	m_accel = 0f;
 
 	[SerializeField]
-	GameObject		m_prefBombEffect = null;
+	protected GameObject		m_prefBombEffect = null;
 	
 	[SerializeField]
-	float			m_bombRange = 5f;
+	protected float			m_bombRange = 5f;
 
 	// Use this for initialization
 	void Start () {
