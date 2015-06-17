@@ -597,7 +597,7 @@
 		},
 		{
 			"id":31008,
-			"prefBody":"marine_skin",
+			"prefBody":"mine_skin",
 			"refWeaponItems":
 			[
 				{

@@ -77,7 +77,7 @@ public class ChampSettingGUI : MonoBehaviour {
 					}
 				}
 
-				Warehouse.Instance.PushItem(new ItemCheatData());
+
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 
 				ItemAccessoryData bootsData = new ItemAccessoryData(Const.BootsRefItemId);
@@ -93,6 +93,8 @@ public class ChampSettingGUI : MonoBehaviour {
 					followerData.Lock = true;
 					Warehouse.Instance.PushItem(followerData);
 				}
+
+				Warehouse.Instance.PushItem(new ItemCheatData());
 			}
 #endif
 		}

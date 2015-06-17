@@ -56,7 +56,6 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 			if (destAngle < 0)
 			{
 				destAngle += 360;
-				destAngle %= 360;
 			}
 
 		}
