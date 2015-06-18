@@ -25,6 +25,7 @@ public class WeaponHolder : MonoBehaviour {
 		{
 			m_weaponChangedTime = Time.time;
 			m_curWeaponIndex = (m_curWeaponIndex + 1) % m_weapons.Count;
+			StopFiring();
 		}
 
 		foreach(KeyValuePair<int, Weapon> pair in m_passiveWeapons)
@@ -80,6 +81,7 @@ public class WeaponHolder : MonoBehaviour {
 
 		if (m_multipleWeapon == false)
 		{
+
 			m_weapons[m_curWeaponIndex].StartFiring(targetAngle);
 		}
 		else

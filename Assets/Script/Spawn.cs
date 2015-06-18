@@ -7,7 +7,6 @@ public class Spawn : MonoBehaviour {
 
 
 
-	[SerializeField]
 	Champ		m_champ = null;
 
 	[SerializeField]
@@ -72,7 +71,7 @@ public class Spawn : MonoBehaviour {
 	IEnumerator EffectWaveText(string msg, float alpha)
 	{
 		m_stageText.Text.text = msg;
-		Color color = guiText.color;
+		Color color = m_stageText.Text.color;
 		color.a = alpha;
 		m_stageText.Color = color;
 		yield return new WaitForSeconds (0.2f);
@@ -142,7 +141,7 @@ public class Spawn : MonoBehaviour {
 		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
-		if (boss == true && progress < 3f)
+		if (boss == true && progress < RefData.Instance.RefBossMobs.Length)
 		{
 			result.spawnMobs.Add(mobs[maxIndex]);
 		}

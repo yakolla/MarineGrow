@@ -279,6 +279,10 @@ public class CreatureProperty {
 		set { m_shield.Value = value; }
 	}
 
+	public float RotationSpeedRatio
+	{
+		get {return m_baseProperty.rotationSpeedRatio;}
+	}
 
 	public bool		BackwardOnDamage
 	{
@@ -333,5 +337,6 @@ public class CreatureProperty {
 		other.m_sp = m_sp;
 		other.m_alphaSPRecoveryPerSec = m_alphaSPRecoveryPerSec;
 		other.m_callableFollowers = m_callableFollowers;
+
 	}
 }

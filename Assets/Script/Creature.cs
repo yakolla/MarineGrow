@@ -183,9 +183,9 @@ public class Creature : MonoBehaviour {
 		gunPoint.z = transform.position.z;
 		float targetHorAngle = Mathf.Atan2(pos.z-gunPoint.z, pos.x-gunPoint.x) * Mathf.Rad2Deg;
 		Vector3 euler = transform.eulerAngles;
-		euler.y = -targetHorAngle;
+		euler.y = (euler.y*(1f-m_creatureProperty.RotationSpeedRatio)-targetHorAngle*m_creatureProperty.RotationSpeedRatio);
 		transform.eulerAngles = euler;
-
+		
 		return targetHorAngle;
 	}
 

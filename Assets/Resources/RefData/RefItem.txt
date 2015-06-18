@@ -633,8 +633,14 @@
 		"weaponStat":
 		{
 			"coolTime":5,
-			"range":7
+			"range":7,
+			"buffOnHitDesc":
+			{
+				"chance":1,
+				"buffType":"Airborne"
+			}
 		}
+		
 	},
 	{
 		"id":114,

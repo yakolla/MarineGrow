@@ -108,20 +108,7 @@
 				"itemSpawn":
 				{
 					"mobItems":
-					[
-						{
-							"refMobId":50007,
-							"refDropItems":
-							[								
-								{
-									"refItemId":10,
-									"minValue":1,
-									"maxValue":1,
-									"ratio":0.1,
-									"count":1
-								}
-							]
-						},
+					[						
 						{
 							"refMobId":1002,
 							"refDropItems":
