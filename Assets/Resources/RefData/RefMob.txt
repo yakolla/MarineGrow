@@ -605,7 +605,6 @@
 				}
 			],
 			"mobAI":"Normal",
-			"scale":0.5,
 			"baseCreatureProperty":
 			{
 				"maxHP":100,
