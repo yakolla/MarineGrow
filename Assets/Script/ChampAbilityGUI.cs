@@ -402,6 +402,37 @@ public class ChampAbilityGUI : MonoBehaviour {
 			return false;
 		}
 		));
+
+		skillAbili.Add(new Ability(0.3f, "Burning Agony Skill", 
+		                           ()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
+			int backup = 1;
+			int ori = 0;
+			if (weapon != null)
+			{
+				backup = weapon.Level+1;
+				ori = weapon.Level;
+			}
+			
+			return "Lv:" + (ori) + " -> " + "<color=yellow>" + (backup) + "</color>";
+		},
+		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
+			if (weapon != null)
+			{
+				weapon.LevelUp();
+			}
+			else
+			{
+				m_champ.EquipPassiveSkillWeapon(new ItemWeaponData(135), null);
+			}
+			
+			--m_champ.RemainStatPoint;
+		},
+		()=>{
+			return true;
+		}
+		));
 		/*
 		skillAbili.Add(new Ability(0.3f, "Charge to Nuclear Skill", 
 		                           ()=>{

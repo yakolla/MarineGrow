@@ -1242,7 +1242,7 @@
 			"prefBody":"newchamp_skin",
 			"baseCreatureProperty":
 			{
-				"maxHP":10000,
+				"maxHP":100,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,

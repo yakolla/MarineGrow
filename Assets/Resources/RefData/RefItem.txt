@@ -1246,6 +1246,17 @@
 		}
 	},
 	{
+		"id":135,
+		"codeName":"BurningAgonyLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/BurningAgony",		
+		"weaponStat":
+		{
+			"coolTime":10,
+			"range":5
+		}
+	},
+	{
 		"id":201,
 		"codeName":"FollowerGun",
 		"type":"Weapon",
