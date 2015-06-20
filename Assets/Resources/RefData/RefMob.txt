@@ -268,7 +268,7 @@
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
 				"exp":40,
-				"phyDamagePerLevel":1,
+				"phyDamagePerLevel":0.3,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
 				"moveSpeed":1.2,
@@ -386,7 +386,7 @@
 				"physicalDefence":0,
 				"evolutionPerLevel":0.3,
 				"exp":80,
-				"phyDamagePerLevel":1,
+				"phyDamagePerLevel":0.3,
 				"phyDefencePerLevel":5,
 				"hpPerLevel":0.5,
 				"moveSpeed":2,
@@ -1242,7 +1242,7 @@
 			"prefBody":"newchamp_skin",
 			"baseCreatureProperty":
 			{
-				"maxHP":10000,
+				"maxHP":100,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,

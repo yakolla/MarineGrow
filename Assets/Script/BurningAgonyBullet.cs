@@ -20,9 +20,9 @@ public class BurningAgonyBullet : Bullet {
 
 		m_weapon = weapon;
 		transform.parent = ownerCreature.WeaponHolder.transform;
-		Vector3 pos = ownerCreature.transform.position-ownerCreature.WeaponHolder.transform.position;
-		pos.y = 0;
-		transform.localPosition = pos;
+		Vector3 pos = ownerCreature.transform.position;
+		pos.y = ownerCreature.WeaponHolder.transform.localPosition.y;
+		transform.position = pos;
 		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.angle, 0));
 		transform.localScale = scale;
 		
