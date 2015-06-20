@@ -176,30 +176,31 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			int capturedItemIndex = itemIndex;
 
-			if (item.Item.Lock == true)
+
+			switch(item.Item.RefItem.type)
 			{
-				if (item.Item.RefItem.unlock != null)
+			case ItemData.Type.Weapon:
+			case ItemData.Type.Accessory:
+			case ItemData.Type.Follower:
+			case ItemData.Type.Skill:
+			case ItemData.Type.Cheat:
+				if (item.Item.Lock == true)
 				{
-					SetButtonRole(ButtonRole.Unlock, invSlot, invSlot.PriceButton0, itemIndex);
+					if (item.Item.RefItem.unlock != null)
+					{
+						SetButtonRole(ButtonRole.Unlock, invSlot, invSlot.PriceButton0, itemIndex);
+					}
 				}
-			}
-			else
-			{
-				switch(item.Item.RefItem.type)
+				else
 				{
-				case ItemData.Type.Weapon:
-				case ItemData.Type.Accessory:
-				case ItemData.Type.Follower:
-				case ItemData.Type.Skill:
 					SetButtonRole(ButtonRole.Equip, invSlot, invSlot.PriceButton0, itemIndex);
-					break;
 				}
 
-			}
-
-			if (item.Item.RefItem.levelup != null)
-			{
-				SetButtonRole(ButtonRole.Levelup, invSlot, invSlot.PriceButton1, itemIndex);
+				if (item.Item.RefItem.levelup != null)
+				{
+					SetButtonRole(ButtonRole.Levelup, invSlot, invSlot.PriceButton1, itemIndex);
+				}
+				break;
 			}
 
 			invSlot.Update();
@@ -265,13 +266,13 @@ public class ChampSettingGUI : MonoBehaviour {
 		case ButtonRole.Levelup:
 			{
 
-			priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.levelup.conds != null && item.Item.Lock == false;};
+				priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.levelup.conds != null && item.Item.Lock == false && item.Item.Level < Const.MaxItemLevel;};
 				
 				priceGemButton.SetPrices(item.Item.RefItem.levelup.conds, item.Item.RefItem.levelup.else_conds);
 
-			priceGemButton.AddListener(() => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
-				priceGemButton.SetLable("Levelup");
-			}
+				priceGemButton.AddListener(() => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+					priceGemButton.SetLable("Levelup");
+				}
 			break;
 
 		case ButtonRole.Unlock:
@@ -480,6 +481,11 @@ public class ChampSettingGUI : MonoBehaviour {
 				StartSpinButton(priceGemButton.m_priceButton.GUIImageButton);
 				++selectedItem.Item.Level;
 
+				if (selectedItem.Item.Level == Const.MaxItemLevel)
+				{
+					priceGemButton.SetPrices(null, null);
+				}
+
 				priceGemButton.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level);
 				priceGemButton.m_gemButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level);
 
@@ -494,6 +500,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				PopupShop();
 			}
 		}
+
 	}
 
 	public void OnClickUnlock(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)

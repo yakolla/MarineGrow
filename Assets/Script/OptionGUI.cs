@@ -15,8 +15,6 @@ public class OptionGUI : MonoBehaviour {
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
 
-		m_admob.ShowBanner(true);
-
 		m_sfxVolume = transform.Find("SFX/Slider").gameObject.GetComponent<Slider>();
 		m_bgmVolume = transform.Find("BGM/Slider").gameObject.GetComponent<Slider>();
 		m_autoTarget = transform.Find("Auto Target").gameObject.GetComponent<Toggle>();
@@ -29,10 +27,12 @@ public class OptionGUI : MonoBehaviour {
 	}
 
 	void OnEnable() {
+		m_admob.ShowBanner(true);
 		TimeEffector.Instance.StopTime();
 	}
 
 	void OnDisable() {
+		m_admob.ShowBanner(false);
 		TimeEffector.Instance.StartTime();
 	}
 
@@ -63,7 +63,6 @@ public class OptionGUI : MonoBehaviour {
 			champObj.GetComponent<Champ>().ApplyGameOptions();
 		}
 
-		m_admob.ShowBanner(false);
 		gameObject.SetActive(false);
 
 	}

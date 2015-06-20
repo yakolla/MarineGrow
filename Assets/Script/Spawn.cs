@@ -73,7 +73,7 @@ public class Spawn : MonoBehaviour {
 		m_stageText.Text.text = msg;
 		Color color = m_stageText.Text.color;
 		color.a = alpha;
-		m_stageText.Color = color;
+		m_stageText.Text.color = color;
 		yield return new WaitForSeconds (0.2f);
 
 		if (alpha > 0)

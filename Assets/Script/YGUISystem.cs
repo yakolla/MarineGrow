@@ -41,11 +41,6 @@ public class YGUISystem {
 		virtual public void Update()
 		{
 			m_button.interactable = m_enableChecker();
-			Color color = m_button.image.color;
-			if (m_button.interactable == true)
-				color.a = 1f;
-			else
-				color.a = 0.5f;
 
 			//m_button.image.color = color;
 		}
@@ -219,6 +214,29 @@ public class YGUISystem {
 		{
 			get{return m_images;}
 		}
+
+		override public void Update()
+		{
+			base.Update();
+
+			float alpha = Button.colors.normalColor.a;
+			if (Button.interactable == false)
+			{
+				alpha = Button.colors.disabledColor.a;
+			}
+
+			Lable.Text.gameObject.SetActive(Button.interactable);
+
+			foreach(GUIImageDynamic image in m_images)
+			{
+				image.Lable.Text.gameObject.SetActive(Button.interactable);
+
+				Color color = image.Icon.color;
+				color.a = alpha;
+				image.Icon.color = color;
+
+			}
+		}
 	}
 
 	public class GUIPriceButton
@@ -357,12 +375,6 @@ public class YGUISystem {
 		{
 			get{return m_text;}
 		}
-
-		public Color Color
-		{
-			get {return m_text.color;}
-			set {m_text.color = value;}
-		}
 	}
 
 	public class GUIImageStatic
@@ -430,6 +442,11 @@ public class YGUISystem {
 		public Vector3 Position
 		{
 			set{m_image.gameObject.transform.localPosition = value;}
+		}
+
+		public RawImage Icon
+		{
+			get{return m_image;}
 		}
 	}
 }
