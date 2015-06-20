@@ -7,11 +7,12 @@ public class RushLauncher : Weapon {
 	float	m_elapsed;
 	const float DashSpeed = 9f;
 	bool	m_rush = false;
+	RushBullet bullet;
 
 	new void Start()
 	{
 		base.Start();
-		CreateBullet(m_firingDescs[0], transform.position);
+		bullet = CreateBullet(m_firingDescs[0], transform.position) as RushBullet;
 	}
 
 
@@ -26,7 +27,15 @@ public class RushLauncher : Weapon {
 			DidStartFiring(0f);
 
 		}
+
+		bullet.gameObject.SetActive(true);
 		m_firing = true;
+	}
+
+	override public void StopFiring()
+	{
+		base.StopFiring();
+		bullet.gameObject.SetActive(false);
 	}
 	
 	void Update()

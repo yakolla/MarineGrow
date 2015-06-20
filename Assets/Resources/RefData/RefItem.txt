@@ -1167,7 +1167,7 @@
 			"range":8,
 			"buffOnHitDesc":
 			{
-				"chance":0,
+				"chance":1,
 				"buffType":"Airborne"
 			}
 		}

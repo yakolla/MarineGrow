@@ -834,11 +834,11 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":700,
+				"maxHP":500,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":700,
+				"exp":1000,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
@@ -892,11 +892,11 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":1400,
+				"maxHP":500,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":1400,
+				"exp":1500,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
@@ -941,11 +941,11 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":1700,
+				"maxHP":500,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
-				"exp":1700,
+				"exp":2000,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
@@ -957,6 +957,7 @@
 		},
 		{
 			"id":50005,
+			"prefHead":"mon_kingbug",
 			"prefBody":"mon_kingbug_skin",
 			"refWeaponItems":
 			[
@@ -979,7 +980,7 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":2000,
+				"maxHP":500,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
@@ -988,7 +989,7 @@
 				"phyDefencePerLevel":3,
 				"hpPerLevel":0.5,
 				"moveSpeed":1,
-				"navMeshBaseOffset":2,
+				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
 		}
@@ -1241,7 +1242,7 @@
 			"prefBody":"newchamp_skin",
 			"baseCreatureProperty":
 			{
-				"maxHP":100,
+				"maxHP":10000,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
