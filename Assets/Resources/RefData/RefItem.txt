@@ -722,7 +722,12 @@
 		"weaponStat":
 		{
 			"coolTime":0.5,
-			"range":5
+			"range":5,
+			"buffOnHitDesc":
+			{
+				"chance":1,
+				"buffType":"Stun"
+			}
 		},
 		"unlock":
 		{
@@ -755,7 +760,7 @@
 		"evolutionFiring":
 		{
 			"angle":10,
-			"delay":0.3
+			"delay":3
 		},
 		"weaponStat":
 		{
@@ -1016,7 +1021,7 @@
 		"weaponStat":
 		{
 			"coolTime":0.5,
-			"range":4,
+			"range":3,
 			"buffOnHitDesc":
 			{
 				"chance":0.5,
@@ -1197,7 +1202,7 @@
 	},
 	{
 		"id":131,
-		"codeName":"GrenadeLauncher",
+		"codeName":"ChampGrenadeLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/Grenade",		
 		"weaponStat":
@@ -1254,6 +1259,48 @@
 		{
 			"coolTime":10,
 			"range":5
+		}
+	},
+	{
+		"id":136,
+		"codeName":"BossSpiderWeb",
+		"type":"Weapon",
+		"icon":"Sprites/Gun",		
+		"evolutionFiring":
+		{
+			"angle":10,
+			"delay":3
+		},
+		"weaponStat":
+		{
+			"coolTime":2,
+			"range":5,
+			"buffOnHitDesc":
+			{
+				"chance":1,
+				"buffType":"Slow"
+			}
+		},
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":50
+				},
+				{
+					"refItemId":5, 
+					"count":5
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":5
+				}
+			]
 		}
 	},
 	{

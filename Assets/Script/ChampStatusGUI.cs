@@ -149,7 +149,6 @@ public class ChampStatusGUI : MonoBehaviour {
 
 			m_champ = obj.GetComponent<Champ>();
 			m_oldMobKills = m_champ.MobKills;
-			m_oldGold = Warehouse.Instance.Gold.Item.Count;
 			SetActiveGUI(true);
 			return;
 		}

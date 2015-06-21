@@ -215,6 +215,10 @@ public class Champ : Creature {
 			{
 				m_weaponHolder.StopFiring();
 			}
+
+			Vector3 ang = m_rightJoypad.transform.eulerAngles;
+			ang.z = -transform.eulerAngles.y;
+			m_rightJoypad.transform.eulerAngles = ang;
 		}
 		else
 		{

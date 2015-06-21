@@ -193,6 +193,7 @@ public class RefMob : RefBaseData
 		public int refItemId;
 		public int level = 1;
 		public int evolution = 0;
+		public bool passive = false;
 		public WeaponStat weaponStat;
 	}
 	public string				prefHead = "mob";

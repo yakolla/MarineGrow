@@ -36,7 +36,15 @@ public class Mob : Creature {
 			if (weaponDesc.reqLevel > mobLevel)
 				continue;
 
-			EquipWeapon(new ItemWeaponData(weaponDesc.refItemId), weaponDesc.weaponStat);
+			if (weaponDesc.passive == true)
+			{
+				EquipPassiveSkillWeapon(new ItemWeaponData(weaponDesc.refItemId), weaponDesc.weaponStat);
+			}
+			else
+			{
+				EquipWeapon(new ItemWeaponData(weaponDesc.refItemId), weaponDesc.weaponStat);
+			}
+
 		}
 
 		switch(refMob.mobAI)
