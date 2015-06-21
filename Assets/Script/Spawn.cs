@@ -339,18 +339,6 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
-	void bindItemOption(ItemData item, RefItemOptionSpawn[] descs)
-	{
-		foreach(RefItemOptionSpawn desc in descs)
-		{
-			float ratio = Random.Range(0f, 1f);
-			if (ratio <= desc.ratio)
-			{
-				item.OptionDescs.Add(new ItemMagicOption(desc.type, Random.Range(desc.minValue, desc.maxValue)));
-			}
-		}
-	}
-
 	public int SpawnMobLevel()
 	{
 		return (int)(1 + ProgressStage());

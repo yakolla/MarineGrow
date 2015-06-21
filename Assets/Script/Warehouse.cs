@@ -345,11 +345,7 @@ public class Warehouse {
 	public int CheatLevel
 	{
 		get {
-			ItemObject cheatItem = FindItem(Const.CheatRefItemId);
-			if (cheatItem.Item.Lock == true)
-				return 0;
-
-			return cheatItem.Item.Level;
+			return FindItem(Const.CheatRefItemId).Item.Level;
 		}
 	}
 
@@ -415,7 +411,7 @@ public class Warehouse {
 						{
 							for(int lv = obj.Item.Level; lv < Const.MaxItemLevel; ++lv)
 							{
-								totalGem += (int)(refPrice.count*Const.GetItemLevelupWorth(lv));
+								totalGem += (int)(refPrice.count*Const.GetItemLevelupWorth(lv, condLevel));
 							}
 							break;
 						}

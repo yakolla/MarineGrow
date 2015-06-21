@@ -536,7 +536,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 		
-		utilAbili.Add(new Ability(0.3f, "Callable Followers", 
+		utilAbili.Add(new Ability(0.3f, "Followers On Summoning", 
 		                          ()=>{
 			
 			m_backup.CallableFollowers+=1;

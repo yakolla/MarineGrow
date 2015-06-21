@@ -44,6 +44,8 @@ public class ItemFollowerData : ItemData{
 				itemWeaponData.Level = Level;
 				follower.EquipWeapon(itemWeaponData, weaponDesc.weaponStat);
 			}
+
+			ApplyOptions(follower);
 		}
 
 	}

@@ -72,11 +72,14 @@ public class Const {
 	public const string LEADERBOARD_SURVIVAL_TIME = "CgkIrKGfsOUeEAIQGw";
 	public const string LEADERBOARD_KILLED_MOBS = "CgkIrKGfsOUeEAIQGg";
 
+	public const string DisabledStringColor = "<color=red>";
+	public const string EnabledStringColor = "<color=white>";
+
 	public static bool			CHEAT_MODE = false;
 
-	public static float GetItemLevelupWorth(int level)
+	public static float GetItemLevelupWorth(int level, RefPriceCondition cond)
 	{
-		return 1f + (level-1);
+		return cond.pricePerLevel * level;
 	}
 
 	public static bool CheckAvailableItem(RefPrice[] conds, float itemWorth)

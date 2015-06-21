@@ -80,9 +80,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 
-				ItemAccessoryData bootsData = new ItemAccessoryData(Const.BootsRefItemId);
-				bootsData.OptionDescs.Add(new ItemMagicOption(ItemData.Option.Weapon, 125));
-				Warehouse.Instance.PushItem(bootsData);
+				Warehouse.Instance.PushItem(new ItemAccessoryData(Const.BootsRefItemId));
 
 				Warehouse.Instance.Gold.Item.Count = 100000;
 				Warehouse.Instance.Gem.Item.Count = 12000;
@@ -484,8 +482,8 @@ public class ChampSettingGUI : MonoBehaviour {
 					priceGemButton.SetPrices(null, null);
 				}
 
-				priceGemButton.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level);
-				priceGemButton.m_gemButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level);
+				priceGemButton.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level, selectedItem.Item.RefItem.levelup);
+				priceGemButton.m_gemButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level, selectedItem.Item.RefItem.levelup);
 
 				invSlot.ItemDesc = selectedItem.Item.Description();
 
@@ -510,7 +508,10 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (button.TryToPay() == true)
 			{
 				selectedItem.Item.Lock = false;
+				selectedItem.Item.Level = 1;
+
 				invSlot.ItemDesc = selectedItem.Item.Description();
+
 				SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 
 				switch(selectedItem.Item.RefItem.id)

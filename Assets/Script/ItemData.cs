@@ -4,33 +4,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-public class ItemMagicOption
-{
-	ItemData.Option	m_type;
-	float	m_value;
-	
-	public ItemMagicOption(ItemData.Option	type, float	value)
-	{
-		m_type = type;
-		m_value = value;
-	}
-	
-	public ItemData.Option Type
-	{
-		get {return m_type;}
-	}
-	
-	public float Value
-	{
-		get {return m_value;}
-	}
-	
-	public string Descript()
-	{
-		return m_type.ToString() + ":" + m_value.ToString();
-	}
-}
-
 
 public class ItemData {
 	
@@ -71,8 +44,6 @@ public class ItemData {
 	SecuredType.XInt	m_level = 1;
 	bool			m_lock = false;
 
-	List<ItemMagicOption>		m_optionDescs = new List<ItemMagicOption>();
-
 	RefItem				m_refItem;
 
 	[JsonConstructor]
@@ -91,21 +62,28 @@ public class ItemData {
 	{
 		return "<color=white>" + 
 				"Level:" + Level + "\n" + 
-				//"Evolution:" + Evolution + "\n" + 
-				//m_refItem.type.ToString() + OptionsDescription() + 
-				OptionsDescription() + 
-				"</color>";
+				"</color>" +
+				OptionsDescription();
 	}
 
 	protected string OptionsDescription()
 	{
-		if (OptionDescs.Count == 0)
+		if (m_refItem.levelup == null || m_refItem.levelup.optionPerLevel == null)
 			return "";
 
 		string desc = "\n";
-		foreach(ItemMagicOption op in OptionDescs)
+		foreach(RefPriceCondition.RefOptionPerLevel op in m_refItem.levelup.optionPerLevel)
 		{
-			desc += op.Descript() + "\n";
+			desc += (Level >= op.level ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv" + op.level + ":";
+			if (op.option.type == Option.Weapon)
+			{
+				desc += RefData.Instance.RefItems[(int)op.option.value].codeName + "</color>\n";
+			}
+			else
+			{
+				desc += op.option.type.ToString() + ":" + op.option.value + "</color>\n";
+			}
+
 		}
 
 		return desc;
@@ -123,21 +101,27 @@ public class ItemData {
 
 	public void ApplyOptions(Creature obj)
 	{
-		foreach(ItemMagicOption desc in m_optionDescs)
+		if (m_refItem.levelup == null || m_refItem.levelup.optionPerLevel == null)
+			return;
+
+		foreach(RefPriceCondition.RefOptionPerLevel op in m_refItem.levelup.optionPerLevel)
 		{
-			switch(desc.Type)
+			if (op.level > Level)
+				continue;
+
+			switch(op.option.type)
 			{
 			case Option.PhysicalDmg:
-				obj.m_creatureProperty.AlphaPhysicalAttackDamage += (int)desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalAttackDamage += (int)op.option.value;
 				break;
 			case Option.MovingSpeed:
-				obj.m_creatureProperty.AlphaMoveSpeed += desc.Value;
+				obj.m_creatureProperty.AlphaMoveSpeed += op.option.value;
 				break;
 			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)op.option.value;
 				break;
 			case Option.Weapon:
-				obj.EquipWeapon(new ItemWeaponData((int)desc.Value), null);
+				obj.EquipPassiveSkillWeapon(new ItemWeaponData((int)op.option.value), null);
 				break;
 			}
 		}
@@ -145,18 +129,24 @@ public class ItemData {
 
 	public void NoApplyOptions(Creature obj)
 	{
-		foreach(ItemMagicOption desc in m_optionDescs)
+		if (m_refItem.levelup == null || m_refItem.levelup.optionPerLevel == null)
+			return;
+		
+		foreach(RefPriceCondition.RefOptionPerLevel op in m_refItem.levelup.optionPerLevel)
 		{
-			switch(desc.Type)
+			if (op.level > Level)
+				continue;
+
+			switch(op.option.type)
 			{
 			case Option.PhysicalDmg:
-				obj.m_creatureProperty.AlphaPhysicalAttackDamage -= (int)desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalAttackDamage -= (int)op.option.value;
 				break;
 			case Option.MovingSpeed:
-				obj.m_creatureProperty.AlphaMoveSpeed -= desc.Value;
+				obj.m_creatureProperty.AlphaMoveSpeed -= op.option.value;
 				break;
 			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= (int)desc.Value;
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= (int)op.option.value;
 				break;
 			}
 		}
@@ -169,23 +159,21 @@ public class ItemData {
 			m_refItemId = value;
 
 			m_refItem = RefData.Instance.RefItems[m_refItemId];
-			m_optionDescs.Clear();
-
-			if (m_refItem.options != null)
-			{
-				foreach(RefItemOption itemOption in m_refItem.options)
-				{
-					m_optionDescs.Add(new ItemMagicOption(itemOption.type, itemOption.value));
-				}
-			}
-
 		}
 	}
 
 	public int Level
 	{
-		get {	return m_level.Value;	}
-		set {m_level.Value = value;}
+		get {
+
+			if (Lock == true)
+				return 0;
+
+			return m_level.Value;	
+		}
+		set {
+			m_level.Value = value;
+		}
 	}
 
 	public int Count
@@ -205,11 +193,6 @@ public class ItemData {
 		get {return m_lock;}
 		set {m_lock = value;}
 
-	}
-
-	public List<ItemMagicOption> OptionDescs
-	{
-		get {return m_optionDescs;}
 	}
 
 }

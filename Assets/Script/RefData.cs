@@ -101,9 +101,16 @@ public class RefPrice
 
 public class RefPriceCondition
 {
+
+	public class RefOptionPerLevel
+	{
+		public int level;
+		public RefItemOption option;
+	}
 	public RefPrice[]		conds;
 	public RefPrice[]		else_conds;	
 	public float			pricePerLevel = 1f;
+	public RefOptionPerLevel[] optionPerLevel;
 }
 
 public class RefItemOption
