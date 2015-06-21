@@ -230,6 +230,8 @@ public class Warehouse {
 		m_waveIndex = 0;
 
 		m_gameBestStats = new GameStatistics();
+		m_options = new Options();
+		m_equipItems = new EquipItems();
 	}
 
 	public void ResetNewGameStats()
