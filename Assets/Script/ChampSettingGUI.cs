@@ -101,11 +101,9 @@ public class ChampSettingGUI : MonoBehaviour {
 		else
 		{
 			//Load();
-			
+
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-
-
 				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId);
 				gunWeaponData.Lock = false;	
 				Warehouse.Instance.PushItem(gunWeaponData);
