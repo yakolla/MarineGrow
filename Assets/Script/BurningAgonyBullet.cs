@@ -10,8 +10,13 @@ public class BurningAgonyBullet : Bullet {
 	int				m_lastFrame = 0;
 	BoxCollider		m_collider;
 	float			m_firingStartTime;
+	float			m_oriSize;
+	float			m_particleOriSize;
 
 	Weapon			m_weapon;
+	float			m_bombRange;
+
+	ParticleSystem	m_particle;
 
 	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
 	{
@@ -25,7 +30,12 @@ public class BurningAgonyBullet : Bullet {
 		transform.position = pos;
 		transform.localRotation = Quaternion.Euler(new Vector3(0, targetAngle.angle, 0));
 		transform.localScale = scale;
-		
+
+		m_collider = GetComponent<BoxCollider>();
+		m_oriSize = m_collider.size.x;
+
+		m_particle = transform.Find("Body/Particle System").GetComponent<ParticleSystem>();
+		m_particleOriSize = m_particle.startSize;
 	}
 
 
@@ -38,6 +48,22 @@ public class BurningAgonyBullet : Bullet {
 	override public void StopFiring()
 	{
 		base.StopFiring();
+	}
+
+	public float BombRange
+	{
+		set{
+			m_bombRange = value;
+
+			Vector3 scale = m_collider.size;
+			scale.x = m_oriSize+m_bombRange;
+			scale.z = m_oriSize+m_bombRange;
+
+			m_collider.size = scale;
+			m_particle.startSize = m_particleOriSize+m_bombRange*2;
+
+		}
+		get{return m_bombRange;}
 	}
 	
 	void OnTriggerStay(Collider other) 

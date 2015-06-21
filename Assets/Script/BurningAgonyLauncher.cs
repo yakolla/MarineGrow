@@ -15,6 +15,7 @@ public class BurningAgonyLauncher : Weapon {
 				if (m_bullet == null)
 				{
 					m_bullet = CreateBullet(m_firingDescs[0], m_gunPoint.transform.position) as BurningAgonyBullet;
+					m_bullet.BombRange = (Level-1);
 				}
 				
 				m_bullet.StartFiring();
@@ -47,5 +48,15 @@ public class BurningAgonyLauncher : Weapon {
 			m_bullet.gameObject.SetActive(false);
 		}
 		
+	}
+
+	override public void LevelUp()
+	{
+		base.LevelUp();
+
+		if (m_bullet != null)
+		{
+			m_bullet.BombRange = (Level-1);
+		}
 	}
 }

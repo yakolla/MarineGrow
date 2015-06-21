@@ -334,7 +334,7 @@ public class Creature : MonoBehaviour {
 				foreach(Creature skip in skipTargets)
 				{
 					if (skip == null)
-						break;
+						continue;
 					
 					if (skip.gameObject == target)
 					{
