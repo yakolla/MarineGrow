@@ -6,6 +6,7 @@ using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
 using UnityEngine.SocialPlatforms;
 
+
 public class Worldmap : MonoBehaviour {
 
 	string		log = "log";
@@ -29,7 +30,7 @@ public class Worldmap : MonoBehaviour {
 		Login();
 	}
 	
-	void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnOpenSavedGame(SavedGameRequestStatus status, ISavedGameMetadata game) {
 
 		if (status == SavedGameRequestStatus.Success) {
 			Warehouse.Instance.FileName = game.Filename;
@@ -42,9 +43,9 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
-	void OnSavedGameOpenedForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnOpenSavedGameForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
-			GPlusPlatform.Instance.LoadGame(game, OnSavedGameDataRead);
+			GPlusPlatform.Instance.LoadGame(game, OnReadGame);
 			Warehouse.Instance.FileName = game.Filename;
 
 		} else {
@@ -55,20 +56,20 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
-	void OnSavedGameOpenedForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnOpenSavedGameForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 
 			System.TimeSpan totalPlayingTime = new System.TimeSpan(System.TimeSpan.TicksPerSecond*0);
 			Warehouse.Instance.Reset();
 			Warehouse.Instance.FileName = game.Filename;
-			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnSavedGameWritten);
+			GPlusPlatform.Instance.SaveGame(game, Warehouse.Instance.Serialize(), totalPlayingTime, null, OnWriteGame);
 		} else {
 			// handle error
 		}
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
-	void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
+	void OnWriteGame (SavedGameRequestStatus status, ISavedGameMetadata game) {
 
 		if (status == SavedGameRequestStatus.Success) {
 			Application.LoadLevel("Basic Dungeon");
@@ -80,7 +81,7 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameWritten:" + status + game;
 	}
 
-	void OnSavedGameDataRead (SavedGameRequestStatus status, byte[] data) {
+	void OnReadGame (SavedGameRequestStatus status, byte[] data) {
 		log = "OnSavedGameDataRead:" + status;
 
 		if (status == SavedGameRequestStatus.Success) {
@@ -126,7 +127,7 @@ public class Worldmap : MonoBehaviour {
 			m_btnStart.interactable = true;
 		}
 	}
-/*
+	/*
 	public void OnGUI()
 	{
 		GUI.Button(new Rect(0, 0, 300, 100), log);
@@ -139,7 +140,7 @@ public class Worldmap : MonoBehaviour {
 			Const.ShowLoadingGUI("Loading...");
 			log = "OnClickStart";
 
-
+/*
 			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
 				if (status == SelectUIStatus.SavedGameSelected) {
 					
@@ -147,12 +148,12 @@ public class Worldmap : MonoBehaviour {
 					if (fileName.Equals(""))
 					{
 						fileName = System.DateTime.Now.Ticks.ToString();
-						GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForSaving);
+						GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForSaving);
 						
 					}
 					else
 					{
-						GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);
+						GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForLoading);
 					}
 					
 					
@@ -162,10 +163,12 @@ public class Worldmap : MonoBehaviour {
 				}
 				log = status.ToString();
 			});
-				
-/*
+				*/
+
+
 			string fileName = "growingmarine.sav";
-			GPlusPlatform.Instance.OpenGame(fileName, OnSavedGameOpenedForLoading);*/
+			GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForLoading);
+
 		}
 		else
 		{
