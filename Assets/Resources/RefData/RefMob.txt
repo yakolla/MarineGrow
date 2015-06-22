@@ -913,7 +913,7 @@
 				"hpPerLevel":0.5,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
-				"rotationSpeedRatio":0.01,
+				"rotationSpeedRatio":20,
 				"backwardOnDamage":false
 			}
 		},

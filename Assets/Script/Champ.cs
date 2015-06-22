@@ -104,7 +104,7 @@ public class Champ : Creature {
 			return;
 
 		Vector3 pos = Vector3.zero;
-		float step = m_creatureProperty.MoveSpeed;
+		float step = 1;
 
 		if (Application.platform == RuntimePlatform.Android)
 		{

@@ -33,7 +33,7 @@ public class RefCreatureBaseProperty
 	[Range (0, 10)]
 	public float	moveSpeed;
 	public float	aniSpeedRatio = 1f;
-	public float	rotationSpeedRatio = 1f;
+	public float	rotationSpeedRatio = 1000f;
 	[Range (0, 1)]
 	public float 	spPerLevel;
 	public float	navMeshBaseOffset;

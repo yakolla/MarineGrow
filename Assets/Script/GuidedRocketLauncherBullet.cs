@@ -52,15 +52,9 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		float destAngle = transform.eulerAngles.y;
 		if (m_target != null)
 		{
-			destAngle = -Mathf.Atan2(m_target.transform.position.z-transform.position.z, m_target.transform.position.x-transform.position.x) * Mathf.Rad2Deg;
-			if (destAngle < 0)
-			{
-				destAngle += 360;
-			}
-
+			destAngle = Mathf.Atan2(m_target.transform.position.z-transform.position.z, m_target.transform.position.x-transform.position.x) * Mathf.Rad2Deg;
 		}
-
-		transform.eulerAngles = Vector3.Lerp(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, destAngle, 0), 0.1f);
+		transform.eulerAngles = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, -destAngle, 0)), 300f*Time.deltaTime).eulerAngles;
 
 		transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
 		m_accel += Time.deltaTime*0.01f*m_speed;
