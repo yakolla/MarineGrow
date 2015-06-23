@@ -562,7 +562,7 @@ public class Creature : MonoBehaviour {
 			damageDesc.PushbackOnDamage = false;
 			TakeDamage(offender, damageDesc);
 		}
-		m_buffEffects[(int)DamageDesc.BuffType.Burning].m_run = false;
+		m_buffEffects[(int)DamageDesc.BuffType.Poison].m_run = false;
 	}
 
 	IEnumerator EffectMacho(float time)
@@ -624,7 +624,7 @@ public class Creature : MonoBehaviour {
 		case DamageDesc.BuffType.LevelUp:
 			StartCoroutine(EffectSteamPack(time));
 			break;
-		case DamageDesc.BuffType.Burning:
+		case DamageDesc.BuffType.Poison:
 			StartCoroutine(EffectBurning(time, null, damageDesc));
 			break;
 		case DamageDesc.BuffType.Macho:
@@ -742,7 +742,7 @@ public class Creature : MonoBehaviour {
 				strDamage = dmg.ToString();
 				color = Color.red;
 			}
-			else if (damageDesc.DamageBuffType == DamageDesc.BuffType.Burning)
+			else if (damageDesc.DamageBuffType == DamageDesc.BuffType.Poison)
 			{
 				color = Color.magenta;
 			}

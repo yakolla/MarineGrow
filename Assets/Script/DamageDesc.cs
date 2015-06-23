@@ -22,7 +22,7 @@ public class DamageDesc {
 		Stun,
 		Slow,
 		LevelUp,
-		Burning,
+		Poison,
 		Macho,
 		Dash,
 		Count,

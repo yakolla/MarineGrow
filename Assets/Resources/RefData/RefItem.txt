@@ -567,7 +567,7 @@
 			"buffOnHitDesc":
 			{
 				"chance":0,
-				"buffType":"Burning"
+				"buffType":"Poison"
 			}
 		},
 		"levelup":
@@ -1389,7 +1389,12 @@
 		"weaponStat":
 		{
 			"coolTime":0,
-			"range":0
+			"range":0,
+			"buffOnHitDesc":
+			{
+				"chance":1,
+				"buffType":"Stun"
+			}
 		}
 	},
 	{
