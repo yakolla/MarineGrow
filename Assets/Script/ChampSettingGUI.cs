@@ -60,7 +60,7 @@ public class ChampSettingGUI : MonoBehaviour {
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId));
-
+				/*
 				foreach(KeyValuePair<int, RefItem> keyPair in RefData.Instance.RefItems)
 				{
 					if (Warehouse.Instance.FindItem(keyPair.Key) != null)
@@ -74,7 +74,7 @@ public class ChampSettingGUI : MonoBehaviour {
 						break;
 					}
 				}
-
+*/
 
 				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
 

@@ -716,38 +716,36 @@ public class Creature : MonoBehaviour {
 			--m_creatureProperty.Shield;
 			shielded = true;
 		}
+
+		Color color = Color.white;
+		string strDamage = dmg.ToString();
+		if (dmg == 0)
+		{
+			if (shielded == true)
+			{
+				strDamage = "Shielded";
+			}
+			else
+			{
+				strDamage = "Blocked";
+			}
+			DamageText(strDamage, color, DamageNumberSprite.MovementType.Parabola);
+			return;
+		}
 		
 		if (m_ingTakenDamageEffect < Const.MaxShowDamageNumber)
 		{
 			++m_ingTakenDamageEffect;
-			Color color = Color.white;
-			string strDamage = dmg.ToString();
-			if (dmg == 0)
+
+			if (critical == true)
 			{
-				if (shielded == true)
-				{
-					strDamage = "Shielded";
-				}
-				else
-				{
-					strDamage = "Blocked";
-				}
-
+				strDamage = dmg.ToString();
+				color = Color.red;
 			}
-			else
+			else if (damageDesc.DamageBuffType == DamageDesc.BuffType.Burning)
 			{
-				if (critical == true)
-				{
-					strDamage = dmg.ToString();
-					color = Color.red;
-				}
-				else if (damageDesc.DamageBuffType == DamageDesc.BuffType.Burning)
-				{
-					color = Color.magenta;
-				}
-
+				color = Color.magenta;
 			}
-
 
 			DamageText(strDamage, color, DamageNumberSprite.MovementType.Parabola);
 
