@@ -173,7 +173,7 @@
 					"level":9,
 					"option":
 					{
-						"type":"PhysicalDmg",
+						"type":"DamageMultiply",
 						"value":3
 					}
 				}
@@ -275,7 +275,7 @@
 					"level":9,
 					"option":
 					{
-						"type":"PhysicalDmg",
+						"type":"DamageMultiply",
 						"value":3
 					}
 				}
@@ -479,7 +479,7 @@
 					"level":9,
 					"option":
 					{
-						"type":"PhysicalDmg",
+						"type":"DamageMultiply",
 						"value":3
 					}
 				}
@@ -610,7 +610,7 @@
 					"level":9,
 					"option":
 					{
-						"type":"PhysicalDmg",
+						"type":"DamageMultiply",
 						"value":3
 					}
 				}
@@ -709,7 +709,7 @@
 					"level":9,
 					"option":
 					{
-						"type":"PhysicalDmg",
+						"type":"DamageMultiply",
 						"value":3
 					}
 				}
@@ -1101,7 +1101,7 @@
 					"level":9,
 					"option":
 					{
-						"type":"PhysicalDmg",
+						"type":"DamageMultiply",
 						"value":3
 					}
 				}

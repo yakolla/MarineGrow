@@ -27,7 +27,9 @@ public class OptionGUI : MonoBehaviour {
 	}
 
 	void OnEnable() {
-		m_admob.ShowBanner(true);
+		if (m_admob != null)
+			m_admob.ShowBanner(true);
+
 		TimeEffector.Instance.StopTime();
 	}
 

@@ -72,8 +72,8 @@ public class Const {
 	public const string LEADERBOARD_SURVIVAL_TIME = "CgkIrKGfsOUeEAIQGw";
 	public const string LEADERBOARD_KILLED_MOBS = "CgkIrKGfsOUeEAIQGg";
 
-	public const string DisabledStringColor = "<color=red>";
-	public const string EnabledStringColor = "<color=white>";
+	public const string DisabledStringColor = "<color=silver>";
+	public const string EnabledStringColor = "<color=yellow>";
 
 	public static bool			CHEAT_MODE = false;
 

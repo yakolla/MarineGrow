@@ -30,7 +30,7 @@ public class ItemData {
 	
 	public enum Option
 	{
-		PhysicalDmg,
+		DamageMultiply,
 		DefencePoint,
 		MovingSpeed,
 		Weapon,
@@ -111,8 +111,8 @@ public class ItemData {
 
 			switch(op.option.type)
 			{
-			case Option.PhysicalDmg:
-				obj.m_creatureProperty.AlphaPhysicalAttackDamage += (int)op.option.value;
+			case Option.DamageMultiply:
+				obj.m_creatureProperty.DamageRatio += op.option.value;
 				break;
 			case Option.MovingSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed += op.option.value;
@@ -139,8 +139,8 @@ public class ItemData {
 
 			switch(op.option.type)
 			{
-			case Option.PhysicalDmg:
-				obj.m_creatureProperty.AlphaPhysicalAttackDamage -= (int)op.option.value;
+			case Option.DamageMultiply:
+				obj.m_creatureProperty.DamageRatio -= op.option.value;
 				break;
 			case Option.MovingSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed -= op.option.value;

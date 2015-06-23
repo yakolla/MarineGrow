@@ -7,7 +7,6 @@ public class CreatureProperty {
 
 	Creature	m_owner;
 
-	[SerializeField]
 	RefCreatureBaseProperty	m_baseProperty;
 	SecuredType.XInt	m_hp = 0;
 
@@ -15,28 +14,23 @@ public class CreatureProperty {
 
 	SecuredType.XInt		m_alphaPhysicalDamage = 0;
 
-	[SerializeField]
-	float	m_alphaCriticalRatio = 0f;
+	SecuredType.XFloat	m_alphaCriticalRatio = 0f;
 
-	[SerializeField]
-	float	m_alphaCriticalDamage = 0f;
+	SecuredType.XFloat	m_alphaCriticalDamage = 0f;
 
 	SecuredType.XInt		m_alphaPhysicalDefencePoint = 0;
 
-	float	m_alphaMoveSpeed = 0f;
+	SecuredType.XFloat	m_alphaMoveSpeed = 0f;
 
-	float	m_betaMoveSpeed = 1f;
+	SecuredType.XFloat	m_betaMoveSpeed = 1f;
 
-	[SerializeField]
-	float	m_alphaLifeSteal = 0f;
+	SecuredType.XFloat	m_alphaLifeSteal = 0f;
 
-	[SerializeField]
-	float	m_alphaGainExtraExp = 0f;
+	SecuredType.XFloat	m_alphaGainExtraExp = 0f;
 
-	[SerializeField]
-	float	m_alphaAttackCoolTime = 0f;
+	SecuredType.XFloat	m_alphaAttackCoolTime = 0f;
 
-	float 	m_bulletLength = 0f;
+	SecuredType.XFloat 	m_bulletLength = 0f;
 
 	SecuredType.XInt		m_shield = 0;
 
@@ -49,12 +43,13 @@ public class CreatureProperty {
 
 	SecuredType.XInt		m_callableFollowers = 1;
 
-	[SerializeField]
-	float	m_alphaSPRecoveryPerSec = 0f;
+	SecuredType.XFloat	m_alphaSPRecoveryPerSec = 0f;
 
-	float	m_accSPRecoveryPerSec = 0f;
+	SecuredType.XFloat	m_accSPRecoveryPerSec = 0f;
 
-	int			m_bombRange = 0;
+	SecuredType.XInt	m_bombRange = 0;
+
+	SecuredType.XFloat	m_damageRatio = 0;
 
 	public void 	init(Creature owner, RefCreatureBaseProperty baseProperty, int level)
 	{
@@ -117,13 +112,13 @@ public class CreatureProperty {
 
 	public float AlphaSPRecoveryPerSec
 	{
-		get { return m_alphaSPRecoveryPerSec; }
-		set { m_alphaSPRecoveryPerSec = value; }
+		get { return m_alphaSPRecoveryPerSec.Value; }
+		set { m_alphaSPRecoveryPerSec.Value = value; }
 	}
 
 	public float SPRecoveryPerSec
 	{
-		get{ return (m_baseProperty.spRecoveryPerSec + m_alphaSPRecoveryPerSec);}
+		get{ return (m_baseProperty.spRecoveryPerSec + m_alphaSPRecoveryPerSec.Value);}
 	}
 
 	public int Level
@@ -167,9 +162,18 @@ public class CreatureProperty {
 		}
 	}
 
+	public float	DamageRatio
+	{
+		get{return m_damageRatio.Value;}
+		set{m_damageRatio.Value = value;}
+	}
+
 	public int	PhysicalAttackDamage
 	{
-		get {return (int)(m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage + (m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_baseProperty.phyDamagePerLevel);}
+		get {
+			int damage = (int)(m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage + (m_baseProperty.physicalDamage + AlphaPhysicalAttackDamage)*(Level-1)*m_baseProperty.phyDamagePerLevel);
+			return damage + (int)(damage*DamageRatio);
+		}
 	}
 
 	public int	AlphaPhysicalAttackDamage
@@ -201,14 +205,14 @@ public class CreatureProperty {
 	
 	public float	AlphaMoveSpeed
 	{
-		get {return m_alphaMoveSpeed;}
-		set { m_alphaMoveSpeed = Mathf.Min(value, Const.MaxAlphaMoveSpeed); }
+		get {return m_alphaMoveSpeed.Value;}
+		set { m_alphaMoveSpeed.Value = Mathf.Min(value, Const.MaxAlphaMoveSpeed); }
 	}
 
 	public float	BetaMoveSpeed
 	{
-		get {return m_betaMoveSpeed;}
-		set { m_betaMoveSpeed = value; }
+		get {return m_betaMoveSpeed.Value;}
+		set { m_betaMoveSpeed.Value = value; }
 	}
 
 
@@ -219,8 +223,8 @@ public class CreatureProperty {
 
 	public float AlphaLifeSteal
 	{
-		get { return m_alphaLifeSteal; }
-		set { m_alphaLifeSteal = value; }
+		get { return m_alphaLifeSteal.Value; }
+		set { m_alphaLifeSteal.Value = value; }
 	}
 
 	public float	CriticalChance
@@ -230,8 +234,8 @@ public class CreatureProperty {
 
 	public float	AlphaCriticalRatio
 	{
-		get {return m_alphaCriticalRatio;}
-		set { m_alphaCriticalRatio = value; }
+		get {return m_alphaCriticalRatio.Value;}
+		set { m_alphaCriticalRatio.Value = value; }
 	}
 
 	public float	CriticalDamage
@@ -241,8 +245,8 @@ public class CreatureProperty {
 	
 	public float	AlphaCriticalDamage
 	{
-		get {return m_alphaCriticalDamage;}
-		set { m_alphaCriticalDamage = value; }
+		get {return m_alphaCriticalDamage.Value;}
+		set { m_alphaCriticalDamage.Value = value; }
 	}
 
 	public float	GainExtraExp
@@ -252,8 +256,8 @@ public class CreatureProperty {
 	
 	public float	AlphaGainExtraExp
 	{
-		get {return m_alphaGainExtraExp;}
-		set { m_alphaGainExtraExp = value; }
+		get {return m_alphaGainExtraExp.Value;}
+		set { m_alphaGainExtraExp.Value = value; }
 	}
 
 	public float	AttackCoolTime
@@ -263,14 +267,14 @@ public class CreatureProperty {
 	
 	public float	AlphaAttackCoolTime
 	{
-		get {return m_alphaAttackCoolTime;}
-		set { m_alphaAttackCoolTime = value; }
+		get {return m_alphaAttackCoolTime.Value;}
+		set { m_alphaAttackCoolTime.Value = value; }
 	}
 
 	public float BulletLength
 	{
-		get {return m_bulletLength;}
-		set { m_bulletLength = value; }
+		get {return m_bulletLength.Value;}
+		set { m_bulletLength.Value = value; }
 	}
 
 	public int Shield
@@ -291,8 +295,8 @@ public class CreatureProperty {
 
 	public int SplashRadius
 	{
-		set {m_bombRange = value;}
-		get {return m_bombRange;}
+		set {m_bombRange.Value = value;}
+		get {return m_bombRange.Value;}
 	}
 
 	public int CallableFollowers
@@ -303,11 +307,11 @@ public class CreatureProperty {
 
 	public void Update()
 	{
-		m_accSPRecoveryPerSec += (SPRecoveryPerSec * Time.deltaTime);
-		if (m_accSPRecoveryPerSec >= 1f)
+		m_accSPRecoveryPerSec.Value += (SPRecoveryPerSec * Time.deltaTime);
+		if (m_accSPRecoveryPerSec.Value >= 1f)
 		{
-			SP += (int)m_accSPRecoveryPerSec;
-			m_accSPRecoveryPerSec -= (int)m_accSPRecoveryPerSec;
+			SP += (int)m_accSPRecoveryPerSec.Value;
+			m_accSPRecoveryPerSec.Value -= (int)m_accSPRecoveryPerSec.Value;
 		}
 	}
 
@@ -337,6 +341,6 @@ public class CreatureProperty {
 		other.m_sp = m_sp;
 		other.m_alphaSPRecoveryPerSec = m_alphaSPRecoveryPerSec;
 		other.m_callableFollowers = m_callableFollowers;
-
+		other.m_damageRatio = m_damageRatio;
 	}
 }
