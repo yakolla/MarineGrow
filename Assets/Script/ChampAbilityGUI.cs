@@ -154,7 +154,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}));
 */
 
-
+		/*
 		basicAbili.Add(new Ability(0.01f, "Weapon Lv Up", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon;
@@ -167,7 +167,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}
 		));
-
+*/
 		skillAbili.Add(new Ability(0.3f, "Embers Skill", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();

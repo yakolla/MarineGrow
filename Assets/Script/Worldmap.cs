@@ -43,12 +43,22 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
+	int m_try = 0;
 	void OnOpenSavedGameForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
 			GPlusPlatform.Instance.LoadGame(game, OnReadGame);
 			Warehouse.Instance.FileName = game.Filename;
 
 		} else {
+			if (m_try < 3)
+			{
+				string fileName = "growingmarine.sav";
+				GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForLoading);
+				++m_try;
+				log = "OnSavedGameOpened:" + status + m_try;
+				return;
+			}
+
 			Const.HideLoadingGUI();
 		}
 
@@ -140,7 +150,7 @@ public class Worldmap : MonoBehaviour {
 			Const.ShowLoadingGUI("Loading...");
 			log = "OnClickStart";
 
-/*
+			/*
 			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
 				if (status == SelectUIStatus.SavedGameSelected) {
 					
@@ -165,7 +175,7 @@ public class Worldmap : MonoBehaviour {
 			});
 				*/
 
-
+			m_try = 0;
 			string fileName = "growingmarine.sav";
 			GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForLoading);
 
