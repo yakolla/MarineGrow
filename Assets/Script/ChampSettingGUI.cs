@@ -52,10 +52,8 @@ public class ChampSettingGUI : MonoBehaviour {
 #if UNITY_EDITOR
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId);
 
-				gunWeaponData.Lock = false;			
-				Warehouse.Instance.PushItem(gunWeaponData);
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGunRefItemId));
 
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId));
@@ -88,7 +86,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
 					ItemFollowerData followerData = new ItemFollowerData(follower.id);
-					followerData.Lock = true;
 					Warehouse.Instance.PushItem(followerData);
 				}
 
@@ -102,9 +99,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			if (Warehouse.Instance.Items.Count == 0)
 			{
-				ItemWeaponData gunWeaponData = new ItemWeaponData(Const.ChampGunRefItemId);
-				gunWeaponData.Lock = false;	
-				Warehouse.Instance.PushItem(gunWeaponData);
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGunRefItemId));
 
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId));
@@ -115,7 +110,6 @@ public class ChampSettingGUI : MonoBehaviour {
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
 					ItemFollowerData followerData = new ItemFollowerData(follower.id);
-					followerData.Lock = true;
 					Warehouse.Instance.PushItem(followerData);
 				}
 

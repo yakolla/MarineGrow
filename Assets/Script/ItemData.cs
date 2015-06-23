@@ -55,7 +55,7 @@ public class ItemData {
 	{
 		RefItemID = refItemId;
 		m_count = count;
-
+		Lock = m_refItem.defaultLock;
 	}
 
 	virtual public string Description()
@@ -77,11 +77,11 @@ public class ItemData {
 			desc += (Level >= op.level ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv" + op.level + ":";
 			if (op.option.type == Option.Weapon)
 			{
-				desc += RefData.Instance.RefItems[(int)op.option.value].codeName + "</color>\n";
+				desc += RefData.Instance.RefItems[(int)op.option.values[0]].codeName + "</color>\n";
 			}
 			else
 			{
-				desc += op.option.type.ToString() + ":" + op.option.value + "</color>\n";
+				desc += op.option.type.ToString() + ":" + op.option.values[0] + "</color>\n";
 			}
 
 		}
@@ -112,16 +112,19 @@ public class ItemData {
 			switch(op.option.type)
 			{
 			case Option.DamageMultiply:
-				obj.m_creatureProperty.DamageRatio += op.option.value;
+				obj.m_creatureProperty.DamageRatio += op.option.values[0];
 				break;
 			case Option.MovingSpeed:
-				obj.m_creatureProperty.AlphaMoveSpeed += op.option.value;
+				obj.m_creatureProperty.AlphaMoveSpeed += op.option.values[0];
 				break;
 			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)op.option.value;
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)op.option.values[0];
 				break;
 			case Option.Weapon:
-				obj.EquipPassiveSkillWeapon(new ItemWeaponData((int)op.option.value), null);
+				ItemWeaponData weaponData = new ItemWeaponData((int)op.option.values[0]);
+
+				weaponData.Level = (int)op.option.values[1];
+				obj.EquipPassiveSkillWeapon(weaponData, null);
 				break;
 			}
 		}
@@ -140,13 +143,13 @@ public class ItemData {
 			switch(op.option.type)
 			{
 			case Option.DamageMultiply:
-				obj.m_creatureProperty.DamageRatio -= op.option.value;
+				obj.m_creatureProperty.DamageRatio -= op.option.values[0];
 				break;
 			case Option.MovingSpeed:
-				obj.m_creatureProperty.AlphaMoveSpeed -= op.option.value;
+				obj.m_creatureProperty.AlphaMoveSpeed -= op.option.values[0];
 				break;
 			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= (int)op.option.value;
+				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= (int)op.option.values[0];
 				break;
 			}
 		}

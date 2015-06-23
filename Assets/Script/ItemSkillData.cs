@@ -13,7 +13,6 @@ public class ItemSkillData : ItemData{
 	public ItemSkillData(int refItemId) : base(refItemId, 1)
 	{
 		m_refWeaponItemId = RefData.Instance.RefItems[refItemId].weaponId;
-		Lock = false;
 	}
 
 	override public void Pickup(Creature obj)

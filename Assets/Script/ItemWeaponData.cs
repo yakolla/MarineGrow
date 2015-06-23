@@ -11,8 +11,6 @@ public class ItemWeaponData : ItemData{
 	{
 		m_prefWeapon = "Pref/Weapon/" + RefItem.codeName;
 		m_weaponName = RefItem.codeName;
-
-		Lock = true;
 	}
 
 	[JsonIgnore]

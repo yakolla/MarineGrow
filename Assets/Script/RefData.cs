@@ -118,7 +118,7 @@ public class RefItemOption
 	[JsonConverter(typeof(StringEnumConverter))]
 	public ItemData.Option  type;
 
-	public float 			value;
+	public float[] 			values;
 }
 
 public class RefItem : RefBaseData
@@ -134,6 +134,7 @@ public class RefItem : RefBaseData
 	public  WeaponStat			weaponStat;
 	public 	RefItemOption[]		options;
 	public 	int					weaponId;
+	public 	bool				defaultLock = false;
 
 }
 
