@@ -82,6 +82,7 @@
 		"codeName":"Engineering Bay",
 		"type":"Cheat",
 		"icon":"Sprites/Pandora",
+		"defaultLock":true,
 		"levelup":
 		{
 			"conds":
@@ -779,7 +780,6 @@
 		"codeName":"ChampTornadoLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/Tornado",
-		"defaultLock":true,
 		"evolutionFiring":
 		{
 			"angle":30,
@@ -1363,7 +1363,6 @@
 		"codeName":"ChampGrenadeLauncher",
 		"type":"Weapon",
 		"icon":"Sprites/Grenade",
-		"defaultLock":true,
 		"weaponStat":
 		{
 			"coolTime":5,

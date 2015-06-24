@@ -12,21 +12,8 @@ public class Worldmap : MonoBehaviour {
 	string		log = "log";
 	GameObject	m_selectedMap;
 
-	Button		m_btnStart;
-	Button		m_btnLeaderBoard;
-	Button		m_btnAchievement;
-
 	void Start()
 	{
-		m_btnStart = transform.Find("ButtonStart").GetComponent<Button>();
-		m_btnLeaderBoard = transform.Find("ButtonLeaderBoard").GetComponent<Button>();
-		m_btnAchievement = transform.Find("ButtonAchievement").GetComponent<Button>();
-
-		bool logined = GPlusPlatform.Instance.IsAuthenticated();
-		/*m_btnStart.interactable = logined;
-		m_btnLeaderBoard.interactable = logined;
-		m_btnAchievement.interactable = logined;
-		*/
 		Login();
 	}
 	
@@ -116,9 +103,7 @@ public class Worldmap : MonoBehaviour {
 
 			GPlusPlatform.Instance.Login((bool success) => {
 				// handle success or failure
-				m_btnLeaderBoard.interactable = success;
-				m_btnAchievement.interactable = success;
-				m_btnStart.interactable = success;
+
 				
 				if (success == true)
 				{
@@ -134,7 +119,7 @@ public class Worldmap : MonoBehaviour {
 		}
 		else
 		{
-			m_btnStart.interactable = true;
+
 		}
 	}
 	/*
@@ -194,5 +179,13 @@ public class Worldmap : MonoBehaviour {
 	public void OnClickAchievement()
 	{
 		GPlusPlatform.Instance.ShowAchievementsUI();
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape)) 
+		{ 
+			transform.Find("ExitGUI/Panel").gameObject.SetActive(true);
+		}
 	}
 }

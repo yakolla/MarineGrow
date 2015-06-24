@@ -6,7 +6,6 @@ public class ItemCheatData : ItemData{
 
 	public ItemCheatData() : base(51, 1)
 	{
-		Lock = true;
 	}
 
 	override public void Pickup(Creature obj)
