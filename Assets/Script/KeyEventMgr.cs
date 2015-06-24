@@ -9,6 +9,7 @@ public class KeyEventMgr : MonoBehaviour {
 	GameObject	m_settings;
 	GameObject	m_shop;
 	GameObject	m_option;
+	GameObject	m_goMainTitle;
 
 
 	void Start()
@@ -16,6 +17,7 @@ public class KeyEventMgr : MonoBehaviour {
 		m_settings = transform.Find("SettingGUI/Panel").gameObject;
 		m_shop = transform.Find("ShopGUI/Panel").gameObject;
 		m_option = transform.Find("OptionGUI/Panel").gameObject;
+		m_goMainTitle = transform.Find("GoMainTitleGUI/Panel").gameObject;
 	}
 
 	void Update()
@@ -31,10 +33,7 @@ public class KeyEventMgr : MonoBehaviour {
 			}
 			else if (m_settings.activeSelf)
 			{
-				Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game)=>{
-					Application.LoadLevel("Worldmap");
-				});
-
+				m_goMainTitle.SetActive(true);
 			}
 		}
 	}
