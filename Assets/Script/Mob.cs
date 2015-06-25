@@ -99,18 +99,6 @@ public class Mob : Creature {
 
 	}
 
-	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
-	{
-		base.TakeDamage(offender, damageDesc);
-
-		if (m_prefEffectBlood != null)
-		{
-			GameObject effect = (GameObject)Instantiate(m_prefEffectBlood, transform.position, transform.rotation);
-			effect.transform.localScale = transform.localScale;
-		}
-
-	}
-
 	override public void Death()
 	{
 		if (m_behaviourType == BehaviourType.Death)

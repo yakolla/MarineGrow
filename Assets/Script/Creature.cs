@@ -677,13 +677,13 @@ public class Creature : MonoBehaviour {
 		return sprite;
 	}
 	
-	virtual public void TakeDamage(Creature offender, DamageDesc damageDesc)
+	virtual public int TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
 
 		if (m_buffEffects[(int)DamageDesc.BuffType.Macho].m_run == true)
 		{
 			DamageText("Blocked", Color.white, DamageNumberSprite.MovementType.Parabola);
-			return;
+			return 0;
 		}
 
 		bool critical = false;
@@ -730,7 +730,7 @@ public class Creature : MonoBehaviour {
 				strDamage = "Blocked";
 			}
 			DamageText(strDamage, color, DamageNumberSprite.MovementType.Parabola);
-			return;
+			return 0;
 		}
 		
 		if (m_ingTakenDamageEffect < Const.MaxShowDamageNumber)
@@ -783,6 +783,7 @@ public class Creature : MonoBehaviour {
 			Death();
 		}
 
+		return dmg;
 	}
 
 	virtual public void GiveExp(int exp)

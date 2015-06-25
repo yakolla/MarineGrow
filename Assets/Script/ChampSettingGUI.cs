@@ -259,6 +259,8 @@ public class ChampSettingGUI : MonoBehaviour {
 				priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.levelup.conds != null && item.Item.Lock == false && item.Item.Level < Const.MaxItemLevel;};
 				
 				priceGemButton.SetPrices(item.Item.RefItem.levelup.conds, item.Item.RefItem.levelup.else_conds);
+				priceGemButton.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(item.Item.Level, item.Item.RefItem.levelup);
+				priceGemButton.m_gemButton.NormalWorth = Const.GetItemLevelupWorth(item.Item.Level, item.Item.RefItem.levelup);
 
 				priceGemButton.AddListener(() => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickLevelup(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 					priceGemButton.SetLable("Levelup");

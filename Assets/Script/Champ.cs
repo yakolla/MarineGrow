@@ -246,10 +246,13 @@ public class Champ : Creature {
 		m_creatureProperty.giveExp(exp);
 	}
 
-	override public void TakeDamage(Creature offender, DamageDesc damageDesc)
+	override public int TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
-		base.TakeDamage(offender, damageDesc);
-		m_bloodWarningAnimator.SetTrigger("Warning");
+		int dmg = base.TakeDamage(offender, damageDesc);
+		if (0 < dmg)
+			m_bloodWarningAnimator.SetTrigger("Warning");
+
+		return dmg;
 	}
 
 	override public void Death()
