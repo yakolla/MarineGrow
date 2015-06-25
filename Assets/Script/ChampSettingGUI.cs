@@ -272,6 +272,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.unlock.conds != null;};
 
 				priceGemButton.SetPrices(item.Item.RefItem.unlock.conds, item.Item.RefItem.unlock.else_conds);
+
 			priceGemButton.AddListener(() => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickUnlock(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
 				priceGemButton.SetLable("Unlock");
 
@@ -509,6 +510,11 @@ public class ChampSettingGUI : MonoBehaviour {
 				invSlot.ItemDesc = selectedItem.Item.Description();
 
 				SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
+
+
+				invSlot.PriceButton1.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level, selectedItem.Item.RefItem.levelup);
+				invSlot.PriceButton1.m_gemButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level, selectedItem.Item.RefItem.levelup);
+
 
 				switch(selectedItem.Item.RefItem.id)
 				{
