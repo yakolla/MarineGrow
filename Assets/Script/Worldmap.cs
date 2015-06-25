@@ -30,6 +30,14 @@ public class Worldmap : MonoBehaviour {
 		log = "OnSavedGameOpened:" + status + game;
 	}
 
+	IEnumerator DelayMessage (string function, float delay)
+	{
+		
+		yield return new WaitForSeconds(delay);
+		
+		SendMessage(function);
+	}
+
 	int m_try = 0;
 	void OnOpenSavedGameForLoading(SavedGameRequestStatus status, ISavedGameMetadata game) {
 		if (status == SavedGameRequestStatus.Success) {
@@ -39,10 +47,10 @@ public class Worldmap : MonoBehaviour {
 		} else {
 			if (m_try < 3)
 			{
-				string fileName = "growingmarine.sav";
-				GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForLoading);
 				++m_try;
-				log = "OnSavedGameOpened:" + status + m_try;
+				log = "OnOpenSavedGameForLoading:" + status + m_try;
+
+				StartCoroutine(DelayMessage("OpenGame", 1f));
 				return;
 			}
 
@@ -50,7 +58,7 @@ public class Worldmap : MonoBehaviour {
 		}
 
 
-		log = "OnSavedGameOpened:" + status + game;
+		log = "OnOpenSavedGameForLoading:" + status + game;
 	}
 
 	void OnOpenSavedGameForSaving(SavedGameRequestStatus status, ISavedGameMetadata game) {
@@ -125,17 +133,8 @@ public class Worldmap : MonoBehaviour {
 	/*
 	public void OnGUI()
 	{
-		GUI.Button(new Rect(0, 0, 300, 100), log);
-	}
-*/
-	public void OnClickStart()
-	{
-		if (Application.platform == RuntimePlatform.Android)
+		if (GUI.Button(new Rect(0, 0, 300, 100), log))
 		{
-			Const.ShowLoadingGUI("Loading...");
-			log = "OnClickStart";
-
-			/*
 			GPlusPlatform.Instance.ShowSavedGameBoard(3, (SelectUIStatus status, ISavedGameMetadata game) => {
 				if (status == SelectUIStatus.SavedGameSelected) {
 					
@@ -158,17 +157,29 @@ public class Worldmap : MonoBehaviour {
 				}
 				log = status.ToString();
 			});
-				*/
+		}
+	}
+*/
+	public void OnClickStart()
+	{
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			Const.ShowLoadingGUI("Loading...");
+			log = "OnClickStart";
 
 			m_try = 0;
-			string fileName = "growingmarine.sav";
-			GPlusPlatform.Instance.OpenGame(fileName, OnOpenSavedGameForLoading);
+			OpenGame();
 
 		}
 		else
 		{
 			Application.LoadLevel("Basic Dungeon");
 		}
+	}
+
+	public void OpenGame()
+	{
+		GPlusPlatform.Instance.OpenGame("growingmarine.sav", OnOpenSavedGameForLoading);
 	}
 
 	public void OnClickLeaderBoard()
