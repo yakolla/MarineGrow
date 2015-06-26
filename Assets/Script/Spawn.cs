@@ -581,6 +581,9 @@ public class Spawn : MonoBehaviour {
 						}
 						item.Count += (int)(item.Count*goldAlpha);
 
+						if (m_champ != null)
+							item.Count += (int)(item.Count*m_champ.m_creatureProperty.GainExtraGold);
+
 						break;
 					case ItemData.Type.HealPosion:
 						item = new ItemHealPosionData(Random.Range(desc.minValue, desc.maxValue));
@@ -615,6 +618,8 @@ public class Spawn : MonoBehaviour {
 					case ItemData.Type.XPPotion:
 						item = new ItemXPPotionData(Random.Range(desc.minValue, desc.maxValue));		
 						item.Count += (int)(item.Count*goldAlpha);
+						if (m_champ != null)
+							item.Count += (int)(item.Count*m_champ.m_creatureProperty.GainExtraExp);
 						break;
 					case ItemData.Type.MobEgg:
 						break;					

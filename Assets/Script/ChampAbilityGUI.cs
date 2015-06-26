@@ -563,11 +563,21 @@ public class ChampAbilityGUI : MonoBehaviour {
 		
 		utilAbili.Add(new Ability(0.3f, "Gain Extra XP", 
 		                          ()=>{
-			m_backup.AlphaGainExtraExp += 0.5f;
+			m_backup.GainExtraExp += 0.5f;
 			return (m_champ.m_creatureProperty.GainExtraExp*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraExp*100) + "%</color>";
 		},
 		()=>{
-			m_champ.m_creatureProperty.AlphaGainExtraExp += 0.5f;
+			m_champ.m_creatureProperty.GainExtraExp += 0.5f;
+			--m_champ.RemainStatPoint;
+		}));
+
+		utilAbili.Add(new Ability(0.3f, "Gain Extra Gold", 
+		                          ()=>{
+			m_backup.GainExtraGold += 0.5f;
+			return (m_champ.m_creatureProperty.GainExtraGold*100) + " -> " + "<color=yellow>" + (m_backup.GainExtraGold*100) + "%</color>";
+		},
+		()=>{
+			m_champ.m_creatureProperty.GainExtraGold += 0.5f;
 			--m_champ.RemainStatPoint;
 		}));
 		

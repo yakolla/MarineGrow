@@ -241,7 +241,6 @@ public class Champ : Creature {
 
 	override public void GiveExp(int exp)
 	{
-		exp = (int)(exp+exp*m_creatureProperty.GainExtraExp);
 		Warehouse.Instance.NewGameStats.GainedXP += exp;
 		m_creatureProperty.giveExp(exp);
 	}

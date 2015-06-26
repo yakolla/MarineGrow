@@ -101,11 +101,11 @@ public class LightningBullet : Bullet
 					
 					for(int i = 1; i < m_maxChaining; ++i)
 					{
-						Creature chaningTargetObj = targets[i-1].SearchTarget(m_ownerCreature.GetMyEnemyType(), targets, 3f);
-						if (chaningTargetObj == null)
+						Creature[] chaningTargets = Bullet.SearchTarget(targets[i-1].transform.position, m_ownerCreature.GetMyEnemyType(), 3f, targets);
+						if (chaningTargets == null)
 							break;
-						
-						targets[i] = chaningTargetObj;
+
+						targets[i] = chaningTargets[0];
 						hittedTargetCount++;
 					}
 					

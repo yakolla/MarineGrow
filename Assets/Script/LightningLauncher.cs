@@ -98,16 +98,7 @@ public class LightningLauncher : Weapon {
 
 	override public void LevelUp()
 	{
-		base.LevelUp();
-
-		if (m_level % 2 == 0)
-		{
-			
-		}
-		else
-		{
-
-		}
-
+		++m_level;
+		MoreFire();
 	}
 }

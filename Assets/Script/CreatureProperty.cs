@@ -26,7 +26,8 @@ public class CreatureProperty {
 
 	SecuredType.XFloat	m_alphaLifeSteal = 0f;
 
-	SecuredType.XFloat	m_alphaGainExtraExp = 0f;
+	SecuredType.XFloat	m_gainExtraExp = 0f;
+	SecuredType.XFloat	m_gainExtraGold = 0f;
 
 	SecuredType.XFloat	m_alphaAttackCoolTime = 0f;
 
@@ -251,13 +252,14 @@ public class CreatureProperty {
 
 	public float	GainExtraExp
 	{
-		get {return AlphaGainExtraExp;}
-	}
-	
-	public float	AlphaGainExtraExp
+		get {return m_gainExtraExp.Value;}
+		set { m_gainExtraExp.Value = value; }
+	}	
+
+	public float	GainExtraGold
 	{
-		get {return m_alphaGainExtraExp.Value;}
-		set { m_alphaGainExtraExp.Value = value; }
+		get {return m_gainExtraGold.Value;}
+		set { m_gainExtraGold.Value = value; }
 	}
 
 	public float	AttackCoolTime
@@ -329,7 +331,8 @@ public class CreatureProperty {
 		other.m_alphaMoveSpeed = m_alphaMoveSpeed;
 		other.m_betaMoveSpeed = m_betaMoveSpeed;
 		other.m_alphaLifeSteal = m_alphaLifeSteal;
-		other.m_alphaGainExtraExp = m_alphaGainExtraExp;
+		other.m_gainExtraExp = m_gainExtraExp;
+		other.m_gainExtraGold = m_gainExtraGold;
 		other.m_alphaAttackCoolTime = m_alphaAttackCoolTime;
 		other.m_level = m_level;
 		other.m_exp = m_exp;

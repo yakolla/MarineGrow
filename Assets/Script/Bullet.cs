@@ -46,39 +46,69 @@ public class Bullet : MonoBehaviour {
 
 	static public Creature[] SearchTarget(Vector3 pos, Creature.Type targetTags, float range)
 	{
+		return SearchTarget(pos, targetTags, range, null);
+	}
 
+	static public Creature[] SearchTarget(Vector3 pos, Creature.Type targetTags, float range, Creature[] skip)
+	{
+		
 		Collider[] hitColliders = Physics.OverlapSphere(pos, range, 1<<9);
 		if (hitColliders.Length == 0)
 			return null;
-
+		
 		Creature[] testSearchedTargets = new Creature[hitColliders.Length];
 		int i = 0;
 		int searchedCount = 0;
 		while (i < hitColliders.Length) {
-				
+			
 			Creature creature = hitColliders[i].gameObject.GetComponent<Creature>();
 			if (creature != null)
 			{
 				if (targetTags == creature.CreatureType)
 				{
-					testSearchedTargets[searchedCount] = creature;
-					++searchedCount;
+					bool already = false;
+
+					if (skip != null)
+					{
+						for(int x = 0; x < i; ++x)
+						{
+							for(int y = 0; y < skip.Length; ++y)
+							{
+								if (skip[y] == null || testSearchedTargets[x] == null)
+									continue;
+
+								if (testSearchedTargets[x] == skip[y])
+								{
+									already = true;
+									x = i;
+									break;
+								}
+							}
+
+						}
+					}
+
+					if (already == false)
+					{
+						testSearchedTargets[searchedCount] = creature;
+						++searchedCount;
+					}
+
 				}
 			}
-				
+			
 			i++;
 		}
-
+		
 		if (searchedCount == 0)
 			return null;
-
+		
 		Creature[] searchead = new Creature[searchedCount];
 		for(i = 0; i < searchedCount; ++i)
 			searchead[i] = testSearchedTargets[i];
-
+		
 		return searchead;
 	}
-
 
 	IEnumerator destoryBombObject(GameObject bombEffect, float duration)
 	{
