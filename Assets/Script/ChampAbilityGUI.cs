@@ -168,7 +168,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 */
-		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[132].name + " Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[132].name, 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
 			int backup = 1;
@@ -205,6 +205,12 @@ public class ChampAbilityGUI : MonoBehaviour {
 				return false;
 			}
 
+			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
+			if (weapon != null)
+			{
+				if (weapon.Level >= Const.MaxItemLevel)
+					return false;
+			}
 			return true;
 		}
 		));
@@ -272,7 +278,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[131].name + " Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[131].name, 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(131);
 			int backup = 1;
@@ -302,21 +308,27 @@ public class ChampAbilityGUI : MonoBehaviour {
 		()=>{
 			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
 			{
-			case Const.ChampGunRefItemId:
+			case Const.ChampGunRefItemId:			
+				Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(131);
+				if (weapon != null)
+				{
+					if (weapon.Level >= Const.MaxItemLevel)
+						return false;
+				}
+				return true;
 			case Const.ChampLightningLauncherRefItemId:
 			case Const.ChampFiregunRefItemId:
-				return true;
 			case Const.ChampGuidedRocketLauncherRefItemId:
 			case Const.ChampRocketLauncherRefItemId:
 			case Const.ChampBoomerangLauncherRefItemId:
-				return false;
+				break;
 			}
 			
 			return false;
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[134].name + " Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[134].name, 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(134);
 			int backup = 1;
@@ -345,21 +357,27 @@ public class ChampAbilityGUI : MonoBehaviour {
 		()=>{
 			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
 			{
-			case Const.ChampBoomerangLauncherRefItemId:
+			case Const.ChampBoomerangLauncherRefItemId:			
+				Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(134);
+				if (weapon != null)
+				{
+					if (weapon.Level >= Const.MaxItemLevel)
+						return false;
+				}
 				return true;
 			case Const.ChampGunRefItemId:
 			case Const.ChampLightningLauncherRefItemId:
 			case Const.ChampFiregunRefItemId:
 			case Const.ChampGuidedRocketLauncherRefItemId:
 			case Const.ChampRocketLauncherRefItemId:
-				return false;
+				break;
 			}
 			
 			return false;
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[129].name + " Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[129].name, 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(129);
 			int backup = 1;
@@ -391,19 +409,25 @@ public class ChampAbilityGUI : MonoBehaviour {
 			{
 			case Const.ChampLightningLauncherRefItemId:
 			case Const.ChampFiregunRefItemId:
+				Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(129);
+				if (weapon != null)
+				{
+					if (weapon.Level >= Const.MaxItemLevel)
+						return false;
+				}
 				return true;
 			case Const.ChampGunRefItemId:			
 			case Const.ChampBoomerangLauncherRefItemId:
 			case Const.ChampGuidedRocketLauncherRefItemId:
 			case Const.ChampRocketLauncherRefItemId:
-				return false;
+				break;
 			}
 			
 			return false;
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[135].name + " Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[135].name, 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
 			int backup = 1;
@@ -430,6 +454,12 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		},
 		()=>{
+			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
+			if (weapon != null)
+			{
+				if (weapon.Level >= Const.MaxItemLevel)
+					return false;
+			}
 			return true;
 		}
 		));

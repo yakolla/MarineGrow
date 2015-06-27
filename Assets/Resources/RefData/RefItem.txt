@@ -1384,7 +1384,7 @@
 	{
 		"id":132,
 		"codeName":"MineLauncher",
-		"name":"Mine",
+		"name":"Embers",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
 		"weaponStat":
@@ -1413,7 +1413,7 @@
 	{
 		"id":134,
 		"codeName":"SummonMobLauncher",
-		"name":"Moving mine",
+		"name":"Moving tracked mine",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
@@ -1584,7 +1584,7 @@
 	{
 		"id":207,
 		"codeName":"SummonMobLauncher",
-		"name":"Moving mine",
+		"name":"Moving tracked mine",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
