@@ -686,6 +686,12 @@ public class Creature : MonoBehaviour {
 			return 0;
 		}
 
+		if (m_buffEffects[(int)DamageDesc.BuffType.Dash].m_run == true)
+		{
+			DamageText("Blocked", Color.white, DamageNumberSprite.MovementType.Parabola);
+			return 0;
+		}
+
 		bool critical = false;
 		float criticalDamage = 1f;
 		if (offender != null)
@@ -705,39 +711,25 @@ public class Creature : MonoBehaviour {
 			dmg = Random.Range(0, 2);
 		}
 
-		if (m_buffEffects[(int)DamageDesc.BuffType.Dash].m_run == true)
+		if (dmg > 0 && m_creatureProperty.Shield > 0)
 		{
-			dmg = 0;
-		}
-
-		bool shielded = false;
-		if (m_creatureProperty.Shield > 0)
-		{
-			dmg = 0;
 			--m_creatureProperty.Shield;
-			shielded = true;
+			DamageText("Shielded", Color.white, DamageNumberSprite.MovementType.Parabola);
+			return 0;
 		}
 
-		Color color = Color.white;
 		string strDamage = dmg.ToString();
 		if (dmg == 0)
 		{
-			if (shielded == true)
-			{
-				strDamage = "Shielded";
-			}
-			else
-			{
-				strDamage = "Blocked";
-			}
-			DamageText(strDamage, color, DamageNumberSprite.MovementType.Parabola);
+			strDamage = "Blocked";
+			DamageText(strDamage, Color.white, DamageNumberSprite.MovementType.Parabola);
 			return 0;
 		}
 		
 		if (m_ingTakenDamageEffect < Const.MaxShowDamageNumber)
 		{
 			++m_ingTakenDamageEffect;
-
+			Color color = Color.white;
 			if (critical == true)
 			{
 				strDamage = dmg.ToString();

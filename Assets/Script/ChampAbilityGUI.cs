@@ -128,7 +128,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		));
 
 
-		basicAbili.Add(new Ability(0.3f, "Critical Suites",
+		basicAbili.Add(new Ability(0.3f, "Critical Pack",
 		()=>{
 			m_backup.AlphaCriticalRatio += 0.1f;
 			m_backup.AlphaCriticalDamage += 0.5f;
@@ -718,7 +718,11 @@ public class ChampAbilityGUI : MonoBehaviour {
 			++statSlot;
 		}
 
-		m_remainPointText.Text.text = m_champ.RemainStatPoint.ToString();
+		string color = "<color=lime>";
+		if (m_champ.RemainStatPoint == 0)
+			color = "<color=red>";
+
+		m_remainPointText.Text.text = color + m_champ.RemainStatPoint + "</color>";
 
 
 		m_rollButton.Update();
