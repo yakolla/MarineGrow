@@ -26,6 +26,7 @@
 	{
 		"id":5,
 		"codeName":"GoldMedal",
+		"name":"Gold Medal",
 		"type":"GoldMedal",
 		"icon":"Sprites/GoldMedal"
 	},
@@ -130,6 +131,7 @@
 	{
 		"id":101,
 		"codeName":"ChampFiregun",
+		"name":"Flamethrower",
 		"type":"Weapon",
 		"icon":"Sprites/Firegun",
 		"defaultLock":true,
@@ -222,6 +224,7 @@
 	{
 		"id":102,
 		"codeName":"ChampLightningLauncher",
+		"name":"Lightning Gun",
 		"type":"Weapon",
 		"icon":"Sprites/LightningBolt",
 		"defaultLock":true,
@@ -426,6 +429,7 @@
 	{
 		"id":106,
 		"codeName":"ChampGuidedRocketLauncher",
+		"name":"Guided Missile Launcher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
 		"defaultLock":true,
@@ -552,6 +556,7 @@
 	{
 		"id":108,
 		"codeName":"ChampGun",
+		"name":"Beam Gun",
 		"type":"Weapon",
 		"icon":"Sprites/Gun",
 		"evolutionFiring":
@@ -656,6 +661,7 @@
 	{
 		"id":111,
 		"codeName":"ChampRocketLauncher",
+		"name":"Rocket Launcher",
 		"type":"Weapon",
 		"icon":"Sprites/RocketLauncher",
 		"defaultLock":true,
@@ -744,6 +750,7 @@
 	{
 		"id":112,
 		"codeName":"MineLauncher",
+		"name":"Mine",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
 		"weaponStat":
@@ -778,6 +785,7 @@
 	{
 		"id":114,
 		"codeName":"ChampTornadoLauncher",
+		"name":"Tornado Launcher",
 		"type":"Weapon",
 		"icon":"Sprites/Tornado",
 		"evolutionFiring":
@@ -1042,6 +1050,7 @@
 	{
 		"id":120,
 		"codeName":"ChampBoomerangLauncher",
+		"name":"Boomerang Launcher",
 		"type":"Weapon",
 		"icon":"Sprites/Boomerang",
 		"defaultLock":true,
@@ -1339,6 +1348,7 @@
 	{
 		"id":129,
 		"codeName":"ExplosionPassiveLauncher",
+		"name":"Explosion",
 		"type":"Weapon",
 		"icon":"Sprites/Explosion",		
 		"weaponStat":
@@ -1350,6 +1360,7 @@
 	{
 		"id":130,
 		"codeName":"ShieldPassiveLauncher",
+		"name":"Shield",
 		"type":"Weapon",
 		"icon":"Sprites/Shield",		
 		"weaponStat":
@@ -1361,6 +1372,7 @@
 	{
 		"id":131,
 		"codeName":"ChampGrenadeLauncher",
+		"name":"Grenade",
 		"type":"Weapon",
 		"icon":"Sprites/Grenade",
 		"weaponStat":
@@ -1372,6 +1384,7 @@
 	{
 		"id":132,
 		"codeName":"MineLauncher",
+		"name":"Mine",
 		"type":"Weapon",
 		"icon":"Sprites/swordoftruth",
 		"weaponStat":
@@ -1383,6 +1396,7 @@
 	{
 		"id":133,
 		"codeName":"NuclearLauncher",
+		"name":"Nuclear",
 		"type":"Weapon",
 		"icon":"Sprites/Grenade",		
 		"weaponStat":
@@ -1399,6 +1413,7 @@
 	{
 		"id":134,
 		"codeName":"SummonMobLauncher",
+		"name":"Moving mine",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
@@ -1416,6 +1431,7 @@
 	{
 		"id":135,
 		"codeName":"BurningAgonyLauncher",
+		"name":"Burning Agony",
 		"type":"Weapon",
 		"icon":"Sprites/BurningAgony",		
 		"weaponStat":
@@ -1568,6 +1584,7 @@
 	{
 		"id":207,
 		"codeName":"SummonMobLauncher",
+		"name":"Moving mine",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":

@@ -168,7 +168,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 */
-		skillAbili.Add(new Ability(0.3f, "Embers Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[132].name + " Skill", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
 			int backup = 1;
@@ -248,7 +248,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 
 
-		skillAbili.Add(new Ability(0.3f, "Charge to " + (m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId].codeName : ""), 
+		skillAbili.Add(new Ability(0.3f, "Charge to " + (m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId].name : ""), 
 		                           ()=>{
 			int backup = m_champ.NuclearSkillStack+3;
 			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
@@ -272,7 +272,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 
-		skillAbili.Add(new Ability(0.3f, "Grenade Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[131].name + " Skill", 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(131);
 			int backup = 1;
@@ -316,7 +316,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, "Movable Mine Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[134].name + " Skill", 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(134);
 			int backup = 1;
@@ -359,7 +359,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, "Explosion Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[129].name + " Skill", 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(129);
 			int backup = 1;
@@ -403,7 +403,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, "Burning Agony Skill", 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[135].name + " Skill", 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
 			int backup = 1;
@@ -453,7 +453,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 */
-		skillAbili.Add(new Ability(0.3f, "Charge to Shield", 
+		skillAbili.Add(new Ability(0.3f, "Charge to " + RefData.Instance.RefItems[130].name, 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(130);
 			m_backup.Shield += 10;
@@ -504,7 +504,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 
-		utilAbili.Add(new Ability(0.3f, "FireGun Length", 
+		utilAbili.Add(new Ability(0.3f, "Flamethrower Length", 
 		                          ()=>{
 			
 			m_backup.BulletLength+=0.25f;

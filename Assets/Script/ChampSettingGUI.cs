@@ -236,7 +236,11 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				priceGemButton.SetPrices(null, null);
 				priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
-				priceGemButton.SetLable("Equip");
+
+				if (item.Item.RefItem.type == ItemData.Type.Follower)
+					priceGemButton.SetLable("Follow");
+				else
+					priceGemButton.SetLable("Equip");
 
 				invSlot.SetListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex));
 			}
@@ -247,6 +251,10 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				priceGemButton.SetPrices(null, null);
 				priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
+
+			if (item.Item.RefItem.type == ItemData.Type.Follower)
+				priceGemButton.SetLable("Unfollow");
+			else
 				priceGemButton.SetLable("Unequip");
 				
 				invSlot.SetListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex));

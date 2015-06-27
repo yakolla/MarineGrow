@@ -127,6 +127,7 @@ public class RefItem : RefBaseData
 	[JsonProperty (ItemConverterType = typeof(StringEnumConverter))]
 	public 	ItemData.Type 		type;
 	public 	string 				codeName;
+	public 	string 				name;
 	public	string				icon;
 	public	RefPriceCondition	levelup;
 	public	RefPriceCondition	evolution;

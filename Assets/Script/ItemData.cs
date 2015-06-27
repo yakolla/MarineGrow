@@ -78,7 +78,7 @@ public class ItemData {
 			switch(op.option.type)
 			{
 			case Option.Weapon:
-				desc += RefData.Instance.RefItems[(int)op.option.values[0]].codeName + "</color>\n";
+				desc += RefData.Instance.RefItems[(int)op.option.values[0]].name + "</color>\n";
 				break;
 			case Option.DamageMultiplier:
 			case Option.DamageReduction:
