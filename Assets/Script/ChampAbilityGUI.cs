@@ -589,7 +589,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_statButtons[i] = new YGUISystem.GUIButton(transform.Find("StatButton"+i).gameObject, ()=>{return true;});
 
 
-		m_remainPointText = new YGUISystem.GUILable(transform.Find("RemainPointText").gameObject);
+		m_remainPointText = new YGUISystem.GUILable(transform.Find("Text/RemainPointText").gameObject);
 
 		m_rollButton = new YGUISystem.GUIPriceButton(transform.Find("RollingButton").gameObject, Const.StartPosYOfPriceButtonImage, ()=>{
 			return m_champ.RemainStatPoint > 0;

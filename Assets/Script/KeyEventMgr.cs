@@ -10,6 +10,7 @@ public class KeyEventMgr : MonoBehaviour {
 	GameObject	m_shop;
 	GameObject	m_option;
 	GameObject	m_goMainTitle;
+	GameObject	m_credits;
 
 
 	void Start()
@@ -18,22 +19,27 @@ public class KeyEventMgr : MonoBehaviour {
 		m_shop = transform.Find("ShopGUI/Panel").gameObject;
 		m_option = transform.Find("OptionGUI/Panel").gameObject;
 		m_goMainTitle = transform.Find("GoMainTitleGUI/Panel").gameObject;
+		m_credits = transform.Find("OptionGUI/CreditsPanel").gameObject;
 	}
 
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 
+			if (m_credits.activeSelf)
+			{
+				m_credits.SetActive(false);
+				return;
+			}
 			if (m_option.activeSelf)
 			{
 				m_option.SetActive(false);
+				return;
 			}
-			else if (m_shop.activeSelf)
-			{
-			}
-			else if (m_settings.activeSelf)
+			if (m_settings.activeSelf)
 			{
 				m_goMainTitle.SetActive(true);
+				return;
 			}
 		}
 	}
