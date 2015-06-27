@@ -281,7 +281,7 @@ public class YGUISystem {
 			{
 				RefItem condRefItem = RefData.Instance.RefItems[price.refItemId];
 				
-				string str = "<color=black>";
+				string str = "<color=white>";
 				int cost = (int)(price.count*itemWorth);
 				
 				ItemObject inventoryItemObj = Warehouse.Instance.FindItem(price.refItemId);

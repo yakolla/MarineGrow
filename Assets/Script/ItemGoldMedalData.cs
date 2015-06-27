@@ -9,5 +9,11 @@ public class ItemGoldMedalData : ItemData{
 
 	}
 
-
+	override public string Description()
+	{
+		return "<color=white>"
+			 	+ RefItem.codeName + "\n"
+				+ "Count:" + Count
+				+ "</color>";
+	}
 }

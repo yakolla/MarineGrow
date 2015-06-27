@@ -96,4 +96,9 @@ public class OptionGUI : MonoBehaviour {
 		Application.OpenURL ("market://details?id=com.banegole.marinegrowing");
 	}
 
+	public void OnClickCredits()
+	{
+		transform.parent.Find("CreditsPanel").gameObject.SetActive(true);
+		
+	}
 }
