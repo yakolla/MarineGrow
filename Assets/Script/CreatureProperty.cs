@@ -275,7 +275,7 @@ public class CreatureProperty {
 
 	public float BulletLength
 	{
-		get {return m_bulletLength.Value;}
+		get {return m_baseProperty.bulletLength+m_bulletLength.Value;}
 		set { m_bulletLength.Value = value; }
 	}
 

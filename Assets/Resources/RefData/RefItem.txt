@@ -1566,6 +1566,23 @@
 		}
 	},
 	{
+		"id":207,
+		"codeName":"SummonMobLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/SummonMob",		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":1
+		},
+		"weaponStat":
+		{
+			"coolTime":6,
+			"range":8,
+			"summonRefMobId":31008
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
@@ -1619,7 +1636,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":3,
+					"level":2,
 					"option":
 					{
 						"type":"Weapon",
@@ -1627,7 +1644,7 @@
 					}
 				},
 				{
-					"level":6,
+					"level":4,
 					"option":
 					{
 						"type":"Weapon",
@@ -1635,11 +1652,19 @@
 					}
 				},
 				{
-					"level":9,
+					"level":7,
 					"option":
 					{
 						"type":"Weapon",
 						"values":[135,3]
+					}
+				},
+				{
+					"level":9,
+					"option":
+					{
+						"type":"Weapon",
+						"values":[207,3]
 					}
 				}
 			]
@@ -1699,7 +1724,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":3,
+					"level":2,
 					"option":
 					{
 						"type":"Weapon",
@@ -1707,7 +1732,7 @@
 					}
 				},
 				{
-					"level":6,
+					"level":4,
 					"option":
 					{
 						"type":"Weapon",
@@ -1715,11 +1740,19 @@
 					}
 				},
 				{
-					"level":9,
+					"level":7,
 					"option":
 					{
 						"type":"Weapon",
 						"values":[135,3]
+					}
+				},
+				{
+					"level":9,
+					"option":
+					{
+						"type":"Weapon",
+						"values":[207,3]
 					}
 				}
 			]
@@ -1779,7 +1812,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":3,
+					"level":2,
 					"option":
 					{
 						"type":"Weapon",
@@ -1787,7 +1820,7 @@
 					}
 				},
 				{
-					"level":6,
+					"level":4,
 					"option":
 					{
 						"type":"Weapon",
@@ -1795,11 +1828,19 @@
 					}
 				},
 				{
-					"level":9,
+					"level":7,
 					"option":
 					{
 						"type":"Weapon",
 						"values":[135,3]
+					}
+				},
+				{
+					"level":9,
+					"option":
+					{
+						"type":"Weapon",
+						"values":[207,3]
 					}
 				}
 			]
@@ -1859,7 +1900,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":3,
+					"level":2,
 					"option":
 					{
 						"type":"Weapon",
@@ -1867,7 +1908,7 @@
 					}
 				},
 				{
-					"level":6,
+					"level":4,
 					"option":
 					{
 						"type":"Weapon",
@@ -1875,11 +1916,19 @@
 					}
 				},
 				{
-					"level":9,
+					"level":7,
 					"option":
 					{
 						"type":"Weapon",
 						"values":[135,3]
+					}
+				},
+				{
+					"level":9,
+					"option":
+					{
+						"type":"Weapon",
+						"values":[207,3]
 					}
 				}
 			]
@@ -1939,7 +1988,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":3,
+					"level":2,
 					"option":
 					{
 						"type":"Weapon",
@@ -1947,7 +1996,7 @@
 					}
 				},
 				{
-					"level":6,
+					"level":4,
 					"option":
 					{
 						"type":"Weapon",
@@ -1955,11 +2004,19 @@
 					}
 				},
 				{
-					"level":9,
+					"level":7,
 					"option":
 					{
 						"type":"Weapon",
 						"values":[135,3]
+					}
+				},
+				{
+					"level":9,
+					"option":
+					{
+						"type":"Weapon",
+						"values":[207,3]
 					}
 				}
 			]
@@ -2019,7 +2076,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":3,
+					"level":2,
 					"option":
 					{
 						"type":"Weapon",
@@ -2027,7 +2084,7 @@
 					}
 				},
 				{
-					"level":6,
+					"level":4,
 					"option":
 					{
 						"type":"Weapon",
@@ -2035,11 +2092,19 @@
 					}
 				},
 				{
-					"level":9,
+					"level":7,
 					"option":
 					{
 						"type":"Weapon",
 						"values":[135,3]
+					}
+				},
+				{
+					"level":9,
+					"option":
+					{
+						"type":"Weapon",
+						"values":[207,3]
 					}
 				}
 			]

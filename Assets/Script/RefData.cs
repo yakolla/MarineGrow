@@ -42,6 +42,7 @@ public class RefCreatureBaseProperty
 	public float	criticalDamage = 1f;
 	public float	attackCoolTime = 1f;
 	public bool		backwardOnDamage = true;
+	public float	bulletLength = 0f;
 }
 
 public class RefEvolutionFiring

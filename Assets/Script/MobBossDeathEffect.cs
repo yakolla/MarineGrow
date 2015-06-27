@@ -27,7 +27,7 @@ public class MobBossDeathEffect : MonoBehaviour {
 		case Type.DownToGround:
 		{
 			Vector3	pos = transform.position;
-			pos.y -= Time.deltaTime;
+			pos.y -= Time.deltaTime*3;
 			pos.y = Mathf.Max(pos.y, 0f);
 			transform.position = pos;
 

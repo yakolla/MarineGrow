@@ -1127,7 +1127,7 @@
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.33,
 				"moveSpeed":3,
-				"navMeshBaseOffset":0,
+				"navMeshBaseOffset":0,				
 				"backwardOnDamage":false
 			}
 		},
@@ -1154,6 +1154,7 @@
 				"hpPerLevel":0.33,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
+				"bulletLength":3,
 				"backwardOnDamage":false
 			}
 		},
