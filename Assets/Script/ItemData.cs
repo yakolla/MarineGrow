@@ -30,8 +30,8 @@ public class ItemData {
 	
 	public enum Option
 	{
-		DamageMultiply,
-		DefencePoint,
+		DamageMultiplier,
+		DamageReduction,
 		MovingSpeed,
 		Weapon,
 		Count
@@ -75,15 +75,19 @@ public class ItemData {
 		foreach(RefPriceCondition.RefOptionPerLevel op in m_refItem.levelup.optionPerLevel)
 		{
 			desc += (Level >= op.level ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv" + op.level + ":";
-			if (op.option.type == Option.Weapon)
+			switch(op.option.type)
 			{
+			case Option.Weapon:
 				desc += RefData.Instance.RefItems[(int)op.option.values[0]].codeName + "</color>\n";
+				break;
+			case Option.DamageMultiplier:
+			case Option.DamageReduction:
+				desc += op.option.type.ToString() + ":"+ (op.option.values[0]*100) + "%</color>\n";
+				break;
+			default:
+				desc += op.option.type.ToString() + ":"+ op.option.values[0] + "</color>\n";
+				break;
 			}
-			else
-			{
-				desc += op.option.type.ToString() + ":" + op.option.values[0] + "</color>\n";
-			}
-
 		}
 
 		return desc;
@@ -111,14 +115,14 @@ public class ItemData {
 
 			switch(op.option.type)
 			{
-			case Option.DamageMultiply:
+			case Option.DamageMultiplier:
 				obj.m_creatureProperty.DamageRatio += op.option.values[0];
 				break;
 			case Option.MovingSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed += op.option.values[0];
 				break;
-			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint += (int)op.option.values[0];
+			case Option.DamageReduction:
+				obj.m_creatureProperty.DamageReduction += op.option.values[0];
 				break;
 			case Option.Weapon:
 				ItemWeaponData weaponData = new ItemWeaponData((int)op.option.values[0]);
@@ -142,14 +146,14 @@ public class ItemData {
 
 			switch(op.option.type)
 			{
-			case Option.DamageMultiply:
+			case Option.DamageMultiplier:
 				obj.m_creatureProperty.DamageRatio -= op.option.values[0];
 				break;
 			case Option.MovingSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed -= op.option.values[0];
 				break;
-			case Option.DefencePoint:
-				obj.m_creatureProperty.AlphaPhysicalDefencePoint -= (int)op.option.values[0];
+			case Option.DamageReduction:
+				obj.m_creatureProperty.DamageReduction -= op.option.values[0];
 				break;
 			}
 		}

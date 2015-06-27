@@ -19,6 +19,7 @@ public class CreatureProperty {
 	SecuredType.XFloat	m_alphaCriticalDamage = 0f;
 
 	SecuredType.XInt		m_alphaPhysicalDefencePoint = 0;
+	SecuredType.XFloat	m_damageReduction = 0f;
 
 	SecuredType.XFloat	m_alphaMoveSpeed = 0f;
 
@@ -194,6 +195,12 @@ public class CreatureProperty {
 		set { m_alphaPhysicalDefencePoint.Value = value; }
 	}
 
+	public float	DamageReduction
+	{
+		get {return m_damageReduction.Value;}
+		set { m_damageReduction.Value = value; }
+	}
+
 	public float	MoveSpeed
 	{
 		get {return (m_baseProperty.moveSpeed + AlphaMoveSpeed) * BetaMoveSpeed;}
@@ -328,6 +335,7 @@ public class CreatureProperty {
 		other.m_alphaCriticalRatio = m_alphaCriticalRatio;
 		other.m_alphaCriticalDamage = m_alphaCriticalDamage;
 		other.m_alphaPhysicalDefencePoint = m_alphaPhysicalDefencePoint;
+		other.m_damageReduction = m_damageReduction;
 		other.m_alphaMoveSpeed = m_alphaMoveSpeed;
 		other.m_betaMoveSpeed = m_betaMoveSpeed;
 		other.m_alphaLifeSteal = m_alphaLifeSteal;

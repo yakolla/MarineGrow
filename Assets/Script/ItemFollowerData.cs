@@ -33,7 +33,7 @@ public class ItemFollowerData : ItemData{
 			float angle = Random.Range(-3.14f, 3.14f);
 			enemyPos.x += Mathf.Cos(angle) * 1f;
 			enemyPos.z += Mathf.Sin(angle) * 1f;
-			GameObject followerObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/Follower"), Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody), enemyPos, obj.transform.rotation);
+			GameObject followerObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/mon/"+refMob.prefHead), Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody), enemyPos, obj.transform.rotation);
 
 			Follower follower = (Follower)followerObj.GetComponent<Follower>();
 			follower.Init(obj, refMob, Level);

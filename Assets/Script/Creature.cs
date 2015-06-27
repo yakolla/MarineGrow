@@ -697,8 +697,9 @@ public class Creature : MonoBehaviour {
 			}
 		}
 
-		int dmg = (int)((damageDesc.Damage*criticalDamage)-m_creatureProperty.PhysicalDefencePoint);
-		dmg = Mathf.Max(0, dmg);
+		int dmg = (int)(damageDesc.Damage*criticalDamage);
+		dmg -= (int)(dmg*m_creatureProperty.DamageReduction);
+		dmg = Mathf.Max(0, dmg-m_creatureProperty.PhysicalDefencePoint);
 		if (dmg == 0)
 		{
 			dmg = Random.Range(0, 2);

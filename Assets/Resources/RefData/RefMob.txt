@@ -1107,6 +1107,7 @@
 	[
 		{
 			"id":30001,
+			"prefHead":"Follower",
 			"prefBody":"marine_skin",
 			"name":"Gun Marines",
 			"refWeaponItems":
@@ -1133,6 +1134,7 @@
 		},
 		{
 			"id":30002,
+			"prefHead":"Follower",
 			"prefBody":"marine_skin",
 			"name":"Fire Marines",
 			"refWeaponItems":
@@ -1160,6 +1162,7 @@
 		},
 		{
 			"id":30003,
+			"prefHead":"Follower",
 			"prefBody":"marine_skin",
 			"name":"GuidedRocket Marines",
 			"refWeaponItems":
@@ -1186,6 +1189,7 @@
 		},
 		{
 			"id":30004,
+			"prefHead":"Follower",
 			"prefBody":"marine_skin",
 			"name":"Rocket Marines",
 			"refWeaponItems":
@@ -1212,6 +1216,7 @@
 		},
 		{
 			"id":30005,
+			"prefHead":"Follower",
 			"prefBody":"marine_skin",
 			"name":"Boomerang Marines",
 			"refWeaponItems":
@@ -1237,7 +1242,8 @@
 			}
 		},
 		{
-			"id":30006,
+			"id":30006,			
+			"prefHead":"Turret",
 			"prefBody":"turret_skin",
 			"name":"Turret",
 			"refWeaponItems":

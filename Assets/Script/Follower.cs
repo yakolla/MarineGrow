@@ -65,6 +65,11 @@ public class Follower : Creature {
 		m_owner = owner;
 		CreatureType = m_owner.CreatureType;
 
+		if (m_creatureProperty.MoveSpeed == 0f)
+		{
+			EnableNavMeshObstacleAvoidance(false);
+		}
+
 		switch(refMob.mobAI)
 		{
 		case MobAIType.Normal:
