@@ -232,7 +232,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		{
 		case ButtonRole.Equip:
 			{
-				priceGemButton.EnableChecker = ()=>{return true;};
+			priceGemButton.EnableChecker = ()=>{return item.Item.RefItem.type != ItemData.Type.Cheat;};
 
 				priceGemButton.SetPrices(null, null);
 				priceGemButton.AddListener(() => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_priceButton, itemIndex), () => OnClickEquip(invSlot, priceGemButton, priceGemButton.m_gemButton, itemIndex) );
