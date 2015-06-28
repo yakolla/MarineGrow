@@ -168,7 +168,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 */
-		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[132].name, 
+		skillAbili.Add(new Ability(0.3f, RefData.Instance.RefItems[Const.EmbersRefItemId].name, 
 		                            ()=>{
 			Weapon weapon = m_champ.WeaponHolder.MainWeapon.GetSubWeapon();
 			int backup = 1;
@@ -190,7 +190,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			}
 			else
 			{
-				m_champ.SetSubWeapon(m_champ.WeaponHolder.MainWeapon, new ItemWeaponData(132), null);
+				m_champ.SetSubWeapon(m_champ.WeaponHolder.MainWeapon, new ItemWeaponData(Const.EmbersRefItemId), null);
 			}
 
 			--m_champ.RemainStatPoint;

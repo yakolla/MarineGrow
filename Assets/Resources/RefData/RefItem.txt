@@ -556,7 +556,7 @@
 	{
 		"id":108,
 		"codeName":"ChampGun",
-		"name":"Beam Gun",
+		"name":"Machine Gun",
 		"type":"Weapon",
 		"icon":"Sprites/Gun",
 		"evolutionFiring":

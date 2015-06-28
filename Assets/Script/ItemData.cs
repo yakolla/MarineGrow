@@ -125,10 +125,18 @@ public class ItemData {
 				obj.m_creatureProperty.DamageReduction += op.option.values[0];
 				break;
 			case Option.Weapon:
-				ItemWeaponData weaponData = new ItemWeaponData((int)op.option.values[0]);
+				int weaponRefItemId = (int)op.option.values[0];
+				if (weaponRefItemId == Const.EmbersRefItemId)
+				{
+					obj.SetSubWeapon(obj.WeaponHolder.MainWeapon, new ItemWeaponData(Const.EmbersRefItemId), null);
+				}
+				else
+				{
+					ItemWeaponData weaponData = new ItemWeaponData((int)op.option.values[0]);
 
-				weaponData.Level = (int)op.option.values[1];
-				obj.EquipPassiveSkillWeapon(weaponData, null);
+					weaponData.Level = (int)op.option.values[1];
+					obj.EquipPassiveSkillWeapon(weaponData, null);
+				}
 				break;
 			}
 		}
