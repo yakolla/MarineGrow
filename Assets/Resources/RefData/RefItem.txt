@@ -800,7 +800,7 @@
 			"skillId":133,
 			"buffOnHitDesc":
 			{
-				"chance":0,
+				"chance":1,
 				"buffType":"Airborne"
 			}
 		},		
@@ -1348,13 +1348,18 @@
 	{
 		"id":129,
 		"codeName":"ExplosionPassiveLauncher",
-		"name":"Explosion",
+		"name":"Shock Wave",
 		"type":"Weapon",
 		"icon":"Sprites/Explosion",		
 		"weaponStat":
 		{
-			"coolTime":10,
-			"range":5
+			"coolTime":8,
+			"range":5,
+			"buffOnHitDesc":
+			{
+				"chance":0.5,
+				"buffType":"Stun"
+			}
 		}
 	},
 	{
@@ -1413,7 +1418,7 @@
 	{
 		"id":134,
 		"codeName":"SummonMobLauncher",
-		"name":"Moving tracked mine",
+		"name":"Moving Tracked Mine",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
@@ -1431,7 +1436,7 @@
 	{
 		"id":135,
 		"codeName":"BurningAgonyLauncher",
-		"name":"Burning Agony",
+		"name":"Burning Aura",
 		"type":"Weapon",
 		"icon":"Sprites/BurningAgony",		
 		"weaponStat":
@@ -1584,7 +1589,7 @@
 	{
 		"id":207,
 		"codeName":"SummonMobLauncher",
-		"name":"Moving tracked mine",
+		"name":"Moving Tracked Mine",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
@@ -1657,7 +1662,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[129,3]
+						"values":[131,3]
 					}
 				},
 				{
@@ -1665,7 +1670,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[135,3]
 					}
 				},
 				{
@@ -1673,7 +1678,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
+						"values":[130,3]
 					}
 				},
 				{
@@ -1753,7 +1758,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[135,3]
 					}
 				},
 				{
@@ -1761,7 +1766,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
+						"values":[130,3]
 					}
 				},
 				{
@@ -1833,7 +1838,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[129,3]
+						"values":[132,3]
 					}
 				},
 				{
@@ -1841,7 +1846,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[135,3]
 					}
 				},
 				{
@@ -1849,7 +1854,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
+						"values":[130,3]
 					}
 				},
 				{
@@ -1921,7 +1926,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[129,3]
+						"values":[132,3]
 					}
 				},
 				{
@@ -1929,7 +1934,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[135,3]
 					}
 				},
 				{
@@ -1937,7 +1942,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
+						"values":[130,3]
 					}
 				},
 				{
@@ -2017,7 +2022,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[135,3]
 					}
 				},
 				{
@@ -2025,7 +2030,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
+						"values":[130,3]
 					}
 				},
 				{
@@ -2097,7 +2102,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[129,3]
+						"values":[131,3]
 					}
 				},
 				{
@@ -2105,7 +2110,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[135,3]
 					}
 				},
 				{
@@ -2113,7 +2118,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
+						"values":[130,3]
 					}
 				},
 				{

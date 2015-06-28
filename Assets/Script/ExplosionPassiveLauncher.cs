@@ -8,6 +8,10 @@ public class ExplosionPassiveLauncher : Weapon {
 
 	ParticleSystem[] m_chargingEffect;
 	float[]			m_maxSize;
+
+	[SerializeField]
+	float			m_bombRange = 3f;
+
 	new void Start()
 	{
 		base.Start();
@@ -31,7 +35,7 @@ public class ExplosionPassiveLauncher : Weapon {
 	override public Bullet CreateBullet(Weapon.FiringDesc targetAngle, Vector3 startPos)
 	{
 		ExplosionBullet bullet = base.CreateBullet(targetAngle, m_creature.transform.position) as ExplosionBullet;
-		bullet.BombRange += (m_level-1);
+		bullet.BombRange = m_bombRange+(m_level-1);
 		return bullet;
 	}
 

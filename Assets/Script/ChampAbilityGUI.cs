@@ -407,8 +407,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		()=>{
 			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
 			{
-			case Const.ChampLightningLauncherRefItemId:
-			case Const.ChampFiregunRefItemId:
+			case Const.ChampLightningLauncherRefItemId:			
 				Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(129);
 				if (weapon != null)
 				{
@@ -416,6 +415,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 						return false;
 				}
 				return true;
+			case Const.ChampFiregunRefItemId:
 			case Const.ChampGunRefItemId:			
 			case Const.ChampBoomerangLauncherRefItemId:
 			case Const.ChampGuidedRocketLauncherRefItemId:
@@ -454,13 +454,27 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		},
 		()=>{
-			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
-			if (weapon != null)
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
 			{
-				if (weapon.Level >= Const.MaxItemLevel)
-					return false;
+			case Const.ChampFiregunRefItemId:
+			
+				Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(135);
+				if (weapon != null)
+				{
+					if (weapon.Level >= Const.MaxItemLevel)
+						return false;
+				}
+				return true;
+			case Const.ChampGunRefItemId:
+			case Const.ChampBoomerangLauncherRefItemId:
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampGuidedRocketLauncherRefItemId:
+			case Const.ChampRocketLauncherRefItemId:
+				return false;
 			}
-			return true;
+			
+			return false;
+
 		}
 		));
 		/*
