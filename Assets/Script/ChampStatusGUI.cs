@@ -10,17 +10,21 @@ public class ChampStatusGUI : MonoBehaviour {
 
 	int			m_oldMobKills;
 	int			m_oldGold;
+	int			m_oldGoldMedal;
+
 
 	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
 	YGUISystem.GUIChargeButton[]	m_accessoryButtons = new YGUISystem.GUIChargeButton[Const.AccessoriesSlots];
 	YGUISystem.GUIGuage[] m_guages = new YGUISystem.GUIGuage[Const.Guages];
 	ComboGUIShake	m_gold;
 	ComboGUIShake	m_mobKills;
+	ComboGUIShake	m_goldMedal;
 
 	void Start () {
 
 
 		m_gold = transform.Find("Gold/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
+		m_goldMedal = transform.Find("GoldMedal/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
 		m_mobKills = transform.Find("Kills/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
 
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
@@ -118,6 +122,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		transform.Find("Special").gameObject.SetActive(active);
 		transform.Find("Option").gameObject.SetActive(active);
 		transform.Find("Gold").gameObject.SetActive(active);
+		transform.Find("GoldMedal").gameObject.SetActive(active);
 		transform.Find("Kills").gameObject.SetActive(active);
 
 		if (active == true)
@@ -168,7 +173,14 @@ public class ChampStatusGUI : MonoBehaviour {
 			m_gold.shake = 2f;
 			m_gold.Text = Warehouse.Instance.Gold.Item.Count.ToString();
 		}
-
+		ItemObject goldMedal = Warehouse.Instance.FindItem(Const.GoldMedalRefItemId);
+		if (goldMedal != null && m_oldGoldMedal != goldMedal.Item.Count)
+		{
+			m_oldGoldMedal = goldMedal.Item.Count;
+			m_goldMedal.enabled = true;
+			m_goldMedal.shake = 2f;
+			m_goldMedal.Text = goldMedal.Item.Count.ToString();
+		}
 
 		foreach(YGUISystem.GUIButton button in m_specialButtons)
 		{

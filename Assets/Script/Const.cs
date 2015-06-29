@@ -44,6 +44,7 @@ public class Const {
 	public const int NuclearSkillRefItemId = 21;
 	public const int GemRefItemId = 8;
 	public const int EmbersRefItemId = 132;
+	public const int GoldMedalRefItemId = 5;
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";
