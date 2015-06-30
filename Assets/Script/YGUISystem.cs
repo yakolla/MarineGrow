@@ -19,7 +19,10 @@ public class YGUISystem {
 
 			Transform iconTrans = obj.transform.Find("Icon");
 			if (iconTrans != null)
-				m_icon = new GUIImageStatic(iconTrans.gameObject, null);
+			{
+				RawImage rawImage = iconTrans.GetComponent<RawImage>();
+				m_icon = new GUIImageStatic(iconTrans.gameObject, rawImage.texture);
+			}
 		}
 
 		public System.Func<bool> EnableChecker

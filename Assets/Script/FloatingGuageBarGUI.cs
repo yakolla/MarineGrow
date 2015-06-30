@@ -7,6 +7,7 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 
 
 	YGUISystem.GUIGuage m_guage;
+	YGUISystem.GUILable	m_level;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +16,8 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 		                                   ()=>{return guageRemainRatio();}, 
 		()=>{return ""; }
 		);
+
+		m_level = new YGUISystem.GUILable(transform.Find("Canvas/HP/Level/Text").gameObject);
 
 		Vector3 pos = m_creature.AimpointLocalPos;
 		pos.y += 1.5f;
@@ -25,6 +28,11 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 	void Update () {
 		transform.rotation = Quaternion.Euler(Vector3.zero);
 		m_guage.Update();
+
+		if (m_level != null)
+		{
+			m_level.Text.text = m_creature.m_creatureProperty.Level.ToString();
+		}
 	}
 
 	virtual protected float guageRemainRatio()
