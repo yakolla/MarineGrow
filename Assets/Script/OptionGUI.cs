@@ -15,8 +15,8 @@ public class OptionGUI : MonoBehaviour {
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
 
-		m_sfxVolume = transform.Find("SFX/Slider").gameObject.GetComponent<Slider>();
-		m_bgmVolume = transform.Find("BGM/Slider").gameObject.GetComponent<Slider>();
+		m_sfxVolume = transform.Find("SFXGUI/Slider").gameObject.GetComponent<Slider>();
+		m_bgmVolume = transform.Find("BGMGUI/Slider").gameObject.GetComponent<Slider>();
 		m_autoTarget = transform.Find("Auto Target").gameObject.GetComponent<Toggle>();
 
 		m_sfxVolume.value = Warehouse.Instance.GameOptions.m_sfxVolume;
