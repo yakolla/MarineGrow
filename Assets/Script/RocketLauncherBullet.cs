@@ -13,6 +13,8 @@ public class RocketLauncherBullet : Bullet {
 	[SerializeField]
 	protected float			m_bombRange = 5f;
 
+	GameObject			m_efGun;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -21,6 +23,8 @@ public class RocketLauncherBullet : Bullet {
 	{
 		m_isDestroying = false;
 		m_accel = 0f;
+		m_efGun = transform.Find("Body/ef gun").gameObject;
+		m_efGun.SetActive(true);
 	}
 
 
@@ -35,6 +39,12 @@ public class RocketLauncherBullet : Bullet {
 
 	}
 
+	protected void Bomb()
+	{
+		m_efGun.SetActive(false);
+		bomb(m_bombRange, m_prefBombEffect);
+	}
+
 	void OnTriggerEnter(Collider other) {
 		if (m_isDestroying == true)
 			return;
@@ -42,7 +52,7 @@ public class RocketLauncherBullet : Bullet {
 		Creature creature = other.gameObject.GetComponent<Creature>();
 		if (creature && Creature.IsEnemy(creature, m_ownerCreature))
 		{
-			bomb(m_bombRange, m_prefBombEffect);
+			Bomb();
 		}
 		else if (other.tag.CompareTo("Wall") == 0)
 		{

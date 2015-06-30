@@ -63,7 +63,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		{
 			if (1.3f > Vector3.Distance(transform.position, m_target.transform.position))
 			{
-				bomb(m_bombRange, m_prefBombEffect);
+				Bomb();
 			}
 		}
 	}

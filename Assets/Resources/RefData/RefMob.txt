@@ -903,7 +903,7 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":900,
+				"maxHP":1200,
 				"physicalDamage":10,
 				"physicalDefence":1,
 				"evolutionPerLevel":0.5,
@@ -961,7 +961,7 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":1200,
+				"maxHP":1500,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,
@@ -1007,7 +1007,7 @@
 			"nearByChampOnSpawn":true,
 			"baseCreatureProperty":
 			{
-				"maxHP":1500,
+				"maxHP":2000,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.5,

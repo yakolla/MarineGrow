@@ -149,6 +149,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 		int itemIndex = 0;
 		int maxCount = Warehouse.Instance.Items.Count;
+		int equipItemIndex = 0;
 		for(itemIndex = 0; itemIndex < maxCount; ++itemIndex)
 		{
 			ItemObject item = Warehouse.Instance.Items[itemIndex];
@@ -197,6 +198,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 			if (Warehouse.Instance.ChampEquipItems.m_weaponRefItemId == item.Item.RefItemID)
 			{
+				equipItemIndex = itemIndex;
 				OnClickEquip(invSlot, invSlot.PriceButton0, invSlot.PriceButton0.m_priceButton, itemIndex);
 			}
 			else
@@ -213,7 +215,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 		rectContents.y = rectGUIInventorySlot.rect.height*itemIndex;
 		rectInventoryObj.sizeDelta = rectContents;
-		rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, -(rectContents.y/2-rectScrollView.rect.height/2), rectInventoryObj.position.z);
+		//rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, -(rectContents.y/2-rectScrollView.rect.height/2), rectInventoryObj.position.z);
+		rectInventoryObj.localPosition = new Vector3(0, -(rectContents.y/2-rectScrollView.rect.height/2-rectGUIInventorySlot.rect.height*equipItemIndex), 0);
 	}
 	enum ButtonRole
 	{

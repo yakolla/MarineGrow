@@ -1357,7 +1357,7 @@
 			"range":5,
 			"buffOnHitDesc":
 			{
-				"chance":0.5,
+				"chance":1,
 				"buffType":"Stun"
 			}
 		}
@@ -1418,7 +1418,7 @@
 	{
 		"id":134,
 		"codeName":"SummonMobLauncher",
-		"name":"Moving Tracked Mine",
+		"name":"Auto tracking Drone",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
@@ -1589,7 +1589,7 @@
 	{
 		"id":207,
 		"codeName":"SummonMobLauncher",
-		"name":"Moving Tracked Mine",
+		"name":"Auto tracking Drone",
 		"type":"Weapon",
 		"icon":"Sprites/SummonMob",		
 		"evolutionFiring":
