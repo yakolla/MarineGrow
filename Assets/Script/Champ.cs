@@ -254,8 +254,23 @@ public class Champ : Creature {
 		return dmg;
 	}
 
+	public void ApplyMachoSkill()
+	{
+		if (MachoSkillStack == 0)
+			return;
+
+		if (true == ApplyBuff(null, DamageDesc.BuffType.Macho, 10f, null))
+			--MachoSkillStack;
+	}
+
 	override public void Death()
 	{
+		if (MachoSkillStack > 0)
+		{
+			m_creatureProperty.HP = 1;
+			ApplyMachoSkill();
+			return;
+		}
 		Warehouse.Instance.NewGameStats.KilledMobs = MobKills;
 		Warehouse.Instance.NewGameStats.SurvivalTime = Warehouse.Instance.PlayTime;
 		Warehouse.Instance.GameBestStats.SetBestStats(Warehouse.Instance.NewGameStats);
