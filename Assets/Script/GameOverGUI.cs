@@ -8,7 +8,7 @@ public class GameOverGUI : MonoBehaviour {
 	ADMob					m_admob;
 
 	YGUISystem.GUIGuage[] 	m_guages = new YGUISystem.GUIGuage[3];
-
+	int						m_restartCount = 0;
 	string[]				m_leaderBoards = {Const.LEADERBOARD_GAINED_GOLD, Const.LEADERBOARD_GAINED_XP, Const.LEADERBOARD_KILLED_MOBS};
 
 	void Start () {
@@ -95,7 +95,8 @@ public class GameOverGUI : MonoBehaviour {
 	public void OnClickRestart()
 	{
 		m_admob.ShowBanner(false);
-		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "GameOver", "Restart", 0);
+		++m_restartCount;
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "GameOver", "Restart"+m_restartCount, 0);
 		Application.LoadLevel("Basic Dungeon");
 	}
 

@@ -139,6 +139,16 @@ public class ChampAbilityGUI : MonoBehaviour {
 			m_champ.m_creatureProperty.AlphaCriticalRatio += 0.1f;
 			m_champ.m_creatureProperty.AlphaCriticalDamage += 0.5f;
 			--m_champ.RemainStatPoint;
+		},
+		()=>{
+			switch(m_champ.WeaponHolder.MainWeapon.RefItem.id)
+			{
+			case Const.ChampLightningLauncherRefItemId:
+			case Const.ChampFiregunRefItemId:			
+				return false;
+			}
+			
+			return true;
 		}
 		));
 

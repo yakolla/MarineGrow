@@ -271,6 +271,9 @@ public class Champ : Creature {
 			ApplyMachoSkill();
 			return;
 		}
+
+		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Death", "Wave"+Warehouse.Instance.WaveIndex, 0);
+
 		Warehouse.Instance.NewGameStats.KilledMobs = MobKills;
 		Warehouse.Instance.NewGameStats.SurvivalTime = Warehouse.Instance.PlayTime;
 		Warehouse.Instance.GameBestStats.SetBestStats(Warehouse.Instance.NewGameStats);
@@ -280,11 +283,6 @@ public class Champ : Creature {
 		});
 		
 		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_GAINED_XP, Warehouse.Instance.NewGameStats.GainedXP, (bool success) => {
-			// handle success or failure
-		});
-		
-		System.TimeSpan totalPlayingTime = new System.TimeSpan((long)(System.TimeSpan.TicksPerSecond*Warehouse.Instance.NewGameStats.SurvivalTime));
-		GPlusPlatform.Instance.ReportScore(Const.LEADERBOARD_SURVIVAL_TIME,  (long)(totalPlayingTime.TotalMilliseconds), (bool success) => {
 			// handle success or failure
 		});
 		
