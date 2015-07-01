@@ -17,7 +17,12 @@ public class FloatingGuageBarGUI : MonoBehaviour {
 		()=>{return ""; }
 		);
 
-		m_level = new YGUISystem.GUILable(transform.Find("Canvas/HP/Level/Text").gameObject);
+		Transform trans = transform.Find("Canvas/HP/Level/Text");
+		if (trans != null)
+		{
+			m_level = new YGUISystem.GUILable(trans.gameObject);
+		}
+
 
 		Vector3 pos = m_creature.AimpointLocalPos;
 		pos.y += 1.5f;
