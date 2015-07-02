@@ -490,6 +490,70 @@ public class ChampSettingGUI : MonoBehaviour {
 				if (selectedItem.Item.Level == Const.MaxItemLevel)
 				{
 					priceGemButton.SetPrices(null, null);
+
+					switch(selectedItem.Item.RefItem.id)
+					{
+					case Const.ChampGunRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_GUN, 100, (bool success) => {
+						});  
+						break;
+					case Const.ChampFiregunRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_FIREGUN, 100, (bool success) => {
+						});  
+						break;
+					case Const.ChampLightningLauncherRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_LIGHTNING, 100, (bool success) => {
+						});  
+						break;
+					case Const.ChampRocketLauncherRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_ROCKET, 100, (bool success) => {
+						});  
+						break;
+					case Const.ChampGuidedRocketLauncherRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_GUIDEDROCKET, 100, (bool success) => {
+						});  
+						break;						
+					case Const.ChampBoomerangLauncherRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_BOOMERANG, 100, (bool success) => {
+						});  
+						break;
+					case Const.EngineeringBayRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_ENGINEERING, 100, (bool success) => {
+						});  
+						break;
+					case Const.GunMarineRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_GUNMARINE, 100, (bool success) => {
+						});  
+						break;
+					case Const.FireMarineRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_FIREMARINE, 100, (bool success) => {
+						});  
+						break;
+					case Const.RocketMarineRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_ROCKETMARINE, 100, (bool success) => {
+						});  
+						break;
+					case Const.GuidedRocketMarineRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_GUIDEDROCKETMARINE, 100, (bool success) => {
+						});  
+						break;
+					case Const.BoomerangMarineRefItemId:
+						GPlusPlatform.Instance.ReportProgress(
+							Const.ACH_MAX_LEVEL_BOOMERANGMARINE, 100, (bool success) => {
+						});  
+						break;
+					}
 				}
 
 				priceGemButton.m_priceButton.NormalWorth = Const.GetItemLevelupWorth(selectedItem.Item.Level, selectedItem.Item.RefItem.levelup);
@@ -551,11 +615,7 @@ public class ChampSettingGUI : MonoBehaviour {
 						Const.ACH_UNLOCKED_THE_GUIDEDROCKETLAUNCHER, 100, (bool success) => {
 					});  
 					break;
-				case 118:
-					GPlusPlatform.Instance.ReportProgress(
-						Const.ACH_UNLOCKED_THE_LASERBEAM, 100, (bool success) => {
-					});  
-					break;
+				
 				case Const.ChampBoomerangLauncherRefItemId:
 					GPlusPlatform.Instance.ReportProgress(
 						Const.ACH_UNLOCKED_THE_BOOMERANGLAUNCHER, 100, (bool success) => {

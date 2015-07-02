@@ -31,7 +31,7 @@ public class Const {
 	public const int HalfAccessoriesSlots = AccessoriesSlots/2;
 	public const int StartPosYOfPriceButtonImage = 10;
 	public const int StartPosYOfGemPriceButtonImage = -5;
-	public const int CheatRefItemId = 51;
+	public const int EngineeringBayRefItemId = 51;
 	public const int RandomAbilityRefItemId = 1101;
 	public const int AbilitySlots = 3;
 	public const int ChampGunRefItemId = 108;
@@ -45,29 +45,36 @@ public class Const {
 	public const int GemRefItemId = 8;
 	public const int EmbersRefItemId = 132;
 	public const int GoldMedalRefItemId = 5;
+	public const int GunMarineRefItemId = 1001;
+	public const int FireMarineRefItemId = 1002;
+	public const int RocketMarineRefItemId = 1003;
+	public const int GuidedRocketMarineRefItemId = 1004;
+	public const int BoomerangMarineRefItemId = 1005;
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
-	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";
-	public const string ACH_SURVIVAL_DURATION_10_WAVES = "CgkIrKGfsOUeEAIQBA";
-	public const string ACH_SURVIVAL_DURATION_20_WAVES = "CgkIrKGfsOUeEAIQBQ";
-	public const string ACH_SURVIVAL_DURATION_30_WAVES = "CgkIrKGfsOUeEAIQBg";
 	public const string ACH_UNLOCKED_THE_LIGHTNINGLAUNCHER = "CgkIrKGfsOUeEAIQBw";
 	public const string ACH_UNLOCKED_THE_ROCKETLAUNCHER = "CgkIrKGfsOUeEAIQCA";
 	public const string ACH_UNLOCKED_THE_GUIDEDROCKETLAUNCHER = "CgkIrKGfsOUeEAIQCQ";
-	public const string ACH_UNLOCKED_THE_LASERBEAM = "CgkIrKGfsOUeEAIQCg";
 	public const string ACH_UNLOCKED_THE_BOOMERANGLAUNCHER = "CgkIrKGfsOUeEAIQCw";
+
+	public const string ACH_KILL_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQAw";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_2 = "CgkIrKGfsOUeEAIQDA";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_3 = "CgkIrKGfsOUeEAIQDQ";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_4 = "CgkIrKGfsOUeEAIQDg";
 	public const string ACH_KILL_THE_BOSS_OF_STAGE_5 = "CgkIrKGfsOUeEAIQDw";
-	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_1 = "CgkIrKGfsOUeEAIQEA";
-	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_2 = "CgkIrKGfsOUeEAIQEQ";
-	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_3 = "CgkIrKGfsOUeEAIQEg";
-	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_4 = "CgkIrKGfsOUeEAIQEw";
-	public const string ACH_DISCOVER_THE_BOSS_OF_STAGE_5 = "CgkIrKGfsOUeEAIQFA";
-	public const string ACH_COMBO_KILLS_100 = "CgkIrKGfsOUeEAIQFQ";
-	public const string ACH_COMBO_KILLS_200 = "CgkIrKGfsOUeEAIQFg";
-	public const string ACH_COMBO_KILLS_300 = "CgkIrKGfsOUeEAIQFw";
+
+	public const string ACH_MAX_LEVEL_FIREGUN = "CgkIrKGfsOUeEAIQBA";
+	public const string ACH_MAX_LEVEL_GUN = "CgkIrKGfsOUeEAIQBQ";
+	public const string ACH_MAX_LEVEL_LIGHTNING = "CgkIrKGfsOUeEAIQBg";
+	public const string ACH_MAX_LEVEL_ROCKET = "CgkIrKGfsOUeEAIQCg";
+	public const string ACH_MAX_LEVEL_GUIDEDROCKET = "CgkIrKGfsOUeEAIQEA";
+	public const string ACH_MAX_LEVEL_BOOMERANG = "CgkIrKGfsOUeEAIQEQ";
+	public const string ACH_MAX_LEVEL_ENGINEERING = "CgkIrKGfsOUeEAIQEg";
+	public const string ACH_MAX_LEVEL_GUNMARINE = "CgkIrKGfsOUeEAIQEw";
+	public const string ACH_MAX_LEVEL_FIREMARINE = "CgkIrKGfsOUeEAIQFA";
+	public const string ACH_MAX_LEVEL_ROCKETMARINE = "CgkIrKGfsOUeEAIQFQ";
+	public const string ACH_MAX_LEVEL_GUIDEDROCKETMARINE = "CgkIrKGfsOUeEAIQFg";
+	public const string ACH_MAX_LEVEL_BOOMERANGMARINE = "CgkIrKGfsOUeEAIQFw";
 
 	public const string LEADERBOARD_GAINED_GOLD = "CgkIrKGfsOUeEAIQAQ";
 	public const string LEADERBOARD_GAINED_XP = "CgkIrKGfsOUeEAIQGA";
