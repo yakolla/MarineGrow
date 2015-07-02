@@ -518,30 +518,6 @@ public class Spawn : MonoBehaviour {
 			m_mobsOfCheckOnDeath++;
 		}
 
-		switch(refMob.id)
-		{
-		case 50001:
-			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_1, 100, (bool success)=>{
-			});
-			break;
-		case 50002:
-			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_2, 100, (bool success)=>{
-			});
-			break;
-		case 50003:
-			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_3, 100, (bool success)=>{
-			});
-			break;
-		case 50004:
-			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_4, 100, (bool success)=>{
-			});
-			break;
-		case 50005:
-			GPlusPlatform.Instance.ReportProgress(Const.ACH_DISCOVER_THE_BOSS_OF_STAGE_5, 100, (bool success)=>{
-			});
-			break;
-		}
-
 		return enemy;
 	}
 	

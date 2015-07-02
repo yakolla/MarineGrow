@@ -357,7 +357,7 @@ public class Warehouse {
 	public int CheatLevel
 	{
 		get {
-			return FindItem(Const.CheatRefItemId).Item.Level;
+			return FindItem(Const.EngineeringBayRefItemId).Item.Level;
 		}
 	}
 
