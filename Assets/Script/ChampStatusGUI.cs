@@ -161,6 +161,8 @@ public class ChampStatusGUI : MonoBehaviour {
 			m_mobKills.Text = m_champ.MobKills.ToString();
 		}
 
+		//m_mobKills.Text = System.String.Format("{0}/{1:00}:{2:00}", m_champ.MobKills, Warehouse.Instance.PlayTime / 60, Warehouse.Instance.PlayTime % 60);
+
 		if (m_oldGold != Warehouse.Instance.Gold.Item.Count)
 		{
 			m_oldGold = Warehouse.Instance.Gold.Item.Count;
