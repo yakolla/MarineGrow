@@ -7,7 +7,7 @@ public class GameOverGUI : MonoBehaviour {
 
 	ADMob					m_admob;
 
-	YGUISystem.GUIGuage[] 	m_guages = new YGUISystem.GUIGuage[3];
+	YGUISystem.GUIGuage[] 	m_guages = new YGUISystem.GUIGuage[1];
 	int						m_restartCount = 0;
 	string[]				m_leaderBoards = {Const.LEADERBOARD_GAINED_GOLD, Const.LEADERBOARD_GAINED_XP, Const.LEADERBOARD_KILLED_MOBS};
 
@@ -16,7 +16,7 @@ public class GameOverGUI : MonoBehaviour {
 
 
 		m_admob = GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>();
-
+		/*
 		m_guages[0] = new YGUISystem.GUIGuage(transform.Find("Gained Gold/Guage/Guage").gameObject, 
 		                                      ()=>{
 			if (Warehouse.Instance.GameBestStats.GainedGold == 0)
@@ -44,7 +44,7 @@ public class GameOverGUI : MonoBehaviour {
 			return Warehouse.Instance.NewGameStats.GainedXP.ToString() + " / " + Warehouse.Instance.GameBestStats.GainedXP.ToString(); 
 		}
 		);
-		/*
+
 		m_guages[2] = new YGUISystem.GUIGuage(transform.Find("Survival Time/Guage/Guage").gameObject, 
 		                                      ()=>{
 			if (Warehouse.Instance.GameBestStats.SurvivalTime == 0)
@@ -58,7 +58,7 @@ public class GameOverGUI : MonoBehaviour {
 		}
 		);
 */
-		m_guages[2] = new YGUISystem.GUIGuage(transform.Find("Killed Mobs/Guage/Guage").gameObject, 
+		m_guages[0] = new YGUISystem.GUIGuage(transform.Find("Killed Mobs/Guage/Guage").gameObject, 
 		                                      ()=>{
 			if (Warehouse.Instance.GameBestStats.KilledMobs == 0)
 			    return 1f;
