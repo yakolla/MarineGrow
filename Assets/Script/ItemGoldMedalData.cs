@@ -9,11 +9,7 @@ public class ItemGoldMedalData : ItemData{
 
 	}
 
-	override public string Description()
-	{
-		return "<color=white>"
-			 	+ RefItem.name + "\n"
-				+ "Count:" + Count
-				+ "</color>";
+	override public void Pickup(Creature obj){
+		Warehouse.Instance.GoldMedal.Item.Count += Count;
 	}
 }

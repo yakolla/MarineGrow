@@ -10,6 +10,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	GameObject	m_inventoryObj;
 	YGUISystem.GUIImageStatic	m_gold;
+	YGUISystem.GUIImageStatic	m_goldMedal;
 	YGUISystem.GUIImageStatic	m_gem;
 	YGUISystem.GUIButton	m_weapon;
 	YGUISystem.GUILockButton[]	m_accessories = new YGUISystem.GUILockButton[Const.AccessoriesSlots];
@@ -76,11 +77,10 @@ public class ChampSettingGUI : MonoBehaviour {
 				}
 */
 
-				Warehouse.Instance.PushItem(new ItemGoldMedalData(200));
-
 				Warehouse.Instance.PushItem(new ItemAccessoryData(Const.BootsRefItemId));
 
 				Warehouse.Instance.Gold.Item.Count = 100000;
+				Warehouse.Instance.GoldMedal.Item.Count = 1000;
 				Warehouse.Instance.Gem.Item.Count = 12000;
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
@@ -136,6 +136,7 @@ public class ChampSettingGUI : MonoBehaviour {
 		}
 
 		m_gold = new YGUISystem.GUIImageStatic(transform.Find("GoldImage").gameObject, Warehouse.Instance.Gold.ItemIcon);
+		m_goldMedal = new YGUISystem.GUIImageStatic(transform.Find("GoldMedalImage").gameObject, Warehouse.Instance.GoldMedal.ItemIcon);
 		m_gem = new YGUISystem.GUIImageStatic(transform.Find("GemImage").gameObject, Warehouse.Instance.Gem.ItemIcon);
 		m_start = new YGUISystem.GUIButton(transform.Find("StartButton").gameObject, ()=>{return m_equipedWeapon != null;});
 
@@ -309,6 +310,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	void Update()
 	{
 		m_gold.Lable.Text.text = Warehouse.Instance.Gold.Item.Count.ToString();
+		m_goldMedal.Lable.Text.text = Warehouse.Instance.GoldMedal.Item.Count.ToString();
 		m_gem.Lable.Text.text = Warehouse.Instance.Gem.Item.Count.ToString();
 		m_start.Update();
 

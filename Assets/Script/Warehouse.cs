@@ -29,6 +29,7 @@ public class Warehouse {
 
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_waveIndex));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gold.Item));
+			writer.WriteLine(JsonConvert.SerializeObject(obj.m_goldMedal.Item));
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gem.Item));
 
 			writer.WriteLine(JsonConvert.SerializeObject(obj.m_gameBestStats));
@@ -60,10 +61,6 @@ public class Warehouse {
 				case ItemData.Type.Weapon:
 					ItemWeaponData weaponData = JsonConvert.DeserializeObject<ItemWeaponData>(reader.ReadLine());
 					obj.m_items.Add(new ItemObject(weaponData));
-					break;
-				case ItemData.Type.GoldMedal:
-					ItemGoldMedalData goldMedalData = JsonConvert.DeserializeObject<ItemGoldMedalData>(reader.ReadLine());
-					obj.m_items.Add(new ItemObject(goldMedalData));
 					break;
 				case ItemData.Type.WeaponDNA:
 					ItemWeaponDNAData weaponDNAData = JsonConvert.DeserializeObject<ItemWeaponDNAData>(reader.ReadLine());
@@ -103,6 +100,9 @@ public class Warehouse {
 			ItemGoldData goldData = JsonConvert.DeserializeObject<ItemGoldData>(reader.ReadLine());
 			obj.m_gold = new ItemObject(goldData);
 
+			ItemGoldMedalData goldMedalData = JsonConvert.DeserializeObject<ItemGoldMedalData>(reader.ReadLine());
+			obj.m_goldMedal = new ItemObject(goldMedalData);
+
 			ItemGemData gemData = JsonConvert.DeserializeObject<ItemGemData>(reader.ReadLine());
 			obj.m_gem = new ItemObject(gemData);
 
@@ -120,6 +120,7 @@ public class Warehouse {
 	List<ItemObject>	m_items = new List<ItemObject>();
 
 	ItemObject			m_gold = new ItemObject(new ItemGoldData(0));
+	ItemObject			m_goldMedal = new ItemObject(new ItemGoldMedalData(0));
 	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
 	int					m_waveIndex = 0;
 
@@ -226,7 +227,9 @@ public class Warehouse {
 		m_items = new List<ItemObject>();
 		
 		m_gold = new ItemObject(new ItemGoldData(0));
+		m_goldMedal = new ItemObject(new ItemGoldMedalData(0));
 		m_gem	= new ItemObject(new ItemGemData(0));
+
 		m_waveIndex = 0;
 
 		m_gameBestStats = new GameStatistics();
@@ -256,6 +259,7 @@ public class Warehouse {
 			case ItemData.Type.Follower:
 			case ItemData.Type.Weapon:
 			case ItemData.Type.Gold:
+			case ItemData.Type.GoldMedal:
 			case ItemData.Type.Gem:
 				return;
 			}
@@ -299,8 +303,11 @@ public class Warehouse {
 		{
 		case 1:
 			return m_gold;
+		case 5:
+			return m_goldMedal;
 		case 8:
 			return m_gem;
+
 		}
 
 		foreach(ItemObject obj in m_items)
@@ -335,6 +342,11 @@ public class Warehouse {
 	public ItemObject Gold
 	{
 		get { return m_gold; }
+	}
+
+	public ItemObject GoldMedal
+	{
+		get { return m_goldMedal; }
 	}
 
 	public ItemObject Gem
