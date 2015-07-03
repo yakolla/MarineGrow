@@ -14,20 +14,8 @@ public class Worldmap : MonoBehaviour {
 
 	void Start()
 	{
+		Const.HideLoadingGUI();
 		Login();
-	}
-	
-	void OnOpenSavedGame(SavedGameRequestStatus status, ISavedGameMetadata game) {
-
-		if (status == SavedGameRequestStatus.Success) {
-			Warehouse.Instance.FileName = game.Filename;
-			Application.LoadLevel("Basic Dungeon");
-			Const.HideLoadingGUI();
-		} else {
-
-		}
-
-		log = "OnSavedGameOpened:" + status + game;
 	}
 
 	IEnumerator DelayMessage (string function, float delay)
@@ -94,7 +82,7 @@ public class Worldmap : MonoBehaviour {
 				Warehouse.Instance.Deserialize(data);
 
 			Application.LoadLevel("Basic Dungeon");
-			Const.HideLoadingGUI();
+			//Const.HideLoadingGUI();
 		} else {
 
 		}

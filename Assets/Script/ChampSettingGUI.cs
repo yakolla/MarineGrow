@@ -41,6 +41,7 @@ public class ChampSettingGUI : MonoBehaviour {
 	void Start()
 	{
 		System.GC.Collect();
+		Const.HideLoadingGUI();
 
 		Const.CHEAT_MODE = m_cheat;
 

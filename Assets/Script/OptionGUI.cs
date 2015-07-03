@@ -85,7 +85,7 @@ public class OptionGUI : MonoBehaviour {
 			m_admob.ShowBanner(false);
 			Application.LoadLevel("Worldmap");
 
-			Const.HideLoadingGUI();
+			//Const.HideLoadingGUI();
 		});
 
 	}
