@@ -17,7 +17,8 @@ public class BlazeBullet : FireSparkBullet {
 		base.Init(ownerCreature, weapon, targetAngle);
 
 		m_status = Status.Dropping;
-		m_parabola = new Parabola(gameObject, m_speed, -targetAngle.angle * Mathf.Deg2Rad, Random.Range(45f, 85f) * Mathf.Deg2Rad, m_bouncing);
+		//m_parabola = new Parabola(gameObject, m_speed, -targetAngle.angle * Mathf.Deg2Rad, Random.Range(45f, 85f) * Mathf.Deg2Rad, m_bouncing);
+		m_parabola = new Parabola(gameObject, m_speed, -ownerCreature.transform.rotation.eulerAngles.y * Mathf.Deg2Rad, Random.Range(45f, 85f) * Mathf.Deg2Rad, m_bouncing);
 	}
 
 	// Update is called once per frame

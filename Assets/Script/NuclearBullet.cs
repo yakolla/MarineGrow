@@ -1,11 +1,34 @@
 using UnityEngine;
 using System.Collections;
 
-public class NuclearBullet : GrenadeBullet {
+public class NuclearBullet : Bullet {
 
+	[SerializeField]
+	protected GameObject		m_prefBombEffect = null;
+	
+	[SerializeField]
+	protected float			m_bombRange = 5f;
 
-	protected override void createParabola(float targetAngle)
+	void OnEnable()
 	{
-		m_parabola = new Parabola(gameObject, m_speed, 0, 90 * Mathf.Deg2Rad, m_bouncing);
+		m_isDestroying = false;
+
+	}
+
+	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
+	{
+		base.Init(ownerCreature, weapon, targetAngle);
+		Vector3 pos = transform.position;
+		pos.y = 0f;
+
+		transform.position = pos;
+	}
+
+	void Update()
+	{
+		if (m_isDestroying == true)
+			return;
+
+		bomb(m_bombRange, m_prefBombEffect);
 	}
 }

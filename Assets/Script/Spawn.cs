@@ -141,19 +141,29 @@ public class Spawn : MonoBehaviour {
 		Debug.Log("min:" + minIndex + ", max:" + maxIndex + ", progress:" + progress);
 		minIndex = Mathf.Clamp(minIndex, 0, mobs.Length-1);
 
-		if (boss == true && progress < RefData.Instance.RefBossMobs.Length)
+		int mobCount = (int)(spawnRatioDesc.count[0]);
+		int stage = GetStage(m_wave)-1;
+		if (boss == true)
 		{
-			result.spawnMobs.Add(mobs[maxIndex]);
+			if (stage < RefData.Instance.RefBossMobs.Length)
+			{
+				result.spawnMobs.Add(mobs[maxIndex]);
+			}
+			else
+			{
+				result.spawnMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
+				mobCount += (int)((spawnRatioDesc.count[1]-spawnRatioDesc.count[0]) * Mathf.Min(1, stage/RefData.Instance.RefBossMobs.Length*(1/(float)RefData.Instance.RefBossMobs.Length)));
+			}
 		}
 		else
 		{
 			result.spawnMobs.Add(mobs[Random.Range(minIndex, maxIndex+1)]);
+			mobCount += (int)((spawnRatioDesc.count[1]-spawnRatioDesc.count[0]) * Mathf.Min(1, stage/RefData.Instance.RefBossMobs.Length*(1/(float)RefData.Instance.RefBossMobs.Length)));
+
 		}
 
 
-		minIndex = (int)(spawnRatioDesc.count[0]);
-		maxIndex = (int)(spawnRatioDesc.count[0] * (1f-progress*0.1f) + spawnRatioDesc.count[1] * progress*0.1f);
-		result.spawnMobCount.Add(Random.Range(minIndex, maxIndex));
+		result.spawnMobCount.Add(mobCount);
 		result.spawnMobMonitored.Add(monitoredDeath);
 		result.spawnMobBoss.Add(boss);
 		result.spawnEffectType.Add(spawnRatioDesc.spawnEffectType);

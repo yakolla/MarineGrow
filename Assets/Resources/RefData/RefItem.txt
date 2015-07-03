@@ -943,12 +943,12 @@
 		"evolutionFiring":
 		{
 			"angle":10,
-			"delay":0.3
+			"delay":1
 		},
 		"weaponStat":
 		{
-			"coolTime":2,
-			"range":5
+			"coolTime":4,
+			"range":10
 		},
 		"unlock":
 		{

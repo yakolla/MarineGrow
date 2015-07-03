@@ -15,7 +15,7 @@ public class SummonMobBullet : GrenadeBullet {
 		if (weapon.WeaponStat.summonRefMobId > 0)
 		{
 			m_spawnedMob = Const.GetSpawn().SpawnMob(RefData.Instance.RefMobs[weapon.WeaponStat.summonRefMobId], weapon.Level, gameObject.transform.position, false, false);
-			
+			m_spawnedMob.EnableNavmesh(false);
 			m_spawnedMob.CreatureType = ownerCreature.CreatureType;
 			m_spawnedMob.SetTarget(null);
 		}
@@ -25,6 +25,13 @@ public class SummonMobBullet : GrenadeBullet {
 	{
 		m_parabola = new Parabola(gameObject, m_speed, -(transform.rotation.eulerAngles.y+targetAngle) * Mathf.Deg2Rad, Random.Range(1f, 1.4f), m_bouncing);
 		m_effectTargetingPoint.Init(m_parabola.DestPosition);
+	}
+
+	void OnDisable()
+	{
+		return;
+		if (m_spawnedMob != null)
+			m_spawnedMob.EnableNavmesh(true);
 	}
 
 	// Update is called once per frame
