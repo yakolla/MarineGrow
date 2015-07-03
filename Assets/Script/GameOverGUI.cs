@@ -9,7 +9,7 @@ public class GameOverGUI : MonoBehaviour {
 
 	YGUISystem.GUIGuage[] 	m_guages = new YGUISystem.GUIGuage[1];
 	int						m_restartCount = 0;
-	string[]				m_leaderBoards = {Const.LEADERBOARD_GAINED_GOLD, Const.LEADERBOARD_GAINED_XP, Const.LEADERBOARD_KILLED_MOBS};
+	string[]				m_leaderBoards = {Const.LEADERBOARD_KILLED_MOBS};
 
 	void Start () {
 
