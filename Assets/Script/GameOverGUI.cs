@@ -104,6 +104,7 @@ public class GameOverGUI : MonoBehaviour {
 	{
 		m_admob.ShowBanner(false);
 		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "GameOver", "Title", 0);
+		Const.ShowLoadingGUI("Loading...");
 		Application.LoadLevel("Worldmap");
 	}
 
