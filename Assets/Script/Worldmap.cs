@@ -15,7 +15,7 @@ public class Worldmap : MonoBehaviour {
 	void Start()
 	{
 		Const.HideLoadingGUI();
-		Login();
+
 	}
 
 	IEnumerator DelayMessage (string function, float delay)
@@ -104,7 +104,9 @@ public class Worldmap : MonoBehaviour {
 				if (success == true)
 				{
 					log = "Login success";
-					Const.HideLoadingGUI();
+					m_try = 0;
+					Const.ShowLoadingGUI("Loading...");
+					OpenGame();
 				}
 				else
 				{
@@ -152,12 +154,7 @@ public class Worldmap : MonoBehaviour {
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			Const.ShowLoadingGUI("Loading...");
-			log = "OnClickStart";
-
-			m_try = 0;
-			OpenGame();
-
+			Login();
 		}
 		else
 		{

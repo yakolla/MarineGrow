@@ -29,7 +29,6 @@ public class SummonMobBullet : GrenadeBullet {
 
 	void OnDisable()
 	{
-		return;
 		if (m_spawnedMob != null)
 			m_spawnedMob.EnableNavmesh(true);
 	}

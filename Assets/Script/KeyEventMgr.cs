@@ -26,6 +26,9 @@ public class KeyEventMgr : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{ 
+			if (m_shop.activeSelf)
+				return;
+
 			if (m_credits.activeSelf)
 			{
 				m_credits.SetActive(false);

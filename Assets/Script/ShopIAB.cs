@@ -82,8 +82,6 @@ public class ShopIAB : MonoBehaviour
 
     private void Start()
     {
-
-
 		m_needGems = new YGUISystem.GUILable(transform.Find("NeedGems/Text").gameObject);
 
         Init();
