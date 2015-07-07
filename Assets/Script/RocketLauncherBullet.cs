@@ -17,18 +17,18 @@ public class RocketLauncherBullet : Bullet {
 
 	// Use this for initialization
 	void Start () {
-		m_efGun = transform.Find("Body/ef gun").gameObject;
-		m_efGun.SetActive(true);
+
 	}
 
 	protected void OnEnable()
 	{
 		m_isDestroying = false;
 		m_accel = 0f;
-		if (m_efGun != null)
-		{
-			m_efGun.SetActive(true);
-		}
+
+		m_efGun = transform.Find("Body/ef gun").gameObject;
+		m_efGun.SetActive(true);
+
+
 	}
 
 

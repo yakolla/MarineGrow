@@ -157,7 +157,7 @@ public class ShopIAB : MonoBehaviour
 	void Update()
 	{
 		if (m_progressing == true)
-			Const.ShowLoadingGUI("Loading...");
+			Const.ShowLoadingGUI(m_closeButton.Lable.Text.text);
 		else
 			Const.HideLoadingGUI();
 
