@@ -38,8 +38,10 @@ public class ADMob : MonoBehaviour
 		bannerView = new BannerView(adBannerId, AdSize.Banner, AdPosition.Top);
 		bannerView.AdLoaded += HandleBannerLoaded;
 
+		DateTime dateTime = DateTime.Now.AddYears(-12);
 		AdRequest request = new AdRequest.Builder()
-			.AddKeyword("game")
+			.AddKeyword("Game")
+				.SetBirthday(dateTime)
 				.Build();
 		// Load the Ads with the request.
 		

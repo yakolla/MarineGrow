@@ -150,7 +150,6 @@ public class ChampStatusGUI : MonoBehaviour {
 			m_champ = obj.GetComponent<Champ>();
 			m_oldMobKills = m_champ.MobKills;
 			SetActiveGUI(true);
-			return;
 		}
 
 		if (m_oldMobKills != m_champ.MobKills)
