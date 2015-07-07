@@ -1500,7 +1500,7 @@
 		"weaponStat":
 		{
 			"coolTime":0.3,
-			"range":8
+			"range":10
 		}
 	},
 	{
@@ -1516,7 +1516,7 @@
 		"weaponStat":
 		{
 			"coolTime":0.3,
-			"range":7
+			"range":8
 		}
 	},
 	{
@@ -1532,7 +1532,7 @@
 		"weaponStat":
 		{
 			"coolTime":1,
-			"range":8
+			"range":10
 		}
 		
 	},
@@ -1550,7 +1550,7 @@
 		"weaponStat":
 		{
 			"coolTime":1,
-			"range":8
+			"range":10
 		}
 	},
 	{
