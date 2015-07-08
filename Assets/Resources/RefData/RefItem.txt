@@ -75,7 +75,7 @@
 		"weaponId":133,
 		"weaponStat":
 		{
-			"coolTime":60
+			"coolTime":90
 		},
 	},
 	{
@@ -1592,7 +1592,7 @@
 		"defaultLock":true,
 		"weaponStat":
 		{
-			"coolTime":55
+			"coolTime":90
 		},
 		"unlock":
 		{
@@ -1672,7 +1672,7 @@
 		"defaultLock":true,
 		"weaponStat":
 		{
-			"coolTime":55
+			"coolTime":90
 		},
 		"unlock":
 		{
@@ -1748,7 +1748,7 @@
 		"defaultLock":true,
 		"weaponStat":
 		{
-			"coolTime":55
+			"coolTime":90
 		},
 		"unlock":
 		{
@@ -1824,7 +1824,7 @@
 		"defaultLock":true,
 		"weaponStat":
 		{
-			"coolTime":55
+			"coolTime":90
 		},
 		"unlock":
 		{
@@ -1900,7 +1900,7 @@
 		"defaultLock":true,
 		"weaponStat":
 		{
-			"coolTime":55
+			"coolTime":90
 		},
 		"unlock":
 		{
@@ -1976,7 +1976,7 @@
 		"defaultLock":true,
 		"weaponStat":
 		{
-			"coolTime":55
+			"coolTime":150
 		},
 		"unlock":
 		{
