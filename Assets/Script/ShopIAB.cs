@@ -144,7 +144,7 @@ public class ShopIAB : MonoBehaviour
 
 		if (m_needTotalGems - m_paidItems[sku].Gem <= -m_paidItems["gem.1000"].Gem)
 		{
-			m_closeButton.Lable.Text.text = "Sorry, You cannot purchase Gems";
+			m_closeButton.Lable.Text.text = "Plz, Buy as you need";
 			return;
 		}
 
