@@ -101,9 +101,8 @@ public class ChampSettingGUI : MonoBehaviour {
 			if (Warehouse.Instance.Items.Count == 0)
 			{
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGunRefItemId));
-
-				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampLightningLauncherRefItemId));
+				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampFiregunRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampGuidedRocketLauncherRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampRocketLauncherRefItemId));
 				Warehouse.Instance.PushItem(new ItemWeaponData(Const.ChampBoomerangLauncherRefItemId));

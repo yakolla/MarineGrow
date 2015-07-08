@@ -10,17 +10,11 @@ public class Dungeon : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {		
-
+	void Start () {	
 		
 		m_refWorldMap = RefData.Instance.RefWorldMaps[m_dungeonId];
 
 
-	}
-
-	public void LoadLevelWorldmap()
-	{
-		Application.LoadLevel("Worldmap");
 	}
 
 	public int DungeonId
