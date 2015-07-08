@@ -1257,7 +1257,7 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":15,
+				"maxHP":30,
 				"physicalDamage":10,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
