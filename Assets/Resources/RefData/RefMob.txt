@@ -854,7 +854,7 @@
 				"exp":700,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
-				"hpPerLevel":1.5,
+				"hpPerLevel":2,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -912,7 +912,7 @@
 				"exp":3000,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
-				"hpPerLevel":1.5,
+				"hpPerLevel":3,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"rotationSpeedRatio":20,
@@ -970,7 +970,7 @@
 				"exp":4000,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
-				"hpPerLevel":1.5,
+				"hpPerLevel":4,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
@@ -1016,7 +1016,7 @@
 				"exp":5000,
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":3,
-				"hpPerLevel":2,
+				"hpPerLevel":5,
 				"moveSpeed":1,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false

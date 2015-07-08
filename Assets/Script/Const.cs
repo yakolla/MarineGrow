@@ -19,12 +19,9 @@ public class Const {
 
 	public const int MaxItemLevel = 9;
 	public const int MaxShowDamageNumber = 3;
-	public const int ComboSkillStackOnCombo = 100;
-	public const int ComboKill_2 = 200;
-	public const int ComboKill_3 = 300;
 	public const int SpecialButtons = 3;
 	public const int Guages = 3;
-	public const int MaxCallableFollowers = 3;
+	public const int MaxCallableFollowers = 2;
 	public const int MaxFiringCount = MaxItemLevel+3;
 	public const float MaxAlphaMoveSpeed = 2f;
 	public const int AccessoriesSlots = 4;

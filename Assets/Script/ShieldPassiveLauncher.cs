@@ -40,7 +40,7 @@ public class ShieldPassiveLauncher : Weapon {
 		obj.transform.localScale = m_prefChargingEffect.transform.localScale;
 		obj.transform.localRotation = m_prefChargingEffect.transform.localRotation;
 
-		while(true)
+		while(m_creature != null)
 		{
 			bool shield = m_creature.m_creatureProperty.Shield > 0;
 			if (shield == true)
@@ -53,6 +53,7 @@ public class ShieldPassiveLauncher : Weapon {
 			
 			yield return null;
 		}
+
 	}
 
 	override public void LevelUp()

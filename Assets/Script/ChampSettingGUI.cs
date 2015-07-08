@@ -218,6 +218,8 @@ public class ChampSettingGUI : MonoBehaviour {
 		rectInventoryObj.sizeDelta = rectContents;
 		//rectInventoryObj.position = new Vector3(rectInventoryObj.position.x, -(rectContents.y/2-rectScrollView.rect.height/2), rectInventoryObj.position.z);
 		rectInventoryObj.localPosition = new Vector3(0, -(rectContents.y/2-rectScrollView.rect.height/2-rectGUIInventorySlot.rect.height*equipItemIndex), 0);
+
+		UpdateAccessorySlots();
 	}
 	enum ButtonRole
 	{
@@ -467,10 +469,7 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	void UpdateAccessorySlots()
 	{
-		if (Cheat.HowManyAccessorySlot == Const.HalfAccessoriesSlots)
-			return;
-
-		for(int i = Const.HalfAccessoriesSlots; i < m_accessories.Length; ++i)
+		for(int i = Const.HalfAccessoriesSlots; i < Cheat.HowManyAccessorySlot; ++i)
 		{
 			m_accessories[i].Lock = false;
 		}

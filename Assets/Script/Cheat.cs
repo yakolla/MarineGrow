@@ -10,12 +10,12 @@ public class Cheat {
 	public static int HowManyAbilityPointOnStart
 	{
 		get{
-			if (Warehouse.Instance.CheatLevel >= 7)
+			if (Warehouse.Instance.CheatLevel >= 9)
+				return 9;
+			else if (Warehouse.Instance.CheatLevel >= 7)
 				return 6;
-			else if (Warehouse.Instance.CheatLevel >= 6)
-				return 3;
 			else if (Warehouse.Instance.CheatLevel >= 5)
-				return 1;
+				return 3;
 
 			return 0;
 		}
@@ -34,9 +34,7 @@ public class Cheat {
 	public static int HowManyAbilityPointRatioOnLevelUp
 	{
 		get{
-			if (Warehouse.Instance.CheatLevel >= 9)
-				return 2;
-			
+
 			return 1;
 		}
 	}

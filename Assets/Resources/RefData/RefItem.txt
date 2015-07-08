@@ -1579,7 +1579,7 @@
 		},
 		"weaponStat":
 		{
-			"coolTime":6,
+			"coolTime":12,
 			"range":8,
 			"summonRefMobId":31008
 		}
@@ -1638,7 +1638,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":2,
+					"level":3,
 					"option":
 					{
 						"type":"Weapon",
@@ -1646,19 +1646,11 @@
 					}
 				},
 				{
-					"level":4,
+					"level":6,
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
-					}
-				},
-				{
-					"level":7,
-					"option":
-					{
-						"type":"Weapon",
-						"values":[130,3]
+						"values":[130,1]
 					}
 				},
 				{
@@ -1666,7 +1658,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[207,3]
+						"values":[207,1]
 					}
 				}
 			]
@@ -1722,15 +1714,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":2,
-					"option":
-					{
-						"type":"Weapon",
-						"values":[129,3]
-					}
-				},
-				{
-					"level":4,
+					"level":3,
 					"option":
 					{
 						"type":"Weapon",
@@ -1738,11 +1722,11 @@
 					}
 				},
 				{
-					"level":7,
+					"level":6,
 					"option":
 					{
 						"type":"Weapon",
-						"values":[130,3]
+						"values":[130,1]
 					}
 				},
 				{
@@ -1750,7 +1734,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[207,3]
+						"values":[207,1]
 					}
 				}
 			]
@@ -1806,7 +1790,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":2,
+					"level":3,
 					"option":
 					{
 						"type":"Weapon",
@@ -1814,19 +1798,11 @@
 					}
 				},
 				{
-					"level":4,
+					"level":6,
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
-					}
-				},
-				{
-					"level":7,
-					"option":
-					{
-						"type":"Weapon",
-						"values":[130,3]
+						"values":[130,1]
 					}
 				},
 				{
@@ -1834,7 +1810,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[207,3]
+						"values":[207,1]
 					}
 				}
 			]
@@ -1890,7 +1866,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":2,
+					"level":3,
 					"option":
 					{
 						"type":"Weapon",
@@ -1898,19 +1874,11 @@
 					}
 				},
 				{
-					"level":4,
+					"level":6,
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
-					}
-				},
-				{
-					"level":7,
-					"option":
-					{
-						"type":"Weapon",
-						"values":[130,3]
+						"values":[130,1]
 					}
 				},
 				{
@@ -1918,7 +1886,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[207,3]
+						"values":[207,1]
 					}
 				}
 			]
@@ -1974,7 +1942,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":2,
+					"level":3,
 					"option":
 					{
 						"type":"Weapon",
@@ -1982,19 +1950,11 @@
 					}
 				},
 				{
-					"level":4,
+					"level":6,
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
-					}
-				},
-				{
-					"level":7,
-					"option":
-					{
-						"type":"Weapon",
-						"values":[130,3]
+						"values":[130,1]
 					}
 				},
 				{
@@ -2002,7 +1962,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[207,3]
+						"values":[207,1]
 					}
 				}
 			]
@@ -2058,7 +2018,7 @@
 			"optionPerLevel":
 			[
 				{
-					"level":2,
+					"level":3,
 					"option":
 					{
 						"type":"Weapon",
@@ -2066,19 +2026,11 @@
 					}
 				},
 				{
-					"level":4,
+					"level":6,
 					"option":
 					{
 						"type":"Weapon",
-						"values":[135,3]
-					}
-				},
-				{
-					"level":7,
-					"option":
-					{
-						"type":"Weapon",
-						"values":[130,3]
+						"values":[130,1]
 					}
 				},
 				{
@@ -2086,7 +2038,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[207,3]
+						"values":[207,1]
 					}
 				}
 			]
