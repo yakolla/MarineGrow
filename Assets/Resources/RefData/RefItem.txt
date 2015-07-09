@@ -62,7 +62,7 @@
 		"options":
 		[
 			{
-				"type":"MovingSpeed",
+				"type":"MoveSpeed",
 				"value":1
 			}
 		]
@@ -161,7 +161,7 @@
 					"level":3,
 					"option":
 					{
-						"type":"MovingSpeed",
+						"type":"MoveSpeed",
 						"values":[1]
 					}
 				},
@@ -261,7 +261,7 @@
 					"level":3,
 					"option":
 					{
-						"type":"MovingSpeed",
+						"type":"MoveSpeed",
 						"values":[1]
 					}
 				},
@@ -466,7 +466,7 @@
 					"level":3,
 					"option":
 					{
-						"type":"MovingSpeed",
+						"type":"MoveSpeed",
 						"values":[1]
 					}
 				},
@@ -594,7 +594,7 @@
 					"level":3,
 					"option":
 					{
-						"type":"MovingSpeed",
+						"type":"MoveSpeed",
 						"values":[1]
 					}
 				},
@@ -694,7 +694,7 @@
 					"level":3,
 					"option":
 					{
-						"type":"MovingSpeed",
+						"type":"MoveSpeed",
 						"values":[1]
 					}
 				},
@@ -1080,7 +1080,7 @@
 					"level":3,
 					"option":
 					{
-						"type":"MovingSpeed",
+						"type":"MoveSpeed",
 						"values":[1]
 					}
 				},
@@ -1585,6 +1585,22 @@
 		}
 	},
 	{
+		"id":208,
+		"codeName":"FollowerLightningLauncher",
+		"type":"Weapon",
+		"icon":"Sprites/Lightning",		
+		"evolutionFiring":
+		{
+			"angle":30,
+			"delay":0
+		},
+		"weaponStat":
+		{
+			"coolTime":1,
+			"range":8
+		}
+	},
+	{
 		"id":1001,
 		"codeName":"Follower",
 		"type":"Follower",
@@ -1744,7 +1760,7 @@
 		"id":1003,
 		"codeName":"Follower",
 		"type":"Follower",
-		"icon":"Sprites/FollowerGuidedRocketMarines",
+		"icon":"Sprites/FollowerLightningMarines",
 		"defaultLock":true,
 		"weaponStat":
 		{
@@ -1794,7 +1810,7 @@
 					"option":
 					{
 						"type":"Weapon",
-						"values":[132,3]
+						"values":[129,3]
 					}
 				},
 				{

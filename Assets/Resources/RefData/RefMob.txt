@@ -1163,20 +1163,20 @@
 			}
 		},
 		{
-			"id":30003,
+			"id":30003,			
 			"prefHead":"Follower",
 			"prefBody":"marine_skin",
-			"name":"GuidedRocket Marines",
+			"name":"Lightning Marines",
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"203"
+					"refItemId":"208"
 				}
 			],
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":15,
+				"maxHP":30,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
