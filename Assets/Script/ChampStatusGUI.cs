@@ -12,6 +12,8 @@ public class ChampStatusGUI : MonoBehaviour {
 	int			m_oldGold;
 	int			m_oldGoldMedal;
 
+	GameObject		m_accessoryBoard;
+
 
 	YGUISystem.GUIButton[]	m_specialButtons = new YGUISystem.GUIButton[Const.SpecialButtons];
 	YGUISystem.GUIChargeButton[]	m_accessoryButtons = new YGUISystem.GUIChargeButton[Const.AccessoriesSlots];
@@ -26,6 +28,8 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_gold = transform.Find("Gold/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
 		m_goldMedal = transform.Find("GoldMedal/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
 		m_mobKills = transform.Find("Kills/RawImage/Text").gameObject.GetComponent<ComboGUIShake>();
+
+		m_accessoryBoard = transform.Find("Accessory").gameObject;
 
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
 			m_specialButtons[0].Lable.Text.text = m_champ.RemainStatPoint.ToString();
@@ -72,6 +76,13 @@ public class ChampStatusGUI : MonoBehaviour {
 			return;
 
 		GameObject.Find("HudGUI/AbilityGUI").transform.Find("Panel").gameObject.SetActive(true);
+
+		m_accessoryBoard.GetComponent<Animator>().SetTrigger("SlidingDown");
+	}
+
+	public void SlidingNormalAccessoryBoard()
+	{
+		m_accessoryBoard.GetComponent<Animator>().SetTrigger("SlidingNormal");
 	}
 
 	public void OnClickOption()
@@ -119,21 +130,6 @@ public class ChampStatusGUI : MonoBehaviour {
 		transform.Find("Gold").gameObject.SetActive(active);
 		transform.Find("GoldMedal").gameObject.SetActive(active);
 		transform.Find("Kills").gameObject.SetActive(active);
-
-		if (active == true)
-		{
-			for(int i = 0; i < Const.AccessoriesSlots; ++i)
-			{
-				if (m_champ.AccessoryItems[i] == null)
-					continue;
-				
-				m_accessoryButtons[i].Icon.Image = m_champ.AccessoryItems[i].ItemIcon;
-				m_accessoryButtons[i].MaxChargingPoint = 2;
-				m_accessoryButtons[i].ChargingPoint = 2;
-				m_accessoryButtons[i].CoolDownTime = m_champ.AccessoryItems[i].Item.RefItem.weaponStat.coolTime;
-			}
-		}
-
 	}
 
 	void Update()
@@ -149,6 +145,18 @@ public class ChampStatusGUI : MonoBehaviour {
 
 			m_champ = obj.GetComponent<Champ>();
 			m_oldMobKills = m_champ.MobKills;
+
+			for(int i = 0; i < Const.AccessoriesSlots; ++i)
+			{
+				if (m_champ.AccessoryItems[i] == null)
+					continue;
+				
+				m_accessoryButtons[i].Icon.Image = m_champ.AccessoryItems[i].ItemIcon;
+				m_accessoryButtons[i].MaxChargingPoint = 2;
+				m_accessoryButtons[i].ChargingPoint = 2;
+				m_accessoryButtons[i].CoolDownTime = m_champ.AccessoryItems[i].Item.RefItem.weaponStat.coolTime;
+			}
+
 			SetActiveGUI(true);
 		}
 
@@ -169,13 +177,12 @@ public class ChampStatusGUI : MonoBehaviour {
 			m_gold.shake = 2f;
 			m_gold.Text = Warehouse.Instance.Gold.Item.Count.ToString();
 		}
-		ItemObject goldMedal = Warehouse.Instance.FindItem(Const.GoldMedalRefItemId);
-		if (goldMedal != null && m_oldGoldMedal != goldMedal.Item.Count)
+		if (m_oldGoldMedal != Warehouse.Instance.GoldMedal.Item.Count)
 		{
-			m_oldGoldMedal = goldMedal.Item.Count;
+			m_oldGoldMedal = Warehouse.Instance.GoldMedal.Item.Count;
 			m_goldMedal.enabled = true;
 			m_goldMedal.shake = 2f;
-			m_goldMedal.Text = goldMedal.Item.Count.ToString();
+			m_goldMedal.Text = Warehouse.Instance.GoldMedal.Item.Count.ToString();
 		}
 
 		foreach(YGUISystem.GUIButton button in m_specialButtons)

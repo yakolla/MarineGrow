@@ -12,6 +12,8 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 	int			m_usedCountOfRandomAbilityItem = 0;
 
+	ChampStatusGUI	m_statusGUI;
+
 	CreatureProperty	m_backup = new CreatureProperty();
 
 	ADMob		m_adMob;
@@ -54,6 +56,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	void Start ()
 	{
 		m_champ = GameObject.Find("Champ").GetComponent<Champ>();
+		m_statusGUI = transform.parent.parent.Find("StatusGUI").GetComponent<ChampStatusGUI>();
 
 		List<Ability> basicAbili = new List<Ability>();
 		List<Ability> skillAbili = new List<Ability>();
@@ -744,6 +747,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		gameObject.SetActive(false);
 		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowBanner(false);
 
+		m_statusGUI.SlidingNormalAccessoryBoard();
 
 	}
 

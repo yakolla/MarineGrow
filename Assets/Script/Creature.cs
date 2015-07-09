@@ -679,6 +679,8 @@ public class Creature : MonoBehaviour {
 	
 	virtual public int TakeDamage(Creature offender, DamageDesc damageDesc)
 	{
+		if (m_behaviourType == BehaviourType.Death)
+			return 0;
 
 		if (m_buffEffects[(int)DamageDesc.BuffType.Macho].m_run == true)
 		{
