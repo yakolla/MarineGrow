@@ -141,7 +141,7 @@ public class LightningBullet : Bullet
 			}
 		}
 
-		if (targets != null)
+		if (hittedTargetCount > 0)
 		{
 			TryToSetDamageBuffType(m_weapon);
 
@@ -154,6 +154,10 @@ public class LightningBullet : Bullet
 				
 				m_lastDamageTime = Time.time;
 			}
+		}
+		else
+		{
+			m_lastDamageTime = Time.time;
 		}
 
 		if (mobHitted == false)
