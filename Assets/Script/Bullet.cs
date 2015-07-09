@@ -70,21 +70,13 @@ public class Bullet : MonoBehaviour {
 
 					if (skip != null)
 					{
-						for(int x = 0; x < i; ++x)
+						for(int y = 0; y < skip.Length; ++y)
 						{
-							for(int y = 0; y < skip.Length; ++y)
+							if (creature == skip[y])
 							{
-								if (skip[y] == null || testSearchedTargets[x] == null)
-									continue;
-
-								if (testSearchedTargets[x] == skip[y])
-								{
-									already = true;
-									x = i;
-									break;
-								}
+								already = true;
+								break;
 							}
-
 						}
 					}
 

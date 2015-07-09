@@ -1163,14 +1163,14 @@
 			}
 		},
 		{
-			"id":30003,
+			"id":30003,			
 			"prefHead":"Follower",
 			"prefBody":"marine_skin",
-			"name":"GuidedRocket Marines",
+			"name":"Lightning Marines",
 			"refWeaponItems":
 			[
 				{
-					"refItemId":"203"
+					"refItemId":"208"
 				}
 			],
 			"mobAI":"Normal",
@@ -1186,6 +1186,7 @@
 				"hpPerLevel":0.33,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
+				"bulletLength":3,
 				"backwardOnDamage":false
 			}
 		},

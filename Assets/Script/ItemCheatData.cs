@@ -31,7 +31,7 @@ public class ItemCheatData : ItemData{
 
 		desc +=  "\n" + (level >= 1 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv1:Enable Roll Button of Ability</color>";
 		desc +=  "\n" + (level >= 3 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv3:Unlock all follower slots</color>";
-		desc +=  "\n" + (level >= 5 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv5:On starting, Give 3 Ability point</color>";
+		desc +=  "\n" + (level >= 5 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv5:On starting, Give 3 Ability points</color>";
 		desc +=  "\n" + (level >= 7 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv7:On starting, Give 6 Ability points</color>";
 		desc +=  "\n" + (level >= 9 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv9:On starting, Give 9 Ability points</color>";
 			

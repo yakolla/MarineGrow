@@ -32,7 +32,7 @@ public class ItemData {
 	{
 		DamageMultiplier,
 		DamageReduction,
-		MovingSpeed,
+		MoveSpeed,
 		Weapon,
 		Count
 	}
@@ -118,7 +118,7 @@ public class ItemData {
 			case Option.DamageMultiplier:
 				obj.m_creatureProperty.DamageRatio += op.option.values[0];
 				break;
-			case Option.MovingSpeed:
+			case Option.MoveSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed += op.option.values[0];
 				break;
 			case Option.DamageReduction:
@@ -157,7 +157,7 @@ public class ItemData {
 			case Option.DamageMultiplier:
 				obj.m_creatureProperty.DamageRatio -= op.option.values[0];
 				break;
-			case Option.MovingSpeed:
+			case Option.MoveSpeed:
 				obj.m_creatureProperty.AlphaMoveSpeed -= op.option.values[0];
 				break;
 			case Option.DamageReduction:

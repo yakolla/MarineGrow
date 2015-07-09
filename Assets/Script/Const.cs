@@ -73,10 +73,7 @@ public class Const {
 	public const string ACH_MAX_LEVEL_GUIDEDROCKETMARINE = "CgkIrKGfsOUeEAIQFg";
 	public const string ACH_MAX_LEVEL_BOOMERANGMARINE = "CgkIrKGfsOUeEAIQFw";
 
-	public const string LEADERBOARD_GAINED_GOLD = "CgkIrKGfsOUeEAIQAQ";
-	public const string LEADERBOARD_GAINED_XP = "CgkIrKGfsOUeEAIQGA";
-	public const string LEADERBOARD_SURVIVAL_TIME = "CgkIrKGfsOUeEAIQGw";
-	public const string LEADERBOARD_KILLED_MOBS = "CgkIrKGfsOUeEAIQGg";
+	public const string LEADERBOARD_KILLED_MOBS = "CgkIrKGfsOUeEAIQHA";
 
 	public const string DisabledStringColor = "<color=silver>";
 	public const string EnabledStringColor = "<color=yellow>";
