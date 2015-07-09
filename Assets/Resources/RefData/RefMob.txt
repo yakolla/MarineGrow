@@ -1176,7 +1176,7 @@
 			"mobAI":"Normal",
 			"baseCreatureProperty":
 			{
-				"maxHP":30,
+				"maxHP":15,
 				"physicalDamage":5,
 				"physicalDefence":0,
 				"evolutionPerLevel":0.2,
@@ -1186,6 +1186,7 @@
 				"hpPerLevel":0.33,
 				"moveSpeed":3,
 				"navMeshBaseOffset":0,
+				"bulletLength":3,
 				"backwardOnDamage":false
 			}
 		},
