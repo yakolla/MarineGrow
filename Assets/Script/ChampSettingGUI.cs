@@ -392,7 +392,7 @@ public class ChampSettingGUI : MonoBehaviour {
 			{
 				m_equipedWeapon.m_itemObject = null;
 				m_equipedWeapon.m_inventorySlot = null;
-				m_weapon.Icon.Image = null;
+				m_weapon.Icon.Image = Resources.Load("Sprites/button") as Texture;
 				invSlot.Check(false);
 				SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 			}
@@ -425,7 +425,7 @@ public class ChampSettingGUI : MonoBehaviour {
 						{
 							m_equipedAccessories[x].m_itemObject = null;
 							m_equipedAccessories[x].m_inventorySlot = null;
-							m_accessories[x].Icon.Image = null;
+							m_accessories[x].Icon.Image = Resources.Load("Sprites/button") as Texture;
 							invSlot.Check(false);
 							SetButtonRole(ButtonRole.Equip, invSlot, priceGemButton, itemIndex);
 							break;

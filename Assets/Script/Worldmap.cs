@@ -12,6 +12,13 @@ public class Worldmap : MonoBehaviour {
 	string		log = "log";
 	GameObject	m_selectedMap;
 
+	enum LoginWith
+	{
+		Start,
+		LeaderBoard,
+		Achievement,
+	}
+
 	void Start()
 	{
 		Const.HideLoadingGUI();
@@ -90,7 +97,7 @@ public class Worldmap : MonoBehaviour {
 
 	}
 
-	void Login()
+	void Login(LoginWith loginWith)
 	{
 
 		if (Application.platform == RuntimePlatform.Android)
@@ -104,14 +111,30 @@ public class Worldmap : MonoBehaviour {
 				if (success == true)
 				{
 					log = "Login success";
-					m_try = 0;
-					Const.ShowLoadingGUI("Loading...");
-					OpenGame();
+
+					switch(loginWith)
+					{
+					case LoginWith.Start:
+						Const.ShowLoadingGUI("Loading...");
+						m_try = 0;
+						OpenGame();
+						break;
+					case LoginWith.LeaderBoard:
+						GPlusPlatform.Instance.ShowLeaderboardUI();
+						Const.HideLoadingGUI();
+						break;
+					case LoginWith.Achievement:
+						GPlusPlatform.Instance.ShowAchievementsUI();
+						Const.HideLoadingGUI();
+						break;
+
+					}
+
 				}
 				else
 				{
 					log = "Login failed";
-					Login ();
+					Login (loginWith);
 				}
 			});
 		}
@@ -154,7 +177,7 @@ public class Worldmap : MonoBehaviour {
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			Login();
+			Login(LoginWith.Start);
 		}
 		else
 		{
@@ -169,12 +192,19 @@ public class Worldmap : MonoBehaviour {
 
 	public void OnClickLeaderBoard()
 	{
-		GPlusPlatform.Instance.ShowLeaderboardUI();
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			Login(LoginWith.LeaderBoard);
+		}
+
 	}
 
 	public void OnClickAchievement()
 	{
-		GPlusPlatform.Instance.ShowAchievementsUI();
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			Login(LoginWith.Achievement);
+		}
 	}
 
 	void Update()
