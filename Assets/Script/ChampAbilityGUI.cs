@@ -267,7 +267,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 
 
-		skillAbili.Add(new Ability(0.3f, "Charge to " + (m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId].name : ""), 
+		skillAbili.Add(new Ability(0.3f, "Fill " + (m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId > 0 ? RefData.Instance.RefItems[m_champ.WeaponHolder.MainWeapon.WeaponStat.skillId].name : ""), 
 		                           ()=>{
 			int backup = m_champ.NuclearSkillStack+3;
 			return (m_champ.NuclearSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
@@ -281,7 +281,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 		));
 
-		skillAbili.Add(new Ability(0.3f, "Charge to Macho Skill", 
+		skillAbili.Add(new Ability(0.3f, "Fill Macho Skill", 
 		                           ()=>{
 			int backup = m_champ.MachoSkillStack+3;
 			return (m_champ.MachoSkillStack) + " -> " + "<color=yellow>" + (backup) + "</color>";
@@ -510,7 +510,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 			--m_champ.RemainStatPoint;
 		}));
 */
-		skillAbili.Add(new Ability(0.3f, "Charge to " + RefData.Instance.RefItems[130].name, 
+		skillAbili.Add(new Ability(0.3f, "Fill " + RefData.Instance.RefItems[130].name, 
 		                           ()=>{
 			Weapon weapon = m_champ.WeaponHolder.GetPassiveSkillWeapon(130);
 			m_backup.Shield += 10;
