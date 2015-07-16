@@ -208,7 +208,7 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":6,
+			"range":8,
 			"skillId":133,
 			"buffOnHitDesc":
 			{
@@ -227,7 +227,7 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":7,
+			"range":10,
 			"skillId":133,
 			"buffOnHitDesc":
 			{
@@ -559,7 +559,7 @@
 		"weaponStat":
 		{
 			"coolTime":0.7,
-			"range":7,
+			"range":10,
 			"skillId":133,
 			"firingCount":2,
 			"buffOnHitDesc":
@@ -665,7 +665,7 @@
 		"weaponStat":
 		{
 			"coolTime":1.5,
-			"range":8,
+			"range":10,
 			"skillId":133
 		},		
 		"levelup":
@@ -784,7 +784,7 @@
 		"weaponStat":
 		{
 			"coolTime":1,
-			"range":7,
+			"range":10,
 			"skillId":133,
 			"buffOnHitDesc":
 			{
@@ -1046,7 +1046,7 @@
 		"weaponStat":
 		{
 			"coolTime":2,
-			"range":7,
+			"range":10,
 			"skillId":133,
 			"buffOnHitDesc":
 			{
