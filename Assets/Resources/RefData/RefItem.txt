@@ -227,7 +227,7 @@
 		"weaponStat":
 		{
 			"coolTime":4,
-			"range":5,
+			"range":7,
 			"skillId":133,
 			"buffOnHitDesc":
 			{
@@ -1046,7 +1046,7 @@
 		"weaponStat":
 		{
 			"coolTime":2,
-			"range":5,
+			"range":7,
 			"skillId":133,
 			"buffOnHitDesc":
 			{

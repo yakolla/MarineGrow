@@ -104,16 +104,20 @@ public class Champ : Creature {
 			return;
 
 		Vector3 pos = Vector3.zero;
-		float step = 1;
+		float step = (5*m_creatureProperty.MoveSpeed)*Time.deltaTime;
 
 		if (Application.platform == RuntimePlatform.Android)
 		{
 			if (m_leftJoypad.Dragging)
 			{
+				step = (m_creatureProperty.MoveSpeed)*Time.deltaTime;
+
 				pos.x = m_leftJoypad.Position.x*step;
 				pos.z = m_leftJoypad.Position.y*step;
+
+				transform.rigidbody.MovePosition(transform.position+pos);
 				
-				m_navAgent.SetDestination(transform.position+pos);
+				//m_navAgent.SetDestination(transform.position+pos);
 			}
 
 		}
@@ -137,8 +141,9 @@ public class Champ : Creature {
 				{
 					pos.x += step;
 				}
-				
-				m_navAgent.SetDestination(transform.position+pos);
+
+				transform.rigidbody.MovePosition(transform.position+pos);
+				//m_navAgent.SetDestination(transform.position+pos);
 
 			}
 
@@ -146,8 +151,9 @@ public class Champ : Creature {
 			{
 				pos.x = m_leftJoypad.Position.x*step;
 				pos.z = m_leftJoypad.Position.y*step;
-				
-				m_navAgent.SetDestination(transform.position+pos);
+
+				transform.rigidbody.MovePosition(transform.position+pos);
+				//m_navAgent.SetDestination(transform.position+pos);
 			}
 		}
 
