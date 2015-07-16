@@ -10,6 +10,7 @@ public class KeyEventMgr : MonoBehaviour {
 	GameObject	m_shop;
 	GameObject	m_option;
 	GameObject	m_goMainTitle;
+	GameObject	m_exit;
 	GameObject	m_credits;
 
 
@@ -19,6 +20,7 @@ public class KeyEventMgr : MonoBehaviour {
 		m_shop = transform.Find("ShopGUI/Panel").gameObject;
 		m_option = transform.Find("OptionGUI/Panel").gameObject;
 		m_goMainTitle = transform.Find("GoMainTitleGUI/Panel").gameObject;
+		m_exit = transform.Find("ExitGUI/Panel").gameObject;
 		m_credits = transform.Find("OptionGUI/CreditsPanel").gameObject;
 	}
 
@@ -44,6 +46,8 @@ public class KeyEventMgr : MonoBehaviour {
 				m_goMainTitle.SetActive(true);
 				return;
 			}
+
+			m_exit.SetActive(true);
 		}
 	}
 }
