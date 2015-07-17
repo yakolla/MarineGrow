@@ -19,11 +19,11 @@ public class Mob : Creature {
 
 		if (Random.Range(0f, 1f) < 0.3f)
 			m_creatureProperty.BetaMoveSpeed = 1.7f;
-		
+		/*
 		if (true == Boss)
 		{
 			transform.Find("FloatingHealthBarGUI").gameObject.SetActive(true);
-		}
+		}*/
 
 		GameObject prefDeathEffect = Resources.Load<GameObject>("Pref/mon_skin/"+refMob.prefBody+"_death");
 		if (prefDeathEffect != null)

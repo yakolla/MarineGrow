@@ -14,10 +14,6 @@ public class Champ : Creature {
 	[SerializeField]
 	bool	m_enableAutoTarget = true;
 
-	[SerializeField]
-	Vector3	m_cameraOffset;
-
-
 	int			m_remainStatPoint = 0;
 
 	int			m_mobKills;

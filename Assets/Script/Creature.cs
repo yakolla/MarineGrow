@@ -523,14 +523,14 @@ public class Creature : MonoBehaviour {
 
 		m_creatureProperty.BulletLength += 1f;
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
-		m_creatureProperty.BetaMoveSpeed *= 2f;
+		m_creatureProperty.BetaMoveSpeed += 1f;
 
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.LevelUp].m_run = false;
 		m_creatureProperty.BulletLength -= 1f;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
-		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+		m_creatureProperty.BetaMoveSpeed -= 1f;
 
 		DestroyObject(effect);
 	}
@@ -576,7 +576,7 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.SP = m_creatureProperty.MaxSP;
 		m_creatureProperty.BulletLength += 1f;
 		m_creatureProperty.AlphaAttackCoolTime -= 0.5f;
-		m_creatureProperty.BetaMoveSpeed *= 2f;
+		m_creatureProperty.BetaMoveSpeed += 1f;
 		Vector3 scale = transform.localScale;
 		transform.localScale = scale*1.3f;
 		
@@ -585,7 +585,7 @@ public class Creature : MonoBehaviour {
 		m_buffEffects[(int)DamageDesc.BuffType.Macho].m_run = false;
 		m_creatureProperty.AlphaAttackCoolTime += 0.5f;
 		m_creatureProperty.BulletLength -= 1f;
-		m_creatureProperty.BetaMoveSpeed *= 0.5f;
+		m_creatureProperty.BetaMoveSpeed -= 1f;
 		transform.localScale = scale;
 
 		DestroyObject(effect);
