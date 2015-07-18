@@ -49,7 +49,7 @@ public class RocketLauncherBullet : Bullet {
 		bomb(m_bombRange, m_prefBombEffect);
 	}
 
-	void OnTriggerEnter(Collider other) {
+	public void OnTriggerEnter(Collider other) {
 		if (m_isDestroying == true)
 			return;
 
