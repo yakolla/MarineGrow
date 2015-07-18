@@ -57,7 +57,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		transform.eulerAngles = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, -destAngle, 0)), 300f*Time.deltaTime).eulerAngles;
 
 		transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
-		m_accel += Time.deltaTime*0.01f*m_speed;
+		m_accel += Time.deltaTime*Time.fixedDeltaTime*m_speed;
 
 		if (m_target != null)
 		{
@@ -65,6 +65,16 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 			{
 				Bomb();
 			}
+		}
+	}
+
+	new void OnTriggerEnter(Collider other) {
+		if (m_isDestroying == true)
+			return;
+
+		if (other.tag.CompareTo("Wall") == 0)
+		{
+			GameObjectPool.Instance.Free(this.gameObject);
 		}
 	}
 
