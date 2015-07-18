@@ -100,13 +100,13 @@ public class Champ : Creature {
 			return;
 
 		Vector3 pos = Vector3.zero;
-		float step = (5*m_creatureProperty.MoveSpeed)*Time.deltaTime;
+		float step = (1*m_creatureProperty.MoveSpeed)*Time.fixedDeltaTime;
 
 		if (Application.platform == RuntimePlatform.Android)
 		{
 			if (m_leftJoypad.Dragging)
 			{
-				step = (m_creatureProperty.MoveSpeed)*Time.deltaTime;
+				step = (m_creatureProperty.MoveSpeed)*Time.fixedDeltaTime;
 
 				pos.x = m_leftJoypad.Position.x*step;
 				pos.z = m_leftJoypad.Position.y*step;
