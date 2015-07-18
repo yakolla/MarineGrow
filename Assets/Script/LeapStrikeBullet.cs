@@ -8,11 +8,19 @@ public class LeapStrikeBullet : Bullet {
 	
 	[SerializeField]
 	float			m_bombRange = 5f;
-	
-	// Use this for initialization
-	void Start () 
-	{		
-		bomb(m_bombRange, m_prefBombEffect);
+
+
+	void OnEnable()
+	{
+		m_isDestroying = false;
 	}
 
+	// Update is called once per frame
+	protected void Update () {
+		if (m_isDestroying == true)
+			return;
+		
+		bomb(m_bombRange, m_prefBombEffect);
+		
+	}
 }

@@ -1,8 +1,6 @@
 using UnityEngine;
 
-public class EffectTargetingPoint {
-
-
+public class EffectTargetingCircle {
 	
 	GameObject	m_effectTargetPoint;
 

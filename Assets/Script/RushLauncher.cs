@@ -6,8 +6,17 @@ public class RushLauncher : Weapon {
 	Vector3	m_goal;
 	float	m_elapsed;
 	const float DashSpeed = 9f;
-	bool	m_rush = false;
 	RushBullet bullet;
+
+	enum State
+	{
+		Nothing,
+		Ready,
+		Rush,
+	}
+
+	EffectTargetingLine	m_effectTargetingPoint = null;
+	State	m_state;
 
 	new void Start()
 	{
@@ -22,8 +31,12 @@ public class RushLauncher : Weapon {
 		{
 			m_goal = m_creature.transform.position+m_creature.transform.right.normalized*DashSpeed;
 			m_goal.y = m_creature.transform.position.y;
-			m_rush = true;
 			m_elapsed = 0f;
+			m_state = State.Ready;
+
+			m_effectTargetingPoint = new EffectTargetingLine();
+			m_effectTargetingPoint.Init(m_creature.transform.position, m_goal);
+
 			DidStartFiring(0f);
 
 		}
@@ -40,15 +53,29 @@ public class RushLauncher : Weapon {
 	
 	void Update()
 	{
-		if (m_rush == false)
+		if (m_state == State.Nothing)
 			return;
 
-		m_elapsed = m_elapsed+Time.deltaTime;
-		m_creature.transform.transform.position = Vector3.Lerp(m_creature.transform.transform.position, m_goal, m_elapsed*0.05f);
+		m_elapsed += Time.deltaTime;
 
-		if (m_elapsed >= 1f)
+		switch(m_state)
 		{
-			m_rush = false;
+		case State.Ready:
+			if (m_elapsed >= 1f)
+			{
+				m_elapsed = 0f;
+				m_state = State.Rush;
+			}
+			break;
+		case State.Rush:
+			m_creature.transform.transform.position = Vector3.Lerp(m_creature.transform.transform.position, m_goal, m_elapsed*0.05f);
+			if (m_elapsed >= 1f)
+			{
+				m_state = State.Nothing;
+				m_effectTargetingPoint.Death();
+			}
+			break;
 		}
+
 	}
 }

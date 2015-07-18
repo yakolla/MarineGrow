@@ -3,13 +3,13 @@ using System.Collections;
 
 public class SummonMobBullet : GrenadeBullet {
 
-	EffectTargetingPoint	m_effectTargetingPoint = null;
+	EffectTargetingCircle	m_effectTargetingPoint = null;
 	Creature		m_spawnedMob = null;
 	// Use this for initialization
 
 	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
 	{
-		m_effectTargetingPoint = new EffectTargetingPoint();
+		m_effectTargetingPoint = new EffectTargetingCircle();
 		base.Init(ownerCreature, weapon, targetAngle);
 
 		if (weapon.WeaponStat.summonRefMobId > 0)
