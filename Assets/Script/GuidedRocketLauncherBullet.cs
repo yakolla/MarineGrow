@@ -16,10 +16,19 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	int maxSearch = 3;
 
 	float	m_refreshAngleCoolTime = 0f;
-	int		m_searchCount = 0;
+
+
+	Weapon	m_weapon;
 	// Use this for initialization
 	void Start () {
 
+	}
+
+	override public void Init(Creature ownerCreature, Weapon weapon, Weapon.FiringDesc targetAngle)
+	{
+		base.Init(ownerCreature, weapon, targetAngle);
+
+		m_weapon = weapon;
 	}
 
 	new void OnEnable()
@@ -28,7 +37,6 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 		m_lastSearchTime = 0f;
 		m_target = null;
-		m_searchCount = 0;
 	}
 
 	// Update is called once per frame
@@ -37,7 +45,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		if (m_isDestroying == true)
 			return;
 
-		if (m_target == null && m_lastSearchTime <= Time.time && m_searchCount < maxSearch)
+		if (m_target == null && m_lastSearchTime <= Time.time)
 		{
 			m_lastSearchTime = Time.time + m_searchCoolTime;
 
@@ -45,7 +53,6 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 			if (searchedTargets != null)
 				m_target = searchedTargets[Random.Range(0, searchedTargets.Length)];
 
-			++m_searchCount;
 		}
 
 
@@ -56,14 +63,16 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		}
 		transform.eulerAngles = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, -destAngle, 0)), 300f*Time.deltaTime).eulerAngles;
 
-		transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
-		m_accel += Time.deltaTime*Time.fixedDeltaTime*m_speed;
+		//transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
+		transform.Translate(m_accel, 0, 0, transform);
+		m_accel += Time.fixedDeltaTime*Time.fixedDeltaTime*m_speed;
 
 		if (m_target != null)
 		{
 			if (1.3f > Vector3.Distance(transform.position, m_target.transform.position))
 			{
 				Bomb();
+				m_weapon.SendMessage("OnDestroyBullet");
 			}
 		}
 	}
@@ -75,6 +84,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		if (other.tag.CompareTo("Wall") == 0)
 		{
 			GameObjectPool.Instance.Free(this.gameObject);
+			m_weapon.SendMessage("OnDestroyBullet");
 		}
 	}
 
