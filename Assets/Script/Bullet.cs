@@ -123,6 +123,15 @@ public class Bullet : MonoBehaviour {
 			}
 		}
 
+		if (m_onHitWeapon != null)
+		{
+			if(m_onHitWeapon.canConsumeSP())
+			{
+				m_onHitWeapon.CreateBullet(m_targetAngle, transform.position);
+				m_onHitWeapon.ConsumeSP();
+			}
+		}
+
 		Vector3 bombPos = transform.position;
 		bombPos.y = prefBombEffect.transform.position.y;
 		
@@ -159,15 +168,6 @@ public class Bullet : MonoBehaviour {
 	protected void GiveDamage(Creature target)
 	{
 		target.TakeDamage(m_ownerCreature, new DamageDesc(m_damage, m_damageType, m_damageBuffType, PrefDamageEffect));
-
-		if (m_onHitWeapon != null)
-		{
-			if(m_onHitWeapon.canConsumeSP())
-			{
-				m_onHitWeapon.CreateBullet(m_targetAngle, target.transform.position);
-				m_onHitWeapon.ConsumeSP();
-			}
-		}
 	}
 
 	public int Damage

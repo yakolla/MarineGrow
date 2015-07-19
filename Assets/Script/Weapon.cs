@@ -31,9 +31,6 @@ public class Weapon : MonoBehaviour {
 	[SerializeField]
 	float						m_damageRatio = 1f;
 
-	[SerializeField]
-	GameObject					m_prefSubWeapon;
-
 	WeaponStat					m_weaponStat;
 
 	Weapon m_subWeapon;
