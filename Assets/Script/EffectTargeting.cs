@@ -5,8 +5,7 @@ public class EffectTargeting {
 	protected GameObject	m_effectTargetPoint;
 	protected string		m_prefName;
 
-	float		m_lifeTime = 5f;
-	float		m_startTime;
+	bool	m_death = false;
 
 	virtual public void	Init(Vector3 targetPos)
 	{
@@ -16,14 +15,26 @@ public class EffectTargeting {
 			m_effectTargetPoint = GameObject.Instantiate (prefEffectTargetPoint, targetPos, prefEffectTargetPoint.transform.localRotation) as GameObject;
 		}
 
+		Const.GetSpawn().StartCoroutine(AutoDeath(this));
+		m_death = false;
 		SetActive(true);
 		m_effectTargetPoint.transform.position = targetPos;
 
-		m_startTime = Time.time + m_lifeTime;
+	}
+
+	System.Collections.IEnumerator AutoDeath(EffectTargeting obj)
+	{
+		yield return new WaitForSeconds(5f);
+
+		obj.Death();
 	}
 
 	public void Death()
 	{
+		if (m_death == true)
+			return;
+
+		m_death = true;
 		SetActive(false);
 		GameObject.DestroyObject(m_effectTargetPoint);
 	}
@@ -31,13 +42,5 @@ public class EffectTargeting {
 	public void SetActive(bool active)
 	{
 		m_effectTargetPoint.SetActive(active);
-	}
-
-	void Update()
-	{
-		if (m_startTime < Time.time)
-		{
-			Death();
-		}
 	}
 }

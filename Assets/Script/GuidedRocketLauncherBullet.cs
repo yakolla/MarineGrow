@@ -84,7 +84,8 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		if (other.tag.CompareTo("Wall") == 0)
 		{
 			GameObjectPool.Instance.Free(this.gameObject);
-			m_weapon.SendMessage("OnDestroyBullet");
+			if (m_weapon != null)
+				m_weapon.SendMessage("OnDestroyBullet");
 		}
 	}
 

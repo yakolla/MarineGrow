@@ -77,5 +77,6 @@ public class RushLauncher : Weapon {
 			break;
 		}
 
+
 	}
 }
