@@ -141,18 +141,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":1000
+					"count":1700
 				},
 				{
 					"refItemId":5, 
-					"count":10
+					"count":17
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":10
+					"count":17
 				}
 			],
 			"optionPerLevel":
@@ -188,15 +188,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":1500
+				},
+				{
+					"refItemId":5, 
+					"count":15
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":15
 				}
 			]
 		},
@@ -300,7 +304,7 @@
 			[
 				{
 					"refItemId":8,
-					"count":11
+					"count":10
 				}
 			]
 		},
@@ -494,15 +498,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":2500
+				},
+				{
+					"refItemId":5, 
+					"count":25
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":25
 				}
 			]
 		}
@@ -722,15 +730,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":3000
+				},
+				{
+					"refItemId":5, 
+					"count":30
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":30
 				}
 			]
 		}
@@ -1108,15 +1120,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":3500
+				},
+				{
+					"refItemId":5, 
+					"count":35
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":35
 				}
 			]
 		}
@@ -1490,7 +1506,7 @@
 		"icon":"Sprites/Firegun",		
 		"evolutionFiring":
 		{
-			"angle":30,
+			"angle":5,
 			"delay":0.3
 		},
 		"weaponStat":
@@ -1695,15 +1711,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":2000
+				},
+				{
+					"refItemId":5, 
+					"count":20
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":20
 				}
 			]
 		},
@@ -1771,15 +1791,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":2500
+				},
+				{
+					"refItemId":5, 
+					"count":25
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":25
 				}
 			]
 		},
@@ -1847,15 +1871,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":3000
+				},
+				{
+					"refItemId":5, 
+					"count":30
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":30
 				}
 			]
 		},
@@ -1923,15 +1951,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":4000
+				},
+				{
+					"refItemId":5, 
+					"count":40
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":40
 				}
 			]
 		},
@@ -1999,15 +2031,19 @@
 			"conds":
 			[
 				{
-					"refItemId":8,
-					"count":300
+					"refItemId":1, 
+					"count":4500
+				},
+				{
+					"refItemId":5, 
+					"count":45
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":300
+					"count":45
 				}
 			]
 		},
