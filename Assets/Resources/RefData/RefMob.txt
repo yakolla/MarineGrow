@@ -133,7 +133,7 @@
 				"phyDamagePerLevel":1,
 				"phyDefencePerLevel":2,
 				"hpPerLevel":2,
-				"moveSpeed":5,								
+				"moveSpeed":3,								
 				"aniSpeedRatio":0.5,
 				"navMeshBaseOffset":0
 			}
@@ -480,7 +480,7 @@
 		},
 		{
 			"id":31004,
-			"prefHead":"mon_kingbug",
+			"prefHead":"mon_big_Worm",
 			"prefBody":"big_Worm_skin",
 			"refWeaponItems":
 			[
@@ -921,7 +921,7 @@
 		},
 		{
 			"id":50004,
-			"prefHead":"mon_kingbug",
+			"prefHead":"mon_big_Worm",
 			"prefBody":"big_Worm_skin",
 			"refWeaponItems":
 			[				

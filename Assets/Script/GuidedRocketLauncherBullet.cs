@@ -63,18 +63,9 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		}
 		transform.eulerAngles = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, -destAngle, 0)), 300f*Time.deltaTime).eulerAngles;
 
-		//transform.Translate(Mathf.Clamp(m_accel, 0, 0.1f), 0, 0, transform);
-		transform.Translate(m_accel, 0, 0, transform);
+		transform.Translate(Mathf.Clamp(m_accel, 0, 0.2f), 0, 0, transform);
 		m_accel += Time.fixedDeltaTime*Time.fixedDeltaTime*m_speed;
 
-		if (m_target != null)
-		{
-			if (1.3f > Vector3.Distance(transform.position, m_target.transform.position))
-			{
-				Bomb();
-				m_weapon.SendMessage("OnDestroyBullet");
-			}
-		}
 	}
 
 	new void OnTriggerEnter(Collider other) {
@@ -84,6 +75,16 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 		if (other.tag.CompareTo("Wall") == 0)
 		{
 			GameObjectPool.Instance.Free(this.gameObject);
+			if (m_weapon != null)
+				m_weapon.SendMessage("OnDestroyBullet");
+
+			return;
+		}
+
+		Creature target = other.gameObject.GetComponent<Creature>();
+		if (m_target != null && m_target == target)
+		{
+			Bomb();
 			if (m_weapon != null)
 				m_weapon.SendMessage("OnDestroyBullet");
 		}

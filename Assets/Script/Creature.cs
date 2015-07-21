@@ -503,12 +503,12 @@ public class Creature : MonoBehaviour {
 	{		
 		
 		DamageText(DamageDesc.BuffType.Slow.ToString(), Color.white, DamageNumberSprite.MovementType.FloatingUp);
-		m_creatureProperty.BetaMoveSpeed /= 2f;
-
+		float ori = m_creatureProperty.BetaMoveSpeed / 2f;
+		m_creatureProperty.BetaMoveSpeed -= ori;
 		yield return new WaitForSeconds(time);
 		
 		m_buffEffects[(int)DamageDesc.BuffType.Slow].m_run = false;
-		m_creatureProperty.BetaMoveSpeed *= 2f;
+		m_creatureProperty.BetaMoveSpeed += ori;
 
 
 	}
