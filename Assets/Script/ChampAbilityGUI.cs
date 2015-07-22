@@ -17,6 +17,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	CreatureProperty	m_backup = new CreatureProperty();
 
 	ADMob		m_adMob;
+	bool		m_autoAssigned = false;
 
 	class Ability
 	{
@@ -51,7 +52,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 	}
 
 	Dictionary<AbilityCategory, List<Ability>>	m_abilities = new Dictionary<AbilityCategory, List<Ability>>();
-	Ability[]	m_abilitySlots = new Ability[3];
+	Ability[]	m_abilitySlots = new Ability[Const.AbilitySlots];
 
 	void Start ()
 	{
@@ -661,7 +662,9 @@ public class ChampAbilityGUI : MonoBehaviour {
 		}
 #endif
 
-		RandomAbility();
+		RandomAbility(!AutoAssigned);
+
+		AutoAssignedAbillity();
 	}
 
 	public void StartSpinButton(YGUISystem.GUIButton button)
@@ -678,7 +681,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 		m_statButtons[slot].Lable.Text.enabled = true;
 	}
 
-	void RandomAbility()
+	void RandomAbility(bool ani)
 	{
 		int selectCount = 0;
 		while(selectCount < Const.AbilitySlots)
@@ -708,18 +711,40 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		}
 
-		for(selectCount = 0; selectCount < Const.AbilitySlots; ++selectCount)
-			StartSpinButton(m_statButtons[selectCount]);
+		if (ani == true)
+		{
+			for(selectCount = 0; selectCount < Const.AbilitySlots; ++selectCount)
+				StartSpinButton(m_statButtons[selectCount]);
+		}
 
 	}
 
 	void OnEnable() {
 		TimeEffector.Instance.StopTime();
+
+
 		GameObject.Find("HudGUI/ADMob").GetComponent<ADMob>().ShowBanner(true);
+
+		AutoAssignedAbillity();
 	}
 
 	void OnDisable() {
 		TimeEffector.Instance.StartTime();
+	}
+
+	void AutoAssignedAbillity()
+	{
+		if (AutoAssigned & m_champ != null)
+		{
+			for(int i = 0; i < m_champ.RemainStatPoint; ++i)
+			{
+				Ability ability = m_abilitySlots[Random.Range(0, Const.AbilitySlots)];
+				
+				ability.m_functor();
+				RandomAbility(false);
+			}
+			OnClickOK();
+		}
 	}
 
 	public void OnClickStat(int slot)
@@ -731,7 +756,7 @@ public class ChampAbilityGUI : MonoBehaviour {
 
 		ability.m_functor();
 		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Ability", ability.m_name, 0);
-		RandomAbility();
+		RandomAbility(true);
 	
 	}
 
@@ -755,13 +780,19 @@ public class ChampAbilityGUI : MonoBehaviour {
 	{
 		if (true == m_rollButton.TryToPay())
 		{
-			RandomAbility();
+			RandomAbility(true);
 			++m_usedCountOfRandomAbilityItem;
 
 			m_rollButton.NormalWorth = 1f+m_usedCountOfRandomAbilityItem;
 
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Ability", "Roll"+m_usedCountOfRandomAbilityItem, 0);
 		}
+	}
+
+	public bool AutoAssigned
+	{
+		set {m_autoAssigned = value;}
+		get {return m_autoAssigned;}
 	}
 
 	void Update()

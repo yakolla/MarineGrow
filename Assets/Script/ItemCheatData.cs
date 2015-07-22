@@ -42,8 +42,6 @@ public class ItemCheatData : ItemData{
 			desc +=  "\n" + (level >= 1 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv1:Play with a Pet</color>";
 			desc +=  "\n" + (level >= 3 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv3:Auto assigned to the ability</color>";
 			desc +=  "\n" + (level >= 5 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv5:Auto calls the followers</color>";
-			desc +=  "\n" + (level >= 7 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv7:On starting, Give 6 Ability points</color>";
-			desc +=  "\n" + (level >= 9 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv9:On starting, Give 9 Ability points</color>";
 			break;
 		}
 

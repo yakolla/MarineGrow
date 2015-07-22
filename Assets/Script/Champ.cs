@@ -26,6 +26,7 @@ public class Champ : Creature {
 	Animator	m_bloodWarningAnimator;
 
 	Vector3		m_moveDir;
+	float		m_lastLevelupTime;
 
 	new void Start () {
 
@@ -51,7 +52,7 @@ public class Champ : Creature {
 		m_mobKills = 0;
 		m_machoSkillStacks = 0;
 		m_remainStatPoint = Cheat.HowManyAbilityPointOnStart;
-
+		m_lastLevelupTime = Time.time;
 	}
 
 	public int RemainStatPoint
@@ -60,12 +61,17 @@ public class Champ : Creature {
 		set{m_remainStatPoint = value;}
 	}
 
+	public float LastLevelupTime
+	{
+		get {return m_lastLevelupTime;}
+	}
+
 	void LevelUp()
 	{
 		m_remainStatPoint+=1*Cheat.HowManyAbilityPointRatioOnLevelUp;
 
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
-
+		m_lastLevelupTime = Time.time;
 	}
 
 	override public bool AutoAttack() {
@@ -193,6 +199,15 @@ public class Champ : Creature {
 
 		AudioListener.volume = Warehouse.Instance.GameOptions.m_sfxVolume;
 		m_enableAutoTarget = Warehouse.Instance.GameOptions.m_autoTarget;
+
+		if (Warehouse.Instance.GameOptions.m_autoScreenOff)
+		{
+			Screen.sleepTimeout = SleepTimeout.NeverSleep;
+		}
+		else
+		{
+			Screen.sleepTimeout = SleepTimeout.SystemSetting;
+		}
 	}
 
 	void OnGUI()

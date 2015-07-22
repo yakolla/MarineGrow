@@ -45,4 +45,14 @@ public class Cheat {
 	{
 		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 1;}
 	}
+
+	public static bool AutoAssignedAbility
+	{
+		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 3;}
+	}
+
+	public static bool AutoCallFollowers
+	{
+		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 5;}
+	}
 }

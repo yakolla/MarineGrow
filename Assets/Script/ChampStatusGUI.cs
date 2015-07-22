@@ -33,6 +33,12 @@ public class ChampStatusGUI : MonoBehaviour {
 
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
 			m_specialButtons[0].Lable.Text.text = m_champ.RemainStatPoint.ToString();
+
+			if (Cheat.AutoAssignedAbility && m_champ.RemainStatPoint > 0 && m_champ.LastLevelupTime+10f < Time.time)
+			{
+				OnClickLevelUp(true);
+			}
+
 			return m_champ.RemainStatPoint > 0;
 		});
 		m_specialButtons[1] = new YGUISystem.GUIButton(transform.Find("Special/Button1").gameObject, ()=>{
@@ -70,12 +76,14 @@ public class ChampStatusGUI : MonoBehaviour {
 		);
 	}
 
-	public void OnClickLevelUp()
+	public void OnClickLevelUp(bool autoAssigned)
 	{
 		if (m_champ.RemainStatPoint == 0)
 			return;
 
-		GameObject.Find("HudGUI/AbilityGUI").transform.Find("Panel").gameObject.SetActive(true);
+		ChampAbilityGUI abilityGui = GameObject.Find("HudGUI/AbilityGUI").transform.Find("Panel").gameObject.GetComponent<ChampAbilityGUI>();
+		abilityGui.AutoAssigned = autoAssigned;
+		abilityGui.gameObject.SetActive(true);
 
 		m_accessoryBoard.GetComponent<Animator>().SetTrigger("SlidingDown");
 	}
