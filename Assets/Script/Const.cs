@@ -29,6 +29,7 @@ public class Const {
 	public const int StartPosYOfPriceButtonImage = 10;
 	public const int StartPosYOfGemPriceButtonImage = -5;
 	public const int EngineeringBayRefItemId = 51;
+	public const int AcademyRefItemId = 52;
 	public const int RandomAbilityRefItemId = 1101;
 	public const int AbilitySlots = 3;
 	public const int ChampGunRefItemId = 108;
@@ -47,6 +48,7 @@ public class Const {
 	public const int RocketMarineRefItemId = 1003;
 	public const int GuidedRocketMarineRefItemId = 1004;
 	public const int BoomerangMarineRefItemId = 1005;
+	public const int PetRefMobId = 30007;
 
 	public const string ACH_UNLOCKED_THE_FIREGUN = "CgkIrKGfsOUeEAIQAg";
 	public const string ACH_UNLOCKED_THE_LIGHTNINGLAUNCHER = "CgkIrKGfsOUeEAIQBw";

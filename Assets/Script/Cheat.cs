@@ -4,17 +4,19 @@ public class Cheat {
 
 	public static bool EnableAbilityRollButton
 	{
-		get{return Warehouse.Instance.CheatLevel >= 1;}
+		get{return Warehouse.Instance.FindItem(Const.EngineeringBayRefItemId).Item.Level >= 1;}
 	}
+
+
 
 	public static int HowManyAbilityPointOnStart
 	{
 		get{
-			if (Warehouse.Instance.CheatLevel >= 9)
+			if (Warehouse.Instance.FindItem(Const.EngineeringBayRefItemId).Item.Level >= 9)
 				return 9;
-			else if (Warehouse.Instance.CheatLevel >= 7)
+			else if (Warehouse.Instance.FindItem(Const.EngineeringBayRefItemId).Item.Level >= 7)
 				return 6;
-			else if (Warehouse.Instance.CheatLevel >= 5)
+			else if (Warehouse.Instance.FindItem(Const.EngineeringBayRefItemId).Item.Level >= 5)
 				return 3;
 
 			return 0;
@@ -24,7 +26,7 @@ public class Cheat {
 	public static int HowManyAccessorySlot
 	{
 		get{
-			if (Warehouse.Instance.CheatLevel >= 3)
+			if (Warehouse.Instance.FindItem(Const.EngineeringBayRefItemId).Item.Level >= 3)
 				return Const.AccessoriesSlots;
 
 			return Const.HalfAccessoriesSlots;
@@ -37,5 +39,10 @@ public class Cheat {
 
 			return 1;
 		}
+	}
+
+	public static bool PlayWithPet
+	{
+		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 1;}
 	}
 }

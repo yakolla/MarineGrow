@@ -354,15 +354,6 @@ public class Warehouse {
 		get { return m_gem; }
 	}
 
-	public int CheatLevel
-	{
-		get {
-			return FindItem(Const.EngineeringBayRefItemId).Item.Level;
-		}
-	}
-
-
-
 	public int WaveIndex
 	{
 		get {return m_waveIndex;}

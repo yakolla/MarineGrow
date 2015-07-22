@@ -13,12 +13,7 @@ public class Follower : Creature {
 
 		base.Update();
 
-		if (AutoAttack() == false)
-		{
-		}
-
-		if (m_owner != null)
-			m_navAgent.SetDestination(m_owner.transform.position);
+		m_ai.Update();
 		
 	}
 
@@ -84,11 +79,20 @@ public class Follower : Creature {
 		case MobAIType.ItemShuttle:
 			m_ai = new MobAIItemShuttle();
 			break;
+		case MobAIType.Pickup:
+			m_ai = new MobAIPickup();
+			((MobAIPickup)(m_ai)).SetOwner(m_owner);
+			CreatureType = Type.Npc;	
+			gameObject.layer = 0;
+			break;
+		case MobAIType.Follow:
+			m_ai = new MobAIFollow();
+			((MobAIFollow)(m_ai)).SetOwner(m_owner);
+			StartCoroutine(DecHpEffect());
+			break;
 		}
 		
 		m_ai.Init(this);
-
-		StartCoroutine(DecHpEffect());
 	
 	}
 

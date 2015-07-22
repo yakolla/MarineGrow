@@ -107,7 +107,9 @@ public class ChampStatusGUI : MonoBehaviour {
 			return;
 
 		--m_accessoryButtons[slot].ChargingPoint;
-		m_champ.AccessoryItems[slot].Item.Use(m_champ);
+
+		for(int i = 0; i < m_champ.m_creatureProperty.CallableFollowers; ++i)
+			m_champ.AccessoryItems[slot].Item.Use(m_champ);
 
 	}
 
@@ -155,6 +157,12 @@ public class ChampStatusGUI : MonoBehaviour {
 				m_accessoryButtons[i].MaxChargingPoint = 2;
 				m_accessoryButtons[i].ChargingPoint = 2;
 				m_accessoryButtons[i].CoolDownTime = m_champ.AccessoryItems[i].Item.RefItem.weaponStat.coolTime;
+			}
+
+
+			if (Cheat.PlayWithPet)
+			{
+				new ItemFollowerData(Const.PetRefMobId).Use(m_champ);
 			}
 
 			SetActiveGUI(true);

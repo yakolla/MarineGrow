@@ -185,7 +185,9 @@ public enum MobAIType
 	ItemShuttle,
 	Dummy,
 	Bomber,
-	Egg
+	Egg,
+	Pickup,
+	Follow,
 }
 
 public enum MobSpawnEffectType

@@ -25,28 +25,27 @@ public class ItemFollowerData : ItemData{
 
 	override public void Use(Creature obj)
 	{
-		for(int i = 0; i < obj.m_creatureProperty.CallableFollowers; ++i)
+
+		RefMob refMob = RefData.Instance.RefMobs[m_refMobId];
+		
+		Vector3 enemyPos = obj.transform.position;
+		float angle = Random.Range(-3.14f, 3.14f);
+		enemyPos.x += Mathf.Cos(angle) * 1f;
+		enemyPos.z += Mathf.Sin(angle) * 1f;
+		GameObject followerObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/mon/"+refMob.prefHead), Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody), enemyPos, obj.transform.rotation);
+
+		Follower follower = (Follower)followerObj.GetComponent<Follower>();
+		follower.Init(obj, refMob, Level);
+		
+		foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
 		{
-			RefMob refMob = RefData.Instance.RefMobs[m_refMobId];
-			
-			Vector3 enemyPos = obj.transform.position;
-			float angle = Random.Range(-3.14f, 3.14f);
-			enemyPos.x += Mathf.Cos(angle) * 1f;
-			enemyPos.z += Mathf.Sin(angle) * 1f;
-			GameObject followerObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/mon/"+refMob.prefHead), Resources.Load<GameObject>("Pref/mon_skin/" + refMob.prefBody), enemyPos, obj.transform.rotation);
-
-			Follower follower = (Follower)followerObj.GetComponent<Follower>();
-			follower.Init(obj, refMob, Level);
-			
-			foreach(RefMob.WeaponDesc weaponDesc in refMob.refWeaponItems)
-			{
-				ItemWeaponData itemWeaponData = new ItemWeaponData(weaponDesc.refItemId);
-				itemWeaponData.Level = Level;
-				follower.EquipWeapon(itemWeaponData, weaponDesc.weaponStat);
-			}
-
-			ApplyOptions(follower);
+			ItemWeaponData itemWeaponData = new ItemWeaponData(weaponDesc.refItemId);
+			itemWeaponData.Level = Level;
+			follower.EquipWeapon(itemWeaponData, weaponDesc.weaponStat);
 		}
+
+		ApplyOptions(follower);
+
 
 	}
 

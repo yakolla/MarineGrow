@@ -90,7 +90,8 @@ public class ChampSettingGUI : MonoBehaviour {
 					Warehouse.Instance.PushItem(followerData);
 				}
 
-				Warehouse.Instance.PushItem(new ItemCheatData());
+				Warehouse.Instance.PushItem(new ItemCheatData(Const.EngineeringBayRefItemId));
+				Warehouse.Instance.PushItem(new ItemCheatData(Const.AcademyRefItemId));
 			}
 #endif
 		}
@@ -109,13 +110,23 @@ public class ChampSettingGUI : MonoBehaviour {
 
 				foreach(RefMob follower in RefData.Instance.RefFollowerMobs)
 				{
+					if (30007 == follower.id)
+						continue;
+
 					ItemFollowerData followerData = new ItemFollowerData(follower.id);
 					Warehouse.Instance.PushItem(followerData);
 				}
 
-				Warehouse.Instance.PushItem(new ItemCheatData());
+				Warehouse.Instance.PushItem(new ItemCheatData(Const.EngineeringBayRefItemId));
+				Warehouse.Instance.PushItem(new ItemCheatData(Const.AcademyRefItemId));
 			}
-			
+			else
+			{
+				if (null == Warehouse.Instance.FindItem(Const.AcademyRefItemId))
+				{
+					Warehouse.Instance.PushItem(new ItemCheatData(Const.AcademyRefItemId));
+				}
+			}
 			byte[] data = Warehouse.Instance.Serialize();
 			Warehouse.Instance.Deserialize(data);
 

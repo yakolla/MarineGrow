@@ -129,6 +129,56 @@
 		}	
 	},
 	{
+		"id":52,
+		"codeName":"Academy",
+		"type":"Cheat",
+		"icon":"Sprites/Pandora",
+		"defaultLock":true,
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":5000
+				},
+				{
+					"refItemId":5, 
+					"count":50
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":50
+				}
+			],
+			"pricePerLevel":1.5
+		},		
+		"unlock":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":5000
+				},
+				{
+					"refItemId":5, 
+					"count":50
+				}
+			],
+			"else_conds":
+			[
+				{
+					"refItemId":8,
+					"count":50
+				}
+			]
+		}	
+	},
+	{
 		"id":101,
 		"codeName":"ChampFiregun",
 		"name":"Flamethrower",
@@ -2095,6 +2145,14 @@
 				}
 			]
 		}
+	},
+	{
+		"id":1007,
+		"codeName":"Follower",
+		"type":"Follower",
+		"icon":"Sprites/FollowerBoomerangMarines",
+		"defaultLock":false
+		
 	},
 	{
 		"id":1101,

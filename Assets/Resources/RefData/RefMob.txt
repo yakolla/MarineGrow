@@ -1118,7 +1118,7 @@
 					"refItemId":"201"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Follow",
 			"baseCreatureProperty":
 			{
 				"maxHP":15,
@@ -1145,7 +1145,7 @@
 					"refItemId":"202"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Follow",
 			"baseCreatureProperty":
 			{
 				"maxHP":15,
@@ -1173,7 +1173,7 @@
 					"refItemId":"208"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Follow",
 			"baseCreatureProperty":
 			{
 				"maxHP":15,
@@ -1200,7 +1200,7 @@
 					"refItemId":"204"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Follow",
 			"baseCreatureProperty":
 			{
 				"maxHP":15,
@@ -1227,7 +1227,7 @@
 					"refItemId":"205"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Follow",
 			"baseCreatureProperty":
 			{
 				"maxHP":15,
@@ -1254,7 +1254,7 @@
 					"refItemId":"206"
 				}
 			],
-			"mobAI":"Normal",
+			"mobAI":"Follow",
 			"baseCreatureProperty":
 			{
 				"maxHP":30,
@@ -1266,6 +1266,33 @@
 				"phyDefencePerLevel":2,
 				"hpPerLevel":0.33,
 				"moveSpeed":0,
+				"navMeshBaseOffset":0,
+				"backwardOnDamage":false
+			}
+		},
+		{
+			"id":30007,			
+			"prefHead":"Pet",
+			"prefBody":"mine_skin",
+			"name":"Pet",
+			"refWeaponItems":
+			[
+				{
+					"refItemId":"206"
+				}
+			],
+			"mobAI":"Pickup",
+			"baseCreatureProperty":
+			{
+				"maxHP":30,
+				"physicalDamage":5,
+				"physicalDefence":0,
+				"evolutionPerLevel":0.2,
+				"exp":0,
+				"phyDamagePerLevel":1,
+				"phyDefencePerLevel":2,
+				"hpPerLevel":0.33,
+				"moveSpeed":3,
 				"navMeshBaseOffset":0,
 				"backwardOnDamage":false
 			}
