@@ -10,7 +10,6 @@ public class OptionGUI : MonoBehaviour {
 	Slider					m_sfxVolume;
 	Slider					m_bgmVolume;
 	Toggle					m_autoTarget;
-	Toggle					m_autoScreenOff;
 
 	void Start () {
 
@@ -19,12 +18,10 @@ public class OptionGUI : MonoBehaviour {
 		m_sfxVolume = transform.Find("SFXGUI/Slider").gameObject.GetComponent<Slider>();
 		m_bgmVolume = transform.Find("BGMGUI/Slider").gameObject.GetComponent<Slider>();
 		m_autoTarget = transform.Find("Auto Target").gameObject.GetComponent<Toggle>();
-		m_autoScreenOff = transform.Find("Auto Screen Off").gameObject.GetComponent<Toggle>();
 
 		m_sfxVolume.value = Warehouse.Instance.GameOptions.m_sfxVolume;
 		m_bgmVolume.value = Warehouse.Instance.GameOptions.m_bgmVolume;
 		m_autoTarget.isOn = Warehouse.Instance.GameOptions.m_autoTarget;
-		m_autoScreenOff.isOn = Warehouse.Instance.GameOptions.m_autoScreenOff;
 
 	}
 
@@ -59,11 +56,7 @@ public class OptionGUI : MonoBehaviour {
 		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Options", "Autotarget"+m_autoTarget.isOn, 0);
 	}
 
-	public void OnToggleAutoScreenOff()
-	{
-		Warehouse.Instance.GameOptions.m_autoScreenOff = m_autoScreenOff.isOn;
-		GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "Options", "AutoScreenOff"+m_autoScreenOff.isOn, 0);
-	}
+
 
 	public void OnClickOk()
 	{

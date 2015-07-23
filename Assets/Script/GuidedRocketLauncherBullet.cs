@@ -8,6 +8,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	float m_lastSearchTime = 0f;
 	Creature	m_target = null;
 
+	float	m_selfDestoryTime;
 
 	[SerializeField]
 	float	m_searchRange = 3f;
@@ -18,7 +19,7 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	float	m_refreshAngleCoolTime = 0f;
 
 
-	Weapon	m_weapon;
+	GuidedRocketLauncher	m_weapon;
 	// Use this for initialization
 	void Start () {
 
@@ -28,7 +29,8 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 	{
 		base.Init(ownerCreature, weapon, targetAngle);
 
-		m_weapon = weapon;
+		m_weapon = weapon as GuidedRocketLauncher;
+		m_selfDestoryTime = Time.time + 5f;
 	}
 
 	new void OnEnable()
@@ -44,6 +46,14 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 		if (m_isDestroying == true)
 			return;
+
+		if (m_selfDestoryTime < Time.time)
+		{
+			if (m_weapon != null)
+				m_weapon.OnDestroyBullet();
+			Bomb();
+			return;
+		}
 
 		if (m_target == null && m_lastSearchTime <= Time.time)
 		{
@@ -74,19 +84,19 @@ public class GuidedRocketLauncherBullet : RocketLauncherBullet {
 
 		if (other.tag.CompareTo("Wall") == 0)
 		{
-			GameObjectPool.Instance.Free(this.gameObject);
 			if (m_weapon != null)
-				m_weapon.SendMessage("OnDestroyBullet");
+				m_weapon.OnDestroyBullet();
 
+			GameObjectPool.Instance.Free(this.gameObject);
 			return;
 		}
 
 		Creature target = other.gameObject.GetComponent<Creature>();
 		if (m_target != null && m_target == target)
 		{
-			Bomb();
 			if (m_weapon != null)
-				m_weapon.SendMessage("OnDestroyBullet");
+				m_weapon.OnDestroyBullet();
+			Bomb();
 		}
 	}
 

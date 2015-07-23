@@ -48,11 +48,11 @@ public class Cheat {
 
 	public static bool AutoAssignedAbility
 	{
-		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 3;}
+		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 5;}
 	}
 
-	public static bool AutoCallFollowers
+	public static bool AutoMove
 	{
-		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 5;}
+		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 9;}
 	}
 }

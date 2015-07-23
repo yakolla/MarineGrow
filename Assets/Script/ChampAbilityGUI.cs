@@ -736,13 +736,14 @@ public class ChampAbilityGUI : MonoBehaviour {
 	{
 		if (AutoAssigned & m_champ != null)
 		{
-			for(int i = 0; i < m_champ.RemainStatPoint; ++i)
+			while(0 < m_champ.RemainStatPoint)
 			{
 				Ability ability = m_abilitySlots[Random.Range(0, Const.AbilitySlots)];
 				
 				ability.m_functor();
 				RandomAbility(false);
 			}
+
 			OnClickOK();
 		}
 	}

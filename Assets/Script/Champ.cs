@@ -28,6 +28,9 @@ public class Champ : Creature {
 	Vector3		m_moveDir;
 	float		m_lastLevelupTime;
 
+	float		m_autoMoveTime;
+	float		m_autoMoveAngTime;
+
 	new void Start () {
 
 		base.Start();
@@ -108,12 +111,12 @@ public class Champ : Creature {
 		Vector3 pos = Vector3.zero;
 		float step = (1*m_creatureProperty.MoveSpeed)*Time.fixedDeltaTime;
 
+
+
 		if (Application.platform == RuntimePlatform.Android)
 		{
 			if (m_leftJoypad.Dragging)
 			{
-				step = (m_creatureProperty.MoveSpeed)*Time.fixedDeltaTime;
-
 				pos.x = m_leftJoypad.Position.x*step;
 				pos.z = m_leftJoypad.Position.y*step;
 
@@ -121,34 +124,25 @@ public class Champ : Creature {
 				
 				//m_navAgent.SetDestination(transform.position+pos);
 			}
-
+			else
+			{
+				if (Cheat.AutoMove)
+				{
+					if (m_autoMoveTime+5f < Time.time)
+					{
+						m_autoMoveTime = Time.time;
+						m_leftJoypad.transform.eulerAngles = new Vector3(0, 0, Random.Range(0, 360));
+					}
+					
+					pos.x = Mathf.Cos(m_leftJoypad.transform.eulerAngles.z*Mathf.Deg2Rad)*step;
+					pos.z = Mathf.Sin(m_leftJoypad.transform.eulerAngles.z*Mathf.Deg2Rad)*step;
+					
+					transform.rigidbody.MovePosition(transform.position+pos);
+				}
+			}
 		}
 		else
 		{
-			if (Input.anyKey)
-			{
-				if(Input.GetKey(KeyCode.W))
-				{
-					pos.z += step;
-				}
-				if(Input.GetKey(KeyCode.S))
-				{
-					pos.z -= step;
-				}
-				if(Input.GetKey(KeyCode.A))
-				{
-					pos.x -= step;
-				}
-				if(Input.GetKey(KeyCode.D))
-				{
-					pos.x += step;
-				}
-
-				transform.rigidbody.MovePosition(transform.position+pos);
-				//m_navAgent.SetDestination(transform.position+pos);
-
-			}
-
 			if (m_leftJoypad.Dragging)
 			{
 				pos.x = m_leftJoypad.Position.x*step;
@@ -156,6 +150,22 @@ public class Champ : Creature {
 
 				transform.rigidbody.MovePosition(transform.position+pos);
 				//m_navAgent.SetDestination(transform.position+pos);
+			}
+			else
+			{
+				if (Cheat.AutoMove)
+				{
+					if (m_autoMoveTime+5f < Time.time)
+					{
+						m_autoMoveTime = Time.time;
+						m_leftJoypad.transform.eulerAngles = new Vector3(0, 0, Random.Range(0, 360));
+					}
+					
+					pos.x = Mathf.Cos(m_leftJoypad.transform.eulerAngles.z*Mathf.Deg2Rad)*step;
+					pos.z = Mathf.Sin(m_leftJoypad.transform.eulerAngles.z*Mathf.Deg2Rad)*step;
+					
+					transform.rigidbody.MovePosition(transform.position+pos);
+				}
 			}
 		}
 
@@ -200,14 +210,7 @@ public class Champ : Creature {
 		AudioListener.volume = Warehouse.Instance.GameOptions.m_sfxVolume;
 		m_enableAutoTarget = Warehouse.Instance.GameOptions.m_autoTarget;
 
-		if (Warehouse.Instance.GameOptions.m_autoScreenOff)
-		{
-			Screen.sleepTimeout = SleepTimeout.NeverSleep;
-		}
-		else
-		{
-			Screen.sleepTimeout = SleepTimeout.SystemSetting;
-		}
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	}
 
 	void OnGUI()

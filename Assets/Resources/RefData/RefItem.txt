@@ -140,21 +140,20 @@
 			[
 				{
 					"refItemId":1, 
-					"count":5000
+					"count":1000
 				},
 				{
 					"refItemId":5, 
-					"count":50
+					"count":10
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":50
+					"count":10
 				}
-			],
-			"pricePerLevel":1.5
+			]
 		},		
 		"unlock":
 		{
@@ -162,18 +161,18 @@
 			[
 				{
 					"refItemId":1, 
-					"count":5000
+					"count":1000
 				},
 				{
 					"refItemId":5, 
-					"count":50
+					"count":10
 				}
 			],
 			"else_conds":
 			[
 				{
 					"refItemId":8,
-					"count":50
+					"count":10
 				}
 			]
 		}	
