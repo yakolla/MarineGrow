@@ -135,10 +135,10 @@ public class SlotMachineGUI : MonoBehaviour {
 					// handle error
 				}
 
-				m_rollable = true;
+
 			});
 
-
+			m_rollable = true;
 		}
 	}
 
