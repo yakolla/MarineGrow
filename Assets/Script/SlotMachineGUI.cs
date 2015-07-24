@@ -69,12 +69,12 @@ public class SlotMachineGUI : MonoBehaviour {
 		m_icons[(int)SlotType.Gem] = Resources.Load("Sprites/Gem") as Texture;
 		m_icons[(int)SlotType.GoldMedal] = Resources.Load("Sprites/GoldMedal") as Texture;
 
-		m_abilities.Add(new Ability(0.2f, SlotType.Gold, 1000));
-		m_abilities.Add(new Ability(0.3f, SlotType.Gold, 500));
-		m_abilities.Add(new Ability(0.5f, SlotType.Gold, 100));
-		m_abilities.Add(new Ability(0.2f, SlotType.Gem, 10));
-		m_abilities.Add(new Ability(0.3f, SlotType.Gem, 5));
-		m_abilities.Add(new Ability(0.5f, SlotType.Gem, 1));
+		m_abilities.Add(new Ability(0.05f, SlotType.Gold, 1000));
+		m_abilities.Add(new Ability(0.1f, SlotType.Gold, 500));
+		m_abilities.Add(new Ability(0.3f, SlotType.Gold, 100));
+		m_abilities.Add(new Ability(0.01f, SlotType.Gem, 10));
+		m_abilities.Add(new Ability(0.1f, SlotType.Gem, 5));
+		m_abilities.Add(new Ability(0.3f, SlotType.Gem, 1));
 		m_abilities.Add(new Ability(0.2f, SlotType.GoldMedal, 10));
 		m_abilities.Add(new Ability(0.3f, SlotType.GoldMedal, 5));
 		m_abilities.Add(new Ability(0.5f, SlotType.GoldMedal, 1));
