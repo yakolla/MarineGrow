@@ -31,6 +31,7 @@ public class Const {
 	public const int EngineeringBayRefItemId = 51;
 	public const int AcademyRefItemId = 52;
 	public const int RandomAbilityRefItemId = 1101;
+	public const int SlotMachineRollRefItemId = 1102;
 	public const int AbilitySlots = 3;
 	public const int ChampGunRefItemId = 108;
 	public const int ChampFiregunRefItemId = 101;

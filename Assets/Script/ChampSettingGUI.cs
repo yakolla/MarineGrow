@@ -377,6 +377,11 @@ public class ChampSettingGUI : MonoBehaviour {
 
 	}
 
+	public void OnSlotMachine()
+	{
+		GameObject.Find("HudGUI/SlotMachineGUI").transform.Find("Panel").gameObject.SetActive(true);
+	}
+
 	public void OnClickEquip(GUIInventorySlot invSlot, GUIInventorySlot.GUIPriceGemButton priceGemButton, YGUISystem.GUIPriceButton button, int itemIndex)
 	{
 

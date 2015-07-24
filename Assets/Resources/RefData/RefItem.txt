@@ -2168,5 +2168,21 @@
 				}
 			]
 		}
+	},
+	{
+		"id":1102,
+		"codeName":"RandomAbility",
+		"type":"RandomAbility",
+		"icon":"Sprites/RandomAbility",
+		"levelup":
+		{
+			"conds":
+			[
+				{
+					"refItemId":1, 
+					"count":30
+				}
+			]
+		}
 	}
 ]
