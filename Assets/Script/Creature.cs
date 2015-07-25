@@ -494,7 +494,7 @@ public class Creature : MonoBehaviour {
 		m_creatureProperty.BetaMoveSpeed = 0f;
 		yield return new WaitForSeconds(2f);
 
-		m_creatureProperty.BetaMoveSpeed = ori;
+		m_creatureProperty.BetaMoveSpeed += ori;
 		m_buffEffects[(int)DamageDesc.BuffType.Stun].m_run = false;
 		CrowdControl(CrowdControlType.Stun, false);
 	}
