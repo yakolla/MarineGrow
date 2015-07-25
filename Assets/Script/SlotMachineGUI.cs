@@ -52,6 +52,7 @@ public class SlotMachineGUI : MonoBehaviour {
 	Ability[]	m_abilitySlots = new Ability[Const.AbilitySlots];
 
 	bool		m_rollable = true;
+	bool		m_savable = false;
 
 	void Start ()
 	{
@@ -128,16 +129,20 @@ public class SlotMachineGUI : MonoBehaviour {
 				m_rewardPanel.SetActive(true);
 			}
 
-			Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
-				if (status == SavedGameRequestStatus.Success) {
-					// handle reading or writing of saved game.
-				} else {
-					// handle error
-				}
+			if (m_savable == false)
+			{
+				m_savable = true;
+				Const.SaveGame((SavedGameRequestStatus status, ISavedGameMetadata game) => {
+					if (status == SavedGameRequestStatus.Success) {
+						// handle reading or writing of saved game.
+					} else {
+						// handle error
+					}
 
-
-			});
-
+					m_savable = false;
+				});
+			}
+			
 			m_rollable = true;
 		}
 	}
