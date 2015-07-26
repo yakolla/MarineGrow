@@ -54,8 +54,16 @@ public class Champ : Creature {
 
 		m_mobKills = 0;
 		m_machoSkillStacks = 0;
-		m_remainStatPoint = Cheat.HowManyAbilityPointOnStart;
+		RemainStatPoint = Cheat.HowManyAbilityPointOnStart + Warehouse.Instance.InitialAbilityPoint;
+		Warehouse.Instance.InitialAbilityPoint = 0;
 		m_lastLevelupTime = Time.time;
+
+#if UNITY_EDITOR
+		if (Const.CHEAT_MODE)
+		{
+			RemainStatPoint += 10;
+		}
+#endif
 	}
 
 	public int RemainStatPoint
@@ -71,7 +79,7 @@ public class Champ : Creature {
 
 	void LevelUp()
 	{
-		m_remainStatPoint+=1*Cheat.HowManyAbilityPointRatioOnLevelUp;
+		RemainStatPoint+=1*Cheat.HowManyAbilityPointRatioOnLevelUp;
 
 		ApplyBuff(null, DamageDesc.BuffType.LevelUp, 10f, null);
 		m_lastLevelupTime = Time.time;

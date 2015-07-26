@@ -27,6 +27,7 @@ public class SlotMachineGUI : MonoBehaviour {
 		Gold,
 		Gem,
 		GoldMedal,
+		Ability,
 		Count
 	}
 
@@ -69,6 +70,7 @@ public class SlotMachineGUI : MonoBehaviour {
 		m_icons[(int)SlotType.Gold] = Resources.Load("Sprites/Gold") as Texture;
 		m_icons[(int)SlotType.Gem] = Resources.Load("Sprites/Gem") as Texture;
 		m_icons[(int)SlotType.GoldMedal] = Resources.Load("Sprites/GoldMedal") as Texture;
+		m_icons[(int)SlotType.Ability] = Resources.Load("Sprites/Levelup") as Texture;
 
 		m_abilities.Add(new Ability(0.05f, SlotType.Gold, 1000));
 		m_abilities.Add(new Ability(0.1f, SlotType.Gold, 500));
@@ -79,7 +81,7 @@ public class SlotMachineGUI : MonoBehaviour {
 		m_abilities.Add(new Ability(0.2f, SlotType.GoldMedal, 10));
 		m_abilities.Add(new Ability(0.3f, SlotType.GoldMedal, 5));
 		m_abilities.Add(new Ability(0.5f, SlotType.GoldMedal, 1));
-
+		m_abilities.Add(new Ability(0.4f, SlotType.Ability, 1));
 
 
 		for(int i = 0; i < m_statButtons.Length; ++i)
@@ -159,6 +161,9 @@ public class SlotMachineGUI : MonoBehaviour {
 			break;
 		case SlotType.GoldMedal:
 			Warehouse.Instance.GoldMedal.Item.Count += m_abilitySlots[0].m_count.Value;
+			break;
+		case SlotType.Ability:
+			Warehouse.Instance.InitialAbilityPoint += m_abilitySlots[0].m_count.Value;
 			break;
 		}
 		

@@ -123,6 +123,7 @@ public class Warehouse {
 	ItemObject			m_goldMedal = new ItemObject(new ItemGoldMedalData(0));
 	ItemObject			m_gem	= new ItemObject(new ItemGemData(0));
 	int					m_waveIndex = 0;
+	SecuredType.XInt	m_initAbilityPoint = 0;
 
 	public class 	GameStatistics
 	{
@@ -358,6 +359,12 @@ public class Warehouse {
 	{
 		get {return m_waveIndex;}
 		set {m_waveIndex = value;}
+	}
+
+	public int InitialAbilityPoint
+	{
+		get {return m_initAbilityPoint.Value;}
+		set {m_initAbilityPoint.Value = value;}
 	}
 
 	public string FileName
