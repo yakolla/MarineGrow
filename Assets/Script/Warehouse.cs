@@ -188,6 +188,10 @@ public class Warehouse {
 
 	float					m_playTime = 0f;
 	float					m_saveTime = 0f;
+
+	bool					m_autoMove = false;
+	bool					m_autoAttack = true;
+
 	public float PlayTime
 	{
 		get { 
@@ -391,6 +395,18 @@ public class Warehouse {
 	public EquipItems ChampEquipItems
 	{
 		get {return m_equipItems;}
+	}
+
+	public bool AutoMove
+	{
+		get{return m_autoMove;}
+		set{m_autoMove = value;}
+	}
+
+	public bool AutoAttack
+	{
+		get{return m_autoAttack;}
+		set{m_autoAttack = value;}		
 	}
 
 	public int NeedTotalGem

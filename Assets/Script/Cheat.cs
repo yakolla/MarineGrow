@@ -53,6 +53,11 @@ public class Cheat {
 
 	public static bool AutoMove
 	{
-		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 9;}
+		get{return Warehouse.Instance.AutoMove;}
+	}
+
+	public static bool AutoAttack
+	{
+		get{return Warehouse.Instance.AutoAttack;}
 	}
 }

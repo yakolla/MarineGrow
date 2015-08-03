@@ -346,35 +346,35 @@ public class ChampSettingGUI : MonoBehaviour {
 		if (m_equipedWeapon.m_itemObject == null)
 			return;
 
-
-		GameObject champObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/Champ"), Resources.Load<GameObject>("Pref/mon_skin/" + RefData.Instance.RefChamp.prefBody), m_spawnChamp.position, m_spawnChamp.localRotation);	
-		champObj.name = "Champ";		
-
-		Champ champ = champObj.GetComponent<Champ>();
-		champ.Init(RefData.Instance.RefChamp, 1);
-
-		Warehouse.Instance.ChampEquipItems.m_weaponRefItemId = m_equipedWeapon.m_itemObject.Item.RefItemID;
-
-		m_equipedWeapon.m_itemObject.Item.Equip(champ);
-		for(int x = 0; x < m_equipedAccessories.Length; ++x)
-		{
-			if (m_equipedAccessories[x].m_itemObject != null)
+		GameObject.Find("HudGUI/GameJoystickOptionGUI").transform.Find("Panel").GetComponent<GameJoystickOptionGUI>().Init(()=>{
+			GameObject champObj = Creature.InstanceCreature(Resources.Load<GameObject>("Pref/Champ"), Resources.Load<GameObject>("Pref/mon_skin/" + RefData.Instance.RefChamp.prefBody), m_spawnChamp.position, m_spawnChamp.localRotation);	
+			champObj.name = "Champ";		
+			
+			Champ champ = champObj.GetComponent<Champ>();
+			champ.Init(RefData.Instance.RefChamp, 1);
+			
+			Warehouse.Instance.ChampEquipItems.m_weaponRefItemId = m_equipedWeapon.m_itemObject.Item.RefItemID;
+			
+			m_equipedWeapon.m_itemObject.Item.Equip(champ);
+			for(int x = 0; x < m_equipedAccessories.Length; ++x)
 			{
-				m_equipedAccessories[x].m_itemObject.Item.Equip(champ);
-				champ.AccessoryItems[x] = m_equipedAccessories[x].m_itemObject;
-				Warehouse.Instance.ChampEquipItems.m_accessoryRefItemId[x] = m_equipedAccessories[x].m_itemObject.Item.RefItemID;
-			}
-		}	
-		
-		m_spawn.StartWave(m_stage-1, champ);
-		
-		GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
-		GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.m_itemObject.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.m_itemObject.Item.Level, 0);
-		
-		champObj.SetActive(false);
-
-		gameObject.SetActive(false);
-
+				if (m_equipedAccessories[x].m_itemObject != null)
+				{
+					m_equipedAccessories[x].m_itemObject.Item.Equip(champ);
+					champ.AccessoryItems[x] = m_equipedAccessories[x].m_itemObject;
+					Warehouse.Instance.ChampEquipItems.m_accessoryRefItemId[x] = m_equipedAccessories[x].m_itemObject.Item.RefItemID;
+				}
+			}	
+			
+			m_spawn.StartWave(m_stage-1, champ);
+			
+			GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", "Stage:"+m_stage, 0);
+			GPlusPlatform.Instance.AnalyticsTrackEvent("Start", "Setting", m_equipedWeapon.m_itemObject.Item.RefItem.codeName+"_Lv:"+m_equipedWeapon.m_itemObject.Item.Level, 0);
+			
+			champObj.SetActive(false);
+			
+			gameObject.SetActive(false);
+		});
 	}
 
 	public void OnSlotMachine()

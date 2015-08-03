@@ -11,9 +11,6 @@ public class Champ : Creature {
 	Joypad		m_leftJoypad;
 	Joypad		m_rightJoypad;
 
-	[SerializeField]
-	bool	m_enableAutoTarget = true;
-
 	int			m_remainStatPoint = 0;
 
 	int			m_mobKills;
@@ -216,7 +213,6 @@ public class Champ : Creature {
 		Const.GetSpawn().audio.ignoreListenerVolume = true;
 
 		AudioListener.volume = Warehouse.Instance.GameOptions.m_sfxVolume;
-		m_enableAutoTarget = Warehouse.Instance.GameOptions.m_autoTarget;
 
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	}
@@ -230,7 +226,7 @@ public class Champ : Creature {
 	new void Update () {
 		base.Update();
 
-		if (m_enableAutoTarget)
+		if (Cheat.AutoAttack)
 		{
 			if (m_rightJoypad.Dragging)
 			{
