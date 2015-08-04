@@ -7,8 +7,6 @@ public class Cheat {
 		get{return Warehouse.Instance.FindItem(Const.EngineeringBayRefItemId).Item.Level >= 1;}
 	}
 
-
-
 	public static int HowManyAbilityPointOnStart
 	{
 		get{
@@ -46,18 +44,22 @@ public class Cheat {
 		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 1;}
 	}
 
-	public static bool AutoAssignedAbility
+	public static float ExtraGold
 	{
-		get{return Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 5;}
+		get{
+			if (Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 5)
+				return 5;
+			return 0;
+			}
 	}
 
-	public static bool AutoMove
+	public static float ExtraXP
 	{
-		get{return Warehouse.Instance.AutoMove;}
+		get{
+			if (Warehouse.Instance.FindItem(Const.AcademyRefItemId).Item.Level >= 9)
+				return 5;
+			return 0;
+		}
 	}
 
-	public static bool AutoAttack
-	{
-		get{return Warehouse.Instance.AutoAttack;}
-	}
 }

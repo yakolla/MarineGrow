@@ -9,6 +9,7 @@ public class GameJoystickOptionGUI : MonoBehaviour {
 	ADMob					m_admob;
 	Toggle					m_autoMoveToggle;
 	Toggle					m_autoAttackToggle;
+	Toggle					m_autoAssignedAbilityToggle;
 
 	System.Action			m_callback;
 
@@ -18,6 +19,7 @@ public class GameJoystickOptionGUI : MonoBehaviour {
 
 		m_autoMoveToggle = transform.Find("AutoMoveToggle").gameObject.GetComponent<Toggle>();
 		m_autoAttackToggle = transform.Find("AutoAttackToggle").gameObject.GetComponent<Toggle>();
+		m_autoAssignedAbilityToggle = transform.Find("AutoAssignedAbilityToggle").gameObject.GetComponent<Toggle>();
 	}
 
 	public void Init(System.Action callback)
@@ -35,7 +37,6 @@ public class GameJoystickOptionGUI : MonoBehaviour {
 
 	void OnDisable() {
 		m_admob.ShowBanner(false);
-		TimeEffector.Instance.StartTime();
 	}
 
 	public void OnToggleAutoAttack()
@@ -46,6 +47,11 @@ public class GameJoystickOptionGUI : MonoBehaviour {
 	public void OnToggleAutoMove()
 	{
 		Warehouse.Instance.AutoMove = m_autoMoveToggle.isOn;
+	}
+
+	public void OnToggleAutoAssignedAbility()
+	{
+		Warehouse.Instance.AutoAssignedAbility = m_autoAssignedAbilityToggle.isOn;
 	}
 
 	public void OnClickOk()

@@ -131,7 +131,7 @@ public class Champ : Creature {
 			}
 			else
 			{
-				if (Cheat.AutoMove)
+				if (Warehouse.Instance.AutoMove)
 				{
 					if (m_autoMoveTime+5f < Time.time)
 					{
@@ -158,7 +158,7 @@ public class Champ : Creature {
 			}
 			else
 			{
-				if (Cheat.AutoMove)
+				if (Warehouse.Instance.AutoMove)
 				{
 					if (m_autoMoveTime+5f < Time.time)
 					{
@@ -226,7 +226,7 @@ public class Champ : Creature {
 	new void Update () {
 		base.Update();
 
-		if (Cheat.AutoAttack)
+		if (Warehouse.Instance.AutoAttack)
 		{
 			if (m_rightJoypad.Dragging)
 			{
@@ -265,6 +265,7 @@ public class Champ : Creature {
 
 	override public void GiveExp(int exp)
 	{
+		exp = (int)(exp+exp*Cheat.ExtraXP);
 		Warehouse.Instance.NewGameStats.GainedXP += exp;
 		m_creatureProperty.giveExp(exp);
 	}

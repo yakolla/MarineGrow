@@ -374,6 +374,9 @@ public class ChampSettingGUI : MonoBehaviour {
 			champObj.SetActive(false);
 			
 			gameObject.SetActive(false);
+
+			
+			TimeEffector.Instance.StartTime();
 		});
 	}
 

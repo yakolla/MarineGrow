@@ -40,8 +40,8 @@ public class ItemCheatData : ItemData{
 			break;
 		case Const.AcademyRefItemId:
 			desc +=  "\n" + (level >= 1 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv1:Play with a Pet</color>";
-			desc +=  "\n" + (level >= 5 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv5:Auto assigned to the ability</color>";
-			desc +=  "\n" + (level >= 9 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv9:Auto Move</color>";
+			desc +=  "\n" + (level >= 5 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv5:Extra Gold 500%</color>";
+			desc +=  "\n" + (level >= 9 ? Const.EnabledStringColor : Const.DisabledStringColor) + "Lv9:Extra XP 500%</color>";
 			break;
 		}
 

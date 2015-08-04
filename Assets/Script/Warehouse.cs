@@ -191,6 +191,7 @@ public class Warehouse {
 
 	bool					m_autoMove = false;
 	bool					m_autoAttack = true;
+	bool					m_autoAssignedAbility = false;
 
 	public float PlayTime
 	{
@@ -407,6 +408,12 @@ public class Warehouse {
 	{
 		get{return m_autoAttack;}
 		set{m_autoAttack = value;}		
+	}
+
+	public bool AutoAssignedAbility
+	{
+		get{return m_autoAssignedAbility;}
+		set{m_autoAssignedAbility = value;}		
 	}
 
 	public int NeedTotalGem

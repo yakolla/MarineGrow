@@ -34,7 +34,7 @@ public class ChampStatusGUI : MonoBehaviour {
 		m_specialButtons[0] = new YGUISystem.GUIButton(transform.Find("Special/Button0").gameObject, ()=>{
 			m_specialButtons[0].Lable.Text.text = m_champ.RemainStatPoint.ToString();
 
-			if (Cheat.AutoAssignedAbility && m_champ.RemainStatPoint > 0 && m_champ.LastLevelupTime+10f < Time.time)
+			if (Warehouse.Instance.AutoAssignedAbility && m_champ.RemainStatPoint > 0 && m_champ.LastLevelupTime+10f < Time.time)
 			{
 				OnClickLevelUp(true);
 			}

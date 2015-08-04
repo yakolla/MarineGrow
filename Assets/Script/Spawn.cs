@@ -563,7 +563,7 @@ public class Spawn : MonoBehaviour {
 						item.Count += (int)(item.Count*goldAlpha);
 
 						if (m_champ != null)
-							item.Count += (int)(item.Count*m_champ.m_creatureProperty.GainExtraGold);
+							item.Count += (int)(item.Count*(m_champ.m_creatureProperty.GainExtraGold+Cheat.ExtraGold));
 
 						break;
 					case ItemData.Type.HealPosion:
