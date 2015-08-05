@@ -11,9 +11,11 @@ public class SlotMachineGUI : MonoBehaviour {
 	YGUISystem.GUIButton[]	m_statButtons = new YGUISystem.GUIButton[Const.AbilitySlots];
 	YGUISystem.GUILable		m_remainPointText;
 	YGUISystem.GUIPriceButton	m_rollButton;
+	YGUISystem.GUIButton	m_allinButton;
 	YGUISystem.GUIImageStatic	m_gold;
 	YGUISystem.GUIImageStatic	m_goldMedal;
 	YGUISystem.GUIImageStatic	m_gem;
+	YGUISystem.GUIImageStatic	m_level;
 
 	GameObject			m_rewardPanel;
 	YGUISystem.GUIButton	m_rewardButton;
@@ -53,6 +55,7 @@ public class SlotMachineGUI : MonoBehaviour {
 	Ability[]	m_abilitySlots = new Ability[Const.AbilitySlots];
 
 	bool		m_rollable = true;
+	bool		m_rolling = false;
 	bool		m_savable = false;
 
 	void Start ()
@@ -65,6 +68,7 @@ public class SlotMachineGUI : MonoBehaviour {
 		m_gold = new YGUISystem.GUIImageStatic(transform.Find("GoldImage").gameObject, Warehouse.Instance.Gold.ItemIcon);
 		m_goldMedal = new YGUISystem.GUIImageStatic(transform.Find("GoldMedalImage").gameObject, Warehouse.Instance.GoldMedal.ItemIcon);
 		m_gem = new YGUISystem.GUIImageStatic(transform.Find("GemImage").gameObject, Warehouse.Instance.Gem.ItemIcon);
+		m_level = new YGUISystem.GUIImageStatic(transform.Find("LevelImage").gameObject, Resources.Load("Sprites/Levelup") as Texture);
 
 
 		m_icons[(int)SlotType.Gold] = Resources.Load("Sprites/Gold") as Texture;
@@ -91,6 +95,10 @@ public class SlotMachineGUI : MonoBehaviour {
 			return m_rollable && m_rewardPanel.activeSelf == false;
 		});
 		m_rollButton.Prices = RefData.Instance.RefItems[Const.SlotMachineRollRefItemId].levelup.conds;
+
+		m_allinButton = new YGUISystem.GUIButton(transform.Find("AllInRollingButton").gameObject, ()=>{
+			return m_rolling == false && m_rewardPanel.activeSelf == false;
+		});
 		
 		transform.Find("RollingButton").gameObject.SetActive(true);
 
@@ -107,6 +115,28 @@ public class SlotMachineGUI : MonoBehaviour {
 		m_rollable = false;
 	}
 
+	bool matchSlot(bool effect)
+	{
+		bool equal = true;
+		for(int i = 1; i < m_abilitySlots.Length; ++i)
+		{
+			if (m_abilitySlots[0] != m_abilitySlots[i])
+			{
+				equal = false;
+				break;
+			}
+		}
+
+		if (effect == true && equal == true)
+		{
+			m_rewardButton.Icon.Image = m_icons[(int)m_abilitySlots[0].m_name];
+			m_rewardButton.Icon.Lable.Text.text = m_abilitySlots[0].m_count.Value.ToString();
+			m_rewardPanel.SetActive(true);
+		}
+
+		return equal;
+	}
+	
 	public void StopSpinButton(int slot)
 	{
 		m_statButtons[slot].Button.enabled = true;
@@ -114,22 +144,7 @@ public class SlotMachineGUI : MonoBehaviour {
 
 		if (slot == 2)
 		{
-			bool equal = true;
-			for(int i = 1; i < m_abilitySlots.Length; ++i)
-			{
-				if (m_abilitySlots[0] != m_abilitySlots[i])
-				{
-					equal = false;
-					break;
-				}
-			}
-			
-			if (equal == true)
-			{
-				m_rewardButton.Icon.Image = m_icons[(int)m_abilitySlots[0].m_name];
-				m_rewardButton.Icon.Lable.Text.text = m_abilitySlots[0].m_count.Value.ToString();
-				m_rewardPanel.SetActive(true);
-			}
+			matchSlot(true);
 
 			if (m_savable == false)
 			{
@@ -149,7 +164,8 @@ public class SlotMachineGUI : MonoBehaviour {
 		}
 	}
 
-	public void OnClickRewardOk()
+
+	void giveReward()
 	{
 		switch(m_abilitySlots[0].m_name)
 		{
@@ -165,11 +181,20 @@ public class SlotMachineGUI : MonoBehaviour {
 		case SlotType.Ability:
 			Warehouse.Instance.InitialAbilityPoint += m_abilitySlots[0].m_count.Value;
 			break;
-		}
+		}		
 		
-
 		m_rewardPanel.SetActive(false);
 	}
+
+	public void OnClickRewardOk()
+	{
+		if (m_rolling == true)
+			return;
+
+		giveReward();
+	}
+
+
 	
 	void RandomAbility(bool ani)
 	{
@@ -217,7 +242,7 @@ public class SlotMachineGUI : MonoBehaviour {
 
 	public void OnClickOK()
 	{
-		if (m_rewardPanel.activeSelf == true)
+		if (m_rewardPanel.activeSelf == true || m_rolling == true)
 			return;
 
 		for(int i = 0; i < m_statButtons.Length; ++i)
@@ -232,20 +257,57 @@ public class SlotMachineGUI : MonoBehaviour {
 
 	}
 
-	public void OnClickRoll()
+	bool rolling(bool ani)
 	{
 		if (true == m_rollButton.TryToPay())
 		{
-			RandomAbility(true);
-
-
-
+			RandomAbility(ani);
+			
 			++m_usedCountOfRandomAbilityItem;
-
-			m_rollButton.NormalWorth = 1f;
-
+			
 			GPlusPlatform.Instance.AnalyticsTrackEvent("InGame", "SlotMachine", "SlotMachine"+m_usedCountOfRandomAbilityItem, 0);
+			return true;
 		}
+		
+		return false;
+	}
+
+	IEnumerator	UpdateAllIn()
+	{
+		while(m_rolling == true && rolling(false))
+		{
+			if (matchSlot(true))
+			{
+				yield return new WaitForSeconds(0.3f);
+				giveReward();
+			}
+
+			yield return null;
+		}
+		m_rolling = false;
+	}
+
+	public void OnClickAllIn()
+	{
+		if (m_rolling == false)
+		{
+			m_rolling = true;
+			m_allinButton.Lable.Text.text = "Auto Roll Off";
+			StartCoroutine(UpdateAllIn());
+		}
+		else
+		{
+			m_rolling = false;
+			m_allinButton.Lable.Text.text = "Auto Roll On";
+		}
+	}
+
+	public void OnClickRoll()
+	{
+		if (m_rolling == true)
+			return;
+
+		rolling(true);
 	}
 
 
@@ -262,6 +324,7 @@ public class SlotMachineGUI : MonoBehaviour {
 		m_gold.Lable.Text.text = Warehouse.Instance.Gold.Item.Count.ToString();
 		m_goldMedal.Lable.Text.text = Warehouse.Instance.GoldMedal.Item.Count.ToString();
 		m_gem.Lable.Text.text = Warehouse.Instance.Gem.Item.Count.ToString();
+		m_level.Lable.Text.text = Warehouse.Instance.InitialAbilityPoint.ToString();
 
 		m_rollButton.Update();
 	}
