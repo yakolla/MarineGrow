@@ -42,8 +42,6 @@ public class Creature : MonoBehaviour {
 	[SerializeField]
 	protected Type			m_creatureType;
 
-	GameObject				m_prefDamageSprite;
-
 	public CreatureProperty	m_creatureProperty;
 	int						m_ingTakenDamageEffect = 0;
 
@@ -74,7 +72,6 @@ public class Creature : MonoBehaviour {
 		m_aimpoint = transform.Find("Body/Aimpoint").gameObject;
 		m_animator = transform.Find("Body").GetComponent<Animator>();
 
-		m_prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
 
 	}
 
@@ -597,6 +594,9 @@ public class Creature : MonoBehaviour {
 			return;
 
 		GameObject dmgEffect = (GameObject)Instantiate(prefEffect, Vector3.zero, Quaternion.Euler(0f, 0f, 0f));
+		if (dmgEffect == null || m_aimpoint == null)
+			return;
+
 		dmgEffect.transform.parent = m_aimpoint.transform;
 		dmgEffect.transform.localPosition = Vector3.zero;
 		dmgEffect.transform.localScale = m_aimpoint.transform.localScale;
@@ -670,7 +670,13 @@ public class Creature : MonoBehaviour {
 
 	public DamageNumberSprite DamageText(string damage, Color color, DamageNumberSprite.MovementType movementType)
 	{
-		GameObject gui = (GameObject)GameObjectPool.Instance.Alloc(m_prefDamageSprite, m_aimpoint.transform.position, m_prefDamageSprite.transform.localRotation);
+		if (m_aimpoint == null)
+			return null;
+
+		GameObject gui = (GameObject)GameObjectPool.Instance.Alloc(Const.GetPrefDamageSprite(), m_aimpoint.transform.position, Const.GetPrefDamageSprite().transform.localRotation);
+		if (gui == null)
+			return null;
+
 		DamageNumberSprite sprite = gui.GetComponent<DamageNumberSprite>();
 		sprite.Init(this, damage, color, movementType);
 

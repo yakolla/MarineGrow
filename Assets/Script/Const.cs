@@ -129,6 +129,9 @@ public class Const {
 
 	public static void DestroyChildrenObjects(GameObject obj)
 	{
+		if (obj == null)
+			return;
+
 		Transform[] children = obj.transform.GetComponentsInChildren<Transform>();
 		for(int i = 0; i < children.Length; ++i)
 		{
@@ -205,5 +208,16 @@ public class Const {
 		}
 
 		return pref;
+	}
+
+	static GameObject prefDamageSprite  = null;
+	public static GameObject GetPrefDamageSprite()
+	{
+		if (prefDamageSprite == null)
+		{
+			prefDamageSprite = Resources.Load<GameObject>("Pref/DamageNumberSprite");
+		}
+
+		return prefDamageSprite;
 	}
 }

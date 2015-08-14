@@ -26,7 +26,7 @@ public class Champ : Creature {
 	float		m_lastLevelupTime;
 
 	float		m_autoMoveTime;
-	float		m_autoMoveAngTime;
+	float[]		m_autoMoveAngs = {0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360};
 
 	new void Start () {
 
@@ -133,10 +133,10 @@ public class Champ : Creature {
 			{
 				if (Warehouse.Instance.AutoMove)
 				{
-					if (m_autoMoveTime+5f < Time.time)
+					if (m_autoMoveTime+2f < Time.time)
 					{
 						m_autoMoveTime = Time.time;
-						m_leftJoypad.transform.eulerAngles = new Vector3(0, 0, Random.Range(0, 360));
+						m_leftJoypad.transform.eulerAngles = new Vector3(0, 0, m_autoMoveAngs[Random.Range(0, m_autoMoveAngs.Length)]);
 					}
 					
 					pos.x = Mathf.Cos(m_leftJoypad.transform.eulerAngles.z*Mathf.Deg2Rad)*step;
